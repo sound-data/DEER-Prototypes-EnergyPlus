@@ -1,0 +1,11 @@
+skip,case_name,:vfd_curve_name,:supplyfan_total_eff,:motor_eff,:cooling_coil_cop,:cooling_coil_cop2,:coil_type,:hvac_type
+,dxAC-Res-SEER-13.0,,0.12,0.24,3.23,,,unitary_system
+,dxAC-Res-SEER-14.0,,0.12,0.24,3.23,,,unitary_system
+,dxAC-Res-SEER-14.5,,0.12,0.24,3.43,,,unitary_system
+,dxAC-Res-SEER-15.0,,0.12,0.24,3.58,,,unitary_system
+,dxAC-Res-SEER-16.0,VFD_Fan_Curve,0.25,0.5,3.58,3.75,multispeed,unitary_system
+,dxAC-Res-SEER-17.0,VFD_Fan_Curve,0.25,0.5,3.58,3.89,multispeed,unitary_system
+,dxAC-Res-SEER-18.0,VFD_Fan_Curve,0.25,0.5,3.58,4.01,multispeed,unitary_system
+,dxAC-Res-SEER-19.0,VFD_Fan_Curve,0.25,0.5,3.72,4.12,multispeed,unitary_system
+,dxAC-Res-SEER-20.0,VFD_Fan_Curve,0.25,0.5,3.82,4.22,multispeed,unitary_system
+,dxAC-Res-SEER-21.0,VFD_Fan_Curve,0.25,0.5,3.94,4.31,multispeed,unitary_system

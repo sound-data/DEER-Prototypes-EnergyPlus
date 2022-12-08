@@ -1,0 +1,154 @@
+<%#INITIALIZE
+parameter "zone_name"
+parameter "zone_area"
+
+# Lighting
+parameter "garage_frac_inc", :default=>0.66 # fraction of garage lamps that are incandescent
+parameter "garage_frac_cfl", :default=>0.21 # fraction of garage lamps that are CFL
+parameter "garage_frac_led", :default=>0.0 # fraction of garage lamps that are LED
+parameter "garage_frac_lf", :default=>0.13 # fraction of garage lamps that are linear fluorescent (T-8, e.g.)
+
+parameter "infil_sla", :default=>0.00067
+parameter "infiltration_schedule", :default=>  # Use this schedule to decrease infiltration if the building is pressurized during HVAC operation
+"
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 1.0;
+"
+
+parameter "zone_height", :default=>10|'ft'
+
+%>
+
+<%
+mdays = [31,
+         28,
+         31,
+         30,
+         31,
+         30,
+         31,
+         31,
+         30,
+         31,
+         30,
+         31]
+
+%>
+
+<%
+# Lighting
+light_month=[0.116, 0.092, 0.086, 0.068, 0.061, 0.055,
+             0.058, 0.065, 0.076, 0.094, 0.108, 0.120]
+
+light_schs=[[0.024, 0.014, 0.010, 0.010, 0.010, 0.010, 0.023, 0.047, 0.045, 0.023, 0.019, 0.019, 0.019, 0.019, 0.020, 0.025, 0.042, 0.078, 0.116, 0.123, 0.106, 0.089, 0.067, 0.046],
+            [0.027, 0.016, 0.011, 0.011, 0.011, 0.012, 0.023, 0.046, 0.041, 0.020, 0.016, 0.016, 0.016, 0.016, 0.017, 0.020, 0.031, 0.060, 0.103, 0.132, 0.123, 0.102, 0.076, 0.053],
+            [0.032, 0.019, 0.013, 0.013, 0.013, 0.014, 0.022, 0.039, 0.031, 0.016, 0.013, 0.013, 0.013, 0.013, 0.013, 0.015, 0.023, 0.046, 0.089, 0.133, 0.143, 0.120, 0.090, 0.063],
+            [0.039, 0.024, 0.016, 0.016, 0.016, 0.017, 0.028, 0.052, 0.042, 0.020, 0.016, 0.016, 0.016, 0.016, 0.016, 0.016, 0.017, 0.023, 0.042, 0.083, 0.136, 0.147, 0.110, 0.076],
+            [0.045, 0.027, 0.018, 0.018, 0.018, 0.019, 0.027, 0.045, 0.034, 0.018, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.016, 0.020, 0.035, 0.070, 0.123, 0.161, 0.126, 0.088],
+            [0.048, 0.029, 0.019, 0.019, 0.019, 0.020, 0.027, 0.043, 0.032, 0.018, 0.016, 0.015, 0.015, 0.015, 0.015, 0.016, 0.016, 0.020, 0.032, 0.062, 0.111, 0.161, 0.135, 0.094],
+            [0.048, 0.029, 0.019, 0.019, 0.019, 0.020, 0.028, 0.046, 0.035, 0.019, 0.016, 0.016, 0.016, 0.016, 0.016, 0.016, 0.017, 0.020, 0.032, 0.061, 0.110, 0.159, 0.133, 0.092],
+            [0.042, 0.025, 0.017, 0.017, 0.017, 0.018, 0.029, 0.051, 0.040, 0.020, 0.016, 0.016, 0.016, 0.016, 0.016, 0.016, 0.017, 0.022, 0.037, 0.072, 0.123, 0.158, 0.118, 0.082],
+            [0.035, 0.021, 0.014, 0.014, 0.014, 0.015, 0.028, 0.053, 0.044, 0.022, 0.017, 0.017, 0.017, 0.017, 0.017, 0.017, 0.019, 0.028, 0.052, 0.095, 0.142, 0.132, 0.099, 0.069],
+            [0.029, 0.018, 0.012, 0.012, 0.012, 0.013, 0.027, 0.055, 0.049, 0.024, 0.019, 0.019, 0.019, 0.019, 0.019, 0.020, 0.025, 0.041, 0.075, 0.118, 0.130, 0.109, 0.082, 0.057],
+            [0.025, 0.015, 0.010, 0.010, 0.010, 0.011, 0.019, 0.037, 0.036, 0.020, 0.017, 0.017, 0.017, 0.017, 0.019, 0.027, 0.049, 0.087, 0.119, 0.119, 0.110, 0.093, 0.069, 0.048],
+            [0.023, 0.014, 0.009, 0.009, 0.009, 0.010, 0.021, 0.043, 0.042, 0.023, 0.019, 0.019, 0.019, 0.019, 0.021, 0.029, 0.052, 0.091, 0.120, 0.112, 0.102, 0.086, 0.064, 0.045]]
+
+lighting_power=8  # kWh/year
+lighting_density=0.08  # kWh/ft2/year
+
+annual_light_elec = lighting_power + lighting_density*zone_area  # kWh/year
+
+er_cfl = 0.27 # efficacy ratio of CFL, from Table 18 of NREL's House Simulation Protocols
+er_led = 0.30 # efficacy ratio of LED, from Table 18 of NREL's House Simulation Protocols
+er_lf = 0.17 # efficacy ratio of linear fluorescent, from Table 18 of NREL's House Simulation Protocols
+
+adjusted_light_garage = annual_light_elec * ( ( ( garage_frac_inc + 0.34 ) + ( garage_frac_cfl - 0.21 )*er_cfl + garage_frac_led*er_led + ( garage_frac_lf - 0.13)*er_lf ) * 0.9 + 0.1 )
+%>
+
+  Lights,
+    <%= zone_name %> Lighting,  !- Name
+    <%= zone_name %>,  !- Zone Name
+    <%= zone_name %> Lighting Schedule,  !- Schedule Name
+    LightingLevel,              !- Design Level Calculation Method
+    <%= adjusted_light_garage * 1000 %>,  !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.6,                     !- Fraction Radiant
+    0.2,                     !- Fraction Visible
+    1;
+
+  Schedule:Compact,
+    <%= zone_name %> Lighting Schedule,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+<% for m in 1..12 %>
+    Through: <%= m %>/<%= mdays[m-1] %>,
+    For: AllDays,
+  <% for h in 1..24 %>
+    <% if m == 12 and h == 24 %>
+    Until: <%= h %>:00,<%= light_schs[m-1][h-1]*light_month[m-1]/mdays[m-1] %>;
+    <% else %>
+    Until: <%= h %>:00,<%= light_schs[m-1][h-1]*light_month[m-1]/mdays[m-1] %>,
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<%
+# Infiltration
+
+g = 9.81
+
+nl = 0.5 # neutral level
+hlf = 0.4 # horizontal leakage fraction
+sc = 0.5/3.0 # shelter coefficient
+
+f_s = 2.0/3.0*(1 + hlf/2.0)*(2*nl*(1 - nl))**0.5/(nl**0.5 + (1 - nl)**0.5)
+f_t =0.47
+f_w = sc*(1 - hlf)**0.333*f_t
+
+stack_coeff = f_s**2*g*zone_height/((70|'F') + 273.15)
+wind_coeff = f_w**2
+
+a_o = infil_sla*zone_area
+
+%>
+
+  ZoneInfiltration:EffectiveLeakageArea,
+     <%= zone_name %> Infiltration,   !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Infiltration Schedule,  !- Schedule Name
+     <%= a_o*10000.0 %>,           !- Effective Air Leakage Area {cm2}
+     <%= stack_coeff*0.01 %>,           !- Stack Coefficient {(L/s)/(cm^4-K)}
+     <%= wind_coeff*0.01 %>;           !- Wind Coefficient {(L/s)2/(cm^4-(m/s)2)}
+
+
+  Schedule:Compact,
+    <%= zone_name %> Infiltration Schedule,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+<%= infiltration_schedule %>
+
+<%
+# Internal mass
+floor_area_frac = 0.1
+
+%>
+
+  Material,
+    <%= zone_name %> Furnishings,   !- Name
+    Rough,                     !- Roughness
+    0.1524,                    !- Thickness {m}
+    0.1154577,                 !- Conductivity {W/m-K}
+    640.8,                     !- Density {kg/m}
+    1214.23;                   !- Specific Heat {J/kg-K}
+
+  Construction,
+    <%= zone_name %> Interior Furnishings,  !- Name
+    <%= zone_name %> Furnishings;  !- Outside Layer
+
+  InternalMass,
+    <%= zone_name %> Internal Mass,  !- Name
+    <%= zone_name %> Interior Furnishings,  !- Construction Name
+    <%= zone_name %>,          !- Zone Name
+    <%= floor_area_frac*zone_area %>;      !- Surface Area {m2}

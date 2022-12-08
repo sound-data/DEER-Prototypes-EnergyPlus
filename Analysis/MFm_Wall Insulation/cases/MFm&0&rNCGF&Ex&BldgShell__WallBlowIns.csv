@@ -1,0 +1,3 @@
+skip,case_name,:window_u,:central_cooling_coil_cop,:furnace_heating_coil_eff,:hvac_cooling_type,:hvac_heating_type,:wall_consol_layer_thickness,:wall_consol_layer_conductivity
+,Pre-BS-BlowInIns-R0-R13,,,,,,0.001,0.043
+,Msr-BS-BlowInIns-R0-R13,,,,,,0.09845,0.043

@@ -1,0 +1,198 @@
+<%#INITIALIZE
+ parameter "zone1_name"
+parameter "zone2_name"
+ parameter "cooling_coil_cop"
+ parameter "system_type"
+ parameter "heating_coil_cop"
+ %>
+
+<% if system_type == 'PTAC' %>
+HVACTemplate:Zone:PTAC,
+    <%= zone1_name %>,  !- Zone Name
+    Thermostat SP,           !- Template Thermostat Name
+    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
+    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    ,                        !- No Load Supply Air Flow Rate {m3/s}
+    ,                        !- Zone Heating Sizing Factor
+    ,                        !- Zone Cooling Sizing Factor
+    Flow/Person,             !- Outdoor Air Method
+    0,                       !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- System Availability Schedule Name
+    ,                        !- Supply Fan Operating Mode Schedule Name
+    DrawThrough,             !- Supply Fan Placement
+    0.7,                     !- Supply Fan Total Efficiency
+    75,                      !- Supply Fan Delta Pressure {Pa}
+    0.9,                     !- Supply Fan Motor Efficiency
+    SingleSpeedDX,           !- Cooling Coil Type
+    ,                        !- Cooling Coil Availability Schedule Name
+    autosize,                !- Cooling Coil Gross Rated Total Capacity {W}
+    autosize,                !- Cooling Coil Gross Rated Sensible Heat Ratio
+    <%= cooling_coil_cop %>,                    !- Cooling Coil Gross Rated Cooling COP {W/W}
+    Electric,                !- Heating Coil Type
+    ,                        !- Heating Coil Availability Schedule Name
+    autosize,                !- Heating Coil Capacity {W}
+    0.8,                     !- Gas Heating Coil Efficiency
+    ,                        !- Gas Heating Coil Parasitic Electric Load {W}
+    ,                        !- Dedicated Outdoor Air System Name
+    SupplyAirTemperature,    !- Zone Cooling Design Supply Air Temperature Input Method
+    12.8,                    !- Zone Cooling Design Supply Air Temperature {C}
+    ,                        !- Zone Cooling Design Supply Air Temperature Difference {deltaC}
+    SupplyAirTemperature,    !- Zone Heating Design Supply Air Temperature Input Method
+    50,                      !- Zone Heating Design Supply Air Temperature {C}
+    ,                        !- Zone Heating Design Supply Air Temperature Difference {deltaC}
+    ,                        !- Design Specification Outdoor Air Object Name
+    ,                        !- Design Specification Zone Air Distribution Object Name
+    None,                    !- Baseboard Heating Type
+    ,                        !- Baseboard Heating Availability Schedule Name
+    autosize,                !- Baseboard Heating Capacity {W}
+    None;                    !- Capacity Control Method
+
+HVACTemplate:Zone:PTAC,
+    <%= zone2_name %>,  !- Zone Name
+    Thermostat SP,           !- Template Thermostat Name
+    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
+    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    ,                        !- No Load Supply Air Flow Rate {m3/s}
+    ,                        !- Zone Heating Sizing Factor
+    ,                        !- Zone Cooling Sizing Factor
+    Flow/Person,             !- Outdoor Air Method
+    0,                       !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- System Availability Schedule Name
+    ,                        !- Supply Fan Operating Mode Schedule Name
+    DrawThrough,             !- Supply Fan Placement
+    0.7,                     !- Supply Fan Total Efficiency
+    75,                      !- Supply Fan Delta Pressure {Pa}
+    0.9,                     !- Supply Fan Motor Efficiency
+    SingleSpeedDX,           !- Cooling Coil Type
+    ,                        !- Cooling Coil Availability Schedule Name
+    autosize,                !- Cooling Coil Gross Rated Total Capacity {W}
+    autosize,                !- Cooling Coil Gross Rated Sensible Heat Ratio
+    <%= cooling_coil_cop %>,                    !- Cooling Coil Gross Rated Cooling COP {W/W}
+    Electric,                !- Heating Coil Type
+    ,                        !- Heating Coil Availability Schedule Name
+    autosize,                !- Heating Coil Capacity {W}
+    0.8,                     !- Gas Heating Coil Efficiency
+    ,                        !- Gas Heating Coil Parasitic Electric Load {W}
+    ,                        !- Dedicated Outdoor Air System Name
+    SupplyAirTemperature,    !- Zone Cooling Design Supply Air Temperature Input Method
+    12.8,                    !- Zone Cooling Design Supply Air Temperature {C}
+    ,                        !- Zone Cooling Design Supply Air Temperature Difference {deltaC}
+    SupplyAirTemperature,    !- Zone Heating Design Supply Air Temperature Input Method
+    50,                      !- Zone Heating Design Supply Air Temperature {C}
+    ,                        !- Zone Heating Design Supply Air Temperature Difference {deltaC}
+    ,                        !- Design Specification Outdoor Air Object Name
+    ,                        !- Design Specification Zone Air Distribution Object Name
+    None,                    !- Baseboard Heating Type
+    ,                        !- Baseboard Heating Availability Schedule Name
+    autosize,                !- Baseboard Heating Capacity {W}
+    None;                    !- Capacity Control Method
+
+<% else %>
+HVACTemplate:Zone:PTHP,
+    <%= zone1_name %>,!- Zone Name
+    Thermostat SP,  !- Template Thermostat Name
+    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
+    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    ,                        !- No Load Supply Air Flow Rate {m3/s}
+    ,                        !- Zone Heating Sizing Factor
+    ,                        !- Zone Cooling Sizing Factor
+    Flow/Person,             !- Outdoor Air Method
+    0,                       !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- System Availability Schedule Name
+    ,                        !- Supply Fan Operating Mode Schedule Name
+    DrawThrough,             !- Supply Fan Placement
+    0.7,                     !- Supply Fan Total Efficiency
+    75,                      !- Supply Fan Delta Pressure {Pa}
+    0.9,                     !- Supply Fan Motor Efficiency
+    SingleSpeedDX,           !- Cooling Coil Type
+    ,                        !- Cooling Coil Availability Schedule Name
+    autosize,                !- Cooling Coil Gross Rated Total Capacity {W}
+    autosize,                !- Cooling Coil Gross Rated Sensible Heat Ratio
+    <%= cooling_coil_cop %>,                    !- Cooling Coil Gross Rated COP {W/W}
+    SingleSpeedDXHeatPump,   !- Heat Pump Heating Coil Type
+    ,                        !- Heat Pump Heating Coil Availability Schedule Name
+    autosize,                !- Heat Pump Heating Coil Gross Rated Capacity {W}
+    <%= heating_coil_cop %>,                    !- Heat Pump Heating Coil Gross Rated COP {W/W}
+    -8,                      !- Heat Pump Heating Minimum Outdoor Dry-Bulb Temperature {C}
+    5,                       !- Heat Pump Defrost Maximum Outdoor Dry-Bulb Temperature {C}
+    ReverseCycle,            !- Heat Pump Defrost Strategy
+    Timed,                   !- Heat Pump Defrost Control
+    0.166667,                !- Heat Pump Defrost Time Period Fraction
+    Electric,                !- Supplemental Heating Coil Type
+    ,                        !- Supplemental Heating Coil Availability Schedule Name
+    autosize,                !- Supplemental Heating Coil Capacity {W}
+    21,                      !- Supplemental Heating Coil Maximum Outdoor Dry-Bulb Temperature {C}
+    0.8,                     !- Supplemental Gas Heating Coil Efficiency
+    ,                        !- Supplemental Gas Heating Coil Parasitic Electric Load {W}
+    ,                        !- Dedicated Outdoor Air System Name
+    SupplyAirTemperature,    !- Zone Cooling Design Supply Air Temperature Input Method
+    12.8,                    !- Zone Cooling Design Supply Air Temperature {C}
+    ,                        !- Zone Cooling Design Supply Air Temperature Difference {deltaC}
+    SupplyAirTemperature,    !- Zone Heating Design Supply Air Temperature Input Method
+    50,                      !- Zone Heating Design Supply Air Temperature {C}
+    ,                        !- Zone Heating Design Supply Air Temperature Difference {deltaC}
+    ,                        !- Design Specification Outdoor Air Object Name
+    ,                        !- Design Specification Zone Air Distribution Object Name
+    None,                    !- Baseboard Heating Type
+    ,                        !- Baseboard Heating Availability Schedule Name
+    autosize,                !- Baseboard Heating Capacity {W}
+    None;                    !- Capacity Control Method
+
+HVACTemplate:Zone:PTHP,
+    <%= zone2_name %>,!- Zone Name
+    Thermostat SP,  !- Template Thermostat Name
+    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
+    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    ,                        !- No Load Supply Air Flow Rate {m3/s}
+    ,                        !- Zone Heating Sizing Factor
+    ,                        !- Zone Cooling Sizing Factor
+    Flow/Person,             !- Outdoor Air Method
+    0,                       !- Outdoor Air Flow Rate per Person {m3/s}
+    ,                        !- Outdoor Air Flow Rate per Zone Floor Area {m3/s-m2}
+    ,                        !- Outdoor Air Flow Rate per Zone {m3/s}
+    ,                        !- System Availability Schedule Name
+    ,                        !- Supply Fan Operating Mode Schedule Name
+    DrawThrough,             !- Supply Fan Placement
+    0.7,                     !- Supply Fan Total Efficiency
+    75,                      !- Supply Fan Delta Pressure {Pa}
+    0.9,                     !- Supply Fan Motor Efficiency
+    SingleSpeedDX,           !- Cooling Coil Type
+    ,                        !- Cooling Coil Availability Schedule Name
+    autosize,                !- Cooling Coil Gross Rated Total Capacity {W}
+    autosize,                !- Cooling Coil Gross Rated Sensible Heat Ratio
+    <%= cooling_coil_cop %>,                    !- Cooling Coil Gross Rated COP {W/W}
+    SingleSpeedDXHeatPump,   !- Heat Pump Heating Coil Type
+    ,                        !- Heat Pump Heating Coil Availability Schedule Name
+    autosize,                !- Heat Pump Heating Coil Gross Rated Capacity {W}
+    <%= heating_coil_cop %>,                    !- Heat Pump Heating Coil Gross Rated COP {W/W}
+    -8,                      !- Heat Pump Heating Minimum Outdoor Dry-Bulb Temperature {C}
+    5,                       !- Heat Pump Defrost Maximum Outdoor Dry-Bulb Temperature {C}
+    ReverseCycle,            !- Heat Pump Defrost Strategy
+    Timed,                   !- Heat Pump Defrost Control
+    0.166667,                !- Heat Pump Defrost Time Period Fraction
+    Electric,                !- Supplemental Heating Coil Type
+    ,                        !- Supplemental Heating Coil Availability Schedule Name
+    autosize,                !- Supplemental Heating Coil Capacity {W}
+    21,                      !- Supplemental Heating Coil Maximum Outdoor Dry-Bulb Temperature {C}
+    0.8,                     !- Supplemental Gas Heating Coil Efficiency
+    ,                        !- Supplemental Gas Heating Coil Parasitic Electric Load {W}
+    ,                        !- Dedicated Outdoor Air System Name
+    SupplyAirTemperature,    !- Zone Cooling Design Supply Air Temperature Input Method
+    12.8,                    !- Zone Cooling Design Supply Air Temperature {C}
+    ,                        !- Zone Cooling Design Supply Air Temperature Difference {deltaC}
+    SupplyAirTemperature,    !- Zone Heating Design Supply Air Temperature Input Method
+    50,                      !- Zone Heating Design Supply Air Temperature {C}
+    ,                        !- Zone Heating Design Supply Air Temperature Difference {deltaC}
+    ,                        !- Design Specification Outdoor Air Object Name
+    ,                        !- Design Specification Zone Air Distribution Object Name
+    None,                    !- Baseboard Heating Type
+    ,                        !- Baseboard Heating Availability Schedule Name
+    autosize,                !- Baseboard Heating Capacity {W}
+    None;                    !- Capacity Control Method
+<% end %>

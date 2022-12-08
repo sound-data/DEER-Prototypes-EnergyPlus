@@ -1,0 +1,103 @@
+<%#INITIALIZE
+parameter "zone_name"
+
+parameter "thermal_comfort", :default=>false
+parameter "occupant_density", :default=>0|'1/ft2'
+parameter "occupant_schedule", :default=>
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00,1.00;
+"
+
+parameter "air_leakage", :default=>0.4|'CFM/ft2'  # Air leakage rate when pressurized at 0.3 inch H2O (75 Pa)
+parameter "infil_ach", :default=>1.0  # Air Changes per Hour
+parameter "infiltration_method", :default=>'Flow/ExteriorArea'  # (Flow/ExteriorArea | Flow/ExteriorWallArea |AirChanges/Hour)
+parameter "infiltration_schedule", :default=>  # Use this schedule to decrease infiltration if the building is pressurized during HVAC operation
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 1.0;
+"
+
+parameter "lighting_controls", :default=>"NONE"
+parameter "lighting_density", :default=>0.5|'W/ft2'
+parameter "lights_fraction_return", :default=>0
+parameter "lights_fraction_radiant", :default=>0.7
+parameter "lighting_schedule", :default=>
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 1.0;
+"
+
+parameter "equipment_density", :default=>0|'W/ft2'
+parameter "equipment_fraction_latent", :default=>0
+parameter "equipment_fraction_radiant", :default=>0.5
+parameter "equipment_fraction_lost", :default=>0
+parameter "equipment_schedule", :default=>
+"
+  Through: 12/31,
+  For: Weekdays SummerDesignDay,
+  Until: 08:00,0.30,
+  Until: 12:00,0.90,
+  Until: 13:00,0.80,
+  Until: 17:00,0.90,
+  Until: 18:00,0.50,
+  Until: 24:00,0.30,
+  For: WinterDesignDay,
+  Until: 06:00,0.30,
+  Until: 08:00,0.4,
+  Until: 12:00,0.5,
+  Until: 17:00,0.35,
+  Until: 24:00,0.30,
+  For: Saturday Sunday Holidays AllOtherDays,
+  Until: 24:00,0.30;
+"
+%>
+
+<%
+if (lighting_controls == "ADVANCED")
+  lighting_schedule =
+"
+  Through: 12/31,
+  For: Weekdays SummerDesignDay,
+  Until: 04:00, 0.3,
+  Until: 06:00, 0.6,
+  Until: 09:00, 1.0,
+  Until: 12:00, 0.6,
+  Until: 18:00, 0.3,
+  Until: 19:00, 0.6,
+  Until: 22:00, 1.0,
+  Until: 23:00, 0.6,
+  Until: 24:00, 0.3,
+  For: Saturday Sunday WinterDesignDay Holidays AllOtherDays,
+  Until: 03:00, 0.6,
+  Until: 06:00, 0.3,
+  Until: 07:00, 0.6,
+  Until: 09:00, 1.0,
+  Until: 19:00, 0.6,
+  Until: 24:00, 1.0;
+"
+end
+%>
+
+<%= insert 'zonetemplate.imf',
+  :zone_name=>zone_name,
+  :occupant_density=>occupant_density,
+  :thermal_comfort=>thermal_comfort,
+  :occupant_schedule=>occupant_schedule,
+  :air_leakage=>air_leakage,
+  :infil_ach=>infil_ach,
+  :infiltration_method=>infiltration_method,
+  :infiltration_schedule=>infiltration_schedule,
+  :equipment_density=>equipment_density,
+  :equipment_fraction_latent=>equipment_fraction_latent,
+  :equipment_fraction_radiant=>equipment_fraction_radiant,
+  :equipment_fraction_lost=>equipment_fraction_lost,
+  :equipment_schedule=>equipment_schedule,
+  :lighting_density=>lighting_density,
+  :lights_fraction_return=>lights_fraction_return,
+  :lights_fraction_radiant=>lights_fraction_radiant,
+  :lighting_schedule=>lighting_schedule
+%>

@@ -1,0 +1,195 @@
+<%#INITIALIZE
+parameter "zone_name"
+
+parameter "occupant_density", :default=>0.004|'1/ft2'
+parameter "thermal_comfort", :default=>false
+parameter "occupant_schedule", :default=>
+"
+  Through: 12/31,
+  For: Weekdays,
+  Until: 05:00,0.0,
+  Until: 07:00,0.1,
+  Until: 08:00,0.3,
+  Until: 12:00,0.95,
+  Until: 13:00,0.5,
+  Until: 17:00,0.95,
+  Until: 18:00,0.3,
+  Until: 24:00,0.0,
+  For: SummerDesignDay,
+  Until: 06:00,0.0,
+  Until: 22:00,1.0,
+  Until: 24:00,0.05,
+  For: WinterDesignDay,
+  Until: 06:00,0.0,
+  Until: 08:00,0.1,
+  Until: 12:00,0.3,
+  Until: 17:00,0.1,
+  Until: 19:00,0.05,
+  Until: 24:00,0.0,
+  For: Saturday Sunday Holidays AllOtherDays,
+  Until: 24:00,0.0;
+"
+
+parameter "air_leakage", :default=>0.4|'CFM/ft2'  # Air leakage rate when pressurized at 0.3 inch H2O (75 Pa)
+parameter "infil_ach", :default=>1.0  # Air Changes per Hour
+parameter "infiltration_method", :default=>'Flow/ExteriorArea'  # (Flow/ExteriorArea | AirChanges/Hour)
+parameter "infiltration_schedule", :default=>  # Use this schedule to decrease infiltration if the building is pressurized during HVAC operation
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 1.0;
+"
+
+parameter "lighting_density", :default=>1.1|'W/ft2'
+parameter "lighting_controls", :default=>"NONE"
+parameter "lights_fraction_return", :default=>0
+parameter "lights_fraction_radiant", :default=>0.7
+parameter "lighting_schedule", :default=>
+"
+  Through: 12/31,
+  For: Weekdays SummerDesignDay,
+  Until: 05:00,0.05,
+  Until: 07:00,0.1,
+  Until: 08:00,0.3,
+  Until: 17:00,0.9,
+  Until: 18:00,0.5,
+  Until: 20:00,0.3,
+  Until: 22:00,0.2,
+  Until: 23:00,0.1,
+  Until: 24:00,0.05,
+  For: WinterDesignDay,
+  Until: 06:00,0.05,
+  Until: 08:00,0.1,
+  Until: 12:00,0.3,
+  Until: 17:00,0.15,
+  Until: 24:00,0.05,
+  For: Saturday Sunday Holidays AllOtherDays,
+  Until: 24:00,0.05;
+"
+
+parameter "equipment_density", :default=>0.5|'W/ft2'
+parameter "equipment_fraction_latent", :default=>0
+parameter "equipment_fraction_radiant", :default=>0.5
+parameter "equipment_fraction_lost", :default=>0
+parameter "equipment_schedule", :default=>
+"
+  Through: 12/31,
+  For: Weekdays SummerDesignDay,
+  Until: 08:00,0.30,
+  Until: 12:00,0.90,
+  Until: 13:00,0.80,
+  Until: 17:00,0.90,
+  Until: 18:00,0.50,
+  Until: 24:00,0.30,
+  For: WinterDesignDay,
+  Until: 06:00,0.30,
+  Until: 08:00,0.4,
+  Until: 12:00,0.5,
+  Until: 17:00,0.35,
+  Until: 24:00,0.30,
+  For: Saturday Sunday Holidays AllOtherDays,
+  Until: 24:00,0.30;
+"
+
+parameter "equipment_density_2", :default=>0|'W/ft2'
+parameter "equipment_fraction_latent_2", :default=>0
+parameter "equipment_fraction_radiant_2", :default=>0.5
+parameter "equipment_fraction_lost_2", :default=>0
+parameter "equipment_schedule_2", :default=>
+"
+  Through: 12/31,
+  For: Weekdays SummerDesignDay,
+  Until: 08:00,0.30,
+  Until: 12:00,0.90,
+  Until: 13:00,0.80,
+  Until: 17:00,0.90,
+  Until: 18:00,0.50,
+  Until: 24:00,0.30,
+  For: WinterDesignDay,
+  Until: 06:00,0.30,
+  Until: 08:00,0.4,
+  Until: 12:00,0.5,
+  Until: 17:00,0.35,
+  Until: 24:00,0.30,
+  For: Saturday Sunday Holidays AllOtherDays,
+  Until: 24:00,0.30;
+"
+
+parameter "dhw_flow", :default=>0|'GPM'
+parameter "dhw_temp", :default=>105|'F'  # DHW mixed hot water temperature
+parameter "dhw_recovery", :default=>false
+parameter "dhw_schedule", :default=>
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 06:00, 0,
+  Until: 07:00, 0.05,
+  Until: 08:00, 0.2,
+  Until: 09:00, 0.1,
+  Until: 18:00, 0,
+  Until: 21:00, 0.05,
+  Until: 24:00, 0;
+"
+
+parameter "graywater_storage_tank", :default=> "" # variable creates tank to store graywater from sinks, showers, laundry, dishwashing
+parameter "graywater_supply_tank", :default=> "" # variable creates tank to supply graywater for toilet flushing
+%>
+
+<%
+if (lighting_controls == "ADVANCED")
+  lighting_schedule =
+"
+  Through: 12/31,
+  For: Weekdays SummerDesignDay,
+  Until: 05:00,0.05,
+  Until: 07:00,0.1,
+  Until: 08:00,0.3,
+  Until: 17:00,0.9,
+  Until: 18:00,0.5,
+  Until: 20:00,0.3,
+  Until: 22:00,0.2,
+  Until: 23:00,0.1,
+  Until: 24:00,0.05,
+  For: WinterDesignDay,
+  Until: 06:00,0.05,
+  Until: 08:00,0.1,
+  Until: 12:00,0.3,
+  Until: 17:00,0.15,
+  Until: 24:00,0.05,
+  For: Saturday Sunday Holidays AllOtherDays,
+  Until: 24:00,0.05;
+"
+end
+%>
+
+
+<%= insert 'zonetemplate.imf',
+  :zone_name=>zone_name,
+  :occupant_density=>occupant_density,
+  :thermal_comfort=>thermal_comfort,
+  :occupant_schedule=>occupant_schedule,
+  :air_leakage=>air_leakage,
+  :infil_ach=>infil_ach,
+  :infiltration_method=>infiltration_method,
+  :infiltration_schedule=>infiltration_schedule,
+  :lighting_density=>lighting_density,
+  :lights_fraction_return=>lights_fraction_return,
+  :lights_fraction_radiant=>lights_fraction_radiant,
+  :lighting_schedule=>lighting_schedule,
+  :equipment_density=>equipment_density,
+  :equipment_fraction_latent=>equipment_fraction_latent,
+  :equipment_fraction_radiant=>equipment_fraction_radiant,
+  :equipment_fraction_lost=>equipment_fraction_lost,
+  :equipment_schedule=>equipment_schedule,
+  :equipment_density_2=>equipment_density_2,
+  :equipment_fraction_latent_2=>equipment_fraction_latent_2,
+  :equipment_fraction_radiant_2=>equipment_fraction_radiant_2,
+  :equipment_fraction_lost_2=>equipment_fraction_lost_2,
+  :equipment_schedule_2=>equipment_schedule_2,
+  :dhw_flow=>dhw_flow,
+  :dhw_temp=>dhw_temp,
+  :dhw_recovery=>dhw_recovery,
+  :dhw_schedule=>dhw_schedule,
+  :graywater_storage_tank=>graywater_storage_tank,
+  :graywater_supply_tank=>graywater_supply_tank
+%>

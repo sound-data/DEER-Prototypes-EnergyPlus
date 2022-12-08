@@ -1,0 +1,10 @@
+# Created results #
+###################
+runs/
+results-summary.csv
+
+
+
+# OS generated files #
+######################
+.DS_Store

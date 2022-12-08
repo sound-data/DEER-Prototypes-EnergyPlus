@@ -1,0 +1,91 @@
+<%#INITIALIZE
+parameter "zone_name"
+
+parameter "thermal_comfort", :default=>false
+parameter "occupant_density", :default=>0.0025|'1/ft2'
+parameter "occupant_schedule", :default=>
+"
+  Through: 12/31,
+  For: Weekdays SummerDesignDay,
+  Until: 06:00,0.0,
+  Until: 07:00,0.2,
+  Until: 09:00,0.4,
+  Until: 11:00,0.5,
+  Until: 15:00,0.7,
+  Until: 16:00,0.8,
+  Until: 17:00,0.7,
+  Until: 18:00,0.2,
+  Until: 19:00,0.1,
+  Until: 24:00,0.0,
+  For: Saturday,
+  Until: 06:00,0.0,
+  Until: 07:00,0.2,
+  Until: 09:00,0.4,
+  Until: 10:00,0.5,
+  Until: 11:00,0.6,
+  Until: 17:00,0.8,
+  Until: 18:00,0.6,
+  Until: 19:00,0.2,
+  Until: 24:00,0.0,
+  For: Sunday Holidays WinterDesignDay AllOtherDays,
+  Until: 24:00,0.0;
+"
+
+parameter "air_leakage", :default=>0.4|'CFM/ft2'  # Air leakage rate when pressurized at 0.3 inch H2O (75 Pa)
+parameter "infil_ach", :default=>1.0  # Air Changes per Hour
+parameter "infiltration_method", :default=>'Flow/ExteriorArea'  # (Flow/ExteriorArea | Flow/ExteriorWallArea |AirChanges/Hour)
+parameter "infiltration_schedule", :default=>  # Use this schedule to decrease infiltration if the building is pressurized during HVAC operation
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 1.0;
+"
+
+parameter "lighting_density", :default=>0.94|'W/ft2'
+parameter "lighting_schedule", :default=>
+"
+  Through: 12/31,
+  For: WinterDesignDays,
+  Until: 24:00, 0.00,
+  For: SummerDesignDays,
+  Until: 24:00, 1.00,
+  For: Weekdays Saturday,
+  Until: 06:00, 0.05,
+  Until: 08:00, 0.50,
+  Until: 17:00, 1.00,
+  Until: 18:00, 0.50,
+  Until: 24:00, 0.05,
+  For: Sunday Holidays AllOtherDays,
+  Until: 24:00, 0.05;
+"
+
+parameter "equipment_density", :default=>0.75|'W/ft2'
+parameter "equipment_schedule", :default=>
+"
+  Through: 12/31,
+  For: Weekdays Saturday SummerDesignDay,
+  Until: 07:00,0.30,
+  Until: 12:00,0.90,
+  Until: 13:00,0.80,
+  Until: 17:00,0.90,
+  Until: 18:00,0.50,
+  Until: 24:00,0.30,
+  For: Sunday Holidays WinterDesignDay AllOtherDays,
+  Until: 24:00,0.30;
+"
+%>
+
+<%= insert 'zonetemplate.imf',
+  :zone_name=>zone_name,
+  :occupant_density=>occupant_density,
+  :thermal_comfort=>thermal_comfort,
+  :occupant_schedule=>occupant_schedule,
+  :air_leakage=>air_leakage,
+  :infil_ach=>infil_ach,
+  :infiltration_method=>infiltration_method,
+  :infiltration_schedule=>infiltration_schedule,
+  :lighting_density=>lighting_density,
+  :lighting_schedule=>lighting_schedule,
+  :equipment_density=>equipment_density,
+  :equipment_schedule=>equipment_schedule
+%>

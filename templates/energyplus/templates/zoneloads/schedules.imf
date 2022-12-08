@@ -1,0 +1,2397 @@
+<%#INITIALIZE
+
+parameter "climate_zone"
+
+%>
+
+<%if climate_zone ==1 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 14.44,
+ Until: 23:00, 14.44,
+ Until: 24:00, 14.44;
+
+ Schedule:Compact,
+  cooling_sch_DEER,
+  Temperature,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 22.78;
+
+ Schedule:Compact,
+  Natural_Ventilation_Min,
+  Temperature,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 22.22;
+
+<%elsif climate_zone ==2 %>
+Schedule:Compact,
+    heating_sch_DEER,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through:5/3,             !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 7:00,             !- Field 3
+    18,                 !- Field 4
+    Until: 23:00,            !- Field 5
+    18,                      !- Field 6
+    Until: 24:00,            !- Field 7
+    18,                 !- Field 8
+    Through:5/15,            !- Field 9
+    For: AllDays,            !- Field 10
+    Until: 24:00,            !- Field 11
+    10,                 !- Field 12
+    Through:5/20,            !- Field 13
+    For: AllDays,            !- Field 14
+    Until: 7:00,             !- Field 15
+    18,                 !- Field 16
+    Until: 23:00,            !- Field 17
+    18,                      !- Field 18
+    Until: 24:00,            !- Field 19
+    18,                 !- Field 20
+    Through:10/11,           !- Field 21
+    For: AllDays,            !- Field 22
+    Until: 24:00,            !- Field 23
+    10,                !- Field 24
+    Through:10/17,           !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 7:00,             !- Field 27
+    18,                 !- Field 28
+    Until: 23:00,            !- Field 29
+    18,                      !- Field 30
+    Until: 24:00,            !- Field 31
+    18,                 !- Field 32
+    Through:10/25,           !- Field 33
+    For: AllDays,            !- Field 34
+    Until: 24:00,            !- Field 35
+    10,                !- Field 36
+    Through:12/31,           !- Field 37
+    For: AllDays,            !- Field 38
+    Until: 7:00,             !- Field 39
+    18,                 !- Field 40
+    Until: 23:00,            !- Field 41
+    18,                      !- Field 42
+    Until: 24:00,            !- Field 43
+    18;                 !- Field 44
+
+Schedule:Compact,
+    cooling_sch_DEER,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 5/3,            !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    40,                      !- Field 4
+    Through:5/15,            !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 7:00,             !- Field 7
+    26.6667,                 !- Field 8
+    Until: 13:00,            !- Field 9
+    28.3333,                 !- Field 10
+    Until:14:00,             !- Field 11
+    27.7778,                 !- Field 12
+    Until: 15:00,            !- Field 13
+    27.2222,                 !- Field 14
+    Until: 16:00,            !- Field 15
+    26.6667,                 !- Field 16
+    Until: 17:00,            !- Field 17
+    26.6667,                 !- Field 18
+    Until: 24:00,            !- Field 19
+    26.6667,                 !- Field 20
+    Through: 5/20,           !- Field 21
+    For: AllDays,            !- Field 22
+    Until: 24:00,            !- Field 23
+    40,                      !- Field 24
+    Through:10/11,           !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 7:00,             !- Field 27
+    26.6667,                 !- Field 28
+    Until: 13:00,            !- Field 29
+    28.3333,                 !- Field 30
+    Until:14:00,             !- Field 31
+    27.7778,                 !- Field 32
+    Until: 15:00,            !- Field 33
+    27.2222,                 !- Field 34
+    Until: 16:00,            !- Field 35
+    26.6667,                 !- Field 36
+    Until: 17:00,            !- Field 37
+    26.6667,                 !- Field 38
+    Until: 24:00,            !- Field 39
+    26.6667,                 !- Field 40
+    Through: 10/17,          !- Field 41
+    For: AllDays,            !- Field 42
+    Until: 24:00,            !- Field 43
+    40,                      !- Field 44
+    Through:10/25,           !- Field 45
+    For: AllDays,            !- Field 46
+    Until: 7:00,             !- Field 47
+    26.6667,                 !- Field 48
+    Until: 13:00,            !- Field 49
+    28.3333,                 !- Field 50
+    Until:14:00,             !- Field 51
+    27.7778,                 !- Field 52
+    Until: 15:00,            !- Field 53
+    27.2222,                 !- Field 54
+    Until: 16:00,            !- Field 55
+    26.6667,                 !- Field 56
+    Until: 17:00,            !- Field 57
+    26.6667,                 !- Field 58
+    Until: 24:00,            !- Field 59
+    26.6667,                 !- Field 60
+    Through: 12/31,          !- Field 61
+    For: AllDays,            !- Field 62
+    Until: 24:00,            !- Field 63
+    40;                      !- Field 64
+
+Schedule:Compact,
+    Natural_Ventilation_Min, !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 5/3,            !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    25,                      !- Field 4
+    Through: 5/15,           !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 5:00,             !- Field 7
+    50,                      !- Field 8
+    Until: 23:00,            !- Field 9
+    20,                      !- Field 10
+    Until: 24:00,            !- Field 11
+    50,                      !- Field 12
+    Through: 5/20,           !- Field 13
+    For: AllDays,            !- Field 14
+    Until: 24:00,            !- Field 15
+    25,                      !- Field 16
+    Through: 10/11,          !- Field 17
+    For: AllDays,            !- Field 18
+    Until: 5:00,             !- Field 19
+    50,                      !- Field 20
+    Until: 23:00,            !- Field 21
+    20,                      !- Field 22
+    Until: 24:00,            !- Field 23
+    50,                      !- Field 24
+    Through: 10/17,          !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 24:00,            !- Field 27
+    25,                      !- Field 28
+    Through: 10/25,          !- Field 29
+    For: AllDays,            !- Field 30
+    Until: 5:00,             !- Field 31
+    50,                      !- Field 32
+    Until: 23:00,            !- Field 33
+    20,                      !- Field 34
+    Until: 24:00,            !- Field 35
+    50,                      !- Field 36
+    Through: 12/31,          !- Field 37
+    For: AllDays,            !- Field 38
+    Until: 24:00,            !- Field 39
+    25;                      !- Field 40
+
+<%elsif climate_zone ==3 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/12,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:3/19,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:5/3,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:5/15,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:5/20,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:7/13,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:7/21,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:8/8,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:8/12,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:9/9,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:9/11,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:10/13,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:10/17,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:10/26,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333;
+
+Schedule:Compact,
+ cooling_sch_DEER,
+ Temperature,
+ Through: 3/12,
+ For: AllDays,
+ Until: 24:00, 24.4444,
+ Through:3/19,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00, 23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 5/3,
+ For: AllDays,
+ Until: 24:00, 24.4444,
+ Through:5/15,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00, 23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 5/20,
+ For: AllDays,
+ Until: 24:00, 24.4444,
+ Through:7/13,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00, 23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 7/21,
+ For: AllDays,
+ Until: 24:00, 24.4444,
+ Through:8/8,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00, 23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 8/12,
+ For: AllDays,
+ Until: 24:00, 24.4444,
+ Through:9/9,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00, 23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 9/11,
+ For: AllDays,
+ Until: 24:00, 24.4444,
+ Through:10/13,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00, 23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 10/17,
+ For: AllDays,
+ Until: 24:00, 24.4444,
+ Through:10/26,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00, 23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 24.4444;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/12,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 3/19,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 5/3,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 5/15,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 5/20,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 7/13,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 7/21,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 8/8,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 8/12,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 9/9,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 9/11,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 10/13,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 10/17,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 10/26,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+<%elsif climate_zone ==4 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/10,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:3/21,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:5/3,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:5/17,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:5/18.3333,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:10/13,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:10/18,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:10/25,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:11/18,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:11/23,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333;
+
+Schedule:Compact,
+ cooling_sch_DEER,
+ Temperature,
+ Through: 3/10,
+ For: AllDays,
+ Until: 24:00,  26.1111,
+ Through:3/21,
+ For: AllDays,
+ Until: 7:00,  26.1111,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00, 26.1111,
+ Through: 5/3,
+ For: AllDays,
+ Until: 24:00,  26.1111,
+ Through:5/17,
+ For: AllDays,
+ Until: 7:00,  26.1111,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00, 26.1111,
+ Through: 5/20,
+ For: AllDays,
+ Until: 24:00,  26.1111,
+ Through:10/13,
+ For: AllDays,
+ Until: 7:00,  26.1111,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00, 26.1111,
+ Through: 10/18,
+ For: AllDays,
+ Until: 24:00,  26.1111,
+ Through:10/25,
+ For: AllDays,
+ Until: 7:00,  26.1111,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00, 26.1111,
+ Through: 11/18,
+ For: AllDays,
+ Until: 24:00,  26.1111,
+ Through:11/23,
+ For: AllDays,
+ Until: 7:00,  26.1111,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00, 26.1111,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 26.1111;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/10,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 3/21,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 5/3,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 5/17,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 5/20,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 10/13,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 10/18,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 10/25,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 11/18,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/23,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+<%elsif climate_zone ==5 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/10,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:3/23,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:5/4,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:5/8,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:6/7,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:6/22,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:6/25,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:7/15,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:7/18.3333,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:10/26,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:10/28,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:11/3,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:11/18,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333,
+ Through:11/22,
+ For: AllDays,
+ Until: 24:00,10,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 18.3333,
+ Until: 24:00, 18.3333;
+
+Schedule:Compact,
+ cooling_sch_DEER,
+ Temperature,
+ Through: 3/10,
+ For: AllDays,
+ Until: 24:00, 26.67,
+ Through:3/23,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00,23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 5/4,
+ For: AllDays,
+ Until: 24:00, 26.67,
+ Through:5/8,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00,23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 6/7,
+ For: AllDays,
+ Until: 24:00, 26.67,
+ Through:6/22,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00,23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 6/25,
+ For: AllDays,
+ Until: 24:00, 26.67,
+ Through:7/15,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00,23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 7/20,
+ For: AllDays,
+ Until: 24:00, 26.67,
+ Through:10/26,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00,23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 10/28,
+ For: AllDays,
+ Until: 24:00, 26.67,
+ Through:11/3,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00,23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 11/18,
+ For: AllDays,
+ Until: 24:00, 26.67,
+ Through:11/22,
+ For: AllDays,
+ Until: 7:00, 23.89,
+ Until: 13:00,  23.89,
+ Until:14:00,23.89,
+ Until: 15:00, 23.89,
+ Until: 16:00,23.89,
+ Until: 17:00,  23.89,
+ Until: 24:00,23.89,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 26.67;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/10,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 3/23,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 5/4,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 5/8,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 6/7,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 6/22,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 6/25,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 7/15,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 7/20,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 10/26,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 10/28,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/3,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 11/18,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/22,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+
+<%elsif climate_zone ==6 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/9,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:4/9,
+ For: AllDays,
+ Until: 24:00,16.67,
+ Through:4/16,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:12/1,
+ For: AllDays,
+ Until: 24:00,16.67,
+ Through:12/16,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00,20,
+ Until: 24:00, 20,
+ Through:12/25,
+ For: AllDays,
+ Until: 24:00,16.67,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20;
+
+ Schedule:Compact,
+  cooling_sch_DEER,
+  Temperature,
+  Through: 3/9,
+  For: AllDays,
+  Until: 24:00, 24.44,
+  Through:4/9,
+  For: AllDays,
+  Until: 7:00, 23.89,
+  Until: 13:00,  24.44,
+  Until:14:00, 24.44,
+  Until: 15:00, 24.44,
+  Until: 16:00,24.44,
+  Until: 17:00,  24.44,
+  Until: 24:00,23.89,
+  Through: 4/16,
+  For: AllDays,
+  Until: 24:00, 24.44,
+  Through:12/1,
+  For: AllDays,
+  Until: 7:00, 23.89,
+  Until: 13:00,  24.44,
+  Until:14:00, 24.44,
+  Until: 15:00, 24.44,
+  Until: 16:00,24.44,
+  Until: 17:00,  24.44,
+  Until: 24:00,23.89,
+  Through: 12/16,
+  For: AllDays,
+  Until: 24:00, 24.44,
+  Through:12/25,
+  For: AllDays,
+  Until: 7:00, 23.89,
+  Until: 13:00,  24.44,
+  Until:14:00, 24.44,
+  Until: 15:00, 24.44,
+  Until: 16:00,24.44,
+  Until: 17:00,  24.44,
+  Until: 24:00,23.89,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 24.44;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/9,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 4/9,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 4/16,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 12/1,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/16,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 12/25,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+
+<%elsif climate_zone ==7 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/5,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:4/12,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:4/16,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:11/30,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:12/19,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:12/25,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20;
+
+Schedule:Compact,
+ cooling_sch_DEER,
+ Temperature,
+ Through: 3/5,
+ For: AllDays,
+ Until: 24:00, 24.44,
+ Through:4/12,
+ For: AllDays,
+ Until: 7:00, 24.44,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,25.56,
+ Until: 17:00,  24.44,
+ Until: 24:00,24.44,
+ Through: 4/16,
+ For: AllDays,
+ Until: 24:00, 24.44,
+ Through:11/30,
+ For: AllDays,
+ Until: 7:00, 24.44,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,25.56,
+ Until: 17:00,  24.44,
+ Until: 24:00,24.44,
+ Through: 12/19,
+ For: AllDays,
+ Until: 24:00, 24.44,
+ Through:12/25,
+ For: AllDays,
+ Until: 7:00, 24.44,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,25.56,
+ Until: 17:00,  24.44,
+ Until: 24:00,24.44,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 24.44;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/5,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 4/12,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 4/16,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/30,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/19,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 12/25,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+<%elsif climate_zone ==8 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/9,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:4/10,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:4/16,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:11/30,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:12/20,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:12/23,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333;
+
+ Schedule:Compact,
+  cooling_sch_DEER,
+  Temperature,
+  Through: 3/9,
+  For: AllDays,
+  Until: 24:00, 25,
+  Through:4/10,
+  For: AllDays,
+  Until: 7:00, 25,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.2222,
+  Until: 16:00,26.6667,
+  Until: 17:00,  26.1111,
+  Until: 24:00,25,
+  Through: 4/16,
+  For: AllDays,
+  Until: 24:00, 25,
+  Through:11/30,
+  For: AllDays,
+  Until: 7:00, 25,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.2222,
+  Until: 16:00,26.6667,
+  Until: 17:00,  26.1111,
+  Until: 24:00,25,
+  Through: 12/20,
+  For: AllDays,
+  Until: 24:00, 25,
+  Through:12/23,
+  For: AllDays,
+  Until: 7:00, 25,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.2222,
+  Until: 16:00,26.6667,
+  Until: 17:00,  26.1111,
+  Until: 24:00,25,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 25;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/9,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 4/10,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 4/16,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/30,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/20,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 12/23,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+
+ Schedule:Compact,
+  Ventilation_Min,
+  Temperature,
+  Through: 3/9,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 4/10,
+  For: AllDays,
+ Until: 6:00, 25,
+ Until: 9:00, 22.2222,
+ Until: 24:00, 25,
+  Through: 4/16,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 11/30,
+  For: AllDays,
+ Until: 6:00, 25,
+ Until: 9:00, 22.2222,
+ Until: 24:00, 25,
+  Through: 12/20,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 12/23,
+  For: AllDays,
+ Until: 6:00, 25,
+ Until: 9:00, 22.2222,
+ Until: 24:00, 25,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 50;
+
+<%elsif climate_zone ==9 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:1/15,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:1/18,
+ For: AllDays,
+ Until: 24:00,18.3333,
+ Through:2/13,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:2/17,
+ For: AllDays,
+ Until: 24:00,18.3333,
+ Through:3/4,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:4/10,
+ For: AllDays,
+ Until: 24:00,18.3333,
+ Through:4/16,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:11/30,
+ For: AllDays,
+ Until: 24:00,18.3333,
+ Through:12/15,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:12/24,
+ For: AllDays,
+ Until: 24:00,18.3333,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333;
+
+Schedule:Compact,
+  cooling_sch_DEER,
+  Temperature,
+  Through: 1/15,
+  For: AllDays,
+  Until: 24:00, 24.44,
+  Through:1/18,
+  For: AllDays,
+  Until: 7:00, 24.44,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.2222,
+  Until: 16:00,26.6667,
+  Until: 17:00,  26.1111,
+  Until: 24:00,24.44,
+  Through: 2/13,
+  For: AllDays,
+  Until: 24:00, 24.44,
+  Through:2/17,
+  For: AllDays,
+  Until: 7:00, 24.44,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.2222,
+  Until: 16:00,26.6667,
+  Until: 17:00,  26.1111,
+  Until: 24:00,24.44,
+  Through: 3/4,
+  For: AllDays,
+  Until: 24:00, 24.44,
+  Through:4/10,
+  For: AllDays,
+  Until: 7:00, 24.44,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.2222,
+  Until: 16:00,26.6667,
+  Until: 17:00,  26.1111,
+  Until: 24:00,24.44,
+  Through: 4/16,
+  For: AllDays,
+  Until: 24:00, 24.44,
+  Through:11/30,
+  For: AllDays,
+  Until: 7:00, 24.44,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.2222,
+  Until: 16:00,26.6667,
+  Until: 17:00,  26.1111,
+  Until: 24:00,24.44,
+  Through: 12/15,
+  For: AllDays,
+  Until: 24:00, 24.44,
+  Through:12/24,
+  For: AllDays,
+  Until: 7:00, 24.44,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.2222,
+  Until: 16:00,26.6667,
+  Until: 17:00,  26.1111,
+  Until: 24:00,24.44,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 24.44;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 1/15,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 1/18,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 2/13,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 2/17,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 3/4,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 4/10,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 4/16,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/30,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/15,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 12/24,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+ Schedule:Compact,
+  Ventilation_Min,
+  Temperature,
+  Through: 1/15,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 1/18,
+  For: AllDays,
+ Until: 6:00, 25,
+ Until: 9:00, 22.2222,
+ Until: 24:00, 25,
+  Through: 2/13,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 2/17,
+  For: AllDays,
+ Until: 6:00, 25,
+ Until: 9:00, 22.2222,
+ Until: 24:00, 25,
+  Through: 3/4,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 4/10,
+  For: AllDays,
+ Until: 6:00, 25,
+ Until: 9:00, 22.2222,
+ Until: 24:00, 25,
+  Through: 4/16,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 11/30,
+  For: AllDays,
+ Until: 6:00, 25,
+ Until: 9:00, 22.2222,
+ Until: 24:00, 25,
+  Through: 12/15,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 12/24,
+  For: AllDays,
+ Until: 6:00, 25,
+ Until: 9:00, 22.2222,
+ Until: 24:00, 25,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 50;
+
+<%elsif climate_zone ==10 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/8,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:4/10,
+ For: AllDays,
+ Until: 24:00,20,
+ Through:4/16,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:11/12,
+ For: AllDays,
+ Until: 24:00,20,
+ Through:11/15,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:11/29,
+ For: AllDays,
+ Until: 24:00,20,
+ Through:12/17,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:12/23,
+ For: AllDays,
+ Until: 24:00,20,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20;
+
+ Schedule:Compact,
+  cooling_sch_DEER,
+  Temperature,
+  Through: 3/8,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through:4/10,
+  For: AllDays,
+  Until: 7:00, 27.22,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.22,
+  Until: 16:00,27.22,
+  Until: 17:00,  27.22,
+  Until: 24:00,27.22,
+  Through: 4/16,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through:11/12,
+  For: AllDays,
+  Until: 7:00, 27.22,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.22,
+  Until: 16:00,27.22,
+  Until: 17:00,  27.22,
+  Until: 24:00,27.22,
+  Through: 11/15,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through:11/29,
+  For: AllDays,
+  Until: 7:00, 27.22,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.22,
+  Until: 16:00,27.22,
+  Until: 17:00,  27.22,
+  Until: 24:00,27.22,
+  Through: 12/17,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through:12/23,
+  For: AllDays,
+  Until: 7:00, 27.22,
+  Until: 13:00,  28.3333,
+  Until:14:00, 27.7778,
+  Until: 15:00, 27.22,
+  Until: 16:00,27.22,
+  Until: 17:00,  27.22,
+  Until: 24:00,27.22,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 50;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/8,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 4/10,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 4/16,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/12,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 11/15,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/29,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/17,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 12/23,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+ Schedule:Compact,
+  Ventilation_Min,
+  Temperature,
+  Through: 3/8,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 4/10,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 4/16,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 11/12,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 11/15,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 11/29,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 12/17,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 12/23,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 50;
+
+<%elsif climate_zone ==11 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/15,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:3/24,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:4/21,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:4/24,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:5/2,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:10/26,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:10/31,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333,
+ Through:11/4,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 18.3333,
+ Until: 23:00, 20,
+ Until: 24:00, 18.3333;
+
+Schedule:Compact,
+ cooling_sch_DEER,
+ Temperature,
+ Through: 3/15,
+ For: AllDays,
+ Until: 24:00, 25.5556,
+ Through:3/24,
+ For: AllDays,
+ Until: 7:00, 25.5556,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00,25.5556,
+ Through: 4/21,
+ For: AllDays,
+ Until: 24:00, 25.5556,
+ Through:4/24,
+ For: AllDays,
+ Until: 7:00, 25.5556,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00,25.5556,
+ Through: 5/2,
+ For: AllDays,
+ Until: 24:00, 25.5556,
+ Through:10/26,
+ For: AllDays,
+ Until: 7:00, 25.5556,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00,25.5556,
+ Through: 10/31,
+ For: AllDays,
+ Until: 24:00, 25.5556,
+ Through:11/4,
+ For: AllDays,
+ Until: 7:00, 25.5556,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00,25.5556,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25.5556;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/15,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 3/24,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 4/21,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 4/24,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 5/2,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 10/26,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 10/31,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/4,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+ Schedule:Compact,
+  Ventilation_Min,
+  Temperature,
+  Through: 3/15,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 3/24,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 4/21,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 4/24,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 5/2,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 10/26,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 10/31,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 11/4,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 50;
+
+<%elsif climate_zone ==12 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/16,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:3/26,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:4/20,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:4/27,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:5/2,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:10/26,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:10/30,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20,
+ Through:11/7,
+ For: AllDays,
+ Until: 24:00,15.5556,
+ Through:12/31,
+ For: AllDays,
+ Until: 7:00, 20,
+ Until: 23:00, 20,
+ Until: 24:00, 20;
+
+Schedule:Compact,
+ cooling_sch_DEER,
+ Temperature,
+ Through: 3/16,
+ For: AllDays,
+ Until: 24:00, 26.1111,
+ Through:3/26,
+ For: AllDays,
+ Until: 7:00, 26.1111,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00,26.1111,
+ Through: 4/20,
+ For: AllDays,
+ Until: 24:00, 26.1111,
+ Through:4/27,
+ For: AllDays,
+ Until: 7:00, 26.1111,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00,26.1111,
+ Through: 5/2,
+ For: AllDays,
+ Until: 24:00, 26.1111,
+ Through:10/26,
+ For: AllDays,
+ Until: 7:00, 26.1111,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00,26.1111,
+ Through: 10/30,
+ For: AllDays,
+ Until: 24:00, 26.1111,
+ Through:11/7,
+ For: AllDays,
+ Until: 7:00, 26.1111,
+ Until: 13:00,  28.3333,
+ Until:14:00, 27.7778,
+ Until: 15:00, 27.2222,
+ Until: 16:00,26.6667,
+ Until: 17:00,  26.1111,
+ Until: 24:00,26.1111,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 26.1111;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/16,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 3/26,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 4/20,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 4/27,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 5/2,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 10/26,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 10/30,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/7,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+ Schedule:Compact,
+  Ventilation_Min,
+  Temperature,
+  Through: 3/16,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 3/26,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 4/20,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 4/27,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 5/2,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 10/26,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 10/30,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 11/7,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 50;
+
+<%elsif climate_zone ==13 %>
+Schedule:Compact,
+   heating_sch_DEER,
+   Temperature,
+   Through:3/7,
+   For: AllDays,
+   Until: 7:00, 20,
+   Until: 23:00, 20,
+   Until: 24:00, 20,
+   Through:4/9,
+   For: AllDays,
+   Until: 24:00,16.67,
+   Through:4/18,
+   For: AllDays,
+   Until: 7:00, 20,
+   Until: 23:00, 20,
+   Until: 24:00, 20,
+   Through:11/9,
+   For: AllDays,
+   Until: 24:00,16.67,
+   Through:12/31,
+   For: AllDays,
+   Until: 7:00, 20,
+   Until: 23:00, 20,
+   Until: 24:00, 20;
+
+  Schedule:Compact,
+   cooling_sch_DEER,
+   Temperature,
+   Through: 3/7,
+   For: AllDays,
+   Until: 24:00, 25.5556,
+   Through:4/9,
+   For: AllDays,
+   Until: 7:00, 25.5556,
+   Until: 13:00,  28.3333,
+   Until:14:00, 27.7778,
+   Until: 15:00, 27.2222,
+   Until: 16:00,26.6667,
+   Until: 17:00,  26.1111,
+   Until: 24:00,25.5556,
+   Through: 4/18,
+   For: AllDays,
+   Until: 24:00, 25.5556,
+   Through:11/9,
+   For: AllDays,
+   Until: 7:00, 25.5556,
+   Until: 13:00,  28.3333,
+   Until:14:00, 27.7778,
+   Until: 15:00, 27.2222,
+   Until: 16:00,26.6667,
+   Until: 17:00,  26.1111,
+   Until: 24:00,25.5556,
+   Through: 12/31,
+   For: AllDays,
+   Until: 24:00, 25.5556;
+
+  Schedule:Compact,
+   Natural_Ventilation_Min,
+   Temperature,
+   Through: 3/7,
+   For: AllDays,
+   Until: 24:00, 25,
+   Through: 4/9,
+   For: AllDays,
+   Until: 5:00, 50,
+   Until: 23:00, 20,
+   Until: 24:00, 50,
+   Through: 4/18,
+   For: AllDays,
+   Until: 24:00, 25,
+   Through: 11/9,
+   For: AllDays,
+   Until: 5:00, 50,
+   Until: 23:00, 20,
+   Until: 24:00, 50,
+   Through: 12/31,
+   For: AllDays,
+   Until: 24:00, 25;
+
+   Schedule:Compact,
+    Ventilation_Min,
+    Temperature,
+    Through: 3/7,
+    For: AllDays,
+    Until: 24:00, 50,
+    Through: 4/9,
+    For: AllDays,
+   Until: 24:00, 22.22,
+    Through: 4/18,
+    For: AllDays,
+    Until: 24:00, 50,
+    Through: 11/9,
+    For: AllDays,
+   Until: 24:00, 22.22,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 50;
+
+<%elsif climate_zone ==14 %>
+Schedule:Compact,
+ heating_sch_DEER,
+ Temperature,
+ Through:3/9,
+ For: AllDays,
+ Until: 24:00, 21.67,
+ Through:4/10,
+ For: AllDays,
+ Until: 24:00,21.67,
+ Through:4/17,
+ For: AllDays,
+ Until: 24:00, 21.67,
+ Through:11/17,
+ For: AllDays,
+ Until: 24:00,21.67,
+ Through:12/31,
+ For: AllDays,
+ Until: 24:00, 21.67;
+
+ Schedule:Compact,
+  cooling_sch_DEER,
+  Temperature,
+  Through: 3/9,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through:4/10,
+  For: AllDays,
+  Until: 24:00,27.78,
+  Through: 4/17,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through:11/17,
+  For: AllDays,
+  Until: 24:00,27.78,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 50;
+
+Schedule:Compact,
+ Natural_Ventilation_Min,
+ Temperature,
+ Through: 3/9,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 4/10,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 4/17,
+ For: AllDays,
+ Until: 24:00, 25,
+ Through: 11/17,
+ For: AllDays,
+ Until: 5:00, 50,
+ Until: 23:00, 20,
+ Until: 24:00, 50,
+ Through: 12/31,
+ For: AllDays,
+ Until: 24:00, 25;
+
+ Schedule:Compact,
+  Ventilation_Min,
+  Temperature,
+  Through: 3/9,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 4/10,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 4/17,
+  For: AllDays,
+  Until: 24:00, 50,
+  Through: 11/17,
+  For: AllDays,
+ Until: 24:00, 22.22,
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 50;
+  
+<%elsif climate_zone ==15 %>
+Schedule:Compact,
+    heating_sch_DEER,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through:1/16,            !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 7:00,             !- Field 3
+    20,                 !- Field 4
+    Until: 23:00,            !- Field 5
+    21.1111,                      !- Field 6
+    Until: 24:00,            !- Field 7
+    20,                 !- Field 8
+    Through:1/18,            !- Field 9
+    For: AllDays,            !- Field 10
+    Until: 24:00,            !- Field 11
+    20,                 !- Field 12
+    Through:2/14,            !- Field 13
+    For: AllDays,            !- Field 14
+    Until: 7:00,             !- Field 15
+    20,                 !- Field 16
+    Until: 23:00,            !- Field 17
+    21.1111,                      !- Field 18
+    Until: 24:00,            !- Field 19
+    20,                 !- Field 20
+    Through:12/1,            !- Field 21
+    For: AllDays,            !- Field 22
+    Until: 24:00,            !- Field 23
+    20,                 !- Field 24
+    Through:12/15,           !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 7:00,             !- Field 27
+    20,                 !- Field 28
+    Until: 23:00,            !- Field 29
+    21.1111,                      !- Field 30
+    Until: 24:00,            !- Field 31
+    20,                 !- Field 32
+    Through:12/31,           !- Field 33
+    For: AllDays,            !- Field 34
+    Until: 24:00,            !- Field 35
+    20;                 !- Field 36
+
+Schedule:Compact,
+    cooling_sch_DEER,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 1/16,           !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    30,                      !- Field 4
+    Through:1/18,            !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 7:00,             !- Field 7
+    25.5556,                 !- Field 8
+    Until: 13:00,            !- Field 9
+    28.3333,                 !- Field 10
+    Until:14:00,             !- Field 11
+    27.7778,                 !- Field 12
+    Until: 15:00,            !- Field 13
+    27.2222,                 !- Field 14
+    Until: 16:00,            !- Field 15
+    26.6667,                 !- Field 16
+    Until: 17:00,            !- Field 17
+    26.1111,                 !- Field 18
+    Until: 24:00,            !- Field 19
+    25.5556,                 !- Field 20
+    Through: 2/14,           !- Field 21
+    For: AllDays,            !- Field 22
+    Until: 24:00,            !- Field 23
+    30,                      !- Field 24
+    Through:12/1,            !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 7:00,             !- Field 27
+    25.5556,                 !- Field 28
+    Until: 13:00,            !- Field 29
+    28.3333,                 !- Field 30
+    Until:14:00,             !- Field 31
+    27.7778,                 !- Field 32
+    Until: 15:00,            !- Field 33
+    27.2222,                 !- Field 34
+    Until: 16:00,            !- Field 35
+    26.6667,                 !- Field 36
+    Until: 17:00,            !- Field 37
+    26.1111,                 !- Field 38
+    Until: 24:00,            !- Field 39
+    25.5556,                 !- Field 40
+    Through: 12/15,          !- Field 41
+    For: AllDays,            !- Field 42
+    Until: 24:00,            !- Field 43
+    30,                      !- Field 44
+    Through:12/31,           !- Field 45
+    For: AllDays,            !- Field 46
+    Until: 7:00,             !- Field 47
+    25.5556,                 !- Field 48
+    Until: 13:00,            !- Field 49
+    28.3333,                 !- Field 50
+    Until:14:00,             !- Field 51
+    27.7778,                 !- Field 52
+    Until: 15:00,            !- Field 53
+    27.2222,                 !- Field 54
+    Until: 16:00,            !- Field 55
+    26.6667,                 !- Field 56
+    Until: 17:00,            !- Field 57
+    26.1111,                 !- Field 58
+    Until: 24:00,            !- Field 59
+    25.5556;                 !- Field 60
+
+Schedule:Compact,
+    Natural_Ventilation_Min, !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 1/16,           !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    25,                      !- Field 4
+    Through: 1/18,           !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 5:00,             !- Field 7
+    50,                      !- Field 8
+    Until: 23:00,            !- Field 9
+    20,                      !- Field 10
+    Until: 24:00,            !- Field 11
+    50,                      !- Field 12
+    Through: 2/14,           !- Field 13
+    For: AllDays,            !- Field 14
+    Until: 24:00,            !- Field 15
+    25,                      !- Field 16
+    Through: 12/1,           !- Field 17
+    For: AllDays,            !- Field 18
+    Until: 5:00,             !- Field 19
+    50,                      !- Field 20
+    Until: 23:00,            !- Field 21
+    20,                      !- Field 22
+    Until: 24:00,            !- Field 23
+    50,                      !- Field 24
+    Through: 12/15,          !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 24:00,            !- Field 27
+    25,                      !- Field 28
+    Through: 12/31,          !- Field 29
+    For: AllDays,            !- Field 30
+    Until: 5:00,             !- Field 31
+    50,                      !- Field 32
+    Until: 23:00,            !- Field 33
+    20,                      !- Field 34
+    Until: 24:00,            !- Field 35
+    50;                      !- Field 36
+
+<%elsif climate_zone ==16 %>
+Schedule:Compact,
+    heating_sch_DEER,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through:4/21,            !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 7:00,             !- Field 3
+    14.4444,                 !- Field 4
+    Until: 23:00,            !- Field 5
+    14.4444,                 !- Field 6
+    Until: 24:00,            !- Field 7
+    14.4444,                 !- Field 8
+    Through:4/25,            !- Field 9
+    For: AllDays,            !- Field 10
+    Until: 24:00,            !- Field 11
+    10,                 !- Field 12
+    Through:5/4,             !- Field 13
+    For: AllDays,            !- Field 14
+    Until: 7:00,             !- Field 15
+    14.4444,                 !- Field 16
+    Until: 23:00,            !- Field 17
+    14.4444,                 !- Field 18
+    Until: 24:00,            !- Field 19
+    14.4444,                 !- Field 20
+    Through:5/18,            !- Field 21
+    For: AllDays,            !- Field 22
+    Until: 24:00,            !- Field 23
+    10,                 !- Field 24
+    Through:5/22,            !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 7:00,             !- Field 27
+    14.4444,                 !- Field 28
+    Until: 23:00,            !- Field 29
+    14.4444,                 !- Field 30
+    Until: 24:00,            !- Field 31
+    14.4444,                 !- Field 32
+    Through:10/13,           !- Field 33
+    For: AllDays,            !- Field 34
+    Until: 24:00,            !- Field 35
+    10,                 !- Field 36
+    Through:10/20,           !- Field 37
+    For: AllDays,            !- Field 38
+    Until: 7:00,             !- Field 39
+    14.4444,                 !- Field 40
+    Until: 23:00,            !- Field 41
+    14.4444,                 !- Field 42
+    Until: 24:00,            !- Field 43
+    14.4444,                 !- Field 44
+    Through:10/23,           !- Field 45
+    For: AllDays,            !- Field 46
+    Until: 24:00,            !- Field 47
+    10,                 !- Field 48
+    Through:12/31,           !- Field 49
+    For: AllDays,            !- Field 50
+    Until: 7:00,             !- Field 51
+    14.4444,                 !- Field 52
+    Until: 23:00,            !- Field 53
+    14.4444,                 !- Field 54
+    Until: 24:00,            !- Field 55
+    14.4444;                 !- Field 56
+
+
+Schedule:Compact,
+    cooling_sch_DEER,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 4/21,           !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    25.5556,                 !- Field 4
+    Through:4/25,            !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 7:00,             !- Field 7
+    25.5556,                 !- Field 8
+    Until: 13:00,            !- Field 9
+    28.3333,                 !- Field 10
+    Until:14:00,             !- Field 11
+    27.7778,                 !- Field 12
+    Until: 15:00,            !- Field 13
+    27.2222,                 !- Field 14
+    Until: 16:00,            !- Field 15
+    26.6667,                 !- Field 16
+    Until: 17:00,            !- Field 17
+    26.1111,                 !- Field 18
+    Until: 24:00,            !- Field 19
+    25.5556,                 !- Field 20
+    Through: 5/4,            !- Field 21
+    For: AllDays,            !- Field 22
+    Until: 24:00,            !- Field 23
+    25.5556,                 !- Field 24
+    Through:5/18,            !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 7:00,             !- Field 27
+    25.5556,                 !- Field 28
+    Until: 13:00,            !- Field 29
+    28.3333,                 !- Field 30
+    Until:14:00,             !- Field 31
+    27.7778,                 !- Field 32
+    Until: 15:00,            !- Field 33
+    27.2222,                 !- Field 34
+    Until: 16:00,            !- Field 35
+    26.6667,                 !- Field 36
+    Until: 17:00,            !- Field 37
+    26.1111,                 !- Field 38
+    Until: 24:00,            !- Field 39
+    25.5556,                 !- Field 40
+    Through: 5/22,           !- Field 41
+    For: AllDays,            !- Field 42
+    Until: 24:00,            !- Field 43
+    25.5556,                 !- Field 44
+    Through:10/13,           !- Field 45
+    For: AllDays,            !- Field 46
+    Until: 7:00,             !- Field 47
+    25.5556,                 !- Field 48
+    Until: 13:00,            !- Field 49
+    28.3333,                 !- Field 50
+    Until:14:00,             !- Field 51
+    27.7778,                 !- Field 52
+    Until: 15:00,            !- Field 53
+    27.2222,                 !- Field 54
+    Until: 16:00,            !- Field 55
+    26.6667,                 !- Field 56
+    Until: 17:00,            !- Field 57
+    26.1111,                 !- Field 58
+    Until: 24:00,            !- Field 59
+    25.5556,                 !- Field 60
+    Through: 10/20,          !- Field 61
+    For: AllDays,            !- Field 62
+    Until: 24:00,            !- Field 63
+    25.5556,                 !- Field 64
+    Through:10/23,           !- Field 65
+    For: AllDays,            !- Field 66
+    Until: 7:00,             !- Field 67
+    25.5556,                 !- Field 68
+    Until: 13:00,            !- Field 69
+    28.3333,                 !- Field 70
+    Until:14:00,             !- Field 71
+    27.7778,                 !- Field 72
+    Until: 15:00,            !- Field 73
+    27.2222,                 !- Field 74
+    Until: 16:00,            !- Field 75
+    26.6667,                 !- Field 76
+    Until: 17:00,            !- Field 77
+    26.1111,                 !- Field 78
+    Until: 24:00,            !- Field 79
+    25.5556,                 !- Field 80
+    Through: 12/31,          !- Field 81
+    For: AllDays,            !- Field 82
+    Until: 24:00,            !- Field 83
+    25.5556;                 !- Field 84
+
+Schedule:Compact,
+    Natural_Ventilation_Min, !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 4/21,           !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    25,                      !- Field 4
+    Through: 4/25,           !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 5:00,             !- Field 7
+    50,                      !- Field 8
+    Until: 23:00,            !- Field 9
+    20,                      !- Field 10
+    Until: 24:00,            !- Field 11
+    50,                      !- Field 12
+    Through: 5/4,            !- Field 13
+    For: AllDays,            !- Field 14
+    Until: 24:00,            !- Field 15
+    25,                      !- Field 16
+    Through: 5/18,           !- Field 17
+    For: AllDays,            !- Field 18
+    Until: 5:00,             !- Field 19
+    50,                      !- Field 20
+    Until: 23:00,            !- Field 21
+    20,                      !- Field 22
+    Until: 24:00,            !- Field 23
+    50,                      !- Field 24
+    Through: 5/22,           !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 24:00,            !- Field 27
+    25,                      !- Field 28
+    Through: 10/13,          !- Field 29
+    For: AllDays,            !- Field 30
+    Until: 5:00,             !- Field 31
+    50,                      !- Field 32
+    Until: 23:00,            !- Field 33
+    20,                      !- Field 34
+    Until: 24:00,            !- Field 35
+    50,                      !- Field 36
+    Through: 10/20,          !- Field 37
+    For: AllDays,            !- Field 38
+    Until: 24:00,            !- Field 39
+    25,                      !- Field 40
+    Through: 10/23,          !- Field 41
+    For: AllDays,            !- Field 42
+    Until: 5:00,             !- Field 43
+    50,                      !- Field 44
+    Until: 23:00,            !- Field 45
+    20,                      !- Field 46
+    Until: 24:00,            !- Field 47
+    50,                      !- Field 48
+    Through: 12/31,          !- Field 49
+    For: AllDays,            !- Field 50
+    Until: 24:00,            !- Field 51
+    25;                      !- Field 52
+
+<% end %>

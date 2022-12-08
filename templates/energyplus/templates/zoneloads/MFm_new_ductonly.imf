@@ -1,0 +1,644 @@
+<%#INITIALIZE
+
+# This template follows the Building America airflow calculations for single
+# family houses. Routines are borrowed from BEopt.
+
+parameter "zone_name"
+parameter "zone_area"
+parameter "slave_zone"
+parameter "number_of_stories", :default=>1
+parameter "climate_zone", :default=>1
+
+# Duct leakage
+parameter "system_name", :default=>nil
+parameter "air_handler_zone", :default=>""
+
+parameter "supply_leakage_frac", :default=>0.1
+parameter "return_leakage_frac", :default=>0.05
+parameter "duct_r_value", :default=>4.9|'R-IP'
+
+parameter "imbalance_oa_frac", :default=>1
+
+parameter "use_dummy_return_plenum", :default=>true
+parameter "return_plenum_zone_name", :default=>nil
+parameter "ductless", :default=>false
+%>
+
+<%
+# Shortened zone name without spaces to be used in EMS objects
+zone_name_ems = zone_name.delete(' ')
+zone_name_ems = zone_name_ems.delete('.')
+zone_name_ems = zone_name_ems.delete('(')
+zone_name_ems = zone_name_ems.delete(')')
+
+#air handler zone
+air_handler_zone_ems = air_handler_zone.delete(' ')
+air_handler_zone_ems = air_handler_zone_ems.delete('.')
+air_handler_zone_ems = air_handler_zone_ems.delete('(')
+air_handler_zone_ems = air_handler_zone_ems.delete(')')
+%>
+
+<% if system_name %>
+
+<% if ductless==true %>
+
+AirLoopHVAC,
+  <%= system_name %>,                !- Name
+  ,                        !- Controller List Name
+  <%= system_name %> Availability Managers,  !- Availability Manager List Name
+  <% if system_name =='DXFG EL1 G_E3' || system_name =='DXFG EL1 G_W9' || system_name =='DXFG EL2 G_S3' || system_name =='DXFG EL2 G_N9' && climate_zone ==1 %>
+      0.001,                !- Design Supply Air Flow Rate {m3/s}
+  <% else %>
+      autosize,                !- Design Supply Air Flow Rate {m3/s}
+  <% end %>
+  <%= system_name %> Branches,       !- Branch List Name
+  ,                        !- Connector List Name
+  <%= system_name %> Mixed Air Outlet,  !- Supply Side Inlet Node Name
+  <%= system_name %> Zone Equipment Outlet Node,  !- Demand Side Outlet Node Name
+  <%= system_name %> Supply Path Inlet,  !- Demand Side Inlet Node Names
+  <%= system_name %> Air Loop Outlet;!- Supply Side Outlet Node Names
+
+
+AirLoopHVAC:ReturnPath,
+  <%= system_name %> Return Air Path,    !- Name
+  <%= system_name %> Zone Equipment Outlet Node,  !- Return Air Path Outlet Node Name
+  AirLoopHVAC:ZoneMixer,   !- Component 1 Object Type
+  <%= system_name %> Return Air Mixer;   !- Component 1 Name
+
+AirLoopHVAC:ZoneMixer,
+  <%= system_name %> Return Air Mixer,   !- Name
+  <%= system_name %> Zone Equipment Outlet Node,  !- Outlet Node Name
+  <%= zone_name %> Return Outlet,  !- Inlet 1 Node Name
+  <%= slave_zone %> Return Outlet; !- Inlet 2 Node Name
+
+<% else %>
+  <%
+  if number_of_stories == 1
+    supply_duct_area = 0.27*zone_area
+    return_duct_area = 0.05*zone_area
+    supply_unconditioned_fraction = 0.75
+  else
+    supply_duct_area = 0.2*zone_area
+    return_duct_area = [0.04*number_of_stories*zone_area,0.19*zone_area].min
+    supply_unconditioned_fraction = 0.67
+  end
+
+
+  supply_leakage_frac *= supply_unconditioned_fraction
+  return_leakage_frac *= supply_unconditioned_fraction
+
+  supply_duct_ua = supply_unconditioned_fraction*supply_duct_area/(duct_r_value)/2
+  return_duct_ua = return_duct_area/(duct_r_value)/2
+
+  %>
+
+  ! Duct losses
+
+  Schedule:Compact,
+    <%= zone_name %> Duct Loss Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 1;
+
+  AirLoopHVAC,
+    <%= system_name %>,                !- Name
+    ,                        !- Controller List Name
+    <%= system_name %> Availability Managers,  !- Availability Manager List Name
+<% if system_name =='DXFG EL1 G_E3' || system_name =='DXFG EL1 G_W9' || system_name =='DXFG EL2 G_S3' || system_name =='DXFG EL2 G_N9' && climate_zone ==1 %>
+    0.001,                !- Design Supply Air Flow Rate {m3/s}
+<% else %>
+    autosize,                !- Design Supply Air Flow Rate {m3/s}
+<% end %>
+    <%= system_name %> Branches,       !- Branch List Name
+    ,                        !- Connector List Name
+    <%= system_name %> Mixed Air Outlet,  !- Supply Side Inlet Node Name
+    <%= system_name %> Zone Equipment Outlet Node,  !- Demand Side Outlet Node Name
+    <%= system_name %> Supply Path Inlet,  !- Demand Side Inlet Node Names
+    <%= system_name %> Air Loop Outlet;!- Supply Side Outlet Node Names
+
+
+! Air loop objects that have been affected by adding plenum
+  AirLoopHVAC:ReturnPlenum,
+    <%= system_name %> Return Plenum,  !- Name
+    <%= system_name %> Dummy Return Plenum,  !- Zone Name
+    <%= system_name %> Dummy Return Plenum Node,  !- Zone Node Name
+    <%= system_name %> Zone Equipment Outlet Node,  !- Outlet Node Name
+    ,                        !- Induced Air Outlet Node or NodeList Name
+    <%= zone_name %> Return Outlet,  !- Inlet 1 Node Name
+    <%= slave_zone %> Return Outlet; !- Inlet 2 Node Name
+
+  AirLoopHVAC:ReturnPath,
+    <%= system_name %> Return Path,    !- Name
+    <%= system_name %> Zone Equipment Outlet Node,  !- Return Air Path Outlet Node Name
+    AirLoopHVAC:ReturnPlenum,!- Component 2 Object Type
+    <%= system_name %> Return Plenum;  !- Component 2 Name
+
+  OtherEquipment,
+     SupplySensibleLeakageTo<%= zone_name %>,   !- Name
+     None,                            !- Fuel Type
+     <%= zone_name %>,                !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                  !- Design Level Calculation Method
+     0,                               !- Design Level {W}
+     ,                                !- Power per Zone Floor Area {W/m}
+     ,                                !- Power per Person {W/person}
+     0,                               !- Fraction Latent
+     0,                               !- Fraction Radiant
+     0;                               !- Fraction Lost
+
+
+  ! Misc. actuated objects required to mimic duct loss heat balances
+  EnergyManagementSystem:Actuator,
+     Qleak_s_s<%= zone_name_ems %>,      !- Name
+     SupplySensibleLeakageTo<%= zone_name %>,   !- Actuated Component Unique Name
+     OtherEquipment,                  !- Actuated Component Type
+     Power Level;                     !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplyLatentLeakageTo<%= zone_name %>,   !- Name
+     None,                          !- Fuel Type
+     <%= zone_name %>,                        !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                !- Design Level Calculation Method
+     0,                             !- Design Level {W}
+     ,                              !- Power per Zone Floor Area {W/m}
+     ,                              !- Power per Person {W/person}
+     1,                             !- Fraction Latent
+     0,                             !- Fraction Radiant
+     0;                             !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qleak_s_l<%= zone_name_ems %>,      !- Name
+     SupplyLatentLeakageTo<%= zone_name %>,   !- Actuated Component Unique Name
+     OtherEquipment,                !- Actuated Component Type
+     Power Level;                   !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplyDuctConductionTo<%= zone_name %>,   !- Name
+     None,                           !- Fuel Type
+     <%= zone_name %>,                         !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                 !- Design Level Calculation Method
+     0,                              !- Design Level {W}
+     ,                               !- Power per Zone Floor Area {W/m}
+     ,                               !- Power per Person {W/person}
+     0,                              !- Fraction Latent
+     0,                              !- Fraction Radiant
+     0;                              !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qduct_sTo<%= zone_name_ems %>,   !- Name
+     SupplyDuctConductionTo<%= zone_name %>,     !- Actuated Component Unique Name
+     OtherEquipment,                   !- Actuated Component Type
+     Power Level;                      !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplyDuctConductionTo<%= air_handler_zone %>,   !- Name
+     None,                           !- Fuel Type
+     <%= air_handler_zone %>,                !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                 !- Design Level Calculation Method
+     0,                              !- Design Level {W}
+     ,                               !- Power per Zone Floor Area {W/m}
+     ,                               !- Power per Person {W/person}
+     0,                              !- Fraction Latent
+     0,                              !- Fraction Radiant
+     0;                              !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qduct_sTo<%= air_handler_zone_ems %>,     !- Name
+     SupplyDuctConductionTo<%= air_handler_zone %>,   !- Actuated Component Unique Name
+     OtherEquipment,                 !- Actuated Component Type
+     Power Level;                    !- Actuated Component Control Type
+
+  OtherEquipment,
+     ReturnDuctConductionToPlenum<%= system_name %>,   !- Name
+     None,                           !- Fuel Type
+     <%= system_name + " Dummy Return Plenum"%>,  !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                 !- Design Level Calculation Method
+     0,                              !- Design Level {W}
+     ,                               !- Power per Zone Floor Area {W/m}
+     ,                               !- Power per Person {W/person}
+     0,                              !- Fraction Latent
+     0,                              !- Fraction Radiant
+     0;                              !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qduct_rToPlenum<%= system_name.delete(' ') %>,   !- Name
+     ReturnDuctConductionToPlenum<%= system_name %>,     !- Actuated Component Unique Name
+     OtherEquipment,                   !- Actuated Component Type
+     Power Level;                      !- Actuated Component Control Type
+
+  OtherEquipment,
+     ReturnDuctConductionTo<%= air_handler_zone %>,   !- Name
+     None,                           !- Fuel Type
+     <%= air_handler_zone %>,                !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                 !- Design Level Calculation Method
+     0,                              !- Design Level {W}
+     ,                               !- Power per Zone Floor Area {W/m}
+     ,                               !- Power per Person {W/person}
+     0,                              !- Fraction Latent
+     0,                              !- Fraction Radiant
+     0;                              !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qduct_rTo<%= air_handler_zone_ems %>,   !- Name
+     ReturnDuctConductionTo<%= air_handler_zone %>,       !- Actuated Component Unique Name
+     OtherEquipment,                     !- Actuated Component Type
+     Power Level;                        !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplySensibleLeakageTo<%= air_handler_zone %>,   !- Name
+     None,                            !- Fuel Type
+     <%= air_handler_zone %>,         !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                  !- Design Level Calculation Method
+     0,                               !- Design Level {W}
+     ,                                !- Power per Zone Floor Area {W/m}
+     ,                                !- Power per Person {W/person}
+     0,                               !- Fraction Latent
+     0,                               !- Fraction Radiant
+     0;                               !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qleak_sTo<%= air_handler_zone_ems %>,   !- Name
+     SupplySensibleLeakageTo<%= air_handler_zone %>,     !- Actuated Component Unique Name
+     OtherEquipment,                    !- Actuated Component Type
+     Power Level;                       !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplyLatentLeakageTo<%= air_handler_zone %>,   !- Name
+     None,                          !- Fuel Type
+     <%= air_handler_zone %>,               !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                !- Design Level Calculation Method
+     0,                             !- Design Level {W}
+     ,                              !- Power per Zone Floor Area {W/m}
+     ,                              !- Power per Person {W/person}
+     1,                             !- Fraction Latent
+     0,                             !- Fraction Radiant
+     0;                             !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     LatentLeakageTo<%= air_handler_zone_ems %>,   !- Name
+     SupplyLatentLeakageTo<%= air_handler_zone %>,     !- Actuated Component Unique Name
+     OtherEquipment,                  !- Actuated Component Type
+     Power Level;                     !- Actuated Component Control Type
+
+  OtherEquipment,
+     ReturnSensibleLeakageEquip<%= system_name %>,   !- Name
+     None,                         !- Fuel Type
+     <%= system_name + " Dummy Return Plenum"%>,  !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,               !- Design Level Calculation Method
+     0,                            !- Design Level {W}
+     ,                             !- Power per Zone Floor Area {W/m2}
+     ,                             !- Power per Person {W/Person}
+     0,                            !- Fraction Latent
+     0,                            !- Fraction Radiant
+     0;                            !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qleak_r_s<%= system_name.delete(' ') %>,
+     ReturnSensibleLeakageEquip<%= system_name %>,
+     OtherEquipment,
+     Power Level;
+
+  OtherEquipment,
+     ReturnLatentLeakageEquip<%= system_name %>,   !- Name
+     None,                       !- Fuel Type
+     <%= system_name + " Dummy Return Plenum"%>,  !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,             !- Design Level Calculation Method
+     0,                          !- Design Level {W}
+     ,                           !- Power per Zone Floor Area {W/m2}
+     ,                           !- Power per Person {W/Person}
+     1,                          !- Fraction Latent
+     0,                          !- Fraction Radiant
+     0;                          !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qleak_r_l<%= system_name.delete(' ') %>,   !- Name
+     ReturnLatentLeakageEquip<%= system_name %>,      !- Actuated Component Unique Name
+     OtherEquipment,                !- Actuated Component Type
+     Power Level;                   !- Actuated Component Control Type
+
+  ZoneMixing,
+     <%= air_handler_zone %>To<%= zone_name %>Mixing,   !- Name
+     <%= zone_name %>,           !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     Flow/Zone,                  !- Design Flow Rate Calculation Method
+     0,                          !- Design Flow Rate (set by EMS)
+     ,                           !- Flow Rate per Zone Floor Area
+     ,                           !- Flow Rate per Person
+     ,                           !- Air Changes per Hour
+     <%= air_handler_zone %>;    !- Source Zone Name
+
+  EnergyManagementSystem:Actuator,
+     V<%= air_handler_zone_ems %>To<%= zone_name_ems %>,   !- Name
+     <%= air_handler_zone %>To<%= zone_name %>Mixing,         !- Actuated Component Unique Name
+     ZoneMixing,                       !- Actuated Component Type
+     Air Exchange Flow Rate;           !- Actuated Component Control Type
+
+  ZoneMixing,
+     <%= zone_name %>To<%= air_handler_zone %>Mixing,   !- Name
+     <%= air_handler_zone %>,            !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     Flow/Zone,                  !- Design Flow Rate Calculation Method
+     0,                          !- Design Flow Rate (set by EMS)
+     ,                           !- Flow Rate per Zone Floor Area
+     ,                           !- Flow Rate per Person
+     ,                           !- Air Changes per Hour
+     <%= zone_name %>;           !- Source Zone Name
+
+  EnergyManagementSystem:Actuator,
+     V<%= zone_name_ems %>To<%= air_handler_zone_ems %>,   !- Name
+     <%= zone_name %>To<%= air_handler_zone %>Mixing,         !- Actuated Component Unique Name
+     ZoneMixing,                       !- Actuated Component Type
+     Air Exchange Flow Rate;           !- Actuated Component Control Type
+
+  ! Required EMS Sensors
+
+  EnergyManagementSystem:Sensor,
+     AH_VFR<%= zone_name_ems %>,             !- Name
+     <%= system_name %> Supply Path Inlet,   !- Output:Variable or Output:Meter Index Key Name
+     System Node Current Density Volume Flow Rate;   !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AH_MFR<%= zone_name_ems %>,             !- Name
+     <%= system_name %> Supply Path Inlet,   !- Output:Variable or Output:Meter Index Key Name
+     System Node Mass Flow Rate;                     !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AH_Tout<%= zone_name_ems %>,            !- Name
+     <%= system_name %> Supply Path Inlet,   !- Output:Variable or Output:Meter Index Key Name
+     System Node Temperature;                        !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AH_Wout<%= zone_name_ems %>,            !- Name
+     <%= system_name %> Supply Path Inlet,   !- Output:Variable or Output:Meter Index Key Name
+     System Node Humidity Ratio;                     !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AHZone_T<%= zone_name_ems %>,           !- Name
+     <%= air_handler_zone %>,                        !- Output:Variable or Output:Meter Index Key Name
+     Zone Air Temperature;                           !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AHZone_W<%= zone_name_ems %>,           !- Name
+     <%= air_handler_zone %>,                        !- Output:Variable or Output:Meter Index Key Name
+     Zone Mean Air Humidity Ratio;                   !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     RA_T<%= zone_name_ems %>,               !- Name
+     <%= zone_name %> Return Outlet,                   !- Output:Variable or Output:Meter Index Key Name
+     System Node Temperature;                        !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     RA_W<%= zone_name_ems %>,               !- Name
+     <%= zone_name %> Return Outlet,                   !- Output:Variable or Output:Meter Index Key Name
+     System Node Humidity Ratio;                     !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Fan_RTF<%= zone_name_ems %>,            !- Name
+     <%= system_name %> Supply Fan,                  !- Output:Variable or Output:Meter Index Key Name
+     Fan Runtime Fraction;                           !- Output:Variable or Output:Meter Index Key Name
+
+  ! Program
+
+  EnergyManagementSystem:ProgramCallingManager,
+     DuctLeakageCallingManager<%= zone_name_ems %>,  !- Name
+     EndOfSystemTimestepAfterHVACReporting,   !- EnergyPlus Model Calling Point
+     DuctLeakageProgram<%= zone_name_ems %>;  !- Program Name 1
+
+  EnergyManagementSystem:Program,
+     DuctLeakageProgram<%= zone_name_ems %>,
+     Set f_sup = <%= supply_leakage_frac %>, ! Supply leakage fraction
+     Set f_ret = <%= return_leakage_frac %>, ! Return leakage fraction
+     Set f_OA = <%= imbalance_oa_frac*(supply_leakage_frac - return_leakage_frac).abs %>, ! Leakage imbalance made up with outside air
+     Set V_OA = f_OA * AH_VFR<%= zone_name_ems %>, ! Outside air flow rate
+     Set Vleak_s = f_sup * AH_VFR<%= zone_name_ems %>, ! Supply leakage flow rate
+     Set Vleak_r = f_ret * AH_VFR<%= zone_name_ems %>, ! Return leakage flow rate
+     Set V<%= air_handler_zone_ems %>To<%= zone_name_ems %> = @Abs (Vleak_s - Vleak_r - V_OA), ! Flow rate from AH zone to this zone
+     Set V<%= zone_name_ems %>To<%= air_handler_zone_ems %> = 0, ! Flow rate from this zone to AH zone
+     Set h_SA = @HFnTdbW AH_Tout<%= zone_name_ems %> AH_Wout<%= zone_name_ems %>, ! Supply air enthalpy
+     Set h_AHZone = @HFnTdbW AHZone_T<%= zone_name_ems %> AHZone_W<%= zone_name_ems %>, ! AH zone enthalpy
+     Set h_RA = @HFnTdbW RA_T<%= zone_name_ems %> RA_W<%= zone_name_ems %>, ! Return air enthalpy
+     Set h_fg = @HfgAirFnWTdb AH_Wout<%= zone_name_ems %> AH_Tout<%= zone_name_ems %>, ! AH Zone enthalpy of vaporization
+     Set Qleak_s = f_sup * AH_MFR<%= zone_name_ems %> * (h_RA - h_SA), ! Supply leakage total heat flow
+     Set Qleak_s_l<%= zone_name_ems %> = f_sup * AH_MFR<%= zone_name_ems %> * h_fg * (RA_W<%= zone_name_ems %> - AH_Wout<%= zone_name_ems %>), ! Supply leakage latent heat flow
+     Set Qleak_s_s<%= zone_name_ems %> = Qleak_s - Qleak_s_l<%= zone_name_ems %>, ! Supply leakage sensible heat flow
+     Set expTerm = (Fan_RTF<%= zone_name_ems %> / ((@Max AH_MFR<%= zone_name_ems %> 0.001) * 1006.0)) * <%= supply_duct_ua %>,
+     Set expTerm = 0 - expTerm,
+     Set Tsupply = AHZone_T<%= zone_name_ems %> + ((AH_Tout<%= zone_name_ems %> - AHZone_T<%= zone_name_ems %>) * (@Exp expTerm)), ! Supply temperature
+     Set Qduct_sTo<%= zone_name_ems %> = AH_MFR<%= zone_name_ems %> * 1006.0 * (Tsupply - AH_Tout<%= zone_name_ems %>), ! Supply duct conduction loss
+     Set Qduct_sTo<%= air_handler_zone_ems %> = 0 - Qduct_sTo<%= zone_name_ems %>, ! Supply duct conduction gain to AH zone
+     Set expTerm = (Fan_RTF<%= zone_name_ems %> / ((@Max AH_MFR<%= zone_name_ems %> 0.001) * 1006.0)) * <%= return_duct_ua %>,
+     Set expTerm = 0 - expTerm,
+     Set Treturn = AHZone_T<%= zone_name_ems %> + ((RA_T<%= zone_name_ems %> - AHZone_T<%= zone_name_ems %>) * (@Exp expTerm)), ! Return temperature
+     Set Qduct_rToPlenum<%= system_name.delete(' ') %> = AH_MFR<%= zone_name_ems %> * 1006.0 * (Treturn - RA_T<%= zone_name_ems %>), ! Return duct conduction to plenum
+     Set Qduct_rTo<%= air_handler_zone_ems %> = 0 - Qduct_rToPlenum<%= system_name.delete(' ') %>, !- Return duct conduction to AH Zone
+     Set Qleak_r_l<%= system_name.delete(' ') %> = 0, ! Return leakage latent heat flow
+     Set Qleak_r_s<%= system_name.delete(' ') %> = f_ret * AH_MFR<%= zone_name_ems %> * 1006.0 * (AHZone_T<%= zone_name_ems %> - RA_T<%= zone_name_ems %>), ! Return leakage sensible heat flow
+     Set Qleak = f_sup * AH_MFR<%= zone_name_ems %> * (h_SA - h_AHZone), ! Leakage heat flow
+     Set Qleak_lTo<%= air_handler_zone_ems %> = f_sup * AH_MFR<%= zone_name_ems %> * h_fg * (AH_Wout<%= zone_name_ems %> - AHZone_W<%= zone_name_ems %>), ! Leakage latent heat flow to AH zone
+     Set Qleak_sTo<%= air_handler_zone_ems %> = Qleak - Qleak_lTo<%= air_handler_zone_ems %>; ! Leakage senisble heat flow to AH zone
+
+<% end %>
+<% end %>
+
+<%
+if (use_dummy_return_plenum)
+  return_plenum_zone_name = system_name + " Dummy Return Plenum"
+end
+
+%>
+
+<% if (use_dummy_return_plenum) %>
+! Dummy return plenum zone
+
+
+Construction,
+  <%= system_name %> Plenum Construction,  ! - Name
+  Wall Cavity Effective Insulation,  !- Outside Layer
+  <%= system_name %> Plenum Material;  ! - Layer 2
+
+
+
+Material,
+  <%= system_name %> Plenum Material,  !- Name
+  Smooth,                  !- Roughness
+  0.05,                    !- Thickness {m}
+  0.1,                    !- Conductivity {W/m-K}
+  200,                     !- Density {kg/m3}
+  1000;                    !- Specific Heat {J/kg-K}
+
+Zone,
+  <%= return_plenum_zone_name %>,  !- Name
+  0,                       !- Direction of Relative North {deg}
+  0,                       !- X Origin {m}
+  0,                       !- Y Origin {m}
+  0,                       !- Z Origin {m}
+  ,                        !- Type
+  1,                       !- Multiplier
+  ,                        !- Ceiling Height {m}
+  1.0,                     !- Volume {m3}
+  ,                        !- Floor Area {m2}
+  ,                        !- Zone Inside Convection Algorithm
+  ,                        !- Zone Outside Convection Algorithm
+  No;                      !- Part of Total Floor Area
+
+BuildingSurface:Detailed,
+  <%= system_name %> Dummy Return Plenum Floor,  !- Name
+  Floor,                   !- Surface Type
+  <%= system_name %> Plenum Construction,  !- Construction Name
+  <%= return_plenum_zone_name %>,  !- Zone Name
+  Adiabatic,               !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate {m}
+  0,                       !- Vertex 1 Y-coordinate {m}
+  -10,                     !- Vertex 1 Z-coordinate {m}
+  0,                       !- Vertex 2 X-coordinate {m}
+  1,                       !- Vertex 2 Y-coordinate {m}
+  -10,                     !- Vertex 2 Z-coordinate {m}
+  1,                       !- Vertex 3 X-coordinate {m}
+  1,                       !- Vertex 3 Y-coordinate {m}
+  -10,                     !- Vertex 3 Z-coordinate {m}
+  1,                       !- Vertex 4 X-coordinate {m}
+  0,                       !- Vertex 4 Y-coordinate {m}
+  -10;                     !- Vertex 4 Z-coordinate {m}
+
+BuildingSurface:Detailed,
+  <%= system_name %> Dummy Return Plenum Ceiling,  !- Name
+  Ceiling,                   !- Surface Type
+  <%= system_name %> Plenum Construction,  !- Construction Name
+  <%= return_plenum_zone_name %>,  !- Zone Name
+  Adiabatic,               !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate {m}
+  0,                       !- Vertex 1 Y-coordinate {m}
+  -9,                     !- Vertex 1 Z-coordinate {m}
+  1,                       !- Vertex 2 X-coordinate {m}
+  0,                       !- Vertex 2 Y-coordinate {m}
+  -9,                     !- Vertex 2 Z-coordinate {m}
+  1,                       !- Vertex 3 X-coordinate {m}
+  1,                       !- Vertex 3 Y-coordinate {m}
+  -9,                     !- Vertex 3 Z-coordinate {m}
+  0,                       !- Vertex 4 X-coordinate {m}
+  1,                       !- Vertex 4 Y-coordinate {m}
+  -9;                     !- Vertex 4 Z-coordinate {m}
+
+BuildingSurface:Detailed,
+  <%= system_name %> Dummy Return Plenum W Wall,  !- Name
+  Wall,                   !- Surface Type
+  <%= system_name %> Plenum Construction,  !- Construction Name
+  <%= return_plenum_zone_name %>,  !- Zone Name
+  Adiabatic,               !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  0.000000000000,  !- Vertex 1 X-coordinate {m}
+  1.000000000000,  !- Vertex 1 Y-coordinate {m}
+  -10.000000000000,  !- Vertex 1 Z-coordinate {m}
+  0.000000000000,  !- Vertex 2 X-coordinate {m}
+  0.000000000000,  !- Vertex 2 Y-coordinate {m}
+  -10.000000000000,  !- Vertex 2 Z-coordinate {m}
+  0.000000000000,  !- Vertex 3 X-coordinate {m}
+  0.000000000000,  !- Vertex 3 Y-coordinate {m}
+  -9.000000000000,  !- Vertex 3 Z-coordinate {m}
+  0.000000000000,  !- Vertex 4 X-coordinate {m}
+  1.000000000000,  !- Vertex 4 Y-coordinate {m}
+  -9.000000000000;  !- Vertex 4 Z-coordinate {m}
+
+BuildingSurface:Detailed,
+  <%= system_name %> Dummy Return Plenum N Wall,  !- Name
+  Wall,                   !- Surface Type
+  <%= system_name %> Plenum Construction,  !- Construction Name
+  <%= return_plenum_zone_name %>,  !- Zone Name
+  Adiabatic,               !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  1.000000000000,  !- Vertex 1 X-coordinate {m}
+  1.000000000000,  !- Vertex 1 Y-coordinate {m}
+  -10.000000000000,  !- Vertex 1 Z-coordinate {m}
+  0.000000000000,  !- Vertex 2 X-coordinate {m}
+  1.000000000000,  !- Vertex 2 Y-coordinate {m}
+  -10.000000000000,  !- Vertex 2 Z-coordinate {m}
+  0.000000000000,  !- Vertex 3 X-coordinate {m}
+  1.000000000000,  !- Vertex 3 Y-coordinate {m}
+  -9.000000000000,  !- Vertex 3 Z-coordinate {m}
+  1.000000000000,  !- Vertex 4 X-coordinate {m}
+  1.000000000000,  !- Vertex 4 Y-coordinate {m}
+  -9.000000000000;  !- Vertex 4 Z-coordinate {m}
+
+BuildingSurface:Detailed,
+  <%= system_name %> Dummy Return Plenum E Wall,  !- Name
+  Wall,                   !- Surface Type
+  <%= system_name %> Plenum Construction,  !- Construction Name
+  <%= return_plenum_zone_name %>,  !- Zone Name
+  Adiabatic,               !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  1.000000000000,  !- Vertex 1 X-coordinate {m}
+  0.000000000000,  !- Vertex 1 Y-coordinate {m}
+  -10.000000000000,  !- Vertex 1 Z-coordinate {m}
+  1.000000000000,  !- Vertex 2 X-coordinate {m}
+  1.000000000000,  !- Vertex 2 Y-coordinate {m}
+  -10.000000000000,  !- Vertex 2 Z-coordinate {m}
+  1.000000000000,  !- Vertex 3 X-coordinate {m}
+  1.000000000000,  !- Vertex 3 Y-coordinate {m}
+  -9.000000000000,  !- Vertex 3 Z-coordinate {m}
+  1.000000000000,  !- Vertex 4 X-coordinate {m}
+  0.000000000000,  !- Vertex 4 Y-coordinate {m}
+  -9.000000000000;  !- Vertex 4 Z-coordinate {m}
+
+BuildingSurface:Detailed,
+  <%= system_name %> Dummy Return Plenum S Wall,  !- Name
+  Wall,                   !- Surface Type
+  <%= system_name %> Plenum Construction,  !- Construction Name
+  <%= return_plenum_zone_name %>,  !- Zone Name
+  Adiabatic,               !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  0.000000000000,  !- Vertex 1 X-coordinate {m}
+  0.000000000000,  !- Vertex 1 Y-coordinate {m}
+  -10.000000000000,  !- Vertex 1 Z-coordinate {m}
+  1.000000000000,  !- Vertex 2 X-coordinate {m}
+  0.000000000000,  !- Vertex 2 Y-coordinate {m}
+  -10.000000000000,  !- Vertex 2 Z-coordinate {m}
+  1.000000000000,  !- Vertex 3 X-coordinate {m}
+  0.000000000000,  !- Vertex 3 Y-coordinate {m}
+  -9.000000000000,  !- Vertex 3 Z-coordinate {m}
+  0.000000000000,  !- Vertex 4 X-coordinate {m}
+  0.000000000000,  !- Vertex 4 Y-coordinate {m}
+  -9.000000000000;  !- Vertex 4 Z-coordinate {m}
+
+InternalMass,
+  <%= return_plenum_zone_name %> Plenum Internal Mass,  !- Name
+  <%= system_name %> Plenum Construction,  !- Construction Name
+  <%= return_plenum_zone_name %>,          !- Zone Name
+  5.0;      !- Surface Area {m2}
+
+<% end %>

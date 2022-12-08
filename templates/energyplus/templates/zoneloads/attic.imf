@@ -1,0 +1,22 @@
+<%#INITIALIZE
+parameter "zone_name"
+
+parameter "air_leakage", :default=>0.4|'CFM/ft2'  # Air leakage rate when pressurized at 0.3 inch H2O (75 Pa)
+parameter "infil_ach", :default=>1.0  # Air Changes per Hour
+parameter "infiltration_method", :default=>'Flow/ExteriorArea'  # (Flow/ExteriorArea | AirChanges/Hour)
+parameter "infiltration_schedule", :default=>  # Use this schedule to decrease infiltration if the building is pressurized during HVAC operation
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 1.0;
+"
+
+%>
+
+<%= insert 'zonetemplate.imf',
+  :zone_name=>zone_name,
+  :air_leakage=>air_leakage,
+  :infil_ach=>infil_ach,
+  :infiltration_method=>infiltration_method,
+  :infiltration_schedule=>infiltration_schedule
+%>

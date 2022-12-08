@@ -1,0 +1,899 @@
+﻿title: DEER Res prototype values ,,,,
+# CZ1-5-10-11-12-14-15: 1972 _ CZ2-3-4-6-7-8-9-13-16: 1985,,,,
+# Residential Prototype Building Models Key Characteristics Values from RASS and MassControl3 ,,,,
+"# Internal Loads values are estimated, needs further verification or collected from other sources",,,,
+table:   Res Key Prototype Values | Climate Zone CZ01,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1591,,,sf
+Number of Stories,1.48,,,
+Occupants,3,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,6.712818141,,
+Ceiling Overall R-Value (Electric),,6.712818141,,
+Wall Overall R-Value,,5.178197809,,
+Floors |Earth Contact,,5.509375312,,
+Glass Area (% floor),14,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,741.57,,,(sqft/ton)
+Cooling SEER,8.5,,,
+Heating Capacity (sqft/kBtu),39.63,,,
+Heating HSPF,4.7,,,
+Heating AFUE,0.7,,,
+Total Duct Leakage (%),20,,,
+1-Story Home Supply Duct Leakage (%),15,,,
+2-Story Home Supply Duct Leakage (%),13.4,,,
+Attic Cool Design T,60,,,
+Attic Heat Design T,52,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,15.96,,MC3 value
+Attic Cavity,,26.8,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.19,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.16,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.320363636,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,15.56,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,15.56,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,15.56,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,15.56,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,1,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.068,,,
+CeilIns_Existing_AddR11_thichness,0.18756,,,
+CeilIns_Existing_AddR19_thichness,0.274513,,,
+CeilIns_Existing_AddR30_thichness,0.394073,,,
+CeilIns_Existing_AddR38_thichness,0.481026,,,
+cool_coil_capacity,7280,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ02,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1591,,,sf
+Number of Stories,1.48,,,
+Occupants,3,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,6.71,,
+Ceiling Overall R-Value (Electric),,6.71,,
+Wall Overall R-Value,,5.178197809,,
+Floors |Earth Contact,,5.509375312,,
+Glass Area (% floor),14,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,428.15,,,(sqft/ton)
+Cooling SEER,8.5,,,
+Heating Capacity (sqft/kBtu),22.88,,,
+Heating HSPF,4.7,,,
+Heating AFUE,0.7,,,
+Total Duct Leakage (%),20,,,
+1-Story Home Supply Duct Leakage (%),15,,,
+2-Story Home Supply Duct Leakage (%),13.4,,,
+Attic Cool Design T,87,,,
+Attic Heat Design T,48,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,8.35,,MC3 value
+Attic Cavity,,20.22,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.22,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.165,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.33245283,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,18.33,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,18.33,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,18.33,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,18.33,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,26.8,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,26.8,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,26.8,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,26.8,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,2,,,
+shading_control,AlwaysOff,,,
+CeilIns_Existing_Base_R_thichness,0.068,,,
+CeilIns_Existing_AddR11_thichness,0.18756,,,
+CeilIns_Existing_AddR19_thichness,0.274513,,,
+CeilIns_Existing_AddR30_thichness,0.394073,,,
+CeilIns_Existing_AddR38_thichness,0.481026,,,
+cool_coil_capacity,9707,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ03,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1591,,,sf
+Number of Stories,1.48,,,
+Occupants,3,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,6.71,,
+Ceiling Overall R-Value (Electric),,6.71,,
+Wall Overall R-Value,,5.178197809,,
+Floors |Earth Contact,,5.509375312,,
+Glass Area (% floor),14,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,529.47,,,(sqft/ton)
+Cooling SEER,8.5,,,
+Heating Capacity (sqft/kBtu),28.29,,,
+Heating HSPF,4.7,,,
+Heating AFUE,0.7,,,
+Total Duct Leakage (%),20,,,
+1-Story Home Supply Duct Leakage (%),15,,,
+2-Story Home Supply Duct Leakage (%),13.4,,,
+Attic Cool Design T,80,,,
+Attic Heat Design T,55,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,8.35,,MC3 value
+Attic Cavity,,20.22,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.22,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.165,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.33245283,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,18.61,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,18.61,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,18.61,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,18.61,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,3,,,
+shading_control,AlwaysOff,,,
+CeilIns_Existing_Base_R_thichness,0.068,,,
+CeilIns_Existing_AddR11_thichness,0.18756,,,
+CeilIns_Existing_AddR19_thichness,0.274513,,,
+CeilIns_Existing_AddR30_thichness,0.394073,,,
+CeilIns_Existing_AddR38_thichness,0.481026,,,
+cool_coil_capacity,9707,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ04,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1591,,,sf
+Number of Stories,1.48,,,
+Occupants,3,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,6.71,,
+Ceiling Overall R-Value (Electric),,6.71,,
+Wall Overall R-Value,,5.178197809,,
+Floors |Earth Contact,,5.509375312,,
+Glass Area (% floor),14,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,555.97,,,(sqft/ton)
+Cooling SEER,8.5,,,
+Heating Capacity (sqft/kBtu),29.71,,,
+Heating HSPF,4.7,,,
+Heating AFUE,0.7,,,
+Total Duct Leakage (%),20,,,
+1-Story Home Supply Duct Leakage (%),15,,,
+2-Story Home Supply Duct Leakage (%),13.4,,,
+Attic Cool Design T,79,,,
+Attic Heat Design T,53,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,8.35,,MC3 value
+Attic Cavity,,20.22,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.22,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.165,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.33245283,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,18.61,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,18.61,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,18.61,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,18.61,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,26.33,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,26.33,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,26.33,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,26.33,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,4,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.068,,,
+CeilIns_Existing_AddR11_thichness,0.18756,,,
+CeilIns_Existing_AddR19_thichness,0.274513,,,
+CeilIns_Existing_AddR30_thichness,0.394073,,,
+CeilIns_Existing_AddR38_thichness,0.481026,,,
+cool_coil_capacity,9707,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ05,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1591,,,sf
+Number of Stories,1.48,,,
+Occupants,3,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,6.71,,
+Ceiling Overall R-Value (Electric),,6.71,,
+Wall Overall R-Value,,5.178197809,,
+Floors |Earth Contact,,5.509375312,,
+Glass Area (% floor),14,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,484.46,,,(sqft/ton)
+Cooling SEER,8.5,,,
+Heating Capacity (sqft/kBtu),25.89,,,
+Heating HSPF,4.7,,,
+Heating AFUE,0.7,,,
+Total Duct Leakage (%),20,,,
+1-Story Home Supply Duct Leakage (%),15,,,
+2-Story Home Supply Duct Leakage (%),13.4,,,
+Attic Cool Design T,74,,,
+Attic Heat Design T,49,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,8.35,,MC3 value
+Attic Cavity,,20.22,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.19,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.16,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.320363636,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,18,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,18,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,18,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,18,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,24.2,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,24.2,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,24.2,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,24.2,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,5,,,
+shading_control,AlwaysOff,,,
+CeilIns_Existing_Base_R_thichness,0.068,,,
+CeilIns_Existing_AddR11_thichness,0.18756,,,
+CeilIns_Existing_AddR19_thichness,0.274513,,,
+CeilIns_Existing_AddR30_thichness,0.394073,,,
+CeilIns_Existing_AddR38_thichness,0.481026,,,
+cool_coil_capacity,9707,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ06,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1528,,,sf
+Number of Stories,1.55,,,
+Occupants,2.6,,,
+Infiltration,0.5,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,7.39,,
+Ceiling Overall R-Value (Electric),,7.39,,
+Wall Overall R-Value,,7.82,,
+Floors |Earth Contact,,5.51,,
+Glass Area (% floor),15.58,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,468.62,,,(sqft/ton)
+Cooling SEER,8.5,,,
+Heating Capacity (sqft/kBtu),25.04,,,
+Heating HSPF,4.7,,,
+Heating AFUE,0.7,,,
+Total Duct Leakage (%),20,,,
+1-Story Home Supply Duct Leakage (%),15,,,
+2-Story Home Supply Duct Leakage (%),13.4,,,
+Attic Cool Design T,81,,,
+Attic Heat Design T,57,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,8.6,,MC3 value
+Attic Cavity,,15.9,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.22,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.165,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.33245283,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,20.28,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,20.28,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,20.28,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,20.28,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,6,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.076,,,
+CeilIns_Existing_AddR11_thichness,0.19556,,,
+CeilIns_Existing_AddR19_thichness,0.282513,,,
+CeilIns_Existing_AddR30_thichness,0.402073,,,
+CeilIns_Existing_AddR38_thichness,0.489026,,,
+cool_coil_capacity,9707,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ07,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1528,,,sf
+Number of Stories,1.55,,,
+Occupants,2.6,,,
+Infiltration,0.5,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,7.39,,
+Ceiling Overall R-Value (Electric),,7.39,,
+Wall Overall R-Value,,7.82,,
+Floors |Earth Contact,,5.51,,
+Glass Area (% floor),15.58,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,618.01,,,(sqft/ton)
+Cooling SEER,8.5,,,
+Heating Capacity (sqft/kBtu),33.02,,,
+Heating HSPF,4.7,,,
+Heating AFUE,0.7,,,
+Total Duct Leakage (%),20,,,
+1-Story Home Supply Duct Leakage (%),15,,,
+2-Story Home Supply Duct Leakage (%),13.4,,,
+Attic Cool Design T,74,,,
+Attic Heat Design T,62,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,8.6,,MC3 value
+Attic Cavity,,15.9,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.22,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.165,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.33245283,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,20,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,20,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,20,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,20,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,7,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.076,,,
+CeilIns_Existing_AddR11_thichness,0.19556,,,
+CeilIns_Existing_AddR19_thichness,0.282513,,,
+CeilIns_Existing_AddR30_thichness,0.402073,,,
+CeilIns_Existing_AddR38_thichness,0.489026,,,
+cool_coil_capacity,9707,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ08,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1528,,,sf
+Number of Stories,1.55,,,
+Occupants,2.6,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,7.39,,
+Ceiling Overall R-Value (Electric),,7.39,,
+Wall Overall R-Value,,7.82,,
+Floors |Earth Contact,,5.51,,
+Glass Area (% floor),15.58,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,504.91,,,(sqft/ton)
+Cooling SEER,8.5,,,
+Heating Capacity (sqft/kBtu),26.98,,,
+Heating HSPF,4.7,,,
+Heating AFUE,0.7,,,
+Total Duct Leakage (%),20,,,
+1-Story Home Supply Duct Leakage (%),15,,,
+2-Story Home Supply Duct Leakage (%),13.4,,,
+Attic Cool Design T,80,,,
+Attic Heat Design T,58,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,8.6,,MC3 value
+Attic Cavity,,15.9,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.22,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.165,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.33245283,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,19.72,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,19.72,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,19.72,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,19.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,25,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,25,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,25,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,25,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,8,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.076,,,
+CeilIns_Existing_AddR11_thichness,0.19556,,,
+CeilIns_Existing_AddR19_thichness,0.282513,,,
+CeilIns_Existing_AddR30_thichness,0.402073,,,
+CeilIns_Existing_AddR38_thichness,0.489026,,,
+cool_coil_capacity,10920,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ09,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1636,,,sf
+Number of Stories,1.33,,,
+Occupants,2.7,,,
+Infiltration,0.6,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,6.89,,
+Ceiling Overall R-Value (Electric),,6.89,,
+Wall Overall R-Value,,6.68,,
+Floors |Earth Contact,,5.51,,
+Glass Area (% floor),13.08,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,469.28,,,(sqft/ton)
+Cooling SEER,8.5,,,
+Heating Capacity (sqft/kBtu),25.08,,,
+Heating HSPF,4.7,,,
+Heating AFUE,0.7,,,
+Total Duct Leakage (%),20,,,
+1-Story Home Supply Duct Leakage (%),15,,,
+2-Story Home Supply Duct Leakage (%),13.4,,,
+Attic Cool Design T,87,,,
+Attic Heat Design T,53,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,8.15,,MC3 value
+Attic Cavity,,16.26,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.22,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.165,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.33245283,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,20.28,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,20.28,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,20.28,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,20.28,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,24.72,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,9,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.076,,,
+CeilIns_Existing_AddR11_thichness,0.19556,,,
+CeilIns_Existing_AddR19_thichness,0.282513,,,
+CeilIns_Existing_AddR30_thichness,0.402073,,,
+CeilIns_Existing_AddR38_thichness,0.489026,,,
+cool_coil_capacity,10920,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ10,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1811,,,sf
+Number of Stories,1.423115774,,,
+Occupants,2.8,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,18.1337906,,
+Ceiling Overall R-Value (Electric),,23.6337906,,
+Wall Overall R-Value,,12.19205172,,
+Floors |Earth Contact,,- n/a -,,
+Glass Area (% floor),16.01325235,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,476.80418,,,(sqft/ton)
+Cooling SEER,9,,,
+Heating Capacity (sqft/kBtu),25.47814819,,,
+Heating HSPF,5.7,,,
+Heating AFUE,0.74,,,
+Total Duct Leakage (%),15,,,
+1-Story Home Supply Duct Leakage (%),11.25,,,
+2-Story Home Supply Duct Leakage (%),10.05,,,
+Attic Cool Design T,91,,,
+Attic Heat Design T,53,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,12.68,,MC3 value
+Attic Cavity,,21.2,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.19,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.16,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.320363636,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,21.39,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,21.39,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,21.39,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,21.39,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,25.56,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,25.56,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,25.56,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,25.56,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,10,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.195,,,
+CeilIns_Existing_AddR11_thichness,0.31456,,,
+CeilIns_Existing_AddR19_thichness,0.401513,,,
+CeilIns_Existing_AddR30_thichness,0.521073,,,
+CeilIns_Existing_AddR38_thichness,0.608026,,,
+cool_coil_capacity,10920,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ11,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1704,,,sf
+Number of Stories,1.229597342,,,
+Occupants,3.4,,,
+Infiltration,0.4,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,19.7337906,,
+Ceiling Overall R-Value (Electric),,20.2337906,,
+Wall Overall R-Value,,11.73275146,,
+Floors |Earth Contact,,- n/a -,,
+Glass Area (% floor),16.02112676,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,462.5557818,,,(sqft/ton)
+Cooling SEER,9.5,,,
+Heating Capacity (sqft/kBtu),24.71678154,,,
+Heating HSPF,5.7,,,
+Heating AFUE,0.74,,,
+Total Duct Leakage (%),15,,,
+1-Story Home Supply Duct Leakage (%),11.25,,,
+2-Story Home Supply Duct Leakage (%),10.05,,,
+Attic Cool Design T,95,,,
+Attic Heat Design T,48,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,13.24,,MC3 value
+Attic Cavity,,23.28,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.19,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.16,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.320363636,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,21.11,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,21.11,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,21.11,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,21.11,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,25,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,25,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,25,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,25,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,11,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.21,,,
+CeilIns_Existing_AddR11_thichness,0.32956,,,
+CeilIns_Existing_AddR19_thichness,0.416513,,,
+CeilIns_Existing_AddR30_thichness,0.536073,,,
+CeilIns_Existing_AddR38_thichness,0.623026,,,
+cool_coil_capacity,10920,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ12,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1704,,,sf
+Number of Stories,1.229597342,,,
+Occupants,3.4,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,19.7337906,,
+Ceiling Overall R-Value (Electric),,20.2337906,,
+Wall Overall R-Value,,11.73275146,,
+Floors |Earth Contact,,- n/a -,,
+Glass Area (% floor),16.02112676,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,495.6923113,,,(sqft/ton)
+Cooling SEER,9.5,,,
+Heating Capacity (sqft/kBtu),26.48744011,,,
+Heating HSPF,5.7,,,
+Heating AFUE,0.74,,,
+Total Duct Leakage (%),15,,,
+1-Story Home Supply Duct Leakage (%),11.25,,,
+2-Story Home Supply Duct Leakage (%),10.05,,,
+Attic Cool Design T,91,,,
+Attic Heat Design T,50,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,13.24,,MC3 value
+Attic Cavity,,23.28,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.19,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.16,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.320363636,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,21.39,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,21.39,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,21.39,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,21.39,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,25,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,25,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,25,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,25,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,12,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.21,,,
+CeilIns_Existing_AddR11_thichness,0.32956,,,
+CeilIns_Existing_AddR19_thichness,0.416513,,,
+CeilIns_Existing_AddR30_thichness,0.536073,,,
+CeilIns_Existing_AddR38_thichness,0.623026,,,
+cool_coil_capacity,10920,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ13,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1704,,,sf
+Number of Stories,1.229597342,,,
+Occupants,3.4,,,
+Infiltration,0.4,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,19.7337906,,
+Ceiling Overall R-Value (Electric),,20.2337906,,
+Wall Overall R-Value,,11.73275146,,
+Floors |Earth Contact,,- n/a -,,
+Glass Area (% floor),16.02112676,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,483.4461024,,,(sqft/ton)
+Cooling SEER,9.5,,,
+Heating Capacity (sqft/kBtu),25.83306094,,,
+Heating HSPF,5.7,,,
+Heating AFUE,0.74,,,
+Total Duct Leakage (%),15,,,
+1-Story Home Supply Duct Leakage (%),11.25,,,
+2-Story Home Supply Duct Leakage (%),10.05,,,
+Attic Cool Design T,92,,,
+Attic Heat Design T,48,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,13.24,,MC3 value
+Attic Cavity,,23.28,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.22,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.165,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.33245283,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,22.44,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,22.44,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,22.44,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,22.44,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,13,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.21,,,
+CeilIns_Existing_AddR11_thichness,0.32956,,,
+CeilIns_Existing_AddR19_thichness,0.416513,,,
+CeilIns_Existing_AddR30_thichness,0.536073,,,
+CeilIns_Existing_AddR38_thichness,0.623026,,,
+cool_coil_capacity,10920,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ14,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1741,,,sf
+Number of Stories,1.118772781,,,
+Occupants,3,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,18.1337906,,
+Ceiling Overall R-Value (Electric),,21.4337906,,
+Wall Overall R-Value,,14.65992969,,
+Floors |Earth Contact,,- n/a -,,
+Glass Area (% floor),14.01493395,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,448.1960587,,,(sqft/ton)
+Cooling SEER,9.5,,,
+Heating Capacity (sqft/kBtu),23.94946622,,,
+Heating HSPF,5.7,,,
+Heating AFUE,0.74,,,
+Total Duct Leakage (%),15,,,
+1-Story Home Supply Duct Leakage (%),11.25,,,
+2-Story Home Supply Duct Leakage (%),10.05,,,
+Attic Cool Design T,99,,,
+Attic Heat Design T,39,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,15.08,,MC3 value
+Attic Cavity,,22.8,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.19,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.16,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.320363636,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,22.78,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,22.78,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,22.78,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,22.78,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,26.39,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,26.39,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,26.39,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,26.39,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,14,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.2,,,
+CeilIns_Existing_AddR11_thichness,0.31956,,,
+CeilIns_Existing_AddR19_thichness,0.406513,,,
+CeilIns_Existing_AddR30_thichness,0.526073,,,
+CeilIns_Existing_AddR38_thichness,0.613026,,,
+cool_coil_capacity,12304,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ15,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1741,,,sf
+Number of Stories,1.118772781,,,
+Occupants,3,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,18.1337906,,
+Ceiling Overall R-Value (Electric),,21.4337906,,
+Wall Overall R-Value,,14.65992969,,
+Floors |Earth Contact,,- n/a -,,
+Glass Area (% floor),14.01493395,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,408.80539,,,(sqft/ton)
+Cooling SEER,9.5,,,
+Heating Capacity (sqft/kBtu),22.84578252,,,
+Heating HSPF,5.7,,,
+Heating AFUE,0.74,,,
+Total Duct Leakage (%),15,,,
+1-Story Home Supply Duct Leakage (%),11.25,,,
+2-Story Home Supply Duct Leakage (%),10.05,,,
+Attic Cool Design T,102,,,
+Attic Heat Design T,50,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,15.08,,MC3 value
+Attic Cavity,,22.8,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.19,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.16,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.320363636,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,21.67,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,21.67,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,21.67,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,21.67,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,23.89,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,15,,,
+shading_control,AlwaysOn,,,
+CeilIns_Existing_Base_R_thichness,0.2,,,
+CeilIns_Existing_AddR11_thichness,0.31956,,,
+CeilIns_Existing_AddR19_thichness,0.406513,,,
+CeilIns_Existing_AddR30_thichness,0.526073,,,
+CeilIns_Existing_AddR38_thichness,0.613026,,,
+cool_coil_capacity,12304,,,
+,,,,
+table:   Res Key Prototype Values | Climate Zone CZ16,,,,
+Key Values,Value,R-Value,Extent,Notes
+Total Floor Area,1904,,,sf
+Number of Stories,1.307044248,,,
+Occupants,3.1,,,
+Infiltration,0.35,,,UPDATED per Calibration notes-changes/hour
+Roofs | shingle ,,,,
+Ceiling Overall R-Value (Gas),,24.1337906,,
+Ceiling Overall R-Value (Electric),,28.1337906,,
+Wall Overall R-Value,,15.37511949,,
+Floors |Earth Contact,,- n/a -,,
+Glass Area (% floor),11.50210084,,,
+Vertical Fenestration U-Factor,1.09,,,UPDATED per Calibration notes
+Vertical Fenestration SHGC,0.8,,,UPDATED per Calibration notes
+Cooling Capacity,727.8500585,,,(sqft/ton)
+Cooling SEER,9,,,
+Heating Capacity (sqft/kBtu),38.89284622,,,
+Heating HSPF,5.7,,,
+Heating AFUE,0.74,,,
+Total Duct Leakage (%),15,,,
+1-Story Home Supply Duct Leakage (%),11.25,,,
+2-Story Home Supply Duct Leakage (%),10.05,,,
+Attic Cool Design T,80,,,
+Attic Heat Design T,32,,,
+Effective Supply Duct R,,2.8,,
+Effective Return Duct R,,2.8,,
+Wall Insulation,,15.96,,MC3 value
+Attic Cavity,,26.8,,MC3 value
+Equipment Load | Living,0.8,,,MC3 value( unit may be W/sf)
+Equipment Load | Bedroom,0.2,,,MC3 value( unit may be W/sf)
+Lighting Load,0.8,,,MC3 value( unit may be W/sf)
+sheathing_consol_layer_thickness,0.0127,,,(m-SI) Added per Modelkit parameters table
+sheathing_consol_layer_conductivity,0.0940184,,,(w/m.k-SI) Added per Modelkit parameters table
+wall_consol_layer_thickness,0.095,,,(m-SI) Added per Modelkit parameters table
+wall_consol_layer_conductivity,0.057165,,,(w/m.k-SI) Added per Modelkit parameters table
+ceil_consol_layer_thickness,0.22,,,(m-SI) Added per Modelkit parameters table
+ceil_consol_layer_conductivity,0.0617176,,,(w/m.k-SI) Added per Modelkit parameters table
+floor_consol_layer_thickness,0.165,,,(m-SI) Added per Modelkit parameters table
+door_thermal_resistance,,0.33245283,,UPDATED per Calibration notes
+heating_sch_DEER_mrn,16.67,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_day,16.67,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_eve,16.67,,,(Celcius-SI) Added per Modelkit parameters table
+heating_sch_DEER_nit,16.67,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_mrn,24.44,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_day,24.44,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_eve,24.44,,,(Celcius-SI) Added per Modelkit parameters table
+cooling_sch_DEER_nit,24.44,,,(Celcius-SI) Added per Modelkit parameters table
+climate_zone,16,,,
+shading_control,OnNightIfHeatingAndOnDayIfCooling,,,
+CeilIns_Existing_Base_R_thichness,0.26,,,
+CeilIns_Existing_AddR11_thichness,0.37956,,,
+CeilIns_Existing_AddR19_thichness,0.466513,,,
+CeilIns_Existing_AddR30_thichness,0.586073,,,
+CeilIns_Existing_AddR38_thichness,0.673026,,,
+cool_coil_capacity,9707,,,

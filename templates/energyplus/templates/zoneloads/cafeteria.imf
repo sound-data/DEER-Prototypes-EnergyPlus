@@ -1,0 +1,146 @@
+<%#INITIALIZE
+parameter "zone_name"
+
+parameter "thermal_comfort", :default=>false
+parameter "occupant_density", :default=>0.0148|'1/ft2'
+parameter "occupant_schedule", :default=>
+"
+  Through: 12/31,
+  For: WinterDesignDays,
+  Until: 24:00, 0.00,
+  For: SummerDesignDays,
+  Until: 24:00, 1.00,
+  For: AllOtherDays,
+  Until: 02:00, 0.00,
+  Until: 05:00, 0.10,
+  Until: 07:00, 0.75,
+  Until: 08:00, 0.375,
+  Until: 11:00, 0.10,
+  Until: 12:00, 1.00,
+  Until: 13:00, 0.50,
+  Until: 16:00, 0.10,
+  Until: 17:00, 0.40,
+  Until: 18:00, 0.20,
+  Until: 20:00, 0.05,
+  Until: 24:00, 0.00;
+"
+
+parameter "air_leakage", :default=>0.4|'CFM/ft2'  # Air leakage rate when pressurized at 0.3 inch H2O (75 Pa)
+parameter "infil_ach", :default=>1.0  # Air Changes per Hour
+parameter "infiltration_method", :default=>'Flow/ExteriorArea'  # (Flow/ExteriorArea | Flow/ExteriorWallArea |AirChanges/Hour)
+parameter "infiltration_schedule", :default=>  # Use this schedule to decrease infiltration if the building is pressurized during HVAC operation
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 1.0;
+"
+
+parameter "lighting_density", :default=>1.45|'W/ft2'
+parameter "lights_fraction_radiant", :default=>0.7
+parameter "lighting_schedule", :default=>
+"
+  Through: 12/31,
+  For: WinterDesignDays,
+  Until: 24:00, 0.00,
+  For: SummerDesignDays,
+  Until: 24:00, 1.00,
+  For: AllOtherDays,
+  Until: 02:00, 0.10,
+  Until: 04:00, 0.50,
+  Until: 19:00, 1.00,
+  Until: 20:00, 0.50,
+  Until: 24:00, 0.10;
+"
+
+parameter "equipment_density", :default=>33.1|'W/ft2'
+parameter "equipment_fraction_latent", :default=>0
+parameter "equipment_fraction_radiant", :default=>0.5
+parameter "equipment_fraction_lost", :default=>0
+parameter "equipment_schedule", :default=>
+"
+  Through: 12/31,
+  For: WinterDesignDays,
+  Until: 24:00, 0.00,
+  For: SummerDesignDays,
+  Until: 24:00, 1.00,
+  For: AllOtherDays,
+  Until: 03:00, 0.103,
+  Until: 04:00, 0.570,
+  Until: 05:00, 0.939,
+  Until: 06:00, 1.000,
+  Until: 07:00, 0.820,
+  Until: 08:00, 0.592,
+  Until: 09:00, 0.920,
+  Until: 10:00, 0.683,
+  Until: 11:00, 0.760,
+  Until: 12:00, 0.801,
+  Until: 13:00, 0.772,
+  Until: 14:00, 0.665,
+  Until: 15:00, 0.680,
+  Until: 16:00, 0.755,
+  Until: 17:00, 0.746,
+  Until: 18:00, 0.278,
+  Until: 24:00, 0.103;
+  "
+
+parameter "gas_max", :default=>0|'W'
+parameter "gas_schedule", :default=>
+"
+  Through: 12/31,
+  For: WinterDesignDays,
+  Until: 24:00, 0.00,
+  For: SummerDesignDays,
+  Until: 24:00, 1.00,
+  For: AllOtherDays,
+  Until: 09:00, 0.209,
+  Until: 10:00, 0.569,
+  Until: 11:00, 0.930,
+  Until: 12:00, 0.569,
+  Until: 15:00, 0.209,
+  Until: 17:00, 1.000,
+  Until: 24:00, 0.209;
+"
+
+parameter "dhw_flow", :default=>3.97|'GPM'
+parameter "dhw_recovery", :default =>false
+parameter "dhw_temp", :default=>105|'F'  # DHW mixed hot water temperature
+parameter "dhw_schedule", :default=>
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 03:00, 0.00,
+  Until: 06:00, 0.25,
+  Until: 20:00, 0.25,
+  Until: 24:00, 0.00;
+ "
+
+parameter "graywater_storage_tank", :default=> "" # variable creates tank to store graywater from sinks, showers, laundry, dishwashing
+parameter "graywater_supply_tank", :default=> "" # variable creates tank to supply graywater for toilet flushing
+%>
+
+<%= insert 'zonetemplate.imf',
+  :zone_name=>zone_name,
+  :occupant_density=>occupant_density,
+  :thermal_comfort=>thermal_comfort,
+  :occupant_schedule=>occupant_schedule,
+  :air_leakage=>air_leakage,
+  :infil_ach=>infil_ach,
+  :infiltration_method=>infiltration_method,
+  :infiltration_schedule=>infiltration_schedule,
+  :lighting_density=>lighting_density,
+  :lights_fraction_radiant=>lights_fraction_radiant,
+  :lighting_schedule=>lighting_schedule,
+  :equipment_density=>equipment_density,
+  :equipment_fraction_latent=>equipment_fraction_latent,
+  :equipment_fraction_radiant=>equipment_fraction_radiant,
+  :equipment_fraction_lost=>equipment_fraction_lost,
+  :equipment_schedule=>equipment_schedule,
+  :gas_max=>gas_max,
+  :gas_schedule=>gas_schedule,
+  :dhw_flow=>dhw_flow,
+  :dhw_recovery=>dhw_recovery,
+  :dhw_temp=>dhw_temp,
+  :dhw_schedule=>dhw_schedule,
+  :graywater_storage_tank=>graywater_storage_tank,
+  :graywater_supply_tank=>graywater_supply_tank
+%>

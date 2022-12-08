@@ -1,0 +1,11 @@
+<%#INITIALIZE
+parameter "zone_name"
+
+parameter "air_leakage", :default=>0.4|'CFM/ft2'  # Air leakage rate when pressurized at 0.3 inch H2O (75 Pa)
+
+%>
+
+<%= insert 'zonetemplate.imf',
+  :zone_name=>zone_name,
+  :air_leakage=>air_leakage
+%>

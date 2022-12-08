@@ -1,0 +1,49 @@
+<%#INITIALIZE
+parameter "zone_name"
+parameter "zone_area"
+
+parameter "infil_sla", :default=>0.0033
+parameter "infiltration_schedule", :default=>  # Use this schedule to decrease infiltration if the building is pressurized during HVAC operation
+"
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 1.0;
+"
+
+parameter "zone_height", :default=>8|'ft'
+
+%>
+
+<%
+# Infiltration
+
+g = 9.81
+
+nl = 0.5 # neutral level
+hlf = 0.4 # horizontal leakage fraction
+sc = 0.5/3.0 # shelter coefficient
+
+f_s = 2.0/3.0*(1 + hlf/2.0)*(2*nl*(1 - nl))**0.5/(nl**0.5 + (1 - nl)**0.5)
+f_t =0.47
+f_w = sc*(1 - hlf)**0.333*f_t
+
+stack_coeff = f_s**2*g*zone_height/((70|'F') + 273.15)
+wind_coeff = f_w**2
+
+a_o = infil_sla*zone_area
+
+%>
+
+  ZoneInfiltration:EffectiveLeakageArea,
+     <%= zone_name %> Infiltration,   !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Infiltration Schedule,  !- Schedule Name
+     <%= a_o*10000.0 %>,           !- Effective Air Leakage Area {cm2}
+     <%= stack_coeff*0.01 %>,           !- Stack Coefficient {(L/s)/(cm^4-K)}
+     <%= wind_coeff*0.01 %>;           !- Wind Coefficient {(L/s)2/(cm^4-(m/s)2)}
+
+
+  Schedule:Compact,
+    <%= zone_name %> Infiltration Schedule,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+<%= infiltration_schedule %>

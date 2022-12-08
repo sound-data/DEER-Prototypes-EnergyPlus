@@ -1,0 +1,12 @@
+The *.FIN4 files use a fixed-field format that can be read by any text editor.  
+
+Line 1 contains the following information on the weather station: Station Name, WMO Station Number, Latitude (N +, S-), Longitude (E +, W -), Elevation (m), WMO region number, Time Zone, ISO-3166 3-letter Country Code, and Koeppen Climate Classification. 
+Lines 2 and 3 contain the self-describing column headers. The capital letters attached to some of the values indicate the value is interpolated, L = Linear, F = Fourier Series, R = Repeating, etc. 
+
+To import a *.FIN4 file into Excel, please download this template file that uses VB to parse the data columns between values and the data quality   flags: http://www.whiteboxtechnologies.com/UTIL/Fin4toExcel.xlsm 
+
+I wish to thank Didier Thevenard and Fiona Fenlon of Canadian Solar for their help in developing this VB script.
+
+Joe Huang
+White Box Technologies, Inc.
+August 21, 2015

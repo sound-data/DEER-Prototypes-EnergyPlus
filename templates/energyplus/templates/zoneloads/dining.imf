@@ -1,0 +1,114 @@
+<%#INITIALIZE
+parameter "zone_name"
+
+parameter "thermal_comfort", :default=>false
+parameter "occupant_density", :default=>0.0781|'1/ft2'
+parameter "occupant_schedule", :default=>
+"
+  Through: 12/31,
+  For: WinterDesignDays,
+  Until: 24:00, 0.00,
+  For: SummerDesignDays,
+  Until: 24:00, 1.00,
+  For: AllOtherDays,
+  Until: 04:00, 0.00,
+  Until: 06:00, 0.05,
+  Until: 07:00, 0.75,
+  Until: 08:00, 0.375,
+  Until: 11:00, 0.05,
+  Until: 12:00, 1.00,
+  Until: 13:00, 0.50,
+  Until: 16:00, 0.05,
+  Until: 17:00, 0.40,
+  Until: 18:00, 0.20,
+  Until: 20:00, 0.05,
+  Until: 24:00, 0.00;
+"
+
+parameter "air_leakage", :default=>0.4|'CFM/ft2'  # Air leakage rate when pressurized at 0.3 inch H2O (75 Pa)
+parameter "infil_ach", :default=>1.0  # Air Changes per Hour
+parameter "infiltration_method", :default=>'Flow/ExteriorArea'  # (Flow/ExteriorArea | Flow/ExteriorWallArea |AirChanges/Hour)
+parameter "infiltration_schedule", :default=>  # Use this schedule to decrease infiltration if the building is pressurized during HVAC operation
+"
+  Through: 12/31,
+  For: AllDays,
+  Until: 24:00, 1.0;
+"
+
+parameter "lighting_density", :default=>0.7672|'W/ft2'
+parameter "lights_fraction_return", :default=>0
+parameter "lights_fraction_radiant", :default=>0.7
+parameter "lighting_schedule", :default=>
+"
+  Through: 12/31,
+  For: WinterDesignDays,
+  Until: 24:00, 0.00,
+  For: SummerDesignDays,
+  Until: 24:00, 1.00,
+  For: Weekdays,
+  Until: 04:00, 0.05,
+  Until: 06:00, 0.50,
+  Until: 18:00, 0.90,
+  Until: 20:00, 0.50,
+  Until: 24:00, 0.05,
+  For: Saturday,
+  Until: 04:00, 0.05,
+  Until: 06:00, 0.50,
+  Until: 18:00, 0.90,
+  Until: 20:00, 0.50,
+  Until: 24:00, 0.05,
+  For: Sunday Holidays AllOtherDays,
+  Until: 04:00, 0.05,
+  Until: 06:00, 0.50,
+  Until: 18:00, 0.90,
+  Until: 20:00, 0.50,
+  Until: 24:00, 0.05;
+"
+
+parameter "equipment_density", :default=>0.819|'W/ft2'
+parameter "equipment_fraction_latent", :default=>0
+parameter "equipment_fraction_radiant", :default=>0.5
+parameter "equipment_fraction_lost", :default=>0
+parameter "equipment_schedule", :default=>
+"
+  Through: 12/31,
+  For: WinterDesignDays,
+  Until: 24:00, 0.00,
+  For: SummerDesignDays,
+  Until: 24:00, 1.00,
+  For: AllOtherDays,
+  Until: 04:00, 0.000,
+  Until: 05:00, 0.228,
+  Until: 06:00, 1.000,
+  Until: 07:00, 0.772,
+  Until: 09:00, 0.000,
+  Until: 10:00, 0.114,
+  Until: 11:00, 0.772,
+  Until: 12:00, 0.658,
+  Until: 15:00, 0.000,
+  Until: 16:00, 0.666,
+  Until: 17:00, 0.772,
+  Until: 18:00, 0.543,
+  Until: 24:00, 0.100;
+  "
+%>
+
+<%= insert 'zonetemplate.imf',
+  :zone_name=>zone_name,
+  :occupant_density=>occupant_density,
+  :thermal_comfort=>thermal_comfort,
+  :occupant_schedule=>occupant_schedule,
+  :air_leakage=>air_leakage,
+  :infil_ach=>infil_ach,
+  :infiltration_method=>infiltration_method,
+  :infiltration_schedule=>infiltration_schedule,
+  :lighting_density=>lighting_density,
+  :lights_fraction_return=>lights_fraction_return,
+  :lights_fraction_radiant=>lights_fraction_radiant,
+  :lighting_schedule=>lighting_schedule,
+  :equipment_density=>equipment_density,
+  :equipment_fraction_latent=>equipment_fraction_latent,
+  :equipment_fraction_radiant=>equipment_fraction_radiant,
+  :equipment_fraction_lost=>equipment_fraction_lost,
+  :equipment_schedule=>equipment_schedule
+%>

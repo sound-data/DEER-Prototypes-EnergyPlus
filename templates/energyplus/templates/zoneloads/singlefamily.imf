@@ -1,0 +1,1552 @@
+<%#INITIALIZE
+
+# This template follows the Building America airflow calculations for single
+# family houses. Routines are borrowed from BEopt.
+
+parameter "zone_name"
+parameter "zone_area"
+parameter "number_of_bedrooms"
+parameter "number_of_bathrooms"
+
+parameter "number_of_stories", :default=>1
+parameter "zone_multiplier", :default=>1 # Will apply to DHW flows that aren't changed by multiplier input field of Zone object
+parameter "zone_height", :default=>10|'ft'
+
+parameter "thermal_comfort", :default=>false
+
+# Building America occupant schedule
+parameter "occupant_schedule", :default=>
+"
+    Through: 12/31,
+    For: SummerDesignDay,
+    Until: 24:00,1.00,
+    For: WinterDesignDay,
+    Until: 24:00,0.00,
+    For: AllOtherDays,
+    Until: 07:00,1.00,
+    Until: 08:00,0.8831,
+    Until: 09:00,0.40861,
+    Until: 16:00,0.24189,
+    Until: 17:00,0.29498,
+    Until: 18:00,0.5531,
+    Until: 21:00,0.89693,
+    Until: 24:00,1.00;
+"
+
+
+# Infiltration
+parameter "infil_sla", :default=>0.00034
+
+# Natural Ventilation
+parameter "open_window_area", :default=>0|'ft2'
+
+# Mechanical Ventilation
+
+# Duct leakage
+parameter "system_name", :default=>nil
+parameter "air_handler_zone", :default=>""
+
+parameter "supply_leakage_frac", :default=>0.1
+parameter "return_leakage_frac", :default=>0.05
+parameter "duct_r_value", :default=>1.7|'R-IP'
+
+parameter "imbalance_oa_frac", :default=>1
+
+# Duct Conduction
+parameter "supply_insulation", :default=>8|'R-IP'
+parameter "return_insulation", :default=>8|'R-IP'
+
+# DHW
+parameter "dhw_supply_setpoint", :default=>125|'F'
+parameter "dhw_mixed_setpoint", :default=>110|'F'
+parameter "dhw_recovery", :default=>false
+
+parameter "graywater_supply_tank", :default=>"" # ("" | "Graywater Tank" )
+parameter "graywater_storage_tank", :default=> "" # variable creates tank to store graywater from sinks, showers, laundry, dishwashing
+
+# LIGHTING
+parameter "hardwired_frac_inc_int", :default=>0.66 # fraction of hard-wired interior lamps that are incandescent
+parameter "hardwired_frac_cfl_int", :default=>0.21 # fraction of hard-wired interior lamps that are CFL
+parameter "hardwired_frac_led_int", :default=>0.0 # fraction of hard-wired interior lamps that are LED
+parameter "hardwired_frac_lf_int", :default=>0.13 # fraction of hard-wired interior lamps that are linear fluorescent (T-8, e.g.)
+parameter "plugin_frac_inc_int", :default=>0.66 # fraction of plug-in interior lamps that are incandescent
+parameter "plugin_frac_cfl_int", :default=>0.21 # fraction of plug-in interior lamps that are CFL
+parameter "plugin_frac_led_int", :default=>0.0 # fraction of plug-in interior lamps that are LED
+parameter "plugin_frac_lf_int", :default=>0.13 # fraction of plug-in interior lamps that are linear fluorescent (T-8, e.g.)
+parameter "exterior_frac_inc", :default=>0.66 # fraction of exterior lamps that are incandescent
+parameter "exterior_frac_cfl", :default=>0.21 # fraction of exterior lamps that are CFL
+parameter "exterior_frac_led", :default=>0.0 # fraction of exterior lamps that are LED
+parameter "exterior_frac_lf", :default=>0.13 # fraction of exterior lamps that are linear fluorescent (T-8, e.g.)
+
+# EQUIPMENT
+parameter "plug_load_multiplier", :default=>1.0
+
+# REFRIGERATOR
+parameter "annual_fridge_elec", :default=>434.0 # annual fridge elec use in kwh
+%>
+
+<%
+# Shortened zone name without spaces to be used in EMS objects
+zone_name_ems = zone_name.delete(' ')
+%>
+
+<%
+mdays = [31,
+         28,
+         31,
+         30,
+         31,
+         30,
+         31,
+         31,
+         30,
+         31,
+         30,
+         31]
+
+occupants = 0.59*number_of_bedrooms + 0.87
+
+%>
+
+<%
+# Lighting
+light_month=[0.116, 0.092, 0.086, 0.068, 0.061, 0.055,
+             0.058, 0.065, 0.076, 0.094, 0.108, 0.120]
+
+light_schs=[[0.024, 0.014, 0.010, 0.010, 0.010, 0.010, 0.023, 0.047, 0.045, 0.023, 0.019, 0.019, 0.019, 0.019, 0.020, 0.025, 0.042, 0.078, 0.116, 0.123, 0.106, 0.089, 0.067, 0.046],
+            [0.027, 0.016, 0.011, 0.011, 0.011, 0.012, 0.023, 0.046, 0.041, 0.020, 0.016, 0.016, 0.016, 0.016, 0.017, 0.020, 0.031, 0.060, 0.103, 0.132, 0.123, 0.102, 0.076, 0.053],
+            [0.032, 0.019, 0.013, 0.013, 0.013, 0.014, 0.022, 0.039, 0.031, 0.016, 0.013, 0.013, 0.013, 0.013, 0.013, 0.015, 0.023, 0.046, 0.089, 0.133, 0.143, 0.120, 0.090, 0.063],
+            [0.039, 0.024, 0.016, 0.016, 0.016, 0.017, 0.028, 0.052, 0.042, 0.020, 0.016, 0.016, 0.016, 0.016, 0.016, 0.016, 0.017, 0.023, 0.042, 0.083, 0.136, 0.147, 0.110, 0.076],
+            [0.045, 0.027, 0.018, 0.018, 0.018, 0.019, 0.027, 0.045, 0.034, 0.018, 0.015, 0.015, 0.015, 0.015, 0.015, 0.015, 0.016, 0.020, 0.035, 0.070, 0.123, 0.161, 0.126, 0.088],
+            [0.048, 0.029, 0.019, 0.019, 0.019, 0.020, 0.027, 0.043, 0.032, 0.018, 0.016, 0.015, 0.015, 0.015, 0.015, 0.016, 0.016, 0.020, 0.032, 0.062, 0.111, 0.161, 0.135, 0.094],
+            [0.048, 0.029, 0.019, 0.019, 0.019, 0.020, 0.028, 0.046, 0.035, 0.019, 0.016, 0.016, 0.016, 0.016, 0.016, 0.016, 0.017, 0.020, 0.032, 0.061, 0.110, 0.159, 0.133, 0.092],
+            [0.042, 0.025, 0.017, 0.017, 0.017, 0.018, 0.029, 0.051, 0.040, 0.020, 0.016, 0.016, 0.016, 0.016, 0.016, 0.016, 0.017, 0.022, 0.037, 0.072, 0.123, 0.158, 0.118, 0.082],
+            [0.035, 0.021, 0.014, 0.014, 0.014, 0.015, 0.028, 0.053, 0.044, 0.022, 0.017, 0.017, 0.017, 0.017, 0.017, 0.017, 0.019, 0.028, 0.052, 0.095, 0.142, 0.132, 0.099, 0.069],
+            [0.029, 0.018, 0.012, 0.012, 0.012, 0.013, 0.027, 0.055, 0.049, 0.024, 0.019, 0.019, 0.019, 0.019, 0.019, 0.020, 0.025, 0.041, 0.075, 0.118, 0.130, 0.109, 0.082, 0.057],
+            [0.025, 0.015, 0.010, 0.010, 0.010, 0.011, 0.019, 0.037, 0.036, 0.020, 0.017, 0.017, 0.017, 0.017, 0.019, 0.027, 0.049, 0.087, 0.119, 0.119, 0.110, 0.093, 0.069, 0.048],
+            [0.023, 0.014, 0.009, 0.009, 0.009, 0.010, 0.021, 0.043, 0.042, 0.023, 0.019, 0.019, 0.019, 0.019, 0.021, 0.029, 0.052, 0.091, 0.120, 0.112, 0.102, 0.086, 0.064, 0.045]]
+
+lighting_base_living=334 # kWh/year
+lighting_density_living=0.542 # kWh/ft2/year
+lighting_density_ext=0.145 # kWh/ft2/year
+
+benchmark_light_int_hw = 0.8 * (lighting_base_living + (lighting_density_living|'1/ft2')*zone_area)  # Benchmark interior hard-wired lighting, kWh/year
+benchmark_light_int_plug = 0.2 * (lighting_base_living + (lighting_density_living|'1/ft2')*zone_area)  # Benchmark interior plug-in lighting, kWh/year
+benchmark_light_ext = (lighting_density_ext|'1/ft2')*zone_area  # Benchmark exterior lighting, kWh/year
+
+# annual_light_elec = (lighting_base_living + (lighting_density_living|'1/ft2')*zone_area)*1000  # kWh/year
+# annual_ext_light_elec = (lighting_density_ext|'1/ft2')*zone_area*1000  # kWh/year
+
+smart_replacement_factor = (0.1672 * hardwired_frac_inc_int ** 4
+                                    - 0.4817 * hardwired_frac_inc_int ** 3
+                                    + 0.6336 * hardwired_frac_inc_int ** 2
+                                    - 0.492 * hardwired_frac_inc_int
+                                    + 1.1561)
+
+er_cfl = 0.27 # efficacy ratio of CFL, from Table 18 of NREL's House Simulation Protocols
+er_led = 0.30 # efficacy ratio of LED, from Table 18 of NREL's House Simulation Protocols
+er_lf = 0.17 # efficacy ratio of linear fluorescent, from Table 18 of NREL's House Simulation Protocols
+
+adjusted_light_int_hw = benchmark_light_int_hw * ( ( ( hardwired_frac_inc_int + 0.34 ) + ( hardwired_frac_cfl_int - 0.21 )*er_cfl + hardwired_frac_led_int*er_led + ( hardwired_frac_lf_int - 0.13)*er_lf ) * smart_replacement_factor * 0.9 + 0.1 )
+adjusted_light_int_plug = benchmark_light_int_plug * ( ( ( plugin_frac_inc_int + 0.34 ) + ( plugin_frac_cfl_int - 0.21 )*er_cfl + plugin_frac_led_int*er_led + ( plugin_frac_lf_int - 0.13)*er_lf ) * smart_replacement_factor * 0.9 + 0.1 )
+adjusted_light_ext = benchmark_light_ext * ( ( ( exterior_frac_inc + 0.34 ) + ( exterior_frac_cfl - 0.21 )*er_cfl + exterior_frac_led*er_led + ( exterior_frac_lf - 0.13)*er_lf ) * 0.9 + 0.1 )
+%>
+
+  Lights,
+    <%= zone_name %> Hard-Wired Interior Lighting,  !- Name
+    <%= zone_name %>,  !- Zone Name
+    <%= zone_name %> Lighting Schedule,  !- Schedule Name
+    LightingLevel,              !- Design Level Calculation Method
+    <%= adjusted_light_int_hw * 1000 %>,  !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.6,                     !- Fraction Radiant
+    0.2,                     !- Fraction Visible
+    1;                       !- Fraction Replaceable
+
+  Lights,
+    <%= zone_name %> Plug-In Interior Lighting,  !- Name
+    <%= zone_name %>,  !- Zone Name
+    <%= zone_name %> Lighting Schedule,  !- Schedule Name
+    LightingLevel,              !- Design Level Calculation Method
+    <%= adjusted_light_int_plug * 1000 %>,  !- Lighting Level {W}
+    ,                        !- Watts per Zone Floor Area {W/m2}
+    ,                        !- Watts per Person {W/person}
+    0,                       !- Return Air Fraction
+    0.6,                     !- Fraction Radiant
+    0.2,                     !- Fraction Visible
+    1;                       !- Fraction Replaceable
+
+  Exterior:Lights,
+    <%= zone_name %> Exterior Lighting,    !- Name
+    <%= zone_name %> Lighting Schedule,     !- Schedule Name
+    <%= adjusted_light_ext * 1000 %>,   !- Design Level {W}
+    ScheduleNameOnly;     !- Control Option
+
+  Schedule:Compact,
+    <%= zone_name %> Lighting Schedule,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+<% for m in 1..12 %>
+    Through: <%= m %>/<%= mdays[m-1] %>,
+    For: AllDays,
+  <% for h in 1..24 %>
+    <% if m == 12 and h == 24 %>
+    Until: <%= h %>:00,<%= light_schs[m-1][h-1]*light_month[m-1]/mdays[m-1] %>;
+    <% else %>
+    Until: <%= h %>:00,<%= light_schs[m-1][h-1]*light_month[m-1]/mdays[m-1] %>,
+    <% end %>
+  <% end %>
+<% end %>
+
+
+
+<%
+# Refrigerator
+fridge_sch = [0.800,
+              0.783,
+              0.766,
+              0.743,
+              0.731,
+              0.731,
+              0.760,
+              0.800,
+              0.817,
+              0.829,
+              0.800,
+              0.800,
+              0.840,
+              0.840,
+              0.840,
+              0.829,
+              0.886,
+              0.971,
+              1.000,
+              0.971,
+              0.943,
+              0.926,
+              0.886,
+              0.829]
+
+fridge_month = [0.837,
+                0.835,
+                1.084,
+                1.084,
+                1.084,
+                1.096,
+                1.096,
+                1.096,
+                1.096,
+                0.931,
+                0.925,
+                0.837]
+
+daily_fridge_elec = annual_fridge_elec/365.0*1000 # convert kWh/year to Wh/day
+peak_hour_fraction = 0.05 # used to convert Wh/day to peak W/day draw
+peak_fridge_elec = daily_fridge_elec*peak_hour_fraction
+%>
+
+  ! Appliances and Plug Loads
+
+  ElectricEquipment,
+     <%= zone_name %> Refrigerator,       !- Name
+     <%= zone_name %>,   !- Zone Name
+     <%= zone_name %> Refrigerator Sch,  !- Schedule Name
+     EquipmentLevel,     !- Design Level Calculation Method
+     <%= peak_fridge_elec %>,   !- Design Level {W}
+     ,                   !- Power per Zone Floor Area {W/m}
+     ,                   !- Power per Person {W/person}
+     0,                  !- Fraction Latent
+     0,                  !- Fraction Radiant
+     0,                  !- Fraction Lost
+     Appl;               !- End-Use Subcategory
+
+  Schedule:Compact,
+    <%= zone_name %> Refrigerator Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+<% for m in 1..12 %>
+    Through: <%= m %>/<%= mdays[m-1] %>,
+    For: AllDays,
+  <% for h in 1..24 %>
+    <% if m == 12 and h == 24 %>
+    Until: <%= h %>:00,<%= fridge_sch[h-1]*fridge_month[m-1] %>;
+    <% else %>
+    Until: <%= h %>:00,<%= fridge_sch[h-1]*fridge_month[m-1] %>,
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<%
+# Cooking Range
+range_sch = [0.047,
+             0.047,
+             0.024,
+             0.024,
+             0.047,
+             0.071,
+             0.165,
+             0.283,
+             0.307,
+             0.321,
+             0.283,
+             0.330,
+             0.377,
+             0.307,
+             0.377,
+             0.292,
+             0.613,
+             1.000,
+             0.778,
+             0.401,
+             0.236,
+             0.165,
+             0.104,
+             0.071]
+
+range_month = [1.097,
+               1.097,
+               0.991,
+               0.987,
+               0.991,
+               0.890,
+               0.896,
+               0.896,
+               0.890,
+               1.085,
+               1.085,
+               1.097]
+
+range_hood_flow = 100|'cfm'
+range_hood_elec = range_hood_flow*0.3/(1|'cfm')
+
+daily_range_elec = (250 + 83*number_of_bedrooms)/365.0*1000
+peak_hour_fraction = 0.15
+peak_range_elec = daily_range_elec*peak_hour_fraction
+
+%>
+
+  Schedule:Compact,
+    <%= zone_name %> Cooking Range Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+<% for m in 1..12 %>
+    Through: <%= m %>/<%= mdays[m-1] %>,
+    For: AllDays,
+  <% for h in 1..24 %>
+    <% if m == 12 and h == 24 %>
+    Until: <%= h %>:00,<%= range_sch[h-1]*range_month[m-1] %>;
+    <% else %>
+    Until: <%= h %>:00,<%= range_sch[h-1]*range_month[m-1] %>,
+    <% end %>
+  <% end %>
+<% end %>
+
+  ElectricEquipment,
+     <%= zone_name %> Cooking Range Hood,  !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Cooking Range Hood Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= range_hood_elec %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0.0,                  !- Fraction Latent
+     0.0,                  !- Fraction Radiant
+     1.0,                  !- Fraction Lost
+     Fans;                 !- End-Use Subcategory
+
+  Schedule:Compact,
+    <%= zone_name %> Cooking Range Hood Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 18:00, 0,
+    Until: 19:00, 1,
+    Until: 24:00, 0;
+
+  ElectricEquipment,
+     <%= zone_name %> Cooking Range,  !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Cooking Range Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= peak_range_elec %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0.3,                  !- Fraction Latent
+     0.24,                 !- Fraction Radiant
+     0.3,                  !- Fraction Lost
+     Appl;                 !- End-Use Subcategory
+
+<%
+# Clothes Dryer
+clothes_dryer_exhaust_flow = 100|'cfm'
+
+daily_cd_elec = (538.2 + 179.4*number_of_bedrooms)/365.0*1000
+peak_hour_fraction = 0.081
+peak_cd_elec = daily_cd_elec*peak_hour_fraction
+
+%>
+
+  Schedule:Compact,
+    <%= zone_name %> Clothes Dryer Exhaust Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 11:00, 0,
+    Until: 12:00, 1,
+    Until: 24:00, 0;
+
+  Schedule:Compact,
+    <%= zone_name %> Clothes Dryer Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 01:00, 0.122,
+    Until: 02:00, 0.073,
+    Until: 03:00, 0.049,
+    Until: 04:00, 0.024,
+    Until: 05:00, 0.049,
+    Until: 06:00, 0.073,
+    Until: 07:00, 0.196,
+    Until: 08:00, 0.391,
+    Until: 09:00, 0.597,
+    Until: 10:00, 0.841,
+    Until: 11:00, 0.963,
+    Until: 12:00, 1.002,
+    Until: 13:00, 0.914,
+    Until: 14:00, 0.831,
+    Until: 15:00, 0.709,
+    Until: 16:00, 0.748,
+    Until: 17:00, 0.685,
+    Until: 18:00, 0.670,
+    Until: 19:00, 0.636,
+    Until: 20:00, 0.626,
+    Until: 21:00, 0.645,
+    Until: 22:00, 0.670,
+    Until: 23:00, 0.538,
+    Until: 24:00, 0.293;
+
+  ElectricEquipment,
+     <%= zone_name %> Clothes Dryer,  !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Clothes Dryer Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= peak_cd_elec %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0.05,                 !- Fraction Latent
+     0.09,                 !- Fraction Radiant
+     0.7999999999999999,   !- Fraction Lost
+     Appl;                 !- End-Use Subcategory
+
+<%
+# Clothes Washer
+
+daily_cw_elec = (38.8 + 12.9*number_of_bedrooms)/365.0*1000
+peak_hour_fraction = 0.086
+peak_cw_elec = daily_cw_elec*peak_hour_fraction
+
+daily_cw_water = (2.35 + 0.78*number_of_bedrooms) # Gallons
+peak_cw_water = zone_multiplier*daily_cw_water*peak_hour_fraction*(1|'gpm')/60
+
+%>
+
+  ElectricEquipment,
+     <%= zone_name %> Clothes Washer,  !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Clothes Washer Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= peak_cw_elec %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0,                    !- Fraction Latent
+     0.48,                 !- Fraction Radiant
+     0.2,                  !- Fraction Lost
+     Appl;                 !- End-Use Subcategory
+
+  WaterUse:Equipment,
+     <%= zone_name %> Clothes Washer,  !- Name
+     Domestic Hot Water,    !- End-Use Subcategory
+     <%= peak_cw_water %>,  !- Peak Flow rate {m^3/s}
+     <%= zone_name %> Clothes Washer Sch,  !- Flow Rate Fraction Schedule Name
+     <%= zone_name %> Clothes Washer Temp Sch;  !- Target Temperature Schedule Name
+
+  Schedule:Constant,
+     <%= zone_name %> Clothes Washer Temp Sch,  !- Name
+     Any Number,            !- Schedule Type
+     <%= dhw_supply_setpoint %>;    !- Hourly Value
+
+  Schedule:Compact,
+    <%= zone_name %> Clothes Washer Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 01:00, 0.105,
+    Until: 02:00, 0.081,
+    Until: 03:00, 0.047,
+    Until: 04:00, 0.047,
+    Until: 05:00, 0.081,
+    Until: 06:00, 0.128,
+    Until: 07:00, 0.256,
+    Until: 08:00, 0.570,
+    Until: 09:00, 0.849,
+    Until: 10:00, 1.000,
+    Until: 11:00, 0.977,
+    Until: 12:00, 0.872,
+    Until: 13:00, 0.779,
+    Until: 14:00, 0.698,
+    Until: 15:00, 0.570,
+    Until: 16:00, 0.605,
+    Until: 17:00, 0.581,
+    Until: 18:00, 0.570,
+    Until: 19:00, 0.570,
+    Until: 20:00, 0.570,
+    Until: 21:00, 0.570,
+    Until: 22:00, 0.547,
+    Until: 23:00, 0.372,
+    Until: 24:00, 0.198;
+
+<%
+# Dishwasher
+
+daily_dw_elec = (87.6 + 29.2*number_of_bedrooms)/365.0*1000
+peak_hour_fraction = 0.111
+peak_dw_elec = daily_dw_elec*peak_hour_fraction
+
+daily_dw_water = (2.26 + 0.75*number_of_bedrooms) # Gallons
+peak_dw_water = zone_multiplier*daily_dw_water*peak_hour_fraction*(1|'gpm')/60
+
+%>
+
+  ElectricEquipment,
+     <%= zone_name %> Dishwasher,  !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Dishwasher Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= peak_dw_elec %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0.15,                !- Fraction Latent
+     0.36,                !- Fraction Radiant
+     0.25,                !- Fraction Lost
+     Appl;                 !- End-Use Subcategory
+
+  WaterUse:Equipment,
+     <%= zone_name %> Dishwasher,  !- Name
+     Domestic Hot Water,    !- End-Use Subcategory
+     <%= peak_dw_water %>,  !- Peak Flow rate {m^3/s}
+     <%= zone_name %> Dishwasher Sch,  !- Flow Rate Fraction Schedule Name
+     <%= zone_name %> Dishwasher Temp Sch;  !- Target Temperature Schedule Name
+
+  Schedule:Constant,
+     <%= zone_name %> Dishwasher Temp Sch,  !- Name
+     Any Number,            !- Schedule Type
+     <%= dhw_supply_setpoint %>;    !- Hourly Value
+
+  Schedule:Compact,
+    <%= zone_name %> Dishwasher Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 01:00, 0.135,
+    Until: 02:00, 0.063,
+    Until: 03:00, 0.045,
+    Until: 04:00, 0.027,
+    Until: 05:00, 0.027,
+    Until: 06:00, 0.090,
+    Until: 07:00, 0.180,
+    Until: 08:00, 0.279,
+    Until: 09:00, 0.523,
+    Until: 10:00, 0.586,
+    Until: 11:00, 0.505,
+    Until: 12:00, 0.432,
+    Until: 13:00, 0.369,
+    Until: 14:00, 0.414,
+    Until: 15:00, 0.324,
+    Until: 16:00, 0.342,
+    Until: 17:00, 0.342,
+    Until: 18:00, 0.441,
+    Until: 19:00, 0.784,
+    Until: 20:00, 1.000,
+    Until: 21:00, 0.811,
+    Until: 22:00, 0.604,
+    Until: 23:00, 0.396,
+    Until: 24:00, 0.279;
+
+
+<%
+# Plug Loads
+plug_sch = [0.563,
+            0.521,
+            0.521,
+            0.507,
+            0.465,
+            0.507,
+            0.606,
+            0.662,
+            0.479,
+            0.324,
+            0.338,
+            0.352,
+            0.338,
+            0.394,
+            0.437,
+            0.451,
+            0.549,
+            0.746,
+            0.887,
+            0.944,
+            1.000,
+            0.972,
+            0.831,
+            0.704]
+
+plug_month = [1.248,
+              1.257,
+              0.993,
+              0.989,
+              0.993,
+              0.827,
+              0.821,
+              0.821,
+              0.827,
+              0.990,
+              0.987,
+              1.248]
+
+daily_plug_elec = (1108.1 + 180.2*number_of_bedrooms + (0.2785|'1/ft2')*zone_area )/365.0*1000
+peak_hour_fraction = 0.071
+peak_plug_elec = daily_plug_elec*peak_hour_fraction
+%>
+
+  ElectricEquipment,
+     <%= zone_name %> Plug Loads,  !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Plug Loads Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= peak_plug_elec*plug_load_multiplier %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0.021,                !- Fraction Latent
+     0.558,                !- Fraction Radiant
+     0.0489999999999999,   !- Fraction Lost
+     Misc;                 !- End-Use Subcategory
+
+  Schedule:Compact,
+    <%= zone_name %> Plug Loads Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+<% for m in 1..12 %>
+    Through: <%= m %>/<%= mdays[m-1] %>,
+    For: AllDays,
+  <% for h in 1..24 %>
+    <% if m == 12 and h == 24 %>
+    Until: <%= h %>:00,<%= plug_sch[h-1]*plug_month[m-1] %>;
+    <% else %>
+    Until: <%= h %>:00,<%= plug_sch[h-1]*plug_month[m-1] %>,
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<%
+# Calculate infiltration parameters based on "Field Validation of Algebraic
+# Equations for Stack and Wind Driven Air Infiltration Calculations" by
+# Walker and Wilson (1998)
+
+air_dens = 1.225
+p_ref = 4
+g = 9.81
+n = 0.67
+a_o = infil_sla*zone_area
+c_i = a_o*(2/air_dens)**0.5*p_ref**(0.5 - n)
+
+r_i = 0.5
+x_i = 0.0
+y_i = 0.0 # flue fraction
+
+# Stack Coefficient
+m_o = (x_i + (2*n +1)*y_i)**2/(2 - r_i)
+
+if m_o <= 1
+  m_i = m_o
+else
+  m_i = 1
+end
+
+# Critical value of ceiling-floor leakage difference where the neutral level
+# is located at the ceiling (assuming no flue)
+x_c = r_i + (2*(1 - r_i - y_i))/(n + 1)
+f_i = 0.0
+
+f_s = ((1 + n*r_i)/(n + 1))*(0.5 - 0.5*m_i**1.2)**(n + 1) + f_i
+
+stack_coeff = f_s*((air_dens*g*zone_height)/((70|'F') + 273.15))**n
+
+# Wind Coefficient (assume no crawlspace for now)
+j_i = (x_i + r_i + 2*y_i)/2
+f_w = 0.19*(2 - n)*(1 - ((x_i + r_i)/2)**(1.5 - y_i)) - y_i/4*(j_i - 2*y_i*j_i**4)
+
+wind_coeff = f_w*(air_dens/2)**n
+
+shielding_coeff = 0.5
+
+%>
+
+  ZoneInfiltration:FlowCoefficient,
+    <%= zone_name %> Infiltration,  !- Name
+    <%= zone_name %>,        !- Zone Name
+    <%= zone_name %> Infiltration Sch,  !- Schedule Name
+    1,                       !- Flow Coefficient {m/s-Pa^n)
+    1,                       !- Stack Coefficient {Pa^n/K^n}
+    1,                       !- Pressure Exponent
+    1,                       !- Wind Coefficient {Pa^n-s^n/m^n}
+    1;                       !- Shelter Factor  (From Walker and Wilson (1998) (eq. 16))
+
+  Schedule:Compact,
+    <%= zone_name %> Infiltration Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 1;
+
+  EnergyManagementSystem:Actuator,
+    InfilFlow<%= zone_name_ems %>,  !- Name
+    <%= zone_name %> Infiltration,  !- Actuated Component Unique Name
+    Zone Infiltration,        !- Actuated Component Type
+    Air Exchange Flow Rate;   !- Actuated Component Control Type
+
+
+<%
+# Mechanical Ventilation
+
+mech_vent_rate = ((number_of_bedrooms + 1)*(7.5|'cfm') + zone_area/(100|'ft2')*(1|'cfm'))
+mech_vent_elec = mech_vent_rate*0.3/(1|'cfm')  # W
+
+bath_exhaust_flow = number_of_bathrooms*(50|'cfm')
+bath_exhaust_elec = bath_exhaust_flow*0.3/(1|'cfm')  # W
+%>
+
+  ElectricEquipment,
+     <%= zone_name %> Mech Vent,  !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Mech Vent Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= mech_vent_elec %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0.0,                  !- Fraction Latent
+     0.0,                  !- Fraction Radiant
+     1.0,                  !- Fraction Lost
+     Fans;                 !- End-Use Subcategory
+
+  Schedule:Compact,
+    <%= zone_name %> Mech Vent Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 1;
+
+  ElectricEquipment,
+     <%= zone_name %> Bath Exhaust,  !- Name
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Bath Exhaust Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= bath_exhaust_elec*bath_exhaust_elec %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0.0,                  !- Fraction Latent
+     0.0,                  !- Fraction Radiant
+     1.0,                  !- Fraction Lost
+     Fans;                 !- End-Use Subcategory
+
+  Schedule:Compact,
+    <%= zone_name %> Bath Exhaust Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 07:00, 0,
+    Until: 08:00, 1,
+    Until: 24:00, 0;
+
+
+  EnergyManagementSystem:Sensor,
+     Tout<%= zone_name_ems %>,       !- Name
+     <%= zone_name %>,                       !- Output:Variable or Output:Meter Index Key Name
+     Zone Outdoor Air Drybulb Temperature;   !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Pbar<%= zone_name_ems %>,       !- Name
+     ,                                       !- Output:Variable or Output:Meter Index Key Name
+     Site Outdoor Air Barometric Pressure;   !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Tin<%= zone_name_ems %>,        !- Name
+     <%= zone_name %>,                       !- Output:Variable or Output:Meter Index Key Name
+     Zone Mean Air Temperature;              !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Win<%= zone_name_ems %>,        !- Name
+     <%= zone_name %>,                       !- Output:Variable or Output:Meter Index Key Name
+     Zone Mean Air Humidity Ratio;           !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Phiin<%= zone_name_ems %>,      !- Name
+     <%= zone_name %>,                       !- Output:Variable or Output:Meter Index Key Name
+     Zone Air Relative Humidity;             !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Wout<%= zone_name_ems %>,  !- Name
+     ,                                  !- Output:Variable or Output:Meter Index Key Name
+     Site Outdoor Air Humidity Ratio;   !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Vwind<%= zone_name_ems %>,      !- Name
+     <%= zone_name %>,                       !- Output:Variable or Output:Meter Index Key Name
+     Zone Outdoor Air Wind Speed;            !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Range_sch<%= zone_name_ems %>,  !- Name
+     <%= zone_name %> Cooking Range Hood Sch,  !- Output:Variable or Output:Meter Index Key Name
+     Schedule Value;   !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Clothes_dryer_sch<%= zone_name_ems %>,  !- Name
+     <%= zone_name %> Clothes Dryer Exhaust Sch,  !- Output:Variable or Output:Meter Index Key Name
+     Schedule Value;        !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     MV_sch<%= zone_name_ems %>,  !- Name
+     <%= zone_name %> Mech Vent Sch,  !- Output:Variable or Output:Meter Index Key Name
+     Schedule Value;        !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Bath_sch<%= zone_name_ems %>,  !- Name
+     <%= zone_name %> Bath Exhaust Sch,  !- Output:Variable or Output:Meter Index Key Name
+     Schedule Value;        !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     NVAvail<%= zone_name_ems %>,  !- Name
+     <%= zone_name %> Nat Vent Sch,  !- Output:Variable or Output:Meter Index Key Name
+     Schedule Value;        !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     HSP<%= zone_name_ems %>,  !- Name
+     <%= zone_name %>,  !- Output:Variable or Output:Meter Index Key Name
+     Zone Thermostat Heating Setpoint Temperature;  !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:ProgramCallingManager,
+     <%= zone_name_ems %>AirflowCalculator,  !- Name
+     BeginTimestepBeforePredictor,   !- EnergyPlus Model Calling Point
+     InfiltrationProgram<%= zone_name_ems %>,  !- Program Name 1
+     NaturalVentilationProgram<%= zone_name_ems %>;  !- Program Name 2
+
+  EnergyManagementSystem:Program,
+     InfiltrationProgram<%= zone_name_ems %>,                                                     !- Name
+     Set Tdiff = Tin<%= zone_name_ems %> - Tout<%= zone_name_ems %>,
+     Set DeltaT = @Abs Tdiff,
+     Set c = <%= c_i %>,
+     Set Cs = <%= stack_coeff %>,
+     Set Cw = <%= wind_coeff %>,
+     Set n = <%= n %>,
+     Set sft = <%= shielding_coeff %>,
+     Set Qn = (((c*Cs*(DeltaT^n))^2)+(((c*Cw)*((sft*Vwind<%= zone_name_ems %>)^(2*n)))^2))^0.5,
+     Set QWH = MV_sch<%= zone_name_ems %>*<%= mech_vent_rate %>,
+     Set Qrange = Range_sch<%= zone_name_ems %>*<%= range_hood_flow %>,
+     Set Qdryer = Clothes_dryer_sch<%= zone_name_ems %>*<%= clothes_dryer_exhaust_flow %>,
+     Set Qbath = Bath_sch<%= zone_name_ems %>*<%= bath_exhaust_flow %>,
+     Set QductsIn = 0, ! Duct leak supply fan equivalent, from BeOpt
+<% if system_name %>
+     Set QductsOut = <%= imbalance_oa_frac*(supply_leakage_frac - return_leakage_frac).abs %> * AH_VFR<%= zone_name_ems %>,
+<% else %>
+     Set QductsOut = <%= imbalance_oa_frac*(supply_leakage_frac - return_leakage_frac).abs %>,
+<% end %>
+     Set Qout = QWH+Qrange+Qbath+Qdryer+QductsOut,                   !- Exhaust flows
+     Set Qin = 0,                                              !- Supply flows
+     Set Qu = @Abs (Qout - Qin),                                              !- Unbalanced flow
+     Set Qb = @Min Qout Qin,                                                  !- Balanced flow
+     Set Q_acctd_for_elsewhere = QductsOut + QductsIn,
+     Set Infilflow<%= zone_name_ems %> = (((Qu^2) + (Qn^2))^0.5) - Q_acctd_for_elsewhere,
+     Set InfMechVent = Qb + Infilflow<%= zone_name_ems %>;
+
+<%
+# Calculate Natural Ventilation
+nl = 0.5 # Neutral level
+hvf = 0 # Horizontal ventilation fraction
+f_s_nv = 2.0/3.0 * (1+ hvf/2.0) * (2*nl*(1 - nl))**0.5/(nl**0.5 + (1 - nl)**0.5)
+f_w_nv = shielding_coeff*(1 - hvf)**0.333
+c_s = f_s_nv**2*g*zone_height/((70|'F') + 273.15)
+c_w = f_w_nv**2
+%>
+
+ ZoneVentilation:DesignFlowRate,
+    <%= zone_name %> Natural Ventilation,  !- Name
+    <%= zone_name %>,      !- Zone Name
+    <%= zone_name %> Nat Vent Sch,  !- Shedule Name
+    Flow/Zone,             !- Design Flow Rate Calculation Method
+    0.001,                 !- Design Flow rate {m^3/s}
+    ,                      !- Flow Rate per Zone Floor Area {m/s-m}
+    ,                      !- Flow Rate per Person {m/s-person}
+    ,                      !- Air Changes per Hour {1/hr}
+    Natural,               !- Ventilation Type
+    0,                     !- Fan Pressure Rise {Pa} (Fan Energy is accounted for in Fan:ZoneExhaust)
+    1,                     !- Fan Total Efficiency
+    1,                     !- Constant Term Coefficient
+    0,                     !- Temperature Term Coefficient
+    0,                     !- Velocity Term Coefficient
+    0;                     !- Velocity Squared Term Coefficient
+
+  Schedule:Compact,
+    <%= zone_name %> Nat Vent Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: Monday Wednesday Friday,
+    Until: 24:00, 1,
+    For: AllOtherDays,
+    Until: 24:00, 0;
+
+  EnergyManagementSystem:Actuator,
+    NatVentFlow<%= zone_name_ems %>,  !- Name
+    <%= zone_name %> Natural Ventilation,  !- Actuated Component Unique Name
+    Zone Ventilation,         !- Actuated Component Type
+    Air Exchange Flow Rate;   !- Actuated Component Control Type
+
+  EnergyManagementSystem:Program,
+     NaturalVentilationProgram<%= zone_name_ems %>,                                               !- Name
+     Set Tdiff = Tin<%= zone_name_ems %> - Tout<%= zone_name_ems %>,
+     Set DeltaT = @Abs Tdiff,
+     Set Phiout = @RhFnTdbWPb Tout<%= zone_name_ems %> Wout<%= zone_name_ems %> Pbar<%= zone_name_ems %>,
+     Set Hin = @HFnTdbRhPb Tin<%= zone_name_ems %> Phiin<%= zone_name_ems %> Pbar<%= zone_name_ems %>,
+     Set NVArea = <%= 0.6*open_window_area %>,
+     Set Cs = <%= c_s %>,
+     Set Cw = <%= c_w %>,
+     Set MaxNV = 2.076568736,
+     Set MaxHR = 0.0115,
+     Set MaxRH = 0.7,
+     set NVSP = HSP<%= zone_name_ems %> + <%= (1|'F') - (0|'F') %>,
+     Set SGNV = (NVAvail<%= zone_name_ems %>*NVArea)*((((Cs*DeltaT)+(Cw*(Vwind<%= zone_name_ems %>^2)))^0.5)),
+     If Wout<%= zone_name_ems %> < MaxHR && Phiout < MaxRH && Tin<%= zone_name_ems %> > NVSP,
+         Set NVadj1 = (Tin<%= zone_name_ems %> - NVSP)/(Tin<%= zone_name_ems %> - Tout<%= zone_name_ems %>),
+         Set NVadj2 = @Min NVadj1 1,
+         Set NVadj3 = @Max NVadj2 0,
+         Set NVadj = SGNV*NVadj3,
+         Set NatVentFlow<%= zone_name_ems %> = @Min NVadj MaxNV,
+     Else,
+         Set NatVentFlow<%= zone_name_ems %> = 0,
+     EndIf;
+
+<% if system_name %>
+
+  <%
+  if number_of_stories == 1
+    supply_duct_area = 0.27*zone_area
+    return_duct_area = 0.05*zone_area
+    supply_unconditioned_fraction = 1
+  else
+    supply_duct_area = 0.2*zone_area
+    return_duct_area = [0.04*number_of_stories*zone_area,0.19*zone_area].min
+    supply_unconditioned_fraction = 0.65
+  end
+
+  duct_film = duct_r_value
+
+  supply_leakage_frac *= supply_unconditioned_fraction
+
+  supply_duct_ua = supply_unconditioned_fraction*supply_duct_area/(supply_insulation + duct_film)
+  return_duct_ua = return_duct_area/(return_insulation + duct_film)
+
+  %>
+
+  ! Duct losses
+
+  Schedule:Compact,
+    <%= zone_name %> Duct Loss Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00, 1;
+
+  ! Misc. actuated objects required to mimic duct loss heat balances
+
+  OtherEquipment,
+     SupplySensibleLeakageTo<%= zone_name %>,   !- Name
+     None,                            !- Fuel Type
+     <%= zone_name %>,                !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                  !- Design Level Calculation Method
+     0,                               !- Design Level {W}
+     ,                                !- Power per Zone Floor Area {W/m}
+     ,                                !- Power per Person {W/person}
+     0,                               !- Fraction Latent
+     0,                               !- Fraction Radiant
+     0;                               !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qleak_s_s<%= zone_name_ems %>,      !- Name
+     SupplySensibleLeakageTo<%= zone_name %>,   !- Actuated Component Unique Name
+     OtherEquipment,                  !- Actuated Component Type
+     Power Level;                     !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplyLatentLeakageTo<%= zone_name %>,   !- Name
+     None,                          !- Fuel Type
+     <%= zone_name %>,                        !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                !- Design Level Calculation Method
+     0,                             !- Design Level {W}
+     ,                              !- Power per Zone Floor Area {W/m}
+     ,                              !- Power per Person {W/person}
+     1,                             !- Fraction Latent
+     0,                             !- Fraction Radiant
+     0;                             !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qleak_s_l<%= zone_name_ems %>,      !- Name
+     SupplyLatentLeakageTo<%= zone_name %>,   !- Actuated Component Unique Name
+     OtherEquipment,                !- Actuated Component Type
+     Power Level;                   !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplyDuctConductionTo<%= zone_name %>,   !- Name
+     None,                           !- Fuel Type
+     <%= zone_name %>,                         !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                 !- Design Level Calculation Method
+     0,                              !- Design Level {W}
+     ,                               !- Power per Zone Floor Area {W/m}
+     ,                               !- Power per Person {W/person}
+     0,                              !- Fraction Latent
+     0,                              !- Fraction Radiant
+     0;                              !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qduct_sTo<%= zone_name_ems %>,   !- Name
+     SupplyDuctConductionTo<%= zone_name %>,     !- Actuated Component Unique Name
+     OtherEquipment,                   !- Actuated Component Type
+     Power Level;                      !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplyDuctConductionTo<%= air_handler_zone %>,   !- Name
+     None,                           !- Fuel Type
+     <%= air_handler_zone %>,                !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                 !- Design Level Calculation Method
+     0,                              !- Design Level {W}
+     ,                               !- Power per Zone Floor Area {W/m}
+     ,                               !- Power per Person {W/person}
+     0,                              !- Fraction Latent
+     0,                              !- Fraction Radiant
+     0;                              !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qduct_sTo<%= air_handler_zone.delete(' ') %>,     !- Name
+     SupplyDuctConductionTo<%= air_handler_zone %>,   !- Actuated Component Unique Name
+     OtherEquipment,                 !- Actuated Component Type
+     Power Level;                    !- Actuated Component Control Type
+
+  OtherEquipment,
+     ReturnDuctConductionToPlenum<%= system_name %>,   !- Name
+     None,                           !- Fuel Type
+     <%= system_name + " Dummy Return Plenum"%>,  !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                 !- Design Level Calculation Method
+     0,                              !- Design Level {W}
+     ,                               !- Power per Zone Floor Area {W/m}
+     ,                               !- Power per Person {W/person}
+     0,                              !- Fraction Latent
+     0,                              !- Fraction Radiant
+     0;                              !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qduct_rToPlenum<%= system_name.delete(' ') %>,   !- Name
+     ReturnDuctConductionToPlenum<%= system_name %>,     !- Actuated Component Unique Name
+     OtherEquipment,                   !- Actuated Component Type
+     Power Level;                      !- Actuated Component Control Type
+
+  OtherEquipment,
+     ReturnDuctConductionTo<%= air_handler_zone %>,   !- Name
+     None,                           !- Fuel Type
+     <%= air_handler_zone %>,                !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                 !- Design Level Calculation Method
+     0,                              !- Design Level {W}
+     ,                               !- Power per Zone Floor Area {W/m}
+     ,                               !- Power per Person {W/person}
+     0,                              !- Fraction Latent
+     0,                              !- Fraction Radiant
+     0;                              !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qduct_rTo<%= air_handler_zone.delete(' ') %>,   !- Name
+     ReturnDuctConductionTo<%= air_handler_zone %>,       !- Actuated Component Unique Name
+     OtherEquipment,                     !- Actuated Component Type
+     Power Level;                        !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplySensibleLeakageTo<%= air_handler_zone %>,   !- Name
+     None,                            !- Fuel Type
+     <%= air_handler_zone %>,         !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                  !- Design Level Calculation Method
+     0,                               !- Design Level {W}
+     ,                                !- Power per Zone Floor Area {W/m}
+     ,                                !- Power per Person {W/person}
+     0,                               !- Fraction Latent
+     0,                               !- Fraction Radiant
+     0;                               !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qleak_sTo<%= air_handler_zone.delete(' ') %>,   !- Name
+     SupplySensibleLeakageTo<%= air_handler_zone %>,     !- Actuated Component Unique Name
+     OtherEquipment,                    !- Actuated Component Type
+     Power Level;                       !- Actuated Component Control Type
+
+  OtherEquipment,
+     SupplyLatentLeakageTo<%= air_handler_zone %>,   !- Name
+     None,                          !- Fuel Type
+     <%= air_handler_zone %>,               !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,                !- Design Level Calculation Method
+     0,                             !- Design Level {W}
+     ,                              !- Power per Zone Floor Area {W/m}
+     ,                              !- Power per Person {W/person}
+     1,                             !- Fraction Latent
+     0,                             !- Fraction Radiant
+     0;                             !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     LatentLeakageTo<%= air_handler_zone.delete(' ') %>,   !- Name
+     SupplyLatentLeakageTo<%= air_handler_zone %>,     !- Actuated Component Unique Name
+     OtherEquipment,                  !- Actuated Component Type
+     Power Level;                     !- Actuated Component Control Type
+
+  OtherEquipment,
+     ReturnSensibleLeakageEquip<%= system_name %>,   !- Name
+     None,                         !- Fuel Type
+     <%= system_name + " Dummy Return Plenum"%>,  !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,               !- Design Level Calculation Method
+     0,                            !- Design Level {W}
+     ,                             !- Power per Zone Floor Area {W/m2}
+     ,                             !- Power per Person {W/Person}
+     0,                            !- Fraction Latent
+     0,                            !- Fraction Radiant
+     0;                            !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qleak_r_s<%= system_name.delete(' ') %>,
+     ReturnSensibleLeakageEquip<%= system_name %>,
+     OtherEquipment,
+     Power Level;
+
+  OtherEquipment,
+     ReturnLatentLeakageEquip<%= system_name %>,   !- Name
+     None,                       !- Fuel Type
+     <%= system_name + " Dummy Return Plenum"%>,  !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     EquipmentLevel,             !- Design Level Calculation Method
+     0,                          !- Design Level {W}
+     ,                           !- Power per Zone Floor Area {W/m2}
+     ,                           !- Power per Person {W/Person}
+     1,                          !- Fraction Latent
+     0,                          !- Fraction Radiant
+     0;                          !- Fraction Lost
+
+  EnergyManagementSystem:Actuator,
+     Qleak_r_l<%= system_name.delete(' ') %>,   !- Name
+     ReturnLatentLeakageEquip<%= system_name %>,      !- Actuated Component Unique Name
+     OtherEquipment,                !- Actuated Component Type
+     Power Level;                   !- Actuated Component Control Type
+
+  ZoneMixing,
+     <%= air_handler_zone %>To<%= zone_name %>Mixing,   !- Name
+     <%= zone_name %>,           !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     Flow/Zone,                  !- Design Flow Rate Calculation Method
+     0,                          !- Design Flow Rate (set by EMS)
+     ,                           !- Flow Rate per Zone Floor Area
+     ,                           !- Flow Rate per Person
+     ,                           !- Air Changes per Hour
+     <%= air_handler_zone %>;    !- Source Zone Name
+
+  EnergyManagementSystem:Actuator,
+     V<%= air_handler_zone.delete(' ') %>To<%= zone_name_ems %>,   !- Name
+     <%= air_handler_zone %>To<%= zone_name %>Mixing,         !- Actuated Component Unique Name
+     ZoneMixing,                       !- Actuated Component Type
+     Air Exchange Flow Rate;           !- Actuated Component Control Type
+
+  ZoneMixing,
+     <%= zone_name %>To<%= air_handler_zone %>Mixing,   !- Name
+     <%= air_handler_zone %>,            !- Zone Name
+     <%= zone_name %> Duct Loss Sch,  !- Schedule Name
+     Flow/Zone,                  !- Design Flow Rate Calculation Method
+     0,                          !- Design Flow Rate (set by EMS)
+     ,                           !- Flow Rate per Zone Floor Area
+     ,                           !- Flow Rate per Person
+     ,                           !- Air Changes per Hour
+     <%= zone_name %>;           !- Source Zone Name
+
+  EnergyManagementSystem:Actuator,
+     V<%= zone_name_ems %>To<%= air_handler_zone.delete(' ') %>,   !- Name
+     <%= zone_name %>To<%= air_handler_zone %>Mixing,         !- Actuated Component Unique Name
+     ZoneMixing,                       !- Actuated Component Type
+     Air Exchange Flow Rate;           !- Actuated Component Control Type
+
+  ! Required EMS Sensors
+
+  EnergyManagementSystem:Sensor,
+     AH_VFR<%= zone_name_ems %>,             !- Name
+     <%= system_name %> Zone Equipment Inlet Node,   !- Output:Variable or Output:Meter Index Key Name
+     System Node Current Density Volume Flow Rate;   !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AH_MFR<%= zone_name_ems %>,             !- Name
+     <%= system_name %> Zone Equipment Inlet Node,   !- Output:Variable or Output:Meter Index Key Name
+     System Node Mass Flow Rate;                     !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AH_Tout<%= zone_name_ems %>,            !- Name
+     <%= system_name %> Zone Equipment Inlet Node,   !- Output:Variable or Output:Meter Index Key Name
+     System Node Temperature;                        !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AH_Wout<%= zone_name_ems %>,            !- Name
+     <%= system_name %> Zone Equipment Inlet Node,   !- Output:Variable or Output:Meter Index Key Name
+     System Node Humidity Ratio;                     !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AHZone_T<%= zone_name_ems %>,           !- Name
+     <%= air_handler_zone %>,                        !- Output:Variable or Output:Meter Index Key Name
+     Zone Air Temperature;                           !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     AHZone_W<%= zone_name_ems %>,           !- Name
+     <%= air_handler_zone %>,                        !- Output:Variable or Output:Meter Index Key Name
+     Zone Mean Air Humidity Ratio;                   !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     RA_T<%= zone_name_ems %>,               !- Name
+     <%= zone_name %> Return Node,                   !- Output:Variable or Output:Meter Index Key Name
+     System Node Temperature;                        !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     RA_W<%= zone_name_ems %>,               !- Name
+     <%= zone_name %> Return Node,                   !- Output:Variable or Output:Meter Index Key Name
+     System Node Humidity Ratio;                     !- Output:Variable or Output:Meter Index Key Name
+
+  EnergyManagementSystem:Sensor,
+     Fan_RTF<%= zone_name_ems %>,            !- Name
+     <%= system_name %> Supply Fan,                  !- Output:Variable or Output:Meter Index Key Name
+     Fan Runtime Fraction;                           !- Output:Variable or Output:Meter Index Key Name
+
+  ! Program
+
+  EnergyManagementSystem:ProgramCallingManager,
+     DuctLeakageCallingManager<%= zone_name_ems %>,  !- Name
+     EndOfSystemTimestepAfterHVACReporting,   !- EnergyPlus Model Calling Point
+     DuctLeakageProgram<%= zone_name_ems %>;  !- Program Name 1
+
+  EnergyManagementSystem:Program,
+     DuctLeakageProgram<%= zone_name_ems %>,
+     Set f_sup = <%= supply_leakage_frac %>, ! Supply leakage fraction
+     Set f_ret = <%= return_leakage_frac %>, ! Return leakage fraction
+     Set f_OA = <%= imbalance_oa_frac*(supply_leakage_frac - return_leakage_frac).abs %>, ! Leakage imbalance made up with outside air
+     Set V_OA = f_OA * AH_VFR<%= zone_name_ems %>, ! Outside air flow rate
+     Set Vleak_s = f_sup * AH_VFR<%= zone_name_ems %>, ! Supply leakage flow rate
+     Set Vleak_r = f_ret * AH_VFR<%= zone_name_ems %>, ! Return leakage flow rate
+     Set V<%= air_handler_zone.delete(' ') %>To<%= zone_name_ems %> = @Abs (Vleak_s - Vleak_r - V_OA), ! Flow rate from AH zone to this zone
+     Set V<%= zone_name_ems %>To<%= air_handler_zone.delete(' ') %> = 0, ! Flow rate from this zone to AH zone
+     Set h_SA = @HFnTdbW AH_Tout<%= zone_name_ems %> AH_Wout<%= zone_name_ems %>, ! Supply air enthalpy
+     Set h_AHZone = @HFnTdbW AHZone_T<%= zone_name_ems %> AHZone_W<%= zone_name_ems %>, ! AH zone enthalpy
+     Set h_RA = @HFnTdbW RA_T<%= zone_name_ems %> RA_W<%= zone_name_ems %>, ! Return air enthalpy
+     Set h_fg = @HfgAirFnWTdb AH_Wout<%= zone_name_ems %> AH_Tout<%= zone_name_ems %>, ! AH Zone enthalpy of vaporization
+     Set Qleak_s = f_sup * AH_MFR<%= zone_name_ems %> * (h_RA - h_SA), ! Supply leakage total heat flow
+     Set Qleak_s_l<%= zone_name_ems %> = f_sup * AH_MFR<%= zone_name_ems %> * h_fg * (RA_W<%= zone_name_ems %> - AH_Wout<%= zone_name_ems %>), ! Supply leakage latent heat flow
+     Set Qleak_s_s<%= zone_name_ems %> = Qleak_s - Qleak_s_l<%= zone_name_ems %>, ! Supply leakage sensible heat flow
+     Set expTerm = (Fan_RTF<%= zone_name_ems %> / ((@Max AH_MFR<%= zone_name_ems %> 0.001) * 1006.0)) * <%= supply_duct_ua %>,
+     Set expTerm = 0 - expTerm,
+     Set Tsupply = AHZone_T<%= zone_name_ems %> + ((AH_Tout<%= zone_name_ems %> - AHZone_T<%= zone_name_ems %>) * (@Exp expTerm)), ! Supply temperature
+     Set Qduct_sTo<%= zone_name_ems %> = AH_MFR<%= zone_name_ems %> * 1006.0 * (Tsupply - AH_Tout<%= zone_name_ems %>), ! Supply duct conduction loss
+     Set Qduct_sTo<%= air_handler_zone.delete(' ') %> = 0 - Qduct_sTo<%= zone_name_ems %>, ! Supply duct conduction gain to AH zone
+     Set expTerm = (Fan_RTF<%= zone_name_ems %> / ((@Max AH_MFR<%= zone_name_ems %> 0.001) * 1006.0)) * <%= return_duct_ua %>,
+     Set expTerm = 0 - expTerm,
+     Set Treturn = AHZone_T<%= zone_name_ems %> + ((RA_T<%= zone_name_ems %> - AHZone_T<%= zone_name_ems %>) * (@Exp expTerm)), ! Return temperature
+     Set Qduct_rToPlenum<%= system_name.delete(' ') %> = AH_MFR<%= zone_name_ems %> * 1006.0 * (Treturn - RA_T<%= zone_name_ems %>), ! Return duct conduction to plenum
+     Set Qduct_rTo<%= air_handler_zone.delete(' ') %> = 0 - Qduct_rToPlenum<%= system_name.delete(' ') %>, !- Return duct conduction to AH Zone
+     Set Qleak_r_l<%= system_name.delete(' ') %> = 0, ! Return leakage latent heat flow
+     Set Qleak_r_s<%= system_name.delete(' ') %> = f_ret * AH_MFR<%= zone_name_ems %> * 1006.0 * (AHZone_T<%= zone_name_ems %> - RA_T<%= zone_name_ems %>), ! Return leakage sensible heat flow
+     Set Qleak = f_sup * AH_MFR<%= zone_name_ems %> * (h_SA - h_AHZone), ! Leakage heat flow
+     Set Qleak_lTo<%= air_handler_zone.delete(' ') %> = f_sup * AH_MFR<%= zone_name_ems %> * h_fg * (AH_Wout<%= zone_name_ems %> - AHZone_W<%= zone_name_ems %>), ! Leakage latent heat flow to AH zone
+     Set Qleak_sTo<%= air_handler_zone.delete(' ') %> = Qleak - Qleak_lTo<%= air_handler_zone.delete(' ') %>; ! Leakage senisble heat flow to AH zone
+
+<% end %>
+
+  ! Domestic Hot Water
+
+<%
+# Sinks
+
+daily_sink_heat = 450 + 150*number_of_bedrooms  # Btu/day
+peak_hour_fraction = 0.075
+peak_sink_heat = daily_sink_heat*peak_hour_fraction*(1|'btuh')
+
+daily_sink_water = (12.5 + 4.16*number_of_bedrooms) # Gallons/day
+peak_sink_water = zone_multiplier*daily_sink_water*peak_hour_fraction*(1|'gpm')/60
+
+%>
+
+  OtherEquipment,
+     <%= zone_name %> Sinks,  !- Name
+     None,                 !- Fuel Type
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Sinks Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= peak_sink_heat %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0.3122222222222222,   !- Fraction Latent
+     0,                    !- Fraction Radiant
+     0;                    !- Fraction Lost
+
+  WaterUse:Equipment,
+     <%= zone_name %> Sinks,  !- Name
+     Domestic Hot Water,    !- End-Use Subcategory
+     <%= peak_sink_water %>,  !- Peak Flow rate {m^3/s}
+     <%= zone_name %> Sinks Sch,  !- Flow Rate Fraction Schedule Name
+     <%= zone_name %> Sinks Temp Sch;  !- Target Temperature Schedule Name
+
+  Schedule:Constant,
+     <%= zone_name %> Sinks Temp Sch,  !- Name
+     Any Number,            !- Schedule Type
+     <%= dhw_mixed_setpoint %>;    !- Hourly Value
+
+  Schedule:Compact,
+    <%= zone_name %> Sinks Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 01:00, 0.187,
+    Until: 02:00, 0.093,
+    Until: 03:00, 0.067,
+    Until: 04:00, 0.067,
+    Until: 05:00, 0.093,
+    Until: 06:00, 0.240,
+    Until: 07:00, 0.560,
+    Until: 08:00, 0.827,
+    Until: 09:00, 0.880,
+    Until: 10:00, 0.827,
+    Until: 11:00, 0.720,
+    Until: 12:00, 0.667,
+    Until: 13:00, 0.653,
+    Until: 14:00, 0.600,
+    Until: 15:00, 0.573,
+    Until: 16:00, 0.547,
+    Until: 17:00, 0.640,
+    Until: 18:00, 0.867,
+    Until: 19:00, 1.000,
+    Until: 20:00, 0.920,
+    Until: 21:00, 0.760,
+    Until: 22:00, 0.640,
+    Until: 23:00, 0.533,
+    Until: 24:00, 0.360;
+
+<%
+# Showers
+
+daily_shower_heat = 1444 + 482*number_of_bedrooms  # Btu/day
+peak_hour_fraction = 0.118
+peak_shower_heat = daily_shower_heat*peak_hour_fraction*(1|'btuh')
+
+daily_shower_water = (14.0 + 4.67*number_of_bedrooms) # Gallons/day
+peak_shower_water = zone_multiplier*daily_shower_water*peak_hour_fraction*(1|'gpm')/60
+
+%>
+
+  OtherEquipment,
+     <%= zone_name %> Showers,  !- Name
+     None,                 !- Fuel Type
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Showers Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= peak_shower_heat %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0.4871972318339101,   !- Fraction Latent
+     0,                    !- Fraction Radiant
+     0;                    !- Fraction Lost
+
+  WaterUse:Equipment,
+     <%= zone_name %> Showers,  !- Name
+     Domestic Hot Water,    !- End-Use Subcategory
+     <%= peak_shower_water %>,  !- Peak Flow rate {m^3/s}
+     <%= zone_name %> Showers Sch,  !- Flow Rate Fraction Schedule Name
+     <%= zone_name %> Showers Temp Sch;  !- Target Temperature Schedule Name
+
+  Schedule:Constant,
+     <%= zone_name %> Showers Temp Sch,  !- Name
+     Any Number,            !- Schedule Type
+     <%= dhw_mixed_setpoint %>;    !- Hourly Value
+
+  Schedule:Compact,
+    <%= zone_name %> Showers Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 01:00, 0.093,
+    Until: 02:00, 0.042,
+    Until: 03:00, 0.025,
+    Until: 04:00, 0.042,
+    Until: 05:00, 0.119,
+    Until: 06:00, 0.441,
+    Until: 07:00, 1.000,
+    Until: 08:00, 0.992,
+    Until: 09:00, 0.805,
+    Until: 10:00, 0.627,
+    Until: 11:00, 0.508,
+    Until: 12:00, 0.398,
+    Until: 13:00, 0.288,
+    Until: 14:00, 0.246,
+    Until: 15:00, 0.220,
+    Until: 16:00, 0.212,
+    Until: 17:00, 0.254,
+    Until: 18:00, 0.331,
+    Until: 19:00, 0.356,
+    Until: 20:00, 0.356,
+    Until: 21:00, 0.356,
+    Until: 22:00, 0.347,
+    Until: 23:00, 0.246,
+    Until: 24:00, 0.178;
+
+<%
+# Baths
+
+daily_bath_heat = 185 + 62*number_of_bedrooms  # Btu/day
+peak_hour_fraction = 0.1
+peak_bath_heat = daily_bath_heat*peak_hour_fraction*(1|'btuh')
+
+daily_bath_water = (3.5 + 1.17*number_of_bedrooms) # Gallons/day
+peak_bath_water = zone_multiplier*daily_bath_water*peak_hour_fraction*(1|'gpm')/60
+
+%>
+
+  OtherEquipment,
+     <%= zone_name %> Baths,  !- Name
+     None,                 !- Fuel Type
+     <%= zone_name %>,     !- Zone Name
+     <%= zone_name %> Baths Sch,  !- Schedule Name
+     EquipmentLevel,       !- Design Level Calculation Method
+     <%= peak_bath_heat %>,  !- Design Level {W}
+     ,                     !- Power per Zone Floor Area {W/m}
+     ,                     !- Power per Person {W/person}
+     0,                    !- Fraction Latent
+     0,                    !- Fraction Radiant
+     0;                    !- Fraction Lost
+
+  WaterUse:Equipment,
+     <%= zone_name %> Baths,  !- Name
+     Domestic Hot Water,    !- End-Use Subcategory
+     <%= peak_bath_water %>,  !- Peak Flow rate {m^3/s}
+     <%= zone_name %> Baths Sch,  !- Flow Rate Fraction Schedule Name
+     <%= zone_name %> Baths Temp Sch;  !- Target Temperature Schedule Name
+
+  Schedule:Constant,
+     <%= zone_name %> Baths Temp Sch,  !- Name
+     Any Number,            !- Schedule Type
+     <%= dhw_mixed_setpoint %>;    !- Hourly Value
+
+  Schedule:Compact,
+    <%= zone_name %> Baths Sch,  !- Name
+    Any Number,              !- Schedule Type Limits Name
+    Through: 12/31,
+    For: AllDays,
+    Until: 01:00, 0.080,
+    Until: 02:00, 0.040,
+    Until: 03:00, 0.040,
+    Until: 04:00, 0.040,
+    Until: 05:00, 0.080,
+    Until: 06:00, 0.190,
+    Until: 07:00, 0.460,
+    Until: 08:00, 0.580,
+    Until: 09:00, 0.660,
+    Until: 10:00, 0.580,
+    Until: 11:00, 0.460,
+    Until: 12:00, 0.350,
+    Until: 13:00, 0.310,
+    Until: 14:00, 0.230,
+    Until: 15:00, 0.230,
+    Until: 16:00, 0.230,
+    Until: 17:00, 0.390,
+    Until: 18:00, 0.460,
+    Until: 19:00, 0.770,
+    Until: 20:00, 1.000,
+    Until: 21:00, 1.000,
+    Until: 22:00, 0.770,
+    Until: 23:00, 0.660,
+    Until: 24:00, 0.390;
+
+  WaterUse:Connections,
+    <%= zone_name %> DHW Connections,!- Name
+    <%= zone_name %> DHW Inlet Node,  !- Inlet Node Name
+    <%= zone_name %> DHW Outlet Node,  !- Outlet Node Name
+    ,                        !- Supply Water Storage Tank Name
+    <%= graywater_storage_tank %>,    !- Reclamation Water Storage Tank Name
+    ,                        !- Hot Water Supply Temperature Schedule Name
+    ,                        !- Cold Water Supply Temperature Schedule Name
+    <% if (dhw_recovery == true) %>
+    Ideal,                   !- Drain Water Heat Exchanger Type
+    Plant,                   !- Drain Water Heat Exchanger Destination
+    ,                        !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
+    <% else %>
+    ,                        !- Drain Water Heat Exchanger Type
+    ,                        !- Drain Water Heat Exchanger Destination
+    ,                        !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
+    <% end %>
+    <%= zone_name %> Sinks,  !- Water Use Equipment 1 Name
+    <%= zone_name %> Showers,  !- Water Use Equipment 2 Name
+    <%= zone_name %> Clothes Washer,  !- Water Use Equipment 3 Name
+    <%= zone_name %> Dishwasher,  !- Water Use Equipment 4 Name
+    <%= zone_name %> Baths;  !- Water Use Equipment 5 Name
+
+  Branch,
+    <%= zone_name %> DHW Demand Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    WaterUse:Connections,    !- Component 1 Object Type
+    <%= zone_name %> DHW Connections,  !- Component 1 Name
+    <%= zone_name %> DHW Inlet Node,  !- Component 1 Inlet Node Name
+    <%= zone_name %> DHW Outlet Node;  !- Component 1 Outlet Node Name
+
+<%
+# Internal mass
+floor_area_frac = 0.4
+
+%>
+
+  Material,
+    <%= zone_name %> Furnishings,   !- Name
+    Rough,                     !- Roughness
+    0.1524,                    !- Thickness {m}
+    0.1154577,                 !- Conductivity {W/m-K}
+    640.8,                     !- Density {kg/m}
+    1214.23;                   !- Specific Heat {J/kg-K}
+
+  Construction,
+    <%= zone_name %> Interior Furnishings,  !- Name
+    <%= zone_name %> Furnishings;  !- Outside Layer
+
+  InternalMass,
+    <%= zone_name %> Internal Mass,  !- Name
+    <%= zone_name %> Interior Furnishings,  !- Construction Name
+    <%= zone_name %>,          !- Zone Name
+    <%= floor_area_frac*zone_area %>;      !- Surface Area {m2}
+
+  InternalMass,
+    <%= zone_name %> Internal Partitions,  !- Name
+    Interior Wall,  !- Construction Name
+    <%= zone_name %>,          !- Zone Name
+    <%= zone_area %>;      !- Surface Area {m2}
+
+<%= insert 'zoneloads/zonetemplate.imf',
+  :zone_name=>zone_name,
+  :occupant_density=>occupants/zone_area,
+  :thermal_comfort=>thermal_comfort,
+  :occupant_schedule=>occupant_schedule,
+  :air_leakage=>0
+%>

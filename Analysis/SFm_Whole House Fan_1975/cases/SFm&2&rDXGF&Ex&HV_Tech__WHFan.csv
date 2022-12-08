@@ -1,0 +1,10 @@
+skip,case_name,:exhaust_fan_flow,:fan_total_eff
+,Pre-SFm-NatVent,0['CFM/ft2'],0.324
+,Msr-SFm-WholeHouseFan-0.7CFM-ECM,0.7['CFM/ft2'],0.324
+,Msr-SFm-WholeHouseFan-1.5CFM-ECM,1.5['CFM/ft2'],0.324
+,Msr-SFm-WholeHouseFan-2.0CFM-ECM,2['CFM/ft2'],0.324
+,Msr-SFm-WholeHouseFan-3.0CFM-ECM,3['CFM/ft2'],0.324
+,Msr-SFm-WholeHouseFan-0.7CFM-PSC,0.7['CFM/ft2'],0.236
+,Msr-SFm-WholeHouseFan-1.5CFM-PSC,1.5['CFM/ft2'],0.236
+,Msr-SFm-WholeHouseFan-2.0CFM-PSC,2['CFM/ft2'],0.236
+,Msr-SFm-WholeHouseFan-3.0CFM-PSC,3['CFM/ft2'],0.236

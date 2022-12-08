@@ -1,0 +1,4 @@
+skip,case_name,:total_leakage_ratio
+,Pre-HV-DuctSeal-HighToLow,0.4
+,Pre-HV-DuctSeal-MedToLow,0.24
+,Duct_Seal_Measure_Low,0.12
