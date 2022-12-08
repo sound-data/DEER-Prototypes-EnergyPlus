@@ -20,12 +20,12 @@ The following steps must be completed in order to install and use the developed 
 To run measure cases, open a new command line in one of the folders (such as _DMo_Duct Seal_) in _analysis/_ directory and run the command `modelkit rake`. This will run all predefined measures in that given directory. To run all measures in all folders in _analysis/_ use the provided automated_run.py Python script located in _scripts/_. The existing predefined measures were grouped by general measure group name, building type and vintage. Each of these folders contains a set of measure cases, defined in the folder _cases/_, per building prototype, defined in the folder _prototypes/residential/_. Modelkit will run all measures and store simulation outputs (IDFs, hourly output variables, etc.) in multiple folders, named based on measure cases names, in _runs/_ (this folder appears after simulations run) and a results summary file containing mainly annual energy consumptions in _results.csv_. More detailed information about how Modelkit works and its features can be found on the [developers website] (https://bigladdersoftware.com/projects/modelkit/).
 
 Postprocessing steps:
-+open one of three python scripts (building type specific)
-+specify the specific subdirectories in analysis folder (with simulation results in them) in the script
-+run script to get three csv files 'current_msr_mat.csv', 'sim_annual.csv', 'sim_hourly_wb.csv'
-+load these three csv files into the postgreSQL database management software
-+run the post-processing SQL queries R1 to R4, then P1 to P8, in order
-+export 'meas_impacts_2022_res' as the output
++ open one of three python scripts (building type specific)
++ specify the specific subdirectories in analysis folder (with simulation results in them) in the script
++ run script to get three csv files 'current_msr_mat.csv', 'sim_annual.csv', 'sim_hourly_wb.csv'
++ load these three csv files into the postgreSQL database management software
++ run the post-processing SQL queries R1 to R4, then P1 to P8, in order
++ export 'meas_impacts_2022_res' as the output
 
 ## How to Contribute to the Project
 Every user can create a new branch of the repository to add new measures or fix bugs. The DEER DNV team will approve the request and merge it to the main branch after an internal review of the proposed addition or bug fix.
