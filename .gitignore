@@ -2,9 +2,14 @@
 ###################
 runs/
 results-summary.csv
-
-
+modelkit_cmd_output.txt
+results-profile-elec.csv
+results-profile-gas.csv
 
 # OS generated files #
 ######################
 .DS_Store
+
+# Other #
+#########
+stderr

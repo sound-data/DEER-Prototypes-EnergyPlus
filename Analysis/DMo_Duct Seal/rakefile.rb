@@ -134,9 +134,9 @@ cohorts_csv_path = "cohorts.csv"
 global_pxv_path = "#{old_root_dir}/analysis/global.pxv"
 query_path = "#{__dir__}/query.txt"
 results_summary_path = "#{__dir__}/results-summary.csv"
-# results_profile_elec_path = "#{__dir__}/results-profile-elec.csv"
-# results_profile_gas_path = "#{__dir__}/results-profile-gas.csv"
-results_paths = [results_summary_path]#[results_summary_path, results_profile_elec_path, results_profile_gas_path]
+results_profile_elec_path = "#{__dir__}/results-profile-elec.csv"
+results_profile_gas_path = "#{__dir__}/results-profile-gas.csv"
+results_paths = [results_summary_path, results_profile_elec_path, results_profile_gas_path]
 
 runs_dir = "#{__dir__}/runs"
 runs_pathname = Pathname.new(runs_dir)
@@ -731,16 +731,16 @@ file results_summary_path => [*run_sql_paths, query_path] do
 end
 
 
-# file results_profile_elec_path => run_csv_paths do
-#   aggregate_profiles("Electricity:Facility [J](Hourly)", results_profile_elec_path, run_csv_paths, runs_pathname)
-# end
+file results_profile_elec_path => run_csv_paths do
+  aggregate_profiles("Electricity:Facility [J](Hourly)", results_profile_elec_path, run_csv_paths, runs_pathname)
+end
 
 
-# file results_profile_gas_path => run_csv_paths do
-#   # NOTE: If Gas:Facility is the last column, there is an extra blank space after
-#   #   the column name. The blank space must be included for CSV to find the column.
-#   aggregate_profiles("Gas:Facility [J](Hourly) ", results_profile_gas_path, run_csv_paths, runs_pathname)
-# end
+file results_profile_gas_path => run_csv_paths do
+  # NOTE: If Gas:Facility is the last column, there is an extra blank space after
+  #   the column name. The blank space must be included for CSV to find the column.
+  aggregate_profiles("Gas:Facility [J](Hourly) ", results_profile_gas_path, run_csv_paths, runs_pathname)
+end
 
 
 desc "Aggregate the simulation results"
@@ -750,36 +750,36 @@ task :results => results_paths
 task :default => :results
 
 
-# def aggregate_profiles(column_name, output_path, run_csv_paths, runs_pathname)
-#   pathname = Pathname.new(output_path).relative_path_from(Pathname.new(__dir__))
-#   puts "Processing: #{pathname}\n"
-#
-#   short_paths = run_csv_paths.map { |path| Pathname.new(path).relative_path_from(runs_pathname) }
-#
-#   columns = []
-#   date_time = true
-#   short_paths.each do |short_path|
-#     csv_path = "#{runs_pathname}/#{short_path}"
-#     if (File.exist?(csv_path))
-#       csv = CSV.read(csv_path, :headers=>true)
-#       if (date_time)
-#         column = csv["Date/Time"]
-#         column.unshift("Date/Time")  # Add header
-#         columns << column
-#         date_time = false
-#       end
-#       column = csv[column_name]
-#       column.unshift(short_path)  # Add header
-#       columns << column
-#     else
-#       puts "WARNING: file not found: #{csv_path}\n"
-#     end
-#   end
-#
-#   File.open(output_path, "w") do |file|
-#     columns.transpose.each { |row| file.puts(row.join(",")) }
-#   end
-# end
+def aggregate_profiles(column_name, output_path, run_csv_paths, runs_pathname)
+  pathname = Pathname.new(output_path).relative_path_from(Pathname.new(__dir__))
+  puts "Processing: #{pathname}\n"
+
+  short_paths = run_csv_paths.map { |path| Pathname.new(path).relative_path_from(runs_pathname) }
+
+  columns = []
+  date_time = true
+  short_paths.each do |short_path|
+    csv_path = "#{runs_pathname}/#{short_path}"
+    if (File.exist?(csv_path))
+      csv = CSV.read(csv_path, :headers=>true)
+      if (date_time)
+        column = csv["Date/Time"]
+        column.unshift("Date/Time")  # Add header
+        columns << column
+        date_time = false
+      end
+      column = csv[column_name]
+      column.unshift(short_path)  # Add header
+      columns << column
+    else
+      puts "WARNING: file not found: #{csv_path}\n"
+    end
+  end
+
+  File.open(output_path, "w") do |file|
+    columns.transpose.each { |row| file.puts(row.join(",")) }
+  end
+end
 
 
 # NOPUB consider building this into modelkit-energyplus.

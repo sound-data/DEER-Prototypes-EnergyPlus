@@ -2,9 +2,11 @@
 import os
 import subprocess
 # To do: Add option to handle existing run folders
+os.chdir("..\\analysis")
 current_dir = os.getcwd()
 dir_content = os.listdir(current_dir)
 dir_prototypes = [dir for dir in dir_content if os.path.isdir(f'{current_dir}\\{dir}')]
+#%%
 print("*** IMPORTANT ***\n- Always check modelkit_cmd_output.txt for potential modelkit output errors\n")
 print("- This script will not override existing runs\n")
 

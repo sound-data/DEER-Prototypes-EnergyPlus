@@ -1468,7 +1468,7 @@ Schedule:Compact,
  Through: 4/10,
  For: AllDays,
  Until: 5:00, 50,
- Until: 23:00, 20,
+ Until: 23:00, 21.11,
  Until: 24:00, 50,
  Through: 4/16,
  For: AllDays,
@@ -1476,7 +1476,7 @@ Schedule:Compact,
  Through: 11/12,
  For: AllDays,
  Until: 5:00, 50,
- Until: 23:00, 20,
+ Until: 23:00, 21.11,
  Until: 24:00, 50,
  Through: 11/15,
  For: AllDays,
@@ -1484,7 +1484,7 @@ Schedule:Compact,
  Through: 11/29,
  For: AllDays,
  Until: 5:00, 50,
- Until: 23:00, 20,
+ Until: 23:00, 21.11,
  Until: 24:00, 50,
  Through: 12/17,
  For: AllDays,
@@ -1492,7 +1492,7 @@ Schedule:Compact,
  Through: 12/23,
  For: AllDays,
  Until: 5:00, 50,
- Until: 23:00, 20,
+ Until: 23:00, 21.11,
  Until: 24:00, 50,
  Through: 12/31,
  For: AllDays,
@@ -1964,65 +1964,84 @@ Schedule:Compact,
 
 <%elsif climate_zone ==14 %>
 Schedule:Compact,
- heating_sch_DEER,
- Temperature,
- Through:3/9,
- For: AllDays,
- Until: 24:00, 21.67,
- Through:4/10,
- For: AllDays,
- Until: 24:00,21.67,
- Through:4/17,
- For: AllDays,
- Until: 24:00, 21.67,
- Through:11/17,
- For: AllDays,
- Until: 24:00,21.67,
- Through:12/31,
- For: AllDays,
- Until: 24:00, 21.67;
-
- Schedule:Compact,
-  cooling_sch_DEER,
-  Temperature,
-  Through: 3/9,
-  For: AllDays,
-  Until: 24:00, 50,
-  Through:4/10,
-  For: AllDays,
-  Until: 24:00,27.78,
-  Through: 4/17,
-  For: AllDays,
-  Until: 24:00, 50,
-  Through:11/17,
-  For: AllDays,
-  Until: 24:00,27.78,
-  Through: 12/31,
-  For: AllDays,
-  Until: 24:00, 50;
+    heating_sch_DEER,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through:3/9,             !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    22.5,                   !- Field 4
+    Through:4/10,            !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 24:00,            !- Field 7
+    21.67,                   !- Field 8
+    Through:4/17,            !- Field 9
+    For: AllDays,            !- Field 10
+    Until: 24:00,            !- Field 11
+    22.5,                   !- Field 12
+    Through:11/17,           !- Field 13
+    For: AllDays,            !- Field 14
+    Until: 24:00,            !- Field 15
+    21.67,                   !- Field 16
+    Through:12/31,           !- Field 17
+    For: AllDays,            !- Field 18
+    Until: 24:00,            !- Field 19
+    22.5;                   !- Field 20
 
 Schedule:Compact,
- Natural_Ventilation_Min,
- Temperature,
- Through: 3/9,
- For: AllDays,
- Until: 24:00, 25,
- Through: 4/10,
- For: AllDays,
- Until: 5:00, 50,
- Until: 23:00, 20,
- Until: 24:00, 50,
- Through: 4/17,
- For: AllDays,
- Until: 24:00, 25,
- Through: 11/17,
- For: AllDays,
- Until: 5:00, 50,
- Until: 23:00, 20,
- Until: 24:00, 50,
- Through: 12/31,
- For: AllDays,
- Until: 24:00, 25;
+    cooling_sch_DEER,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 3/9,            !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    50,                      !- Field 4
+    Through:4/10,            !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 24:00,            !- Field 7
+    27.78,                   !- Field 8
+    Through: 4/17,           !- Field 9
+    For: AllDays,            !- Field 10
+    Until: 24:00,            !- Field 11
+    50,                      !- Field 12
+    Through:11/17,           !- Field 13
+    For: AllDays,            !- Field 14
+    Until: 24:00,            !- Field 15
+    27.78,                   !- Field 16
+    Through: 12/31,          !- Field 17
+    For: AllDays,            !- Field 18
+    Until: 24:00,            !- Field 19
+    50;                      !- Field 20
+
+Schedule:Compact,
+    Natural_Ventilation_Min, !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 3/9,            !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    25,                      !- Field 4
+    Through: 4/10,           !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 5:00,             !- Field 7
+    50,                      !- Field 8
+    Until: 23:00,            !- Field 9
+    22,                      !- Field 10
+    Until: 24:00,            !- Field 11
+    50,                      !- Field 12
+    Through: 4/17,           !- Field 13
+    For: AllDays,            !- Field 14
+    Until: 24:00,            !- Field 15
+    25,                      !- Field 16
+    Through: 11/17,          !- Field 17
+    For: AllDays,            !- Field 18
+    Until: 5:00,             !- Field 19
+    50,                      !- Field 20
+    Until: 23:00,            !- Field 21
+    22,                      !- Field 22
+    Until: 24:00,            !- Field 23
+    50,                      !- Field 24
+    Through: 12/31,          !- Field 25
+    For: AllDays,            !- Field 26
+    Until: 24:00,            !- Field 27
+    25;                      !- Field 28
 
  Schedule:Compact,
   Ventilation_Min,
@@ -2042,7 +2061,7 @@ Schedule:Compact,
   Through: 12/31,
   For: AllDays,
   Until: 24:00, 50;
-  
+
 <%elsif climate_zone ==15 %>
 Schedule:Compact,
     heating_sch_DEER,        !- Name
