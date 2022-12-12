@@ -1,11 +1,9 @@
 # Prototype models generation system
 
 ## Introduction
-This repository contains the modeling system developed to transition the residential buildings prototype energy models from the DOE2-eQuest ecosystem to the EnergyPlus ecosystem. The MASControl3 tool was previously used to perform all the batch simulations and permutations of the DEER measures. The new system seeks to utilize the more modern EnergyPlus engine which is getting more support from the Department of Energy and NREL. Since EnergyPlus is a completely different tool compared to eQuest, the DEER Ex Ante team decided to use a new batch processing system called, modelkit, developed by Big Ladder Software, a software company that specializes in providing support for EnergyPlus.
+This repository contains the modeling system developed to transition the DEER prototype building simulation models from DOE2-eQuest to EnergyPlus, a more modern energy simulation engine which has more support from the Department of Energy and NREL. MASControl3 was the tool previously used to perform batch simulations for the measure permutations. The new system uses a a free and open-source, cross-platform framework for parametric modeling, Modelkit, developed by Big Ladder Software, a software company that specializes in providing support for EnergyPlus. (https://bigladdersoftware.com/projects/modelkit/)
 
-The modelkit batch processing system takes in certain buildings parameters of interest (e.g., building type, HVAC performance figures, insulation levels, etc.), and can create EnergyPlus models, i.e., input data file (IDF) from predefined templates. The modelkit tool is also able to run batched simulations with relative freedom for all generated models.
-
-The repository contains two categories of scripts, too. The first one serves to transform gross modelkit energy consumption results to the DEER measure savings. The second one contains Python and SQL scripts that serve to transform the simulations outputs data to the DEER accepted format. The current data transformation process builds and reuses most of the scripts that previous DEER Ex Ante team developed for the MASControl3 tool. An optimization and a complete adaptation of the scripts to the current modelkit based modeling framework will take place in the future.
+This repository contains Modelkit files used to generate EnergyPlus input files and two categories of scripts. The first category contains only Python scripts and serves to transform gross modelkit energy consumption results to the DEER measure savings. The second category contains Python and SQL scripts that serve to transform the simulations outputs data to the DEER accepted format. The current data transformation process builds and reuses most of the scripts that previous DEER Ex Ante team developed to transform outputs of the MASControl3 tool. An optimization and a complete adaptation of the scripts to the current modelkit based modeling framework will take place in the future.
 
 ## Required tools and installation
 The following steps must be completed in order to install and use the developed prototype energy models on Windows (directions for Mac will be provided in the future):
@@ -54,3 +52,4 @@ Every user can create a new branch of the repository to add new measures or fix 
 1. Optimize the prototype models’ files to reduce the number of root files.
 2. Optimize the data transformation process from the Modelkit system outputs to DEER database.
 3. Reduce the number of measure folders by parameterizing codes’ fields, in _climates.csv_ that vary by building type, in a separate table.
+4. Add the Aiflow Network model to the Modelkit residential prototypes.
