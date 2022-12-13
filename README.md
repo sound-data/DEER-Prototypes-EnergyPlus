@@ -21,8 +21,8 @@ To run measure cases, open a new command line in one of the folders (such as _DM
 
 Postprocessing steps:
 + open one of three python scripts (building type specific)
-+ specify the specific subdirectories in analysis folder (with simulation results in them) in the script
-+ run script to get three csv files 'current_msr_mat.csv', 'sim_annual.csv', 'sim_hourly_wb.csv'
++ specify the specific subdirectories in analysis folder (with simulation results in them) in the script, and specify "measure name" to be processed (list of measure names can be found from "DEER_EnergyPlus_Modelkit_Measure_list.xlsx", in the "Measure_list" sheet, the "Measure (general name)" column.
++ run script to get three csv files 'current_msr_mat.csv', 'sim_annual.csv', 'sim_hourly_wb.csv' (or 'sfm_annual.csv' and 'sfm_hourly_csv' for single family)
 + load these three csv files into the postgreSQL database management software
 + run the post-processing SQL queries R1 to R4, then P1 to P8, in order
 + export 'meas_impacts_2022_res' as the output
