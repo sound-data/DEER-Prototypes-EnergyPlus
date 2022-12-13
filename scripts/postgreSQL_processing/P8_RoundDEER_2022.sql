@@ -1,0 +1,69 @@
+--Format measure impact table for ex ante database using appropriate significant figures
+SET search_path TO "MC_results_database";
+DROP TABLE IF EXISTS meas_impacts_2022_res;
+CREATE TABLE meas_impacts_2022_res AS 
+SELECT
+
+meas_impacts_wtd_2022."EnergyImpactID"::VARCHAR,
+"Version"::VARCHAR,
+"VersionSource"::VARCHAR, --Note Version must reflect prototype version used (COP, sizing, etc.)
+"LastMod"::TIMESTAMP,
+"PA",
+"BldgType",
+"BldgVint",
+"BldgLoc",
+"BldgHVAC",
+--(CASE WHEN "NormUnit" = 'ResCoolCap' THEN 'Cap-Tons' ELSE 'Cap-kBTUh' END)::VARCHAR as "NormUnit", #3/10/2022 changed this line to follow whatever Norm unit it was before
+"NormUnit",
+(case "NumUnit" when 0 then 0 else round("NumUnit"::Numeric(15,5),(2-floor(log(abs("NumUnit"))))::SMALLINT) end)::float4 as "NumUnit", 
+(case "MeasArea" when 0 then 0 else round("MeasArea"::Numeric(15,5),(2-floor(log(abs("MeasArea"))))::SMALLINT) end)::float4 as "MeasArea", 
+"ScaleBasis",
+--"APreWBkWh_0",
+(case "APreWBkWh" when 0 then 0 else round("APreWBkWh"::Numeric(15,6),(2-floor(log(abs("APreWBkWh"))))::SMALLINT) end)::float4 as "APreWBkWh", 
+--"APreWBkW_0",
+(case "APreWBkW" when 0 then 0 else round("APreWBkW"::Numeric(15,6),(2-floor(log(abs("APreWBkW"))))::SMALLINT) end)::float4 as "APreWBkW", 
+--"APreWBtherm_0",
+(case "APreWBtherm" when 0 then 0 else round("APreWBtherm"::Numeric(15,6),(2-floor(log(abs("APreWBtherm"))))::SMALLINT) end)::float4 as "APreWBtherm", 
+--"AStdWBkWh_0",
+(case "AStdWBkWh" when 0 then 0 else round("AStdWBkWh"::Numeric(15,6),(2-floor(log(abs("AStdWBkWh"))))::SMALLINT) end)::float4 as "AStdWBkWh", 
+--"AStdWBkW_0",
+(case "AStdWBkW" when 0 then 0 else round("AStdWBkW"::Numeric(15,6),(2-floor(log(abs("AStdWBkW"))))::SMALLINT) end)::float4 as "AStdWBkW", 
+--"AStdWBtherm_0",
+(case "AStdWBtherm" when 0 then 0 else round("AStdWBtherm"::Numeric(15,6),(2-floor(log(abs("AStdWBtherm"))))::SMALLINT) end)::float4 as "AStdWBtherm",
+NULL::FLOAT4 as "APreEUkWh",
+NULL::FLOAT4 as "APreEUkW",
+NULL::FLOAT4 as "APreEUtherm",
+NULL::FLOAT4 as "AStdEUkWh",
+NULL::FLOAT4 as "AStdEUkW",
+NULL::FLOAT4 as "AStdEUtherm",
+"ElecImpactProfileID",
+"GasImpactProfileID",
+20::INT2 as "Flag",
+''::VARCHAR as "SourceDesc",
+--new fields added 6/20/2022
+round("APreUseWBkWh"::numeric(15,5), 4-floor(log(abs("APreUseWBkWh")))::INT) as "APreUseWBkWh",
+round("APreUseWBtherm"::numeric(15,5), 4-floor(log(abs("APreUseWBtherm")))::INT) as "APreUseWBtherm",
+round("AStdUseWBkWh"::numeric(15,5), 4-floor(log(abs("AStdUseWBkWh")))::INT) as "AStdUseWBkWh",
+round("AStdUseWBtherm"::numeric(15,5), 4-floor(log(abs("AStdUseWBtherm")))::INT) as "AStdUseWBtherm",
+round("AMsrUseWBkWh"::numeric(15,5), 4-floor(log(abs("AMsrUseWBkWh")))::INT) as "AMsrUseWBkWh",
+round("AMsrUseWBtherm"::numeric(15,5), 4-floor(log(abs("AMsrUseWBtherm")))::INT) as "AMsrUseWBtherm",
+"APreUseEUkWh",
+"APreUseEUtherm",
+"AStdUseEUkWh",
+"AStdUseEUtherm",
+"AMsrUseEUkWh",
+"AMsrUseEUtherm"
+
+
+FROM
+meas_impacts_wtd_2022
+LEFT JOIN "ImpactProfiles" on "ImpactProfiles"."EnergyImpactID" = meas_impacts_wtd_2022."EnergyImpactID";
+
+ALTER TABLE "meas_impacts_2022_res"
+ALTER COLUMN "EnergyImpactID" SET NOT NULL,
+ALTER COLUMN "PA" SET NOT NULL,
+ALTER COLUMN "BldgType" SET NOT NULL,
+ALTER COLUMN "BldgVint" SET NOT NULL,
+ALTER COLUMN "BldgLoc" SET NOT NULL,
+ALTER COLUMN "BldgHVAC" SET NOT NULL,
+ADD PRIMARY KEY ("EnergyImpactID", "PA", "BldgType", "BldgVint", "BldgLoc", "BldgHVAC");
