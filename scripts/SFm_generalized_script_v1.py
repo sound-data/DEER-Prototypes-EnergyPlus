@@ -211,6 +211,8 @@ sim_annual_2s_v1 = end_use_rearrange(sim_annual_2s)
 # %%
 ## Hourly data setup/transform
 #Read 8760 map
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
 annual_map = pd.read_excel('annual8760map.xlsx')
 hrly_paths = paths
 

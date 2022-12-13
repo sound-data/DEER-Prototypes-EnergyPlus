@@ -189,6 +189,8 @@ sim_annual_v1 = sim_annual_proto[['TechID', 'BldgLoc', 'BldgType', 'BldgHVAC', '
 # %%
 ##STEP 2: Hourly WB output data read/transform
 #Read 8760 map
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
 annual_map = pd.read_excel('annual8760map.xlsx')
 
 # %%
