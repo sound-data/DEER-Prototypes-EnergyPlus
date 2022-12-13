@@ -10,6 +10,33 @@ import datetime as dt
 df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
+
+# %%
+#generate unique list of measure names
+measures = list(df_master['Measure (general name)'].unique())
+# %%
+#Shows list of measure names 
+print(measures)
+#%%
+#Define measure name here
+measure_name = 'SEER Rated AC/HP'
+
+# %%
+#SFm only script
+####Define path
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+os.chdir("..") #go up one directory
+print(os.path.abspath(os.curdir))
+
+#input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path1 and leave other blank.
+path1 = 'analysis/SFm_SEER Rated AC_HP_1975'
+path2 = 'analysis/SFm_SEER Rated AC_HP_1985'
+
+paths = [path1, path2]
+
+if any('New' in x for x in paths):
+    paths = [path1]
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -145,15 +172,7 @@ def end_use_rearrange(df):
        'thm_htg', 'thm_shw']]
     
     return annual_df_final
-# %%
-#generate unique list of measure names
-measures = list(df_master['Measure (general name)'].unique())
-# %%
-#Shows list of measure names 
-print(measures)
-#%%
-#Define measure name here
-measure_name = 'SEER Rated AC/HP'
+
 # %%
 #create measure specific Master table based on Measure selected
 df_measure = df_master[df_master['Measure (general name)'] == measure_name]
@@ -218,6 +237,9 @@ hrly_paths = paths
 
 
 #%%
+os.chdir("..") #go up one directory
+print(os.path.abspath(os.curdir))
+
 sim_hourly_raw = pd.DataFrame()
 
 for path in paths:

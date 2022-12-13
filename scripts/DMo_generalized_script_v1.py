@@ -5,11 +5,31 @@ import numpy as np
 import os
 import sys
 import datetime as dt
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
 df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
+
+# %%
+#generate unique list of measure names
+measures = list(df_master['Measure (general name)'].unique())
+# %%
+#Shows list of measure names 
+print(measures)
+#%%
+#Define measure name here
+measure_name = 'Ductless Heat Pump'
+# %%
+#DMo only script
+####Define path
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+os.chdir("..") #go up one directory
+print(os.path.abspath(os.curdir))
+
+path = 'Analysis/DMo_Ductless Heat Pump'
 
 # %%
 #extract only the 5th portion of the measure group name for expected_att
@@ -136,29 +156,12 @@ def end_use_rearrange(df_in):
     df_in['deskw_equ'] = 1
 
     return df_in
-# %%
-#generate unique list of measure names
-measures = list(df_master['Measure (general name)'].unique())
-# %%
-#Shows list of measure names 
-print(measures)
-#%%
-#Define measure name here
-measure_name = 'Ductless Heat Pump'
+
 
 # %%
 #create measure specific Master table based on Measure selected
 df_measure = df_master[df_master['Measure (general name)'] == measure_name]
 case_cohort_list = df_measure['Measure Group Name'].unique()
-# %%
-#DMo only script
-####Define path
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-os.chdir("..") #go up one directory
-print(os.path.abspath(os.curdir))
-
-path = 'analysis/DMo_Ductless Heat Pump'
 
 # %%
 ##STEP 1: Annual output data read/transform
@@ -194,6 +197,8 @@ print(os.path.abspath(os.curdir))
 annual_map = pd.read_excel('annual8760map.xlsx')
 
 # %%
+os.chdir("..") #go up one directory
+print(os.path.abspath(os.curdir))
 hrly_path = path + '/runs' 
 
 #extract data per bldgtype-bldghvac-bldgvint group

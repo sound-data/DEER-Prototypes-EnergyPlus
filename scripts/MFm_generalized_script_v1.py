@@ -12,6 +12,25 @@ df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_na
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
+#generate unique list of measure names
+measures = list(df_master['Measure (general name)'].unique())
+# %%
+#Shows list of measure names 
+print(measures)
+#%%
+#Define measure name here
+measure_name = 'SEER Rated AC/HP'
+
+# %%
+#MFm only script
+####Define path
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+os.chdir("..") #go up one directory
+print(os.path.abspath(os.curdir))
+
+path = 'analysis/MFm_SEER Rated AC_HP_Ex'
+# %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
 techgroup_techtypes = [i.split('&', 4)[-1] for i in measure_group_names]
@@ -136,29 +155,12 @@ def end_use_rearrange(df_in):
     df_in['deskw_equ'] = 1
 
     return df_in
-# %%
-#generate unique list of measure names
-measures = list(df_master['Measure (general name)'].unique())
-# %%
-#Shows list of measure names 
-print(measures)
-#%%
-#Define measure name here
-measure_name = 'SEER Rated AC/HP'
 
 # %%
 #create measure specific Master table based on Measure selected
 df_measure = df_master[df_master['Measure (general name)'] == measure_name]
 case_cohort_list = df_measure['Measure Group Name'].unique()
-# %%
-#MFm only script
-####Define path
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-os.chdir("..") #go up one directory
-print(os.path.abspath(os.curdir))
 
-path = 'analysis/MFm_SEER Rated AC_HP_Ex'
 
 # %%
 ##STEP 1: Annual output data read/transform
@@ -194,6 +196,8 @@ print(os.path.abspath(os.curdir))
 annual_map = pd.read_excel('annual8760map.xlsx')
 
 # %%
+os.chdir("..") #go up one directory
+print(os.path.abspath(os.curdir))
 hrly_path = path + '/runs' 
 
 #extract data per bldgtype-bldghvac-bldgvint group
