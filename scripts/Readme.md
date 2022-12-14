@@ -1,7 +1,7 @@
 # Post-processing scripts for Modelkit outputs for DEER
 
 ## Introduction
-Scripts provided here are used to transform Modelkit simulation results into measure savings/impacts records suitable for the DEER database. 
+Scripts provided here are used to automate a batch file and to transform Modelkit simulation results into measure savings/impacts records suitable for the DEER database. 
 
 Before using these scripts make sure:
 1. Python is installed (at least version 3.8.8)
