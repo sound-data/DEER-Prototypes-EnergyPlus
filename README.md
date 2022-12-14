@@ -8,7 +8,7 @@ This repository contains Modelkit files used to generate EnergyPlus input files 
 ## Required tools and installation
 The following steps must be completed in order to install and use the developed prototype energy models on Windows (directions for Mac will be provided in the future):
 1.	Install the [EnergyPlus engine version 9.5](https://github.com/NREL/EnergyPlus/releases/tag/v9.5.0).
-2.	Install the [Modelki tool](https://share.bigladdersoftware.com/files/modelkit-catalyst-0.7.0.exe).
+2.	Install the [Modelkit tool](https://share.bigladdersoftware.com/files/modelkit-catalyst-0.7.0.exe).
 3.	Replace the file at this path (or similar) _C:\Program Files (x86)\Modelkit Catalyst\lib\rubygems\gems\modelkit-0.8.1\lib\modelkit\parametrics\template.rb_ by the file in available on this repository in folder _concurrency bug_.
 4.	Install Python.
 5.	Install a database management software that supports postgreSQL such as pgAdmin4.
