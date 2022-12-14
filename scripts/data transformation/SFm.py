@@ -5,6 +5,7 @@ import numpy as np
 import os
 import sys
 import datetime as dt
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
 df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
@@ -30,8 +31,8 @@ os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
 #input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path1 and leave other blank.
-path1 = 'analysis/SFm_SEER Rated AC_HP_1975'
-path2 = 'analysis/SFm_SEER Rated AC_HP_1985'
+path1 = 'Analysis/SFm_SEER Rated AC_HP_1975'
+path2 = 'Analysis/SFm_SEER Rated AC_HP_1985'
 
 paths = [path1, path2]
 
