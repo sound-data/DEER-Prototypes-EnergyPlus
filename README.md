@@ -3,12 +3,12 @@
 ## Introduction
 This repository contains the modeling system developed to transition the DEER prototype building simulation models from DOE2-eQuest to EnergyPlus, a more modern energy simulation engine which has more support from the Department of Energy and NREL. MASControl3 was the tool previously used to perform batch simulations for the measure permutations. The new system uses a a free and open-source, cross-platform framework for parametric modeling, Modelkit, developed by Big Ladder Software, a software company that specializes in providing support for EnergyPlus. (https://bigladdersoftware.com/projects/modelkit/)
 
-This repository contains Modelkit files used to generate EnergyPlus input files and two categories of scripts. The first category contains only Python scripts and serves to transform gross modelkit energy consumption results to the DEER measure savings. The second category contains Python and SQL scripts that serve to transform the simulations outputs data to the DEER accepted format. The current data transformation process builds and reuses most of the scripts that previous DEER Ex Ante team developed to transform outputs of the MASControl3 tool. An optimization and a complete adaptation of the scripts to the current modelkit based modeling framework will take place in the future.
+This repository contains Modelkit files used to generate EnergyPlus input files and several types of scripts. There is one script to run a batch file to execute a full set of permutations for one or more measures. There is a set of Python scripts that transform modelkit energy consumption results to the database format previously used for outputs of MASControl3. And another set of Python and SQL scripts that calculate energy savings from simulation outputs. The current process builds and reuses most of the scripts that previous DEER Ex Ante team developed to manipulate outputs of the MASControl3 tool. An optimization and a complete adaptation of the scripts to the current modelkit based modeling framework will take place in the future.
 
 ## Required tools and installation
 The following steps must be completed in order to install and use the developed prototype energy models on Windows (directions for Mac will be provided in the future):
 1.	Install the [EnergyPlus engine version 9.5](https://github.com/NREL/EnergyPlus/releases/tag/v9.5.0).
-2.	Install the [Modelki tool](https://share.bigladdersoftware.com/files/modelkit-catalyst-0.7.0.exe).
+2.	Install the [Modelkit tool](https://share.bigladdersoftware.com/files/modelkit-catalyst-0.7.0.exe).
 3.	Replace the file at this path (or similar) _C:\Program Files (x86)\Modelkit Catalyst\lib\rubygems\gems\modelkit-0.8.1\lib\modelkit\parametrics\template.rb_ by the file in available on this repository in folder _concurrency bug_.
 4.	Install Python.
 5.	Install a database management software that supports postgreSQL such as pgAdmin4.
@@ -24,7 +24,7 @@ Postprocessing steps:
 + specify the specific subdirectories in analysis folder (with simulation results in them) in the script, and specify "measure name" to be processed (list of measure names can be found from "DEER_EnergyPlus_Modelkit_Measure_list.xlsx", in the "Measure_list" sheet, the "Measure (general name)" column.
 + run script to get three csv files 'current_msr_mat.csv', 'sim_annual.csv', 'sim_hourly_wb.csv' (or 'sfm_annual.csv' and 'sfm_hourly_csv' for single family)
 + load these three csv files into the postgreSQL database management software
-+ run the post-processing SQL queries R1 to R4, then P1 to P8, in order
++ run the post-processing SQL queries R1 to R4 (for residential measures only), then P1 to P8 (for all measures), in order
 + export 'meas_impacts_2022_res' as the output
 
 ## How to Contribute to the Project
@@ -51,5 +51,6 @@ Every user can create a new branch of the repository to add new measures or fix 
 ## Features to be added in the future
 1. Optimize the prototype models’ files to reduce the number of root files.
 2. Optimize the data transformation process from the Modelkit system outputs to DEER database.
-3. Reduce the number of measure folders by parameterizing codes’ fields, in _climates.csv_ that vary by building type, in a separate table.
-4. Add the Aiflow Network model to the Modelkit residential prototypes.
+3. Write a script to produce measure permutation energy savings information in eTRM format
+4. Reduce the number of measure folders by parameterizing codes’ fields, in _climates.csv_ that vary by building type, in a separate table.
+5. Add the Aiflow Network model to the Modelkit residential prototypes.
