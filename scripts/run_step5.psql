@@ -1,0 +1,133 @@
+--run_step5.psql
+--Nicholas Fette, 2023-01-05
+--Usage:
+--  cd "C:/.../DEER-Prototypes-EnergyPlus/scripts/"
+--  psql -d "dbname" -U "dbuser" -f "run_step5.psql"
+
+
+--\cd 'C:/.../DEER-Prototypes-EnergyPlus/scripts/'
+
+\set ON_ERROR_STOP on
+
+-- Comment these lines if need to skip import of files.
+--\set import_sfm
+\set import_sim
+
+-- Uncomment these lines if need to apply corrections.
+-- (Or, use command line arguments -v Duct_Opt= -v Duct_Seal=
+--\set Duct_Opt
+\set DO_SIM
+
+
+
+CREATE SCHEMA IF NOT EXISTS "MC_results_database";
+SET search_path TO "MC_results_database";
+
+\echo Import current_msr_mat
+\i 'energy savings/create_current_msr_mat.sql'
+truncate "current_msr_mat";
+\copy "current_msr_mat" FROM 'data transformation/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Import sim_annual
+\i 'energy savings/create_sim_annual.sql'
+\if :{?import_sim}
+truncate "sim_annual";
+\copy "sim_annual" FROM 'data transformation/sim_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+\endif
+
+\echo Import sim_hourly_wb
+\i 'energy savings/create_sim_hourly_wb.sql'
+\if :{?import_sim}
+truncate "sim_hourly_wb";
+\copy "sim_hourly_wb" FROM 'data transformation/sim_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+\endif
+
+\echo Import sfm_annual
+\i 'energy savings/create_sfm_annual.sql'
+\if :{?import_sfm}
+truncate "sfm_annual";
+\copy "sfm_annual" FROM 'data transformation/sfm_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+\endif
+
+\echo Import sfm_hourly_wb
+\i 'energy savings/create_sfm_hourly_wb.sql'
+\if :{?import_sfm}
+truncate "sfm_hourly_wb";
+\copy "sfm_hourly_wb" FROM 'data transformation/sfm_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+\endif
+
+\echo Loading support tables
+\echo FloorArea_2022
+\i 'energy savings/create_FloorArea_2022.sql'
+truncate "FloorArea_2022";
+\copy "FloorArea_2022" FROM 'energy savings/FloorArea_2022.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo NumBldgs
+\i 'energy savings/create_NumBldgs.sql'
+truncate "NumBldgs";
+\copy "NumBldgs" FROM 'energy savings/NumBldgs.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo NumStor
+\i 'energy savings/create_NumStor.sql'
+truncate "NumStor";
+\copy "NumStor" FROM 'energy savings/NumStor.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo ImpactProfiles
+\i 'energy savings/ImpactProfiles.sql'
+
+\echo peakperspec
+\i 'energy savings/create_peakperspec.sql'
+truncate "peakperspec";
+\copy "peakperspec" FROM 'energy savings/peakperspec.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo wts_res_hvac
+\i 'energy savings/create_wts_res_hvac.sql'
+truncate "wts_res_hvac";
+\copy "wts_res_hvac" FROM 'energy savings/wts_res_hvac.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo wts_res_bldg_2022
+\i 'energy savings/create_wts_res_bldg_2022.sql'
+truncate "wts_res_bldg_2022";
+\copy "wts_res_bldg_2022" FROM 'energy savings/wts_res_bldg_2022.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Run step R1
+\i 'energy savings/R1_Wt_NumStories_Annual.sql'
+\echo Run step R2
+\i 'energy savings/R2_Wt_NumStories_Hourly.sql'
+\echo Run step R3
+\i 'energy savings/R3_Sum_Annual.sql'
+\echo Run step R4
+\i 'energy savings/R4_Sum_Hourly.sql'
+
+\echo Run step P1
+\i 'energy savings/P1-Create-sim_peakper_2022.sql'
+\echo Run step P2
+\i 'energy savings/P2-Calc_MsrImpacts_2022.sql'
+
+-- Only run these for duct optimization.
+\if :{?Duct_Opt}
+  \i 'energy savings/P2.1A-Duct_Opt_correction_factor_2022.sql'
+  \i 'energy savings/P2.1B-Duct_Opt_correction_factor_2022.sql'
+\endif
+
+-- Only run these for duct seal.
+\if :{?Duct_Seal}
+  \i 'energy savings/P2.1A-Duct_Seal_correction_factor_2022.sql'
+  \i 'energy savings/P2.1B-Duct_Seal_correction_factor_2022.sql'
+\endif
+
+\echo Run step P3
+\i 'energy savings/P3-HVAC_wt_Mult.sql'
+\echo Run step P4
+\i 'energy savings/P4-HVAC_wt_sum.sql'
+\echo Run step P5
+\i 'energy savings/P5_VintSub_2022_all.sql'
+\echo Run step P5
+\i 'energy savings/P6_BldgMult_2022.sql'
+\echo Run step P5
+\i 'energy savings/P7_SumBldg_2022.sql'
+\echo Run step P5
+\i 'energy savings/P8_RoundDEER_2022.sql'
+
+\echo Write file meas_impacts_2022_res.csv.
+\copy "meas_impacts_2022_res" to 'meas_impacts_2022_res.csv' WITH (FORMAT csv, HEADER)
