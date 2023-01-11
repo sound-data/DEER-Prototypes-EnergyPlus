@@ -52,7 +52,7 @@ expected_att = {
     'BldgVint': ['Ex','New'],
     'Measure': tech_uniques
 }
-
+# function to parse meta data from & delimited case file names
 def parse_measure_name(measure_name):
     #split at most 4 times for 5 descriptor fields
     measure_name_split = measure_name.split('&', 4) 
@@ -178,22 +178,7 @@ def end_use_rearrange(df):
 #create measure specific Master table based on Measure selected
 df_measure = df_master[df_master['Measure (general name)'] == measure_name]
 case_cohort_list = df_measure['Measure Group Name'].unique()
-# %%
-#SFm only script
-####Define path
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-os.chdir("../..") #go up two directory
-print(os.path.abspath(os.curdir))
 
-#input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path1 and leave other blank.
-path1 = 'analysis/SFm_SEER Rated AC_HP_1975'
-path2 = 'analysis/SFm_SEER Rated AC_HP_1985'
-
-paths = [path1, path2]
-
-if any('New' in x for x in paths):
-    paths = [path1]
 # %%
 ##STEP 1: Annual output data read/transform
 sim_annual_raw = pd.DataFrame()
@@ -238,7 +223,7 @@ hrly_paths = paths
 
 
 #%%
-os.chdir("..") #go up one directory
+os.chdir("../..") #go up two directories
 print(os.path.abspath(os.curdir))
 
 sim_hourly_raw = pd.DataFrame()
