@@ -14,5 +14,6 @@ CREATE TABLE IF NOT EXISTS "current_msr_mat"(
   "MsrSizingID" VARCHAR(255),
   "SizingSrc" VARCHAR(255),
   "EU_HrRepVar" VARCHAR(255),
-  "NormUnit" VARCHAR(255)
+  "NormUnit" VARCHAR(255),
+  PRIMARY KEY ("MeasureID","BldgType","BldgVint","BldgLoc","BldgHVAC","tstat","NormUnit")
 );
