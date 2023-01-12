@@ -1,5 +1,5 @@
 #%%
-#import all necessary libraries
+##STEP 0: Setup (import all necessary libraries)
 import pandas as pd
 import numpy as np
 import os
@@ -164,7 +164,7 @@ case_cohort_list = df_measure['Measure Group Name'].unique()
 
 
 # %%
-##STEP 1: Annual output data read/transform
+##STEP 1: Annual data extraction / transformation
 
 df_raw = pd.read_csv(path+'/results-summary.csv', usecols=['File Name'])
 num_runs = len(df_raw['File Name'].dropna().unique()) - 1
@@ -190,7 +190,7 @@ sim_annual_v1 = sim_annual_proto[['TechID', 'BldgLoc', 'BldgType', 'BldgHVAC', '
     'thm_htg', 'thm_shw', 'deskw_ltg', 'deskw_equ']].drop_duplicates().copy()
 
 # %%
-##STEP 2: Hourly WB output data read/transform
+##STEP 2: Hourly data extraction / transformation
 #Read 8760 map
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
@@ -305,7 +305,7 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr13',     'hr14',     'hr15',     'hr16',     'hr17',     'hr18',
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
 # %%
-#### Finalize norm units
+##STEP 3: Normalizing Units
 bldgtype = 'MFm'
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
@@ -394,7 +394,7 @@ sim_hourly_f = sim_hourly_wb_v1[['TechID', 'SizingID', 'BldgType', 'BldgVint', '
                                 'hr12', 'hr13', 'hr14', 'hr15', 'hr16', 'hr17', 'hr18', 'hr19', 'hr20',
                                 'hr21', 'hr22', 'hr23', 'hr24', 'lastmod']]
 # %%
-#####
+##STEP 4: Measure setup file (current_msr_mat.csv)
 
 # Creating current_msr_mat and finalzing TechID's
 
@@ -509,8 +509,8 @@ current_msr_mat = current_msr_mat.rename(columns={'normunit':'NormUnit'})
 #check length of current_msr_mat
 len(current_msr_mat)
 
-
 # %%
+##STEP 5: Clean Up Sequence
 #Creating updated Sim_annual and Sim_hourly data with distinguished TechID names
 sim_annual_pre_common = sim_annual_f[sim_annual_f['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
 sim_annual_std_common = sim_annual_f[sim_annual_f['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]

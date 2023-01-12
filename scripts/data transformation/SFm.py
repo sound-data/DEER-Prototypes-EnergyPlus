@@ -1,5 +1,5 @@
 #%%
-#import all necessary libraries
+##STEP 0: Setup (import all necessary libraries)
 import pandas as pd
 import numpy as np
 import os
@@ -180,7 +180,7 @@ df_measure = df_master[df_master['Measure (general name)'] == measure_name]
 case_cohort_list = df_measure['Measure Group Name'].unique()
 
 # %%
-##STEP 1: Annual output data read/transform
+##STEP 1: Annual data extraction / transformation
 sim_annual_raw = pd.DataFrame()
 for path in paths:
     print(f'processing data in {path}')
@@ -214,7 +214,7 @@ sim_annual_2s_v1 = end_use_rearrange(sim_annual_2s)
 
 
 # %%
-## Hourly data setup/transform
+##STEP 2: Hourly data extraction / transformation
 #Read 8760 map
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
@@ -346,7 +346,7 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
 sim_hourly_wb_1s_v1 = sim_hourly_wb_v1[sim_hourly_wb_v1['BldgType'].str.contains('&1&')].copy()
 sim_hourly_wb_2s_v1 = sim_hourly_wb_v1[sim_hourly_wb_v1['BldgType'].str.contains('&2&')].copy()
 # %%
-## 1-story / 2-story data seperation / re-organization
+##STEP 3: 1-S, 2-S combination, and Normalizing Units
 # annual data
 rename_1s_fields = {'kwh_tot':'kwh_tot1', 
                     'kwh_ltg':'kwh_ltg1',
@@ -602,7 +602,7 @@ sim_hourly_final = pd.merge(sim_hourly_1s_re, sim_hourly_2s_re, on=['TechID', 'S
 sim_hourly_final['lastmod']=dt.datetime.now()
 
 # %%
-#####
+##STEP 4: Measure setup file (current_msr_mat.csv)
 
 # Creating current_msr_mat and finalzing TechID's
 
@@ -717,7 +717,7 @@ current_msr_mat = current_msr_mat.rename(columns={'normunit':'NormUnit'})
 len(current_msr_mat)
 
 # %%
-#####
+##STEP 5: Clean Up Sequence
 # Creating updated Sim_annual and Sim_hourly data with distinguished TechID names
 sim_annual_pre_common = sim_annual_f[sim_annual_f['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
 sim_annual_std_common = sim_annual_f[sim_annual_f['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]
