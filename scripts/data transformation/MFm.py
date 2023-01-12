@@ -46,6 +46,7 @@ expected_att = {
     'Measure': tech_uniques
 }
 
+# function to parse meta data from & delimited case file names (Measure Group Name from master spreadsheet)
 def parse_measure_name(measure_name):
     #split at most 4 times for 5 descriptor fields
     measure_name_split = measure_name.split('&', 4) 
@@ -64,7 +65,6 @@ def parse_measure_name(measure_name):
 
     return measure_name_dict # returns a dictionary
 
-
 #function to melt long 8760 col into 24col x365row format
 def long2wide_pivot(df, name):
     '''
@@ -80,6 +80,8 @@ def long2wide_pivot(df, name):
     
     return df_wide
 
+#function to uses the “File Name” column from the results-summary csv to identify directory structure (an organized table) of a batch run 
+# and uses the structure to construct a semi-organized annual outputs table.
 def annual_raw_parsing(df, cohort_dict):
     #create separated meta data cols
     df['BldgLoc'] = split_meta_cols_eu[0]
@@ -106,6 +108,7 @@ def annual_raw_parsing(df, cohort_dict):
     
     return annual_df_v1
 
+#function to merge and rearrange specific annual consumption end-use fields into the format required
 def end_use_rearrange(df_in):
     df_in['kwh_tot'] = (df_in['Heating Elec (kWh)'] + \
                             df_in['Cooling Elec (kWh)'] +\
@@ -124,18 +127,14 @@ def end_use_rearrange(df_in):
                                     df_in['Exterior Equipment (kWh)']
 
     df_in['kwh_htg'] = df_in['Heating Elec (kWh)']
-
     df_in['kwh_clg'] = df_in['Cooling Elec (kWh)']
-
     df_in['kwh_twr'] = 0 #place holder (tower kwh load?)
-
     df_in['kwh_aux'] = 0 #place holder (aux equipment kwh load?)
 
     df_in['kwh_vent'] = df_in['Fans (kWh)'] #use fan kWh as vent load for now
 
     df_in['kwh_venthtg'] =0 #placeholders fields for now
     df_in['kwh_ventclg'] =0
-
     df_in['kwh_refg'] = 0 
     df_in['kwh_hpsup'] = 0
     df_in['kwh_shw'] = 0
