@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'Ductless Heat Pump'
+measure_name = 'Brushless Fan Motor'
 
 # %%
 #DMo only script
@@ -30,7 +30,7 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-path = 'Analysis/DMo_Ductless Heat Pump'
+path = 'Analysis/DMo_Brushless_Fan_Motor_Ex'
 
 # %%
 #extract only the 5th portion of the measure group name for expected_att
@@ -608,6 +608,10 @@ sim_hourly_final = pd.concat([sim_hourly_pre, sim_hourly_std, sim_hourly_msr])
 # %%
 ##Final export of all processed data pre-SQL process
 #change directory to wherever desired, if needed
+
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+
 current_msr_mat.to_csv('current_msr_mat.csv', index=False)
 sim_annual_final.to_csv('sim_annual.csv', index=False)
 sim_hourly_final.to_csv('sim_hourly_wb.csv', index=False)
