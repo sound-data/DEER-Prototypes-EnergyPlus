@@ -7,7 +7,8 @@ import sys
 import datetime as dt
 from pathlib import Path
 from argparse import ArgumentParser
-from tqdm import trange
+from multiprocessing import Pool
+from tqdm import tqdm, trange
 
 TRANSFORM_PATH = Path(os.path.dirname(__file__))
 DEERROOT = TRANSFORM_PATH / '../..'
@@ -206,6 +207,40 @@ def end_use_rearrange_sfm(df_in: pd.DataFrame) -> pd.DataFrame:
     )
 
 
+def truncate8760(df: pd.DataFrame) -> pd.DataFrame:
+    if len(df) != 8760:
+        #8/31/2022 update, need to make the final length 8808. Snip data based on difference to 8760
+        record_count_diff = len(df) - 8760
+        #print(f'extra records: {str(len(extracted_df))}, snipping away {record_count_diff} records and changing to 8760')
+        return df.iloc[record_count_diff:].reset_index(drop=True)
+    else:
+        return df
+
+def read_hourly(full_path: Path, col_name: str) -> pd.DataFrame:
+    return (
+        #extract the last column (the total elec hrly profile)
+        #if for enduse hourly, then extract the relevant end use column
+        pd.read_csv(full_path, usecols=['Electricity:Facility [J](Hourly) '])
+        #change column name
+        .set_axis([col_name], axis=1)
+        .pipe(truncate8760)
+    )
+
+def read_hourly_multi(files_and_names: list) -> pd.DataFrame:
+    """
+    Parameters
+    ----------
+    files_and_names: list of tuples x = (full_path,col_name)
+    """
+    with Pool() as pool:
+        results=[]
+        presults = [(x,pool.apply_async(read_hourly, x)) for x in files_and_names]
+        with tqdm(presults, desc='Read hourly CSV') as t:
+            for (full_path,col_name),presult in t:
+                t.set_description('{:<50s}'.format(col_name[:50]))
+                results.append(presult.get())
+    return pd.concat([pd.DataFrame(index=range(0,8760))] + results,axis=1)
+
 def transform_mfm(
     bldgtype: str = 'MFm',
     measure_name: str = 'Wall Furnace',
@@ -261,35 +296,22 @@ def transform_mfm(
     hrly_path = msrpath / 'runs'
 
     #extract data per bldgtype-bldghvac-bldgvint group
-    hourly_df = pd.DataFrame(index=range(0,8760))
     #extract num_runs / split_meta_cols_eu
     df_raw = pd.read_csv(msrpath / 'results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
     annual_df = pd.read_csv(msrpath / 'results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
     split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
-    for i in trange(0,num_runs, desc='Merge records'):
-
+    files_and_names=[]
+    for i in range(0,num_runs):
         #loop path of each file, read corresponding file
-        full_path = hrly_path / split_meta_cols_eu.iloc[i][0] / split_meta_cols_eu.iloc[i][1] / split_meta_cols_eu.iloc[i][2] / "instance-var.csv"
-        df = pd.read_csv(full_path, low_memory=False)
-
-        #extract the last column (the total elec hrly profile)
-        #if for enduse hourly, then extract the relevant end use column
-        extracted_df = pd.DataFrame(df.iloc[:,-1])
-
         #create the column name based on the permutations
         col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
+        full_path = hrly_path / col_name
+        files_and_names.append((full_path, col_name))
 
-        #change column name
-        extracted_df = extracted_df.set_axis([col_name],axis=1)
-        if len(extracted_df)!=8760:
-            #8/31/2022 update, need to make the final length 8808. Snip data based on difference to 8760
-            record_count_diff = len(extracted_df) - 8760
-            print(f'extra records: {str(len(extracted_df))}, snipping away {record_count_diff} records and changing to 8760')
-            extracted_df = extracted_df.iloc[record_count_diff:].reset_index(drop=True)
+    #left-merge onto big df
+    hourly_df = read_hourly_multi(files_and_names)
 
-        #left-merge onto big df
-        hourly_df = hourly_df.merge(extracted_df, left_index=True, right_index=True)
     # %%
     fyr_hrly = hourly_df
     #rearrange 1-column 8760 format to 365x24 wide format for all runs in hourly_df
