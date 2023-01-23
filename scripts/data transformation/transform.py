@@ -42,7 +42,7 @@ expected_att = {
 }
 
 # function to parse meta data from & delimited case file names (Measure Group Name from master spreadsheet)
-def parse_measure_name(measure_name):
+def parse_measure_name(measure_name: str) -> dict:
     #split at most 4 times for 5 descriptor fields
     measure_name_split = measure_name.split('&', 4)
     # Check here if the presented name has 5 attributes as expected:
@@ -98,7 +98,7 @@ def parse_measure_name2(cohort_names: pd.Series, verify: bool = False) -> pd.Dat
     return result
 
 #function to melt long 8760 col into 24col x365row format
-def long2wide_pivot(df, name):
+def long2wide_pivot(df: pd.DataFrame, name: str) -> pd.DataFrame:
     '''
     customized function.
     input df is long 8760, 1 column format, with the daynum(of365) and hour of day(of24) mapped.
@@ -114,7 +114,10 @@ def long2wide_pivot(df, name):
 
 #function to uses the “File Name” column from the results-summary csv to identify directory structure (an organized table) of a batch run
 # and uses the structure to construct a semi-organized annual outputs table.
-def annual_raw_parsing(df, cohort_dict, split_meta_cols_eu):
+def annual_raw_parsing(df: pd.DataFrame,
+    cohort_dict: dict,
+    split_meta_cols_eu: pd.DataFrame
+    ) -> pd.DataFrame :
     #create separated meta data cols
     df['BldgLoc'] = split_meta_cols_eu[0]
 
@@ -141,7 +144,7 @@ def annual_raw_parsing(df, cohort_dict, split_meta_cols_eu):
     return annual_df_v1
 
 #function to merge and rearrange specific annual consumption end-use fields into the format required
-def end_use_rearrange(df_in):
+def end_use_rearrange(df_in: pd.DataFrame) -> pd.DataFrame:
     df_in['kwh_tot'] = (df_in['Heating Elec (kWh)'] + \
                             df_in['Cooling Elec (kWh)'] +\
                             df_in['Interior Equipment Elec (kWh)'] +\
@@ -189,10 +192,11 @@ def end_use_rearrange(df_in):
     return df_in
 
 def transform_mfm(
-    measure_name : str = 'Wall Furnace',
-    msrpath : Path = DEERROOT/'Analysis/MFm_Furnace_Ex',
-    outpath : Path = None
-    ):
+    bldgtype: str = 'MFm',
+    measure_name: str = 'Wall Furnace',
+    msrpath: Path = DEERROOT/'Analysis/MFm_Furnace_Ex',
+    outpath: Path = None
+    ) -> None:
 
     if outpath is None:
         outpath = Path()
@@ -346,10 +350,14 @@ def transform_mfm(
     # %%
     ##STEP 3: Normalizing Units
     print('STEP 3. Normalizing Units.')
-    bldgtype = 'MFm'
 
     df_normunits = pd.read_excel(NORMUNITS_PATH, sheet_name=bldgtype)
-    numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['CZ','Value', 'Msr','BldgVint']]
+    if bldgtype == 'MFm':
+        numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['CZ','Value', 'Msr','BldgVint']]
+    elif bldgtype == 'DMo':
+        numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['Value', 'Msr']]
+    else:
+        raise ValueError(f'Building type "{bldgtype}" was unexpected at this point.')
     #%%
     #create numunits object based on what normunit it uses.
     #numunits can be a single value, or a dictionary
@@ -357,7 +365,7 @@ def transform_mfm(
         numunits = list(numunits_vals['Value'])[0]
     elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
         numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
-    elif measure_name == 'PTAC / PTHP':
+    elif bldgtype == 'MFm' and measure_name == 'PTAC / PTHP':
         #create aligned lists for numunit dictionary
         cz = list(numunits_vals['CZ'])
         vint = list(numunits_vals['BldgVint'])
@@ -374,18 +382,28 @@ def transform_mfm(
     sim_annual_v1['tstat'] = 0
     #now Norm unit is read from measure master table
     sim_annual_v1['normunit'] = df_measure['Normunit'].unique()[0]
-    #make this automatic as well
-    sim_annual_v1['measarea'] = 24576 #from MFm model outputs htmls
+    if bldgtype == 'MFm':
+        # TODO: make this automatic as well
+        sim_annual_v1['measarea'] = 24576 #from MFm model outputs htmls
 
-    #apply normunits where appropriate
-    #num unit will be per dwelling, so divide by num of dwellings (2 for SFM, DMo, 24 for MFm)
+        #apply normunits where appropriate
+        #num unit will be per dwelling, so divide by num of dwellings (2 for SFM, DMo, 24 for MFm)
 
-    if measure_name == 'PTAC / PTHP':
-        #Map special dictionary to the correct values
-        sim_annual_v1['numunits'] = pd.Series(list(zip(sim_annual_v1['BldgLoc'],sim_annual_v1['BldgVint']))).map(numunits)/24
+        if measure_name == 'PTAC / PTHP':
+            #Map special dictionary to the correct values
+            sim_annual_v1['numunits'] = pd.Series(list(zip(sim_annual_v1['BldgLoc'],sim_annual_v1['BldgVint']))).map(numunits)/24
+        else:
+            sim_annual_v1['numunits'] = numunits/24
+    elif bldgtype == 'DMo':
+        #make this automatic as well
+        sim_annual_v1['measarea'] = 2484 #from DMo model outputs htmls
+
+        #apply normunits where appropriate
+        #num unit will be per dwelling, so use roof area / num of dwellings (2 for SFM, DMo, 24 for MFm)
+        sim_annual_v1['numunits'] = numunits/2
+    #elif bldgtype == 'SFm':
     else:
-        sim_annual_v1['numunits'] = numunits/24
-
+        raise ValueError(f'Building type "{bldgtype}" was unexpected at this point.')
 
     sim_annual_v1['lastmod']=dt.datetime.now()
 
@@ -659,11 +677,11 @@ def parse_args():
         epilog=None
         )
 
-    parser.add_argument('BldgType', metavar='BldgType', type=str, choices=["DMo","MFm","SFm"],
+    parser.add_argument('bldgtype', metavar='bldgtype', type=str, choices=["DMo","MFm","SFm"],
                     help='E.g. "MFm"')
     parser.add_argument('measure_name', metavar='measure_name', type=str, choices=MEASURES,
                     help='E.g. "Wall Furnace"')
-    parser.add_argument('msrpath', metavar='measure_path', type=Path,
+    parser.add_argument('msrpath', metavar='measure_path', type=Path,# nargs=+,
                     help='E.g. '+(DEERROOT/'Analysis/MFm_Furnace_Ex').resolve().as_posix())
     parser.add_argument('-o', '--outpath', type=Path,
                     help='E.g. "myresults/"')
@@ -673,10 +691,10 @@ def parse_args():
 def main():
     # Gather user options.
     args = parse_args()
-    if args.BldgType != 'MFm':
-        print(f'Building type "{args.BldgType}" not implemented.')
+    if args.bldgtype != 'MFm':
+        print(f'Building type "{args.bldgtype}" not implemented.')
         return
-    transform_mfm(args.measure_name, args.msrpath, args.outpath)
+    transform_mfm(args.bldgtype, args.measure_name, args.msrpath, args.outpath)
 
 if __name__ == '__main__':
     main()
