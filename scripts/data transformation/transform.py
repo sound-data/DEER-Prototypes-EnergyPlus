@@ -152,43 +152,31 @@ def end_use_rearrange(df_in: pd.DataFrame) -> pd.DataFrame:
                             df_in['Exterior Lighting (kWh)'] +\
                             df_in['Fans (kWh)']+\
                             df_in['Pumps (kWh)'])
-
     df_in['kwh_ltg'] = (df_in['Interior Lighting (kWh)'] +\
                                     df_in['Exterior Lighting (kWh)'])
-
     df_in['kwh_task'] = 0 # placeholder (task lighting load?)
-
     df_in['kwh_equip'] = df_in['Interior Equipment Elec (kWh)'] +\
                                     df_in['Exterior Equipment (kWh)']
-
     df_in['kwh_htg'] = df_in['Heating Elec (kWh)']
     df_in['kwh_clg'] = df_in['Cooling Elec (kWh)']
     df_in['kwh_twr'] = 0 #place holder (tower kwh load?)
     df_in['kwh_aux'] = 0 #place holder (aux equipment kwh load?)
-
     df_in['kwh_vent'] = df_in['Fans (kWh)'] #use fan kWh as vent load for now
-
     df_in['kwh_venthtg'] =0 #placeholders fields for now
     df_in['kwh_ventclg'] =0
     df_in['kwh_refg'] = 0
     df_in['kwh_hpsup'] = 0
     df_in['kwh_shw'] = 0
     df_in['kwh_ext'] = 0
-
     df_in['thm_tot'] = (df_in['Heating NG (kWh)'] +\
                                 df_in['Cooling NG (kWh)'] +\
                                 df_in['Interior Equipment NG (kWh)'] +\
                                 df_in['Water Systems (kWh)'])/29.3
-
     df_in['thm_equip'] = df_in['Interior Equipment NG (kWh)']/29.3
-
     df_in['thm_htg'] = df_in['Heating NG (kWh)']/29.3
-
     df_in['thm_shw'] = df_in['Water Systems (kWh)']/29.3
-
     df_in['deskw_ltg'] = 1 #placeholders fields for now
     df_in['deskw_equ'] = 1
-
     return df_in
 
 def transform_mfm(
