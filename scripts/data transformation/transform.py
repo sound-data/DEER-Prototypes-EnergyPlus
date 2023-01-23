@@ -145,39 +145,66 @@ def annual_raw_parsing(df: pd.DataFrame,
 
 #function to merge and rearrange specific annual consumption end-use fields into the format required
 def end_use_rearrange(df_in: pd.DataFrame) -> pd.DataFrame:
-    df_in['kwh_tot'] = (df_in['Heating Elec (kWh)'] + \
-                            df_in['Cooling Elec (kWh)'] +\
-                            df_in['Interior Equipment Elec (kWh)'] +\
-                            df_in['Interior Lighting (kWh)'] +\
-                            df_in['Exterior Lighting (kWh)'] +\
-                            df_in['Fans (kWh)']+\
-                            df_in['Pumps (kWh)'])
-    df_in['kwh_ltg'] = (df_in['Interior Lighting (kWh)'] +\
-                                    df_in['Exterior Lighting (kWh)'])
-    df_in['kwh_task'] = 0 # placeholder (task lighting load?)
-    df_in['kwh_equip'] = df_in['Interior Equipment Elec (kWh)'] +\
-                                    df_in['Exterior Equipment (kWh)']
-    df_in['kwh_htg'] = df_in['Heating Elec (kWh)']
-    df_in['kwh_clg'] = df_in['Cooling Elec (kWh)']
-    df_in['kwh_twr'] = 0 #place holder (tower kwh load?)
-    df_in['kwh_aux'] = 0 #place holder (aux equipment kwh load?)
-    df_in['kwh_vent'] = df_in['Fans (kWh)'] #use fan kWh as vent load for now
-    df_in['kwh_venthtg'] =0 #placeholders fields for now
-    df_in['kwh_ventclg'] =0
-    df_in['kwh_refg'] = 0
-    df_in['kwh_hpsup'] = 0
-    df_in['kwh_shw'] = 0
-    df_in['kwh_ext'] = 0
-    df_in['thm_tot'] = (df_in['Heating NG (kWh)'] +\
-                                df_in['Cooling NG (kWh)'] +\
-                                df_in['Interior Equipment NG (kWh)'] +\
-                                df_in['Water Systems (kWh)'])/29.3
-    df_in['thm_equip'] = df_in['Interior Equipment NG (kWh)']/29.3
-    df_in['thm_htg'] = df_in['Heating NG (kWh)']/29.3
-    df_in['thm_shw'] = df_in['Water Systems (kWh)']/29.3
-    df_in['deskw_ltg'] = 1 #placeholders fields for now
-    df_in['deskw_equ'] = 1
-    return df_in
+    kwh_per_therm = 29.3
+    columns=['TechID', 'BldgLoc', 'BldgType', 'BldgHVAC', 'BldgVint', 'kwh_tot', 'kwh_ltg', 'kwh_task',
+    'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
+    'kwh_venthtg', 'kwh_ventclg',
+    'kwh_refg', 'kwh_hpsup', 'kwh_shw', 'kwh_ext', 'thm_tot', 'thm_equip',
+    'thm_htg', 'thm_shw', 'deskw_ltg', 'deskw_equ']
+    return (
+        df_in[['TechID', 'BldgLoc', 'BldgType', 'BldgHVAC', 'BldgVint']]
+        .assign(kwh_tot = (df_in['Heating Elec (kWh)'] +
+                            df_in['Cooling Elec (kWh)'] +
+                            df_in['Interior Equipment Elec (kWh)'] +
+                            df_in['Interior Lighting (kWh)'] +
+                            df_in['Exterior Lighting (kWh)'] +
+                            df_in['Fans (kWh)']+
+                            df_in['Pumps (kWh)']))
+        .assign(kwh_ltg = (df_in['Interior Lighting (kWh)'] +
+                                        df_in['Exterior Lighting (kWh)']))
+        .assign(kwh_task = 0) # placeholder (task lighting load?)
+        .assign(kwh_equip = df_in['Interior Equipment Elec (kWh)'] +
+                                        df_in['Exterior Equipment (kWh)'])
+        .assign(kwh_htg = df_in['Heating Elec (kWh)'])
+        .assign(kwh_clg = df_in['Cooling Elec (kWh)'])
+        .assign(kwh_twr = 0) #place holder (tower kwh load?)
+        .assign(kwh_aux = 0) #place holder (aux equipment kwh load?)
+        .assign(kwh_vent = df_in['Fans (kWh)']) #use fan kWh as vent load for now
+        .assign(kwh_venthtg =0) #placeholders fields for now
+        .assign(kwh_ventclg =0)
+        .assign(kwh_refg = 0)
+        .assign(kwh_hpsup = 0)
+        .assign(kwh_shw = 0)
+        .assign(kwh_ext = 0)
+        .assign(thm_tot = (df_in['Heating NG (kWh)'] +
+                                    df_in['Cooling NG (kWh)'] +
+                                    df_in['Interior Equipment NG (kWh)'] +
+                                    df_in['Water Systems (kWh)'])/kwh_per_therm)
+        .assign(thm_equip = df_in['Interior Equipment NG (kWh)']/kwh_per_therm)
+        .assign(thm_htg = df_in['Heating NG (kWh)']/kwh_per_therm)
+        .assign(thm_shw = df_in['Water Systems (kWh)']/kwh_per_therm)
+        .assign(deskw_ltg = 1) #placeholders fields for now
+        .assign(deskw_equ = 1)
+        [columns]
+    )
+
+
+def end_use_rearrange_sfm(df_in: pd.DataFrame) -> pd.DataFrame:
+    kwh_per_therm = 29.3
+    columns=['TechID', 'BldgLoc', 'BldgType','BldgHVAC', 'BldgVint', 'kwh_tot', 'kwh_ltg', 'kwh_task',
+       'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
+       'kwh_venthtga', 'kwh_ventclga', 'kwh_venthtgb', 'kwh_ventclgb',
+       'kwh_refg', 'kwh_hpsup', 'kwh_shw', 'kwh_ext', 'thm_tot', 'thm_equip',
+       'thm_htg', 'thm_shw']
+    return (
+        end_use_rearrange(df_in)
+        .assign(kwh_venthtga =0) #placeholders fields...
+        .assign(kwh_ventclga =0)
+        .assign(kwh_venthtgb =0)
+        .assign(kwh_ventclgb =0)
+        [columns]
+    )
+
 
 def transform_mfm(
     bldgtype: str = 'MFm',
