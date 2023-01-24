@@ -65,6 +65,43 @@ def parse_measure_name(measure_name):
 
     return measure_name_dict # returns a dictionary
 
+def parse_measure_name2(cohort_names: pd.Series, verify: bool = False) -> pd.DataFrame:
+    '''Returns a DataFrame with five columns (all type string):
+        ["BldgType","Story","BldgHVAC","BldgVint","TechGroup__TechType"]
+    Each cohort name must match the pattern:
+        "BldgType&Story&BldgHVAC&BldgVint&TechGroup__TechType"
+    Only alphanumeric characters are allowed  [a-zA-Z0-9_], except TechGroup__TechType may contain ampersand (&).
+
+    Parameters
+    ----------
+    cohort_names : pandas.Series
+        The cohort names as from cohorts.csv.
+    verify : bool, default=False
+        If true and name parts do not match `expected_att`, raise an exception.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Structure containing the parts of cohort name.
+    '''
+    result = cohort_names.str.extract(
+        r'(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<Measure>[^/]+)'
+    )
+    if verify:
+        # Check for missing descriptor fields
+        missing = result.isna()
+        if missing.any().any():
+            example = cohort_names[missing.any(axis=1)].iloc[0]
+            raise ValueError(f'Missing descriptor field, e.g. cohort = "{example}"')
+        # Check for unrecognized fields
+        for attr_name,attr_val in expected_att.items():
+            unrecognized = ~result[attr_name].isin(attr_val)
+            if unrecognized.any():
+                example = result[attr_name][unrecognized].iloc[0]
+                raise ValueError(f'Unrecognized descriptor field, e.g. {attr_name} = "{example}"')
+    result.rename({'Measure':'TechGroup__TechType'},axis=1,inplace=True)
+    return result
+
 #function to melt long 8760 col into 24col x365row format
 def long2wide_pivot(df, name):
     '''
@@ -341,30 +378,13 @@ sim_annual_f = sim_annual_v1[['TechID', 'SizingID', 'BldgType','BldgVint','BldgL
        'deskw_equ', 'lastmod']]
 # %%
 ##Hourly Data final field fixes
-def vintage_str(name):
-    if 'Ex' in name:
-        return 'Ex'
-    elif 'New' in name:
-        return 'New'
-
-def hvac_str(name):
-    if 'rDXGF' in name:
-        return 'rDXGF'
-    elif 'rDXHP' in name:
-        return 'rDXHP'
-
-def bldgtype_str(name):
-    if 'DMo' in name:
-        return 'DMo'
-    elif 'MFm' in name:
-        return 'MFm'
-    elif 'SFm' in name:
-        return 'SFm'
 
 #update field names based on what it contains
-sim_hourly_wb_v1['BldgVint'] = sim_hourly_wb_v1['BldgType'].apply(vintage_str)
-sim_hourly_wb_v1['BldgHVAC'] = sim_hourly_wb_v1['BldgType'].apply(hvac_str)
-sim_hourly_wb_v1['BldgType'] = sim_hourly_wb_v1['BldgType'].apply(bldgtype_str)
+df_tmp = parse_measure_name2(sim_hourly_wb_v1['ID'],verify=True)
+sim_hourly_wb_v1['BldgVint'] = df_tmp['BldgVint']
+sim_hourly_wb_v1['BldgHVAC'] = df_tmp['BldgHVAC']
+sim_hourly_wb_v1['BldgType'] = df_tmp['BldgType']
+del df_tmp
 sim_hourly_wb_v1['SizingID'] = 'None'
 sim_hourly_wb_v1['tstat'] = 0
 sim_hourly_wb_v1['enduse'] = 0
