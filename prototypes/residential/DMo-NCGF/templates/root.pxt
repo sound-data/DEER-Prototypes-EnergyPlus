@@ -25,6 +25,8 @@ parameter "floor_consol_layer_thickness", :default=>0.16['m']
 parameter "ceil_consol_layer_thickness", :default=>0.19['m']
 parameter "ceil_consol_layer_conductivity", :default=>0.0617176
 
+parameter "ceil_insul_layer_thickness", :default=>0.000001['m']
+
 # zone infiltration
 parameter "infiltration_ACH", :default=>0.35
 
@@ -4028,6 +4030,16 @@ Material,
     41.9286,                 !- Density {kg/m3}
     776.25126;               !- Specific Heat {J/kg-K}
 
+    !Name
+    Material,
+        ceil_insul_layer,       !- Name
+        Rough,                   !- Roughness
+        <%=ceil_insul_layer_thickness%>,                    !- Thickness {m}
+        0.0617176,               !- Conductivity {W/m-K}
+        41.9286,                 !- Density {kg/m3}
+        776.25126;               !- Specific Heat {J/kg-K}
+
+
 !Name
 Material,
     floor_consol_layer,      !- Name
@@ -4284,6 +4296,7 @@ Construction,
 
 Construction,
     EL1 AFlr Construction,   !- Name
+    ceil_insul_layer,
     ceil_consol_layer,       !- Outside Layer
     Drywall_1/2in;           !- Layer 2
 
@@ -4306,7 +4319,8 @@ Construction,
 Construction,
     EL1 AFlr Construction-mirror,  !- Name
     Drywall_1/2in,           !- Outside Layer
-    ceil_consol_layer;       !- Layer 2
+    ceil_consol_layer,
+    ceil_insul_layer;       !- Layer 2
 
 Construction,
     window_w_blinds,         !- Name
