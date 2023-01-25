@@ -623,6 +623,21 @@ sim_hourly_2s_re = sim_hourly_2s[['TechID','SizingID','BldgType','BldgVint','Bld
 sim_hourly_final = pd.merge(sim_hourly_1s_re, sim_hourly_2s_re, on=['TechID', 'SizingID','BldgType','BldgVint','BldgLoc','BldgHVAC','tstat','enduse','daynum'])
 sim_hourly_final['lastmod']=dt.datetime.now()
 
+#%%
+#Create CZ:VintYear dictionary based on prototype definitions
+cz_list1 = ['CZ01','CZ02','CZ03','CZ04','CZ05','CZ06','CZ07','CZ08','CZ09']
+cz_list2 = ['CZ10','CZ11','CZ12','CZ13','CZ14','CZ15','CZ16']
+
+cz_vint_dict1 = {i:'1975' for i in cz_list1}
+cz_vint_dict2 = {i:'1985' for i in cz_list2}
+
+cz_vint_dict = cz_vint_dict1 | cz_vint_dict2
+
+#%%
+##BldgVint label correction for NumStor weights
+sim_annual_f['BldgVint'] = sim_annual_f['BldgLoc'].map(cz_vint_dict)
+sim_hourly_final['BldgVint'] = sim_hourly_final['BldgLoc'].map(cz_vint_dict)
+
 # %%
 ##STEP 4: Measure setup file (current_msr_mat.csv)
 
@@ -856,3 +871,5 @@ sim_hourly_final = pd.concat([sim_hourly_pre, sim_hourly_std, sim_hourly_msr])
 current_msr_mat.to_csv('current_msr_mat.csv', index=False)
 sim_annual_final.to_csv('sfm_annual.csv', index=False)
 sim_hourly_final.to_csv('sfm_hourly_wb.csv', index=False)
+
+# %%

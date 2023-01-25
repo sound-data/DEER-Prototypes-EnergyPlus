@@ -13,3 +13,5 @@ results-profile-gas.csv
 # Other #
 #########
 stderr
+scripts/data transformation/sfm_annual.csv
+scripts/data transformation/sfm_hourly_wb.csv
