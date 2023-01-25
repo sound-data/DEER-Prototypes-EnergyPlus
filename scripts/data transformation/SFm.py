@@ -706,6 +706,8 @@ current_msr_mat_proto['PreSizingID']='None'
 current_msr_mat_proto['StdSizingID']='None'
 current_msr_mat_proto['MsrSizingID']='None'
 current_msr_mat_proto['SizingSrc']=np.nan
+
+#to be worked on: need to add corresponding indicator for what enduse it is for end use loadshape connections
 current_msr_mat_proto['EU_HrRepVar']=np.nan
 
 current_msr_mat = current_msr_mat_proto[['MeasureID', 'BldgType', 'BldgVint','BldgLoc','BldgHVAC','tstat','PreTechID','PreSizingID',
