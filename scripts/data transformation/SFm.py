@@ -1,5 +1,5 @@
 #%%
-#import all necessary libraries
+##STEP 0: Setup (import all necessary libraries)
 import pandas as pd
 import numpy as np
 import os
@@ -52,7 +52,7 @@ expected_att = {
     'BldgVint': ['Ex','New'],
     'Measure': tech_uniques
 }
-
+# function to parse meta data from & delimited case file names (Measure Group Name from master spreadsheet)
 def parse_measure_name(measure_name):
     #split at most 4 times for 5 descriptor fields
     measure_name_split = measure_name.split('&', 4) 
@@ -71,6 +71,42 @@ def parse_measure_name(measure_name):
 
     return measure_name_dict # returns a dictionary
 
+def parse_measure_name2(cohort_names: pd.Series, verify: bool = False) -> pd.DataFrame:
+    '''Returns a DataFrame with five columns (all type string):
+        ["BldgType","Story","BldgHVAC","BldgVint","TechGroup__TechType"]
+    Each cohort name must match the pattern:
+        "BldgType&Story&BldgHVAC&BldgVint&TechGroup__TechType"
+    Only alphanumeric characters are allowed  [a-zA-Z0-9_], except TechGroup__TechType may contain ampersand (&).
+
+    Parameters
+    ----------
+    cohort_names : pandas.Series
+        The cohort names as from cohorts.csv.
+    verify : bool, default=False
+        If true and name parts do not match `expected_att`, raise an exception.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Structure containing the parts of cohort name.
+    '''
+    result = cohort_names.str.extract(
+        r'(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<Measure>[^/]+)'
+    )
+    if verify:
+        # Check for missing descriptor fields
+        missing = result.isna()
+        if missing.any().any():
+            example = cohort_names[missing.any(axis=1)].iloc[0]
+            raise ValueError(f'Missing descriptor field, e.g. cohort = "{example}"')
+        # Check for unrecognized fields
+        for attr_name,attr_val in expected_att.items():
+            unrecognized = ~result[attr_name].isin(attr_val)
+            if unrecognized.any():
+                example = result[attr_name][unrecognized].iloc[0]
+                raise ValueError(f'Unrecognized descriptor field, e.g. {attr_name} = "{example}"')
+    result.rename({'Measure':'TechGroup__TechType'},axis=1,inplace=True)
+    return result
 
 #function to melt long 8760 col into 24col x365row format
 def long2wide_pivot(df, name):
@@ -87,6 +123,8 @@ def long2wide_pivot(df, name):
     
     return df_wide
 
+#function to uses the “File Name” column from the results-summary csv to identify directory structure (an organized table) of a batch run 
+# and uses the structure to construct a semi-organized annual outputs table.
 def annual_raw_parsing(df, cohort_dict):
     #create separated meta data cols
     df['BldgLoc'] = split_meta_cols_eu[0]
@@ -113,6 +151,7 @@ def annual_raw_parsing(df, cohort_dict):
     
     return annual_df_v1
 
+#function to merge and rearrange specific annual consumption end-use fields into the format required
 def end_use_rearrange(df):
         #end use rearrangement
     df['kwh_tot'] = (df['Heating Elec (kWh)'] + \
@@ -136,9 +175,7 @@ def end_use_rearrange(df):
     df['kwh_clg'] = df['Cooling Elec (kWh)']
 
     df['kwh_twr'] = 0 #place holder (tower kwh load?)
-
     df['kwh_aux'] = 0 #place holder (aux equipment kwh load?)
-
     df['kwh_vent'] = df['Fans (kWh)'] #use fan kWh as vent load for now
 
     df['kwh_venthtga'] =0 #placeholders fields..
@@ -178,24 +215,9 @@ def end_use_rearrange(df):
 #create measure specific Master table based on Measure selected
 df_measure = df_master[df_master['Measure (general name)'] == measure_name]
 case_cohort_list = df_measure['Measure Group Name'].unique()
+
 # %%
-#SFm only script
-####Define path
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-os.chdir("../..") #go up two directory
-print(os.path.abspath(os.curdir))
-
-#input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path1 and leave other blank.
-path1 = 'analysis/SFm_SEER Rated AC_HP_1975'
-path2 = 'analysis/SFm_SEER Rated AC_HP_1985'
-
-paths = [path1, path2]
-
-if any('New' in x for x in paths):
-    paths = [path1]
-# %%
-##STEP 1: Annual output data read/transform
+##STEP 1: Annual data extraction / transformation
 sim_annual_raw = pd.DataFrame()
 for path in paths:
     print(f'processing data in {path}')
@@ -229,7 +251,7 @@ sim_annual_2s_v1 = end_use_rearrange(sim_annual_2s)
 
 
 # %%
-## Hourly data setup/transform
+##STEP 2: Hourly data extraction / transformation
 #Read 8760 map
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
@@ -238,7 +260,7 @@ hrly_paths = paths
 
 
 #%%
-os.chdir("..") #go up one directory
+os.chdir("../..") #go up two directories
 print(os.path.abspath(os.curdir))
 
 sim_hourly_raw = pd.DataFrame()
@@ -361,12 +383,12 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
 sim_hourly_wb_1s_v1 = sim_hourly_wb_v1[sim_hourly_wb_v1['BldgType'].str.contains('&1&')].copy()
 sim_hourly_wb_2s_v1 = sim_hourly_wb_v1[sim_hourly_wb_v1['BldgType'].str.contains('&2&')].copy()
 # %%
-## 1-story / 2-story data seperation / re-organization
+##STEP 3: 1-S, 2-S combination, and Normalizing Units
 # annual data
 rename_1s_fields = {'kwh_tot':'kwh_tot1', 
                     'kwh_ltg':'kwh_ltg1',
                     'kwh_task':'kwh_task1', 
-                    'kwh_equip':'kwh_eqiup1',
+                    'kwh_equip':'kwh_equip1',
                     'kwh_htg':'kwh_htg1',
                     'kwh_clg':'kwh_clg1',                    
                     'kwh_twr':'kwh_twr1',
@@ -388,7 +410,7 @@ rename_1s_fields = {'kwh_tot':'kwh_tot1',
 rename_2s_fields = {'kwh_tot':'kwh_tot2', 
                     'kwh_ltg':'kwh_ltg2',
                     'kwh_task':'kwh_task2', 
-                    'kwh_equip':'kwh_eqiup2',
+                    'kwh_equip':'kwh_equip2',
                     'kwh_htg':'kwh_htg2',
                     'kwh_clg':'kwh_clg2',                    
                     'kwh_twr':'kwh_twr2',
@@ -497,43 +519,26 @@ sim_annual_final['lastmod']=dt.datetime.now()
 #rearrange columns
 sim_annual_f = sim_annual_final[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
        'normunit', 'numunits', 'kwh_tot1', 'kwh_ltg1', 'kwh_task1',
-       'kwh_eqiup1', 'kwh_htg1', 'kwh_clg1', 'kwh_twr1', 'kwh_aux1',
+       'kwh_equip1', 'kwh_htg1', 'kwh_clg1', 'kwh_twr1', 'kwh_aux1',
        'kwh_vent1', 'kwh_venthtg1a', 'kwh_ventclg1a', 'kwh_venthtg1b',
        'kwh_ventclg1b', 'kwh_refg1', 'kwh_hpsup1', 'kwh_shw1', 'kwh_ext1',
        'thm_tot1', 'thm_equip1', 'thm_htg1', 'thm_shw1','kwh_tot2', 'kwh_ltg2',
-       'kwh_task2', 'kwh_eqiup2', 'kwh_htg2', 'kwh_clg2', 'kwh_twr2',
+       'kwh_task2', 'kwh_equip2', 'kwh_htg2', 'kwh_clg2', 'kwh_twr2',
        'kwh_aux2', 'kwh_vent2', 'kwh_venthtg2a', 'kwh_ventclg2a',
        'kwh_venthtg2b', 'kwh_ventclg2b', 'kwh_refg2', 'kwh_hpsup2', 'kwh_shw2',
        'kwh_ext2', 'thm_tot2', 'thm_equip2', 'thm_htg2', 'thm_shw2', 'lastmod']]
 # %%
 ###Finalize Hourly data
-def vintage_str(name):
-    if 'Ex' in name:
-        return 'Ex'
-    elif 'New' in name:
-        return 'New'
-
-def hvac_str(name):
-    if 'rDXGF' in name:
-        return 'rDXGF'
-    elif 'rDXHP' in name:
-        return 'rDXHP'
-
-def bldgtype_str(name):
-    if 'DMo' in name:
-        return 'DMo'
-    elif 'MFm' in name:
-        return 'MFm'
-    elif 'SFm' in name:
-        return 'SFm'
 
 #hourly data
 #1story
 #rename some fields to fit MC3 output
 #add some placeholder fields to fit MC3 output
-sim_hourly_wb_1s_v1['BldgVint'] = sim_hourly_wb_1s_v1['BldgType'].apply(vintage_str)
-sim_hourly_wb_1s_v1['BldgHVAC'] = sim_hourly_wb_1s_v1['BldgType'].apply(hvac_str)
-sim_hourly_wb_1s_v1['BldgType'] = sim_hourly_wb_1s_v1['BldgType'].apply(bldgtype_str)
+df_tmp = parse_measure_name2(sim_hourly_wb_1s_v1['ID'],verify=True)
+sim_hourly_wb_1s_v1['BldgVint'] = df_tmp['BldgVint']
+sim_hourly_wb_1s_v1['BldgHVAC'] = df_tmp['BldgHVAC']
+sim_hourly_wb_1s_v1['BldgType'] = df_tmp['BldgType']
+del df_tmp
 sim_hourly_wb_1s_v1['SizingID'] = 'None'
 sim_hourly_wb_1s_v1['tstat'] = 0
 sim_hourly_wb_1s_v1['enduse'] = 0
@@ -541,9 +546,11 @@ sim_hourly_wb_1s_v1['enduse'] = 0
 #2story
 #rename some fields to fit MC3 output
 #add some placeholder fields to fit MC3 output
-sim_hourly_wb_2s_v1['BldgVint'] = sim_hourly_wb_2s_v1['BldgType'].apply(vintage_str)
-sim_hourly_wb_2s_v1['BldgHVAC'] = sim_hourly_wb_2s_v1['BldgType'].apply(hvac_str)
-sim_hourly_wb_2s_v1['BldgType'] = sim_hourly_wb_2s_v1['BldgType'].apply(bldgtype_str)
+df_tmp = parse_measure_name2(sim_hourly_wb_2s_v1['ID'],verify=True)
+sim_hourly_wb_2s_v1['BldgVint'] = df_tmp['BldgVint']
+sim_hourly_wb_2s_v1['BldgHVAC'] = df_tmp['BldgHVAC']
+sim_hourly_wb_2s_v1['BldgType'] = df_tmp['BldgType']
+del df_tmp
 sim_hourly_wb_2s_v1['SizingID'] = 'None'
 sim_hourly_wb_2s_v1['tstat'] = 0
 sim_hourly_wb_2s_v1['enduse'] = 0
@@ -616,8 +623,23 @@ sim_hourly_2s_re = sim_hourly_2s[['TechID','SizingID','BldgType','BldgVint','Bld
 sim_hourly_final = pd.merge(sim_hourly_1s_re, sim_hourly_2s_re, on=['TechID', 'SizingID','BldgType','BldgVint','BldgLoc','BldgHVAC','tstat','enduse','daynum'])
 sim_hourly_final['lastmod']=dt.datetime.now()
 
+#%%
+#Create CZ:VintYear dictionary based on prototype definitions
+cz_list1 = ['CZ01','CZ02','CZ03','CZ04','CZ05','CZ06','CZ07','CZ08','CZ09']
+cz_list2 = ['CZ10','CZ11','CZ12','CZ13','CZ14','CZ15','CZ16']
+
+cz_vint_dict1 = {i:'1975' for i in cz_list1}
+cz_vint_dict2 = {i:'1985' for i in cz_list2}
+
+cz_vint_dict = cz_vint_dict1 | cz_vint_dict2
+
+#%%
+##BldgVint label correction for NumStor weights
+sim_annual_f['BldgVint'] = sim_annual_f['BldgLoc'].map(cz_vint_dict)
+sim_hourly_final['BldgVint'] = sim_hourly_final['BldgLoc'].map(cz_vint_dict)
+
 # %%
-#####
+##STEP 4: Measure setup file (current_msr_mat.csv)
 
 # Creating current_msr_mat and finalzing TechID's
 
@@ -721,6 +743,8 @@ current_msr_mat_proto['PreSizingID']='None'
 current_msr_mat_proto['StdSizingID']='None'
 current_msr_mat_proto['MsrSizingID']='None'
 current_msr_mat_proto['SizingSrc']=np.nan
+
+#to be worked on: need to add corresponding indicator for what enduse it is for end use loadshape connections
 current_msr_mat_proto['EU_HrRepVar']=np.nan
 
 current_msr_mat = current_msr_mat_proto[['MeasureID', 'BldgType', 'BldgVint','BldgLoc','BldgHVAC','tstat','PreTechID','PreSizingID',
@@ -732,7 +756,7 @@ current_msr_mat = current_msr_mat.rename(columns={'normunit':'NormUnit'})
 len(current_msr_mat)
 
 # %%
-#####
+##STEP 5: Clean Up Sequence
 # Creating updated Sim_annual and Sim_hourly data with distinguished TechID names
 sim_annual_pre_common = sim_annual_f[sim_annual_f['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
 sim_annual_std_common = sim_annual_f[sim_annual_f['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]
@@ -847,3 +871,5 @@ sim_hourly_final = pd.concat([sim_hourly_pre, sim_hourly_std, sim_hourly_msr])
 current_msr_mat.to_csv('current_msr_mat.csv', index=False)
 sim_annual_final.to_csv('sfm_annual.csv', index=False)
 sim_hourly_final.to_csv('sfm_hourly_wb.csv', index=False)
+
+# %%

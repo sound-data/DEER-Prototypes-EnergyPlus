@@ -1,0 +1,3 @@
+skip,case_name,:fan_power_per_flow,:vfd_curve_name,:hvac_type,:supplyfan_total_eff,:motor_eff
+,RE-HV-PSCFanMotor,1059.44,,unitary_system,0.12,0.24
+,RE-HV-BrushlessFanMotor,1059.44,VFD_Fan_Curve,unitary_system,0.25,0.5
