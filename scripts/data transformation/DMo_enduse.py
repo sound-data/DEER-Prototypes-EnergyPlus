@@ -225,14 +225,14 @@ sim_hourly_f = sim_hourly_eu_v1[['TechID', 'SizingID', 'BldgType', 'BldgVint', '
 #if looping over all HVAC types, ignore BldgHVAC filter
 PreTechIDs = df_measure[['PreTechID','Common_PreTechID']].drop_duplicates()
 StdTechIDs = df_measure[['StdTechID','Common_StdTechID']].drop_duplicates()
-MsrTechIDs = df_measure[['MsrTechID','Common_MsrTechID']].drop_duplicates()
+MeasTechIDs = df_measure[['MeasTechID','Common_MeasTechID']].drop_duplicates()
 # %%
 
 #Hourly Clean up
 ###hourly data, separate into pre std msr, change into specific TechID
 sim_hourly_pre_common = sim_hourly_f[sim_hourly_f['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
 sim_hourly_std_common = sim_hourly_f[sim_hourly_f['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]
-sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MsrTechIDs['Common_MsrTechID'].unique())]
+sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MeasTechIDs['Common_MeasTechID'].unique())]
 
 # %%
 #Pre hourly
@@ -264,9 +264,9 @@ else:
     sim_hourly_std = sim_hourly_std_common.copy()
 # %%
 #Msr hourly
-if False in list(MsrTechIDs['MsrTechID']==MsrTechIDs['Common_MsrTechID']):
+if False in list(MeasTechIDs['MeasTechID']==MeasTechIDs['Common_MeasTechID']):
     sim_hourly_msr = pd.DataFrame()
-    for common_id, new_id in zip(MsrTechIDs['Common_MsrTechID'], MsrTechIDs['MsrTechID']):
+    for common_id, new_id in zip(MeasTechIDs['Common_MeasTechID'], MeasTechIDs['MeasTechID']):
         print(f'common is {common_id}, changing into new id is {new_id}')
         #Isolate specific common id (old)
         sim_hourly_msr_mod = sim_hourly_msr_common[sim_hourly_msr_common['TechID']==common_id].copy()
