@@ -54,18 +54,15 @@ vint_folder_list = [i for i in file_list if 'SFm_SEER Rated AC_HP_1' in i]
 ## Hourly data setup/transform
 #Read 8760 map
 annual_map = pd.read_excel('../annual8760map.xlsx')
-# %%
-# (number of runs per results-summary.csv file)
-def num_runs_by_vint(folder_name):
-    if '1975' in folder_name:
-        return 360
-    elif '1985' in folder_name:
-        return 280
+
 # %%
 #vintage = 1975, all runs, hourly data
-num_runs = num_runs_by_vint(vint_folder_list[0])
 full_path = path + "/" + vint_folder_list[0] 
 
+df_raw = pd.read_csv(full_path +'/results-summary.csv', usecols=['File Name'])
+num_runs = len(df_raw['File Name'].dropna().unique()) - 1
+
+#%%
 annual_df = pd.read_csv(full_path + "/results-summary.csv", nrows=num_runs, skiprows=num_runs+2)
 split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
@@ -150,9 +147,11 @@ sim_hourly_wb_1975_2s = sim_hourly_wb_proto_1975[sim_hourly_wb_proto_1975['BldgT
 
 # %%
 #vintage = 1985, all runs, hourly data
-num_runs = num_runs_by_vint(vint_folder_list[1])
 full_path = path + "/" + vint_folder_list[1] 
 
+df_raw = pd.read_csv(full_path +'/results-summary.csv', usecols=['File Name'])
+num_runs = len(df_raw['File Name'].dropna().unique()) - 1
+#%%
 annual_df_2 = pd.read_csv(full_path + "/results-summary.csv", nrows=num_runs, skiprows=num_runs+2)
 split_meta_cols_eu2 = annual_df_2['File Name'].str.split('/', expand=True)
 
