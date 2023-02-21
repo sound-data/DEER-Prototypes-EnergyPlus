@@ -185,7 +185,7 @@ print('go to next step.')
 #using htm beautiful soup extraction
 from bs4 import BeautifulSoup
 import re
-#9/1/2022 actual SEER rated baseline output path, SFm
+#9/1/2022 actual SEER rated baseline output path, DMo
 path = "../../../../Analysis/DMo_SEER Rated AC_HP"
 
 overall_path = path +"/runs"
