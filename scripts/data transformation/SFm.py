@@ -37,7 +37,7 @@ path_new = ''
 
 paths = [path_1975, path_1975]
 
-if any('New' in x for x in paths):
+if path_new != '' :
     paths = [path_new]
 # %%
 #extract only the 5th portion of the measure group name for expected_att
