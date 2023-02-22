@@ -30,14 +30,15 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-#input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path1 and leave other blank.
-path1 = 'Analysis/SFm_SEER Rated AC_HP_1975'
-path2 = 'Analysis/SFm_SEER Rated AC_HP_1985'
+#input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path_new and leave other blank.
+path_1975 = 'Analysis/SFm_SEER Rated AC_HP_1975'
+path_1985 = 'Analysis/SFm_SEER Rated AC_HP_1985'
+path_new = ''
 
-paths = [path1, path2]
+paths = [path_1975, path_1975]
 
 if any('New' in x for x in paths):
-    paths = [path1]
+    paths = [path_new]
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
