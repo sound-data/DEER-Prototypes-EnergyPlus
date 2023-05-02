@@ -43088,7 +43088,7 @@ ZoneInfiltration:DesignFlowRate,
                 SimpleAndTabular;        !- Option Type
 
                 Output:Meter,Electricity:Facility,hourly; !- [J]
-                Output:Meter,Gas:Facility,hourly; !- [J]
+                Output:Meter,NaturalGas:Facility,hourly; !- [J]
 
     !
     ! -------------------------------------------------------------
@@ -51080,8 +51080,8 @@ ZoneInfiltration:DesignFlowRate,
       autosize,                !- Nominal Capacity {W}
       DXFG EL2 G_S3 Heating Coil Outlet,  !- Air Inlet Node Name
       DXFG EL2 G_S3 Air Loop Outlet;  !- Air Outlet Node Name
- <% end %>   
-	
+ <% end %>
+
 	Coil:Heating:Electric,
       DXFG EL1 T_E29 supp heat coil,  !- Name
       always_avail,            !- Availability Schedule Name
@@ -51179,8 +51179,8 @@ ZoneInfiltration:DesignFlowRate,
       autosize,                !- Nominal Capacity {W}
       DXFG EL2 G_N9 Heating Coil Outlet,  !- Air Inlet Node Name
       DXFG EL2 G_N9 Air Loop Outlet;  !- Air Outlet Node Name
-<% end %>	  
-	  
+<% end %>
+
     Coil:Heating:Electric,
       DXFG EL1 T_W35 supp heat coil,  !- Name
       always_avail,            !- Availability Schedule Name

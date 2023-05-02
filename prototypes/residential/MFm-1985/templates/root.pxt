@@ -1,4 +1,4 @@
-<%#INTERFACE
+Output:Meter,NaturalGas<%#INTERFACE
 
 parameter "run_control", :default=>"ANNUAL"  # Sets the simulation run period (ANNUAL | SIZING)
 
@@ -45356,7 +45356,7 @@ Output:Variable,
             SimpleAndTabular;        !- Option Type
 
             Output:Meter,Electricity:Facility,hourly; !- [J]
-            Output:Meter,Gas:Facility,hourly; !- [J]
+            Output:Meter,NaturalGas:Facility,hourly; !- [J]
 
 !
 ! -------------------------------------------------------------
