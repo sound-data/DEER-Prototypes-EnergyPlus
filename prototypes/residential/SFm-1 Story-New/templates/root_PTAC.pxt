@@ -22591,7 +22591,7 @@ ThermostatSetpoint:DualSetpoint,
         hourly;                  !- Reporting Frequency
 
     Output:Meter,
-        Gas:Facility,            !- Key Name
+        NaturalGas:Facility,            !- Key Name
         hourly;                  !- Reporting Frequency
 
 
