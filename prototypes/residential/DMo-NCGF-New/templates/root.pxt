@@ -7864,7 +7864,7 @@ Output:Table:SummaryReports,
             SimpleAndTabular;        !- Option Type
 
             Output:Meter,Electricity:Facility,hourly; !- [J]
-            Output:Meter,Gas:Facility,hourly; !- [J]
+            Output:Meter,NaturalGas:Facility,hourly; !- [J]
 
 
 ! -------------------------------------------------------------
