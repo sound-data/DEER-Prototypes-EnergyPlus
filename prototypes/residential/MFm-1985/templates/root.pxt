@@ -1,4 +1,4 @@
-Output:Meter,NaturalGas<%#INTERFACE
+<%#INTERFACE
 
 parameter "run_control", :default=>"ANNUAL"  # Sets the simulation run period (ANNUAL | SIZING)
 
