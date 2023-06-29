@@ -35,7 +35,7 @@ path_1975 = 'Analysis/SFm_SEER Rated AC_HP_1975'
 path_1985 = 'Analysis/SFm_SEER Rated AC_HP_1985'
 path_new = ''
 
-paths = [path_1975, path_1975]
+paths = [path_1975, path_1985]
 
 if path_new != '' :
     paths = [path_new]
