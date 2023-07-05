@@ -2,6 +2,9 @@
 run_step5.psql
 Nicholas Fette, 2023-01-05
 
+Import all the results data into PostgreSQL, and run all the post-processing scripts.
+Warning: deletes the results data currently in the database.
+
 Usage on command line:
   cd "C:/.../DEER-Prototypes-EnergyPlus/scripts/"
   psql -d "dbname" -U "dbuser" -f "run_step5.psql" -v import_sfm= -v import_sim=
@@ -55,7 +58,7 @@ Within an open interactive psql session:
 \endif
 
 -- Uncomment these lines if need to apply corrections.
--- (Or, use command line arguments -v Duct_Opt= -v Duct_Seal=
+-- Or, use command line arguments: -v Duct_Opt= -v Duct_Seal=
 --\set Duct_Opt
 --\set Duct_Seal
 
@@ -68,6 +71,8 @@ SET search_path TO "MC_results_database";
 truncate "current_msr_mat";
 \set command '\\copy "current_msr_mat" FROM ' :'file0' ' WITH (FORMAT csv, HEADER MATCH)'
 :command
+--\copy "current_msr_mat" FROM 'results/<insert your path 1>/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "current_msr_mat" FROM 'results/<insert your path 2>/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
 
 \echo Import sim_annual
 \i 'schema/create_sim_annual.sql'
@@ -76,6 +81,9 @@ truncate "sim_annual";
 \set command '\\copy "sim_annual" FROM ' :'file1' ' WITH (FORMAT csv, HEADER MATCH)'
 :command
 \endif
+-- If data comes from multiple folders, uncomment lines below.
+--\copy "sim_annual" FROM 'results/<insert your path 1>/sim_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "sim_annual" FROM 'results/<insert your path 2>/sim_annual.csv' WITH (FORMAT csv, HEADER MATCH)
 
 \echo Import sim_hourly_wb
 \i 'schema/create_sim_hourly_wb.sql'
@@ -84,6 +92,9 @@ truncate "sim_hourly_wb";
 \set command '\\copy "sim_hourly_wb" FROM ' :'file2' ' WITH (FORMAT csv, HEADER MATCH)'
 :command
 \endif
+-- If data comes from multiple folders, uncomment lines below.
+--\copy "sim_hourly_wb" FROM 'results/<insert your path 1>/sim_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "sim_hourly_wb" FROM 'results/<insert your path 2>/sim_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
 
 \echo Import sfm_annual
 \i 'schema/create_sfm_annual.sql'
@@ -92,6 +103,8 @@ truncate "sfm_annual";
 \set command '\\copy "sfm_annual" FROM ' :'file3' ' WITH (FORMAT csv, HEADER MATCH)'
 :command
 \endif
+--\copy "sfm_annual" FROM 'results/<insert your path 1>/sfm_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "sfm_annual" FROM 'results/<insert your path 2>/sfm_annual.csv' WITH (FORMAT csv, HEADER MATCH)
 
 \echo Import sfm_hourly_wb
 \i 'schema/create_sfm_hourly_wb.sql'
@@ -100,6 +113,8 @@ truncate "sfm_hourly_wb";
 \set command '\\copy "sfm_hourly_wb" FROM ' :'file4' ' WITH (FORMAT csv, HEADER MATCH)'
 :command
 \endif
+--\copy "sfm_hourly_wb" FROM 'results/<insert your path 1>/sfm_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "sfm_hourly_wb" FROM 'results/<insert your path 2>/sfm_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
 
 \echo Loading support tables
 \echo FloorArea_2022
