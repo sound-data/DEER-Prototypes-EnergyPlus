@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS "current_msr_mat"(
   "PreSizingID" VARCHAR(255),
   "StdTechID" VARCHAR(255),
   "StdSizingID" VARCHAR(255),
-  "MsrTechID" VARCHAR(255),
+  "MeasTechID" VARCHAR(255),
   "MsrSizingID" VARCHAR(255),
   "SizingSrc" VARCHAR(255),
   "EU_HrRepVar" VARCHAR(255),
