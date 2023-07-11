@@ -1,3 +1,37 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+"""Residential data transformation script (work in progress)
+
+Transform "results-summary.csv" and "instance-var.csv" files
+into "current_msr_mat", "sim_annual", and "sim_hourly_wb".
+
+This script is based on SFm.py, DMo.py, and MFm.py from January 2023 and lacks several later changes.
+WARNING: The script is not fully tested.
+
+Features:
+* Make data transformation more command-line-friendly for MFm
+* Requires python >= 3.2 and additional package "tqdm"
+* Speed up reading hourly files (DMo and MFm)
+
+To do:
+* Speed up reading hourly files (SFm)
+* Merge recent changes from SFm/DMo/MFm
+* Testing and validation that results match SFm/DMo/MFm scripts
+
+Usage:
+    Prerequisite: running models
+    $terminal1> cd C:/Users/user1/source/DEER-Prototypes-EnergyPlus/Analysis/MFm_Furnace_Ex
+    $terminal1> modelkit rake results
+
+    Data transformation step
+    $terminal1> cd C:/Users/user1/source/DEER-Prototypes-EnergyPlus
+    $terminal1> python scripts/transform.py MFm "Wall Furnace" ./Analysis/MFm_Furnace_Ex -o ./myresults/
+
+@Author: Nicholas Fette <nfette@solaris-technical.com>
+@Date: 2023-07-11
+"""
+
 #%%
 ##STEP 0: Setup (import all necessary libraries)
 import pandas as pd
