@@ -43,6 +43,9 @@ from pathlib import Path
 from argparse import ArgumentParser
 from multiprocessing import Pool
 from tqdm import tqdm, trange
+from io import BytesIO
+
+DEFAULT_HOURLY_COLUMN = 'Electricity:Facility [J](Hourly)'
 
 TRANSFORM_PATH = Path(os.path.dirname(__file__))
 DEERROOT = TRANSFORM_PATH / '../..'
@@ -250,11 +253,25 @@ def truncate8760(df: pd.DataFrame) -> pd.DataFrame:
     else:
         return df
 
-def read_hourly(full_path: Path, col_name: str) -> pd.DataFrame:
+def read_hourly(
+    full_path: Path,
+    col_name: str,
+    selected_column: str = DEFAULT_HOURLY_COLUMN
+) -> pd.DataFrame:
     return (
         #extract the last column (the total elec hrly profile)
         #if for enduse hourly, then extract the relevant end use column
-        pd.read_csv(full_path, usecols=['Electricity:Facility [J](Hourly) '])
+        #pd.read_csv(full_path, usecols=[selected_column])
+        pd.read_csv(
+            # EnergyPlus output CSV files have a trailing space at the end of each line.
+            # If parsed using pandas, the last column name will retain the extra, trailing space.
+            # E.g. 'Electricity:Facility [J](Hourly)' becomes 'Electricity:Facility [J](Hourly) '.
+            # For repeatable results, strip trailing spaces on all lines before parsing the CSV file.
+            BytesIO(b'\r\n'.join((line.rstrip() for line in open(full_path,'rb')))),
+            # For performance, parse and return only the selected column
+            usecols=[selected_column]
+        )
+        
         #change column name
         .set_axis([col_name], axis=1)
         .pipe(truncate8760)
@@ -270,7 +287,7 @@ def read_hourly_multi(files_and_names: list) -> pd.DataFrame:
         results=[]
         presults = [(x,pool.apply_async(read_hourly, x)) for x in files_and_names]
         with tqdm(presults, desc='Read hourly CSV') as t:
-            for (full_path,col_name),presult in t:
+            for (full_path,col_name,hourly_column_name),presult in t:
                 t.set_description('{:<50s}'.format(col_name[:50]))
                 results.append(presult.get())
     return pd.concat([pd.DataFrame(index=range(0,8760))] + results,axis=1)
@@ -279,7 +296,8 @@ def transform_mfm(
     bldgtype: str = 'MFm',
     measure_name: str = 'Wall Furnace',
     msrpath: Path = DEERROOT/'Analysis/MFm_Furnace_Ex',
-    outpath: Path = None
+    outpath: Path = None,
+    hourly_column_name: str = DEFAULT_HOURLY_COLUMN
     ) -> None:
 
     if outpath is None:
@@ -341,7 +359,7 @@ def transform_mfm(
         #create the column name based on the permutations
         col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
         full_path = hrly_path / col_name
-        files_and_names.append((full_path, col_name))
+        files_and_names.append((full_path, col_name, hourly_column_name))
 
     #left-merge onto big df
     hourly_df = read_hourly_multi(files_and_names)
@@ -756,6 +774,8 @@ def parse_args():
                     help='E.g. '+(DEERROOT/'Analysis/MFm_Furnace_Ex').resolve().as_posix())
     parser.add_argument('-o', '--outpath', type=Path,
                     help='E.g. "myresults/"')
+    parser.add_argument('-d', '--hourly_column_name', type=str,
+                        default=DEFAULT_HOURLY_COLUMN)
     # parse command line arguments
     return parser.parse_args()
 
@@ -765,7 +785,7 @@ def main():
     if args.bldgtype != 'MFm':
         print(f'Building type "{args.bldgtype}" not implemented.')
         return
-    transform_mfm(args.bldgtype, args.measure_name, args.msrpath, args.outpath)
+    transform_mfm(args.bldgtype, args.measure_name, args.msrpath, args.outpath, args.hourly_column_name)
 
 if __name__ == '__main__':
     main()
