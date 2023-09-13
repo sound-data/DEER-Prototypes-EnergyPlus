@@ -257,9 +257,12 @@ if __name__ == '__main__':
     Progress does not change while a simulation is running (no partial progress)."""
     )
     # default_root: assume we are in repo/ and we want to track repo/Analysis:
-    default_root = Path("./Analysis")
+    #default_root = Path("./Analysis")
     # Assuming we are in repo/scripts, and we want to track repo/Analysis:
     #default_root = Path("../Analysis")
+
+    # default_root: assume we are in repo/Analysis and we want to track repo/Analysis:
+    default_root = Path("./")
 
     parser.add_argument("analysis_root", metavar='analysis-root', nargs="?",
                         type=Path, default=default_root,
