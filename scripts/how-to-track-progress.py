@@ -210,7 +210,7 @@ def progress_bar2(root):
         # Count composed models.
         n_models = len(list(subroot.glob('**/runs/**/*.pxv')))
         # Count finished simulations.
-        n_done = len(list(subroot.glob('**/runs/**/*.sql')))
+        n_done = len(list(subroot.glob('**/runs/**/instance-out.sql')))
         if n_models > 0:
             a_subroot.append(subroot)
             a_n_models.append(n_models)
@@ -229,7 +229,7 @@ def progress_bar2(root):
                 a_subroot, a_n_models, a_pbar
             )):
                 # Count finished simulations.
-                n_done = len(list(subroot.glob('**/runs/**/*.sql')))
+                n_done = len(list(subroot.glob('**/runs/**/instance-out.sql')))
                 # Lag = how many simulations finished since last progress bar update
                 lag = n_done - pbar.n
                 # Update progress bar by at most 100 points, to animate progress already accrued
