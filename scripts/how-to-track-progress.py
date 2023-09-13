@@ -209,11 +209,13 @@ def progress_bar2(root):
         relpath = subroot.relative_to(root)
         # Count composed models.
         n_models = len(list(subroot.glob('**/runs/**/*.pxv')))
+        # Count finished simulations.
+        n_done = len(list(subroot.glob('**/runs/**/*.sql')))
         if n_models > 0:
             a_subroot.append(subroot)
             a_n_models.append(n_models)
             # Create the progress bar here.
-            a_pbar.append(tqdm(total=n_models, desc=relpath.parts[0]))
+            a_pbar.append(tqdm(total=n_models, desc=relpath.parts[0], initial=n_done))
             a_n_done.append(0)
             overall_models += n_models
     delta_t = 1.0 # seconds
