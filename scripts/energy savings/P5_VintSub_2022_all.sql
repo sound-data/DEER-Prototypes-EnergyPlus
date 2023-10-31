@@ -50,3 +50,4 @@ ORDER BY
 UPDATE meas_impacts_wtd_2022
 SET "BldgVint" = 'Ex'
 WHERE "BldgVint" = '1975' OR "BldgVint" = '1985'
+;
