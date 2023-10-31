@@ -105,3 +105,4 @@ LEFT JOIN sim_peakper spk ON
 
 ORDER BY 
  current_msr_mat."MeasureID",current_msr_mat."BldgType",current_msr_mat."BldgHVAC",current_msr_mat."BldgVint",current_msr_mat."BldgLoc"
+;
