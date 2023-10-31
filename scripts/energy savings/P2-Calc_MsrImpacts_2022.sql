@@ -61,7 +61,7 @@ NULL::numeric(15,5) as "AMsrUseEUtherm"
 
 FROM current_msr_mat
 LEFT JOIN sim_annual_wtd msr on 
-  msr."TechID"   = current_msr_mat."MsrTechID" AND  
+  msr."TechID"   = current_msr_mat."MeasTechID" AND  
   msr."SizingID" = current_msr_mat."MsrSizingID" AND  
   msr."BldgType" = current_msr_mat."BldgType" AND
   msr."BldgVint" = current_msr_mat."BldgVint" AND  
@@ -82,7 +82,7 @@ LEFT JOIN sim_annual_wtd std on
   std."BldgLoc"  = current_msr_mat."BldgLoc" AND  
   std."BldgHVAC" = current_msr_mat."BldgHVAC"
 LEFT JOIN sim_peakper mpk ON
-  mpk."TechID"   = current_msr_mat."MsrTechID" AND  
+  mpk."TechID"   = current_msr_mat."MeasTechID" AND  
   mpk."SizingID" = current_msr_mat."MsrSizingID" AND  
   mpk."BldgType" = current_msr_mat."BldgType" AND
   mpk."BldgVint" = current_msr_mat."BldgVint" AND  
