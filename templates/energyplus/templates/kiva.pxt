@@ -1,0 +1,186 @@
+<%#INITIALIZE
+parameter "width"
+
+parameter "perimeter_surface_width", :default=>4['ft']
+
+parameter "slab_full_insulation", :default=>0['R-IP']
+
+parameter "slab_horizontal_insulation", :default=>0['R-IP']
+parameter "slab_horizontal_insulation_width", :default=>2['ft']
+
+parameter "slab_gap_insulation", :default=>0['R-IP']
+
+parameter "slab_vertical_insulation", :default=>0['R-IP']
+parameter "slab_vertical_insulation_depth", :default=>2['ft']
+
+parameter "footer_depth", :default=>20['in']
+parameter "slab_thickness", :default=>8['in']
+
+parameter "foundation_depth", :default=>0['ft']
+
+parameter "basement_vertical_insulation", :default=>0['R-IP']
+parameter "basement_vertical_insulation_depth", :default=>2['ft']
+parameter "basement_insulation_location", :default=>'EXTERIOR'  # INTERIOR | EXTERIOR
+
+parameter "heating_setpoint", :default=>70['F']
+
+
+%>
+
+<%
+# Since horizontal insulation begins at the bottom of the slab, the total
+# insulation at the perimeter is additive:
+
+slab_horizontal_insulation += slab_full_insulation
+
+%>
+
+Simulation Control:
+  startDate: 2015-Jan-1
+  endDate: 2015-Dec-31
+  timeStep: 60 # [min]
+
+Materials:
+  Typical Soil:
+    k: 0.864  # [W/m-K]
+    rho: 1510.0  # [kg/m3]
+    cp: 1260.0  # [J/kg-K]
+  Concrete:
+    k: 1.311  # [W/m-K]
+    rho: 2240.0  # [kg/m3]
+    cp: 836.8  # [J/kg-K]
+<%
+xps_cond = 0.0288 # (W/m-K) Extruded/Expanded Polystyrene @ R-5/inch
+%>
+  XPS:
+    k: <%= xps_cond %>  # [W/m-K]
+    rho: 29.0  # [kg/m3]
+    cp: 1210.0  # [J/kg-K]
+
+Foundation:
+  soil: Typical Soil  # Material reference
+  vegetationHeight: 0.3  # [m]
+  deltaLocal: 370  # [m]
+  alphaLocal: 0.22
+  soilAbsorptivity: 0.7  # 0-1
+  soilEmissivity: 0.9  # 0-1
+  surfaceRoughness: 30
+  slab:
+    layers:
+      -
+        material: Concrete
+        thickness: <%= slab_thickness %>
+<% slab_cont_insul_thick = xps_cond * slab_full_insulation %>
+<% if (slab_cont_insul_thick == 0.0 or slab_cont_insul_thick.nan?) %>
+
+<% else %>
+      -
+        material: XPS
+        thickness: <%= slab_cont_insul_thick %>
+<% end %>
+    emissivity: 0.9
+
+  wall:
+    layers:
+      -
+        material: Concrete
+        thickness: <%= 12['in'] %>
+    heightAboveGrade: <%= 8['in'] %>
+    height: <%= foundation_depth + footer_depth %>
+    interiorEmissivity: 0.9
+    exteriorEmissivity: 0.9
+    exteriorAbsorptivity: 0.7
+
+<% perim_insul_thick = xps_cond * slab_horizontal_insulation %>
+<% if (perim_insul_thick == 0.0 or perim_insul_thick.nan?) %>
+
+<% else %>
+  interiorHorizontalInsulation:
+    material: XPS
+    thickness: <%= perim_insul_thick %>
+    depth: <%= slab_thickness + foundation_depth %>
+    width: <%= slab_horizontal_insulation_width %>
+<% end %>
+
+<% if foundation_depth > 0.0 %>
+  <% vertical_insul_thick = xps_cond * basement_vertical_insulation %>
+  <% if (vertical_insul_thick == 0.0 or vertical_insul_thick.nan?) %>
+
+  <% else %>
+    <% if basement_insulation_location == 'INTERIOR' %>
+  interiorVerticalInsulation:
+    <% else %>
+  exteriorVerticalInsulation:
+    <% end %>
+    material: XPS
+    thickness: <%= vertical_insul_thick %>
+    depth: <%= basement_vertical_insulation_depth %>
+  <% end %>
+
+<% else %>
+  <% gap_insul_thick = xps_cond * slab_gap_insulation %>
+  <% if (gap_insul_thick == 0.0 or gap_insul_thick.nan?) %>
+
+  <% else %>
+  interiorVerticalInsulation:
+    material: XPS
+    thickness: <%= gap_insul_thick %>
+    depth: <%= slab_thickness + perim_insul_thick + slab_cont_insul_thick %>
+  <% end %>
+
+  <% vertical_insul_thick = xps_cond * slab_vertical_insulation %>
+  <% if (vertical_insul_thick == 0.0 or vertical_insul_thick.nan?) %>
+
+  <% else %>
+  exteriorVerticalInsulation:
+    material: XPS
+    thickness: <%= vertical_insul_thick %>
+    depth: <%= slab_vertical_insulation_depth %>
+  <% end %>
+<% end %>
+
+  foundationDepth:  <%= foundation_depth %>  # [m]
+  farFieldWidth: 40.0  # [m]
+  deepGroundDepth: 40.0  # [m]
+  deepGroundBoundary: ZERO-FLUX  # AUTO | CONSTANT-TEMP | ZERO-FLUX
+
+  indoorTemperatureMethod: CONSTANT
+  indoorAirTemperature: <%= heating_setpoint + 273.15 %>  # [K]
+
+  coordinateSystem: CARTESIAN
+  numberOfDimensions: 2
+  reductionStrategy: BOUNDARY
+  polygon:
+    - [0, 0]
+    - [0, <%= width %>]
+    - [<%= width %>, <%= width %>]
+    - [<%= width %>, 0]
+
+  perimeterSurfaceWidth: <%= perimeter_surface_width %>
+
+  mesh:
+    minCellDim: 0.05  # [m]
+    maxNearGrowthCoeff: 1.5
+    maxDepthGrowthCoeff: 1.5
+    maxInteriorGrowthCoeff: 1.5
+    maxExteriorGrowthCoeff: 1.5
+
+  numericalScheme: ADI  # ADE | EXPLICIT | ADI | IMPLICIT | CRANK-NICOLSON | STEADY-STATE
+  fADI: 0.00001
+  solver: bicgstab
+  preconditioner: ilu
+  maxIterations: 100000
+  tolerance: 1.0e-6
+  initializationMethod: STEADY-STATE  # KUSUDA | CONSTANT | STEADY-STATE
+  implicitAccelTimestep: 168  # hours
+  implicitAccelPeriods: 12
+  warmupDays: 365 # days
+  convectionCalculationMethod: AUTO # AUTO | CONSTANT
+  wallTopBoundary: ZERO-FLUX  # ZERO-FLUX | LINEAR-DT
+  outdoorTemperatureMethod: WEATHER-FILE # WEATHER-FILE | CONSTANT
+
+  outputReport:
+    minFrequency: 60  # [min]
+    reports: [2,6,13]
+
+  outputAnimations:

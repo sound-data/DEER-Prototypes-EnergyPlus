@@ -1,0 +1,988 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+# CHECK THESE
+
+# change to:
+# roof_type  == Roof Assembly Type
+# roof_cav_insul
+# roof_cont_insul
+# roof_int_type
+# roof_ext_type
+# roof_ext_refl
+# roof_ext_emit
+
+parameter "roof_base_type", :name => "Roof Assembly Type", :description => "Roof assembly type",
+  :domain => String,  # ["Insulation Entirely Above Deck", "Metal Roof", "Attic Roof with Wood Joists", "Attic Roof with Steel Joists", "Concrete Roof"]
+  :default => "Insulation Entirely Above Deck"
+parameter "roof_base_cavity_insul", :name => "Roof Base Cavity Insulation", :description => "Roof base cavity insulation R-value",
+  :domain => Quantity,
+  :default => 0['R-IP']
+parameter "roof_base_cont_insul", :name => "Roof Base Continuous Insulation", :description => "Roof base continuous insulation R-value",
+  :domain => Quantity,
+  :default => 20['R-IP']
+parameter "roof_exterior_type", :name => "Roof Exterior Type", :description => "Roof exterior type",
+  :domain => String,  # ["None", "Roof Membrane", "Metal Roof", "Metal Decking", "Asphalt Shingles", "Wood Shingles", "Tile"]
+  :default => "Roof Membrane"
+parameter "roof_reflectance", :name => "Roof Reflectance", :description => "Reflective property of roof surface",
+  :domain => Numeric,
+  :default => 0.3  # Roof "aged" solar reflectance
+parameter "roof_emittance", :name => "Roof Emittance", :description => "Emittance property of roof surface",
+  :domain => Numeric,
+  :default => 0.85
+parameter "roof_interior_type", :name => "Roof Interior Type", :description => "Roof interior type",
+  :domain => String,  # ["None", "Metal Decking", "Gypsum 1/2in", "Gypsum 5/8in"]
+  :default => "Metal Decking"
+
+parameter "wall_base_type", :name => "Wall Base Type", :description => "Wall base type",
+  :domain => String,  # ["Concrete MW Solid Grouted", "Concrete NW Solid", "Concrete MW Partially Grouted", "Metal Panels", "Steel Framing at 16 in. on center", "Steel Framing at 24 in. on center", "Wood Framing at 16 in. on center", "Wood Framing at 24 in. on center", "Concrete with Steel Framing", "Concrete with Wood Framing", "Granite 10in"]
+  :default => "Steel Framing at 16 in. on center"
+parameter "wall_base_cavity_insul", :name => "Wall Base Cavity Insulation", :description => "Wall base cavity insulation R-value",
+  :domain => Quantity,
+  :default => 13['R-IP']
+parameter "wall_base_cont_insul", :name => "Wall Base Continuous Insulation", :description => "Wall base continuous insulation R-value",
+  :domain => Quantity,
+  :default => 7.5['R-IP']
+parameter "wall_exterior_type", :name => "Wall Exterior Type", :description => "Wall exterior type",
+  :domain => String,  # ["None", "Metal Siding", "Wood Siding", "Stucco", "Brick Veneer", "Concrete Block Veneer", "Spandrel Glass", "Stone Slab"]
+  :default => "Stucco"
+parameter "wall_interior_type", :name => "Wall Interior Type", :description => "Wall interior type",
+  :domain => String,  # ["None", "Gypsum 1/2in", "Gypsum 5/8in"]
+  :default => "Gypsum 5/8in"
+
+parameter "window_u", :name => "Window U-Value", :description => "Window U-value",
+  :domain => Quantity,
+  :default => 0.35['U-IP']
+parameter "window_shgc", :name => "Window SHGC", :description => "Window solar heat gain coefficient",
+  :domain => Numeric,
+  :default => 0.40
+parameter "window_transmittance", :name => "Window Visible Light Transmittance", :description => "Window visible light transmittance",
+  :domain => Numeric,
+  :default => 0.40
+
+parameter "window_shade_transmittance",
+  :domain => Numeric,
+  :default => 0.5
+parameter "window_shade_permeability",
+  :domain => Numeric,
+  :default => 0.25
+parameter "window_shade_setpoint",
+  :domain => Quantity,
+  :default => 20['W/m2']  # High solar setpoint (W/m2)
+
+parameter "skylight_u", :default=>0.55['U-IP']
+parameter "skylight_shgc", :default=>0.40
+parameter "skylight_type", :default=>"DIFFUSING"  # DIFFUSING | CLEAR
+
+parameter "foundation_type", :name => "Foundation Type", :description => "Foundation type",
+  :domain => String,  # ["None", "Full Slab", "Interior Horizontal", "Interior Vertical", "Exterior Horizontal", "Exterior Vertical"]
+  :default => "None"
+# Can change to import this from foundation.pxt; identical definition
+
+parameter "thermal_bridging", :name => "Thermal Bridging", :description => "Heat losses due to thermal bridging",
+  :domain => Boolean,
+  :default => true
+
+# Dimensions for thermal bridging calculations
+parameter "parapet_length", :default=>0.0
+parameter "floor_length", :default=>0.0
+parameter "wall_area", :default=>1.0
+
+parameter "radiant_ceilings", :default=>false
+parameter "radiant_tube_spacing", :default=>0.20['m']  # Radiant tube spacing (m) - yes, meters because Clina uses SI
+%>
+
+<%
+require("modelkit/energyplus")
+require("modelkit/envelope")
+%>
+
+<%# Roof Constructions %>
+
+<%
+# Calculate Effective Insulation Value
+roof_cont_thick, roof_cont_cond, roof_cav_thick, roof_cav_cond = Envelope.roof_insulation(roof_base_type, roof_base_cavity_insul, roof_base_cont_insul)
+
+layers = []
+if (roof_exterior_type != "None")
+  layers << roof_exterior_type
+end
+if (roof_base_type == Envelope::ROOF_CONCRETE)
+  layers << "Concrete NW Solid 8in"
+end
+if (roof_base_cont_insul != 0)
+  layers << "Roof Continuous Insulation"
+end
+if (roof_base_cavity_insul != 0)
+  layers << "Roof Cavity Effective Insulation"
+end
+if (roof_interior_type != "None")
+  layers << roof_interior_type
+end
+if (radiant_ceilings)
+  layers << "Plaster 1/4in"
+  layers << "Plaster 1/4in"
+end
+if (roof_cont_thick <= 0.0)
+  roof_cont_thick = 0.0001
+end
+if (roof_cav_thick <= 0.0)
+  roof_cav_thick = 0.0001
+end
+%>
+
+Material,
+  Roof Continuous Insulation,  !- Name
+  VeryRough,               !- Roughness
+  <%= roof_cont_thick %>,  !- Thickness {m}
+  <%= roof_cont_cond %>,  !- Conductivity {W/m-K}
+  32,                      !- Density {kg/m3}(2013 ASHRAE Handbook - Fundamentals Section 26 Table 1 - Extruded polystyrene, smooth skin - aged 180 days)
+  1465;                     !- Specific Heat {J/kg-K}(2013 ASHRAE Handbook - Fundamentals Section 26 Table 1 - Extruded polystyrene, smooth skin - aged 180 days)
+
+Material,
+  Roof Cavity Effective Insulation,  !- Name
+  VeryRough,               !- Roughness
+  <%= roof_cav_thick %>,  !- Thickness {m}
+  <%= roof_cav_cond %>,  !- Conductivity {W/m-K}
+  8.17,                      !- Density {kg/m3}(2013 ASHRAE Handbook - Fundamentals Section 26 Table 1 - Glass-fiber batts)
+  837;                     !- Specific Heat {J/kg-K}(2013 ASHRAE Handbook - Fundamentals Section 26 Table 1 - Glass-fiber batts)
+
+Construction,
+  Exterior Roof,           !- Name
+<% EnergyPlus.each(layers) do |layer| %>
+  <%= layer %>,  !- Layer
+<% end %>
+
+<% if (radiant_ceilings) %>
+Construction:InternalSource,
+  Radiant Exterior Roof,  !- Name
+  <%= layers.count - 1 %>,                       !- Source Present After Layer Number
+  <%= layers.count - 1 %>,                       !- Temperature Calculation Requested After Layer Number
+  1,                       !- Dimensions for the CTF Calculation
+  <%= radiant_tube_spacing %>,  !- Tube Spacing {m}
+<% EnergyPlus.each(layers) do |layer| %>
+  <%= layer %>,  !- Layer
+<% end %>
+<% else %>
+Construction,
+  Radiant Exterior Roof,  !- Name
+<% EnergyPlus.each(layers) do |layer| %>
+  <%= layer %>,  !- Layer
+<% end %>
+<% end %>
+
+<%# Exterior Wall Constructions %>
+
+<%
+# Calculate Effective Insulation Value
+wall_cont_thick, wall_cont_cond, wall_cav_thick, wall_cav_cond = Envelope.wall_insulation(wall_base_type, wall_base_cavity_insul, wall_base_cont_insul, wall_area, floor_length, parapet_length)
+
+layers = []
+if (wall_exterior_type != "None")
+  layers << wall_exterior_type
+end
+if (wall_exterior_type == "Brick Veneer") || (wall_exterior_type == "Concrete Block Veneer")
+  layers << "Air Space"
+end
+case wall_base_type
+when Envelope::WALL_CONCRETE_MW_SOLID_GROUTED, Envelope::WALL_CONCRETE_STEEL_FRAMING, Envelope::WALL_CONCRETE_WOOD_FRAMING
+  layers << "Concrete MW Solid Grouted 8in"
+when Envelope::WALL_CONCRETE_NW_SOLID
+  layers << "Concrete NW Solid 8in"
+when Envelope::WALL_CONCRETE_MW_PARTIALLY_GROUTED
+  layers << "Concrete MW Partially Grouted 8in"
+when Envelope::WALL_GRANITE_10IN
+  layers << "Granite 10in"
+end
+if (wall_base_cont_insul != 0)
+  layers << "Wall Continuous Insulation"
+end
+if (wall_base_cavity_insul != 0)
+  layers << "Wall Cavity Effective Insulation"
+end
+if (wall_interior_type != "None")
+  layers << wall_interior_type
+end
+if (wall_cont_thick <= 0.0)
+  wall_cont_thick = 0.0001
+end
+if (wall_cav_thick <= 0.0)
+  wall_cav_thick = 0.0001
+end
+%>
+
+Material,
+  Wall Continuous Insulation,  !- Name
+  MediumSmooth,               !- Roughness
+  <%= wall_cont_thick %>,  !- Thickness {m}
+  <%= wall_cont_cond %>,  !- Conductivity {W/m-K}
+  32,                      !- Density {kg/m3}(2013 ASHRAE Handbook - Fundamentals Section 26 Table 1 - Extruded polystyrene, smooth skin - aged 180 days)
+  1465;                     !- Specific Heat {J/kg-K}(2013 ASHRAE Handbook - Fundamentals Section 26 Table 1 - Extruded polystyrene, smooth skin - aged 180 days)
+
+Material,
+  Wall Cavity Effective Insulation,  !- Name
+  VeryRough,               !- Roughness
+  <%= wall_cav_thick %>,  !- Thickness {m}
+  <%= wall_cav_cond %>,  !- Conductivity {W/m-K}
+  8.17,                      !- Density {kg/m3}(2013 ASHRAE Handbook - Fundamentals Section 26 Table 1 - Glass-fiber batts)
+  837;                     !- Specific Heat {J/kg-K}(2013 ASHRAE Handbook - Fundamentals Section 26 Table 1 - Glass-fiber batts)
+
+Construction,
+  Exterior Wall,           !- Name
+<% EnergyPlus.each(layers) do |layer| %>
+  <%= layer %>,  !- Layer
+<% end %>
+
+Construction,
+  Basement Wall,           !- Name
+  Gypsum 5/8in,   !- Outside Layer
+  Concrete HW Solid 8in;  !- Layer 2
+
+<%# Floor Constructions %>
+
+Construction,
+  Interior Floor,          !- Name
+  Concrete MW Solid 4in,  !- Outside Layer
+  Carpet;                  !- Layer 2
+
+<% if (radiant_ceilings) %>
+Construction:InternalSource,
+  Radiant Interior Floor,  !- Name
+  1,                       !- Source Present After Layer Number
+  1,                       !- Temperature Calculation Requested After Layer Number
+  1,                       !- Dimensions for the CTF Calculation
+  <%= radiant_tube_spacing %>,  !- Tube Spacing {m}
+  Plaster 1/4in,           !- Outside Layer
+  Plaster 1/4in,           !- Layer 2
+  Rigid Insulation 1in,    !- Layer 3
+  Concrete MW Solid 4in,  !- Layer 4
+  Carpet;                  !- Layer 5
+<% else %>
+Construction,
+  Radiant Interior Floor,  !- Name
+  Concrete MW Solid 4in,  !- Layer 2
+  Carpet;                  !- Layer 3
+<% end %>
+
+Construction,
+  Soffit Floor,            !- Name
+  Floor Insulation,    !- Layer 1
+  Concrete HW Solid 8in,  !- Layer 2
+  Carpet;                  !- Layer 3
+
+Construction,
+  Interior Ceiling,        !- Name
+  Carpet,                  !- Outside Layer
+  Concrete MW Solid 4in;  !- Layer 2
+
+<% if (radiant_ceilings) %>
+Construction:InternalSource,
+  Radiant Interior Ceiling,  !- Name
+  4,                       !- Source Present After Layer Number
+  4,                       !- Temperature Calculation Requested After Layer Number
+  1,                       !- Dimensions for the CTF Calculation
+  <%= radiant_tube_spacing %>,  !- Tube Spacing {m}
+  Carpet,                  !- Outside Layer
+  Concrete MW Solid 4in,  !- Layer 2
+  Rigid Insulation 1in,    !- Layer 3
+  Plaster 1/4in,           !- Layer 4
+  Plaster 1/4in;           !- Layer 5
+<% else %>
+Construction,
+  Radiant Interior Ceiling,  !- Name
+  Carpet,                    !- Outside Layer
+  Concrete MW Solid 4in;  !- Layer 2
+<% end %>
+
+Construction,
+  Attic Floor,             !- Name
+  Gypsum 5/8in,           !- Outside Layer
+  Plywood;                !- Layer 2
+
+<% if (radiant_ceilings) %>
+Construction:InternalSource,
+  Radiant Attic Floor,     !- Name
+  1,                       !- Source Present After Layer Number
+  1,                       !- Temperature Calculation Requested After Layer Number
+  1,                       !- Dimensions for the CTF Calculation
+  <%= radiant_tube_spacing %>,  !- Tube Spacing {m}
+  Plaster 1/4in,           !- Outside Layer
+  Plaster 1/4in,           !- Layer 2
+  Rigid Insulation 1in,    !- Layer 3
+  Plywood;                !- Layer 4
+<% else %>
+Construction,
+  Radiant Attic Floor,     !- Name
+  Gypsum 5/8in,           !- Outside Layer
+  Plywood;                !- Layer 2
+<% end %>
+
+Construction,
+  Interior Ceiling To Attic,  !- Name
+  Plywood,                !- Outside Layer
+  Gypsum 5/8in;           !- Layer 2
+
+
+<% if (radiant_ceilings) %>
+Construction:InternalSource,
+  Radiant Interior Ceiling To Attic,  !- Name
+  3,                       !- Source Present After Layer Number
+  3,                       !- Temperature Calculation Requested After Layer Number
+  1,                       !- Dimensions for the CTF Calculation
+  <%= radiant_tube_spacing %>,  !- Tube Spacing {m}
+  Plywood,                !- Outside Layer
+  Rigid Insulation 1in,    !- Layer 2
+  Plaster 1/4in,           !- Layer 3
+  Plaster 1/4in;           !- Layer 4
+<% else %>
+Construction,
+  Radiant Interior Ceiling To Attic,  !- Name
+  Plywood,                !- Outside Layer
+  Gypsum 5/8in;           !- Layer 2
+<% end %>
+
+<%# Slab-On-Grade Constructions %>
+
+Construction,
+  Exterior Floor,          !- Name
+  Concrete HW Solid 6in,  !- Outside Layer
+  Carpet;                  !- Layer 2
+
+Construction,
+  Exterior Slab,          !- Name
+<% if (foundation_type == "Full Slab") %>
+  Slab_Insulation,  !- Outside Layer
+<% end %>
+  Concrete HW Solid 6in,  !- Outside Layer
+  Carpet;                  !- Layer 2
+
+Construction,
+  Exterior Floor Slab,     !- Name
+  Concrete HW Solid 8in;  !- Outside Layer
+
+Construction,
+  Slab Footing,    !- Name
+  Concrete NW Solid 6in;         !- Outside Layer
+
+<%# Opaque Door Constructions %>
+
+Construction,
+  MetalSlabDoor, !- Name {}
+  Metal Door, !- Outside Layer {}
+  Air-gap:0.1300, !- Layer 2 {}
+  Metal Door; !- Layer 3 {}
+
+Construction,
+  Wood Door,           !- Name
+  Wood Door Panel;     !- Outside Layer
+
+Construction,
+  Overhead Door,           !- Name
+  Overhead Door Panel;     !- Outside Layer
+
+Construction,
+  Swinging Door,           !- Name
+  Opaque Door Panel;     !- Outside Layer
+
+<%# Vertical Glazing Constructions %>
+
+Construction,
+  Exterior Window,         !- Name
+  Theoretical Glazing;     !- Outside Layer
+
+Construction,
+  Glass Door,         !- Name
+  Clear Glass;     !- Outside Layer
+
+<%# Roof Materials %>
+
+<%
+roof_absorptance = 1.0 - roof_reflectance
+%>
+
+Material,
+  Roof Membrane, !- Name {}
+  VeryRough, !- Roughness {}
+  0.0095, !- Thickness {m}
+  0.16, !- Conductivity {W/m-K}
+  1121.29, !- Density {kg/m3}
+  1460.0, !- Specific Heat {J/kg-K}
+  <%= roof_emittance %>, !- Thermal Absorptance
+  <%= roof_absorptance %>, !- Solar Absorptance
+  <%= roof_absorptance %>; !- Visible Absorptance
+
+Material,
+  Metal Decking,           !- Name
+  MediumSmooth,            !- Roughness
+  0.0015,                  !- Thickness {m}
+  45,        !- Conductivity {W/m-K}
+  7689,      !- Density {kg/m3}
+  418,       !- Specific Heat {J/kg-K}
+  0.9000,                  !- Thermal Absorptance
+  0.7000,                  !- Solar Absorptance
+  0.3000;                  !- Visible Absorptance
+
+Material,
+  Metal Roof,              !- Name
+  Smooth,                  !- Roughness
+  0.0015,                  !- Thickness {m}
+  45,        !- Conductivity {W/m-K}
+  7689,      !- Density {kg/m3}
+  418,       !- Specific Heat {J/kg-K}
+  <%= roof_emittance %>,   !- Thermal Absorptance
+  <%= roof_absorptance %>,  !- Solar Absorptance
+  <%= roof_absorptance %>;  !- Visible Absorptance
+
+Material,
+  Gypsum 5/8in,           !- Name
+  MediumSmooth,            !- Roughness
+  0.016,                   !- Thickness {m}
+  0.1622,                  !- Conductivity {W/m-K}
+  800,                     !- Density {kg/m3}
+  1090,                    !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.7;                     !- Visible Absorptance
+
+Material,
+  Concrete MW Solid Grouted 8in,  !- Name
+  Rough,                   !- Roughness
+  0.2032,                  !- Thickness {m}
+  1.32,  !- Conductivity {W/m-K}
+  1968,  !- Density {kg/m3}
+  836.8,  !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.2;                     !- Visible Absorptance
+
+Material,
+  Concrete MW Solid Grouted 6in,  !- Name
+  Rough,                   !- Roughness
+  0.1524,                  !- Thickness {m}
+  1.32,  !- Conductivity {W/m-K}
+  1968,  !- Density {kg/m3}
+  836.8,  !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.2;                     !- Visible Absorptance
+
+Material,
+  Asphalt Shingles,    !- Name
+  VeryRough,               !- Roughness
+  0.0032,                  !- Thickness {m}
+  0.04,                    !- Conductivity {W/m-K}
+  1120,                    !- Density {kg/m3}
+  1260;                    !- Specific Heat {J/kg-K}
+
+Material,
+  Wood Shingles,       !- Name
+  VeryRough,               !- Roughness
+  0.0064,                  !- Thickness {m}
+  0.04,                    !- Conductivity {W/m-K}
+  592,                     !- Density {kg/m3}
+  1300;                    !- Specific Heat {J/kg-K}
+
+Material,
+  Tile,       !- Name
+  VeryRough,               !- Roughness
+  0.0127,                  !- Thickness {m}
+  1.59,                    !- Conductivity {W/m-K}
+  1920,                    !- Density {kg/m3}
+  1260;                    !- Specific Heat {J/kg-K}
+
+<%# Exterior Wall Materials %>
+
+Material,
+  Gypsum 1/2in,           !- Name
+  MediumSmooth,            !- Roughness
+  0.0127,                   !- Thickness {m}
+  0.1622,                  !- Conductivity {W/m-K}
+  800,                     !- Density {kg/m3}
+  1090,                    !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.7;                     !- Visible Absorptance
+
+Material,
+  Stucco,           !- Name
+  Smooth,                  !- Roughness
+  0.01015,                 !- Thickness {m}
+  0.72,                    !- Conductivity {W/m-K}
+  1856,                    !- Density {kg/m3}
+  840,                     !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.7;                     !- Visible Absorptance
+
+Material,
+  Metal Siding,          !- Name
+  Smooth,            !- Roughness
+  0.0015,                    !- Thickness {m}
+  45,         !- Conductivity {W/m-K}
+  7689,       !- Density {kg/m3}
+  418,        !- Specific Heat {J/kg-K}
+  0.9000000,               !- Thermal Absorptance
+  0.7000000,               !- Solar Absorptance
+  0.7000000;               !- Visible Absorptance
+
+Material,
+  Wood Siding,         !- Name
+  MediumSmooth,            !- Roughness
+  0.0127,                  !- Thickness {m}
+  0.09,                    !- Conductivity {W/m-K}
+  592,                     !- Density {kg/m3}
+  1170;                    !- Specific Heat {J/kg-K}
+
+Material,
+  Concrete NW Solid 6in,  !- Name
+  Rough,                   !- Roughness
+  0.1524,                  !- Thickness {m}
+  2.3075,  !- Conductivity {W/m-K}
+  1968,  !- Density {kg/m3}
+  836.8,  !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.2;                     !- Visible Absorptance
+
+Material,
+  Concrete NW Solid 8in,  !- Name
+  Rough,                   !- Roughness
+  0.2032,                  !- Thickness {m}
+  2.3075,  !- Conductivity {W/m-K}
+  1968,  !- Density {kg/m3}
+  836.8,  !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.2;                     !- Visible Absorptance
+
+Material,
+  Concrete MW Partially Grouted 8in,  !- Name
+  Rough,                   !- Roughness
+  0.2032,                  !- Thickness {m}
+  0.935,  !- Conductivity {W/m-K}
+  1968,  !- Density {kg/m3}
+  836.8,  !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.2;                     !- Visible Absorptance
+
+Material,
+  Concrete HW Solid 8in,  !- Name
+  Rough,                   !- Roughness
+  0.2032,                  !- Thickness {m}
+  1.311,  !- Conductivity {W/m-K}
+  2240,  !- Density {kg/m3}
+  836.8,  !- Specific Heat {J/kg-K}
+  0.9000,                  !- Thermal Absorptance
+  0.7000,                  !- Solar Absorptance
+  0.7000;                  !- Visible Absorptance
+
+Material,
+  Brick Veneer,          !- Name
+  MediumRough,             !- Roughness
+  0.1016,                  !- Thickness {m}
+  0.89,        !- Conductivity {W/m-K}
+  1920,      !- Density {kg/m3}
+  790,       !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.7;                     !- Visible Absorptance
+
+Material,
+  Concrete Block Veneer,  !- Name
+  MediumRough,             !- Roughness
+  0.1016,                  !- Thickness {m}
+  0.53,                    !- Conductivity {W/m-K}
+  1280,                    !- Density {kg/m3}
+  840;                     !- Specific Heat {J/kg-K}
+
+Material,
+  Stone Slab,  !- Name
+  MediumRough,             !- Roughness
+  0.051,                   !- Thickness {m}
+  1.14,                    !- Conductivity {W/m-K}
+  1920,                    !- Density {kg/m3}
+  900;                     !- Specific Heat {J/kg-K}
+
+Material,
+  Spandrel Glass,  !- Name
+  Smooth,                  !- Roughness
+  0.0064,                  !- Thickness {m}
+  0.99,                    !- Conductivity {W/m-K}
+  2528,                    !- Density {kg/m3}
+  880;                     !- Specific Heat {J/kg-K}
+
+Material:AirGap,
+  Air Space,  !- Name
+  0.16;                    !- Thermal Resistance {m2-K/W}
+
+Material,
+  Granite 10in,  !- Name
+  MediumRough,             !- Roughness
+  0.254,                   !- Thickness {m}
+  4.3,                     !- Conductivity {W/m-K}
+  2880,                    !- Density {kg/m3}
+  790;                     !- Specific Heat {J/kg-K}
+
+
+
+
+
+Material,
+  Wood 6in,          !- Name
+  MediumSmooth,            !- Roughness
+  0.15,                    !- Thickness {m}
+  0.12,         !- Conductivity {W/m-K}
+  540,       !- Density {kg/m3}
+  1210,        !- Specific Heat {J/kg-K}
+  0.9000000,               !- Thermal Absorptance
+  0.7000000,               !- Solar Absorptance
+  0.7000000;               !- Visible Absorptance
+
+Material,
+  Concrete MW Solid 4in,  !- Name
+  Rough,                   !- Roughness
+  0.1016,                  !- Thickness {m}
+  0.858,  !- Conductivity {W/m-K}
+  1968,  !- Density {kg/m3}
+  836.8,  !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.2;                     !- Visible Absorptance
+
+Material,
+  Concrete HW Solid 6in, !- Name
+  Rough,                   !- Roughness
+  0.1524,                  !- Thickness {m}
+  1.311,  !- Conductivity {W/m-K}
+  2240,  !- Density {kg/m3}
+  836.8,  !- Specific Heat {J/kg-K}
+  0.9000,                  !- Thermal Absorptance
+  0.7000,                  !- Solar Absorptance
+  0.7000;                  !- Visible Absorptance
+
+Material,
+  Plywood,                !- Name
+  MediumSmooth,            !- Roughness
+  1.9099999E-02,           !- Thickness {m}
+  0.12,         !- Conductivity {W/m-K}
+  540,       !- Density {kg/m3}
+  1210,        !- Specific Heat {J/kg-K}
+  0.9000000,               !- Thermal Absorptance
+  0.7800000,               !- Solar Absorptance
+  0.7800000;               !- Visible Absorptance
+
+Material,
+  Plaster 1/4in,           !- Name
+  MediumSmooth,            !- Roughness
+  0.00635,                 !- Thickness {m}
+  0.58,                    !- Conductivity {W/m-K}
+  800,                     !- Density {kg/m3}
+  1090,                    !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.7;                     !- Visible Absorptance
+
+Material,
+  Rigid Insulation 1in,    !- Name
+  MediumSmooth,            !- Roughness
+  0.0254,                  !- Thickness {m}
+  0.0288,                  !- Conductivity {W/m-K}
+  29,                      !- Density {kg/m3}
+  1210;                    !- Specific Heat {J/kg-K}
+
+Material,
+  AtticFloor Insulation, !- Name {}
+  MediumRough, !- Roughness {}
+  0.2377, !- Thickness {m}
+  0.045, !- Conductivity {W/m-K}
+  265.0, !- Density {kg/m3}
+  836.8, !- Specific Heat {J/kg-K}
+  0.9, !- Thermal Absorptance {}
+  0.7, !- Solar Absorptance {}
+  0.7; !- Visible Absorptance {}
+
+Material,
+  Floor Insulation,  !- Name
+  MediumRough,  !- Roughness
+  0.0795,  !- Thickness
+  0.0450,  !- Conductivity
+  265.0000,  !- Density
+  836.8000,  !- Specific Heat
+  0.9000,  !- Thermal Absorptance
+  0.7000,  !- Solar Absorptance
+  0.7000;  !- Visible Absorptance
+
+Material,
+  Carpet,                  !- Name
+  VeryRough,               !- Roughness
+  0.0127,                  !- Thickness {m}
+  0.06,                    !- Conductivity {W/m-K}
+  288,                     !- Density {kg/m3}
+  1380,                    !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.8;                     !- Visible Absorptance
+
+Material,
+  Wall Insulation 4in R-19,    !- Name
+  MediumSmooth,               !- Roughness
+  0.1,                     !- Thickness {m}
+  0.0288,                  !- Conductivity {W/m-K}
+  29,                      !- Density {kg/m3}
+  1210;                    !- Specific Heat {J/kg-K}
+
+Material,
+  Concrete HW Solid 2in White,  !- Name
+  MediumRough,             !- Roughness
+  5.0901599E-02,           !- Thickness {m}
+  1.729577,                !- Conductivity {W/m-K}
+  2242.585,                !- Density {kg/m3}
+  836.8,                   !- Specific Heat {J/kg-K}
+  0.90,                    !- Thermal Absorptance
+  0.30,                    !- Solar Absorptance
+  0.30;                    !- Visible Absorptance
+
+Material,
+  Drop-Ceiling Acoustic Tile,       !- Name
+  MediumSmooth,            !- Roughness
+  0.0191,                  !- Thickness {m}
+  0.06,                    !- Conductivity {W/m-K}
+  368,                     !- Density {kg/m3}
+  590,                     !- Specific Heat {J/kg-K}
+  0.90,                    !- Thermal Absorptance
+  0.30,                    !- Solar Absorptance
+  0.30;                    !- Visible Absorptance
+
+Material,
+  Perimeter Buffer,       !- Name
+  MediumSmooth,            !- Roughness
+  0.001,                  !- Thickness {m}
+  1000.00,                    !- Conductivity {W/m-K}
+  0.001,                     !- Density {kg/m3}
+  100.0,                     !- Specific Heat {J/kg-K}
+  0.999,                    !- Thermal Absorptance
+  0.999,                    !- Solar Absorptance
+  0.999;                    !- Visible Absorptance
+
+Construction,
+  Light Shelf Window, ! - Name
+  Clear Glass;        ! - Outside Layer
+
+Construction,
+  Exterior Light Shelf,                   ! - Name
+  Concrete HW Solid 2in White; ! - Outside Layer
+
+Construction,
+  Interior Wall,           !- Name
+  Gypsum 5/8in,           !- Outside Layer
+  Air Space,              !- Layer 1
+  Gypsum 5/8in;           !- Layer 2
+
+Construction,
+  Insulated Interior Wall,  !- Name
+  Gypsum 5/8in,           !- Outside Layer
+  Wall Insulation 4in R-19,    !- Layer 1
+  Gypsum 5/8in;           !- Layer 2
+
+Construction,
+  Interior Furnishings,    !- Name
+  Wood 6in;          !- Outside Layer
+
+Construction,
+  Drop Ceiling, ! - Name
+  Drop-Ceiling Acoustic Tile;        ! - Outside Layer
+
+Construction,
+  Perimeter Air Wall, ! - Name
+  Perimeter Buffer;        ! - Outside Layer
+
+WindowMaterial:SimpleGlazingSystem,
+  Theoretical Glazing,     !- Name
+  <%= window_u %>,  !- U-Factor {W/m2-K}
+  <%= window_shgc %>,  !- Solar Heat Gain Coefficient
+  <%= window_transmittance %>;  !- Visible Transmittance
+
+WindowMaterial:Glazing,
+  Clear Glass,             !- Name
+  SpectralAverage,         !- Optical Data Type
+  ,                        !- Window Glass Spectral Data Set Name
+  0.003,                   !- Thickness {m}
+  0.837,                   !- Solar Transmittance at Normal Incidence
+  7.50E-02,                !- Front Side Solar Reflectance at Normal Incidence
+  7.50E-02,                !- Back Side Solar Reflectance at Normal Incidence
+  0.898,                   !- Visible Transmittance at Normal Incidence
+  8.10E-02,                !- Front Side Visible Reflectance at Normal Incidence
+  8.10E-02,                !- Back Side Visible Reflectance at Normal Incidence
+  0.0,                     !- Infrared Transmittance at Normal Incidence
+  0.84,                    !- Front Side Infrared Hemispherical Emissivity
+  0.84,                    !- Back Side Infrared Hemispherical Emissivity
+  0.90;                    !- Conductivity {W/m-K}
+
+WindowMaterial:SimpleGlazingSystem,
+  Air Space Glazing,     !- Name
+  7.0,  !- U-Factor {W/m2-K}
+  0.99,  !- Solar Heat Gain Coefficient
+  0.99;  !- Visible Transmittance
+
+Construction,
+  Air Space Window,         !- Name
+  Air Space Glazing;     !- Outside Layer
+
+Material,
+  Metal Door, !- Name {}
+  Smooth, !- Roughness {}
+  0.0013106, !- Thickness {m}
+  45.31492, !- Conductivity {W/m-K}
+  7833.028, !- Density {kg/m3}
+  502.08, !- Specific Heat {J/kg-K}
+  0.8, !- Thermal Absorptance {}
+  0.5, !- Solar Absorptance {}
+  0.5; !- Visible Absorptance {}
+
+Material,
+  Wood Door Panel, !- Name {}
+  Rough,                !- Roughness
+  0.0633984,            !- Thickness {m}
+  0.0873267038564152,   !- Conductivity {W/m-K}
+  512.64,               !- Density {kg/m^3}
+  1214.23,              !- Specific Heat {J/kg-K}
+  ,                     !- Thermal Absorptance
+  ,                     !- Solar Absorptance
+  ;                     !- Visible Absorptance
+
+Material:NoMass,
+  Opaque Door Panel,   !- Name
+  MediumRough,             !- Roughness
+  0.352236703,             !- Thermal Resistance
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.7;                     !- Visible Absorptance
+
+Material:AirGap,
+  Air-gap:0.1300, !- Name {}
+  0.13; !- Thermal Resistance {m2-K/W}
+
+Material:NoMass,
+  Overhead Door Panel,     !- Name
+  MediumRough,             !- Roughness
+  0.352,                   !- Thermal Resistance {m2-K/W}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.7;                     !- Visible Absorptance
+
+Construction,
+  AtticFloor1, !- Name {}
+  Gypsum 5/8in, !- Outside Layer {}
+  AtticFloor Insulation, !- Layer 2 {}
+  Gypsum 5/8in; !- Layer 3 {}
+
+WindowMaterial:Glazing,
+  Clear Acrylic Plastic,   !- Name
+  SpectralAverage,         !- Optical Data Type
+  ,                        !- Window Glass Spectral Data Set Name
+  0.003,                   !- Thickness {m}
+  0.92,                    !- Solar Transmittance at Normal Incidence
+  0.05,                    !- Front Side Solar Reflectance at Normal Incidence
+  0.05,                    !- Back Side Solar Reflectance at Normal Incidence
+  0.92,                    !- Visible Transmittance at Normal Incidence
+  0.05,                    !- Front Side Visible Reflectance at Normal Incidence
+  0.05,                    !- Back Side Visible Reflectance at Normal Incidence
+  0.00,                    !- Infrared Transmittance at Normal Incidence
+  0.90,                    !- Front Side Infrared Hemispherical Emissivity
+  0.90,                    !- Back Side Infrared Hemispherical Emissivity
+  0.90;                    !- Conductivity {W/m-K}
+
+WindowMaterial:Glazing,
+  Diffusing Acrylic Plastic,  !- Name
+  SpectralAverage,         !- Optical Data Type
+  ,                        !- Window Glass Spectral Data Set Name
+  0.0022,                  !- Thickness {m}
+  0.90,                    !- Solar Transmittance at Normal Incidence
+  0.08,                    !- Front Side Solar Reflectance at Normal Incidence
+  0.08,                    !- Back Side Solar Reflectance at Normal Incidence
+  0.90,                    !- Visible Transmittance at Normal Incidence
+  0.08,                    !- Front Side Visible Reflectance at Normal Incidence
+  0.08,                    !- Back Side Visible Reflectance at Normal Incidence
+  0.00,                    !- Infrared Transmittance at Normal Incidence
+  0.90,                    !- Front Side Infrared Hemispherical Emissivity
+  0.90,                    !- Back Side Infrared Hemispherical Emissivity
+  0.90;                    !- Conductivity {W/m-K}
+
+Material,
+  Very High Reflectivity Surface,  !- Name
+  Smooth,                  !- Roughness
+  0.0005,                  !- Thickness {m}
+  237,                     !- Conductivity {W/m-K}
+  2702,                    !- Density {kg/m3}
+  903,                     !- Specific Heat {J/kg-K}
+  0.90,                    !- Thermal Absorptance
+  0.05,                    !- Solar Absorptance
+  0.05;                    !- Visible Absorptance
+
+
+Construction,
+  TDD Pipe,                !- Name
+  Very High Reflectivity Surface;  !- Outside Layer
+
+Construction,
+  TDD Dome,                !- Name
+  Clear Acrylic Plastic;   !- Outside Layer
+
+Construction,
+  TDD Diffuser,            !- Name
+  Diffusing Acrylic Plastic;  !- Outside Layer
+
+WindowMaterial:SimpleGlazingSystem,
+  Theoretical Skylight Glazing,  !- Name
+  <%= skylight_u %>,       !- U-Factor {W/m2-K}
+  <%= skylight_shgc %>;    !- Solar Heat Gain Coefficient
+
+WindowMaterial:Shade,
+  Skylight Diffuser,       !- Name
+  0.5,                     !- Solar Transmittance
+  0.49,                    !- Solar Reflectance
+  0.5,                     !- Visible Transmittance
+  0.49,                    !- Visible Reflectance
+  0.9,                     !- Infrared Hemispherical Emissivity
+  0.0,                     !- Infrared Transmittance
+  0.0005,                  !- Thickness {m}
+  237,                     !- Conductivity {W/m-K}
+  0.001,                   !- Shade to Glass Distance {m}
+  0.0,                     !- Top Opening Multiplier
+  0.0,                     !- Bottom Opening Multiplier
+  0.0,                     !- Left-side Opening Multiplier
+  0.0,                     !- Right-side Opening Multiplier
+  0.0;                     !- Air flow permeability
+
+Construction,
+  Exterior Skylight,     !- Name
+  Theoretical Skylight Glazing;  !- Outside Layer
+
+<%# FIX: Not used %>
+<% if (skylight_type == "DIFFUSING") %>
+
+  <% diffuser = "AlwaysOn" %>
+
+<% elsif (skylight_type == "CLEAR") %>
+
+  <% diffuser = "AlwaysOff" %>
+
+<% end %>
+
+WindowMaterial:Shade,
+  Window Shade,            !- Name
+  <%= window_shade_transmittance %>,  !- Solar Transmittance
+  <%= 0.98 - window_shade_transmittance %>,  !- Solar Reflectance
+  <%= window_shade_transmittance %>,  !- Visible Transmittance
+  <%= 0.98 - window_shade_transmittance %>,  !- Visible Reflectance
+  0.9,                     !- Infrared Hemispherical Emissivity
+  0.0,                     !- Infrared Transmittance
+  0.0005,                  !- Thickness {m}
+  237,                     !- Conductivity {W/m-K}
+  0.001,                   !- Shade to Glass Distance {m}
+  0.0,                     !- Top Opening Multiplier
+  0.0,                     !- Bottom Opening Multiplier
+  0.0,                     !- Left-side Opening Multiplier
+  0.0,                     !- Right-side Opening Multiplier
+  <%= window_shade_permeability %>;  !- Air flow permeability

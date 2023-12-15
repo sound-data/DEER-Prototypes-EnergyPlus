@@ -1,0 +1,142 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "name"
+
+parameter "fan_flow", :default => Autosize  # in atu.pxt this is just 'flow'
+
+parameter "fan_config", :default => "BLOW-THROUGH"  # ["DRAW-THROUGH", "BLOW-THROUGH"]
+
+parameter "fan_rise", :default => 0.4['in H2O'], :domain => Quantity
+parameter "fan_eff", :default => 0.7
+parameter "fan_motor_eff",
+  :default => 0.85, :domain => Numeric
+parameter "fan_mode_sch", :default => ""  # 0 means cycling; 1 means continuous
+parameter "fan_subcat", :default => "VRF Fans"  # End-use subcategory for the fan
+
+parameter "cool_coil_cap", :default => Autosize
+parameter "cool_coil_shr", :default => Autosize
+
+parameter "heat_coil_cap", :default => Autosize
+
+parameter "clear_water_storage_tank", :default => "" # variable used to create tank to store clear water as cooling coil condensate
+%>
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,
+  <%= name %> Terminal Unit,  !- Zone Terminal Unit Name
+  ,                        !- Terminal Unit Availability schedule
+  <%= name %> Inlet Node,  !- Terminal Unit Air Inlet Node Name
+  <%= name %> Outlet Node,  !- Terminal Unit Air Outlet Node Name
+  <%= fan_flow %>,         !- Supply Air Flow Rate During Cooling Operation {m3/s}
+  <%= fan_flow %>,         !- Supply Air Flow Rate When No Cooling is Needed {m3/s}
+  <%= fan_flow %>,         !- Supply Air Flow Rate During Heating Operation {m3/s}
+  <%= fan_flow %>,         !- Supply Air Flow Rate When No Heating is Needed {m3/s}
+  0.0,                     !- Outdoor Air Flow Rate During Cooling Operation {m3/s}
+  0.0,                     !- Outdoor Air Flow Rate During Heating Operation {m3/s}
+  0.0,                     !- Outdoor Air Flow Rate When No Cooling or Heating is Needed {m3/s}
+  <%= name %> Fan Mode Schedule,  !- Supply Air Fan Operating Mode Schedule Name
+<% if (fan_config == "BLOW-THROUGH") %>
+  BlowThrough,             !- Supply Air Fan Placement
+<% else %>
+  DrawThrough,             !- Supply Air Fan Placement
+<% end %>
+  Fan:OnOff,               !- Supply Air Fan Object Type
+  <%= name %> Fan,         !- Supply Air Fan Object Name
+  ,                        !- Outside Air Mixer Object Type
+  ,                        !- Outside Air Mixer Object Name
+  Coil:Cooling:DX:VariableRefrigerantFlow,  !- Cooling Coil Object Type
+  <%= name %> Cooling Coil,  !- Cooling Coil Object Name
+  Coil:Heating:DX:VariableRefrigerantFlow,  !- Heating Coil Object Type
+  <%= name %> Heating Coil,  !- Heating Coil Object Name
+  30,                      !- Zone Terminal Unit On Parasitic Electric Energy Use {W}
+  20,                      !- Zone Terminal Unit Off Parasitic Electric Energy Use {W}
+  ;                        !- Rated Total Heating Capacity Sizing Ratio {W/W}
+
+Schedule:Compact,
+  <%= name %> Fan Mode Schedule,  !- Name
+  Fan Mode Control,        !- Schedule Type Limits Name
+  <%= fan_mode_sch %>
+
+
+Fan:OnOff,
+  <%= name %> Fan,         !- Name
+  ,                        !- Availability Schedule Name
+  <%= fan_eff %>,          !- Fan Efficiency
+  <%= fan_rise %>,         !- Pressure Rise {Pa}
+  <%= fan_flow %>,         !- Maximum Flow Rate {m3/s}
+  <%= fan_motor_eff %>,    !- Motor Efficiency
+  1.0,                     !- Motor In Airstream Fraction
+<% if (fan_config == "BLOW-THROUGH") %>
+  <%= name %> Inlet Node,  !- Air Inlet Node Name
+  <%= name %> Fan Outlet Node,  !- Air Outlet Node Name
+<% else %>
+  <%= name %> Heating Coil Outlet Node,  !- Air Inlet Node Name
+  <%= name %> Outlet Node,  !- Air Outlet Node Name
+<% end %>
+  ,                        !- Fan Power Ratio Function of Speed Ratio Curve Name
+  ,                        !- Fan Efficiency Ratio Function of Speed Ratio Curve Name
+  <%= fan_subcat %>;       !- End-Use Subcategory
+
+Coil:Cooling:DX:VariableRefrigerantFlow,
+  <%= name %> Cooling Coil,  !- Name
+  ,                        !- Availability Schedule Name
+  <%= cool_coil_cap %>,    !- Rated Total Cooling Capacity {W}
+  <%= cool_coil_shr %>,    !- Rated Sensible Heat Ratio
+  <%= fan_flow %>,         !- Rated Air Flow Rate {m3/s}
+  <%= name %> VRFTUCoolCapFT,  !- Cooling Capacity Ratio Modifier Function of Temperature Curve Name
+  <%= name %> VRFACCoolCapFFF,  !- Cooling Capacity Modifier Curve Function of Flow Fraction Name
+<% if (fan_config == "BLOW-THROUGH") %>
+  <%= name %> Fan Outlet Node,  !- Coil Air Inlet Node
+<% else %>
+  <%= name %> Inlet Node,  !- Coil Air Inlet Node
+<% end %>
+  <%= name %> Cooling Coil Outlet Node,  !- Coil Air Outlet Node
+  <%= clear_water_storage_tank %>;  !- Name of Water Storage Tank for Condensate Collection
+
+Coil:Heating:DX:VariableRefrigerantFlow,
+  <%= name %> Heating Coil,  !- Name
+  ,                        !- Availability Schedule
+  <%= heat_coil_cap %>,    !- Rated Total Heating Capacity {W}
+  <%= fan_flow %>,         !- Rated Air Flow Rate {m3/s}
+  <%= name %> Cooling Coil Outlet Node,  !- Coil Air Inlet Node
+<% if (fan_config == "BLOW-THROUGH") %>
+  <%= name %> Outlet Node,  !- Coil Air Outlet Node
+<% else %>
+  <%= name %> Heating Coil Outlet Node,  !- Coil Air Outlet Node
+<% end %>
+  <%= name %> VRFTUHeatCapFT,  !- Heating Capacity Ratio Modifier Function of Temperature Curve Name
+  <%= name %> VRFACCoolCapFFF;  !- Heating Capacity Modifier Function of Flow Fraction Curve Name
+
+! From EnergyPlus example files
+Curve:Cubic,
+  <%= name %> VRFTUCoolCapFT,  !- Name
+  0.504547273506488,       !- Coefficient1 Constant
+  0.0288891279198444,      !- Coefficient2 x
+  -0.000010819418650677,   !- Coefficient3 x**2
+  0.0000101359395177008,   !- Coefficient4 x**3
+  0.0,                     !- Minimum Value of x
+  50.0,                    !- Maximum Value of x
+  0.5,                     !- Minimum Curve Output
+  1.5,                     !- Maximum Curve Output
+  Temperature,             !- Input Unit Type for X
+  Dimensionless;           !- Output Unit Type
+
+Curve:Cubic,
+  <%= name %> VRFTUHeatCapFT,  !- Name
+  -0.390708928227928,      !- Coefficient1 Constant
+  0.261815023760162,       !- Coefficient2 x
+  -0.0130431603151873,     !- Coefficient3 x**2
+  0.000178131745997821,    !- Coefficient4 x**3
+  0.0,                     !- Minimum Value of x
+  50.0,                    !- Maximum Value of x
+  0.5,                     !- Minimum Curve Output
+  1.5,                     !- Maximum Curve Output
+  Temperature,             !- Input Unit Type for X
+  Dimensionless;           !- Output Unit Type
+
+Curve:Quadratic,
+  <%= name %> VRFACCoolCapFFF,  !- Name
+  0.8,                     !- Coefficient1 Constant
+  0.2,                     !- Coefficient2 x
+  0.0,                     !- Coefficient3 x**2
+  0.5,                     !- Minimum Value of x
+  1.5;                     !- Maximum Value of x

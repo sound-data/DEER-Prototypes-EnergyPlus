@@ -1,0 +1,62 @@
+<%#INITIALIZE
+parameter "zone_name"
+
+parameter "x_1"
+parameter "y_1"
+parameter "z_1", :default=>3['ft']
+
+parameter "reference_points", :default=>1
+
+parameter "fraction_1", :default=>1.0
+
+parameter "x_2", :default=>''
+parameter "y_2", :default=>''
+parameter "z_2", :default=>''
+parameter "fraction_2", :default=>0.0
+
+parameter "azimuth", :default=>0
+
+parameter "illum_setpoint", :default=>430  # lux
+
+%>
+
+Daylighting:Controls,
+  <%= zone_name %> Daylighting,  !- Name
+  <%= zone_name %>,        !- Zone Name
+  SplitFlux,               !- Daylighting Method
+  ,                        !- Availability Schedule Name
+  Continuous,              !- Lighting Control Type
+  0.1,                     !- Minimum Input Power Fraction for Continuous or ContinuousOff Dimming Control
+  0.05,                    !- Minimum Light Output Fraction for Continuous or ContinuousOff Dimming Control
+  1,                       !- Number of Stepped Control Steps
+  1.0,                     !- Probability Lighting will be Reset When Needed in Manual Stepped Control
+  <%= zone_name %> Daylighting Point 1,  !- Glare Calculation Daylighting Reference Point Name
+  <%= azimuth %>,          !- Glare Calculation Azimuth Angle of View Direction Clockwise from Zone y-Axis {deg}
+  22,                      !- Maximum Allowable Discomfort Glare Index
+  ,                        !- DElight Gridding Resolution {m2}
+  <%= zone_name %> Daylighting Point 1,  !- Daylighting Reference Point 1 Name
+  <%= fraction_1 %>,       !- Fraction of Zone Controlled by Reference Point 1
+<% if (reference_points == 2) %>
+  <%= illum_setpoint %>,   !- Illuminance Setpoint at Reference Point 1 {lux}
+  <%= zone_name %> Daylighting Point 2,  !- Daylighting Reference Point 2 Name
+  <%= fraction_2 %>,       !- Fraction of Zone Controlled by Reference Point 2
+  <%= illum_setpoint %>;   !- Illuminance Setpoint at Reference Point 2 {lux}
+<% else %>
+  <%= illum_setpoint %>;   !- Illuminance Setpoint at Reference Point 1 {lux}
+<% end %>
+
+Daylighting:ReferencePoint,
+  <%= zone_name %> Daylighting Point 1,  !- Name
+  <%= zone_name %>,        !- Zone Name
+  <%= x_1 %>,              !- X-Coordinate of Reference Point {m}
+  <%= y_1 %>,              !- Y-Coordinate of Reference Point {m}
+  <%= z_1 %>;              !- Z-Coordinate of Reference Point {m}
+
+<% if (reference_points == 2) %>
+Daylighting:ReferencePoint,
+  <%= zone_name %> Daylighting Point 2,  !- Name
+  <%= zone_name %>,        !- Zone Name
+  <%= x_2 %>,              !- X-Coordinate of Reference Point {m}
+  <%= y_2 %>,              !- Y-Coordinate of Reference Point {m}
+  <%= z_2 %>;              !- Z-Coordinate of Reference Point {m}
+<% end %>

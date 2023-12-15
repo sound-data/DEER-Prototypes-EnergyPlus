@@ -1,0 +1,116 @@
+<%#INITIALIZE
+parameter "foundation_type", :name => "Foundation Type", :description => "Foundation type",
+  :domain => String,  # ["None", "Full Slab", "Interior Horizontal", "Interior Vertical", "Exterior Horizontal", "Exterior Vertical"]
+  :default => "None"
+parameter "foundation_insul", :name => "Foundation Insulation", :description => "Foundation insulation R-value",
+  :domain => Quantity,
+  :default => 0['R-IP']
+parameter "slab_insulation_extent", :name=>"Foundation Slab Insulation Extent", :description=>"Foundation slab insulation extent",
+  :domain => Quantity,
+  :default => 0['in']
+parameter "below_grade_wall_insul", :name => "Below Grade Wall Insulation", :description => "Below grade wall insulation R-value",
+  :domain => Quantity,
+  :default => 0['R-IP']
+parameter "below_grade_wall_insul_depth", :name => "Below Grade Wall Insulation Depth", :description => "Below grade wall insulation depth",
+  :domain => Quantity,
+  :default => 8['ft']
+%>
+
+Foundation:Kiva:Settings,
+  1.73,           !- Soil Conductivity
+  1842,           !- Soil Density
+  419,            !- Soil Specific Heat
+  0.9,            !- Ground Solar Absorptivity
+  0.9,            !- Ground Thermal Absorptivity
+  0.03,           !- Ground Surface Roughness
+  40,             !- Far-Field Width
+  ZeroFlux,       !- Deep-Ground Boundary Condition
+  40,             !- Deep-Ground Depth
+  ,               !- Minimum Cell Dimension
+  ,               !- Maximum Cell Growth Coefficient
+  Timestep;       !- Simulation Timestep
+
+Foundation:Kiva,
+  Slab Foundation,         !- Name
+  ,                        !- Initial Indoor Air Temperature {C}
+<% if (foundation_type == "Interior Horizontal") %>
+  Slab_Insulation,         !- Interior Horizontal Insulation Material Name
+  ,                        !- Interior Horizontal Insulation Depth {m}
+  <%= slab_insulation_extent %>, !- Interior Horizontal Insulation Width {m}
+<% else %>
+  ,                        !- Interior Horizontal Insulation Material Name
+  ,                        !- Interior Horizontal Insulation Depth {m}
+  ,                        !- Interior Horizontal Insulation Width {m}
+<% end %>
+<% if (foundation_type == "Interior Vertical") %>
+  Slab_Insulation,         !- Interior Vertical Insulation Material Name
+  <%= slab_insulation_extent %>, !- Interior Vertical Insulation Depth
+<% else %>
+  ,                        !- Interior Vertical Insulation Material Name
+  ,                        !- Interior Vertical Insulation Depth
+<% end %>
+<% if (foundation_type == "Exterior Horizontal") %>
+  Slab_Insulation,         !- Exterior Horizontal Insulation Material Name
+  ,                        !- Exterior Horizontal Insulation Depth {m}
+  <%= slab_insulation_extent %>, !- Exterior Horizontal Insulation Width {m}
+<% else %>
+  ,                        !- Exterior Horizontal Insulation Material Name
+  ,                        !- Exterior Horizontal Insulation Depth {m}
+  ,                        !- Exterior Horizontal Insulation Width {m}
+<% end %>
+<% if (below_grade_wall_insul > 0) %>
+  Below_Grade_Wall_Insulation, !- Exterior Vertical Insulation Material Name
+  <%= below_grade_wall_insul_depth %>,                  !- Exterior Vertical Insulation Depth
+<% elsif (foundation_type == "Exterior Vertical") %>
+  Slab_Insulation,         !- Exterior Vertical Insulation Material Name
+  <%= slab_insulation_extent %>, !- Exterior Vertical Insulation Depth
+<% else %>
+  ,                     !- Exterior Vertical Insulation Material Name
+  ,                     !- Exterior Vertical Insulation Depth
+<% end %>
+  0.0,                     !- Wall Height Above Grade
+  0.0,                     !- Wall Depth Below Slab
+  Slab Footing;            !- Footer Wall Construction
+
+<%
+foundation_insul_cond = 0.0288 # (W/m-K) Extruded/Expanded Polystyrene @ R-5/inch
+foundation_insul_thickness = foundation_insul_cond * foundation_insul
+
+if (foundation_insul_thickness == 0.0 or foundation_insul_thickness.nan?)
+  foundation_insul_thickness = 0.0001
+end
+
+below_grade_wall_insul_cond = 0.0288 # (W/m-K) Extruded/Expanded Polystyrene @ R-5/inch
+below_grade_wall_insul_thickness = below_grade_wall_insul_cond * below_grade_wall_insul
+
+if (below_grade_wall_insul_thickness == 0.0 or below_grade_wall_insul_thickness.nan?)
+  below_grade_wall_insul_thickness = 0.0001
+end
+%>
+
+<% if (foundation_insul > 0) %>
+Material,
+  Slab_Insulation,  !- Name
+  MediumSmooth,            !- Roughness
+  <%= foundation_insul_thickness %>,  !- Thickness {m}
+  <%= foundation_insul_cond %>,  !- Conductivity {W/m-K}
+  32,                      !- Density {kg/m3}
+  1465,                    !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.7;                     !- Visible Absorptance
+
+<% end %>
+<% if (below_grade_wall_insul > 0) %>
+Material,
+  Below_Grade_Wall_Insulation,  !- Name
+  MediumSmooth,            !- Roughness
+  <%= below_grade_wall_insul_thickness %>,  !- Thickness {m}
+  <%= below_grade_wall_insul_cond %>,  !- Conductivity {W/m-K}
+  32,                      !- Density {kg/m3}
+  1465,                    !- Specific Heat {J/kg-K}
+  0.9,                     !- Thermal Absorptance
+  0.7,                     !- Solar Absorptance
+  0.7;                     !- Visible Absorptance
+
+<% end %>

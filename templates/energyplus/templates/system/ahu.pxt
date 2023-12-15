@@ -1,0 +1,1486 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "ahu_name"
+parameter "branch_names"
+
+parameter "ahu_type", :name => "AHU Type", :description => "Type of air handling unit",
+  :default => "CAV", :domain => String  # ["CAV", "VAV", "DOAS", "MAU"]
+
+parameter "duct_type", :default => "SINGLE"  # (SINGLE | DUAL) Sets AHU distribution system to single-duct or dual duct
+
+import "system/unitary.pxt", :group => "unitary" do
+  include "*"
+  exclude "unitary_name|doas|sat_temp_max"
+  parameter "fan_subcat", :default => "AHU Fans"
+end
+
+parameter "fan_return", :default => false  # Creates return fan for AHU system
+parameter "fan_return_rise", :default => 2.25['in H2O']  # Pressure rise across return fan.
+
+# rename design_ => sizing_
+
+parameter "design_peak_load", :default => "NONCOINCIDENT"  # (NONCOINCIDENT | COINCIDENT) Zone peak load sum method used in Sizing:System object. NonCoincident is generally more conservative and over-sizes
+parameter "design_max_heat_frac", :default => Autosize  # Ratio of max system heating air flow to max system air flow
+  # Value for VAV depends on heating configuration and terminal damper position, 1 for all other system types
+
+parameter "oa_sch", :name => "Outdoor Air Schedule", :description => "Outdoor air schedule controls when ventilation air is supplied",
+  :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;", :domain => String
+parameter "oa_frac_sch", :name => "Outdoor Air Schedule", :description => "Outdoor air schedule controls when ventilation air is supplied",
+  :default => "NONE"
+parameter "oa_frac_max_sch", :name => "Outdoor Air Schedule", :description => "Outdoor air schedule controls when ventilation air is supplied",
+  :default => "NONE"
+
+parameter "oa_min_flow", :default => Autosize  # Minimum design outdoor air flow rate {m3/s}
+parameter "oa_max_flow", :default => Autosize  # Maximum design outdoor air flow rate {m3/s}
+# or should be:?  oa_flow_min, oa_flow_max
+
+# needed?  there's nothing else that allows you to set the minimum fraction of the max
+parameter "oa_frac", :default => 0.3  # Sets AHU design OA fraction. Value of 1.0 indicates DOAS system
+
+# maybe: oa_min_flow_frac   or  oa_flow_min_frac
+
+parameter "night_cycle_control_type", :default=>"CYCLE-AHU-FOR-ANY-ZONE" # (NONE | FOLLOW-FAN-SCHEDULE | CYCLE-AHU-FOR-ANY-ZONE | CYCLE-AHU-FOR-CONTROL-ZONE-ONLY | CYCLE-ZONE-FANS-ONLY) Control type used in night cycle availability manager. DOAS systems should use "CYCLE-ZONE-FANS-ONLY"
+
+parameter "oa_econ_type", :default => "NONE"  # (NONE | FIXED-DRY-BULB | DIFFERENTIAL-DRY-BULB | FIXED-ENTHALPY | DIFFERENTIAL-ENTHALPY | ELECTRONIC-ENTHALPY | FIXED-DEW-POINT-AND-DRY-BULB | DIFFERENTIAL-DRY-BULB-AND-ENTHALPY) Economizer control type
+parameter "oa_econ_mode", :default => "MODULATE-FLOW" # ( MODULATE-FLOW | MINIMUM-FLOW-WITH-BYPASS ) ModulateFlow = OA flow increased to meet mixed air setpoint, MinimumFlowWithBypass = forces OA flow to remain at minimum
+parameter "oa_econ_min_temp", :default => 40['F']  # Minimum outdoor air temperature for economizer operation
+parameter "oa_econ_max_temp", :default => 75['F']  # Maximum outdoor air temperature for economizer operation (depends on climate zone per ASHRAE 90.1 Table G3.1.2.8)
+parameter "oa_econ_lockout", :default => "LockoutWithHeating"  # (NoLockout | LockoutWithHeating | LockoutWithCompressor)
+
+parameter "oa_energy_recovery", :default => false # Turn on OA energy recovery. Look up ASHRAE 90.1 Tables 6.5.6.1-1 & 6.5.6.1-2 for allowable scenarios
+parameter "oa_er_sensible_eff", :default => 0.7 # Sensible effectiveness of OA energy recovery HX. Minimum value from ASHRAE 90.1 Section 6.5.6.1
+parameter "oa_er_latent_eff", :default => 0.6 # Latent effectiveness of OA energy recovery HX. Minimum value from ASHRAE 90.1 Section 6.5.6.1
+parameter "oa_energy_recovery_power", :default=>260['W'] # Nominal electric power
+
+parameter "oa_indirect_evap", :default => false # Turns on indirect evaporative cooling of OA stream before entering OA mixer
+parameter "oa_ind_evap_eff", :default => 1.0
+parameter "oa_ind_evap_wb_eff", :default => 1.0 # Indirect evap cooler wetbulb design effectiveness
+parameter "oa_ind_evap_db_eff", :default => 1.0 # Indirect evap cooler drybulb design effectiveness
+parameter "oa_ind_evap_pump_factor", :default => 90 # W/(m3/s), used to autosize recirculating water pump (E+ default)
+parameter "oa_ind_evap_fan_factor", :default => 250 # W/(m3/s), used to autosize secondary air fan (E+ default)
+parameter "oa_ind_evap_secondary", :default => "RETURN" # (RETURN | OUTDOORS)
+
+parameter "oa_solar_preheat", :default => false # Turns on OA solar preheat capability via collector surfaces
+parameter "oa_solar_surfaces", :default => [] # Array of surface names that will be solar collectors for OA solar preheat
+parameter "oa_solar_control_zone", :default => "" # Name of zone paired with free heating setpoint schedule in OA solar preheat
+
+parameter "rac", :default => false  # Run-around coil
+parameter "rac_eff", :default => 0.6
+parameter "rac_oa_min", :default => 10['F']
+parameter "rac_oa_max", :default => 95['F']
+parameter "rac_deadband", :default => 5['F']
+parameter "rac_pump_eff", :default => 0.9
+parameter "rac_pump_head", :default => 15['ft H2O']
+
+parameter "chiller_cond_hr", :default => false # Creates HR coil to provide heat to AHU system from chiller heat recovery loop
+parameter "chiller_hr_flow", :default => Autosize # Max water flow rate in chiller heat recovery HX
+
+#parameter "design_cool_sat",
+#  :default => 55['F'] # AHU system design supply air temp in cooling. Based on 20F decrease from cooling setpoint, from ASHRAE 90.1 Section G3.1.2.9.1
+#parameter "design_heat_sat",#
+#  :default => 55['F'] # AHU system design supply air temp in heating. Based on 20F increase from heating setpoint, from ASHRAE 90.1 Section G3.1.2.9.1
+# Before was defaulted at 55 F, same as cooling
+
+#sat_control_type   (CONSTANT | OUTDOOR-AIR | WARMEST-ZONE | AVERAGE-ZONE | HVAC-SETBACK | SCHEDULE)
+#sat_reset_type  hmm, CONSTANT and SCHEDULE are not resets; well, SCHEDULE should be a reset, otherwise no difference from CONSTANT
+#  kind of liking _reset_type
+#  (NONE | OUTDOOR-AIR | WARMEST-ZONE | AVERAGE-ZONE | HVAC-SETBACK | SCHEDULE)
+
+#  CONSTANT => single fixed SAT, uses sat_min_temp all the time; disable sat_max_temp
+#  OUTDOOR-AIR / OUTDOOR-RESET / OA-RESET => outdoor air reset: uses sat_min_temp, sat_max_temp, sat_reset_low_temp, sat_reset_high_temp for 4 temperatures
+#  WARMEST-ZONE => polls all the zones for cooling; uses sat_min_temp, sat_max_temp for allowed temp range; minimizes reheat energy!
+#  AVERAGE-ZONE => same as above but calculates SAT based on average cooling loads
+#  HVAC-SETBACK / NIGHT-SETBACK / OA-SETBACK / SETBACK-RESET / FOLLOW-OA / FOLLOW-OCC => follows oa_sch but gsubs 0.0 => sat_temp_max, 1.0 => sat_temp_min
+#  SCHEDULE => uses sat_temp_sch for a single SAT setpoint; optionally can do gsub with %1 => sat_temp_min, %2 => sat_temp_max
+
+#future:
+#  ZONE-REHEAT => SetpointManager:SingleZone:Reheat => used for _variable_temperature_ system for a single zone
+#  DUAL-DUCT-RESET => uses Warmest and Coldest with dual duct system to set SAT on cold and hot decks separately
+#  ??? => SetpointManager:WarmestTemperatureFlow has 2 different strategies: one like WARMEST-ZONE, other is different
+
+# might be some other complexities with dual duct systems: OA reset on each deck separately?
+# for dual duct:
+#   sat_temp_min = cold deck SAT
+#   sat_temp_max = hot deck SAT
+
+parameter "sat_reset_type",
+  :default => "NONE", :domain => String  # ["NONE", "OUTDOOR-AIR", "WARMEST-ZONE", "AVERAGE-ZONE", "HVAC-SETBACK", "SCHEDULE", "FLOATING"]
+
+parameter "sat_temp_min",  # cooling SAT    sat_min_temp / sat_temp_min  ?
+  :default => 52['F']  #, :domain => Numeric
+parameter "sat_temp_max",  # heating SAT    sat_max_temp / sat_temp_max  ?
+  :default => 104['F']  #, :domain => Numeric
+  # or maybe disable initially?
+parameter "sat_temp_sch",  # used with SCHEDULE only; applies single SAT setpoint; optionally can do gsub with %1 => sat_temp_min, %2 => sat_temp_max
+  :default => "", :domain => String
+
+parameter "heat_flow_method", # Heating Supply Air Flow Rate Method
+  :default => "DesignDay"
+parameter "heat_flow_frac", # Heating Fraction of Autosized Heating Supply Air Flow Rate. Only used when Heating Supply Air Flow Rate Method is FractionOfAutosizedHeatingAirflow
+  :default => Autosize, :domain => Numeric
+parameter "heat_flow", # Heating Supply Air Flow Rate. Only used when Heating Supply Air Flow Rate Method is Flow/System
+  :default => 0['CFM']
+
+parameter "cool_flow_method", # Cooling Supply Air Flow Rate Method
+  :default => "DesignDay"
+parameter "cool_flow", # Heating Supply Air Flow Rate. Only used when Heating Supply Air Flow Rate Method is Flow/System
+  :default => 0['CFM']
+
+#G3.1.3.12 Supply Air Temperature Reset
+#The air temperature for cooling shall be reset higher by 5°F under the
+#minimum cooling load conditions.
+# => applies to all the resets
+
+parameter "sat_oa_temp_min",  # used with OUTDOOR-AIR only    or sat_reset_low_temp
+  :default => 60['F']  #, :domain => Numeric
+parameter "sat_oa_temp_max",  # used with OUTDOOR-AIR only    or sat_reset_high_temp
+  :default => 70['F']  #, :domain => Numeric
+
+rule "fan_return_false", :parameters => {:fan_return => false} do
+  disable :fan_return_rise
+end
+
+rule "ahu_type_doas", :parameters => {:ahu_type => "DOAS"} do
+  force :oa_frac => 1.0
+  force :heat_flow_frac => 1.0
+  default :fan_speed => "CONSTANT"
+  #force :cool_flow_method => "Flow/System"
+  #force :heat_flow_method => "Flow/System"
+  force :sizing_type => "VentilationRequirement"
+end
+
+rule "sat_reset_type_none", :parameters => { :sat_reset_type => "NONE" } do
+  default :sat_temp_min => 55['F']
+  default :sat_temp_max => 55['F']
+  disable :sat_temp_sch
+  disable :sat_oa_temp_min
+  disable :sat_oa_temp_max
+end
+
+rule "sat_reset_type_outdoor_air", :parameters => { :sat_reset_type => "OUTDOOR-AIR" } do
+  default :sat_temp_min => 55['F']  # Setpoint at sat_oa_temp_max
+  default :sat_temp_max => 60['F']  # Setpoint at sat_oa_temp_min
+  default :sat_oa_temp_max => 70['F']
+  default :sat_oa_temp_min => 60['F']
+  disable :sat_temp_sch
+end
+
+rule "sat_reset_type_warmest_zone", :parameters => { :sat_reset_type => "WARMEST-ZONE" } do
+  default :sat_temp_min => 55['F']
+  default :sat_temp_max => 60['F']  # 5 F increase based on ASHRAE 90.1 Section G3.1.3.12
+  disable :sat_temp_sch
+  disable :sat_oa_temp_min
+  disable :sat_oa_temp_max
+end
+
+rule "sat_reset_type_average_zone", :parameters => { :sat_reset_type => "AVERAGE-ZONE" } do
+  default :sat_temp_min => 55['F']
+  default :sat_temp_max => 60['F']  # 5 F increase based on ASHRAE 90.1 Section G3.1.3.12
+  disable :sat_temp_sch
+  disable :sat_oa_temp_min
+  disable :sat_oa_temp_max
+end
+
+rule "sat_reset_type_hvac_setback", :parameters => { :sat_reset_type => "HVAC-SETBACK" } do
+  default :sat_temp_min => 55['F']
+  default :sat_temp_max => 60['F']  # 5 F increase based on ASHRAE 90.1 Section G3.1.3.12
+  disable :sat_temp_sch
+  disable :sat_oa_temp_min
+  disable :sat_oa_temp_max
+end
+
+rule "sat_reset_type_schedule", :parameters => { :sat_reset_type => "SCHEDULE" } do
+  default :sat_temp_min => 55['F']
+  default :sat_temp_max => 60['F']  # 5 F increase based on ASHRAE 90.1 Section G3.1.3.12
+  disable :sat_temp_sch
+  disable :sat_oa_temp_min
+  disable :sat_oa_temp_max
+end
+
+
+# FORMER--still used below
+#parameter "heat_sat_reset_control", :default => "NONE"  # (NONE | SCHEDULE | OUTDOORTEMP | COLDEST) Sets type of heating supply air temp reset control
+#parameter "heat_sat_no_reset", :default => 95['F'] # Heating supply air temp for no reset control (sets constant SAT schedule). Average of max and min SAT in coldest reset control from E+ default
+#parameter "heat_sat_schedule_occ", :default => 95['F'] # Heating supply air temp for schedule reset control (sets occupied SAT). Average of max and min SAT in coldest reset control from E+ default
+#parameter "heat_sat_schedule_reset", :default => 80['F'] # Heating supply air temp for schedule reset control (sets unoccupied/reset SAT)
+#parameter "heat_sat_outdoor_low_temp", :default => 30['F'] # Heating supply air temp for outdoor reset control (sets low OA temp)
+#parameter "heat_sat_outdoor_low_setpt", :default => 95['F'] # Heating supply air temp for outdoor reset control (sets SAT for low OA temp). Average of max and min SAT in coldest reset control from E+ default
+#parameter "heat_sat_outdoor_high_temp", :default => 50['F'] # Heating supply air temp for outdoor reset control (sets high OA temp)
+#parameter "heat_sat_outdoor_high_setpt", :default => 80['F'] # Heating supply air temp for outdoor reset control (sets SAT for high OA temp)
+#parameter "heat_sat_coldest_low_setpt", :default => 68['F'] # Heating supply air temp for coldest reset control (sets min SAT). E+ default
+#parameter "heat_sat_coldest_high_setpt", :default => 122['F']  # Heating supply air temp for coldest reset control (sets max SAT). E+ default
+
+parameter "sizing_type",  # Type of Load to Size on (Sizing:System object)
+  :default => "Sensible" # (Sensible | VentilationRequirement)
+parameter "hum_type",  # Humidifier type (if any)
+  :default => "NONE" # ["NONE", "RESISTANCE", "COMBUSTION"]
+parameter "hum_min_hr",  # Min absolute humidity ratio outlet from central AHU
+  :default => 0.004, :domain => Numeric
+parameter "hum_max_hr",  # Max absolute humidity ratio outlet from central AHU
+  :default => 0.02, :domain => Numeric
+parameter "hum_cap",  # {m3/s} Nominal water flow rate @ 5.05C in humidifer
+  :default => Autosize
+parameter "hum_power",  # {W} Nominal full output power consumption of humidifier (uses humidifer water flow capacity and enthalpy rise of water from 20C liquid to 100C steam)
+  :default => Autosize
+parameter "hum_eff",  # thermal efficiency, only applies to COMBUSTION
+  :default => 0.8, :domain => Numeric
+
+parameter "return_plenum", :default => false
+parameter "return_plenum_zone_name", # If return_plenum is true and return_plenum_zone_name is empty, a dummy return plenum zone is created automatically.
+  :default => ""
+
+rule "return_plenum_false", :parameters => { :return_plenum => false} do
+  disable :return_plenum_zone_name
+end
+
+parameter "clear_water_supply_tank", :default => ""
+%>
+<%
+
+# setting control_type (and other local variables)
+# could be done with rules that set a hidden/internal variable
+
+# can probably in-line this below instead:
+if (control_zone_name.empty?)
+  control_type = "Setpoint"
+else
+  control_type = "Load"
+end
+
+if (sat_temp_max.nil?)
+  sat_temp_max = sat_temp_min
+end
+
+if (sat_reset_type == "HVAC-SETBACK")
+  # Derive SAT schedule from OA schedule.
+  # NOTE: not sure this works for heating vs. cooling season?
+  sat_temp_sch = oa_sch.gsub(/(?<=,)\s*(1\.0*|1)\s*(?=[,;])/, " %1")  # Match values equal to 1.0
+  sat_temp_sch.gsub!(/(?<=,)\s*(0\.0*|\.0+|0)\s*(?=[,;])/, " %2")  # Match values equal to 0.0
+  sat_reset_type = "SCHEDULE"
+end
+
+if (sat_reset_type == "SCHEDULE")
+  # Original schedule is unchanged if it does not have % tags.
+  sat_temp_sch.gsub!(/%1/, sat_temp_min.to_s)
+  sat_temp_sch.gsub!(/%2/, sat_temp_max.to_s)
+end
+
+if (return_plenum and return_plenum_zone_name.empty?)
+  return_plenum_zone_name = "#{ahu_name} Return Plenum"
+end
+
+# this should be more explicit elsewhere!:
+if (fan_mode == "SCHEDULE" and fan_mode_sch.empty?)
+  fan_mode_sch = oa_sch  # Set cycling and continuous fan operation modes
+end
+
+# not needed with Unitary?
+controllers = []
+if (rac)
+  controllers << "#{ahu_name} Run Around Heating Mode Controller"
+  controllers << "#{ahu_name} Run Around Cooling Mode Controller"
+end
+if (cool_coil_type == "WATER")
+  controllers << "#{ahu_name} Cooling Coil Controller"
+end
+if (chiller_cond_hr)
+  controllers << "#{ahu_name} Cond Coil Controller"
+end
+if (heat_coil_type == "WATER")
+  controllers << "#{ahu_name} Heating Coil Controller"
+end
+
+
+
+# Check that OA flow isn't greater than AHU system flow
+#if (oa_flow == Autosize or fan_flow == Autosize)
+  # Ignore
+#elsif (oa_flow > fan_flow)
+#  puts "[WARNING] Design OA flow input is greater than AHU supply fan flow input! Design OA flow should be equal to or less than AHU supply fan flow, check inputs."
+#end
+
+# If modeling a DOAS AHU, hard-set supply fan flow to OA flow and min OAF schedule
+
+#if (oa_frac == 1.0)
+#  fan_flow = oa_flow
+#  oa_min_frac_sch = op_sch
+#end
+
+
+# Change to a lookup Hash:
+#   goal is to decouple from potential future EnergyPlus changes
+#   freeze all strings -- YES
+econ_key = {
+  "NONE" => "NoEconomizer",
+  "FIXED-DRY-BULB" => "FixedDryBulb",
+  "DIFFERENTIAL-DRY-BULB" => "DifferentialDryBulb"
+}
+
+oa_econ_type_input = ""
+if (oa_econ_type == "NONE")
+  oa_econ_type_input = "NoEconomizer"
+elsif (oa_econ_type == "FIXED-DRY-BULB")
+  oa_econ_type_input = "FixedDryBulb"
+elsif (oa_econ_type == "DIFFERENTIAL-DRY-BULB")
+  oa_econ_type_input = "DifferentialDryBulb"
+elsif (oa_econ_type == "FIXED-ENTHALPY")
+  oa_econ_type_input = "FixedEnthalpy"
+elsif (oa_econ_type == "DIFFERENTIAL-ENTHALPY")
+  oa_econ_type_input = "DifferentialEnthalpy"
+elsif (oa_econ_type == "ELECTRONIC-ENTHALPY")
+  oa_econ_type_input = "ElectronicEnthalpy"
+elsif (oa_econ_type == "FIXED-DEW-POINT-AND-DRY-BULB")
+  oa_econ_type_input = "FixedDewPointAndDryBulb"
+elsif (oa_econ_type == "DIFFERENTIAL-DRY-BULB-AND-ENTHALPY")
+  oa_econ_type_input = "DifferentialDryBulbAndEnthalpy"
+end
+
+oa_econ_control_action_input = ""
+if (oa_econ_mode == "MODULATE-FLOW" || oa_econ_mode == "DIFFERENTIAL-DRY-BULB")
+  oa_econ_control_action_input = "ModulateFlow"
+elsif (oa_econ_mode == "MINIMUM-FLOW-WITH-BYPASS")
+  oa_econ_control_action_input = "MinimumFlowWithBypass"
+end
+
+# Use new parameter to set night cycle control type to E+-compatible input string. Add warning message if input doesn't match options
+
+night_cycle_control_input = ""
+
+if (night_cycle_control_type != "NONE")
+  if (night_cycle_control_type == "FOLLOW-FAN-SCHEDULE")
+    night_cycle_control_input = "StayOff"
+  elsif (night_cycle_control_type == "CYCLE-AHU-FOR-ANY-ZONE")
+    night_cycle_control_input = "CycleOnAny"
+  elsif (night_cycle_control_type == "CYCLE-AHU-FOR-CONTROL-ZONE-ONLY")
+    night_cycle_control_input = "CycleOnControlZone"
+  elsif (night_cycle_control_type == "CYCLE-ZONE-FANS-ONLY")
+    night_cycle_control_input = "CycleOnAnyZoneFansOnly"
+  else
+    puts "[WARNING] Night cycle control type input doesn't match allowable options!"
+  end
+end
+
+# should not need this
+#if ahu_type == "DOAS"
+#    heat_flow = oa_min_flow
+#    cool_flow = oa_min_flow
+#end
+
+%>
+Sizing:System,
+  <%= ahu_name %>,         !- AirLoop Name
+  <%= sizing_type %>,                   !- Type of Load to Size On
+  <%= oa_min_flow %>,      !- Design Outdoor Air Flow Rate {m3/s}
+  <%= heat_flow_frac %>,   !- Central Heating Maximum System Air Flow Ratio
+<%# leave blank if no preheat/precool %>
+  7.0,                     !- Preheat Design Temperature {C}
+  0.008,                   !- Preheat Design Humidity Ratio {kg-H2O/kg-Air}
+  <%= sat_temp_min %>,                    !- Precool Design Temperature {C}
+  0.008,                   !- Precool Design Humidity Ratio {kg-H2O/kg-Air}
+  <%= sat_temp_min %>,     !- Central Cooling Design Supply Air Temperature {C}
+  <%= sat_temp_max %>,     !- Central Heating Design Supply Air Temperature {C}
+<% if (design_peak_load == "COINCIDENT") %>
+  Coincident,              !- Type of Zone Sum to Use
+<% elsif (design_peak_load == "NONCOINCIDENT") %>
+  NonCoincident,           !- Type of Zone Sum to Use
+<% end %>
+<% if (ahu_type == "DOAS" || ahu_type == "MAU") %>
+  Yes,                     !- 100% Outdoor Air in Cooling
+  Yes,                     !- 100% Outdoor Air in Heating
+<% else %>
+  No,                      !- 100% Outdoor Air in Cooling
+  No,                      !- 100% Outdoor Air in Heating
+<% end %>
+  0.0085,                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-Air}
+  0.008,                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-Air}
+  <%= cool_flow_method %>,               !- Cooling Supply Air Flow Rate Method
+<%# better to leave Cooling Supply Air Flow Rate blank unless Method is Flow/System %>
+  <%= cool_flow %>,                        !- Cooling Supply Air Flow Rate {m3/s}
+  ,                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
+  ,                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
+  ,                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
+  <%= heat_flow_method %>,               !- Heating Supply Air Flow Rate Method
+  <%= heat_flow %>,                        !- Heating Supply Air Flow Rate {m3/s}
+  ,                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
+  ,                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
+  ,                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
+  ,                        !- Heating Supply Air Flow Rate Per Unit Heating Capacity {m3/s-W}
+  ZoneSum,                 !- System Outdoor Air Method
+<% if ahu_type == "DOAS" %>
+  ;                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
+<% else %>
+  1.0,                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
+  CoolingDesignCapacity,   !- Cooling Design Capacity Method
+  Autosize,                !- Cooling Design Capacity {W}
+  ,                        !- Cooling Design Capacity Per Floor Area {W/m2}
+  ,                        !- Fraction of Autosized Cooling Design Capacity
+  HeatingDesignCapacity,   !- Heating Design Capacity Method
+  Autosize,                !- Heating Design Capacity {W}
+  ,                        !- Heating Design Capacity Per Floor Area {W/m2}
+  ,                        !- Fraction of Autosized Heating Design Capacity
+<% if (fan_speed == "CONSTANT") %>
+  VT;                      !- Central Cooling Capacity Control Method
+<% elsif fan_mode == "CYCLING" %>
+  OnOff;
+<% else %>
+  VAV;                     !- Central Cooling Capacity Control Method
+<% end %>
+<% end %>
+<%# maybe better to switch on ahu_type instead? %>
+
+
+AirLoopHVAC,
+  <%= ahu_name %>,         !- Name
+<% if (controllers.length > 0) %>
+  ,  !<%= ahu_name %> Controllers,  !- Controller List Name
+<% else %>
+  ,                        !- Controller List Name
+<% end %>
+  <%= ahu_name %> Availability Manager List,  !- Availability Manager List Name
+  <%= fan_flow %>,         !- Design Supply Air Flow Rate {m3/s}
+  <%= ahu_name %> Branch List,  !- Branch List Name
+<% if (duct_type == "DUAL") %>
+  <%= ahu_name %> Dual Duct Connectors,  !- Connector List Name
+<% else %>
+  ,                        !- Connector List Name
+<% end %>
+  <%= ahu_name %> Supply Equipment Inlet Node,  !- Supply Side Inlet Node Name
+  <%= ahu_name %> Zone Equipment Outlet Node,  !- Demand Side Outlet Node Name
+  <%= ahu_name %> Zone Equipment Inlet Nodes,  !- Demand Side Inlet Node Names
+  <%= ahu_name %> Equipment Outlet Nodes;  !- Supply Side Outlet Node Names
+  !;  !- Design Return Air Flow Fraction of Supply Air Flow {}
+
+<%# Naming? < > Equipment Outlet Nodes => < > Supply Equipment Outlet Nodes?
+ or something with Unitary?
+ %>
+
+NodeList,
+  <%= ahu_name %> Zone Equipment Inlet Nodes,  !- Name
+<% if (duct_type == "DUAL") %>
+  <%= ahu_name %> Hot Deck Air Inlet Node,  !- Node 1 Name
+  <%= ahu_name %> Cold Deck Air Inlet Node;  !- Node 2 Name
+<% else %>
+  <%= ahu_name %> Zone Equipment Inlet Node;  !- Node 1 Name
+<% end %>
+
+NodeList,
+  <%= ahu_name %> Equipment Outlet Nodes,!- Name
+<% if (duct_type == "DUAL") %>
+  <%= ahu_name %> Hot Deck Outlet Node,  !- Node 1 Name
+  <%= ahu_name %> Cold Deck Outlet Node;  !- Node 2 Name
+<% else %>
+  <%= ahu_name %> Unitary Outlet Node;  !- Node 1 Name
+<% end %>
+
+! This gets easier because DUAL version can just be set to Heat Coil Outlet and Cool Coil Outlet
+! SINGLE version outlet node changes based on draw-through, blow-through, heating coil existence,
+! aux heat coil existence, etc.
+
+! Can have one block earlier that sets supply_equipment_outlet_node
+
+! Controller not needed with Unitary...?
+<%# NOTE:  Possibly don't need controllers with UnitarySystem %>
+<%# NOTE:  AirLoopHVAC:ControllerList needs at least one controller %>
+<% if (controllers.length > 0) %>
+!AirLoopHVAC:ControllerList,
+!  <%= ahu_name %> Controllers,  !- Name
+<% EnergyPlus.each(controllers) do |controller| %>
+!  Controller:WaterCoil,    !- Controller Object Type
+!  <%= controller %>,       !- Controller Name
+<% end %>
+<% end %>
+
+
+<% if (night_cycle_control_type != "NONE") %>
+AvailabilityManagerAssignmentList,
+  <%= ahu_name %> Availability Manager List,  !- Name
+  AvailabilityManager:NightCycle,  !- Availability Manager 1 Object Type
+  <%= ahu_name %> Availability Manager;  !- Availability Manager 1 Name
+
+<%# NOTE:  NightCycle does not affect ALL objects that reference the specified Fan Schedule Name; it only influences
+the fan objects connected to this air system with that schedule.
+NOTE2:  NightCycle also activates the outdoor air system when the fans turn on.  If outdoor air should be off
+for night cycling, specify a different schedule for Minimum Outdoor Air Schedule Name on Controller:OutdoorAir.
+*DOAS NOTE:  DOAS should only cycle the zone fan coil units...but unfortunately this doesn't work.
+%>
+AvailabilityManager:NightCycle,
+  <%= ahu_name %> Availability Manager,  !- Name
+  <%= ahu_name %> Always On Schedule,  !- Applicability Schedule Name
+  <%= ahu_name %> Operation Schedule,  !- Fan Schedule Name
+  <%= night_cycle_control_input %>,              !- Control Type
+  1.0,                     !- Thermostat Tolerance {deltaC}
+  FixedRunTime,            !- Cycling Run Time Control Type
+  1800;                    !- Cycling Run Time {s}
+<% else %>
+AvailabilityManagerAssignmentList,
+  <%= ahu_name %> Availability Manager List,  !- Name
+  AvailabilityManager:Scheduled,  !- Availability Manager 1 Object Type
+  <%= ahu_name %> Availability Manager;  !- Availability Manager 1 Name
+
+AvailabilityManager:Scheduled,
+  <%= ahu_name %> Availability Manager,  !- Name
+  <%= ahu_name %> Operation Schedule;  !- Schedule Name
+<% end %>
+
+Schedule:Constant,
+  <%= ahu_name %> Always On Schedule,  !- Name
+  Any Number,              !- Schedule Type Limits Name
+  1;                       !- Hourly Value
+
+Schedule:Compact,
+  <%= ahu_name %> Operation Schedule,  !- Name
+  Binary Control,          !- Schedule Type Limits Name
+  <%= op_sch %>
+
+
+BranchList,
+  <%= ahu_name %> Branch List,  !- Name
+<% if (duct_type == "DUAL") %>
+  <%= ahu_name %> Main Branch,  !- Branch Name
+  <%= ahu_name %> CD Branch,  !- Branch Name
+  <%= ahu_name %> HD Branch;  !- Branch Name
+<% elsif (hum_type != "NONE") %>
+  <%= ahu_name %> Main Branch,  !- Branch Name
+  <%= ahu_name %> Humidifier Branch;  !- Branch 2 Name
+<% else %>
+  <%= ahu_name %> Main Branch;  !- Branch Name
+<% end %>
+
+<% if (hum_type != "NONE") %>
+Branch,
+  <%= ahu_name %> Humidifier Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Humidifier:Steam:Electric,  !- Component Object Type
+  <%= ahu_name %> Humidifier,  !- Component Name
+  <%= ahu_name %> Humidifier Inlet Node,  !- Component Inlet Node Name
+  <%= ahu_name %> Humidifier Outlet Node;  !- Component Outlet Node Name
+<% end %>
+
+Branch,
+  <%= ahu_name %> Main Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if (fan_return) %>
+  <% if (fan_speed == "CONSTANT") %>
+  Fan:ConstantVolume,      !- Component Object Type
+  <% elsif (fan_speed == "VARIABLE") %>
+  Fan:VariableVolume,      !- Component Object Type
+  <% end %>
+  <%= ahu_name %> Return Fan,  !- Component Name
+  <%= ahu_name %> Supply Equipment Inlet Node,  !- Component Inlet Node Name
+  <%= ahu_name %> Return Fan Outlet Node,  !- Component Outlet Node Name
+  AirLoopHVAC:OutdoorAirSystem,  !- Component Object Type
+  <%= ahu_name %> OA System,  !- Component Name
+  <%= ahu_name %> Return Fan Outlet Node,  !- Component Inlet Node Name
+  <%= ahu_name %> Unitary Inlet Node,  !- Component Outlet Node Name
+<% else %>
+  AirLoopHVAC:OutdoorAirSystem,  !- Component Object Type
+  <%= ahu_name %> OA System,  !- Component Name
+  <%= ahu_name %> Supply Equipment Inlet Node,  !- Component Inlet Node Name
+  <%= ahu_name %> Unitary Inlet Node,  !- Component Outlet Node Name
+<% end %>
+<% if (duct_type == "SINGLE") %>
+  AirLoopHVAC:UnitarySystem,  !- Component Object Type
+  <%= ahu_name %> Unitary,  !- Component Name
+  <%= ahu_name %> Unitary Inlet Node,  !- Component Inlet Node Name
+  <%= ahu_name %> Unitary Outlet Node;  !- Component Outlet Node Name
+<% else %>
+! DUAL DUCT
+! Can this work with Unitary?
+!
+!   <% if (fan_speed == "CONSTANT") %>
+!   Fan:ConstantVolume,      !- Component Object Type
+!   <% elsif (fan_speed == "VARIABLE") %>
+!   Fan:VariableVolume,      !- Component Object Type
+!   <% end %>
+!   <%= ahu_name %> Supply Fan,   !- Component Name
+!   <%= ahu_name %> Equipment Inlet Node, !- Component Inlet Node Name
+!   <%= ahu_name %> Supply Fan Outlet Node;  !- Component Outlet Node Name
+!
+! ConnectorList,
+!   <%= ahu_name %> Dual Duct Connectors,        !- Name
+!   Connector:Splitter,                             !- Connector Object Type
+!   <%= ahu_name %> DualDuctAirSplitter;         !- Connector Name
+!
+! Connector:Splitter,
+!   <%= ahu_name %> DualDuctAirSplitter,         !- Name
+!   <%= ahu_name %> Main Branch,                 !- Inlet Branch Name
+!   <%= ahu_name %> CD Branch,                   !- Outlet Branch 1 Name
+!   <%= ahu_name %> HD Branch;                   !- Outlet Branch 2 Name
+!
+! Branch,
+!   <%= ahu_name %> CD Branch,                   !- Name
+!   ,                                               !- Pressure Drop Curve Name
+!   <% if (cool_coil_type == "DX-AIR") %>
+!   CoilSystem:Cooling:DX,                          !- Component Object Type
+!   <% elsif (cool_coil_type == "WATER") %>
+!   Coil:Cooling:Water,                             !- Component Object Type
+!   <% end %>
+!   <%= ahu_name %> Cooling Coil,                !- Component Name
+!   <%= ahu_name %> Cold Deck Inlet Node,        !- Component Inlet Node Name
+!   <%= ahu_name %> Cold Deck Outlet Node;       !- Component Outlet Node Name
+!
+! Branch,
+!   <%= ahu_name %> HD Branch,                   !- Name
+!   ,                                               !- Pressure Drop Curve Name
+!   <% if (chiller_cond_hr) %>
+!   Coil:Heating:Water,                             !- Component Object Type
+!   <%= ahu_name %> Cond Coil,                !- Component Name
+!   <%= ahu_name %> Hot Deck Inlet Node,         !- Component Inlet Node Name
+!   <%= ahu_name %> Cond Coil Outlet Node;        !- Component Outlet Node Name
+!   <% end %>
+!   <% if (heat_coil_type == "COMBUSTION") %>
+!   Coil:Heating:Fuel,                               !- Component Object Type
+!   <% elsif (heat_coil_type == "RESISTANCE") %>
+!   Coil:Heating:Electric,                          !- Component Object Type
+!   <% elsif (heat_coil_type == "WATER") %>
+!   Coil:Heating:Water,                             !- Component Object Type
+!   <% end %>
+!   <%= ahu_name %> Heating Coil,                !- Component Name
+!   <% if (chiller_cond_hr) %>
+!   <%= ahu_name %> Cond Coil Outlet Node,         !- Component Inlet Node Name
+!   <% else %>
+!   <%= ahu_name %> Hot Deck Inlet Node,         !- Component Inlet Node Name
+!   <% end %>
+!   <%= ahu_name %> Hot Deck Outlet Node;        !- Component Outlet Node Name
+<% end %>
+
+<% if (fan_return) %>
+  <% if (fan_speed == "CONSTANT") %>
+  Fan:ConstantVolume,
+    <%= ahu_name %> Return Fan,  !- Name
+    ,                        !- Availability Schedule Name
+    <%= fan_eff %>,          !- Fan Efficiency
+    <%= fan_return_rise %>,  !- Pressure Rise {Pa}
+    Autosize,                !- Maximum Flow Rate {m3/s}
+    <%= fan_motor_eff %>,    !- Motor Efficiency
+    <%= fan_motor_frac %>,   !- Motor In Airstream Fraction
+    <%= ahu_name %> Supply Equipment Inlet Node,  !- Air Inlet Node Name
+    <%= ahu_name %> Return Fan Outlet Node,  !- Air Outlet Node Name
+    <%= fan_subcat %>;       !- End-Use Subcategory
+  <% elsif (fan_speed == "VARIABLE") %>
+  Fan:VariableVolume,
+    <%= ahu_name %> Return Fan,  !- Name
+    <%= ahu_name %> Operation Schedule, !- Availability Schedule Name
+    <%= fan_eff %>,          !- Fan Efficiency
+    <%= fan_return_rise %>,  !- Pressure Rise {Pa}
+    Autosize,                !- Maximum Flow Rate {m3/s}
+    <%= fan_flow_min_method %>,                !- Fan Power Minimum Flow Rate Input Method
+    <%= fan_flow_min_frac %>,  !- Fan Power Minimum Flow Fraction {}
+    <%= fan_flow_min %>,                        !- Fan Power Minimum Flow Rate {m3/s}
+    <%= fan_motor_eff %>,    !- Motor Efficiency
+    <%= fan_motor_frac %>,   !- Motor In Airstream Fraction
+    0.0408,                  !- Fan Power Coefficient 1
+    0.088,                   !- Fan Power Coefficient 2
+    -0.0729,                  !- Fan Power Coefficient 3
+    0.9437,                 !- Fan Power Coefficient 4
+    0.0,                     !- Fan Power Coefficient 5
+    <%= ahu_name %> Supply Equipment Inlet Node,  !- Air Inlet Node Name
+    <%= ahu_name %> Return Fan Outlet Node,  !- Air Outlet Node Name
+    <%= fan_subcat %>;       !- End-Use Subcategory
+  <% end %>
+<% end %>
+
+AirLoopHVAC:OutdoorAirSystem,
+  <%= ahu_name %> OA System,  !- Name
+  <%= ahu_name %> OA Controllers,  !- Controller List Name
+  <%= ahu_name %> OA Equipment;  !- Outdoor Air Equipment List Name
+
+AirLoopHVAC:ControllerList,
+  <%= ahu_name %> OA Controllers,  !- Name
+  Controller:OutdoorAir,   !- Controller 1 Object Type
+  <%= ahu_name %> OA Controller;  !- Controller 1 Name
+
+AirLoopHVAC:OutdoorAirSystem:EquipmentList,
+  <%= ahu_name %> OA Equipment,  !- Name
+<% if (oa_solar_preheat) %>
+  SolarCollector:UnglazedTranspired,  !- Component Object Type
+  <%= ahu_name %> Transpired Solar Collector,  !- Component Name
+<% end %>
+<% if (oa_energy_recovery) %>
+  HeatExchanger:AirToAir:SensibleAndLatent,  !- Component Object Type
+  <%= ahu_name %> Energy Recovery Wheel,  !- Component Name
+<% end %>
+<% if (oa_indirect_evap) %>
+  EvaporativeCooler:Indirect:ResearchSpecial,  !- Component Object Type
+  <%= ahu_name %> Indirect Evap Cooler,  !- Component Name
+<% end %>
+<% if (rac) %>
+  Coil:Heating:Water,      !- Component Object Type
+  <%= ahu_name %> Run Around Heating Mode,  !- Component Name
+  Coil:Cooling:Water,      !- Component Object Type
+  <%= ahu_name %> Run Around Cooling Mode,  !- Component Name
+<% end %>
+  OutdoorAir:Mixer,        !- Component Object Type
+  <%= ahu_name %> OA Mixer;  !- Component Name
+
+OutdoorAir:Node,
+  <%= ahu_name %> OA Inlet Node;  !- Name
+
+<% if (oa_solar_preheat) %>
+SolarCollector:UnglazedTranspired,
+  <%= ahu_name %> Transpired Solar Collector,  !- Name
+  GapConvectionModel,      !- Boundary Conditions Model Name
+  ,                        !- Availability Schedule Name
+  <%= ahu_name %> OA Inlet Node,  !- Inlet Node Name
+  <%= ahu_name %> Transpired Collector Outlet Node,  !- Outlet Node Name
+  <%= ahu_name %> Unitary Inlet Node,  !- Setpoint Node Name
+  <%= oa_solar_control_zone %> Air Node,  !- Zone Node Name
+  <%= ahu_name %> Free Heating Setpoint Schedule,  !- Free Heating Setpoint Schedule Name
+  0.001,                   !- Diameter of Perforations in Collector {m}
+  0.020,                   !- Distance Between Perforations in Collector {m}
+  0.9,                     !- Thermal Emissivity of Collector Surface {dimensionless}
+  0.9,                     !- Solar Absorbtivity of Collector Surface {dimensionless}
+  11.4,                    !- Effective Overall Height of Collector
+  0.1,                     !- Effective Gap Thickness of Plenum Behind Collector {m}
+  9.2,                     !- Effective Cross Section Area of Plenum Behind Collector {m2}
+  Triangle,                !- Hole Layout Pattern for Pitch
+  VanDeckerHollandsBrunger2001,  !- Heat Exchange Effectiveness Correlation
+  1.165,                   !- Ratio of Actual Collector Surface Area to Projected Surface Area {dimensionless}
+  MediumRough,             !- Roughness of Collector
+  0.001,                   !- Collector Thickness {m}
+  0.25,                    !- Effectiveness for Perforations with Respect to Wind {dimensionless}
+  0.5,                     !- Discharge Coefficient for Openings with Respect to Buoyancy Driven Flow {dimensionless}
+<% EnergyPlus.each(oa_solar_surfaces) do |surface| %>
+  <%= surface %>,          !- Surface Name
+<% end %>
+
+Schedule:Constant,
+  <%= ahu_name %> Free Heating Setpoint Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= 55['F'] %>;          !- Hourly Value
+<% end %>
+
+<% if (oa_energy_recovery) %>
+
+<%#
+NOTE:  For HeatExchanger controls to work properly must also set the appropriate controls
+on Controller:OutdoorAir.  Specifically Economizer Control Type should be set to FixedDryBulb
+(or similar--just not NoEconomizer, even if it's a DOAS).  Economizer Maximum and Minimum Limit
+Dry-Bulb Temperatures are used to define when the HeatExchanger should run.
+Economizer Control Types for DifferentialDryBulb and DifferentialEnthalpy can also be used.
+
+UPDATE:  Default behavior for the HeatExchanger is to turn off when the Controller:OutdoorAir
+activates economizing.  To get the HeatExchanger to run, Economizer Lockout must be set to No.
+In this case, it appears that Supply Air Outlet Temperature Control frequently does not work
+correctly!  The HeatExchanger sometimes overheats beyond the OutdoorAirPretreat setpoint
+requiring extra cooling.  There is no apparent workaround.
+
+UPDATE:  An economizer control other than "NoEconomizer" on Controller:OutdoorAir is required
+in order to activate the economizer controls that allow heat recovery to be locked out.  When
+the outdoor temperature is warm enough that heat recovery would result in unnecessary cooling,
+it should be locked out.  Economizer Lockout must be set to "Yes" for the HeatExchanger.
+%>
+HeatExchanger:AirToAir:SensibleAndLatent,
+  <%= ahu_name %> Energy Recovery Wheel,  !- Name
+  ,                        !- Availability Schedule Name
+  <%= oa_max_flow %>,                !- Nominal Supply Air Flow Rate {m3/s}
+  <%= oa_er_sensible_eff %>,  !- Sensible Effectiveness at 100% Heating Air Flow {}
+  <%= oa_er_latent_eff %>,  !- Latent Effectiveness at 100% Heating Air Flow {}
+  <%= oa_er_sensible_eff %>,  !- Sensible Effectiveness at 75% Heating Air Flow {}
+  <%= oa_er_latent_eff %>,  !- Latent Effectiveness at 75% Heating Air Flow {}
+  <%= oa_er_sensible_eff + 0.05 %>,  !- Sensible Effectiveness at 100% Cooling Air Flow {}
+  <%= oa_er_latent_eff %>,  !- Latent Effectiveness at 100% Cooling Air Flow {}
+  <%= oa_er_sensible_eff + 0.05 %>,  !- Sensible Effectiveness at 75% Cooling Air Flow {}
+  <%= oa_er_latent_eff %>,  !- Latent Effectiveness at 75% Cooling Air Flow {}
+<% if (oa_solar_preheat) %>
+  <%= ahu_name %> Transpired Collector Outlet Node,  !- Supply Air Inlet Node Name
+<% else %>
+  <%= ahu_name %> OA Inlet Node,  !- Supply Air Inlet Node Name
+<% end %>
+  <%= ahu_name %> ER Supply Outlet Node,  !- Supply Air Outlet Node Name
+  <%= ahu_name %> OA Relief Node,  !- Exhaust Air Inlet Node Name
+  <%= ahu_name %> ER Exhaust Outlet Node,  !- Exhaust Air Outlet Node Name
+  <%= oa_energy_recovery_power %>,                     !- Nominal Electric Power {W}
+  Yes,                     !- Supply Air Outlet Temperature Control
+  Rotary,                  !- Heat Exchanger Type
+  ExhaustOnly,             !- Frost Control Type
+  -23.3,                   !- Threshold Temperature
+  0.167,                   !- Initial Defrost Time Fraction
+  1.44,                    !- Rate of Defrost Time Fraction Increase
+  Yes;                     !- Economizer Lockout
+<% end %>
+
+<%#
+WARNING: For EvaporativeCooler:Indirect:ResearchSpecial, a Secondary Fan Flow Rate of zero causes a hard crash
+for variable flow air systems (probably doing a divide by zero).  Use a very small flow rate to simulate no
+extra fan energy from the secondary fan, e.g., when secondary air is return air.
+%>
+<% if (oa_indirect_evap) %>
+EvaporativeCooler:Indirect:ResearchSpecial,
+  <%= ahu_name %> Indirect Evap Cooler,  !- Name
+  ,                        !- Availability Schedule Name
+  <%= oa_ind_evap_wb_eff %>,  !- Cooler Wetbulb Design Effectiveness
+  ,                        !- Wetbulb Effectiveness Flow Ratio Modifier Curve Name
+  <%= oa_ind_evap_db_eff %>,                        !- Cooler Drybulb Design Effectiveness
+  ,                        !- Drybulb Effectiveness Flow Ratio Modifier Curve Name
+  Autosize,                       !- Recirculating Water Pump Design Power {W}
+  <%= oa_ind_evap_pump_factor %>,                       !- Water Pump Power Sizing Factor {W/(m3/s)}
+  ,                        !- Water Pump Power Modifier Curve Name
+  0.000001,  !Autosize,                !- Secondary Air Design Flow Rate {m3/s}
+  1.0,  !0.6,                     !- Secondary Air Flow Scaling Factor
+  Autosize,                       !- Secondary Air Fan Design Power {W}
+  <%= oa_ind_evap_fan_factor %>,                     !- Secondary Air Fan Sizing Specific Power {W/(m3/s)}
+  ,                        !- Secondary Air Fan Power Modifier Curve Name
+<% if (oa_energy_recovery) %>
+  <%= ahu_name %> ER Supply Outlet Node,  !- Primary Air Inlet Node Name
+<% elsif (oa_solar_preheat) %>
+  <%= ahu_name %> Transpired Collector Outlet Node,  !- Primary Air Inlet Node Name
+<% else %>
+  <%= ahu_name %> OA Inlet Node,  !- Primary Air Inlet Node Name
+<% end %>
+  <%= ahu_name %> IEC Outlet Node,  !- Primary Air Outlet Node Name
+  Autosize,                       !- Primary Design Air Flow Rate {m3/s}
+  0.9,                     !- Dewpoint Effectiveness Factor
+  <%= ahu_name %> IEC Secondary Inlet Node,  !- Secondary Air Inlet Node Name
+  <%= ahu_name %> IEC Secondary Inlet Node,  !- Secondary Air Outlet Node Name
+  <%= ahu_name %> IEC Outlet Node,  !- Sensor Node Name
+<% if (oa_ind_evap_secondary == "OUTDOORS") %>
+  ,                        !- Relief Air Inlet Node Name
+<% else %>
+  <%= ahu_name %> OA Relief Node,  !- Relief Air Inlet Node Name
+<% end %>
+  <%= clear_water_supply_tank %>,  !- Water Supply Storage Tank Name
+  0,                       !- Drift Loss Fraction
+  4.0;                     !- Blowdown Concentration Ratio
+
+OutdoorAir:Node,
+  <%= ahu_name %> IEC Secondary Inlet Node;  !- Name
+<% end %>
+
+<% if (rac) %>
+Coil:Heating:Water,
+  <%= ahu_name %> Run Around Heating Mode,  !- Name
+  ,                        !- Availability Schedule Name
+  Autosize,                !- U-Factor Times Area Value {W/K}
+  Autosize,                !- Maximum Water Flow Rate {m3/s}
+  <%= ahu_name %> Run Around Heat Demand Inlet Node,  !- Water Inlet Node Name
+  <%= ahu_name %> Run Around Heat Demand Outlet Node,  !- Water Outlet Node Name
+<% if (oa_energy_recovery) %>
+  <%= ahu_name %> ER Supply Outlet Node,  !- Primary Air Inlet Node Name
+<% elsif (oa_desiccant_hx) %>
+  <%= ahu_name %> Desiccant HX Outlet Node,  !- Primary Air Inlet Node Name
+<% elsif (oa_solar_preheat) %>
+  <%= ahu_name %> Transpired Collector Outlet Node,  !- Primary Air Inlet Node Name
+<% elsif (oa_indirect_evap) %>
+  <%= ahu_name %> IEC Outlet Node,  !- Primary Air Inlet Node Name
+<% else %>
+  <%= ahu_name %> OA Inlet Node,  !- Primary Air Inlet Node Name
+<% end %>
+  <%= ahu_name %> Run Around Heat Outlet Node,  !- Air Outlet Node Name
+  UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+  ,                        !- Rated Capacity {W}
+  ,                        !- Rated Inlet Water Temperature {C}
+  ,                        !- Rated Inlet Air Temperature {C}
+  ,                        !- Rated Outlet Water Temperature {C}
+  ;                        !- Rated Outlet Air Temperature {C}
+
+Controller:WaterCoil,
+  <%= ahu_name %> Run Around Heating Mode Controller,  !- Name
+  Temperature,             !- Control Variable
+  Normal,                  !- Action
+  Flow,                    !- Actuator Variable
+  <%= ahu_name %> Run Around Heat Outlet Node,  !- Sensor Node Name
+  <%= ahu_name %> Run Around Heat Demand Inlet Node,  !- Actuator Node Name
+  0.0001,                  !- Controller Convergence Tolerance {deltaC}
+  Autosize,                !- Maximum Actuated Flow {m3/s}
+  0.0;                     !- Minimum Actuated Flow {m3/s}
+
+Branch,
+  <%= ahu_name %> Run Around Heating Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Coil:Heating:Water,      !- Component 1 Object Type
+  <%= ahu_name %> Run Around Heating Mode,  !- Component 1 Name
+  <%= ahu_name %> Run Around Heat Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around Heat Demand Outlet Node,  !- Component 1 Outlet Node Name
+  Active;                  !- Component 1 Branch Control Type
+
+Coil:Cooling:Water,
+  <%= ahu_name %> Run Around Cooling Mode,  !- Name
+  ,                        !- Availability Schedule Name
+  Autosize,                !- Design Water Flow Rate {m3/s}
+  Autosize,                !- Design Air Flow Rate {m3/s}
+  Autosize,                !- Design Inlet Water Temperature {C}
+  Autosize,                !- Design Inlet Air Temperature {C}
+  Autosize,                !- Design Outlet Air Temperature {C}
+  Autosize,                !- Design Inlet Air Humidity Ratio {kg-H2O/kg-air}
+  Autosize,                !- Design Outlet Air Humidity Ratio {kg-H2O/kg-air}
+  <%= ahu_name %> Run Around Cool Demand Inlet Node,  !- Water Inlet Node Name
+  <%= ahu_name %> Run Around Cool Demand Outlet Node,  !- Water Outlet Node Name
+  <%= ahu_name %> Run Around Heat Outlet Node,  !- Air Inlet Node Name
+  <%= ahu_name %> Run Around Coil Outlet Node,  !- Air Outlet Node Name
+  SimpleAnalysis,          !- Type of Analysis
+  CrossFlow;               !- Heat Exchanger Configuration
+
+Controller:WaterCoil,
+  <%= ahu_name %> Run Around Cooling Mode Controller,  !- Name
+  Temperature,             !- Control Variable
+  Reverse,                 !- Action
+  Flow,                    !- Actuator Variable
+  <%= ahu_name %> Run Around Coil Outlet Node,  !- Sensor Node Name
+  <%= ahu_name %> Run Around Cool Demand Inlet Node,  !- Actuator Node Name
+  0.0001,                  !- Controller Convergence Tolerance {deltaC}
+  Autosize,                !- Maximum Actuated Flow {m3/s}
+  0.0;                     !- Minimum Actuated Flow {m3/s}
+
+Branch,
+  <%= ahu_name %> Run Around Cooling Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Coil:Cooling:Water,      !- Component 1 Object Type
+  <%= ahu_name %> Run Around Cooling Mode,  !- Component 1 Name
+  <%= ahu_name %> Run Around Cool Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around Cool Demand Outlet Node,  !- Component 1 Outlet Node Name
+  Active;                  !- Component 1 Branch Control Type
+<% end %>
+
+SetpointManager:OutdoorAirPretreat,
+  <%= ahu_name %> OA Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  ,                        !- Minimum Setpoint Temperature {C}
+  ,                        !- Maximum Setpoint Temperature {C}
+  ,                        !- Minimum Setpoint Humidity Ratio {kgWater/kgDryAir}
+  ,                        !- Maximum Setpoint Humidity Ratio {kgWater/kgDryAir}
+  <%= ahu_name %> Unitary Inlet Node,  !- Reference Setpoint Node Name
+  <%= ahu_name %> Unitary Inlet Node,  !- Mixed Air Stream Node Name
+  <%= ahu_name %> OA Inlet Node,  !- Outdoor Air Stream Node Name
+<% if (fan_return) %>
+  <%= ahu_name %> Return Fan Outlet Node,  !- Return Air Stream Node Name
+<% else %>
+  <%= ahu_name %> Supply Equipment Inlet Node,  !- Return Air Stream Node Name
+<% end %>
+  <%= ahu_name %> OA Setpoint Nodes;  !- Setpoint Node or NodeList Name
+
+NodeList,
+  <%= ahu_name %> OA Setpoint Nodes,  !- Name
+<% if (rac) %>
+  <%= ahu_name %> Run Around Heat Outlet Node,  !- Node Name
+  <%= ahu_name %> Run Around Coil Outlet Node,  !- Node Name
+<% end %>
+<% if (oa_solar_preheat) %>
+  <%= ahu_name %> Transpired Collector Outlet Node,  !- Node Name
+<% end %>
+<% if (oa_energy_recovery) %>
+  <%= ahu_name %> ER Supply Outlet Node,  !- Node Name
+<% end %>
+<% if (oa_indirect_evap) %>
+  <%= ahu_name %> IEC Outlet Node,  !- Node Name
+<% end %>
+<%# Include OA Inlet Node just to be able to terminate the NodeList cleanly. %>
+  <%= ahu_name %> OA Inlet Node;  !- Node Name
+
+OutdoorAir:Mixer,
+  <%= ahu_name %> OA Mixer,  !- Name
+  <%= ahu_name %> Unitary Inlet Node,  !- Mixed Air Node Name
+<% if (oa_indirect_evap) %>
+  <%= ahu_name %> IEC Outlet Node,  !- Outdoor Air Stream Node Name
+<% elsif (oa_energy_recovery) %>
+  <%= ahu_name %> ER Supply Outlet Node,  !- Outdoor Air Stream Node Name
+<% elsif (oa_solar_preheat) %>
+  <%= ahu_name %> Transpired Collector Outlet Node,  !- Outdoor Air Stream Node Name
+<% elsif (rac) %>
+  <%= ahu_name %> Run Around Coil Outlet Node,  !- Outdoor Air Stream Node Name
+<% else %>
+  <%= ahu_name %> OA Inlet Node,  !- Outdoor Air Stream Node Name
+<% end %>
+  <%= ahu_name %> OA Relief Node,  !- Relief Air Stream Node Name
+<% if (fan_return) %>
+  <%= ahu_name %> Return Fan Outlet Node;  !- Return Air Stream Node Name
+<% else %>
+  <%= ahu_name %> Supply Equipment Inlet Node;  !- Return Air Stream Node Name
+<% end %>
+
+<%#
+NOTE: There is a problem with the controls on HeatExchanger:AirToAir:SensibleAndLatent. The bypass controls only
+appear to work if an economizer is enabled AND actively operating. Otherwise the Supply Air Outlet Temperature Control
+is ignored, even with the proper setpoint manager.
+
+In general, this means that energy recovery WITHOUT an economizer is a bad combination. Under some conditions the
+energy recovery wheel will overheat the outdoor air and result in unnecessary cooling. There is no apparent
+workaround, although an EMS override might be possible.
+
+For DOAS--which does not normally economize--Economizer Control Type should be set to FixedDryBulb (or similar--
+just not NoEconomizer) in order to use energy recovery. ALSO (need to recheck): Setting the Economizer Minimum Limit
+to SAT - 1.0 C (roughly optimal), disables the economizer below this value and allows heat recovery to operate; above
+the value locks it out.
+%>
+
+<%# if no economizer, set to blank all the economizer fields. Looks better. %>
+
+Controller:OutdoorAir,
+  <%= ahu_name %> OA Controller,  !- Name
+  <%= ahu_name %> OA Relief Node,  !- Relief Air Outlet Node Name
+<% if (fan_return) %>
+  <%= ahu_name %> Return Fan Outlet Node,  !- Return Air Node Name
+<% else %>
+  <%= ahu_name %> Supply Equipment Inlet Node,  !- Return Air Node Name
+<% end %>
+  <%= ahu_name %> Unitary Inlet Node,  !- Mixed Air Node Name
+  <%= ahu_name %> OA Inlet Node,  !- Actuator Node Name
+  <%= oa_min_flow %>,      !- Minimum Outdoor Air Flow Rate {m3/s}
+  <%= oa_max_flow %>,      !- Maximum Outdoor Air Flow Rate {m3/s}
+<% if (oa_econ_type == "NONE") %>
+  NoEconomizer,            !- Economizer Control Type
+  ,                        !- Economizer Control Action Type
+  ,                        !- Economizer Maximum Limit Dry-Bulb Temperature {C}
+  ,                        !- Economizer Maximum Limit Enthalpy {J/kg}
+  ,                        !- Economizer Maximum Limit Dewpoint Temperature {C}
+  ,                        !- Electronic Enthalpy Limit Curve Name
+  ,                        !- Economizer Minimum Limit Dry-Bulb Temperature {C}
+  ,                        !- Lockout Type
+<% else %>
+  <%= oa_econ_type_input %>,  !- Economizer Control Type
+  <%= oa_econ_control_action_input %>,  !- Economizer Control Action Type
+  <%= oa_econ_max_temp %>,  !- Economizer Maximum Limit Dry-Bulb Temperature {C}
+  ,                        !- Economizer Maximum Limit Enthalpy {J/kg}
+  ,                        !- Economizer Maximum Limit Dewpoint Temperature {C}
+  ,                        !- Electronic Enthalpy Limit Curve Name
+  <%= oa_econ_min_temp %>,  !- Economizer Minimum Limit Dry-Bulb Temperature {C}
+  <%= oa_econ_lockout %>,  !- Lockout Type
+<% end %>
+  FixedMinimum,            !- Minimum Limit Type
+  <%= ahu_name %> Outdoor Air Schedule,  !- Minimum Outdoor Air Schedule Name
+<% if oa_frac_sch != "NONE" %>
+  <%= ahu_name %> Outdoor Air Fraction Schedule,                        !- Minimum Fraction of Outdoor Air Schedule Name
+<% else %>
+  ,                        !- Minimum Fraction of Outdoor Air Schedule Name
+<% end %>
+<% if oa_frac_max_sch != "NONE" %>
+  <%= ahu_name %> Outdoor Air Max Fraction Schedule, !- Maximum Fraction of Outdoor Air Schedule Name
+<% else %>
+  ,                        !- Maximum Fraction of Outdoor Air Schedule Name
+<% end %>
+  ,                        !- Mechanical Ventilation Controller Name
+  ,                        !- Time of Day Economizer Control Schedule Name
+  ,                        !- High Humidity Control
+  ,                        !- Humidistat Control Zone Name
+  ,                        !- High Humidity Outdoor Air Flow Ratio
+  ,                        !- Control High Indoor Humidity Based on Outdoor Humidity Ratio
+  BypassWhenWithinEconomizerLimits;  !- Heat Recovery Bypass Control Type
+<%# only show BypassWhenWithinEconomizerLimits when there is heat recovery %>
+
+Schedule:Compact,
+  <%= ahu_name %> Outdoor Air Schedule,  !- Name
+  Unit Interval,           !- Schedule Type Limits Name
+  <%= oa_sch %>
+
+
+<% if oa_frac_sch != "NONE" %>
+Schedule:Compact,
+  <%= ahu_name %> Outdoor Air Fraction Schedule,  !- Name
+  Unit Interval,           !- Schedule Type Limits Name
+  <%= oa_frac_sch %>
+
+<% end %>
+
+<% if oa_frac_max_sch != "NONE" %>
+Schedule:Compact,
+  <%= ahu_name %> Outdoor Air Max Fraction Schedule,  !- Name
+  Unit Interval,           !- Schedule Type Limits Name
+  <%= oa_frac_max_sch %>
+
+<% end %>
+
+<% if (hum_type == "RESISTANCE") %>
+Humidifier:Steam:Electric,
+  <%= ahu_name %> Humidifier,  !- Name
+  ,                        !- Availability Schedule Name
+  <%= hum_cap %>,          !- Rated Capacity {m3/s}
+  <%= hum_power %>,        !- Rated Power {W}
+  0.0,                     !- Rated Fan Power {W}
+  0.0,                     !- Standby Power {W}
+  <%= ahu_name %> Humidifier Inlet Node,  !- Air Inlet Node Name
+  <%= ahu_name %> Humidifier Outlet Node,  !- Air Outlet Node Name
+  ;                        !- Water Storage Tank Name
+
+<% elsif (hum_type == "COMBUSTION") %>
+Humidifier:Steam:Gas,
+  <%= ahu_name %> Humidifier,  !- Name
+  ,                        !- Availability Schedule Name
+  <%= hum_cap %>,          !- Rated Capacity {m3/s}
+  <%= hum_power %>,        !- Rated Gas Use Rate {W}
+  <%= hum_eff %>,          !- Thermal Efficiency {}
+  ,                        !- Thermal Efficiency Modifier Curve Name
+  0.0,                     !- Rated Fan Power {W}
+  0.0,                     !- Auxiliary Electric Power {W}
+  <%= ahu_name %> Unitary Inlet Node,  !- Air Inlet Node Name
+  <%= ahu_name %> Humidifier Outlet Node,  !- Air Outlet Node Name
+  ,                        !- Water Storage Tank Name
+  ;                        !- Inlet Water Temperature Option
+
+<% end %>
+
+<%
+insert "system/unitary.pxt",
+  :unitary_name => ahu_name,
+  :doas => (ahu_type == "DOAS"),
+  **unitary
+%>
+
+
+<% if (duct_type == "DUAL") %>
+! SetpointManager:MixedAir,
+!   <%= ahu_name %> OA Setpoint Manager,         !- Name
+!   Temperature,                                    !- Control Variable
+!   <%= ahu_name %> Cold Deck Outlet Node,       !- Reference Setpoint Node Name
+!   <%= ahu_name %> Unitary Inlet Node,              !- Fan Inlet Node Name
+!   <%= ahu_name %> Supply Fan Outlet Node,      !- Fan Outlet Node Name
+!   <%= ahu_name %> Dual Duct Setpoint Nodes;           !- Setpoint Node or NodeList Name
+!
+! NodeList,
+!   <%= ahu_name %> Dual Duct Setpoint Nodes,           !- Name
+!   <% if (rac) %>
+!   <%= ahu_name %> Run Around Heat Outlet Node,  !- Node Name
+!   <%= ahu_name %> Run Around Coil Outlet Node,  !- Node Name
+!   <% end %>
+!   <% if (oa_solar_preheat) %>
+!   <%= ahu_name %> Transpired Collector Outlet Node,  !- Node Name
+!   <% end %>
+!   <% if (oa_energy_recovery) %>
+!   <%= ahu_name %> ER Supply Outlet Node,  !- Node Name
+!   <% end %>
+!   <% if (oa_indirect_evap) %>
+!   <%= ahu_name %> IEC Outlet Node,  !- Node Name
+!   <% end %>
+!   <%= ahu_name %> Unitary Inlet Node;              !- Node Name
+<% else %>
+SetpointManager:MixedAir,
+  <%= ahu_name %> Mixed Air Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= ahu_name %> Unitary Outlet Node,  !- Reference Setpoint Node Name
+<% if (fan_config == "BLOW-THROUGH") %>
+  <%= ahu_name %> Unitary Inlet Node, !- Fan Inlet Node Name
+<% else %>
+  <% if (heat_coil_type == "NONE") %>
+    <% if (chiller_cond_hr) %>
+  <%= ahu_name %> Cond Coil Outlet Node, !- Fan Inlet Node Name
+    <% elsif (cool_coil_type != "NONE") %>
+  <%= ahu_name %> Cooling Coil Outlet Node, !- Fan Inlet Node Name
+    <% elsif (hum_type != "NONE") %>
+  <%= ahu_name %> Humidifier Outlet Node, !- Fan Inlet Node Name
+    <% else %>
+  <%= ahu_name %> Equipment Inlet Node, !- Fan Inlet Node Name
+    <% end %>
+  <% else %>
+  <%= ahu_name %> Heating Coil Outlet Node, !- Fan Inlet Node Name
+  <% end %>
+<% end %>
+<% if (fan_config == "BLOW-THROUGH") %>
+  <%= ahu_name %> Supply Fan Outlet Node,  !- Fan Outlet Node Name
+<% else %>
+  <%= ahu_name %> Unitary Outlet Node,  !- Fan Outlet Node Name
+<% end %>
+  <%= ahu_name %> Mixed Air Setpoint Nodes;  !- Setpoint Node or NodeList Name
+
+NodeList,
+  <%= ahu_name %> Mixed Air Setpoint Nodes,  !- Name
+<% if (rac) %>
+  <%= ahu_name %> Run Around Heat Outlet Node,  !- Node Name
+  <%= ahu_name %> Run Around Coil Outlet Node,  !- Node Name
+<% end %>
+<% if (oa_solar_preheat) %>
+  <%= ahu_name %> Transpired Collector Outlet Node,  !- Node Name
+<% end %>
+<% if (oa_energy_recovery) %>
+  <%= ahu_name %> ER Supply Outlet Node,  !- Node Name
+<% end %>
+<% if (oa_indirect_evap) %>
+  <%= ahu_name %> IEC Outlet Node,  !- Node Name
+<% end %>
+<% if (cool_coil_type != "NONE") %>
+  <%= ahu_name %> Cooling Coil Outlet Node,  !- Node Name
+<% end %>
+<% if (chiller_cond_hr) %>
+  <%= ahu_name %> Cond Coil Outlet Node,  !- Node Name
+<% end %>
+<% if (heat_coil_type != "NONE" and fan_config == "DRAW-THROUGH") %>
+  <%= ahu_name %> Heating Coil Outlet Node,  !- Node Name
+<% end %>
+<%# List Equipment Inlet Node last just to be able to terminate the NodeList cleanly. %>
+  <%= ahu_name %> Unitary Inlet Node;  !- Node Name
+<% end %>
+
+<%# aux heat coils still need a setpoint too %>
+
+<% if (duct_type == "DUAL") %>
+!   <% if (heat_sat_reset_control == "NONE") %>
+! SetpointManager:Scheduled,
+!   <%= ahu_name %> Heating SAT Setpoint Manager,  !- Name
+!   Temperature,             !- Control Variable
+!   <%= ahu_name %> Heating Supply Air Temp Schedule,  !- Schedule Name
+!   <%= ahu_name %> Hot Deck Outlet Node;  !- Setpoint Node or NodeList Name
+!
+! Schedule:Constant,
+!   <%= ahu_name %> Heating Supply Air Temp Schedule,  !- Name
+!   Temperature,             !- Schedule Type Limits Name
+!   <%= heat_sat_no_reset %>;  !- Hourly Value
+!   <% elsif (heat_sat_reset_control == "SCHEDULE") %>
+! SetpointManager:Scheduled,
+!   <%= ahu_name %> Heating SAT Setpoint Manager,  !- Name
+!   Temperature,             !- Control Variable
+!   <%= ahu_name %> Heating Supply Air Temp Schedule,  !- Schedule Name
+!   <%= ahu_name %> Hot Deck Outlet Node;  !- Setpoint Node or NodeList Name
+!
+! Schedule:Compact,
+!   <%= ahu_name %> Heating Supply Air Temp Schedule,  !- Name
+!   Temperature,             !- Schedule Type Limits Name
+!   Through: 12/31,          !- Field 1
+!   For: Weekdays SummerDesignDay WinterDesignDay,  !- Field 2
+!   Until: 06:00, <%= heat_sat_schedule_reset %>,  !- Field 3
+!   Until: 18:00, <%= heat_sat_schedule_occ %>,  !- Field 4
+!   Until: 24:00, <%= heat_sat_schedule_reset %>,  !- Field 5
+!   For: Saturday Sunday Holidays AllOtherDays, !- Field 6
+!   Until: 24:00, <%= heat_sat_schedule_reset %>;  !- Field 7
+!   <% elsif (heat_sat_reset_control == "OUTDOORTEMP") %>
+! SetpointManager:OutdoorAirReset,
+!   <%= ahu_name %> Heating SAT Setpoint Manager,  !- Name
+!   Temperature,             !- Control Variable
+!   <%= heat_sat_outdoor_low_setpt %>,  !- Setpoint at Outdoor Low Temperature {C}
+!   <%= heat_sat_outdoor_low_temp %>,  !- Outdoor Low Temperature {C}
+!   <%= heat_sat_outdoor_high_setpt %>,  !- Setpoint at Outdoor High Temperature {C}
+!   <%= heat_sat_outdoor_high_temp %>,  !- Outdoor High Temperature {C}
+!   <%= ahu_name %> Hot Deck Outlet Node;  !- Setpoint Node or NodeList Name
+!   <% elsif (heat_sat_reset_control == "COLDEST") %>
+! SetpointManager:Coldest,
+!   <%= ahu_name %> Heating SAT Setpoint Manager,  !- Name
+!   Temperature,             !- Control Variable
+!   <%= ahu_name %>,  !- HVAC Air Loop Name
+!   <%= heat_sat_coldest_low_setpt %>,  !- Minimum Setpoint Temperature {C}
+!   <%= heat_sat_coldest_high_setpt %>,  !- Maximum Setpoint Temperature {C}
+!   MinimumTemperature,      !- Strategy
+!   <%= ahu_name %> Hot Deck Outlet Node;  !- Setpoint Node or NodeList Name
+!   <% end %>
+<% end %>
+
+<% if (sat_reset_type == "NONE") %>
+SetpointManager:Scheduled,
+  <%= ahu_name %> Cooling SAT Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= ahu_name %> Cooling Supply Air Temp Schedule,  !- Schedule Name
+  <%= ahu_name %> Unitary Outlet Node;  !- Setpoint Node or NodeList Name
+
+Schedule:Constant,
+  <%= ahu_name %> Cooling Supply Air Temp Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= sat_temp_min %>;     !- Hourly Value
+
+SetpointManager:Scheduled,
+  <%= ahu_name %> Heating SAT Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= ahu_name %> Heating Supply Air Temp Schedule,  !- Schedule Name
+  <%= ahu_name %> Unitary Outlet Node;  !- Setpoint Node or NodeList Name
+
+Schedule:Constant,
+  <%= ahu_name %> Heating Supply Air Temp Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= sat_temp_min %>;     !- Hourly Value
+
+<% elsif (sat_reset_type == "OUTDOOR-AIR") %>
+SetpointManager:OutdoorAirReset,
+  <%= ahu_name %> Cooling SAT Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= sat_temp_max %>,     !- Setpoint at Outdoor Low Temperature {C}
+  <%= sat_oa_temp_min %>,  !- Outdoor Low Temperature {C}
+  <%= sat_temp_min %>,     !- Setpoint at Outdoor High Temperature {C}
+  <%= sat_oa_temp_max %>,  !- Outdoor High Temperature {C}
+  <%= ahu_name %> Unitary Outlet Node;  !- Setpoint Node or NodeList Name
+
+<% elsif (sat_reset_type == "WARMEST-ZONE") %>
+SetpointManager:Warmest,
+  <%= ahu_name %> Cooling SAT Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= ahu_name %>,         !- HVAC Air Loop Name
+  <%= sat_temp_min %>,     !- Minimum Setpoint Temperature {C}
+  <%= sat_temp_max %>,     !- Maximum Setpoint Temperature {C}
+  MaximumTemperature,      !- Strategy
+  <%= ahu_name %> Unitary Outlet Node;  !- Setpoint Node or NodeList Name
+
+<% elsif (sat_reset_type == "AVERAGE-ZONE") %>
+SetpointManager:MultiZone:Cooling:Average,
+  <%= ahu_name %> Cooling SAT Setpoint Manager,  !- Name
+  <%= ahu_name %>,         !- HVAC Air Loop Name
+  <%= sat_temp_min %>,     !- Minimum Setpoint Temperature {C}
+  <%= sat_temp_max %>,     !- Maximum Setpoint Temperature {C}
+  <%= ahu_name %> Unitary Outlet Node;  !- Setpoint Node or NodeList Name
+
+<% elsif (sat_reset_type == "SCHEDULE") %>
+SetpointManager:Scheduled,
+  <%= ahu_name %> Cooling SAT Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= ahu_name %> Cooling Supply Air Temp Schedule,  !- Schedule Name
+  <%= ahu_name %> Unitary Outlet Node;  !- Setpoint Node or NodeList Name
+
+Schedule:Compact,
+  <%= ahu_name %> Cooling Supply Air Temp Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= sat_temp_sch %>
+
+<% elsif (sat_reset_type == "FLOATING") %>
+  <% for branch_name in branch_names %>
+    <%
+    service = branch_name.split("-")[0].split(" ")[-1]
+    speed = branch_name.split("-")[-1].split(" ")[0]
+    sys_type = (service + "-" + speed).strip
+    zn_name = branch_name.split("#{sys_type}")[0].strip
+    %>
+    SetpointManager:SingleZone:Heating,
+      <%= branch_name %> Heating SAT Setpoint Manager,  !- Name
+      Temperature,             !- Control Variable
+      <%= sat_temp_min %>,                      !- Minimum Supply Air Temperature
+      <%= sat_temp_max %>,                      !- Maximum Supply Air Temperature
+      <%= zn_name %>,                !- Control Zone Name
+      <%= zn_name %> Air Node,       !- Zone Node Name
+      <%= zn_name %> <%= sys_type%> Outlet Node,  !- Zone Inlet Node Name
+      <%= ahu_name %> Unitary Outlet Node;  !- Setpoint Node or NodeList Name
+
+    SetpointManager:SingleZone:Cooling,
+      <%= branch_name %> Cooling SAT Setpoint Manager,  !- Name
+      Temperature,             !- Control Variable
+      <%= sat_temp_min %>,                      !- Minimum Supply Air Temperature
+      <%= sat_temp_max %>,                      !- Maximum Supply Air Temperature
+      <%= zn_name %>,                !- Control Zone Name
+      <%= zn_name %> Air Node,       !- Zone Node Name
+      <%= zn_name %> <%= sys_type%> Outlet Node,  !- Zone Inlet Node Name
+      <%= ahu_name %> Unitary Outlet Node;  !- Setpoint Node or NodeList Name
+
+  <% end %>
+
+<% end %>
+
+<% if (duct_type == "DUAL") %>
+! AirLoopHVAC:SupplyPath,
+!   <%= ahu_name %> Hot Deck Supply Path,        !- Name
+!   <%= ahu_name %> Hot Deck Air Inlet Node,     !- Supply Air Path Inlet Node Name
+!   AirLoopHVAC:ZoneSplitter,                       !- Component Object Type
+!   <%= ahu_name %> HD Air Splitter;             !- Component Name
+!
+! AirLoopHVAC:ZoneSplitter,
+!   <%= ahu_name %> HD Air Splitter,             !- Name
+!   <%= ahu_name %> Hot Deck Air Inlet Node,     !- Inlet Node Name
+!   <% EnergyPlus.each(branch_names) do |branch_name| %>
+!   <%= branch_name %> HD Inlet Node,                 !- Outlet Node Name
+!   <% end %>
+!
+! AirLoopHVAC:SupplyPath,
+!   <%= ahu_name %> Cold Deck Supply Path,       !- Name
+!   <%= ahu_name %> Cold Deck Air Inlet Node,    !- Supply Air Path Inlet Node Name
+!   AirLoopHVAC:ZoneSplitter,                       !- Component Object Type
+!   <%= ahu_name %> CD Air Splitter;             !- Component Name
+!
+! AirLoopHVAC:ZoneSplitter,
+!   <%= ahu_name %> CD Air Splitter,             !- Name
+!   <%= ahu_name %> Cold Deck Air Inlet Node,    !- Inlet Node Name
+!   <% EnergyPlus.each(branch_names) do |branch_name| %>
+!   <%= branch_name %> CD Inlet Node,                 !- Outlet Node Name
+!   <% end %>
+<% else %>
+AirLoopHVAC:SupplyPath,
+  <%= ahu_name %> Supply Path,             !- Name
+  <%= ahu_name %> Zone Equipment Inlet Node,  !- Supply Air Path Inlet Node Name
+  AirLoopHVAC:ZoneSplitter,  !- Component Object Type
+  <%= ahu_name %> Zone Splitter;  !- Component Name
+
+AirLoopHVAC:ZoneSplitter,
+  <%= ahu_name %> Zone Splitter,  !- Name
+  <%= ahu_name %> Zone Equipment Inlet Node,  !- Inlet Node Name
+<% EnergyPlus.each(branch_names) do |branch_name| %>
+  <%= branch_name %> Inlet Node,  !- Outlet Node Name
+<% end %>
+<% end %>
+
+AirLoopHVAC:ReturnPath,
+  <%= ahu_name %> Return Path,  !- Name
+  <%= ahu_name %> Zone Equipment Outlet Node,  !- Return Air Path Outlet Node Name
+<% if (return_plenum) %>
+  AirLoopHVAC:ReturnPlenum,  !- Component Object Type
+  <%= ahu_name %> Return Plenum;  !- Component Name
+<% else %>
+  AirLoopHVAC:ZoneMixer,   !- Component Object Type
+  <%= ahu_name %> Zone Mixer;  !- Component Name
+<% end %>
+
+<% if (return_plenum) %>
+AirLoopHVAC:ReturnPlenum,
+  <%= ahu_name %> Return Plenum,  ! Name
+  <%= return_plenum_zone_name %>,  ! Zone Name
+  <%= return_plenum_zone_name %> Air Node,  ! Zone Node Name
+  <%= ahu_name %> Zone Equipment Outlet Node,  !- Outlet Node Name
+  ,                        !- Induced Air Outlet Node or NodeList Name
+<% EnergyPlus.each(branch_names) do |branch_name| %>
+  <%= branch_name %> Return Node,  !- Inlet Node Name
+<% end %>
+<% else %>
+AirLoopHVAC:ZoneMixer,
+  <%= ahu_name %> Zone Mixer,   !- Name
+  <%= ahu_name %> Zone Equipment Outlet Node,  !- Outlet Node Name
+<% EnergyPlus.each(branch_names) do |branch_name| %>
+  <%= branch_name %> Return Node,  !- Inlet Node Name
+<% end %>
+<% end %>
+
+<% if (return_plenum_zone_name == "#{ahu_name} Return Plenum") %>
+! Dummy return plenum zone
+Construction,
+  <%= ahu_name %> Plenum Construction,  ! - Name
+  <%= ahu_name %> Plenum Material;  ! - Outside Layer
+
+Material,
+  <%= ahu_name %> Plenum Material,  !- Name
+  Smooth,                  !- Roughness
+  0.01,                    !- Thickness {m}
+  0.01,                    !- Conductivity {W/m-K}
+  100,                     !- Density {kg/m3}
+  1000;                    !- Specific Heat {J/kg-K}
+
+Zone,
+  <%= return_plenum_zone_name %>,  !- Name
+  0,                       !- Direction of Relative North {deg}
+  0,                       !- X Origin {m}
+  0,                       !- Y Origin {m}
+  0,                       !- Z Origin {m}
+  ,                        !- Type
+  1,                       !- Multiplier
+  ,                        !- Ceiling Height {m}
+  1.0,                     !- Volume {m3}
+  ,                        !- Floor Area {m2}
+  ,                        !- Zone Inside Convection Algorithm
+  ,                        !- Zone Outside Convection Algorithm
+  No;                      !- Part of Total Floor Area
+
+BuildingSurface:Detailed,
+  <%= ahu_name %> Return Plenum Floor,  !- Name
+  Floor,                   !- Surface Type
+  <%= ahu_name %> Plenum Construction,  !- Construction Name
+  <%= return_plenum_zone_name %>,  !- Zone Name
+  Adiabatic,               !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate {m}
+  0,                       !- Vertex 1 Y-coordinate {m}
+  -10,                     !- Vertex 1 Z-coordinate {m}
+  0,                       !- Vertex 2 X-coordinate {m}
+  1,                       !- Vertex 2 Y-coordinate {m}
+  -10,                     !- Vertex 2 Z-coordinate {m}
+  1,                       !- Vertex 3 X-coordinate {m}
+  1,                       !- Vertex 3 Y-coordinate {m}
+  -10,                     !- Vertex 3 Z-coordinate {m}
+  1,                       !- Vertex 4 X-coordinate {m}
+  0,                       !- Vertex 4 Y-coordinate {m}
+  -10;                     !- Vertex 4 Z-coordinate {m}
+
+<% end %>
+<%
+if (rac)
+  insert "rac.pxt",
+    **local(
+      :ahu_name,
+      :rac_eff,
+      :rac_oa_min,
+      :rac_oa_max,
+      :rac_deadband,
+      :rac_pump_head,
+      :rac_pump_eff)
+end
+%>
