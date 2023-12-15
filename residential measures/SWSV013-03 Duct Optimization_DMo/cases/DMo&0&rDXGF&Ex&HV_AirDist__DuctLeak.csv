@@ -1,0 +1,5 @@
+skip,case_name,:total_leakage_ratio,:return_leakage_frac
+,Pre-DuctOpt-HighToLow-Replacement,0.35,
+,Msr-DuctOpt-HighToLow-Replacement,0.15,
+,Pre-DuctOpt-HighToLow-Retrofit,0.3,0.5
+,Msr-DuctOpt-HighToLow-Retrofit,0.3,0.15

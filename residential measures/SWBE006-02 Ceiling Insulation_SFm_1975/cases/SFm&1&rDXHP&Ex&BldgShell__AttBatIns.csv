@@ -1,0 +1,8 @@
+skip,case_name,:window_u,:central_cooling_coil_cop,:furnace_heating_coil_eff,:hvac_cooling_type,:hvac_heating_type,:ceil_consol_layer_thickness,:ceil_consol_layer_conductivity,:ceil_insul_layer_thickness
+,Pre-BS-CeilIns-VintR-RvaluebyCZ,,,,,,,,
+,Msr-BS-CeilIns-VintR-AddR11,,,,,,,,0.084
+,Msr-BS-CeilIns-VintR-AddR19,,,,,,,,0.145
+,Msr-BS-CeilIns-VintR-AddR30,,,,,,,,0.228
+,Msr-BS-CeilIns-VintR-AddR38,,,,,,,,0.289
+,Msr-BS-CeilIns-VintR-AddR44,,,,,,,,0.335
+,Msr-BS-CeilIns-VintR-AddR60,,,,,,,,0.456
