@@ -1,0 +1,694 @@
+<%#INTERFACE
+import "general.pxt", :group => "general" do
+  include "*"
+  exclude "min*|max*|*convergence"
+  exclude "zone_air_heat_balance_algorithm|shadow_frequency|max_shadow_figures"
+  parameter "run_name", :default => "Gro"
+end
+
+parameter "latitude", :default => 0
+
+import "ext-light.pxt", :group => "ext_light", :prefix => "ext_light_" do
+  include "*"
+  exclude "name"
+  parameter "power", :default => 0.0['W']
+end
+
+import "ext-equip.pxt", :group => "ext_equip", :prefix => "ext_equip_" do
+  include "*"
+  exclude "ext_equip_name"
+  parameter "power", :default => 0['W']
+end
+
+import "foundation.pxt", :group => "foundation" do
+  include "*"
+  parameter "foundation_type", :default => "NONE"
+end
+
+import "constructions.pxt", :group => "constructions" do
+  include "*"
+  exclude "window_shade*|radiant*"
+  exclude "foundation_type|parapet_length|floor_length|wall_area"
+  parameter "roof_base_type", :default => "Insulation Entirely Above Deck"
+  parameter "roof_exterior_type", :default => "Roof Membrane"
+  parameter "roof_interior_type", :default => "Metal Decking"
+  parameter "wall_base_type", :default => "Steel Framing at 16 in. on center"
+  parameter "wall_exterior_type", :default => "Stucco"
+  parameter "wall_interior_type", :default => "Gypsum 5/8in"
+  parameter "wall_base_cont_insul", :default => 7.5['R-IP']
+end
+
+parameter "daylighting_controls", :name => "Daylighting Controls", :description => "Daylighting controls to automatically dim electric lights",
+  :default => false, :domain => Boolean
+parameter "top_daylighting", :name => "Top Daylighting Strategy", :description => "Top daylighting strategy",
+  :default => "NONE", :domain => String  # ["NONE", "SKYLIGHT", "TUBULAR"]
+
+parameter "infil_hvac_frac", :name => "Infiltration Fraction During HVAC Operation", :description => "Fraction of full infiltration during HVAC operation (pressurized building)",
+  :default => 0.25, :domain => Numeric
+
+import "entry-infil.pxt" do
+  parameter "vestibule"
+end
+
+group "space_loads" do # hardcode building-level defaults
+  import "zoneloads/zonetemplate.pxt", :group => "building" do
+    parameter "lights_fraction_radiant", :default => 0.58
+    parameter "lights_fraction_visible", :default => 0
+    parameter "infil_area", :default => 0.26046511627907['CFM/ft2']
+    parameter "infiltration_method", :default => "Flow/ExteriorWallArea"
+    parameter "infil_sch", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+    parameter "int_mass_ratio", :default => 0
+    parameter "dhw_flow_area", :default => 0['GPM/ft2']
+    parameter "dhw_temp", :default => 135.0['F']
+    parameter "dhw_target", :default => 135.0['F']
+    parameter "dhw_water_heater_fuel", :default => "Electric"
+  end
+
+  import "zoneloads/zonetemplate.pxt", :group => "grocery", :prefix => "grocery_" do
+    parameter "light_area", :default => 1.05['W/ft2']
+    parameter "equip_area", :default => 1['W/ft2']
+    parameter "occ_area", :default => 0.0083341865['1/ft2']
+    parameter "occ_heat_gain", :default => 131.8819815775['W']
+    parameter "occ_sensible_frac", :default => 0.555555556
+    parameter "gas_area", :default => 0['W/ft2']
+    parameter "dhw_flow_area", :default => 0.00005['GPM/ft2']
+    parameter "dhw_water_heater_fuel", :default => "Gas"
+    parameter "equip_2_area", :default => 5['W/ft2']
+  end
+
+  import "zoneloads/zonetemplate.pxt", :group => "industrial_high", :prefix => "industrial_high_" do
+    parameter "light_area", :default => 0.65['W/ft2']
+    parameter "equip_area", :default => 1['W/ft2']
+    parameter "occ_area", :default => 0.005['1/ft2']
+    parameter "occ_heat_gain", :default => 219.803302629166['W']
+    parameter "occ_sensible_frac", :default => 0.36666667
+    parameter "gas_area", :default => 0['W/ft2']
+    parameter "dhw_flow_area", :default => 0.00003['GPM/ft2']
+    parameter "dhw_water_heater_fuel", :default => "Gas"
+    parameter "equip_2_area", :default => 0['W/ft2']
+  end
+
+  import "zoneloads/zonetemplate.pxt", :group => "office_large", :prefix => "office_large_" do
+    parameter "light_area", :default => 0.65['W/ft2']
+    parameter "equip_area", :default => 1.5['W/ft2']
+    parameter "occ_area", :default => 0.005['1/ft2']
+    parameter "occ_heat_gain", :default => 131.8819815775['W']
+    parameter "occ_sensible_frac", :default => 0.555555556
+    parameter "gas_area", :default => 0['W/ft2']
+    parameter "dhw_flow_area", :default => 0.00003['GPM/ft2']
+    parameter "dhw_water_heater_fuel", :default => "Electric"
+    parameter "equip_2_area", :default => 0['W/ft2']
+  end
+
+  import "zoneloads/zonetemplate.pxt", :group => "storage_refrig", :prefix => "storage_refrig_" do
+    parameter "light_area", :default => 0.45['W/ft2']
+    parameter "equip_area", :default => 0.2['W/ft2']
+    parameter "occ_area", :default => 0['1/ft2']
+    parameter "occ_heat_gain", :default => 0['W']
+    parameter "occ_sensible_frac", :default => 0
+    parameter "gas_area", :default => 0['W/ft2']
+    parameter "dhw_flow_area", :default => 0['GPM/ft2']
+    parameter "dhw_water_heater_fuel", :default => "Electric"
+    parameter "equip_2_area", :default => 10['W/ft2']
+  end
+
+  import "zoneloads/zonetemplate.pxt", :group => "retail_schs", :prefix => "retail_" do
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1,\nFor: Weekdays,\nUntil: 06:00,0,\nUntil: 21:00,1,\nUntil: 24:00,0,\nFor: Saturdays,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 08:00,0,\nUntil: 19:00,1,\nUntil: 24:00,0;"
+    parameter "light_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays,\nUntil: 07:00,0.05,\nUntil: 08:00,0.2,\nUntil: 09:00,0.5,\nUntil: 18:00,0.85,\nUntil: 20:00,0.55,\nUntil: 21:00,0.5,\nUntil: 22:00,0.2,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 07:00,0.05,\nUntil: 08:00,0.1,\nUntil: 09:00,0.3,\nUntil: 10:00,0.55,\nUntil: 18:00,0.85,\nUntil: 19:00,0.5,\nUntil: 21:00,0.3,\nUntil: 22:00,0.1,\nUntil: 24:00,0.05,\nFor: AllOtherdays,\nUntil: 08:00,0.05,\nUntil: 10:00,0.1,\nUntil: 12:00,0.4,\nUntil: 17:00,0.55,\nUntil: 18:00,0.4,\nUntil: 19:00,0.2,\nUntil: 24:00,0.05;"
+    parameter "equip_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays,\nUntil: 07:00,0.05,\nUntil: 08:00,0.2,\nUntil: 09:00,0.5,\nUntil: 18:00,0.9,\nUntil: 20:00,0.6,\nUntil: 21:00,0.5,\nUntil: 22:00,0.2,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 07:00,0.05,\nUntil: 08:00,0.1,\nUntil: 09:00,0.3,\nUntil: 10:00,0.6,\nUntil: 18:00,0.9,\nUntil: 19:00,0.5,\nUntil: 21:00,0.3,\nUntil: 22:00,0.1,\nUntil: 24:00,0.05,\nFor: AllOtherdays,\nUntil: 08:00,0.05,\nUntil: 10:00,0.1,\nUntil: 12:00,0.4,\nUntil: 17:00,0.6,\nUntil: 18:00,0.4,\nUntil: 19:00,0.2,\nUntil: 24:00,0.05;"
+    parameter "occ_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays,\nUntil: 07:00,0,\nUntil: 08:00,0.1,\nUntil: 09:00,0.2,\nUntil: 11:00,0.5,\nUntil: 15:00,0.7,\nUntil: 16:00,0.8,\nUntil: 17:00,0.7,\nUntil: 19:00,0.5,\nUntil: 21:00,0.3,\nUntil: 24:00,0,\nFor: Saturday,\nUntil: 07:00,0,\nUntil: 08:00,0.1,\nUntil: 09:00,0.2,\nUntil: 10:00,0.5,\nUntil: 11:00,0.6,\nUntil: 17:00,0.8,\nUntil: 18:00,0.6,\nUntil: 21:00,0.2,\nUntil: 22:00,0.1,\nUntil: 24:00,0,\nFor: AllOtherdays,\nUntil: 09:00,0,\nUntil: 10:00,0.1,\nUntil: 12:00,0.2,\nUntil: 17:00,0.4,\nUntil: 18:00,0.2,\nUntil: 19:00,0.1,\nUntil: 24:00,0;"
+    parameter "gas_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 07:00,0,\nUntil: 09:00,0.5,\nUntil: 10:00,0.75,\nUntil: 13:00,0.9,\nUntil: 15:00,0.75,\nUntil: 18:00,0.9,\nUntil: 19:00,0.75,\nUntil: 21:00,0.5,\nUntil: 24:00,0;"
+    parameter "dhw_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays,\nUntil: 01:00,0.04,\nUntil: 03:00,0.05,\nUntil: 07:00,0.04,\nUntil: 08:00,0.15,\nUntil: 09:00,0.23,\nUntil: 10:00,0.32,\nUntil: 11:00,0.41,\nUntil: 12:00,0.57,\nUntil: 13:00,0.62,\nUntil: 14:00,0.61,\nUntil: 15:00,0.5,\nUntil: 16:00,0.45,\nUntil: 17:00,0.46,\nUntil: 18:00,0.47,\nUntil: 19:00,0.42,\nUntil: 20:00,0.34,\nUntil: 21:00,0.33,\nUntil: 22:00,0.23,\nUntil: 23:00,0.13,\nUntil: 24:00,0.08,\nFor: Saturday,\nUntil: 01:00,0.11,\nUntil: 02:00,0.1,\nUntil: 03:00,0.08,\nUntil: 06:00,0.06,\nUntil: 07:00,0.07,\nUntil: 08:00,0.2,\nUntil: 09:00,0.24,\nUntil: 10:00,0.27,\nUntil: 11:00,0.42,\nUntil: 12:00,0.54,\nUntil: 13:00,0.59,\nUntil: 14:00,0.6,\nUntil: 15:00,0.49,\nUntil: 16:00,0.48,\nUntil: 17:00,0.47,\nUntil: 18:00,0.46,\nUntil: 19:00,0.44,\nUntil: 20:00,0.36,\nUntil: 21:00,0.29,\nUntil: 22:00,0.22,\nUntil: 23:00,0.16,\nUntil: 24:00,0.13,\nFor: AllOtherdays,\nUntil: 03:00,0.07,\nUntil: 06:00,0.06,\nUntil: 07:00,0.07,\nUntil: 08:00,0.1,\nUntil: 09:00,0.12,\nUntil: 10:00,0.14,\nUntil: 11:00,0.29,\nUntil: 12:00,0.31,\nUntil: 14:00,0.36,\nUntil: 15:00,0.34,\nUntil: 16:00,0.35,\nUntil: 17:00,0.37,\nUntil: 18:00,0.34,\nUntil: 19:00,0.25,\nUntil: 20:00,0.27,\nUntil: 21:00,0.21,\nUntil: 22:00,0.16,\nUntil: 23:00,0.1,\nUntil: 24:00,0.06;"
+  end
+
+end
+
+group "space_hvac" do
+  import "zonehvac/hvac-zone.pxt", :group => "building" do # hardcode building-level defaults
+    parameter "oa_person", :default => 0['CFM']
+    parameter "sat_min_dt", :default => 20.0['deltaF']
+  end
+
+  import "zonehvac/hvac-zone.pxt", :group => "grocery", :prefix => "grocery_" do
+    parameter "oa_area", :default => 0.25['CFM/ft2']
+    parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
+    parameter "exh_fan_coupling", :default => FALSE
+  end
+
+  import "zonehvac/hvac-zone.pxt", :group => "industrial_high", :prefix => "industrial_high_" do
+    parameter "oa_area", :default => 0.15['CFM/ft2']
+    parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
+    parameter "exh_fan_coupling", :default => FALSE
+  end
+
+  import "zonehvac/hvac-zone.pxt", :group => "office_large", :prefix => "office_large_" do
+    parameter "oa_area", :default => 0.15['CFM/ft2']
+    parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
+    parameter "exh_fan_coupling", :default => FALSE
+  end
+
+  import "zonehvac/hvac-zone.pxt", :group => "storage_refrig", :prefix => "storage_refrig_" do
+    parameter "oa_area", :default => 0['CFM/ft2']
+    parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
+    parameter "exh_fan_coupling", :default => FALSE
+  end
+
+  import "zonehvac/hvac-zone.pxt", :group => "retail_hvac_schs", :prefix => "retail_" do
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1,\nFor: Weekdays,\nUntil: 06:00,0,\nUntil: 21:00,1,\nUntil: 24:00,0,\nFor: Saturdays,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 08:00,0,\nUntil: 19:00,1,\nUntil: 24:00,0;"
+  end
+
+end
+
+
+
+import "system/dhw.pxt", :group => "dhw_elec", :prefix => "dhw_elec" do
+  include "*"
+  exclude "name|branch_names|op_sch|preheat_name|plantloop|peak_flow"
+  exclude "number_of_bedrooms|number_of_bathrooms"
+  exclude "water_heater_ambient_*|water_heater_volume|water_heater_capacity"
+
+  parameter "peak_draw_time", :default => 2.0
+  parameter "storage_recovery_time", :default => 1.0
+  parameter "water_heater_fuel", :default => "Electricity"
+  parameter "water_heater_eff", :default => 1.0
+  parameter "design_temp", :default => 135.0['F']
+  parameter "pump_head", :default => 0.0['ft H2O']
+  parameter "pump_eff", :default => 0.9
+  parameter "parasitic_off", :default => 0.0['W']
+  parameter "parasitic_on", :default => 0.0['W']
+  parameter "cycle_loss_coef", :default => 1.62817
+  parameter "wh_config", :default => "CENTRAL"
+end
+
+import "system/dhw.pxt", :group => "dhw_gas", :prefix => "dhw_gas_" do
+  include "*"
+  exclude "name|branch_names|op_sch|preheat_name|plantloop|peak_flow"
+  exclude "number_of_bedrooms|number_of_bathrooms"
+  exclude "water_heater_ambient_*|water_heater_volume|water_heater_capacity"
+  parameter "peak_draw_time", :default => 2.0
+  parameter "storage_recovery_time", :default => 1.0
+  parameter "water_heater_fuel", :default => "NaturalGas"
+  parameter "water_heater_eff", :default => 0.8
+  parameter "design_temp", :default => 135['F']
+  parameter "pump_head", :default => 0.0['ft H2O']
+  parameter "pump_eff", :default => 0.3
+  parameter "parasitic_off", :default => 0.0['W']
+  parameter "parasitic_on", :default => 0.0['W']
+  parameter "cycle_loss_coef", :default => 1.62817
+  parameter "wh_config", :default => "CENTRAL"
+end
+
+parameter "hvac_config", :default => "BUILDING"  # ["BUILDING", "FLOOR", "SECTION", "CLUSTER"]
+
+group "hvac_zone", :prefix => "main_" do
+  parameter "hvac_type", :default => "SZ-VAV"
+  parameter "oa_type", :default => "UNIT"
+  parameter "heat_flow_frac", :default => 0.5
+  parameter "atu_flow_min_frac", :default => Autosize
+  parameter "atu_reheat_coil_type", :default => "NONE"
+  parameter "atu_reheat_control", :default => nil
+end
+
+group "hvac_system", :prefix => "main_" do
+  parameter "fan_speed", :default => "VARIABLE"
+  parameter "fan_mode", :default => "CONTINUOUS"
+  parameter "fan_rise", :default => 3.877['in H2O']
+  parameter "fan_eff", :default => 0.55
+  parameter "fan_curve", :default => "T24"
+  parameter "fan_motor_eff", :default => 0.9
+  parameter "fan_flow_min_method", :default => "Fraction"
+  parameter "fan_return", :default => false
+  parameter "cool_coil_type", :default => "DX-AIR"
+  parameter "cool_coil_cop", :default => 3.85
+  parameter "heat_coil_cop", :default => nil
+  parameter "heat_coil_type", :default => "COMBUSTION"
+  parameter "dx_type", :default => "T24"
+  parameter "dx_comp_speed", :default => "DUAL-EQUAL"
+  parameter "aux_heat_coil_type", :default => "NONE"
+  parameter "sat_reset_type", :default => "FLOATING"
+  parameter "sat_temp_min", :default => 55.0['F']
+  parameter "sat_temp_max", :default => 95.0['F']
+  parameter "design_peak_load", :default => "NONCOINCIDENT"
+  parameter "heat_flow_frac", :default => 0.5
+  parameter "demand_controlled_vent", :default => "No"
+  parameter "oa_min_flow", :default => Autosize
+  parameter "oa_econ_type", :default => "DIFFERENTIAL-DRY-BULB"
+  parameter "oa_econ_max_temp", :default => ""
+  parameter "oa_energy_recovery", :default => false
+  parameter "oa_frac_sch", :default => "NONE"
+  parameter "oa_frac_max_sch", :default => "NONE"
+  parameter "hum_type", :default => "NONE"
+  parameter "hum_cap", :default => nil
+  parameter "return_plenum", :default => false
+end
+
+group "alt_hvac_zone", :prefix => "alt_" do
+  parameter "hvac_type", :default => "NONE"
+  parameter "oa_type", :default => "UNIT"
+  parameter "heat_flow_frac", :default => 1.0
+  parameter "atu_flow_min_frac", :default => Autosize
+  parameter "atu_reheat_coil_type", :default => "NONE"
+  parameter "atu_reheat_control", :default => nil
+end
+
+group "alt_hvac_system", :prefix => "alt_" do
+  parameter "fan_speed", :default => "CONSTANT"
+  parameter "fan_mode", :default => "SCHEDULE"
+  parameter "fan_rise", :default => nil
+  parameter "fan_eff", :default => nil
+  parameter "fan_curve", :default => "T24"
+  parameter "fan_motor_eff", :default => nil
+  parameter "fan_flow_min_method", :default => "Fraction"
+  parameter "fan_return", :default => false
+  parameter "cool_coil_type", :default => "DX-AIR"
+  parameter "cool_coil_cop", :default => nil
+  parameter "heat_coil_cop", :default => nil
+  parameter "heat_coil_type", :default => "COMBUSTION"
+  parameter "dx_type", :default => "PNNL"
+  parameter "dx_comp_speed", :default => "CONSTANT"
+  parameter "aux_heat_coil_type", :default => "NONE"
+  parameter "sat_reset_type", :default => "NONE"
+  parameter "sat_temp_min", :default => 55.0['F']
+  parameter "sat_temp_max", :default => 104.0['F']
+  parameter "design_peak_load", :default => "COINCIDENT"
+  parameter "heat_flow_frac", :default => 1.0
+  parameter "demand_controlled_vent", :default => "No"
+  parameter "oa_min_flow", :default => Autosize
+  parameter "oa_econ_type", :default => "NONE"
+  parameter "oa_econ_max_temp", :default => ""
+  parameter "oa_energy_recovery", :default => false
+  parameter "oa_frac_sch", :default => "NONE"
+  parameter "oa_frac_max_sch", :default => "NONE"
+  parameter "hum_type", :default => "NONE"
+  parameter "hum_cap", :default => nil
+  parameter "return_plenum", :default => false
+end
+
+import "system/ahu.pxt", :group => "doas", :prefix => "doas_" do
+  include "*"
+  exclude "ahu_name|branch_names|ahu_type|op_sch|oa_sch"
+  exclude "control_zone_name|fan_mode|return_plenum_zone_name"
+
+  parameter "fan_rise", :default => 1.5['in H2O']
+  parameter "fan_eff", :default => 0.65
+  parameter "fan_motor_eff", :default => 0.9
+  parameter "cool_coil_type", :default => "DX-AIR"
+  parameter "heat_coil_type", :default => "COMBUSTION"
+  parameter "oa_min_flow", :default => Autosize
+  parameter "oa_energy_recovery", :default => false
+  parameter "oa_energy_recovery_power", :default => 0.0['W']
+  parameter "sat_reset_type", :default => "NONE"
+  parameter "sat_temp_min", :default => 55.0['F']
+  parameter "sat_temp_max", :default => 60.0['F']
+end
+
+import "system/hw.pxt", :group => "hw", :prefix => "hw_" do
+  include "*"
+  exclude "name|branch_names"
+  parameter "boiler_eff", :default => 0.8
+  parameter "boiler_type", :default => "T24_NONCONDENSING"
+  parameter "boiler_duplicate", :default => true
+  parameter "boiler_parasitic", :default=> 100.0['W']
+  parameter "design_delta", :default => 40.0['deltaF']
+  parameter "pump_type", :default => "VARIABLE"
+  parameter "pump_head", :default => 60.0['ft H2O']
+  parameter "pump_eff", :default => 0.9
+  parameter "pump_control", :default => "INTERMITTENT"
+end
+
+import "system/chw.pxt", :group => "chw", :prefix => "chw_" do
+  include "*"
+  exclude "name|branch_names"
+  parameter "num_chillers", :default => 2
+  parameter "design_delta", :default => 20.0['deltaF']
+  parameter "setpoint_type", :default => "Reset"
+  parameter "pump_head", :default => 52.0['ft H2O']
+  parameter "pump_eff", :default => 0.9
+  parameter "pump_control", :default => "INTERMITTENT"
+  parameter "loop_config", :default => "PRIMARY-ONLY"
+  parameter "sec_pump_head", :default => 52.0['ft H2O']
+end
+
+import "system/cw.pxt", :group => "cw", :prefix => "cw_" do
+  include "*"
+  exclude "name|branch_names|clear_water_supply_tank"
+  parameter "num_towers", :default => 2
+  parameter "design_temp", :default => 81.8['F']
+  parameter "model_type", :default => "CoolToolsCrossFlow"
+  parameter "pump_head", :default => 45.0['ft H2O']
+end
+
+import "system/vrfc.pxt", :group => "vrf", :prefix => "vrf_" do
+  include "*"
+  exclude "name|branches|control_zone_name|op_sch|cool_coil_cop|heat_coil_cop"
+end
+
+parameter "solar_hot_water", :name => "Solar Hot Water Collector", :description => "Creates solar how water collectors for DHW or space heating loop",
+  :default => false, :domain => Boolean
+
+import "system/solarhotwater.pxt", :prefix => "solar_" do
+  include "collector_type|collector_performance"
+end
+
+parameter "solar_collector_fraction_usable_roof_area", :name => "Solar Hot Water Collector Area as a Fraction of Usable Roof Area", :description => "Solar Hot Water Collector Area as a Fraction of Usable Roof Area",
+  :default => 0.75, :domain => Numeric
+
+
+parameter "rainwater_harvest", :default => false, :fullname => "Rainwater Harvesting", :description => "Creates tank to harvest rainwater to be used elsewhere in the building", :type => "Enumeration", :valuelist => "true,false"
+parameter "graywater_recycling", :default => false, :fullname => "Graywater Recycling", :description => "Creates tank to capture graywater to be recycled elsewhere in the building", :type => "Enumeration", :valuelist => "true,false"
+parameter "cooling_coil_condensate", :default => false, :fullname => "Cooling Coil Condensate Collection", :description => "Creates tank to capture cooling coil condensate to be recycled elsewhere in the building", :type => "Enumeration", :valuelist => "true,false"
+
+parameter "landscaping_control", :name => "Landscaping Irrigation", :description => "Creates water use object for irrigation of landscaping on building site",
+  :default => false, :domain => Boolean
+
+import "irrigation.pxt", :group => "irrigation" do
+  include "*"
+  exclude "landscaping_water_temperature|graywater_supply_tank"
+  parameter "landscaping_area", :default => 1000.0['ft2']
+end
+
+%>
+<%
+total_roof_area = 49996.5['ft2']
+
+if (graywater_recycling)
+  graywater_storage_tank = "Graywater Tank"
+  graywater_supply_tank = "Graywater Tank"
+else
+  graywater_storage_tank = ""
+  graywater_supply_tank = ""
+end
+
+if (rainwater_harvest || cooling_coil_condensate)
+  clear_water_storage_tank = "Clear Water Tank"
+  clear_water_supply_tank = "Clear Water Tank"
+else
+  clear_water_storage_tank = ""
+  clear_water_supply_tank = ""
+end
+
+if (cooling_coil_condensate)
+  condensate_collection = clear_water_storage_tank
+else
+  condensate_collection = ""
+end
+
+if (solar_hot_water)
+  usable_roof_area = 0.5 * total_roof_area
+  collector_total_area = solar_collector_fraction_usable_roof_area * usable_roof_area
+  dhw_preheat_name = "SHW"
+else
+  dhw_preheat_name = nil
+end
+
+insert "general.pxt", **general
+
+insert "holidays.pxt"
+
+insert "site.pxt"
+
+insert "ext-light.pxt", **ext_light, :name => "Exterior Lighting" if (ext_light_power > 0)
+
+insert "ext-equip.pxt", **ext_equip, :ext_equip_name => "Exterior Equipment" if (ext_equip_power > 0)
+
+insert "foundation.pxt", **foundation
+
+insert "constructions.pxt", **constructions,
+  :foundation_type => foundation_type,
+  :parapet_length => 0.0['ft'],  # Flat roof only
+  :floor_length => 0.0['ft'],  # Second floor and above only; ground floor is handled by Kiva
+  :wall_area => 22362.18['ft2']  # External above-grade wall area
+
+insert "geometry.pxt"
+
+if (daylighting_controls)
+  insert "daylight.pxt"
+end
+
+ahu_branches = {}
+vrfc_branches = {}
+
+doas_branches = []
+hw_branches = []
+chw_branches = []
+cw_branches = []
+dhw_branches_gas = []
+dhw_branches_elec = []
+wshp_branches = []
+all_zones = [
+  ["Grocery Sales EL1 SSE Perim Spc (G.SSE1)", "grocery", 40011.19['ft2'], "Grocery", "F1", nil, nil, "Retail"],
+  ["IndLoadDock EL1 North Perim Spc (G.N3)", "industrial_high", 2851.18['ft2'], "Industrial", "F1", nil, nil, "Retail"],
+  ["Office EL1 SW Perim Spc (G.SW2)", "office_large", 3500.23['ft2'], "Office", "F1", nil, nil, "Retail"],
+  ["RefFoodPrep EL1 Core Spc (G.C4)", "storage_refrig", 1267.14['ft2'], "RefFoodPrep", "F1", nil, nil, "Retail"],
+  ["RefWalkInCool EL1 Core Spc (G.C6)", "storage_refrig", 1559.8['ft2'], "WalkInCool", "F1", nil, nil, "Retail"],
+  ["RefWalkInFreeze EL1 Core Spc (G.C5)", "storage_refrig", 812.31['ft2'], "WalkInFreeze", "F1", nil, nil, "Retail"],
+]
+
+
+for zone in all_zones
+  zone_name = zone[0]
+  zone_type = zone[1].downcase
+  zone_area = zone[2]
+  zone_sch_group = zone[7].downcase + "_schs"
+
+  if (hvac_config == "BUILDING")
+    sys_name = zone[3]
+  elsif (hvac_config == "FLOOR")
+    sys_name = zone[4]
+  elsif (hvac_config == "SECTION")
+    sys_name = zone[5]
+  elsif (hvac_config == "CLUSTER")
+    sys_name = zone[6]
+  else
+    raise("error: unknown option '#{hvac_config}' for hvac_config")
+  end
+
+  insert "zoneloads/zonetemplate.pxt",
+    :zone_name => zone_name,
+    :zone_area => zone_area,
+    :graywater_storage_tank => graywater_storage_tank,
+    :graywater_supply_tank => graywater_supply_tank,
+    **(space_loads.building | space_loads[zone_type] | space_loads[zone_sch_group])
+
+  if ( (space_loads[zone_type][:dhw_flow].to_f > 0) || (space_loads[zone_type][:dhw_flow_area].to_f > 0) )
+    (space_loads[zone_type][:dhw_water_heater_fuel].to_s == "Electric") ? (dhw_branches_elec << zone_name) : (dhw_branches_gas << zone_name)
+  end
+end
+
+if (not dhw_branches_gas.empty?)
+  insert "system/dhw.pxt", **dhw_gas,
+    :name => "DHW",
+    :branch_names => dhw_branches_gas,
+    :preheat_name => dhw_preheat_name
+end
+
+if (not dhw_branches_elec.empty?)
+  insert "system/dhw.pxt", **dhw_elec,
+    :name => "DHW",
+    :branch_names => dhw_branches_elec,
+    :preheat_name => dhw_preheat_name
+end
+
+if (solar_hot_water)
+  insert "system/solarhotwater.pxt",
+    :system_name => "SHW",
+    :design_temp => supply_dhw_temp,
+    :collector_performance => solar_collector_performance,
+    :collector_type => solar_collector_type,
+    :collector_sizing => "AREA",
+    :collector_total_area => collector_total_area,
+    :inclination_angle => latitude
+end
+
+systems_table = Hash.new { |hash, key| hash[key] = [] }
+
+for zone in all_zones
+  zone_name = zone[0]
+  zone_type = zone[1].downcase
+  zone_area = zone[2]
+  zone_sch_group = zone[7].downcase + "_hvac_schs"
+
+  if (hvac_config == "BUILDING")
+    sys_name = zone[3]
+  elsif (hvac_config == "FLOOR")
+    sys_name = zone[4]
+  elsif (hvac_config == "SECTION")
+    sys_name = zone[5]
+  elsif (hvac_config == "CLUSTER")
+    sys_name = zone[6]
+  else
+    raise("error: unknown option '#{hvac_config}' for hvac_config")
+  end
+
+  next if (sys_name.nil?)
+
+  if sys_name.include?("ALT")
+    this_hvac = alt_hvac_system
+    this_hvac_type = alt_hvac_zone[:hvac_type]
+    this_hvac_zone = alt_hvac_zone
+  else
+    this_hvac = hvac_system
+    this_hvac_type = hvac_zone[:hvac_type]
+    this_hvac_zone = hvac_zone
+  end
+
+  # Create hash table with system types as keys, system names as values
+
+  this_sys_name = "this_sys_name = #{this_hvac_type}-#{sys_name}"
+  systems_table[sys_name] |= [this_hvac_type, space_hvac[zone_sch_group][:oa_sch]]
+
+  insert "zonehvac/hvac-zone.pxt",
+    :zone_name => zone_name,
+    :zone_area => zone_area,
+    :sys_name => "#{this_hvac_type}-#{sys_name}",
+    :clear_water_storage_tank => condensate_collection,
+    :clear_water_supply_tank => clear_water_supply_tank,
+    **( this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
+
+  branch_name = "#{zone_name} #{this_hvac_type}"
+
+  if (this_hvac_type == "MZ-VRF")
+    vrfc_branches[sys_name] ||= []
+    vrfc_branches[sys_name] << branch_name
+
+  elsif (this_hvac_type =~ /^MZ/)
+    ahu_branches[sys_name] ||= []
+    ahu_branches[sys_name] << branch_name
+    hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "WATER")
+
+    if (this_hvac[:atu_type] == "CAV-CHB")
+      chw_branches << branch_name
+    elsif (this_hvac[:atu_type] == "CAV-IND")
+      hw_branches << branch_name
+      chw_branches << branch_name
+    end
+
+    if (this_hvac[:heat_coil_type] == "WATER")
+      hw_branches |= ["#{this_hvac_type}-#{sys_name}"]
+    elsif (this_hvac[:heat_coil_type] == "DX-WATER")
+      wshp_branches  |= ["#{this_hvac_type}-#{sys_name} HR Branch"]
+    end
+    if (this_hvac[:cool_coil_type] == "WATER")
+      chw_branches |= ["#{this_hvac_type}-#{sys_name}"]
+    elsif (this_hvac[:cool_coil_type] == "DX-WATER")
+      wshp_branches  |= ["#{this_hvac_type}-#{sys_name} HR Branch"]
+    end
+
+  else  # SZ or ZN
+    if (this_hvac[:heat_coil_type] == "WATER")
+      hw_branches << branch_name
+      hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "WATER")
+    elsif (this_hvac[:heat_coil_type] == "DX-WATER")
+      wshp_branches  |= ["#{branch_name} HR Branch"]
+    end
+
+    if (this_hvac[:cool_coil_type] == "WATER")
+      chw_branches << branch_name
+    elsif (this_hvac[:cool_coil_type] == "DX-WATER")
+      wshp_branches  |= ["#{branch_name} HR Branch"]
+    end
+  end
+
+  if (this_hvac[:sub_heat_type] == "BASEBOARD-WATER")
+    hw_branches << "#{zone_name} Baseboard"
+  end
+
+  if (this_hvac[:oa_type] == "DOAS")
+    doas_branches << "#{zone_name} MZ-DOAS"
+    doas_oa_sch = this_hvac[:oa_sch]
+  end
+end
+
+vrfc_branches.each_key do |sys_name|
+  insert "system/vrfc.pxt", **vrf,
+    :name => "#{hvac_type}-#{sys_name}",
+    :branches => vrfc_branches[sys_name],
+    :op_sch => hvac_sch,
+    **local(:cool_coil_cop, :heat_coil_cop)
+end
+
+systems_table.each_key do |system_name|
+  system_type = systems_table[system_name][0]
+  system_schedule = systems_table[system_name][1]
+  if ( (system_type =~ /^MZ/) && (system_type != "MZ-VRF") )
+    (system_name.include?("ALT")) ? (this_hvac_system = alt_hvac_system) : (this_hvac_system = hvac_system)
+    insert "system/ahu.pxt",
+      :ahu_name => "#{system_type}-#{system_name}",
+      :branch_names => ahu_branches[system_name],
+      :oa_sch =>system_schedule,
+      :op_sch => system_schedule,
+      :fan_subcat => "#{hvac_zone[:hvac_type]} Fans",
+      :return_plenum_zone_name => "#{system_name} Plenum",
+      **this_hvac_system
+  end
+end
+
+
+if (not doas_branches.empty?)
+  doas_name = "MZ-DOAS"
+  insert "system/ahu.pxt", **doas,
+    :ahu_name => doas_name,
+    :branch_names => doas_branches,
+    :ahu_type => "DOAS",
+    :oa_sch => doas_oa_sch,
+    :op_sch => doas_oa_sch,
+    :fan_mode => "CONTINUOUS"
+
+  if (doas_heat_coil_type == "WATER")
+    hw_branches << doas_name
+  end
+
+  if (doas_cool_coil_type == "WATER")
+    chw_branches << doas_name
+  end
+end
+
+if (not hw_branches.empty?)
+  insert "system/hw.pxt", **hw,
+    :name => "HW",
+    :branch_names => hw_branches
+end
+
+if (not chw_branches.empty?)
+  insert "system/chw.pxt", **chw,
+    :name => "CHW",
+    :branch_names => chw_branches,
+    :chiller_sizing => (1.0/2)
+
+  if (chw_chiller_condenser == "WATERCOOLED")
+    cw_branches << "CHW 1"
+    cw_branches << "CHW 2" if (chw_num_chillers > 1)
+    cw_branches << "CHW FREE COOLING" if (chw[:chiller_economizer])
+  end
+end
+
+if (not cw_branches.empty?)
+  insert "system/cw.pxt", **cw,
+    :name => "CW",
+    :branch_names => cw_branches,
+    :ct_sizing => (1.0/2)
+end
+
+if (not wshp_branches.empty?)
+  insert "system/sourcewater.pxt",
+    :name => "Source Water Plant",
+    :branch_names => wshp_branches
+end
+
+if (rainwater_harvest || cooling_coil_condensate)
+  insert "system/clearwaterharvest.imf",
+    **local(:total_roof_area, :rainwater_harvest, :clear_water_storage_tank, :clear_water_supply_tank)
+end
+
+if (graywater_recycling)
+  insert "system/graywaterrecycle.imf",
+    **local(:clear_water_supply_tank, :graywater_storage_tank, :graywater_supply_tank)
+end
+
+if (landscaping_control)
+  insert "irrigation.pxt", **irrigation, **local(:graywater_supply_tank)
+end
+
+insert "output.pxt"
+insert "custom.pxt"
+%>
