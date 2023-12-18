@@ -1,10 +1,10 @@
 
 # Paths are expanded relative to this modelkit-config file.
 
-prototypes-dir = '../prototypes'
-templates-dir = '../templates/energyplus/templates'
-weather-dir = '../weather'
-codes-dir = '../codes'
+prototypes-dir = '../../prototypes/residential'
+templates-dir = '../../templates/energyplus/templates'
+weather-dir = '../../weather'
+codes-dir = '../../codes'
 
 max-workers = 12  # Maximum number of simulations to run in parallel
 
@@ -16,7 +16,7 @@ esc-line = "! "
 dirs = '~\Documents\Modelkit Caboodle\templates\energyplus\templates'  # Must be an absolute path
 
 [energyplus-run]
-engine = 'C:\EnergyPlusV22-2-0'  # Must be an absolute path
+engine = 'C:\EnergyPlusV9-5-0'  # Must be an absolute path
 #engine = '/Applications/EnergyPlus-22-2-0'  # Must be an absolute path
 #engine = '/Applications/EnergyPlus-9-2-0'  # Must be an absolute path
 readvars = true
