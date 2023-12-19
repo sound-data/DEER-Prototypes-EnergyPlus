@@ -9,9 +9,9 @@ This repository includes Modelkit files for generating EnergyPlus input files an
 To install and use the prototype energy models on Windows (instructions for Mac will be provided in the future), follow these steps:
 
 1. Install EnergyPlus [version 9.5](https://github.com/NREL/EnergyPlus/releases/tag/v9.5.0) (for residential prototypes) and [version 22.2](https://github.com/NREL/EnergyPlus/releases/tag/v22.2.0) (for commercial prototypes).
-2. Install [Modelkit](https://share.bigladdersoftware.com/files/modelkit-caboodle-0.9.3+59d2aa1.exe).
+2. Install [Modelkit Caboodle](https://share.bigladdersoftware.com/files/modelkit-caboodle-0.9.3+59d2aa1.exe). If Modelkit Catalyst is already installed, you may need to uninstall it before installing Modelkit Caboodle.
 3. Install Python.
-4. Install database management software that supports PostgreSQL, such as pgAdmin4.
+4. Install a database management software that supports PostgreSQL, such as pgAdmin4.
 5. Install Git.
 6. (Optional) Install a GUI for Git if preferred over the command line.
 7. Clone the repository to your machine using Git or your preferred tool. It's recommended to clone it as close to the (C:) drive as possible to avoid path length limit-related issues.
