@@ -20,4 +20,4 @@ sim_hourly_wb.csv
 stderr
 scripts/data transformation/sfm_annual.csv
 scripts/data transformation/sfm_hourly_wb.csv
-global.pxv
+**/global.pxv
