@@ -19,7 +19,7 @@ df_com = df_master[df_master['Sector']=='Com']
 
 measures = list(df_com['Modelkit Folder Primary Name'].unique())
 # %%
-#Shows list of measure names (with workpaper ID) 
+#Shows list of commercial measure names (with workpaper ID) 
 print(measures)
 #%%
 #Define measure name here (name of the measure folder itself)
@@ -144,6 +144,43 @@ def parse_measure_name(measure_name):
             
 
     return measure_name_dict # returns a dictionary
+
+def parse_measure_name2(cohort_names: pd.Series, verify: bool = False) -> pd.DataFrame:
+    '''Returns a DataFrame with five columns (all type string):
+        ["BldgType","Story","BldgHVAC","BldgVint","TechGroup__TechType"]
+    Each cohort name must match the pattern:
+        "BldgType&Story&BldgHVAC&BldgVint&TechGroup__TechType"
+    Only alphanumeric characters are allowed  [a-zA-Z0-9_], except TechGroup__TechType may contain ampersand (&).
+
+    Parameters
+    ----------
+    cohort_names : pandas.Series
+        The cohort names as from cohorts.csv.
+    verify : bool, default=False
+        If true and name parts do not match `expected_att`, raise an exception.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Structure containing the parts of cohort name.
+    '''
+    result = cohort_names.str.extract(
+        r'(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<Measure>[^/]+)'
+    )
+    if verify:
+        # Check for missing descriptor fields
+        missing = result.isna()
+        if missing.any().any():
+            example = cohort_names[missing.any(axis=1)].iloc[0]
+            raise ValueError(f'Missing descriptor field, e.g. cohort = "{example}"')
+        # Check for unrecognized fields
+        for attr_name,attr_val in expected_att.items():
+            unrecognized = ~result[attr_name].isin(attr_val)
+            if unrecognized.any():
+                example = result[attr_name][unrecognized].iloc[0]
+                raise ValueError(f'Unrecognized descriptor field, e.g. {attr_name} = "{example}"')
+    result.rename({'Measure':'TechGroup__TechType'},axis=1,inplace=True)
+    return result
 
 #function to melt long 8760 col into 24col x365row format
 def long2wide_pivot(df, name):
@@ -277,15 +314,14 @@ for folder in folder_list:
 #(supposed to be the actual cohort with &s for Res case)
 #Com version
 
-#%%
 cohort_cases = list(split_meta_cols_all[1].unique())
 #%%
 #test 2
 #12/21/23, test case for 1 record. ok
 #note the update for annual_raw_parsing_com function
-cohort_dict = parse_measure_name(cohort_cases[0])
-sim_annual_filtered = df_annual_raw[df_annual_raw['File Name'].str.contains(cohort_cases[0])].copy()
-sim_annual_i = annual_raw_parsing_com(sim_annual_filtered, cohort_dict, cohort_cases[0])
+# cohort_dict = parse_measure_name(cohort_cases[0])
+# sim_annual_filtered = df_annual_raw[df_annual_raw['File Name'].str.contains(cohort_cases[0])].copy()
+# sim_annual_i = annual_raw_parsing_com(sim_annual_filtered, cohort_dict, cohort_cases[0])
 
 #%%
 #test for-loop style. OK for annual. keep this for actual code
@@ -317,7 +353,6 @@ os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 annual_map = pd.read_excel('annual8760map.xlsx')
 
-#%%
 
 
 # %%
@@ -409,7 +444,7 @@ for i in range(0,len(fyr_hrly.columns)):
     #converted_df = converted_df.append(hrly_wide) #deprecated method
     converted_df = pd.concat([converted_df, hrly_wide])
     print(f"col {i} transformed.")
-# %%
+
 #%%
 #rearrange columns
 sim_hourly_wb_proto = converted_df[['TechID','file','BldgLoc','BldgType','ID','daynum',1,          2,          3,          4,          5,
@@ -458,3 +493,298 @@ os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 # %%
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+# %%
+##Annual Data final field fixes
+
+#normunit = buildng area(conditioned) for default / example measure
+
+sim_annual_v1['SizingID'] = 'None'
+sim_annual_v1['tstat'] = 0
+#now Norm unit is read from measure master table
+#this may need to be modified based on the measure
+sim_annual_v1['normunit'] = df_normunits['Normunit'].unique()[0]
+
+#%%
+#add area based on building type
+#also add normunit (also the area) for the example measure
+#code may need to be tweaked if normalizing unit is different for a specific measure
+
+area_lookup = df_normunits[['BldgType', 'Value']]
+sim_annual_v2 = pd.merge(sim_annual_v1, area_lookup, on='BldgType')
+sim_annual_v2['numunits'] = sim_annual_v2['Value']
+sim_annual_v2['measarea'] = sim_annual_v2['Value']
+
+# %%
+sim_annual_v2['lastmod']=dt.datetime.now()
+#rearrange columns
+sim_annual_f = sim_annual_v2[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
+       'normunit', 'numunits', 'measarea', 'kwh_tot', 'kwh_ltg', 'kwh_task',
+       'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
+       'kwh_venthtg', 'kwh_ventclg', 'kwh_refg', 'kwh_hpsup', 'kwh_shw',
+       'kwh_ext', 'thm_tot', 'thm_equip', 'thm_htg', 'thm_shw', 'deskw_ltg',
+       'deskw_equ', 'lastmod']]
+# %%
+##Hourly Data final field fixes
+
+#update field names based on what it contains
+df_tmp = parse_measure_name2(sim_hourly_wb_v1['ID'],verify=True)
+sim_hourly_wb_v1['BldgVint'] = df_tmp['BldgVint']
+sim_hourly_wb_v1['BldgHVAC'] = df_tmp['BldgHVAC']
+sim_hourly_wb_v1['BldgType'] = df_tmp['BldgType']
+del df_tmp
+sim_hourly_wb_v1['SizingID'] = 'None'
+sim_hourly_wb_v1['tstat'] = 0
+sim_hourly_wb_v1['enduse'] = 0
+sim_hourly_wb_v1['lastmod']=dt.datetime.now()
+
+#rearrange columns
+sim_hourly_f = sim_hourly_wb_v1[['TechID', 'SizingID', 'BldgType', 'BldgVint', 'BldgLoc','BldgHVAC','tstat', 'enduse', 'daynum', 
+                                 'hr01', 'hr02', 'hr03', 'hr04', 'hr05', 'hr06', 'hr07', 'hr08', 'hr09', 'hr10', 'hr11',
+                                'hr12', 'hr13', 'hr14', 'hr15', 'hr16', 'hr17', 'hr18', 'hr19', 'hr20',
+                                'hr21', 'hr22', 'hr23', 'hr24', 'lastmod']]
+# %%
+##STEP 4: Measure setup file (current_msr_mat.csv)
+
+# Creating current_msr_mat and finalzing TechID's
+
+metadata_cols = sim_annual_f[['TechID', 'BldgLoc', 'BldgType', 'BldgVint', 'BldgHVAC', 'SizingID',
+       'tstat', 'normunit']]
+
+#check unique TechID cases
+metadata_cols['TechID'].unique()
+# %%
+#TechID identification from Master table
+#if looping over all HVAC types, ignore BldgHVAC filter
+PreTechIDs = df_measure[['PreTechID','Common_PreTechID']].drop_duplicates()
+StdTechIDs = df_measure[['StdTechID','Common_StdTechID']].drop_duplicates()
+MeasTechIDs = df_measure[['MeasTechID','Common_MeasTechID']].drop_duplicates()
+# %%
+#filter out each pre, std, msr using the Common TechIDs from master table
+metadata_pre = metadata_cols[metadata_cols['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
+metadata_std = metadata_cols[metadata_cols['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]
+metadata_msr = metadata_cols[metadata_cols['TechID'].isin(MeasTechIDs['Common_MeasTechID'].unique())]
+
+# %%
+#rename to Pre, Std or Msr 
+#both Std and Pre are baseline for SEER rated AC measures
+metadata_pre = metadata_pre.rename(columns={'TechID':'PreTechID'})
+metadata_std = metadata_std.rename(columns={'TechID':'StdTechID'})
+metadata_msr = metadata_msr.rename(columns={'TechID':'MeasTechID'})
+# %%
+#Changing common TechID to actual TechIDs if needed.
+#In most cases this is not needed
+#only needed when TechID and CommonTechID field on measure mapping workbook is not the same
+#might only apply to Res SEER AC/HP and some selected measures
+
+#create full pre_metadata sets for different names but the same TechID
+# commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
+if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
+    metadata_pre_full = pd.DataFrame()
+    for new_id in PreTechIDs['PreTechID']:
+        print(f'changing to specific PreTechID {new_id}')
+        metadata_pre_mod = metadata_pre.copy()
+        metadata_pre_mod['PreTechID'] = new_id
+        #merge to final df
+        metadata_pre_full = pd.concat([metadata_pre_full, metadata_pre_mod])
+else:
+    print('same TechID, proceeding without changing names')
+    metadata_pre_full = metadata_pre.copy()
+
+
+# %%
+#create std_metadata sets, assigning appropriate final TechIDs
+if (False in list(StdTechIDs['StdTechID']==StdTechIDs['Common_StdTechID'])):
+    metadata_std_full = pd.DataFrame()
+    for common_id, new_id in zip(StdTechIDs['Common_StdTechID'], StdTechIDs['StdTechID']):
+        print(f'common is {common_id}, changing into new id is {new_id}')
+        #Isolate specific common id (old)
+        metadata_std_mod = metadata_std[metadata_std['StdTechID']==common_id].copy()
+        #Change into final techID name (new)
+        metadata_std_mod['StdTechID'] = new_id
+        #merge to final df
+        metadata_std_full = pd.concat([metadata_std_full, metadata_std_mod])
+else:
+    print('same TechID, proceeding without changing names')
+    metadata_std_full = metadata_std.copy()
+# %%
+#create msr_metadata sets, assigning appropriate final TechIDs
+if False in list(MeasTechIDs['MeasTechID']==MeasTechIDs['Common_MeasTechID']):
+    metadata_msr_full = pd.DataFrame()
+    for common_id, new_id in zip(MeasTechIDs['Common_MeasTechID'], MeasTechIDs['MeasTechID']):
+        print(f'common is {common_id}, changing into new id is {new_id}')
+        #Identify corresponding common TechID (the last 9 characters indicating SEER levels)
+        metadata_msr_mod = metadata_msr[metadata_msr['MeasTechID']==common_id].copy()
+        #Change into final TechID name
+        metadata_msr_mod['MeasTechID'] = new_id
+        #merge to final df
+        metadata_msr_full = pd.concat([metadata_msr_full, metadata_msr_mod])
+else:
+    print('same TechID, proceeding without changing names')
+    metadata_msr_full = metadata_msr.copy()
+# %%
+#create raw merged current_msr_mat
+#need to delete/drop incorrect sets
+if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+    df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
+elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+    df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
+else:
+    df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
+    df_measure_set_full = pd.merge(df_measure_baseline_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
+
+# %%
+#Unique sets of each MeasureID with their TechID triplets
+TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
+# %%
+#to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
+if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+    current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
+elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+    current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
+else:
+    current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
+
+# %%
+#add placeholders, rearrange fields
+current_msr_mat_proto['PreSizingID']='None'
+current_msr_mat_proto['StdSizingID']='None'
+current_msr_mat_proto['MsrSizingID']='None'
+current_msr_mat_proto['SizingSrc']=np.nan
+
+#to be worked on: need to add corresponding indicator for what enduse it is for end use loadshape connections
+current_msr_mat_proto['EU_HrRepVar']=np.nan
+
+current_msr_mat = current_msr_mat_proto[['MeasureID', 'BldgType', 'BldgVint','BldgLoc','BldgHVAC','tstat','PreTechID','PreSizingID',
+                             'StdTechID', 'StdSizingID','MeasTechID','MsrSizingID','SizingSrc','EU_HrRepVar','normunit']]
+current_msr_mat = current_msr_mat.rename(columns={'normunit':'NormUnit'})
+
+# %%
+#check length of current_msr_mat
+len(current_msr_mat)
+
+# %%
+##STEP 5: Clean Up Sequence
+#Again, in most cases this is not needed
+#only needed when TechID and CommonTechID field on measure mapping workbook is not the same
+#might only apply to Res SEER AC/HP and some selected measures
+#Creating updated Sim_annual and Sim_hourly data with distinguished TechID names if needed. 
+sim_annual_pre_common = sim_annual_f[sim_annual_f['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
+sim_annual_std_common = sim_annual_f[sim_annual_f['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]
+sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MeasTechIDs['Common_MeasTechID'].unique())]
+# %%
+#Add a TechID col renaming the common TechID to the specific TechID using PreTechIDs, StdTechIDs, MeasTechIDs
+
+#create full pre sim_annual sets for different names but the same TechID
+# commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
+if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
+    sim_annual_pre = pd.DataFrame()
+    for new_id in PreTechIDs['PreTechID']:
+        print(f'changing to specific PreTechID {new_id}')
+        sim_annual_pre_mod = sim_annual_pre_common.copy()
+        sim_annual_pre_mod['TechID'] = new_id
+        #merge to final df
+        sim_annual_pre = pd.concat([sim_annual_pre, sim_annual_pre_mod])
+else:
+    print('same TechID, proceeding without changing names')
+    sim_annual_pre = sim_annual_pre_common.copy()
+
+# %%
+# create full std sim_annual sets for different names but the same TechID
+if False in list(StdTechIDs['StdTechID']==StdTechIDs['Common_StdTechID']):
+    sim_annual_std = pd.DataFrame()
+    for common_id, new_id in zip(StdTechIDs['Common_StdTechID'], StdTechIDs['StdTechID']):
+        print(f'common is {common_id}, changing into new id is {new_id}')
+        #Isolate specific common id (old)
+        sim_annual_std_mod = sim_annual_std_common[sim_annual_std_common['TechID']==common_id].copy()
+        #Change into final techID name (new)
+        sim_annual_std_mod['TechID'] = new_id
+        #merge to final df
+        sim_annual_std = pd.concat([sim_annual_std, sim_annual_std_mod])
+else:
+    print('same TechID, proceeding without changing names')
+    sim_annual_std = sim_annual_std_common.copy()
+# %%
+# create full msr sim_annual sets for different names but the same TechID
+if False in list(MeasTechIDs['MeasTechID']==MeasTechIDs['Common_MeasTechID']):
+    sim_annual_msr = pd.DataFrame()
+    for common_id, new_id in zip(MeasTechIDs['Common_MeasTechID'], MeasTechIDs['MeasTechID']):
+        print(f'common is {common_id}, changing into new id is {new_id}')
+        #Isolate specific common id (old)
+        sim_annual_msr_mod = sim_annual_msr_common[sim_annual_msr_common['TechID']==common_id].copy()
+        #Change into final techID name (new)
+        sim_annual_msr_mod['TechID'] = new_id
+        #merge to final df
+        sim_annual_msr = pd.concat([sim_annual_msr, sim_annual_msr_mod])
+else:
+    print('same TechID, proceeding without changing names')
+    sim_annual_msr = sim_annual_msr_common.copy()
+
+# %%
+#final merge sim_annual
+sim_annual_final = pd.concat([sim_annual_pre, sim_annual_std, sim_annual_msr])
+# %%
+
+###same deal with with hourly data, separate into pre std msr, change into specific TechID
+sim_hourly_pre_common = sim_hourly_f[sim_hourly_f['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
+sim_hourly_std_common = sim_hourly_f[sim_hourly_f['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]
+sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MeasTechIDs['Common_MeasTechID'].unique())]
+
+# %%
+#Pre hourly
+if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
+    sim_hourly_pre = pd.DataFrame()
+    for new_id in PreTechIDs['PreTechID']:
+        print(f'changing to specific PreTechID {new_id}')
+        sim_hourly_pre_mod = sim_hourly_pre_common.copy()
+        sim_hourly_pre_mod['TechID'] = new_id
+        #merge to final df
+        sim_hourly_pre = pd.concat([sim_hourly_pre, sim_hourly_pre_mod])
+else:
+    print('same TechID, proceeding without changing names')
+    sim_hourly_pre = sim_hourly_pre_common.copy()
+# %%
+#Std hourly
+if False in list(StdTechIDs['StdTechID']==StdTechIDs['Common_StdTechID']):
+    sim_hourly_std = pd.DataFrame()
+    for common_id, new_id in zip(StdTechIDs['Common_StdTechID'], StdTechIDs['StdTechID']):
+        print(f'common is {common_id}, changing into new id is {new_id}')
+        #Isolate specific common id (old)
+        sim_hourly_std_mod = sim_hourly_std_common[sim_hourly_std_common['TechID']==common_id].copy()
+        #Change into final techID name (new)
+        sim_hourly_std_mod['TechID'] = new_id
+        #merge to final df
+        sim_hourly_std = pd.concat([sim_hourly_std, sim_hourly_std_mod])
+else:
+    print('same TechID, proceeding without changing names')
+    sim_hourly_std = sim_hourly_std_common.copy()
+# %%
+#Msr hourly
+if False in list(MeasTechIDs['MeasTechID']==MeasTechIDs['Common_MeasTechID']):
+    sim_hourly_msr = pd.DataFrame()
+    for common_id, new_id in zip(MeasTechIDs['Common_MeasTechID'], MeasTechIDs['MeasTechID']):
+        print(f'common is {common_id}, changing into new id is {new_id}')
+        #Isolate specific common id (old)
+        sim_hourly_msr_mod = sim_hourly_msr_common[sim_hourly_msr_common['TechID']==common_id].copy()
+        #Change into final techID name (new)
+        sim_hourly_msr_mod['TechID'] = new_id
+        #merge to final df
+        sim_hourly_msr = pd.concat([sim_hourly_msr, sim_hourly_msr_mod])
+else:
+    print('same TechID, proceeding without changing names')
+    sim_hourly_msr = sim_hourly_msr_common.copy()
+
+# %%
+#final merge sim_hourly
+sim_hourly_final = pd.concat([sim_hourly_pre, sim_hourly_std, sim_hourly_msr])
+
+# %%
+##Final export of all processed data pre-SQL process
+#change directory to wherever desired, if needed
+
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+
+current_msr_mat.to_csv('current_msr_mat.csv', index=False)
+sim_annual_final.to_csv('sim_annual.csv', index=False)
+sim_hourly_final.to_csv('sim_hourly_wb.csv', index=False)
+# %%
