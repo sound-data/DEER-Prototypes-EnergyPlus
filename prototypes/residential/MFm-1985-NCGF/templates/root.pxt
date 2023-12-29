@@ -75,9 +75,10 @@ parameter "number_of_stories", :default=>1  #no. of stories, default one story
 parameter "conditioned_floor_area", :default =>1017.6|'ft2'  # ft2, default conditioned floor area of 1 story SFm
 parameter "duct_r_value", :default => 4.9['R-IP'] #U-IP effective duct R value = duct R + insulation R
 
+# recirc schedule parameter
+parameter "recirc_schedule", :default=>'DH Load Profile Constant Flow Frac Schedule'
+
 %>
-
-
 
 <%insert 'site.pxt'%>
 
@@ -54186,3 +54187,9 @@ Controller:OutdoorAir,
   ,                                                        !- Minimum Fraction of Outdoor Air Schedule Name
   ,                                                        !- Maximum Fraction of Outdoor Air Schedule Name
   ;                                                        !- Mechanical Ventilation Controller Name
+
+
+<%
+insert 'Recirc Object.pxt', 
+  :recirc_schedule => recirc_schedule
+%>

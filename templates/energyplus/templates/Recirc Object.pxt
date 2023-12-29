@@ -1,3 +1,11 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+# recirc schedule parameter
+parameter "recirc_schedule", :default=>'DH Load Profile Constant Flow Frac Schedule'
+
+%>
+
 Schedule:Compact,
     always_off DH,           !- Name
     On/Off,                  !- Schedule Type Limits Name
@@ -217,11 +225,6 @@ Schedule:Compact,
     0.044;                   !- Field 4
 
 Schedule:Constant,
-    SSBWaterTempSchedule,    !- Name
-    Temperature,             !- Schedule Type Limits Name
-    57;                      !- Hourly Value
-
-Schedule:Constant,
     DHSupplySetpoint,        !- Name
     Temperature,             !- Schedule Type Limits Name
     57;                      !- Hourly Value
@@ -301,6 +304,16 @@ Sizing:Plant,
     57.2222222222222,        !- Design Loop Exit Temperature {C}
     13.8888888888889;        !- Loop Design Temperature Difference {deltaC}
 
+
+!-   ===========  ALL OBJECTS IN CLASS: LOADPROFILE:PLANT ===========
+
+LoadProfile:Plant,
+    DH Load Profile,         !- Name
+    DH Demand Load Profile Inlet Node,  !- Inlet Node Name
+    DH Demand Load Profile Outlet Node,  !- Outlet Node Name
+    DH Load Profile Load Schedule,  !- Load Schedule Name
+    0.0030283296,            !- Peak Flow Rate {m3/s}
+    <%= recirc_schedule %>;  !- Flow Rate Fraction Schedule Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: COIL:HEATING:WATER ===========
@@ -1191,7 +1204,17 @@ ConnectorList,
     Connector:Mixer,         !- Connector 2 Object Type
     DH Supply Mixer_unit1;   !- Connector 2 Name
 
+Connector:Splitter,
+    DH Demand Splitter_unit1,!- Name
+    DH Demand Inlet Branch_unit 1,  !- Inlet Branch Name
+    DH Water Bath Branch_unit1,  !- Outlet Branch 1 Name
+    DH Load Profile Branch;  !- Outlet Branch 2 Name
 
+Connector:Splitter,
+    DH Supply Splitter_unit1,!- Name
+    DH Heating Supply Inlet Branch,  !- Inlet Branch Name
+    DH Water Heater Branch_unit1;  !- Outlet Branch 1 Name
+	
 !-   ===========  ALL OBJECTS IN CLASS: NODELIST ===========
 
 NodeList,
@@ -1559,6 +1582,30 @@ WaterUse:Connections,
     ,                        !- Drain Water Heat Exchanger Destination
     ,                        !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
     DH Baths_unit1;          !- Water Use Equipment 1 Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: BOILER:HOTWATER ===========
+
+Boiler:HotWater,
+    CentralBoiler,           !- Name
+    NaturalGas,              !- Fuel Type
+    autosize,                !- Nominal Capacity {W}
+    0.9,                     !- Nominal Thermal Efficiency
+    LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
+    NonCond_Boiler_Eff,      !- Normalized Boiler Efficiency Curve Name
+    autosize,                !- Design Water Flow Rate {m3/s}
+    0.2,                     !- Minimum Part Load Ratio
+    1,                       !- Maximum Part Load Ratio
+    1,                       !- Optimum Part Load Ratio
+    Boiler Water Inlet Node, !- Boiler Water Inlet Node Name
+    Boiler Water Oulet Node, !- Boiler Water Outlet Node Name
+    99.9,                    !- Water Outlet Upper Temperature Limit {C}
+    LeavingSetpointModulated,!- Boiler Flow Mode
+    ,                        !- Parasitic Electric Load {W}
+    1,                       !- Sizing Factor
+    General;                 !- End-Use Subcategory
+
+
 
 !-   ===========  ALL OBJECTS IN CLASS: CURVE:BICUBIC ===========
 
