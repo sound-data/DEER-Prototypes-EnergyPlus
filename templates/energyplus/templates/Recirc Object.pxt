@@ -1727,4 +1727,3 @@ Output:Variable,
     Zone Air Temperature ,   !- Variable Name
     Hourly;                  !- Reporting Frequency
 
-Output:Variable,
