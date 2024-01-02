@@ -19,7 +19,7 @@ Output:Surfaces:List,Details;
 
 OutputControl:Table:Style,
   CommaAndHTML,            !- Column Separator
-  InchPound;               !- Unit Conversion
+  JtoKWH;               !- Unit Conversion
 
 <%# NOTE: There seems to be a bug with the SystemTimestep frequency. It reports at 5-minute intervals? %>
 EnergyManagementSystem:OutputVariable,
