@@ -222,7 +222,7 @@ Schedule:Compact,
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
     Until: 24:00,            !- Field 3
-    0.044;                   !- Field 4
+    0.035;                   !- Field 4
 
 Schedule:Constant,
     DHSupplySetpoint,        !- Name
@@ -1397,7 +1397,7 @@ WaterHeater:Mixed,
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
     NaturalGas,              !- Heater Fuel Type
-    0.8,                     !- Heater Thermal Efficiency
+    0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
     ,                        !- Off Cycle Parasitic Fuel Type
@@ -1589,8 +1589,8 @@ WaterUse:Connections,
 Boiler:HotWater,
     CentralBoiler,           !- Name
     NaturalGas,              !- Fuel Type
-    autosize,                !- Nominal Capacity {W}
-    0.9,                     !- Nominal Thermal Efficiency
+    1E-015,                  !- Nominal Capacity {W}
+    1.0,                     !- Nominal Thermal Efficiency
     LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
     NonCond_Boiler_Eff,      !- Normalized Boiler Efficiency Curve Name
     autosize,                !- Design Water Flow Rate {m3/s}
@@ -1764,13 +1764,5 @@ Output:Variable,
     Plant Load Profile Mass Flow Rate ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
 
-Output:Variable,
-    DXFG EL1 G_SSE1 Dummy Return Plenum,  !- Key Value
-    Zone Air Temperature ,   !- Variable Name
-    Hourly;                  !- Reporting Frequency
 
-Output:Variable,
-    EL1 East Perim At Zn (T.E41),  !- Key Value
-    Zone Air Temperature ,   !- Variable Name
-    Hourly;                  !- Reporting Frequency
 
