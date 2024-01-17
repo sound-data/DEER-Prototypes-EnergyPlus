@@ -689,6 +689,130 @@ if (landscaping_control)
   insert "irrigation.pxt", **irrigation, **local(:graywater_supply_tank)
 end
 
+### Start Refrigeration systems ###
+# Maybe use a for loop? Systems may have multiple different values for their inputs...
+
+# Compressor rack system
+insert "ref-case.pxt",
+  :case_name => "SelfContainedDisplayCase",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 1000['W/m']
+
+insert "ref-comp.pxt",
+  :rack_name => "SelfContainedDisplay",
+  :case_names => ["SelfContainedDisplayCase"],
+  :rack_type => "SELF-CONTAINED",
+  :heat_rej_location => "Zone",
+  :rack_cop => 4,
+  :fan_power => 175
+
+# System MT_System
+MT_System_case_walkin_names = ["FishDisplayCase", "MeatDisplayCase", "MultiDeckDairyAndDeliCase"]
+MT_System_ref_sys_comp_names = ["MT_Compressor1","MT_Compressor2","MT_Compressor3","MT_Compressor4","MT_Compressor5","MT_Compressor6","MT_Compressor7","MT_Compressor8"]
+insert "ref-sys.pxt",
+  :ref_system_name => "MT_System",
+  :case_walkin_names => MT_System_case_walkin_names,
+  :ref_sys_comp_names => MT_System_ref_sys_comp_names,
+  :cond_curves_source => "MediumTemp"
+
+insert "ref-case.pxt",
+  :case_name => "FishDisplayCase",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 288.4['W/m']
+
+insert "ref-case.pxt",
+  :case_name => "MeatDisplayCase",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 456.6['W/m']
+
+insert "ref-case.pxt",
+  :case_name => "MultiDeckDairyAndDeliCase",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 1890['W/m']
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor1"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor2"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor3"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor4"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor5"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor6"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor7"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor8"
+# System LT_System
+LT_System_case_walkin_names = ["OpenWellIceCreamDisplayCase", "GlassDoorFrozenFoodA", "GlassDoorFrozenFoodB","GlassDoorFrozenFoodC","WalkInFreezer"]
+LT_System_ref_sys_comp_names = ["LT_Compressor1","LT_Compressor2","LT_Compressor3","LT_Compressor4","LT_Compressor5","LT_Compressor6","LT_Compressor7"]
+insert "ref-sys.pxt",
+  :ref_system_name => "LT_System",
+  :case_walkin_names => LT_System_case_walkin_names,
+  :ref_sys_comp_names => LT_System_ref_sys_comp_names,
+  :cond_curves_source => "LowTemp"
+
+insert "ref-case.pxt",
+  :case_name => "OpenWellIceCreamDisplayCase",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 441.6['W/m']
+
+insert "ref-case.pxt",
+  :case_name => "GlassDoorFrozenFoodA",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 615.8['W/m']
+
+insert "ref-case.pxt",
+  :case_name => "GlassDoorFrozenFoodB",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 615.8['W/m']
+
+insert "ref-case.pxt",
+  :case_name => "GlassDoorFrozenFoodC",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 615.8['W/m']
+
+insert "ref-walkin.pxt",
+  :walkin_name => "WalkInFreezer",
+  :zone_name => "RefWalkInFreeze EL1 Core Spc (G.C5)",
+  :capacity => 27200['W']
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor1"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor2"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor3"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor4"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor5"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor6"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor7"
+
+insert "fluid-properties.pxt",
+  :working_fluid =>"R22"
+
+### End Refrigeration system ###
+
 insert "output.pxt"
 insert "custom.pxt"
 %>
