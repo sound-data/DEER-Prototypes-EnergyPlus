@@ -1,0 +1,196 @@
+<%#INITIALIZE
+parameter "comp_name"
+parameter "comp_curves_source", :default=>"Carlyle_R-22_Med_06DM808" # (Carlyle_R-22_Low_06CC665 | Carlyle_R-22_Low_06DR718 | Carlyle_R-22_Med_06DM808 | Carlyle_R-22_Med_06DR820)
+parameter "return_gas_temp", :default=>18['C']
+parameter "liquid_temp", :default=>4.4['C']
+parameter "lighting_schedule", :default=>
+"
+  Through: 12/31,
+  For: WinterDesignDays,
+  Until: 24:00, 0.00,
+  For: SummerDesignDays,
+  Until: 24:00, 1.00,
+  For: AllOtherDays,
+  Until: 02:00, 0.10,
+  Until: 04:00, 0.50,
+  Until: 19:00, 1.00,
+  Until: 20:00, 0.50,
+  Until: 24:00, 0.10;
+"
+%>
+
+Refrigeration:Compressor,
+    <%= comp_name %>,  !- Name
+    <%= comp_name %> Power Curve,!- Refrigeration Compressor Power Curve Name
+    <%= comp_name %> Capacity Curve,  !- Refrigeration Compressor Capacity Curve Name
+    ,                        !- Rated Superheat {deltaC}
+    <%= return_gas_temp %>,                    !- Rated Return Gas Temperature {C}
+    <%= liquid_temp %>,                     !- Rated Liquid Temperature {C}
+    ;                        !- Rated Subcooling {deltaC}
+
+
+<% if (comp_curves_source == "Carlyle_R-22_Med_06DR820") %>
+
+! Capacity Curve for Carlyle_R-22_Med_06DR820,   !nominal MBtu/h = 42395.1
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    3.849e+004,              !- Coefficient1 Constant
+    1393.,                   !- Coefficient2 x
+    19.32,                   !- Coefficient3 x**2
+    -365.6,                  !- Coefficient4 y
+    1.295,                   !- Coefficient5 y**2
+    -10.41,                  !- Coefficient6 x*y
+    0.09712,                 !- Coefficient7 x**3
+    -0.007640,               !- Coefficient8 y**3
+    -0.1141,                 !- Coefficient9 x**2*y
+    0.004656,                !- Coefficient10 x*y**2
+    -17.8,                   !- Minimum Value of x
+    4.4,                     !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+! Power Curve for Carlyle_R-22_Med_06DR820,   !nominal kW = 5.5
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    1284.,                   !- Coefficient1 Constant
+    -124.3,                  !- Coefficient2 x
+    -3.435,                  !- Coefficient3 x**2
+    153.9,                   !- Coefficient4 y
+    -0.4744,                 !- Coefficient5 y**2
+    4.041,                   !- Coefficient6 x*y
+    -0.02511,                !- Coefficient7 x**3
+    0.001230,                !- Coefficient8 y**3
+    0.03235,                 !- Coefficient9 x**2*y
+    -0.003028,               !- Coefficient10 x*y**2
+    -17.8,                   !- Minimum Value of x
+    4.4,                     !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+<% elsif (comp_curves_source == "Carlyle_R-22_Low_06CC665") %>
+! Capacity Curve for Carlyle_R-22_Low_06CC665,   !nominal MBtu/h = 71847.7
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    7.353e+004,              !- Coefficient1 Constant
+    2513.,                   !- Coefficient2 x
+    32.91,                   !- Coefficient3 x**2
+    -25.69,                  !- Coefficient4 y
+    0.3655,                  !- Coefficient5 y**2
+    -0.8183,                 !- Coefficient6 x*y
+    0.1712,                  !- Coefficient7 x**3
+    -0.003657,               !- Coefficient8 y**3
+    -0.01027,                !- Coefficient9 x**2*y
+    0.009071,                !- Coefficient10 x*y**2
+    -40.0,                   !- Minimum Value of x
+    -17.8,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+! Power Curve for Carlyle_R-22_Low_06CC665,   !nominal kW = 11.7
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    5546.,                   !- Coefficient1 Constant
+    -61.38,                  !- Coefficient2 x
+    -1.599,                  !- Coefficient3 x**2
+    332.9,                   !- Coefficient4 y
+    -0.07860,                !- Coefficient5 y**2
+    5.981,                   !- Coefficient6 x*y
+    0.0008655,               !- Coefficient7 x**3
+    0.003784,                !- Coefficient8 y**3
+    0.02998,                 !- Coefficient9 x**2*y
+    0.01728,                 !- Coefficient10 x*y**2
+    -40.0,                   !- Minimum Value of x
+    -17.8,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+<% elsif (comp_curves_source == "Carlyle_R-22_Low_06DR718") %>
+! Capacity Curve for Carlyle_R-22_Low_06DR718,   !nominal MBtu/h = 18786.0
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    2.861e+004,              !- Coefficient1 Constant
+    1069.,                   !- Coefficient2 x
+    17.73,                   !- Coefficient3 x**2
+    -155.1,                  !- Coefficient4 y
+    -0.08805,                !- Coefficient5 y**2
+    -4.646,                  !- Coefficient6 x*y
+    0.1427,                  !- Coefficient7 x**3
+    -0.002566,               !- Coefficient8 y**3
+    -0.04829,                !- Coefficient9 x**2*y
+    0.002038,                !- Coefficient10 x*y**2
+    -40.0,                   !- Minimum Value of x
+    -17.8,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+! Power Curve for Carlyle_R-22_Low_06DR718,   !nominal kW = 3.5
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    2378.,                   !- Coefficient1 Constant
+    -30.52,                  !- Coefficient2 x
+    -1.571,                  !- Coefficient3 x**2
+    75.14,                   !- Coefficient4 y
+    0.7122,                  !- Coefficient5 y**2
+    1.050,                   !- Coefficient6 x*y
+    -0.01503,                !- Coefficient7 x**3
+    -0.006798,               !- Coefficient8 y**3
+    -0.004701,               !- Coefficient9 x**2*y
+    0.01875,                 !- Coefficient10 x*y**2
+    -40.0,                   !- Minimum Value of x
+    -17.8,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+<% elsif (comp_curves_source == "Carlyle_R-22_Med_06DM808") %>
+! Capacity Curve for Carlyle_R-22_Med_06DM808,   !nominal MBtu/h = 14944.9
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    1.499e+004,              !- Coefficient1 Constant
+    541.8,                   !- Coefficient2 x
+    7.285,                   !- Coefficient3 x**2
+    -118.0,                  !- Coefficient4 y
+    -0.3645,                 !- Coefficient5 y**2
+    -3.050,                  !- Coefficient6 x*y
+    0.03440,                 !- Coefficient7 x**3
+    0.002250,                !- Coefficient8 y**3
+    -0.03927,                !- Coefficient9 x**2*y
+    -0.007307,               !- Coefficient10 x*y**2
+    -17.8,                   !- Minimum Value of x
+    4.4,                     !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+! Power Curve for Carlyle_R-22_Med_06DM808,   !nominal kW = 2.0
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    483.6,                   !- Coefficient1 Constant
+    -53.20,                  !- Coefficient2 x
+    -1.384,                  !- Coefficient3 x**2
+    56.19,                   !- Coefficient4 y
+    0.003688,                !- Coefficient5 y**2
+    1.439,                   !- Coefficient6 x*y
+    -0.008268,               !- Coefficient7 x**3
+    -0.002810,               !- Coefficient8 y**3
+    0.007222,                !- Coefficient9 x**2*y
+    0.006025,                !- Coefficient10 x*y**2
+    -17.8,                   !- Minimum Value of x
+    4.4,                     !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+<% end %>
