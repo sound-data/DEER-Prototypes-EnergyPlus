@@ -1,28 +1,30 @@
-
 <%#INITIALIZE
 require "modelkit/energyplus"
 
 parameter "zone_name"
-parameter "ref_system_name"
+parameter "air_chiller_names"
+parameter "add_heater", :default => true
+parameter "sup_airflow", :default => 0.84['m3/s']
+parameter "heater_capa", :default => 800000['W']
 
-parameter "case_walkin_names"
-parameter "ref_sys_comp_names"
-parameter "suction_piping_location"
-parameter "suction_gains", :default=>false # (true | false)
-parameter "piping_suction_ua", :default=>10 # in ['W/K']
-parameter "cond_curves_source", :default=>"SelfContained" # (SelfContained | MediumTemp | LowTemp)
-parameter "cond_fan_power", :default=>2600['W']
-parameter "cond_subcool", :default=>0['C']
-parameter "working_fluid", :default=>"R22" # TODO add other fluids
+
+parameter "htg_sp", :default=>
+"
+  Through: 12/31,          !- Field 1
+  For: AllDays,            !- Field 2
+  Until:  7:00,2.,         !- Field 3
+  Until: 17:00,2.,         !- Field 5
+  Until: 24:00,2.;         !- Field 7
+"
+parameter "clg_sp", :default=>
+"
+  Through: 12/31,          !- Field 1
+  For: AllDays,            !- Field 2
+  Until:  7:00,4.,         !- Field 3
+  Until: 20:00,4.,         !- Field 5
+  Until: 24:00,4.;         !- Field 7
+"
 %>
-
-<%
-case_walkin_list = "#{ref_system_name} Case And Walkin List"
-enduse_subcategory = "#{ref_system_name} Refrigeration"
-
-ref_sys_comp_list = "#{ref_system_name} Compressors List"
-%>
-
 
   ZoneControl:Thermostat,
     <%= zone_name %> Thermostat,     !- Name
@@ -52,20 +54,12 @@ ref_sys_comp_list = "#{ref_system_name} Compressors List"
   Schedule:Compact,
     <%= zone_name %> Heating Setpoints sch,!- Name
     Temperature,             !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until:  7:00,2.,         !- Field 3
-    Until: 17:00,2.,         !- Field 5
-    Until: 24:00,2.;         !- Field 7
+    <%= htg_sp %>
 
   Schedule:Compact,
     <%= zone_name %> Cooling Setpoints sch,!- Name
     Temperature,             !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until:  7:00,4.,         !- Field 3
-    Until: 20:00,4.,         !- Field 5
-    Until: 24:00,4.;         !- Field 7
+    <%= clg_sp %>
 
   ZoneHVAC:EquipmentConnections,
     <%= zone_name %>,                !- Zone Name
@@ -83,28 +77,29 @@ ref_sys_comp_list = "#{ref_system_name} Compressors List"
     <%= zone_name %> ref equipment,       !- Name
     SequentialLoad,          !- Load Distribution Scheme
     ZoneHVAC:RefrigerationChillerSet,  !- Zone Equipment 1 Object Type
-    Cooler_1ChillerSet,      !- Zone Equipment 1 Name
+    <%= zone_name %> chiller set,      !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
+<% if (add_heater) %>
     2,                       !- Zone Equipment 1 Heating or No-Load Sequence
     ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
     ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     ZoneHVAC:UnitHeater,     !- Zone Equipment 2 Object Type
-    Cooler_1UnitHeat,        !- Zone Equipment 2 Name
+    <%= zone_name %> unit heater,        !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
     1,                       !- Zone Equipment 2 Heating or No-Load Sequence
     ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
     ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:UnitHeater,
-    Cooler_1UnitHeat,        !- Name
-    UnitHeatAvailability,    !- Availability Schedule Name
+    <%= zone_name %> unit heater,        !- Name
+    <%= zone_name %> unit heater avail,    !- Availability Schedule Name
     <%= zone_name %> Exhaust Nodes,  !- Air Inlet Node Name
     <%= zone_name %> Inlet Nodes,  !- Air Outlet Node Name
     Fan:ConstantVolume,      !- Supply Air Fan Object Type
-    Cooler_1UnitHeatFan,     !- Supply Air Fan Name
-    0.84,                    !- Maximum Supply Air Flow Rate {m3/s}
+    <%= zone_name %> unit heater fan,     !- Supply Air Fan Name
+    <%= sup_airflow %>,                    !- Maximum Supply Air Flow Rate {m3/s}
     Coil:Heating:Electric,   !- Heating Coil Object Type
-    Cooler_1UnitHeatHeatingCoil,  !- Heating Coil Name
+    <%= zone_name %> unit heater coil,  !- Heating Coil Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     Yes,                     !- Supply Air Fan Operation During No Heating
     ,                        !- Maximum Hot Water or Steam Flow Rate {m3/s}
@@ -112,34 +107,49 @@ ref_sys_comp_list = "#{ref_system_name} Compressors List"
     0.001;                   !- Heating Convergence Tolerance
 
   Coil:Heating:Electric,
-    Cooler_1UnitHeatHeatingCoil,  !- Name
-    UnitHeatAvailability,    !- Availability Schedule Name
+    <%= zone_name %> unit heater coil,  !- Name
+    <%= zone_name %> unit heater avail,    !- Availability Schedule Name
     1.0,                     !- Efficiency
-    800000.,                 !- Nominal Capacity {W}
-    Cooler_1UnitHeatFanOutletNode,  !- Air Inlet Node Name
+    <%= heater_capa %>,                 !- Nominal Capacity {W}
+    <%= zone_name %> unit heater coil inlet node,  !- Air Inlet Node Name
     <%= zone_name %> Inlet Nodes;  !- Air Outlet Node Name
 
   Fan:ConstantVolume,
-    Cooler_1UnitHeatFan,     !- Name
-    UnitHeatAvailability,    !- Availability Schedule Name
+    <%= zone_name %> unit heater fan,     !- Name
+    <%= zone_name %> unit heater avail,    !- Availability Schedule Name
     0.5,                     !- Fan Total Efficiency
     75.0,                    !- Pressure Rise {Pa}
-    0.84,                    !- Maximum Flow Rate {m3/s}
+    <%= sup_airflow %>,                    !- Maximum Flow Rate {m3/s}
     0.9,                     !- Motor Efficiency
     1.0,                     !- Motor In Airstream Fraction
     <%= zone_name %> Exhaust Nodes,  !- Air Inlet Node Name
-    Cooler_1UnitHeatFanOutletNode;  !- Air Outlet Node Name
+    <%= zone_name %> unit heater coil inlet node;  !- Air Outlet Node Name
+
+  Schedule:Compact,
+    <%= zone_name %> unit heater avail,    !- Name
+    Control Type,            !- Schedule Type Limits Name
+    Through: 3/31,           !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,1,          !- Field 3
+    Through: 9/30,           !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 24:00,0,          !- Field 7
+    Through: 12/31,          !- Field 9
+    For: AllDays,            !- Field 10
+    Until: 24:00,1;          !- Field 11
+<% else %>
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+<% end %>
 
   ZoneHVAC:RefrigerationChillerSet,
-    Cooler_1ChillerSet,      !- Name
+    <%= zone_name %> chiller set,      !- Name
     ,                        !- Availability Schedule Name
-    Cooler_1,                !- Zone Name
+    <%= zone_name %>,                !- Zone Name
     ,                        !- Air Inlet Node Name
     ,                        !- Air Outlet Node Name
-    Cooler_1AirChiller_1,    !- Air Chiller 1 Name
-    Cooler_1AirChiller_2,    !- Air Chiller 2 Name
-    Cooler_1AirChiller_3,    !- Air Chiller 3 Name
-    Cooler_1AirChiller_4,    !- Air Chiller 4 Name
-    Cooler_1AirChiller_5,    !- Air Chiller 5 Name
-    Cooler_1AirChiller_6;    !- Air Chiller 6 Name
+<% EnergyPlus.each(air_chiller_names) do |air_chiller_name| %>
+  <%= air_chiller_name %>,  !- Refrigeration Compressor Name
+<% end %>
 
