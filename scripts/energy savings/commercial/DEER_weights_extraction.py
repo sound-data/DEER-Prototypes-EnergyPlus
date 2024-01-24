@@ -30,7 +30,7 @@ conn = psycopg2.connect(**db_params)
 
 #12/22/2023 connection error?
 # %%
-query = text('''
+query = ('''
 SELECT *
 FROM applic.BldgWts;
 ''')
