@@ -86,10 +86,13 @@ parameter "graywater_supply_tank", :default=> "" # variable creates tank to supp
 <%
 # Calculate infiltration rate from leakage rate by adjusting to normal building pressurization at 5 Pa.
 infil_area_adj = infil_area * (5.0 / 75.0)**0.65
-
+%>
+<%
 # Calculate dhw_flow from dhw_flow_area
-if dhw_flow == 0.0 and dhw_flow_area > 0
+if dhw_flow_area > 0 && dhw_flow == 0
   dhw_flow = dhw_flow_area * zone_area
+elsif dhw_flow_area > 0 && dhw_flow != dhw_flow_area * zone_area
+  raise("Error: dhw_flow is not equal to dhw_flow_area * zone_area")
 end
 %>
 <% if (infil_ach > 0.0 && infiltration_method == 'AirChanges/Hour') %>
