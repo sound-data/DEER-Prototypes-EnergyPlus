@@ -69,7 +69,7 @@ parameter "gas_sch",
   :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
 parameter "dhw_flow", :default=>0['GPM']
-parameter "dhw_flow_area", :default=>0['GPM']
+parameter "dhw_flow_area", :default=>0['GPM/ft2']
 parameter "dhw_temp", :default=>105['F']  # DHW mixed hot water temperature
 parameter "dhw_target", :default=>131['F'] # DHW target temperature
 parameter "dhw_recovery", :default=>false
