@@ -69,6 +69,7 @@ parameter "gas_sch",
   :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
 parameter "dhw_flow", :default=>0['GPM']
+parameter "dhw_flow_area", :default=>0['GPM']
 parameter "dhw_temp", :default=>105['F']  # DHW mixed hot water temperature
 parameter "dhw_target", :default=>131['F'] # DHW target temperature
 parameter "dhw_recovery", :default=>false
@@ -85,6 +86,11 @@ parameter "graywater_supply_tank", :default=> "" # variable creates tank to supp
 <%
 # Calculate infiltration rate from leakage rate by adjusting to normal building pressurization at 5 Pa.
 infil_area_adj = infil_area * (5.0 / 75.0)**0.65
+
+# Calculate dhw_flow from dhw_flow_area
+if dhw_flow == 0.0 and dhw_flow_area > 0
+  dhw_flow = dhw_flow_area * zone_area
+end
 %>
 <% if (infil_ach > 0.0 && infiltration_method == 'AirChanges/Hour') %>
 ZoneInfiltration:DesignFlowRate,
