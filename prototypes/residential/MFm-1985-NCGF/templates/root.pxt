@@ -75,9 +75,12 @@ parameter "number_of_stories", :default=>1  #no. of stories, default one story
 parameter "conditioned_floor_area", :default =>1017.6|'ft2'  # ft2, default conditioned floor area of 1 story SFm
 parameter "duct_r_value", :default => 4.9['R-IP'] #U-IP effective duct R value = duct R + insulation R
 
+# temp schedule parameter
+parameter "temp_schedule", :default=>'DH DHW Constant Temp Setpt'
+# recirc schedule parameter
+parameter "recirc_schedule", :default=>'DH Load Profile Constant Flow Frac Schedule'
+
 %>
-
-
 
 <%insert 'site.pxt'%>
 
@@ -1832,7 +1835,7 @@ Schedule:Constant,
 Schedule:Constant,
     SSBWaterTempSchedule,    !- Name
     Temperature,             !- Schedule Type Limits Name
-    40.5555555555556;        !- Hourly Value
+    57;        !- Hourly Value
 
 
 !-   ===========  ALL OBJECTS IN CLASS: MATERIAL ===========
@@ -36869,11 +36872,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -36910,11 +36913,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -36951,11 +36954,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -36992,11 +36995,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37033,11 +37036,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37074,11 +37077,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37115,11 +37118,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37156,11 +37159,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37197,11 +37200,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37238,11 +37241,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37279,11 +37282,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37320,11 +37323,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37361,11 +37364,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37402,11 +37405,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37443,11 +37446,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37484,11 +37487,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37525,11 +37528,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37566,11 +37569,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37607,11 +37610,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37648,11 +37651,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37689,11 +37692,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37730,11 +37733,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37771,11 +37774,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37812,11 +37815,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37853,11 +37856,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37894,11 +37897,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37935,11 +37938,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -37976,11 +37979,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38017,11 +38020,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38058,11 +38061,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38099,11 +38102,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38140,11 +38143,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38181,11 +38184,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38222,11 +38225,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38263,11 +38266,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38304,11 +38307,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38345,11 +38348,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38386,11 +38389,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38427,11 +38430,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38468,11 +38471,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38509,11 +38512,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38550,11 +38553,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38591,11 +38594,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38632,11 +38635,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38673,11 +38676,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38714,11 +38717,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38755,11 +38758,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -38796,11 +38799,11 @@ WaterHeater:Mixed,
     2,                       !- Deadband Temperature Difference {deltaC}
     50,                      !- Maximum Temperature Limit {C}
     Cycle,                   !- Heater Control Type
-    autosize,                !- Heater Maximum Capacity {W}
+    0,                       !- Heater Maximum Capacity {W}
     0,                       !- Heater Minimum Capacity {W}
     0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
     ,                        !- Heater Ignition Delay {s}
-    NaturalGas,              !- Heater Fuel Type
+    Coal,                    !- Heater Fuel Type
     0.9,                     !- Heater Thermal Efficiency
     ,                        !- Part Load Factor Curve Name
     ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
@@ -54186,3 +54189,10 @@ Controller:OutdoorAir,
   ,                                                        !- Minimum Fraction of Outdoor Air Schedule Name
   ,                                                        !- Maximum Fraction of Outdoor Air Schedule Name
   ;                                                        !- Mechanical Ventilation Controller Name
+
+
+<%
+insert 'Recirc Object Combo.pxt', 
+  :recirc_schedule => recirc_schedule,
+  :temp_schedule => temp_schedule
+%>
