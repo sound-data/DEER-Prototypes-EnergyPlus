@@ -222,7 +222,7 @@ Schedule:Compact,
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
     Until: 24:00,            !- Field 3
-    0.035;                   !- Field 4
+    0.044;                   !- Field 4
 
 Schedule:Constant,
     DHSupplySetpoint,        !- Name
@@ -1294,7 +1294,7 @@ Pump:VariableSpeed,
     HW Pump Oulet Node,      !- Outlet Node Name
     autosize,                !- Design Maximum Flow Rate {m3/s}
     179352,                  !- Design Pump Head {Pa}
-    autosize,                !- Design Power Consumption {W}
+    0,                       !- Design Power Consumption {W}
     0.9,                     !- Motor Efficiency
     ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
     ,                        !- Coefficient 1 of the Part Load Performance Curve

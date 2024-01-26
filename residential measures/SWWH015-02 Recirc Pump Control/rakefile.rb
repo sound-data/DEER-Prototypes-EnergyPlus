@@ -28,7 +28,7 @@ require("modelkit/energyplus")
 # - which design days
 # - water mains temp?
 # - daylight saving time?
-def generate_site_pxt(idd, ddy_path, site_path)
+def generate_site_pxt(idd, ddy_path, site_path, tout_ave, delta_t_max)
   site_file = File.open(site_path, "w")
 
   if (File.exists?(ddy_path))
@@ -61,7 +61,15 @@ def generate_site_pxt(idd, ddy_path, site_path)
 
 # Does this work for design-day only runs?
 # Seems to work for annual.
-  site_file.puts("\n\nSite:WaterMainsTemperature,\n  CorrelationFromWeatherFile;\n")
+
+# the line below is commented and repalced by the for lines below it to have correlation calculation instead of CorrelationFromWeatherFile
+
+#  site_file.puts("\n\nSite:WaterMainsTemperature,\n  CorrelationFromWeatherFile;\n")
+	
+  site_file.puts("\n\nSite:WaterMainsTemperature,\n  Correlation,\n")
+  site_file.puts("  ,")
+  site_file.puts("  #{tout_ave},")
+  site_file.puts("  #{delta_t_max};")
 
   daylight_saving_time = input_file.find_objects_by_class_name("RunPeriodControl:DaylightSavingTime").to_a
   if (not daylight_saving_time.empty?)
@@ -337,6 +345,63 @@ if (not rake_task_name =~ /^(clean|none)$/)
     end
 
     weather_name = variables1[:weather_file].to_s.strip  # Could have been converted to non-string by Util.value_from_string
+	
+	
+	
+	puts "weather_name: #{weather_name}"
+	tout_ave = 0
+	delta_t_max = 0
+
+	if weather_name.include?("EUREKA")
+	  tout_ave = 10.81
+	  delta_t_max = 16.84
+	elsif weather_name.include?("NAPA")
+	  tout_ave = 14.22
+	  delta_t_max = 18.85
+	elsif weather_name.include?("OAKLAND")
+	  tout_ave = 14.37
+	  delta_t_max = 18.68
+	elsif weather_name.include?("SAN-JOSE")
+	  tout_ave = 15.69
+	  delta_t_max = 19.87
+	elsif weather_name.include?("MARIA")
+	  tout_ave = 14.37
+	  delta_t_max = 16.20
+	elsif weather_name.include?("ANGELES")
+	  tout_ave = 17.41
+	  delta_t_max = 8.03
+	elsif weather_name.include?("DIEGO")
+	  tout_ave = 17.85
+	  delta_t_max = 10.33
+	elsif weather_name.include?("BEACH")
+	  tout_ave = 17.91
+	  delta_t_max = 9.67
+	elsif weather_name.include?("DOWNTOWN")
+	  tout_ave = 18.39
+	  delta_t_max = 10.33
+	elsif weather_name.include?("RIVERSIDE")
+	  tout_ave = 18.67
+	  delta_t_max = 16.10
+	elsif weather_name.include?("BLUFF")
+	  tout_ave = 17.88
+	  delta_t_max = 25.6
+	elsif weather_name.include?("STOCKTON")
+	  tout_ave = 16.91
+	  delta_t_max = 22.76
+	elsif weather_name.include?("FRESNO")
+	  tout_ave = 18.9
+	  delta_t_max = 26.28
+	elsif weather_name.include?("BARSTOW")
+	  tout_ave = 20.64
+	  delta_t_max = 26.23
+	elsif weather_name.include?("CENTRO")
+	  tout_ave = 24.25
+	  delta_t_max = 21.71
+	elsif weather_name.include?("BISHOP")
+	  tout_ave = 14.85
+	  delta_t_max = 23.84
+	end
+	
     if (weather_name.empty?)
       raise("weather_file field cannot be blank for row #{index1 + 2} of #{File.basename(climates_csv_path)}")
     end
@@ -380,7 +445,7 @@ if (not rake_task_name =~ /^(clean|none)$/)
       idd = open_data_dictionary
       pathname = Pathname.new(site_path).relative_path_from(runs_pathname)
       puts "Generating: #{pathname}\n"
-      generate_site_pxt(idd, ddy_path, site_path)
+      generate_site_pxt(idd, ddy_path, site_path, tout_ave, delta_t_max)
     end
 
     if (variables1.key?(:codes_file))  # NOTE: codes_file is an optional column
