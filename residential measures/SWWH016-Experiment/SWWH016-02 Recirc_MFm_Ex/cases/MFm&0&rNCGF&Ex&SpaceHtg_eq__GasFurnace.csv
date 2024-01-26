@@ -1,0 +1,3 @@
+skip,case_name,:temp_schedule
+,DHWtempchedulebaseline,DH DHW Constant Temp Setpt
+,DHWtempschedulmeasure,DH New DHW Varying Temp Setpt
