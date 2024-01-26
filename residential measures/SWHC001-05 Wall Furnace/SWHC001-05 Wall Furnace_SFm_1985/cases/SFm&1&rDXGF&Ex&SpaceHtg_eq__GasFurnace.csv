@@ -1,5 +1,12 @@
 skip,case_name,:burner_eff,:supplyfan_total_eff,:motor_eff
-,AFUE_80_baseline,0.8,0.12,0.24
-,Msr-Res-GasFurnace-AFUE92-ECM,0.92,0.25,0.5
-,Msr-Res-GasFurnace-AFUE95-ECM,0.95,0.25,0.5
-,Msr-Res-GasFurnace-AFUE97-ECM,0.97,0.25,0.5
+#,AFUE_80_baseline,0.8,0.12,0.24
+#,Msr-Res-GasFurnace-AFUE92-ECM,0.92,0.25,0.5
+#,Msr-Res-GasFurnace-AFUE95-ECM,0.95,0.25,0.5
+#,Msr-Res-GasFurnace-AFUE97-ECM,0.97,0.25,0.5
+,AFUE_67_baseline,0.67,0.12,0.24
+,AFUE_65_baseline,0.65,0.12,0.24
+,AFUE_66_baseline,0.66,0.12,0.24
+,Msr-Res-GravFurnace-AFUE70,0.7,0.25,0.5
+,AFUE_66_baseline_fan,0.66,0.12,0.24
+,AFUE_75_baseline_fan,0.75,0.12,0.24
+,Msr-Res-UpdraftFurnace-AFUE82,0.82,0.25,0.5
