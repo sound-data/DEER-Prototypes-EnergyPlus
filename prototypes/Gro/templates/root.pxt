@@ -73,7 +73,7 @@ group "space_loads" do # hardcode building-level defaults
     parameter "gas_area", :default => 0['W/ft2']
     parameter "dhw_flow_area", :default => 0.00005['GPM/ft2']
     parameter "dhw_water_heater_fuel", :default => "Gas"
-    parameter "equip_2_area", :default => 5['W/ft2']
+    parameter "equip_2_area", :default => 0['W/ft2']
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "industrial_high", :prefix => "industrial_high_" do
@@ -109,7 +109,7 @@ group "space_loads" do # hardcode building-level defaults
     parameter "gas_area", :default => 0['W/ft2']
     parameter "dhw_flow_area", :default => 0['GPM/ft2']
     parameter "dhw_water_heater_fuel", :default => "Electric"
-    parameter "equip_2_area", :default => 10['W/ft2']
+    parameter "equip_2_area", :default => 0['W/ft2']
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "retail_schs", :prefix => "retail_" do
