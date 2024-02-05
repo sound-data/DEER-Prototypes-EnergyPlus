@@ -10,7 +10,7 @@ parameter "piping_suction_ua", :default=>10 # in ['W/K']
 parameter "cond_curves_source", :default=>"SelfContained" # (SelfContained | MediumTemp | LowTemp)
 parameter "cond_fan_power", :default=>2600['W']
 parameter "cond_subcool", :default=>0['C']
-parameter "working_fluid", :default=>"R22" # TODO add other fluids
+parameter "working_fluid", :default=>"R507" # TODO add other fluids R22
 %>
 
 <%

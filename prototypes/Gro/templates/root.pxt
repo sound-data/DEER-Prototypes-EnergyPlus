@@ -731,28 +731,37 @@ insert "ref-case.pxt",
   :capacity => 1890['W/m']
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor1"
+  :comp_name => "MT_Compressor1",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor2"
+  :comp_name => "MT_Compressor2",
+  :comp_curves_source=>"Copeland_R507_Med_2da3075e"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor3"
+  :comp_name => "MT_Compressor3",
+  :comp_curves_source=>"Copeland_R507_Med_3db3100e"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor4"
+  :comp_name => "MT_Compressor4",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor5"
+  :comp_name => "MT_Compressor5",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor6"
+  :comp_name => "MT_Compressor6",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor7"
+  :comp_name => "MT_Compressor7",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor8"
+  :comp_name => "MT_Compressor8",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+
 # System LT_System
 LT_System_case_walkin_names = ["OpenWellIceCreamDisplayCase", "GlassDoorFrozenFoodA", "GlassDoorFrozenFoodB","GlassDoorFrozenFoodC","WalkInFreezer"]
 LT_System_ref_sys_comp_names = ["LT_Compressor1","LT_Compressor2","LT_Compressor3","LT_Compressor4","LT_Compressor5","LT_Compressor6","LT_Compressor7"]
@@ -788,28 +797,35 @@ insert "ref-walkin.pxt",
   :capacity => 27200['W']
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor1"
+  :comp_name => "LT_Compressor1",
+  :comp_curves_source=>"Copeland_R507_Low_4dl3150e"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor2"
+  :comp_name => "LT_Compressor2",
+  :comp_curves_source=>"Copeland_R507_Low_4dl3150e"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor3"
+  :comp_name => "LT_Compressor3",
+  :comp_curves_source=>"Copeland_R507_Low_4dl3150e"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor4"
+  :comp_name => "LT_Compressor4",
+  :comp_curves_source=>"Copeland_R507_Low_4dl3150e"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor5"
+  :comp_name => "LT_Compressor5",
+  :comp_curves_source=>"Copeland_R507_Low_4dl3150e"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor6"
+  :comp_name => "LT_Compressor6",
+  :comp_curves_source=>"Copeland_R507_Low_4dl3150e"
 
 insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor7"
+  :comp_name => "LT_Compressor7",
+  :comp_curves_source=>"Copeland_R507_Low_4dl3150e"
 
 insert "fluid-properties.pxt",
-  :working_fluid =>"R22"
+  :working_fluid =>"R507"
 
 ### End Refrigeration system ###
 

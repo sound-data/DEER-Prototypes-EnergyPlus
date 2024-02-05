@@ -1,14 +1,17 @@
 <%#INITIALIZE
 
-parameter "working_fluid" # R22
+parameter "working_fluid" # R507
 
 %>
 
-! Fluid properties from Supermarket_Detailed.idf example file.
+
+
 FluidProperties:Name,
     <%= working_fluid %>,                     !- Fluid Name
     REFRIGERANT;             !- Fluid Type
 
+<% if (working_fluid == "R22") %>
+! Fluid properties from Supermarket_Detailed.idf example file.
   FluidProperties:Saturated,
     <%= working_fluid %>,                     !- Fluid Name
     PRESSURE,                !- Fluid Property Type
@@ -2388,3 +2391,1335 @@ FluidProperties:Name,
     58.570,60.713,62.855,64.998,67.140,69.283,71.425,
     73.568,75.710,77.853,79.995,82.138,84.280,86.423,
     88.565,90.708,112.850,132.850,152.850;
+
+<% elsif (working_fluid == "R507") %>
+! Fluid properties from DuPoint Suva Thermodynamic properties of DuPoint Suva 507 (R507)
+!-   ===========  ALL OBJECTS IN CLASS: FLUIDPROPERTIES:TEMPERATURES ===========
+
+FluidProperties:Temperatures,
+    R507_SaturatedTemperatures,  !- Name
+    -51.11111111,            !- Temperature 1 {C}
+    -47.97722222,            !- Temperature 2 {C}
+    -44.84333333,            !- Temperature 3 {C}
+    -41.70944444,            !- Temperature 4 {C}
+    -38.57555556,            !- Temperature 5 {C}
+    -35.44166667,            !- Temperature 6 {C}
+    -32.30777778,            !- Temperature 7 {C}
+    -29.17388889,            !- Temperature 8 {C}
+    -26.04,                  !- Temperature 9 {C}
+    -22.90611111,            !- Temperature 10 {C}
+    -19.77222222,            !- Temperature 11 {C}
+    -16.63833333,            !- Temperature 12 {C}
+    -13.50444444,            !- Temperature 13 {C}
+    -10.37055556,            !- Temperature 14 {C}
+    -7.236666667,            !- Temperature 15 {C}
+    -4.102777778,            !- Temperature 16 {C}
+    -0.968333333,            !- Temperature 17 {C}
+    2.165555556,             !- Temperature 18 {C}
+    5.299444444,             !- Temperature 19 {C}
+    8.433333333,             !- Temperature 20 {C}
+    11.56722222,             !- Temperature 21 {C}
+    14.70111111,             !- Temperature 22 {C}
+    17.835,                  !- Temperature 23 {C}
+    20.96888889,             !- Temperature 24 {C}
+    24.10277778,             !- Temperature 25 {C}
+    27.23666667,             !- Temperature 26 {C}
+    30.37055556,             !- Temperature 27 {C}
+    33.50444444,             !- Temperature 28 {C}
+    36.63833333,             !- Temperature 29 {C}
+    39.77222222,             !- Temperature 30 {C}
+    42.90611111,             !- Temperature 31 {C}
+    46.04,                   !- Temperature 32 {C}
+    49.17388889,             !- Temperature 33 {C}
+    52.30777778,             !- Temperature 34 {C}
+    55.44166667,             !- Temperature 35 {C}
+    58.57555556,             !- Temperature 36 {C}
+    61.70944444,             !- Temperature 37 {C}
+    64.84333333,             !- Temperature 38 {C}
+    65.55555556;             !- Temperature 39 {C}
+
+FluidProperties:Temperatures,
+    R507_SuperHeatTemp,      !- Name
+    -73.33333333,            !- Temperature 1 {C}
+    -67.77777778,            !- Temperature 2 {C}
+    -62.22222222,            !- Temperature 3 {C}
+    -56.66666667,            !- Temperature 4 {C}
+    -51.11111111,            !- Temperature 5 {C}
+    -45.55555556,            !- Temperature 6 {C}
+    -40,                     !- Temperature 7 {C}
+    -34.44444444,            !- Temperature 8 {C}
+    -28.88888889,            !- Temperature 9 {C}
+    -23.33333333,            !- Temperature 10 {C}
+    -17.77777778,            !- Temperature 11 {C}
+    -12.22222222,            !- Temperature 12 {C}
+    -6.666666667,            !- Temperature 13 {C}
+    -1.111111111,            !- Temperature 14 {C}
+    4.444444444,             !- Temperature 15 {C}
+    10,                      !- Temperature 16 {C}
+    15.55555556,             !- Temperature 17 {C}
+    21.11111111,             !- Temperature 18 {C}
+    26.66666667,             !- Temperature 19 {C}
+    32.22222222,             !- Temperature 20 {C}
+    37.77777778,             !- Temperature 21 {C}
+    43.33333333,             !- Temperature 22 {C}
+    48.88888889,             !- Temperature 23 {C}
+    54.44444444,             !- Temperature 24 {C}
+    60,                      !- Temperature 25 {C}
+    65.55555556,             !- Temperature 26 {C}
+    71.11111111,             !- Temperature 27 {C}
+    76.66666667,             !- Temperature 28 {C}
+    82.22222222,             !- Temperature 29 {C}
+    87.77777778,             !- Temperature 30 {C}
+    93.33333333,             !- Temperature 31 {C}
+    98.88888889,             !- Temperature 32 {C}
+    104.4444444,             !- Temperature 33 {C}
+    110,                     !- Temperature 34 {C}
+    115.5555556,             !- Temperature 35 {C}
+    121.1111111,             !- Temperature 36 {C}
+    126.6666667,             !- Temperature 37 {C}
+    132.2222222,             !- Temperature 38 {C}
+    137.7777778,             !- Temperature 39 {C}
+    143.3333333;             !- Temperature 40 {C}
+
+
+!-   ===========  ALL OBJECTS IN CLASS: FLUIDPROPERTIES:SATURATED ===========
+
+FluidProperties:Saturated,
+    R507,                    !- Fluid Name
+    Pressure,                !- Fluid Property Type
+    FluidGas,                !- Fluid Phase
+    R507_SaturatedTemperatures,  !- Temperature Values Name
+    83247.33224,             !- Property Value 1
+    97140.27364,             !- Property Value 2
+    112798.2736,             !- Property Value 3
+    130366.1221,             !- Property Value 4
+    150009.2933,             !- Property Value 5
+    171879.472,              !- Property Value 6
+    196142.1325,             !- Property Value 7
+    222969.6436,             !- Property Value 8
+    252534.3745,             !- Property Value 9
+    285015.5889,             !- Property Value 10
+    320606.34,               !- Property Value 11
+    359478.9969,             !- Property Value 12
+    401833.5076,             !- Property Value 13
+    447869.8201,             !- Property Value 14
+    497780.9877,             !- Property Value 15
+    551773.8533,             !- Property Value 16
+    610062.1543,             !- Property Value 17
+    672852.7336,             !- Property Value 18
+    740366.2236,             !- Property Value 19
+    812823.2564,             !- Property Value 20
+    890465.1488,             !- Property Value 21
+    973505.6382,             !- Property Value 22
+    1062206.726,             !- Property Value 23
+    1156795.938,             !- Property Value 24
+    1257542.171,             !- Property Value 25
+    1364714.321,             !- Property Value 26
+    1478574.387,             !- Property Value 27
+    1599418.846,             !- Property Value 28
+    1727551.066,             !- Property Value 29
+    1863295.1,               !- Property Value 30
+    2006981.899,             !- Property Value 31
+    2158990.673,             !- Property Value 32
+    2319728.212,             !- Property Value 33
+    2489635.783,             !- Property Value 34
+    2669230.492,             !- Property Value 35
+    2859125.972,             !- Property Value 36
+    3060066.857,             !- Property Value 37
+    3273073.572,             !- Property Value 38
+    3325411.696;             !- Property Value 39
+
+FluidProperties:Saturated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    Fluid,                   !- Fluid Phase
+    R507_SaturatedTemperatures,  !- Temperature Values Name
+    1331.13735,              !- Property Value 1
+    1321.52625,              !- Property Value 2
+    1311.803021,             !- Property Value 3
+    1301.98368,              !- Property Value 4
+    1292.05221,              !- Property Value 5
+    1282.008611,             !- Property Value 6
+    1271.836863,             !- Property Value 7
+    1261.520949,             !- Property Value 8
+    1251.076887,             !- Property Value 9
+    1240.488659,             !- Property Value 10
+    1229.724227,             !- Property Value 11
+    1218.79961,              !- Property Value 12
+    1207.682771,             !- Property Value 13
+    1196.37371,              !- Property Value 14
+    1184.856408,             !- Property Value 15
+    1173.114848,             !- Property Value 16
+    1161.116991,             !- Property Value 17
+    1148.862839,             !- Property Value 18
+    1136.320353,             !- Property Value 19
+    1123.457498,             !- Property Value 20
+    1110.258254,             !- Property Value 21
+    1096.674566,             !- Property Value 22
+    1082.690415,             !- Property Value 23
+    1068.241728,             !- Property Value 24
+    1053.296468,             !- Property Value 25
+    1037.806578,             !- Property Value 26
+    1021.675949,             !- Property Value 27
+    1004.840505,             !- Property Value 28
+    987.2041365,             !- Property Value 29
+    968.638695,              !- Property Value 30
+    948.9839955,             !- Property Value 31
+    928.0638345,             !- Property Value 32
+    905.6058975,             !- Property Value 33
+    881.209722,              !- Property Value 34
+    854.362716,              !- Property Value 35
+    824.1358065,             !- Property Value 36
+    788.9591805,             !- Property Value 37
+    745.4849715,             !- Property Value 38
+    732.68619;               !- Property Value 39
+
+FluidProperties:Saturated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    Fluid,                   !- Fluid Phase
+    R507_SaturatedTemperatures,  !- Temperature Values Name
+    -13655.946,              !- Property Value 1
+    -9836.654,               !- Property Value 2
+    -5989.45,                !- Property Value 3
+    -2121.312,               !- Property Value 4
+    1772.412,                !- Property Value 5
+    5694.048,                !- Property Value 6
+    9641.27,                 !- Property Value 7
+    13616.404,               !- Property Value 8
+    17621.776,               !- Property Value 9
+    21655.06,                !- Property Value 10
+    25720.908,               !- Property Value 11
+    29819.32,                !- Property Value 12
+    33950.296,               !- Property Value 13
+    38116.162,               !- Property Value 14
+    42319.244,               !- Property Value 15
+    46561.868,               !- Property Value 16
+    50844.034,               !- Property Value 17
+    55168.068,               !- Property Value 18
+    59538.622,               !- Property Value 19
+    63958.022,               !- Property Value 20
+    68426.268,               !- Property Value 21
+    72948.012,               !- Property Value 22
+    77527.906,               !- Property Value 23
+    82168.276,               !- Property Value 24
+    86878.426,               !- Property Value 25
+    91658.356,               !- Property Value 26
+    96519.696,               !- Property Value 27
+    101467.098,              !- Property Value 28
+    106509.866,              !- Property Value 29
+    111664.282,              !- Property Value 30
+    116939.65,               !- Property Value 31
+    122359.23,               !- Property Value 32
+    127948.608,              !- Property Value 33
+    133742.674,              !- Property Value 34
+    139797.252,              !- Property Value 35
+    146196.078,              !- Property Value 36
+    153092.668,              !- Property Value 37
+    160819.64,               !- Property Value 38
+    162301.302;              !- Property Value 39
+
+FluidProperties:Saturated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    FluidGas,                !- Fluid Phase
+    R507_SaturatedTemperatures,  !- Temperature Values Name
+    185007.714,              !- Property Value 1
+    186898.752,              !- Property Value 2
+    188780.486,              !- Property Value 3
+    190652.916,              !- Property Value 4
+    192513.716,              !- Property Value 5
+    194358.234,              !- Property Value 6
+    196191.122,              !- Property Value 7
+    198005.402,              !- Property Value 8
+    199801.074,              !- Property Value 9
+    201578.138,              !- Property Value 10
+    203334.268,              !- Property Value 11
+    205067.138,              !- Property Value 12
+    206774.422,              !- Property Value 13
+    208451.468,              !- Property Value 14
+    210100.602,              !- Property Value 15
+    211717.172,              !- Property Value 16
+    213298.852,              !- Property Value 17
+    214840.99,               !- Property Value 18
+    216343.586,              !- Property Value 19
+    217797.336,              !- Property Value 20
+    219202.24,               !- Property Value 21
+    220553.646,              !- Property Value 22
+    221844.576,              !- Property Value 23
+    223065.726,              !- Property Value 24
+    224214.77,               !- Property Value 25
+    225280.078,              !- Property Value 26
+    226252.346,              !- Property Value 27
+    227119.944,              !- Property Value 28
+    227866.59,               !- Property Value 29
+    228471.35,               !- Property Value 30
+    228915.616,              !- Property Value 31
+    229162.172,              !- Property Value 32
+    229176.128,              !- Property Value 33
+    228899.334,              !- Property Value 34
+    228243.402,              !- Property Value 35
+    227082.728,              !- Property Value 36
+    225182.386,              !- Property Value 37
+    222065.546,              !- Property Value 38
+    219611.616;              !- Property Value 39
+
+FluidProperties:Saturated,
+    R507,                    !- Fluid Name
+    SpecificHeat,            !- Fluid Property Type
+    Fluid,                   !- Fluid Phase
+    R507_SaturatedTemperatures,  !- Temperature Values Name
+    1214.171478,             !- Property Value 1
+    1221.289035,             !- Property Value 2
+    1228.825272,             !- Property Value 3
+    1236.780188,             !- Property Value 4
+    1244.735105,             !- Property Value 5
+    1253.108701,             !- Property Value 6
+    1261.482298,             !- Property Value 7
+    1270.693254,             !- Property Value 8
+    1279.90421,              !- Property Value 9
+    1289.533846,             !- Property Value 10
+    1299.582161,             !- Property Value 11
+    1310.049157,             !- Property Value 12
+    1321.353512,             !- Property Value 13
+    1333.076547,             !- Property Value 14
+    1345.218262,             !- Property Value 15
+    1358.197336,             !- Property Value 16
+    1372.01377,              !- Property Value 17
+    1386.667564,             !- Property Value 18
+    1402.577397,             !- Property Value 19
+    1419.32459,              !- Property Value 20
+    1437.746502,             !- Property Value 21
+    1457.424453,             !- Property Value 22
+    1478.777124,             !- Property Value 23
+    1502.641874,             !- Property Value 24
+    1529.018703,             !- Property Value 25
+    1557.90761,              !- Property Value 26
+    1590.983316,             !- Property Value 27
+    1628.24582,              !- Property Value 28
+    1670.951162,             !- Property Value 29
+    1721.61142,              !- Property Value 30
+    1781.482634,             !- Property Value 31
+    1854.751603,             !- Property Value 32
+    1947.279843,             !- Property Value 33
+    2068.278311,             !- Property Value 34
+    2235.750239,             !- Property Value 35
+    2485.702091,             !- Property Value 36
+    2905.637951,             !- Property Value 37
+    3779.004055,             !- Property Value 38
+    4178.424604;             !- Property Value 39
+
+FluidProperties:Saturated,
+    R507,                    !- Fluid Name
+    SpecificHeat,            !- Fluid Property Type
+    FluidGas,                !- Fluid Phase
+    R507_SaturatedTemperatures,  !- Temperature Values Name
+    754.0423558,             !- Property Value 1
+    764.9280311,             !- Property Value 2
+    775.8137065,             !- Property Value 3
+    787.5367414,             !- Property Value 4
+    799.2597764,             !- Property Value 5
+    811.4014912,             !- Property Value 6
+    823.9618858,             !- Property Value 7
+    837.35964,               !- Property Value 8
+    850.7573942,             !- Property Value 9
+    864.5738283,             !- Property Value 10
+    879.227622,              !- Property Value 11
+    894.3000955,             !- Property Value 12
+    909.7912489,             !- Property Value 13
+    926.5384417,             !- Property Value 14
+    943.7043143,             !- Property Value 15
+    961.7075465,             !- Property Value 16
+    980.5481384,             !- Property Value 17
+    1001.06345,              !- Property Value 18
+    1022.41612,              !- Property Value 19
+    1045.443511,             !- Property Value 20
+    1070.14562,              !- Property Value 21
+    1096.522449,             !- Property Value 22
+    1125.411356,             !- Property Value 23
+    1157.231022,             !- Property Value 24
+    1192.400127,             !- Property Value 25
+    1231.75603,              !- Property Value 26
+    1276.136091,             !- Property Value 27
+    1326.79635,              !- Property Value 28
+    1385.411524,             !- Property Value 29
+    1454.912375,             !- Property Value 30
+    1538.648339,             !- Property Value 31
+    1642.062254,             !- Property Value 32
+    1773.527718,             !- Property Value 33
+    1948.117202,             !- Property Value 34
+    2191.788858,             !- Property Value 35
+    2558.55238,              !- Property Value 36
+    3176.942474,             !- Property Value 37
+    4453.915925,             !- Property Value 38
+    5589.375597;             !- Property Value 39
+
+FluidProperties:Saturated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    FluidGas,                !- Fluid Phase
+    R507_SaturatedTemperatures,  !- Temperature Values Name
+    4.644389678,             !- Property Value 1
+    5.368130027,             !- Property Value 2
+    6.179976852,             !- Property Value 3
+    7.081564987,             !- Property Value 4
+    8.086067643,             !- Property Value 5
+    9.200746697,             !- Property Value 6
+    10.42871094,             !- Property Value 7
+    11.78697572,             !- Property Value 8
+    13.28233831,             !- Property Value 9
+    14.91480447,             !- Property Value 10
+    16.70333681,             !- Property Value 11
+    18.66958042,             !- Property Value 12
+    20.80324675,             !- Property Value 13
+    23.14812139,             !- Property Value 14
+    25.71187801,             !- Property Value 15
+    28.45204263,             !- Property Value 16
+    31.47053045,             !- Property Value 17
+    34.7472885,              !- Property Value 18
+    38.32177033,             !- Property Value 19
+    42.15394737,             !- Property Value 20
+    46.43043478,             !- Property Value 21
+    51.01433121,             !- Property Value 22
+    55.81358885,             !- Property Value 23
+    61.37356322,             !- Property Value 24
+    67.30462185,             !- Property Value 25
+    73.4793578,              !- Property Value 26
+    80.49497487,             !- Property Value 27
+    88.5,                    !- Property Value 28
+    97.08181818,             !- Property Value 29
+    106.0827815,             !- Property Value 30
+    116.9233577,             !- Property Value 31
+    128.148,                 !- Property Value 32
+    141.7566372,             !- Property Value 33
+    157.0441176,             !- Property Value 34
+    174.1141304,             !- Property Value 35
+    195.347561,              !- Property Value 36
+    219.4315068,             !- Property Value 37
+    254.2619048,             !- Property Value 38
+    266.975;                 !- Property Value 39
+
+
+!-   ===========  ALL OBJECTS IN CLASS: FLUIDPROPERTIES:SUPERHEATED ===========
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    6894.76,                 !- Pressure {Pa}
+    0.412,                   !- Property Value 1
+    0.401,                   !- Property Value 2
+    0.390,                   !- Property Value 3
+    0.380,                   !- Property Value 4
+    0.370,                   !- Property Value 5
+    0.361,                   !- Property Value 6
+    0.353,                   !- Property Value 7
+    0.344,                   !- Property Value 8
+    0.336,                   !- Property Value 9
+    0.329,                   !- Property Value 10
+    0.322,                   !- Property Value 11
+    0.315,                   !- Property Value 12
+    0.308,                   !- Property Value 13
+    0.302,                   !- Property Value 14
+    0.296,                   !- Property Value 15
+    0.290,                   !- Property Value 16
+    0.284,                   !- Property Value 17
+    0.279,                   !- Property Value 18
+    0.274,                   !- Property Value 19
+    0.269,                   !- Property Value 20
+    0.264,                   !- Property Value 21
+    0.259,                   !- Property Value 22
+    0.255,                   !- Property Value 23
+    0.250,                   !- Property Value 24
+    0.246,                   !- Property Value 25
+    0.242,                   !- Property Value 26
+    0.238,                   !- Property Value 27
+    0.235,                   !- Property Value 28
+    0.231,                   !- Property Value 29
+    0.227,                   !- Property Value 30
+    0.224,                   !- Property Value 31
+    0.220,                   !- Property Value 32
+    0,                       !- Property Value 33
+    0,                       !- Property Value 34
+    0,                       !- Property Value 35
+    0,                       !- Property Value 36
+    0,                       !- Property Value 37
+    0,                       !- Property Value 38
+    0,                       !- Property Value 39
+    0;                       !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    6894.76,                 !- Pressure {Pa}
+    172261.234,              !- Property Value 1
+    176015.398,              !- Property Value 2
+    179830.038,              !- Property Value 3
+    183705.154,              !- Property Value 4
+    187640.746,              !- Property Value 5
+    191636.814,              !- Property Value 6
+    195693.358,              !- Property Value 7
+    199808.052,              !- Property Value 8
+    203985.548,              !- Property Value 9
+    208221.194,              !- Property Value 10
+    212517.316,              !- Property Value 11
+    216871.588,              !- Property Value 12
+    221286.336,              !- Property Value 13
+    225759.234,              !- Property Value 14
+    230287.956,              !- Property Value 15
+    234879.48,               !- Property Value 16
+    239531.48,               !- Property Value 17
+    244230,                  !- Property Value 18
+    248975.04,               !- Property Value 19
+    253789.86,               !- Property Value 20
+    258674.46,               !- Property Value 21
+    263605.58,               !- Property Value 22
+    268583.22,               !- Property Value 23
+    273607.38,               !- Property Value 24
+    278701.32,               !- Property Value 25
+    283841.78,               !- Property Value 26
+    289052.02,               !- Property Value 27
+    294285.52,               !- Property Value 28
+    299588.8,                !- Property Value 29
+    304938.6,                !- Property Value 30
+    310334.92,               !- Property Value 31
+    315801.02,               !- Property Value 32
+    0,                       !- Property Value 33
+    0,                       !- Property Value 34
+    0,                       !- Property Value 35
+    0,                       !- Property Value 36
+    0,                       !- Property Value 37
+    0,                       !- Property Value 38
+    0,                       !- Property Value 39
+    0;                       !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    34473.8,                 !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    1.782011347,             !- Property Value 3
+    1.738684468,             !- Property Value 4
+    1.697414433,             !- Property Value 5
+    1.658058172,             !- Property Value 6
+    1.620649535,             !- Property Value 7
+    1.585048486,             !- Property Value 8
+    1.550977924,             !- Property Value 9
+    1.518341232,             !- Property Value 10
+    1.487187819,             !- Property Value 11
+    1.457287118,             !- Property Value 12
+    1.428692472,             !- Property Value 13
+    1.401075833,             !- Property Value 14
+    1.37462456,              !- Property Value 15
+    1.349153542,             !- Property Value 16
+    1.324609278,             !- Property Value 17
+    1.301047758,             !- Property Value 18
+    1.278207788,             !- Property Value 19
+    1.256254411,             !- Property Value 20
+    1.235042406,             !- Property Value 21
+    1.21453484,              !- Property Value 22
+    1.194697196,             !- Property Value 23
+    1.175497175,             !- Property Value 24
+    1.156988082,             !- Property Value 25
+    1.138971843,             !- Property Value 26
+    1.121508087,             !- Property Value 27
+    1.104647955,             !- Property Value 28
+    1.088213315,             !- Property Value 29
+    1.072332307,             !- Property Value 30
+    0,                       !- Property Value 31
+    0,                       !- Property Value 32
+    0,                       !- Property Value 33
+    0,                       !- Property Value 34
+    0,                       !- Property Value 35
+    0,                       !- Property Value 36
+    0,                       !- Property Value 37
+    0,                       !- Property Value 38
+    0,                       !- Property Value 39
+    0;                       !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    34473.8,                 !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    194900.192,              !- Property Value 3
+    199073.036,              !- Property Value 4
+    203299.378,              !- Property Value 5
+    207581.544,              !- Property Value 6
+    211917.208,              !- Property Value 7
+    216311.022,              !- Property Value 8
+    220758.334,              !- Property Value 9
+    225261.47,               !- Property Value 10
+    229818.104,              !- Property Value 11
+    234437.54,               !- Property Value 12
+    239112.8,                !- Property Value 13
+    243834.58,               !- Property Value 14
+    248602.88,               !- Property Value 15
+    253440.96,               !- Property Value 16
+    258325.56,               !- Property Value 17
+    263279.94,               !- Property Value 18
+    268257.58,               !- Property Value 19
+    273305,                  !- Property Value 20
+    278422.2,                !- Property Value 21
+    283562.66,               !- Property Value 22
+    288772.9,                !- Property Value 23
+    294029.66,               !- Property Value 24
+    299332.94,               !- Property Value 25
+    304706,                  !- Property Value 26
+    310125.58,               !- Property Value 27
+    315568.42,               !- Property Value 28
+    321081.04,               !- Property Value 29
+    326640.18,               !- Property Value 30
+    0,                       !- Property Value 31
+    0,                       !- Property Value 32
+    0,                       !- Property Value 33
+    0,                       !- Property Value 34
+    0,                       !- Property Value 35
+    0,                       !- Property Value 36
+    0,                       !- Property Value 37
+    0,                       !- Property Value 38
+    0,                       !- Property Value 39
+    0;                       !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    165474.24,               !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    8.786889742,             !- Property Value 8
+    8.538646055,             !- Property Value 9
+    8.308350622,             !- Property Value 10
+    8.090151515,             !- Property Value 11
+    7.887001477,             !- Property Value 12
+    7.697501201,             !- Property Value 13
+    7.516893477,             !- Property Value 14
+    7.344566713,             !- Property Value 15
+    7.183183857,             !- Property Value 16
+    7.028740676,             !- Property Value 17
+    6.880798969,             !- Property Value 18
+    6.741792929,             !- Property Value 19
+    6.60556701,              !- Property Value 20
+    6.479975728,             !- Property Value 21
+    6.356547619,             !- Property Value 22
+    6.237733645,             !- Property Value 23
+    6.125621415,             !- Property Value 24
+    6.015208412,             !- Property Value 25
+    5.910885609,             !- Property Value 26
+    5.810119695,             !- Property Value 27
+    5.712731812,             !- Property Value 28
+    5.618554893,             !- Property Value 29
+    5.527432712,             !- Property Value 30
+    5.441066576,             !- Property Value 31
+    5.3555667,               !- Property Value 32
+    5.274448469,             !- Property Value 33
+    5.194066148,             !- Property Value 34
+    5.117731629,             !- Property Value 35
+    5.042020774,             !- Property Value 36
+    4.970058951,             !- Property Value 37
+    4.900122362,             !- Property Value 38
+    4.830669481,             !- Property Value 39
+    0;                       !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    165474.24,               !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    195360.74,               !- Property Value 8
+    199866.202,              !- Property Value 9
+    204394.924,              !- Property Value 10
+    208951.558,              !- Property Value 11
+    213540.756,              !- Property Value 12
+    218167.17,               !- Property Value 13
+    222828.474,              !- Property Value 14
+    227531.646,              !- Property Value 15
+    232276.686,              !- Property Value 16
+    237065.92,               !- Property Value 17
+    241904,                  !- Property Value 18
+    246765.34,               !- Property Value 19
+    251696.46,               !- Property Value 20
+    256674.1,                !- Property Value 21
+    261675,                  !- Property Value 22
+    266745.68,               !- Property Value 23
+    271862.88,               !- Property Value 24
+    277026.6,                !- Property Value 25
+    282236.84,               !- Property Value 26
+    287493.6,                !- Property Value 27
+    292796.88,               !- Property Value 28
+    298146.68,               !- Property Value 29
+    303543,                  !- Property Value 30
+    308985.84,               !- Property Value 31
+    314498.46,               !- Property Value 32
+    320034.34,               !- Property Value 33
+    325640,                  !- Property Value 34
+    331268.92,               !- Property Value 35
+    336967.62,               !- Property Value 36
+    342689.58,               !- Property Value 37
+    348481.32,               !- Property Value 38
+    354319.58,               !- Property Value 39
+    0;                       !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    193053.28,               !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    9.785277947,             !- Property Value 10
+    9.523483948,             !- Property Value 11
+    9.275332947,             !- Property Value 12
+    9.044889893,             !- Property Value 13
+    8.825619835,             !- Property Value 14
+    8.621367061,             !- Property Value 15
+    8.42635455,              !- Property Value 16
+    8.244209985,             !- Property Value 17
+    8.0697733,               !- Property Value 18
+    7.902565368,             !- Property Value 19
+    7.742145964,             !- Property Value 20
+    7.588109901,             !- Property Value 21
+    7.443540892,             !- Property Value 22
+    7.304377565,             !- Property Value 23
+    7.170322292,             !- Property Value 24
+    7.041098901,             !- Property Value 25
+    6.916450777,             !- Property Value 26
+    6.799023769,             !- Property Value 27
+    6.682728411,             !- Property Value 28
+    6.573040624,             !- Property Value 29
+    6.464285714,             !- Property Value 30
+    6.361596505,             !- Property Value 31
+    6.262118843,             !- Property Value 32
+    6.165704388,             !- Property Value 33
+    6.072213798,             !- Property Value 34
+    5.981516057,             !- Property Value 35
+    5.893487859,             !- Property Value 36
+    5.808013053,             !- Property Value 37
+    5.72498213,              !- Property Value 38
+    5.644291755,             !- Property Value 39
+    5.567778936;             !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    193053.28,               !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    203683.168,              !- Property Value 10
+    208293.3,                !- Property Value 11
+    212929.018,              !- Property Value 12
+    217594.974,              !- Property Value 13
+    222295.82,               !- Property Value 14
+    227031.556,              !- Property Value 15
+    231806.834,              !- Property Value 16
+    236623.98,               !- Property Value 17
+    241485.32,               !- Property Value 18
+    246369.92,               !- Property Value 19
+    251324.3,                !- Property Value 20
+    256301.94,               !- Property Value 21
+    261349.36,               !- Property Value 22
+    266420.04,               !- Property Value 23
+    271560.5,                !- Property Value 24
+    276724.22,               !- Property Value 25
+    281934.46,               !- Property Value 26
+    287214.48,               !- Property Value 27
+    292541.02,               !- Property Value 28
+    297890.82,               !- Property Value 29
+    303310.4,                !- Property Value 30
+    308753.24,               !- Property Value 31
+    314265.86,               !- Property Value 32
+    319825,                  !- Property Value 33
+    325430.66,               !- Property Value 34
+    331082.84,               !- Property Value 35
+    336758.28,               !- Property Value 36
+    342503.5,                !- Property Value 37
+    348295.24,               !- Property Value 38
+    354133.5,                !- Property Value 39
+    360018.28;               !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    241316.6,                !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    11.761,                  !- Property Value 12
+    11.458,                  !- Property Value 13
+    11.171,                  !- Property Value 14
+    10.897,                  !- Property Value 15
+    10.644,                  !- Property Value 16
+    10.402,                  !- Property Value 17
+    10.177,                  !- Property Value 18
+    9.956,                   !- Property Value 19
+    9.750,                   !- Property Value 20
+    9.558,                   !- Property Value 21
+    9.368,                   !- Property Value 22
+    9.185,                   !- Property Value 23
+    9.014,                   !- Property Value 24
+    8.850,                   !- Property Value 25
+    8.692,                   !- Property Value 26
+    8.539,                   !- Property Value 27
+    8.391,                   !- Property Value 28
+    8.253,                   !- Property Value 29
+    8.115,                   !- Property Value 30
+    7.985,                   !- Property Value 31
+    7.856,                   !- Property Value 32
+    7.735,                   !- Property Value 33
+    7.613,                   !- Property Value 34
+    7.499,                   !- Property Value 35
+    7.389,                   !- Property Value 36
+    7.281,                   !- Property Value 37
+    7.177,                   !- Property Value 38
+    7.075,                   !- Property Value 39
+    6.977;                   !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    241316.6,                !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    211835.798,              !- Property Value 12
+    216576.186,              !- Property Value 13
+    221344.486,              !- Property Value 14
+    226140.698,              !- Property Value 15
+    230969.474,              !- Property Value 16
+    235833.140,              !- Property Value 17
+    240741.000,              !- Property Value 18
+    245672.120,              !- Property Value 19
+    250649.760,              !- Property Value 20
+    255673.920,              !- Property Value 21
+    260744.600,              !- Property Value 22
+    265861.800,              !- Property Value 23
+    271002.260,              !- Property Value 24
+    276212.500,              !- Property Value 25
+    281446.000,              !- Property Value 26
+    286726.020,              !- Property Value 27
+    292075.820,              !- Property Value 28
+    297448.880,              !- Property Value 29
+    302891.720,              !- Property Value 30
+    308357.820,              !- Property Value 31
+    313870.440,              !- Property Value 32
+    319452.840,              !- Property Value 33
+    325058.500,              !- Property Value 34
+    330710.680,              !- Property Value 35
+    336432.640,              !- Property Value 36
+    342177.860,              !- Property Value 37
+    347969.600,              !- Property Value 38
+    353831.120,              !- Property Value 39
+    359715.900;              !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    296474.68,               !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    14.709,                  !- Property Value 12
+    14.302,                  !- Property Value 13
+    13.917,                  !- Property Value 14
+    13.564,                  !- Property Value 15
+    13.238,                  !- Property Value 16
+    12.929,                  !- Property Value 17
+    12.633,                  !- Property Value 18
+    12.350,                  !- Property Value 19
+    12.089,                  !- Property Value 20
+    11.839,                  !- Property Value 21
+    11.599,                  !- Property Value 22
+    11.369,                  !- Property Value 23
+    11.155,                  !- Property Value 24
+    10.942,                  !- Property Value 25
+    10.743,                  !- Property Value 26
+    10.552,                  !- Property Value 27
+    10.368,                  !- Property Value 28
+    10.190,                  !- Property Value 29
+    10.018,                  !- Property Value 30
+    9.851,                   !- Property Value 31
+    9.696,                   !- Property Value 32
+    9.541,                   !- Property Value 33
+    9.395,                   !- Property Value 34
+    9.249,                   !- Property Value 35
+    9.112,                   !- Property Value 36
+    8.974,                   !- Property Value 37
+    8.845,                   !- Property Value 38
+    8.720,                   !- Property Value 39
+    8.598;                   !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    296474.68,               !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    210542.542,              !- Property Value 12
+    215378.296,              !- Property Value 13
+    220228.006,              !- Property Value 14
+    225098.650,              !- Property Value 15
+    229992.554,              !- Property Value 16
+    234926.000,              !- Property Value 17
+    239880.380,              !- Property Value 18
+    244858.020,              !- Property Value 19
+    249882.180,              !- Property Value 20
+    254952.860,              !- Property Value 21
+    260046.800,              !- Property Value 22
+    265187.260,              !- Property Value 23
+    270374.240,              !- Property Value 24
+    275607.740,              !- Property Value 25
+    280864.500,              !- Property Value 26
+    286191.040,              !- Property Value 27
+    291540.840,              !- Property Value 28
+    296937.160,              !- Property Value 29
+    302403.260,              !- Property Value 30
+    307892.620,              !- Property Value 31
+    313428.500,              !- Property Value 32
+    319010.900,              !- Property Value 33
+    324639.820,              !- Property Value 34
+    330315.260,              !- Property Value 35
+    336037.220,              !- Property Value 36
+    341805.700,              !- Property Value 37
+    347620.700,              !- Property Value 38
+    353458.960,              !- Property Value 39
+    359367.000;              !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    344738,                  !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    0.000,                   !- Property Value 12
+    16.879,                  !- Property Value 13
+    16.396,                  !- Property Value 14
+    15.971,                  !- Property Value 15
+    15.567,                  !- Property Value 16
+    15.183,                  !- Property Value 17
+    14.832,                  !- Property Value 18
+    14.483,                  !- Property Value 19
+    14.176,                  !- Property Value 20
+    13.869,                  !- Property Value 21
+    13.587,                  !- Property Value 22
+    13.304,                  !- Property Value 23
+    13.044,                  !- Property Value 24
+    12.794,                  !- Property Value 25
+    12.564,                  !- Property Value 26
+    12.331,                  !- Property Value 27
+    12.108,                  !- Property Value 28
+    11.901,                  !- Property Value 29
+    11.701,                  !- Property Value 30
+    11.508,                  !- Property Value 31
+    11.313,                  !- Property Value 32
+    11.132,                  !- Property Value 33
+    10.957,                  !- Property Value 34
+    10.787,                  !- Property Value 35
+    10.622,                  !- Property Value 36
+    10.470,                  !- Property Value 37
+    10.315,                  !- Property Value 38
+    10.164,                  !- Property Value 39
+    10.018;                  !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    344738,                  !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    0.00,                    !- Property Value 12
+    214296.706,              !- Property Value 13
+    219225.500,              !- Property Value 14
+    224163.598,              !- Property Value 15
+    229120.304,              !- Property Value 16
+    234088.640,              !- Property Value 17
+    239112.800,              !- Property Value 18
+    244136.960,              !- Property Value 19
+    249207.640,              !- Property Value 20
+    254301.580,              !- Property Value 21
+    259442.040,              !- Property Value 22
+    264605.760,              !- Property Value 23
+    269816.000,              !- Property Value 24
+    275072.760,              !- Property Value 25
+    280376.040,              !- Property Value 26
+    285702.580,              !- Property Value 27
+    291075.640,              !- Property Value 28
+    296495.220,              !- Property Value 29
+    301961.320,              !- Property Value 30
+    307473.940,              !- Property Value 31
+    313033.080,              !- Property Value 32
+    318638.740,              !- Property Value 33
+    324267.660,              !- Property Value 34
+    329966.360,              !- Property Value 35
+    335688.320,              !- Property Value 36
+    341456.800,              !- Property Value 37
+    347295.060,              !- Property Value 38
+    353156.580,              !- Property Value 39
+    359064.620;              !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    413685,                  !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    0.000,                   !- Property Value 12
+    0.000,                   !- Property Value 13
+    20.073,                  !- Property Value 14
+    19.511,                  !- Property Value 15
+    18.979,                  !- Property Value 16
+    18.497,                  !- Property Value 17
+    18.039,                  !- Property Value 18
+    17.603,                  !- Property Value 19
+    17.206,                  !- Property Value 20
+    16.826,                  !- Property Value 21
+    16.463,                  !- Property Value 22
+    16.115,                  !- Property Value 23
+    15.797,                  !- Property Value 24
+    15.492,                  !- Property Value 25
+    15.183,                  !- Property Value 26
+    14.901,                  !- Property Value 27
+    14.629,                  !- Property Value 28
+    14.379,                  !- Property Value 29
+    14.126,                  !- Property Value 30
+    13.881,                  !- Property Value 31
+    13.656,                  !- Property Value 32
+    13.427,                  !- Property Value 33
+    13.217,                  !- Property Value 34
+    13.013,                  !- Property Value 35
+    12.805,                  !- Property Value 36
+    12.613,                  !- Property Value 37
+    12.427,                  !- Property Value 38
+    12.247,                  !- Property Value 39
+    12.071;                  !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    413685,                  !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    0.00,                    !- Property Value 12
+    0.000,                   !- Property Value 13
+    217743.838,              !- Property Value 14
+    222791.258,              !- Property Value 15
+    227841.004,              !- Property Value 16
+    232902.380,              !- Property Value 17
+    237973.060,              !- Property Value 18
+    243090.260,              !- Property Value 19
+    248207.460,              !- Property Value 20
+    253347.920,              !- Property Value 21
+    258534.900,              !- Property Value 22
+    263768.400,              !- Property Value 23
+    269025.160,              !- Property Value 24
+    274305.180,              !- Property Value 25
+    279631.720,              !- Property Value 26
+    285004.780,              !- Property Value 27
+    290401.100,              !- Property Value 28
+    295867.200,              !- Property Value 29
+    301356.560,              !- Property Value 30
+    306892.440,              !- Property Value 31
+    312451.580,              !- Property Value 32
+    318080.500,              !- Property Value 33
+    323732.680,              !- Property Value 34
+    329454.640,              !- Property Value 35
+    335199.860,              !- Property Value 36
+    340991.600,              !- Property Value 37
+    346829.860,              !- Property Value 38
+    352714.640,              !- Property Value 39
+    358622.680;              !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    482633,                  !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    0.000,                   !- Property Value 12
+    0.000,                   !- Property Value 13
+    0.000,                   !- Property Value 14
+    23.182,                  !- Property Value 15
+    22.530,                  !- Property Value 16
+    21.913,                  !- Property Value 17
+    21.358,                  !- Property Value 18
+    20.803,                  !- Property Value 19
+    20.328,                  !- Property Value 20
+    19.849,                  !- Property Value 21
+    19.416,                  !- Property Value 22
+    19.002,                  !- Property Value 23
+    18.605,                  !- Property Value 24
+    18.224,                  !- Property Value 25
+    17.858,                  !- Property Value 26
+    17.526,                  !- Property Value 27
+    17.187,                  !- Property Value 28
+    16.879,                  !- Property Value 29
+    16.582,                  !- Property Value 30
+    16.296,                  !- Property Value 31
+    16.019,                  !- Property Value 32
+    15.751,                  !- Property Value 33
+    15.492,                  !- Property Value 34
+    15.241,                  !- Property Value 35
+    15.013,                  !- Property Value 36
+    14.777,                  !- Property Value 37
+    14.562,                  !- Property Value 38
+    14.341,                  !- Property Value 39
+    14.138;                  !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    482633,                  !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    0.00,                    !- Property Value 12
+    0.000,                   !- Property Value 13
+    0.000,                   !- Property Value 14
+    221365.420,              !- Property Value 15
+    226517.510,              !- Property Value 16
+    231669.600,              !- Property Value 17
+    236833.320,              !- Property Value 18
+    241997.040,              !- Property Value 19
+    247184.020,              !- Property Value 20
+    252394.260,              !- Property Value 21
+    257627.760,              !- Property Value 22
+    262907.780,              !- Property Value 23
+    268187.800,              !- Property Value 24
+    273537.600,              !- Property Value 25
+    278887.400,              !- Property Value 26
+    284283.720,              !- Property Value 27
+    289726.560,              !- Property Value 28
+    295215.920,              !- Property Value 29
+    300728.540,              !- Property Value 30
+    306287.680,              !- Property Value 31
+    311893.340,              !- Property Value 32
+    317522.260,              !- Property Value 33
+    323220.960,              !- Property Value 34
+    328942.920,              !- Property Value 35
+    334711.400,              !- Property Value 36
+    340503.140,              !- Property Value 37
+    346364.660,              !- Property Value 38
+    352249.440,              !- Property Value 39
+    358204.000;              !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Density,                 !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    689476,                  !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    0.000,                   !- Property Value 12
+    0.000,                   !- Property Value 13
+    0.000,                   !- Property Value 14
+    0.000,                   !- Property Value 15
+    0.000,                   !- Property Value 16
+    32.960,                  !- Property Value 17
+    31.909,                  !- Property Value 18
+    31.044,                  !- Property Value 19
+    30.167,                  !- Property Value 20
+    29.392,                  !- Property Value 21
+    28.656,                  !- Property Value 22
+    27.955,                  !- Property Value 23
+    27.335,                  !- Property Value 24
+    26.742,                  !- Property Value 25
+    26.174,                  !- Property Value 26
+    25.630,                  !- Property Value 27
+    25.107,                  !- Property Value 28
+    24.606,                  !- Property Value 29
+    24.161,                  !- Property Value 30
+    23.696,                  !- Property Value 31
+    23.283,                  !- Property Value 32
+    22.884,                  !- Property Value 33
+    22.466,                  !- Property Value 34
+    22.094,                  !- Property Value 35
+    21.735,                  !- Property Value 36
+    21.387,                  !- Property Value 37
+    21.049,                  !- Property Value 38
+    20.723,                  !- Property Value 39
+    20.406;                  !- Property Value 40
+
+FluidProperties:Superheated,
+    R507,                    !- Fluid Name
+    Enthalpy,                !- Fluid Property Type
+    R507_SuperHeatTemp,      !- Temperature Values Name
+    689476,                  !- Pressure {Pa}
+    0,                       !- Property Value 1
+    0,                       !- Property Value 2
+    0,                       !- Property Value 3
+    0,                       !- Property Value 4
+    0,                       !- Property Value 5
+    0,                       !- Property Value 6
+    0,                       !- Property Value 7
+    0,                       !- Property Value 8
+    0,                       !- Property Value 9
+    0,                       !- Property Value 10
+    0,                       !- Property Value 11
+    0.00,                    !- Property Value 12
+    0.000,                   !- Property Value 13
+    0.000,                   !- Property Value 14
+    0.000,                   !- Property Value 15
+    0.000,                   !- Property Value 16
+    227722.378,              !- Property Value 17
+    233158.240,              !- Property Value 18
+    238577.820,              !- Property Value 19
+    243997.400,              !- Property Value 20
+    249393.720,              !- Property Value 21
+    254813.300,              !- Property Value 22
+    260232.880,              !- Property Value 23
+    265675.720,              !- Property Value 24
+    271118.560,              !- Property Value 25
+    276607.920,              !- Property Value 26
+    282120.540,              !- Property Value 27
+    287656.420,              !- Property Value 28
+    293238.820,              !- Property Value 29
+    298821.220,              !- Property Value 30
+    304473.400,              !- Property Value 31
+    310148.840,              !- Property Value 32
+    315847.540,              !- Property Value 33
+    321592.760,              !- Property Value 34
+    327384.500,              !- Property Value 35
+    333199.500,              !- Property Value 36
+    339061.020,              !- Property Value 37
+    344969.060,              !- Property Value 38
+    350900.360,              !- Property Value 39
+    356878.180;              !- Property Value 40
+
+<% end %>
