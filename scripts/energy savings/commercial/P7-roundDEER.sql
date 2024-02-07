@@ -1,9 +1,8 @@
 -- Format the measures impacts table for the ex ante database, using three significant figures where appropriate 
 --   and adding the appropriate text for the impact profiles for this measure group.
 SET search_path TO "MC_results_database";
-DROP TABLE IF EXISTS meas_impacts_2023_com;
-CREATE TABLE meas_impacts_2023_com AS 
-SELECT
+DROP TABLE IF EXISTS meas_impacts_2024_com;
+CREATE TABLE meas_impacts_2024_com AS 
 SELECT
 
 meas_impacts_wtd."EnergyImpactID"::VARCHAR,
@@ -61,7 +60,7 @@ FROM
 meas_impacts_wtd
 LEFT JOIN "ImpactProfiles" on "ImpactProfiles"."EnergyImpactID" = meas_impacts_wtd."EnergyImpactID";
 
-ALTER TABLE "meas_impacts_2023_com"
+ALTER TABLE "meas_impacts_2024_com"
 ALTER COLUMN "EnergyImpactID" SET NOT NULL,
 ALTER COLUMN "PA" SET NOT NULL,
 ALTER COLUMN "BldgType" SET NOT NULL,

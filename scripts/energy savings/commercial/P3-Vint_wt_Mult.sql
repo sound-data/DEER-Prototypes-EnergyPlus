@@ -17,18 +17,24 @@ meas_impacts_2022."BldgVint",
 wts_com_vintage.era as "era",
 meas_impacts_2022."BldgLoc",
 meas_impacts_2022."BldgHVAC",
-CASE WHEN wts_com_loc.sum_loc = 0 THEN 1 ELSE wts_com_vintage.wt_vint END as "wt_vint",
+--CASE WHEN wts_com_loc.sum_loc = 0 THEN 1 ELSE wts_com_vintage.wt_vint END as "wt_vint",
+wts_com_vintage.wt_vint as "wt_vint",
 "NormUnit",
 "NumUnit" * wt_vint as "NumUnit",
 "MeasArea" * wt_vint as "MeasArea",
 'None'::VARCHAR as "ScaleBasis",
-CASE WHEN wts_com_loc.sum_loc = 0 THEN "APreWBkWh"   ELSE "APreWBkWh" * wt_vint   END as "APreWBkWh",
-CASE WHEN wts_com_loc.sum_loc = 0 THEN "APreWBkW49"  ELSE "APreWBkW49" * wt_vint  END as "APreWBkW",
-CASE WHEN wts_com_loc.sum_loc = 0 THEN "APreWBtherm" ELSE "APreWBtherm" * wt_vint END as "APreWBtherm",
-CASE WHEN wts_com_loc.sum_loc = 0 THEN "AStdWBkWh"   ELSE "AStdWBkWh" * wt_vint   END as "AStdWBkWh",
-CASE WHEN wts_com_loc.sum_loc = 0 THEN "AStdWBkW49"  ELSE "AStdWBkW49" * wt_vint  END as "AStdWBkW",
-CASE WHEN wts_com_loc.sum_loc = 0 THEN "AStdWBtherm" ELSE "AStdWBtherm" * wt_vint END as "AStdWBtherm",
-
+--CASE WHEN wts_com_loc.sum_loc = 0 THEN "APreWBkWh"   ELSE "APreWBkWh" * wt_vint   END as "APreWBkWh",
+--CASE WHEN wts_com_loc.sum_loc = 0 THEN "APreWBkW49"  ELSE "APreWBkW49" * wt_vint  END as "APreWBkW",
+--CASE WHEN wts_com_loc.sum_loc = 0 THEN "APreWBtherm" ELSE "APreWBtherm" * wt_vint END as "APreWBtherm",
+--CASE WHEN wts_com_loc.sum_loc = 0 THEN "AStdWBkWh"   ELSE "AStdWBkWh" * wt_vint   END as "AStdWBkWh",
+--CASE WHEN wts_com_loc.sum_loc = 0 THEN "AStdWBkW49"  ELSE "AStdWBkW49" * wt_vint  END as "AStdWBkW",
+--CASE WHEN wts_com_loc.sum_loc = 0 THEN "AStdWBtherm" ELSE "AStdWBtherm" * wt_vint END as "AStdWBtherm",
+"APreWBkWh" * wt_vint   as "APreWBkWh",
+"APreWBkW49" * wt_vint  as "APreWBkW",
+"APreWBtherm" * wt_vint as "APreWBtherm",
+"AStdWBkWh" * wt_vint   as "AStdWBkWh",
+"AStdWBkW49" * wt_vint  as "AStdWBkW",
+"AStdWBtherm" * wt_vint as "AStdWBtherm",
 --new fields added 6/20/2022
 "APreUseWBkWh" * wt_vint as "APreUseWBkWh",
 "APreUseWBtherm" * wt_vint as "APreUseWBtherm",
@@ -48,11 +54,11 @@ JOIN wts_com_vintage on
  wts_com_vintage.bldgtype = meas_impacts_2022."BldgType" and 
  wts_com_vintage.bldgvint = meas_impacts_2022."BldgVint" and 
  wts_com_vintage.bldgloc  = meas_impacts_2022."BldgLoc"
-JOIN wts_com_loc on 
- wts_com_vintage.pa       = wts_com_loc.pa and 
- wts_com_vintage.bldgtype = wts_com_loc.bldgtype and 
- wts_com_vintage.bldgloc  = wts_com_loc.bldgloc and
- wts_com_vintage.era      = wts_com_loc.era
+--JOIN wts_com_loc on 
+-- wts_com_vintage.pa       = wts_com_loc.pa and 
+-- wts_com_vintage.bldgtype = wts_com_loc.bldgtype and 
+-- wts_com_vintage.bldgloc  = wts_com_loc.bldgloc and
+-- wts_com_vintage.era      = wts_com_loc.era
 WHERE meas_impacts_2022."BldgVint" <> 'New'
 
 ORDER BY 
