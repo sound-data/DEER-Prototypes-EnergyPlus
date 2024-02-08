@@ -899,7 +899,7 @@ insert "ref-sys-comp.pxt",
   :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
 
 # System LT_System
-LT_System_case_walkin_names = ["OpenWellIceCreamDisplayCase", "GlassDoorFrozenFoodA", "GlassDoorFrozenFoodB","GlassDoorFrozenFoodC","WalkInFreezer"]
+LT_System_case_walkin_names = ["LT_ReachinCase1", "LT_ReachinCase2","LT_ICReachinCase", "LT_DualTemp1Case","LT_DualTemp2Case","WalkInFreezer"]
 LT_System_ref_sys_comp_names = ["LT_Compressor1","LT_Compressor2","LT_Compressor3","LT_Compressor4","LT_Compressor5","LT_Compressor6","LT_Compressor7"]
 insert "ref-sys.pxt",
   :ref_system_name => "LT_System",
@@ -908,24 +908,79 @@ insert "ref-sys.pxt",
   :cond_curves_source => "LowTemp"
 
 insert "ref-case.pxt",
-  :case_name => "OpenWellIceCreamDisplayCase",
+  :case_name => "LT_ReachinCase1",
   :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
-  :capacity => 441.6['W/m']
+  :capacity => 522['W/m'],
+  :length => 35['ft'],
+  :case_temp => -5['F'],
+  :fan_power => 68.75['W/m'],
+  :light_power => 97.5 ['W/m'] ,
+  :ash_power => 267.5 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  183 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
-  :case_name => "GlassDoorFrozenFoodA",
+  :case_name => "LT_ReachinCase2",
   :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
-  :capacity => 615.8['W/m']
+  :capacity => 522['W/m'],
+  :length => 35['ft'],
+  :case_temp => -5['F'],
+  :fan_power => 68.75['W/m'],
+  :light_power => 97.5 ['W/m'] ,
+  :ash_power => 267.5 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  183 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
-  :case_name => "GlassDoorFrozenFoodB",
+  :case_name => "LT_ICReachinCase",
   :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
-  :capacity => 615.8['W/m']
+  :capacity => 564['W/m'],
+  :length => 39['ft'],
+  :case_temp => -12['F'],
+  :fan_power => 68.75['W/m'],
+  :light_power => 97.5 ['W/m'] ,
+  :ash_power => 267.5 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  183 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
 
 insert "ref-case.pxt",
-  :case_name => "GlassDoorFrozenFoodC",
+  :case_name => "LT_DualTemp1Case",
   :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
-  :capacity => 615.8['W/m']
+  :capacity => 529['W/m'],
+  :length => 80['ft'],
+  :case_temp => -12['F'],
+  :fan_power => 29.53['W/m'],
+  :light_power => 0 ['W/m'] ,
+  :ash_power => 78.74 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
+
+insert "ref-case.pxt",
+  :case_name => "LT_DualTemp2Case",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 529['W/m'],
+  :length => 80['ft'],
+  :case_temp => -12['F'],
+  :fan_power => 29.53['W/m'],
+  :light_power => 0 ['W/m'] ,
+  :ash_power => 78.74 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
 
 insert "ref-walkin.pxt",
   :walkin_name => "WalkInFreezer",
