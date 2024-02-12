@@ -707,7 +707,7 @@ insert "ref-comp.pxt",
   :fan_power => 175
 
 # System MT_System
-MT_System_case_walkin_names = ["Meat1DisplayCase","FishDisplayCase",  "MT_MelonBakery", "MT_Deli","MT_DeliServ", "MT_Meat2", "MT_Meat3", "MT_Dairy1", "MT_Dairy2", "MT_Produce"]
+MT_System_case_walkin_names = ["Meat1DisplayCase","FishDisplayCase",  "MT_MelonBakery", "MT_Deli","MT_DeliServ", "MT_Meat2", "MT_Meat3", "MT_Dairy1", "MT_Dairy2", "MT_Produce", "WalkInCooler"]
 MT_System_ref_sys_comp_names = ["MT_Compressor1","MT_Compressor2","MT_Compressor3","MT_Compressor4","MT_Compressor5","MT_Compressor6","MT_Compressor7","MT_Compressor8"]
 insert "ref-sys.pxt",
   :ref_system_name => "MT_System",
@@ -866,6 +866,16 @@ insert "ref-case.pxt",
   :defrost_type => "OFF-CYCLE",
   :case_type => "OPEN"
 
+insert "ref-walkin.pxt",
+  :walkin_name => "WalkInCooler",
+  :zone_name => "RefWalkInCool EL1 Core Spc (G.C6)",
+  :capacity => 21980['W'],
+  :op_temp => 35 ['F'],
+  :cool_source_temp => 25 ['F'],
+  :fan_power => 1003 ['W'],
+  :floor_area => 1559.8['ft2'],
+  :total_insulated_area => 3119.6['ft2']
+
 insert "ref-sys-comp.pxt",
   :comp_name => "MT_Compressor1",
   :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
@@ -988,7 +998,12 @@ insert "ref-case.pxt",
 insert "ref-walkin.pxt",
   :walkin_name => "WalkInFreezer",
   :zone_name => "RefWalkInFreeze EL1 Core Spc (G.C5)",
-  :capacity => 27200['W']
+  :capacity => 17584['W'],
+  :op_temp => -5 ['F'],
+  :cool_source_temp => -13 ['F'],
+  :fan_power => 963.3 ['W'],
+  :floor_area => 812.31['ft2'],
+  :total_insulated_area => 1624.62['ft2']
 
 insert "ref-sys-comp.pxt",
   :comp_name => "LT_Compressor1",

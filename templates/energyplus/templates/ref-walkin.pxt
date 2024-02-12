@@ -3,11 +3,14 @@ parameter "walkin_name"
 parameter "zone_name"
 parameter "capacity", :default=>4690['W']
 parameter "op_temp", :default=>28['F']
+parameter "cool_source_temp", :default => -6.67 ['C']
 parameter "anti_sweat_power", :default=>0['W']
 parameter "fan_power", :default=>735.0['W']
 parameter "light_power", :default=>120.0['W']
 parameter "defrost_power", :default=>5512['W']
+parameter "floor_area", :default=> 1559.8['ft2']
 parameter "floor_U_value", :default=>0.207 # in ['W/m2-K']
+parameter "total_insulated_area", :default=> 3119.6['ft2']
 parameter "surface_U_value", :default=>0.235 # in ['W/m2-K']
 parameter "lighting_Schedule", :default=>
 "
@@ -39,7 +42,7 @@ Refrigeration:WalkIn,
     <%= walkin_name %> Walkin Availability Sch,      !- Availability Schedule Name
     <%= capacity %>,                   !- Rated Coil Cooling Capacity {W}
     <%= op_temp %>,                   !- Operating Temperature {C}
-    -6.67,                   !- Rated Cooling Source Temperature {C}
+    <%= cool_source_temp %>,                   !- Rated Cooling Source Temperature {C}
     <%= anti_sweat_power %>,                     !- Rated Total Heating Power {W}
     <%= walkin_name %> Walkin Heater Sch,      !- Heating Power Schedule Name
     <%= fan_power %>,                    !- Rated Cooling Coil Fan Power {W}
@@ -54,10 +57,10 @@ Refrigeration:WalkIn,
     ,                        !- Temperature Termination Defrost Fraction to Ice {dimensionless}
     <%= walkin_name %> Restock Sch,     !- Restocking Schedule Name
     ,                        !- Average Refrigerant Charge Inventory {kg}
-    13,                    !- Insulated Floor Surface Area {m2}
+    <%= floor_area %>,                    !- Insulated Floor Surface Area {m2}
     <%= floor_U_value %>,                   !- Insulated Floor U-Value {W/m2-K}
     <%= zone_name %>,                !- Zone 1 Name
-    43.4,                    !- Total Insulated Surface Area Facing Zone 1 {m2}
+    <%= total_insulated_area %>,                    !- Total Insulated Surface Area Facing Zone 1 {m2}
     <%= surface_U_value %>,                    !- Insulated Surface U-Value Facing Zone 1 {W/m2-K}
     ,                        !- Area of Glass Reach In Doors Facing Zone 1 {m2}
     ,                        !- Height of Glass Reach In Doors Facing Zone 1 {m}
