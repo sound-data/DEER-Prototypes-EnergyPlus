@@ -1,2 +1,2 @@
-:timestep => 1,
+:timestep => 6,
 :run_control => "ANNUAL"  # ANNUAL | SIZING

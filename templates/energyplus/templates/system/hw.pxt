@@ -308,11 +308,17 @@ Pump:VariableSpeed,
   <%= pump_head %>,  !- Rated Pump Head {Pa}
   <%= pump_power %>,  !- Rated Power Consumption {W}
   <%= pump_eff %>,  !- Motor Efficiency
+! Original performance curve as found January 2024, source: ASHRAE 90.1 Hospital EnergyPlus example model 
+!  0,                       !- Coefficient 1 of the Part Load Performance Curve
+!  3.2485,                       !- Coefficient 2 of the Part Load Performance Curve
+!  -4.7443,                       !- Coefficient 3 of the Part Load Performance Curve
+!  2.5295,                       !- Coefficient 4 of the Part Load Performance Curve
+! Updated performance curve, source: CBECC Office Large Template
   0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
-  0,                       !- Coefficient 1 of the Part Load Performance Curve
-  3.2485,                       !- Coefficient 2 of the Part Load Performance Curve
-  -4.7443,                       !- Coefficient 3 of the Part Load Performance Curve
-  2.5295,                       !- Coefficient 4 of the Part Load Performance Curve
+  0.0273,                       !- Coefficient 1 of the Part Load Performance Curve
+  -0.1317,                       !- Coefficient 2 of the Part Load Performance Curve
+  0.6642,                       !- Coefficient 3 of the Part Load Performance Curve
+  0.4445,                       !- Coefficient 4 of the Part Load Performance Curve
   0.0,                     !- Minimum Flow Rate {m3/s}
 <% if (pump_control == "CONTINUOUS") %>
   Continuous;              !- Pump Control Type
