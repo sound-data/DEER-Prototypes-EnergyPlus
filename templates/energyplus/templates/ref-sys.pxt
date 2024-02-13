@@ -4,8 +4,8 @@ require "modelkit/energyplus"
 parameter "ref_system_name"
 parameter "case_walkin_names"
 parameter "ref_sys_comp_names"
-parameter "suction_piping_location"
-parameter "suction_gains", :default=>false # (true | false)
+parameter "suction_piping_location", :default=>"" # Replace by "zone_name" when applicable
+parameter "suction_gains", :default=>false # (true | false) if true provide suction_piping_location as well!
 parameter "piping_suction_ua", :default=>10 # in ['W/K']
 parameter "cond_curves_source", :default=>"SelfContained" # (SelfContained | MediumTemp | LowTemp)
 parameter "cond_fan_power", :default=>2600['W']
