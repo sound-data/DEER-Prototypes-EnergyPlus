@@ -22,7 +22,8 @@ measures = list(df_com['Modelkit Folder Primary Name'].unique())
 #Shows list of commercial measure names (with workpaper ID) 
 print(measures)
 #%%
-#Define measure name here (name of the measure folder itself)
+#Define measure name here (name of the measure folder itself
+##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
 measure_name = 'SWXX111-00 Example_SEER_AC'
 
 #filter to specific measure mapping records from mapping workbook
