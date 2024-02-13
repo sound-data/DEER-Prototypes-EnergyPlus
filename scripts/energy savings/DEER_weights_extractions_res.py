@@ -56,3 +56,22 @@ wts_res_bldg.to_csv('wts_res_bldg.csv', index=False)
 
 #%%
 ##Extracting wts_res_hvac
+#filter for BldgHVAC = rWrd weights
+flag_weightID = df['weightID']=='rWtd'
+flag_Version = df['Version']=='DEER2024'
+
+df_bldghvac_res_wts = df[flag_weightID & flag_Version]
+# %%
+wts_res_hvac = df_bldghvac_res_wts[['BldgType', 'BldgLoc', 'BldgHVAC', 'weight']].copy()
+wts_res_hvac = wts_res_hvac.assign(PA='Any')
+wts_res_hvac.rename(columns={'weight':'wtval', 
+                             'BldgHVAC':'bldghvac', 
+                             'BldgType':'bldgtype', 
+                             'BldgLoc':'bldgloc'},
+                             inplace=True)
+wts_res_hvac_final = wts_res_hvac[['PA','bldgtype', 'bldgloc','bldghvac','wtval']]
+wts_res_hvac_final_sorted = wts_res_hvac_final.sort_values(by=['bldgtype', 'bldgloc','bldghvac'])
+
+# %%
+wts_res_hvac_final_sorted.to_csv('wts_res_hvac_2024.csv', index=False)
+# %%
