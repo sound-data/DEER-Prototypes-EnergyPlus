@@ -240,3 +240,133 @@ ScheduleTypeLimits,
   0.0,                     !- Lower Limit Value
   1.0,                     !- Upper Limit Value
   Continuous;              !- Numeric Type
+
+
+!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+! adding schedules 
+
+Schedule:Compact,
+    Ambient Varying Zone Temperature ,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 1:00,             !- Field 3
+    16.8,                    !- Field 4
+    Until: 2:00,             !- Field 5
+    16.2,                    !- Field 6
+    Until: 3:00,             !- Field 7
+    15.7,                    !- Field 8
+    Until: 4:00,             !- Field 9
+    15.1,                    !- Field 10
+    Until: 5:00,             !- Field 11
+    14.6,                    !- Field 12
+    Until: 6:00,             !- Field 13
+    14,                      !- Field 14
+    Until: 7:00,             !- Field 15
+    15.1,                    !- Field 16
+    Until: 8:00,             !- Field 17
+    18.4,                    !- Field 18
+    Until: 9:00,             !- Field 19
+    22.3,                    !- Field 20
+    Until: 10:00,            !- Field 21
+    23.1,                    !- Field 22
+    Until: 11:00,            !- Field 23
+    24.6,                    !- Field 24
+    Until: 12:00,            !- Field 25
+    25.8,                    !- Field 26
+    Until: 13:00,            !- Field 27
+    26.9,                    !- Field 28
+    Until: 14:00,            !- Field 29
+    27.4,                    !- Field 30
+    Until: 15:00,            !- Field 31
+    28.9,                    !- Field 32
+    Until: 16:00,            !- Field 33
+    29.1,                    !- Field 34
+    Until: 17:00,            !- Field 35
+    28.5,                    !- Field 36
+    Until: 18:00,            !- Field 37
+    27.6,                    !- Field 38
+    Until: 19:00,            !- Field 39
+    26.5,                    !- Field 40
+    Until: 20:00,            !- Field 41
+    25.1,                    !- Field 42
+    Until: 21:00,            !- Field 43
+    22.3,                    !- Field 44
+    Until: 22:00,            !- Field 45
+    19.6,                    !- Field 46
+    Until: 23:00,            !- Field 47
+    18.4,                    !- Field 48
+    Until: 24:00,            !- Field 49
+    17.3;                    !- Field 50
+	
+Schedule:Compact,
+    Ambient Air Velocity,    !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    470;                     !- Field 4
+	
+Schedule:Compact,
+    DHW Load Profile Varying Flow Frac Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 1:00,             !- Field 3
+    0.00472,                 !- Field 4
+    Until: 2:00,             !- Field 5
+    0.00547,                 !- Field 6
+    Until: 3:00,             !- Field 7
+    0.00602,                 !- Field 8
+    Until: 4:00,             !- Field 9
+    0.00591,                 !- Field 10
+    Until: 5:00,             !- Field 11
+    0.00547,                 !- Field 12
+    Until: 6:00,             !- Field 13
+    0.00465,                 !- Field 14
+    Until: 7:00,             !- Field 15
+    0.00412,                 !- Field 16
+    Until: 8:00,             !- Field 17
+    0.00363,                 !- Field 18
+    Until: 9:00,             !- Field 19
+    0.00311,                 !- Field 20
+    Until: 10:00,            !- Field 21
+    0.00301,                 !- Field 22
+    Until: 11:00,            !- Field 23
+    0.00283,                 !- Field 24
+    Until: 12:00,            !- Field 25
+    0.00269,                 !- Field 26
+    Until: 13:00,            !- Field 27
+    0.00256,                 !- Field 28
+    Until: 14:00,            !- Field 29
+    0.00251,                 !- Field 30
+    Until: 15:00,            !- Field 31
+    0.00231,                 !- Field 32
+    Until: 16:00,            !- Field 33
+    0.00229,                 !- Field 34
+    Until: 17:00,            !- Field 35
+    0.00236,                 !- Field 36
+    Until: 18:00,            !- Field 37
+    0.00246,                 !- Field 38
+    Until: 19:00,            !- Field 39
+    0.00256,                 !- Field 40
+    Until: 20:00,            !- Field 41
+    0.00276,                 !- Field 42
+    Until: 21:00,            !- Field 43
+    0.00314,                 !- Field 44
+    Until: 22:00,            !- Field 45
+    0.00353,                 !- Field 46
+    Until: 23:00,            !- Field 47
+    0.00377,                 !- Field 48
+    Until: 24:00,            !- Field 49
+    0.00412;                 !- Field 50	
+	
+Schedule:Compact,
+    DHW Load Profile Load Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    0;                       !- Field 4	
+	
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>	
