@@ -56,7 +56,7 @@ parameter "preheat_name", :default=>""  # Name of plant loop heating source to c
 parameter "plantloop", :default=>true # Create planltoop system (true) or standalone heater with load profile (false)
 parameter "peak_flow", :default=>0['GPM']
 parameter "wh_config", :default=>"CENTRAL" # (CENTRAL | SEPARATE) if separate, create separate waterheater:mixed for each zone/load
-parameter "dhw_loop_configuration", :default=>"NO-LOOP"
+parameter "dhw_loop_configuration", :default=>"DEFAULT-LOOP"
 %>
 
 <%
@@ -154,7 +154,7 @@ BranchList,
   <%= name %> Supply Branches, !- Name
   <%= name %> Supply Inlet Branch,  !- Branch 1 Name
   <%= name %> Supply Equipment Branch,  !- Branch 2 Name
-<% if (dhw_loop_configuration == "NO-LOOP") %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
   <%= name %> Supply Equipment Bypass Branch,  !- Branch 3 Name
 <% end %>  
   <%= name %> Supply Outlet Branch;  !- Branch 4 Name
@@ -170,7 +170,7 @@ BranchList,
 
 
 
-<% if (dhw_loop_configuration == "NO-LOOP") %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
 Branch,
   <%= name %> Supply Inlet Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
@@ -220,7 +220,7 @@ Pump:ConstantSpeed,
 
 ! adding supply side inlet branch and defining corresponding pipe, since we removed pump as the supply inlet node
 
-<% if (dhw_loop_configuration == "DHW-LOOP") %>
+<% if (dhw_loop_configuration == "RECIRCULATION-LOOP") %>
  
 Branch,
   <%= name %> Supply Inlet Branch,  !- Name
@@ -353,7 +353,7 @@ OutdoorAir:Node,
 ! removing tempering valve from supply bypass branch
  
 
-<% if (dhw_loop_configuration == "NO-LOOP") %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
 Branch,
   <%= name %> Supply Equipment Bypass Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
@@ -376,9 +376,9 @@ TemperingValve,
 Branch,
   <%= name %> Supply Outlet Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
-  <% if (dhw_loop_configuration == "NO-LOOP") %>
+  <% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
     Pipe:Adiabatic,          !- Component 1 Object Type
-  <% elsif (dhw_loop_configuration == "DHW-LOOP") %>
+  <% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>
     Pipe:Indoor,          !- Component 1 Object Type
   <% end %>	
   <%= name %> Supply Outlet Pipe,  !- Component 1 Name
@@ -388,14 +388,14 @@ Branch,
 !removing adiabatic pipe in the supply outlet, since we need to add non-adibatic pipes
 
 
-<% if (dhw_loop_configuration == "NO-LOOP") %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
 
 Pipe:Adiabatic,
   <%= name %> Supply Outlet Pipe,  !- Name
   <%= name %> Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
   <%= name %> Supply Outlet Node;  !- Outlet Node Name
   
-<% elsif (dhw_loop_configuration == "DHW-LOOP") %>	  
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>	  
 
 ! adding two non adibatic pipes, one in the inlet of demand and one in load profile branch 
 Pipe:Indoor,
@@ -532,26 +532,26 @@ ConnectorList,
   Connector:Mixer,         !- Connector 2 Object Type
   <%= name %> Supply Mixer;    !- Connector 2 Name
    
-<% if (dhw_loop_configuration == "NO-LOOP") %>  
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>  
 Connector:Splitter,
   <%= name %> Supply Splitter, !- Name
   <%= name %> Supply Inlet Branch,  !- Inlet Branch Name
   <%= name %> Supply Equipment Branch  !- Outlet Branch 1 Name
   <%= name %> Supply Equipment Bypass Branch;  !- Outlet Branch 2 Name
-<% elsif (dhw_loop_configuration == "DHW-LOOP") %>
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>
 Connector:Splitter,
   <%= name %> Supply Splitter, !- Name
   <%= name %> Supply Inlet Branch,  !- Inlet Branch Name
   <%= name %> Supply Equipment Branch;  !- Outlet Branch 1 Name
 <% end %>
 
-<% if (dhw_loop_configuration == "NO-LOOP") %>  
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>  
 Connector:Mixer,
   <%= name %> Supply Mixer,    !- Name
   <%= name %> Supply Outlet Branch,  !- Outlet Branch Name
   <%= name %> Supply Equipment Branch,  !- Inlet Branch 1 Name
   <%= name %> Supply Equipment Bypass Branch;  !- Inlet Branch 2 Name
-<% elsif (dhw_loop_configuration == "DHW-LOOP") %>  
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>  
 Connector:Mixer,
   <%= name %> Supply Mixer,    !- Name
   <%= name %> Supply Outlet Branch,  !- Outlet Branch Name
@@ -567,9 +567,9 @@ BranchList,
 <% for branch_name in branch_names %>
   <%= branch_name %> DHW Demand Branch,  !- Branch Name
 <% end %>
-<% if (dhw_loop_configuration == "NO-LOOP") %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
   <%= name %> Demand Bypass Branch,  !- Branch Name
-<% elsif (dhw_loop_configuration == "DHW-LOOP") %>	  
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>	  
   <%= name %> Load Profile Branch,  !- Branch Name
 <% end %>   
   <%= name %> Demand Outlet Branch;  !- Branch Name
@@ -593,7 +593,7 @@ Pipe:Adiabatic,
 !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 ! removing demand bypass branch, since we use loadprofile branch
 
-<% if (dhw_loop_configuration == "NO-LOOP") %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
 Branch,
   <%= name %> Demand Bypass Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
@@ -641,9 +641,9 @@ Connector:Splitter,
 <% for branch_name in branch_names %>
   <%= branch_name %> DHW Demand Branch,  !- Outlet Branch Name
 <% end %>
-<% if (dhw_loop_configuration == "NO-LOOP") %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
   <%= name %> Demand Bypass Branch;  !- Outlet Branch Name
-<% elsif (dhw_loop_configuration == "DHW-LOOP") %>	
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>	
   <%= name %> Load Profile Branch;  !- Outlet Branch Name
 <% end %> 
    
@@ -654,9 +654,9 @@ Connector:Mixer,
 <% for branch_name in branch_names %>
   <%= branch_name %> DHW Demand Branch,  !- Inlet Branch Name
 <% end %>
-<% if (dhw_loop_configuration == "NO-LOOP") %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
   <%= name %> Demand Bypass Branch;  !- Inlet Branch Name
-<% elsif (dhw_loop_configuration == "DHW-LOOP") %>  
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>  
   <%= name %> Load Profile Branch;  !- Inlet Branch Name
 <% end %> 
 !>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

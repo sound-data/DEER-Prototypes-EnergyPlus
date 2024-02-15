@@ -82,7 +82,7 @@ parameter "int_mass_ratio", :name => "Internal Mass Area Ratio", :description =>
 
 parameter "graywater_storage_tank", :default=> "" # variable creates tank to store graywater from sinks, showers, laundry, dishwashing
 parameter "graywater_supply_tank", :default=> "" # variable creates tank to supply graywater for toilet flushing
-parameter "dhw_loop_configuration", :default=>"NO-LOOP"
+parameter "dhw_loop_configuration", :default=>"DEFAULT-LOOP"
 %>
 <%
 # Calculate infiltration rate from leakage rate by adjusting to normal building pressurization at 5 Pa.
@@ -406,7 +406,7 @@ Schedule:Constant,
 ! adding pump after water fixture in demand branches (Note: outlet of water fixture node should be inlet of pump)
 
 
-  <% if (dhw_loop_configuration == "NO-LOOP") %>
+  <% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
   Branch,
     <%= zone_name %> DHW Demand Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -415,7 +415,7 @@ Schedule:Constant,
     <%= zone_name %> DHW Inlet Node,  !- Component 1 Inlet Node Name
     <%= zone_name %> DHW Outlet Node;  !- Component 1 Outlet Node Name
 	
-  <% elsif (dhw_loop_configuration == "DHW-LOOP") %>
+  <% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>
   
 	Branch,
     <%= zone_name %> DHW Demand Branch,  !- Name
