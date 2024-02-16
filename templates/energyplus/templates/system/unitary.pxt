@@ -1994,7 +1994,8 @@ Coil:Heating:DX:MultiSpeed,
   <%= heat_coil_cap %>,    !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_1 %>,  !- Rated COP
   <%= fan_flow %>,         !- Rated Air Flow Rate {m^3/s}
-  ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2023 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
   <%= unitary_name %> HP_Heat-Cap-fT1,  !- Total Heating Capacity Function of Temperature Curve Name
   <%= unitary_name %> HP_Heat-Cap-fFF1,  !- Total Heating Capacity Function of Flow Fraction Curve Name
   <%= unitary_name %> HP_Heat-EIR-fT1,  !- Energy Input Ratio Function of Temperature Curve Name
@@ -2005,7 +2006,8 @@ Coil:Heating:DX:MultiSpeed,
   Autosize,                !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_2 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
-  ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2023 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
   <%= unitary_name %> HP_Heat-Cap-fT2,  !- Total Heating Capacity Function of Temperature Curve Name
   <%= unitary_name %> HP_Heat-Cap-fFF2,  !- Total Heating Capacity Function of Flow Fraction Curve Name
   <%= unitary_name %> HP_Heat-EIR-fT2,  !- Energy Input Ratio Function of Temperature Curve Name
@@ -2019,7 +2021,8 @@ Coil:Heating:DX:MultiSpeed,
   Autosize,                !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_3 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
-  ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2023 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
   <%= unitary_name %> HP_Heat-Cap-fT3,  !- Total Heating Capacity Function of Temperature Curve Name
   <%= unitary_name %> HP_Heat-Cap-fFF3,  !- Total Heating Capacity Function of Flow Fraction Curve Name
   <%= unitary_name %> HP_Heat-EIR-fT3,  !- Energy Input Ratio Function of Temperature Curve Name
@@ -2033,7 +2036,8 @@ Coil:Heating:DX:MultiSpeed,
   Autosize,                !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_4 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
-  ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2023 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
   <%= unitary_name %> HP_Heat-Cap-fT4,  !- Total Heating Capacity Function of Temperature Curve Name
   <%= unitary_name %> HP_Heat-Cap-fFF4,  !- Total Heating Capacity Function of Flow Fraction Curve Name
   <%= unitary_name %> HP_Heat-EIR-fT4,  !- Energy Input Ratio Function of Temperature Curve Name
