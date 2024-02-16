@@ -2845,7 +2845,7 @@ UnitarySystemPerformance:Multispeed,
     #This may remain an issue for any Unitary systems with multispeed compressors, two-speed fans or other configurations.
 
 if (cool_coil_type == "DX-AIR" && dx_comp_speed == "CONSTANT" && fan_speed == "VARIABLE")
-replacements = {' ' => '_','-' => '_'}
+replacements = {' ' => '_','-' => '_','.' => '_','(' => '',')' => ''}
 unitary_name_ems = unitary_name.gsub(Regexp.union(replacements.keys), replacements)
 if (cool_flow_min_frac == nil) #if cool_flow_min_frac is default, set to EnergyPlus default for Constant Speed DX systems
 cool_flow_min_frac = 0.67
@@ -2894,7 +2894,7 @@ EnergyManagementSystem:InternalVariable,
   #during annual simulation, coil with no capacity calls for high HW flow, resulting in pump energy
   #EMS tests to see if coil has negilible capacity and turns it off if it does
 if (heat_coil_type == "WATER")
-replacements = {' ' => '_','-' => '_'}
+replacements = {' ' => '_','-' => '_','.' => '_','(' => '',')' => ''}
 unitary_name_ems = unitary_name.gsub(Regexp.union(replacements.keys), replacements)
 %>
 EnergyManagementSystem:Actuator,
