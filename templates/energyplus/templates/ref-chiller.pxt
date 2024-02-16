@@ -1,0 +1,85 @@
+<%#INITIALIZE
+parameter "chiller_name"
+parameter "laod_factor", :default =>7900 # in ['W/K']
+parameter "source_temp", :default=>-4['C']
+parameter "deltaT", :default=>8 # in ['C']
+parameter "defrost_power", :default=>28400['W']
+parameter "htg_power_sch", :default=>
+"
+    Through: 12/31,          !- Field 1
+    For:AllDays,             !- Field 2
+    Interpolate:Average,     !- Field 3
+    Until: 5:00,0,           !- Field 4
+    Until: 5:40,1,           !- Field 6
+    Until: 10:00,0,          !- Field 8
+    Until: 10:40,1,          !- Field 10
+    Until: 15:00,0,          !- Field 12
+    Until: 15:40,1,          !- Field 14
+    Until: 22:00,0,          !- Field 16
+    Until: 22:50,1,          !- Field 18
+    Until: 24:00,0;          !- Field 20
+"
+
+parameter "defrost_sch", :default=>
+"   Through: 12/31,          !- Field 1
+    For:AllDays,             !- Field 2
+    Interpolate:Average,     !- Field 3
+    Until: 5:00,0,           !- Field 4
+    Until: 5:30,1,           !- Field 6
+    Until: 10:00,0,          !- Field 8
+    Until: 10:30,1,          !- Field 10
+    Until: 15:00,0,          !- Field 12
+    Until: 15:30,1,          !- Field 14
+    Until: 22:00,0,          !- Field 16
+    Until: 22:40,1,          !- Field 18
+    Until: 24:00,0;          !- Field 20
+"
+%>
+
+  Refrigeration:AirChiller,
+    <%= chiller_name %>,    !- Name
+    <%= chiller_name %> Avail,            !- Availability Schedule Name
+    UnitLoadFactorSensibleOnly,  !- Capacity Rating Type
+    <%= laod_factor %>,                   !- Rated Unit Load Factor {W/K}
+    ,                        !- Rated Capacity {W}
+    ,                        !- Rated Relative Humidity {percent}
+    <%= source_temp %>,                     !- Rated Cooling Source Temperature {C}
+    <%= deltaT %>,                      !- Rated Temperature Difference DT1 {deltaC}
+    11.,                     !- Maximum Temperature Difference Between Inlet Air and Evaporating Temperature {deltaC}
+    ,                        !- Coil Material Correction Factor {dimensionless}
+    ,                        !- Refrigerant Correction Factor {dimensionless}
+    LinearSHR60,             !- Capacity Correction Curve Type
+    ,                        !- Capacity Correction Curve Name
+    1.5,                     !- SHR60 Correction Factor {dimensionless}
+    200.,                    !- Rated Total Heating Power {W}
+    <%= chiller_name %> htg power sch,  !- Heating Power Schedule Name
+    ,                        !- Fan Speed Control Type
+    2200.,                   !- Rated Fan Power {W}
+    14.,                     !- Rated Air Flow {m3/s}
+    ,                        !- Minimum Fan Air Flow Ratio {dimensionless}
+    Electric,                !- Defrost Type
+    TimeSchedule,            !- Defrost Control Type
+    <%= chiller_name %> defrost sch,!- Defrost Schedule Name
+    <%= chiller_name %> htg power sch,  !- Defrost Drip-Down Schedule Name
+    <%= defrost_power %>,                  !- Defrost Power {W}
+    ,                        !- Temperature Termination Defrost Fraction to Ice {dimensionless}
+    ,                        !- Vertical Location
+    ;                        !- Average Refrigerant Charge Inventory {kg}
+
+  Schedule:Compact,
+    <%= chiller_name %> Avail,            !- Name
+    ON/OFF,                  !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For:AllDays,             !- Field 2
+    Interpolate:No,          !- Field 3
+    Until: 24:00,1;          !- Field 4
+
+  Schedule:Compact,
+    <%= chiller_name %> htg power sch, !- Name
+    ON/OFF,                  !- Schedule Type Limits Name
+    <%= htg_power_sch %>
+
+  Schedule:Compact,
+    <%= chiller_name %> defrost sch,!- Name
+    ON/OFF,                  !- Schedule Type Limits Name
+    <%= defrost_sch %>

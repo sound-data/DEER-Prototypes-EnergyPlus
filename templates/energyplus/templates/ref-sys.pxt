@@ -1,0 +1,87 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "ref_system_name"
+parameter "case_walkin_names"
+parameter "ref_sys_comp_names"
+parameter "suction_piping_location", :default=>"" # Replace by "zone_name" when applicable
+parameter "suction_gains", :default=>false # (true | false) if true provide suction_piping_location as well!
+parameter "piping_suction_ua", :default=>10 # in ['W/K']
+parameter "cond_curves_source", :default=>"SelfContained" # (SelfContained | MediumTemp | LowTemp)
+parameter "cond_fan_power", :default=>2600['W']
+parameter "cond_subcool", :default=>0['C']
+parameter "working_fluid", :default=>"R507" # TODO add other fluids R22
+%>
+
+<%
+case_walkin_list = "#{ref_system_name} Case And Walkin List"
+enduse_subcategory = "#{ref_system_name} Refrigeration"
+
+ref_sys_comp_list = "#{ref_system_name} Compressors List"
+%>
+
+Refrigeration:System,
+    <%= ref_system_name %>,           !- Name
+    <%= case_walkin_list %>,         !- Refrigerated Case or Walkin or CaseAndWalkInList Name
+    ,                        !- Refrigeration Transfer Load or TransferLoad List Name
+    <%= ref_system_name %> Condenser Air Cooled,        !- Refrigeration Condenser Name
+    <%= ref_sys_comp_list %>,   !- Compressor or CompressorList Name
+    25.0,                    !- Minimum Condensing Temperature {C}
+    <%= working_fluid %>,                     !- Refrigeration System Working Fluid Type
+    ConstantSuctionTemperature,  !- Suction Temperature Control Type
+    ,                        !- Mechanical Subcooler Name
+    ,                        !- Liquid Suction Heat Exchanger Subcooler Name
+ <% if suction_gains %>
+    <%= piping_suction_ua %>,                        !- Sum UA Suction Piping {W/K}
+    <%= suction_piping_location %>,                        !- Suction Piping Zone Name
+ <% else %>
+    ,                        !- Sum UA Suction Piping {W/K}
+    ,                        !- Suction Piping Zone Name
+<% end %>
+    <%= enduse_subcategory %>;           !- End-Use Subcategory
+
+Refrigeration:CaseAndWalkInList,
+  <%= case_walkin_list %>,   !- Name
+<% EnergyPlus.each(case_walkin_names) do |case_walkin_name| %>
+  <%= case_walkin_name %>,  !- Case or WalkIn Name
+<% end %>
+
+Refrigeration:CompressorList,
+  <%= ref_sys_comp_list %>,   !- Name
+<% EnergyPlus.each(ref_sys_comp_names) do |ref_sys_comp_name| %>
+  <%= ref_sys_comp_name %>,  !- Refrigeration Compressor Name
+<% end %>
+
+Refrigeration:Condenser:AirCooled,
+    <%= ref_system_name %> Condenser Air Cooled,        !- Name
+    <%= ref_system_name %> Condenser HR curve, !- Rated Effective Total Heat Rejection Rate Curve Name
+    <%= cond_subcool %>,                      !- Rated Subcooling Temperature Difference {deltaC}
+    TwoSpeed,                !- Condenser Fan Speed Control Type
+    <%= cond_fan_power %>,                   !- Rated Fan Power {W}
+    0.25,                    !- Minimum Fan Air Flow Ratio {dimensionless}
+    ,  !- Air Inlet Node Name or Zone Name
+    ;           !- End-Use Subcategory
+
+<% if (cond_curves_source == "SelfContained") %>
+  Curve:Linear,
+    <%= ref_system_name %> Condenser HR curve,  !- Name
+    0.0,                     !- Coefficient1 Constant
+    500.,                    !- Coefficient2 x
+    11.0,                    !- Minimum Value of x
+    22.2;                    !- Maximum Value of x
+<% elsif (cond_curves_source == "MediumTemp") %>
+  Curve:Linear,
+    <%= ref_system_name %> Condenser HR curve,  !- Name
+    0.0,                     !- Coefficient1 Constant
+    3150.,                   !- Coefficient2 x
+    11.0,                    !- Minimum Value of x
+    22.2;                    !- Maximum Value of x
+<% elsif (cond_curves_source == "LowTemp") %>
+  Curve:Linear,
+    <%= ref_system_name %> Condenser HR curve, !- Name
+    0.0,                     !- Coefficient1 Constant
+    2090.,                   !- Coefficient2 x
+    11.0,                    !- Minimum Value of x
+    22.2;                    !- Maximum Value of x
+<% end %>
+
