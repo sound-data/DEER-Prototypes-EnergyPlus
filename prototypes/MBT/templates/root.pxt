@@ -625,18 +625,20 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
   ["Computer EL1 Core Spc (G.C8)", "computer", 3997.96['ft2'], nil, nil, nil, nil, "Data"],
-  ["Conference EL1 Core Spc (G.C7)", "conference", 3999.03['ft2'], "MAIN", nil, nil, nil, "Office"],
-  ["Corridor EL1 Core Spc (G.C6)", "corridor", 40004.04['ft2'], "MAIN", nil, nil, nil, "Office"],
-  ["Dining EL1 Core Spc (G.C9)", "dining_fast", 5998.85['ft2'], "MAIN", nil, nil, nil, "Office"],
+  ["Conference EL1 Core Spc (G.C7)", "conference", 3999.03['ft2'], "MAIN", "MAIN", "MAIN", "MAIN", "Office"],
+  ["Corridor EL1 Core Spc (G.C6)", "corridor", 40004.04['ft2'], "MAIN", "MAIN", "MAIN", "MAIN", "Office"],
+  ["Dining EL1 Core Spc (G.C9)", "dining_fast", 5998.85['ft2'], "MAIN", "MAIN", "MAIN", "MAIN", "Office"],
   ["Kitchen EL1 Core Spc (G.C10)", "kitchen", 2000.13['ft2'], nil, nil, nil, nil, "Restaurant"],
   ["Lab EL1 Core Spc (G.C5)", "lab", 90670.84['ft2'], nil, nil, nil, nil, "Lab"],
-  ["Office EL1 Core Spc (G.C11)", "office_large", 15879.72['ft2'], "MAIN", nil, nil, nil, "Office"],
-  ["Office EL1 East Perim Spc (G.E2)", "office_large", 2513.5['ft2'], "MAIN", nil, nil, nil, "Office"],
-  ["Office EL1 North Perim Spc (G.N3)", "office_large", 16208.33['ft2'], "MAIN", nil, nil, nil, "Office"],
-  ["Office EL1 South Perim Spc (G.S1)", "office_large", 16208.33['ft2'], "MAIN", nil, nil, nil, "Office"],
-  ["Office EL1 West Perim Spc (G.W4)", "office_large", 2513.5['ft2'], "MAIN", nil, nil, nil, "Office"],
+  ["Office EL1 Core Spc (G.C11)", "office_large", 15879.72['ft2'], "MAIN", "MAIN", "MAIN", "MAIN", "Office"],
+  ["Office EL1 East Perim Spc (G.E2)", "office_large", 2513.5['ft2'], "MAIN", "MAIN", "MAIN", "MAIN", "Office"],
+  ["Office EL1 North Perim Spc (G.N3)", "office_large", 16208.33['ft2'], "MAIN", "MAIN", "MAIN", "MAIN", "Office"],
+  ["Office EL1 South Perim Spc (G.S1)", "office_large", 16208.33['ft2'], "MAIN", "MAIN", "MAIN", "MAIN", "Office"],
+  ["Office EL1 West Perim Spc (G.W4)", "office_large", 2513.5['ft2'], "MAIN", "MAIN", "MAIN", "MAIN", "Office"],
   ["EL1 Core Plnm (G.C16)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
   ["EL1 Core Plnm (G.C17)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
   ["EL1 Core Plnm (G.C18)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],

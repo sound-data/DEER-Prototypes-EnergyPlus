@@ -419,8 +419,10 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Classroom EL1 Spc (G.1)", "classroom_class", 961.29['ft2'], "MAIN", "Level1", "Level1", nil, "School"],
+  ["Classroom EL1 Spc (G.1)", "classroom_class", 961.29['ft2'], "MAIN", "Level1", "Level1", "Level1", "School"],
   ["CrawlSpace EL1 CrS (G.1)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
   ["Plenum EL1 Plnm (G.2)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
 ]

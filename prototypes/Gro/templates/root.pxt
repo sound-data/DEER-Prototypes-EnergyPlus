@@ -441,13 +441,15 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Grocery Sales EL1 SSE Perim Spc (G.SSE1)", "grocery", 40011.19['ft2'], "Grocery", "F1", nil, nil, "Retail"],
-  ["IndLoadDock EL1 North Perim Spc (G.N3)", "industrial_high", 2851.18['ft2'], "Industrial", "F1", nil, nil, "Retail"],
-  ["Office EL1 SW Perim Spc (G.SW2)", "office_large", 3500.23['ft2'], "Office", "F1", nil, nil, "Retail"],
-  ["RefFoodPrep EL1 Core Spc (G.C4)", "storage_refrig", 1267.14['ft2'], "RefFoodPrep", "F1", nil, nil, "Retail"],
-  ["RefWalkInCool EL1 Core Spc (G.C6)", "storage_refrig", 1559.8['ft2'], "WalkInCool", "F1", nil, nil, "Retail"],
-  ["RefWalkInFreeze EL1 Core Spc (G.C5)", "storage_refrig", 812.31['ft2'], "WalkInFreeze", "F1", nil, nil, "Retail"],
+  ["Grocery Sales EL1 SSE Perim Spc (G.SSE1)", "grocery", 40011.19['ft2'], "Grocery", "F1", "F1", "F1", "Retail"],
+  ["IndLoadDock EL1 North Perim Spc (G.N3)", "industrial_high", 2851.18['ft2'], "Industrial", "F1", "F1", "F1", "Retail"],
+  ["Office EL1 SW Perim Spc (G.SW2)", "office_large", 3500.23['ft2'], "Office", "F1", "F1", "F1", "Retail"],
+  ["RefFoodPrep EL1 Core Spc (G.C4)", "storage_refrig", 1267.14['ft2'], "RefFoodPrep", "F1", "F1", "F1", "Retail"],
+  ["RefWalkInCool EL1 Core Spc (G.C6)", "storage_refrig", 1559.8['ft2'], "WalkInCool", "F1", "F1", "F1", "Retail"],
+  ["RefWalkInFreeze EL1 Core Spc (G.C5)", "storage_refrig", 812.31['ft2'], "WalkInFreeze", "F1", "F1", "F1", "Retail"],
 ]
 
 

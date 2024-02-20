@@ -533,7 +533,7 @@ ZoneControl:Thermostat,
 <% if hvac_type == "UH" %>
   ThermostatSetpoint:SingleHeating,  !- Control 1 Object Type
 <%# TRC - addition for DXNH system type (no heating)
-elsif ((atu_reheat_coil_type == "NONE" || atu_reheat_coil_type == nil) && (heat_coil_type == "NONE" || heat_coil_type == nil) ) %>
+elsif (((atu_reheat_coil_type == "NONE" || atu_reheat_coil_type == nil) && (heat_coil_type == "NONE" || heat_coil_type == nil)) && (sub_heat_type == "NONE" || sub_heat_type == nil)) %>
   ThermostatSetpoint:SingleCooling,  !- Control 1 Object Type
 <% else %>
   ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
@@ -551,7 +551,7 @@ ThermostatSetpoint:SingleHeating,
   <%= zone_name %> Heating Setpoint Schedule;  !- Heating Setpoint Temperature Schedule Name
 
 <%# TRC - addition for DXNH system type (no heating)
-elsif ((atu_reheat_coil_type == "NONE" || atu_reheat_coil_type == nil) && (heat_coil_type == "NONE" || heat_coil_type == nil) ) %>
+elsif (((atu_reheat_coil_type == "NONE" || atu_reheat_coil_type == nil) && (heat_coil_type == "NONE" || heat_coil_type == nil)) && (sub_heat_type == "NONE" || sub_heat_type == nil)) %>
 Schedule:Constant,
   <%= zone_name %> Thermostat Type Schedule,  !- Name
   Thermostat Control,      !- Schedule Type Limits Name

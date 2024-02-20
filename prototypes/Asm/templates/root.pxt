@@ -436,17 +436,19 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed.
 all_zones = [
   ["Plenum NE Corner", "plenum", 1990.9514['ft2'], nil, nil, nil, nil, "Plenum"],
-  ["NE Corner Office", "office_large", 1990.9514['ft2'], "Sys5-VAVRH", nil, nil, nil, "Assembly"],
+  ["NE Corner Office", "office_large", 1990.9514['ft2'], "Sys5-VAVRH", "Sys5-VAVRH", "NE Corner Office", "NE Corner Office", "Assembly"],
   ["Plenum NW Corner", "plenum", 1990.9514['ft2'], nil, nil, nil, nil, "Plenum"],
-  ["NW Corner Office", "office_large", 1990.9514['ft2'], "Sys5-VAVRH", nil, nil, nil, "Assembly"],
+  ["NW Corner Office", "office_large", 1990.9514['ft2'], "Sys5-VAVRH", "Sys5-VAVRH", "NW Corner Office", "NW Corner Office", "Assembly"],
   ["Plenum SE Corner", "plenum", 1990.9514['ft2'], nil, nil, nil, nil, "Plenum"],
-  ["SE Corner Office", "office_large", 1990.9514['ft2'], "Sys5-VAVRH", nil, nil, nil, "Assembly"],
+  ["SE Corner Office", "office_large", 1990.9514['ft2'], "Sys5-VAVRH", "Sys5-VAVRH", "SE Corner Office", "SE Corner Office", "Assembly"],
   ["Plenum SW Corner", "plenum", 1990.9514['ft2'], nil, nil, nil, nil, "Plenum"],
-  ["SW Corner Office", "office_large", 1990.9514['ft2'], "Sys5-VAVRH", nil, nil, nil, "Assembly"],
+  ["SW Corner Office", "office_large", 1990.9514['ft2'], "Sys5-VAVRH", "Sys5-VAVRH", "SW Corner Office", "SW Corner Office", "Assembly"],
   ["Plenum Core", "plenum", 26039.5301['ft2'], nil, nil, nil, nil, "Plenum"],
-  ["Core Auditorium", "auditorium", 26039.5301['ft2'], "Sys5-VAVRH", nil, nil, nil, "Assembly"],
+  ["Core Auditorium", "auditorium", 26039.5301['ft2'], "Sys5-VAVRH", "Sys5-VAVRH", "Core Auditorium", "Core Auditorium", "Assembly"],
 ]
 
 

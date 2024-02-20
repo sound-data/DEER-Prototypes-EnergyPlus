@@ -436,9 +436,11 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["RetailSales EL1 South Perim (G.S1)", "retail_sales", 6401.85['ft2'], "MAIN", "F1", "RetailSales", nil, "Retail"],
-  ["StockRoom EL1 North Perim (G.N2)", "storage_warehouse", 1600.25['ft2'], "MAIN", "F1", "StockRoom", nil, "Retail"],
+  ["RetailSales EL1 South Perim (G.S1)", "retail_sales", 6401.85['ft2'], "MAIN", "F1", "RetailSales", "RetailSales", "Retail"],
+  ["StockRoom EL1 North Perim (G.N2)", "storage_warehouse", 1600.25['ft2'], "MAIN", "F1", "StockRoom", "StockRoom", "Retail"],
   ["EL1 North Perim Plnm (G.N4) ZN Thermal Zone", "plenum", 1600.25['ft2'], nil, nil, nil, nil, "Plenum"],
   ["EL1 South Perim Plnm (G.S3) ZN Thermal Zone", "plenum", 6401.85['ft2'], nil, nil, nil, nil, "Plenum"],
 ]
