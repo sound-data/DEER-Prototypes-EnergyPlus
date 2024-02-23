@@ -35,7 +35,7 @@ Contributions to the project are welcome. To add new measures or fix bugs, follo
 
 ### How to Add a New Measure
 1. Install the modeling framework as described above.
-2. If the proposed measure doesn't fit into any general measure categories (see folder names in '_residential measures/_' or '_commercial measures/_'), create a new folder with the MeasureVersionID followed by the a short version of the measure package name in one of the two directories. Refer to the [User Guide](https://cedars.sound-data.com/deer-resources/tools/energy-plus/) on CEDARS for further folder naming, cohort naming and case naming instructions.
+2. If the proposed measure doesn't fit into any general measure categories (see folder names in '_residential measures/_' or '_commercial measures/_'), create a new folder with the MeasureVersionID followed by the a short version of the measure package name in one of the two directories. Refer to the [DEER Prototype System User Guide](https://cedars.sound-data.com/deer-resources/tools/energy-plus/) on CEDARS for further folder naming, cohort naming and case naming instructions. Also please refer to [DRAFT Technology ID Creation template](https://cedars.sound-data.com/deer-resources/tools/energy-plus/) for the naming conventions of TechIDs (the case_name of each simulation run)
 3. Within the newly created folder, create a subfolder named '_cases/_'.
 4. Copy the file named '_query.txt_' from any existing measure and paste it into the new folder.
 5. Create two new files in the newly created folder: '_climates.csv_' and '_cohort.csv_'. Populate '_cohort.csv_' with necessary information about weather files and prototype buildings to be used. Additional details on preparing the cohort file are also in the User Guide.
