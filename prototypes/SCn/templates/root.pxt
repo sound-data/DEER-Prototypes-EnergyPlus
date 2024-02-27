@@ -151,6 +151,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "WATER"
   parameter "atu_reheat_control", :default => "DUAL-MAX-LIMIT"
 end
@@ -166,6 +170,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "WATER"
   parameter "cool_coil_cop", :default => 3.85
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "WATER"
   parameter "dx_type", :default => "PNNL"
@@ -381,9 +387,11 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["WarehouseCond EL1 North Perim Spc (G.N2)", "storage_warehouse", 250019.61['ft2'], "MAIN", "F1", nil, nil, "Warehouse"],
-  ["WarehouseCond EL1 South Perim Spc (G.S1)", "storage_warehouse", 250019.61['ft2'], "MAIN", "F1", nil, nil, "Warehouse"],
+  ["WarehouseCond EL1 North Perim Spc (G.N2)", "storage_warehouse", 250019.61['ft2'], "MAIN", "F1", "F1", "F1", "Warehouse"],
+  ["WarehouseCond EL1 South Perim Spc (G.S1)", "storage_warehouse", 250019.61['ft2'], "MAIN", "F1", "F1", "F1", "Warehouse"],
 ]
 
 

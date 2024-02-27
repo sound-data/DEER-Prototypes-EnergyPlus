@@ -332,6 +332,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "WATER"
   parameter "atu_reheat_control", :default => "DUAL-MAX-LIMIT"
 end
@@ -347,6 +351,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => 3.85
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "WATER"
   parameter "dx_type", :default => "T24"
@@ -582,55 +588,57 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["BarCasino EL2 North Perim Spc (G.N2)", "dining_fine", 625.29['ft2'], "MAIN", "Level1", "Level1", nil, "Assembly"],
-  ["BarCasino EL3 North Perim Spc (G.N1)", "dining_fine", 373.51['ft2'], "MAIN", "Level1", "Level1", nil, "Assembly"],
-  ["Corridor EL4 Core Spc (G.C5)", "corridor", 1839.06['ft2'], "MAIN", "Level2", "Level2", nil, "Office"],
-  ["Corridor EL4 Core Spc (M.C15)", "corridor", 1839.06['ft2'], "MAIN", "Level3", "Level3", nil, "Office"],
-  ["Corridor EL4 Core Spc (T.C25)", "corridor", 1839.06['ft2'], "MAIN", "Level4", "Level4", nil, "Office"],
-  ["Dining EL2 West Perim Spc (G.W3)", "dining_fine", 399.93['ft2'], "MAIN", "Level1", "Level1", nil, "Assembly"],
-  ["Dining EL3 West Perim Spc (G.W3)", "dining_fine", 399.94['ft2'], "MAIN", "Level1", "Level1", nil, "Assembly"],
-  ["Kitchen EL2 South Perim Spc (G.S1)", "kitchen", 373.51['ft2'], "MAIN", "Level1", nil, nil, "Restaurant"],
-  ["Kitchen EL3 South Perim Spc (G.S2)", "kitchen", 625.29['ft2'], "MAIN", "Level1", nil, nil, "Restaurant"],
-  ["Laundry EL1 West Perim Spc (G.W1)", "laundry", 4110.34['ft2'], "MAIN", "Level1", "Level1", nil, "Assembly"],
-  ["Lobby EL1 West Perim Spc (G.W2)", "lobby", 8221.22['ft2'], "MAIN", "Level1", "Level1", nil, "Assembly"],
-  ["Office EL1 East Perim Spc (G.E3)", "office_large", 4110.34['ft2'], "MAIN", "Level1", "Level1", nil, "Assembly"],
-  ["GuestRm EL4 NNE Perim Spc (G.NNE3)", "guestroom", 1825.3['ft2'], "MAIN", "Level2", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 NNE Perim Spc (M.NNE13)", "guestroom", 1825.3['ft2'], "MAIN", "Level3", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 NNE Perim Spc (T.NNE23)", "guestroom", 1825.3['ft2'], "MAIN", "Level4", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 North Perim Spc (G.N1)", "guestroom", 5476.13['ft2'], "MAIN", "Level2", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 North Perim Spc (M.N11)", "guestroom", 5476.13['ft2'], "MAIN", "Level3", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 North Perim Spc (T.N21)", "guestroom", 5476.13['ft2'], "MAIN", "Level4", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 South Perim Spc (G.S4)", "guestroom", 5476.13['ft2'], "MAIN", "Level2", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 South Perim Spc (M.S14)", "guestroom", 5476.13['ft2'], "MAIN", "Level3", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 South Perim Spc (T.S24)", "guestroom", 5476.13['ft2'], "MAIN", "Level4", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 SSW Perim Spc (G.SSW2)", "guestroom", 1825.29['ft2'], "MAIN", "Level2", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 SSW Perim Spc (M.SSW12)", "guestroom", 1825.29['ft2'], "MAIN", "Level3", "ALT", nil, "ResidentialLiving"],
-  ["GuestRm EL4 SSW Perim Spc (T.SSW22)", "guestroom", 1825.29['ft2'], "MAIN", "Level4", "ALT", nil, "ResidentialLiving"],
-  ["EL1 East Perim Plnm (G.E6)", "plenum", 0.0['ft2'], nil, "Level1", nil, nil, "Plenum"],
-  ["EL1 West Perim Plnm (G.W4)", "plenum", 0.0['ft2'], nil, "Level1", nil, nil, "Plenum"],
-  ["EL1 West Perim Plnm (G.W5)", "plenum", 0.0['ft2'], nil, "Level1", nil, nil, "Plenum"],
-  ["EL2 North Perim Plnm (G.N5)", "plenum", 0.0['ft2'], nil, "Level1", nil, nil, "Plenum"],
-  ["EL2 South Perim Plnm (G.S4)", "plenum", 0.0['ft2'], nil, "Level1", nil, nil, "Plenum"],
-  ["EL2 West Perim Plnm (G.W6)", "plenum", 0.0['ft2'], nil, "Level1", nil, nil, "Plenum"],
-  ["EL3 North Perim Plnm (G.N4)", "plenum", 0.0['ft2'], nil, "Level1", nil, nil, "Plenum"],
-  ["EL3 South Perim Plnm (G.S5)", "plenum", 0.0['ft2'], nil, "Level1", nil, nil, "Plenum"],
-  ["EL3 West Perim Plnm (G.W6)", "plenum", 0.0['ft2'], nil, "Level1", nil, nil, "Plenum"],
-  ["EL4 Core Plnm (G.C10)", "plenum", 0.0['ft2'], nil, "Level2", nil, nil, "Plenum"],
-  ["EL4 Core Plnm (M.C20)", "plenum", 0.0['ft2'], nil, "Level3", nil, nil, "Plenum"],
-  ["EL4 Core Plnm (T.C30)", "plenum", 0.0['ft2'], nil, "Level4", nil, nil, "Plenum"],
-  ["EL4 NNE Perim Plnm (G.NNE8)", "plenum", 0.0['ft2'], nil, "Level2", nil, nil, "Plenum"],
-  ["EL4 NNE Perim Plnm (M.NNE18)", "plenum", 0.0['ft2'], nil, "Level3", nil, nil, "Plenum"],
-  ["EL4 NNE Perim Plnm (T.NNE28)", "plenum", 0.0['ft2'], nil, "Level4", nil, nil, "Plenum"],
-  ["EL4 North Perim Plnm (G.N6)", "plenum", 0.0['ft2'], nil, "Level2", nil, nil, "Plenum"],
-  ["EL4 North Perim Plnm (M.N16)", "plenum", 0.0['ft2'], nil, "Level3", nil, nil, "Plenum"],
-  ["EL4 North Perim Plnm (T.N26)", "plenum", 0.0['ft2'], nil, "Level4", nil, nil, "Plenum"],
-  ["EL4 South Perim Plnm (G.S9)", "plenum", 0.0['ft2'], nil, "Level2", nil, nil, "Plenum"],
-  ["EL4 South Perim Plnm (M.S19)", "plenum", 0.0['ft2'], nil, "Level3", nil, nil, "Plenum"],
-  ["EL4 South Perim Plnm (T.S29)", "plenum", 0.0['ft2'], nil, "Level4", nil, nil, "Plenum"],
-  ["EL4 SSW Perim Plnm (G.SSW7)", "plenum", 0.0['ft2'], nil, "Level2", nil, nil, "Plenum"],
-  ["EL4 SSW Perim Plnm (M.SSW17)", "plenum", 0.0['ft2'], nil, "Level3", nil, nil, "Plenum"],
-  ["EL4 SSW Perim Plnm (T.SSW27)", "plenum", 0.0['ft2'], nil, "Level4", nil, nil, "Plenum"],
+  ["BarCasino EL2 North Perim Spc (G.N2)", "dining_fine", 625.29['ft2'], "MAIN", "Level1", "Level1", "Level1", "Assembly"],
+  ["BarCasino EL3 North Perim Spc (G.N1)", "dining_fine", 373.51['ft2'], "MAIN", "Level1", "Level1", "Level1", "Assembly"],
+  ["Corridor EL4 Core Spc (G.C5)", "corridor", 1839.06['ft2'], "MAIN", "Level2", "Level2", "Level1", "Office"],
+  ["Corridor EL4 Core Spc (M.C15)", "corridor", 1839.06['ft2'], "MAIN", "Level3", "Level3", "Level1", "Office"],
+  ["Corridor EL4 Core Spc (T.C25)", "corridor", 1839.06['ft2'], "MAIN", "Level4", "Level4", "Level1", "Office"],
+  ["Dining EL2 West Perim Spc (G.W3)", "dining_fine", 399.93['ft2'], "MAIN", "Level1", "Level1", "Level1", "Assembly"],
+  ["Dining EL3 West Perim Spc (G.W3)", "dining_fine", 399.94['ft2'], "MAIN", "Level1", "Level1", "Level1", "Assembly"],
+  ["Kitchen EL2 South Perim Spc (G.S1)", "kitchen", 373.51['ft2'], nil, nil, nil, nil, "Restaurant"],
+  ["Kitchen EL3 South Perim Spc (G.S2)", "kitchen", 625.29['ft2'], nil, nil, nil, nil, "Restaurant"],
+  ["Laundry EL1 West Perim Spc (G.W1)", "laundry", 4110.34['ft2'], "MAIN", "Level1", "Level1", "Level1", "Assembly"],
+  ["Lobby EL1 West Perim Spc (G.W2)", "lobby", 8221.22['ft2'], "MAIN", "Level1", "Level1", "Level1", "Assembly"],
+  ["Office EL1 East Perim Spc (G.E3)", "office_large", 4110.34['ft2'], "MAIN", "Level1", "Level1", "Level1", "Assembly"],
+  ["GuestRm EL4 NNE Perim Spc (G.NNE3)", "guestroom", 1825.3['ft2'], "MAIN_ALT", "Level2_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 NNE Perim Spc (M.NNE13)", "guestroom", 1825.3['ft2'], "MAIN_ALT", "Level3_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 NNE Perim Spc (T.NNE23)", "guestroom", 1825.3['ft2'], "MAIN_ALT", "Level4_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 North Perim Spc (G.N1)", "guestroom", 5476.13['ft2'], "MAIN_ALT", "Level2_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 North Perim Spc (M.N11)", "guestroom", 5476.13['ft2'], "MAIN_ALT", "Level3_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 North Perim Spc (T.N21)", "guestroom", 5476.13['ft2'], "MAIN_ALT", "Level4_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 South Perim Spc (G.S4)", "guestroom", 5476.13['ft2'], "MAIN_ALT", "Level2_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 South Perim Spc (M.S14)", "guestroom", 5476.13['ft2'], "MAIN_ALT", "Level3_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 South Perim Spc (T.S24)", "guestroom", 5476.13['ft2'], "MAIN_ALT", "Level4_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 SSW Perim Spc (G.SSW2)", "guestroom", 1825.29['ft2'], "MAIN_ALT", "Level2_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 SSW Perim Spc (M.SSW12)", "guestroom", 1825.29['ft2'], "MAIN_ALT", "Level3_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["GuestRm EL4 SSW Perim Spc (T.SSW22)", "guestroom", 1825.29['ft2'], "MAIN_ALT", "Level4_ALT", "ALT", "ALT", "ResidentialLiving"],
+  ["EL1 East Perim Plnm (G.E6)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 West Perim Plnm (G.W4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 West Perim Plnm (G.W5)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 North Perim Plnm (G.N5)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 South Perim Plnm (G.S4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 West Perim Plnm (G.W6)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 North Perim Plnm (G.N4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 South Perim Plnm (G.S5)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 West Perim Plnm (G.W6)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 Core Plnm (G.C10)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 Core Plnm (M.C20)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 Core Plnm (T.C30)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 NNE Perim Plnm (G.NNE8)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 NNE Perim Plnm (M.NNE18)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 NNE Perim Plnm (T.NNE28)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 North Perim Plnm (G.N6)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 North Perim Plnm (M.N16)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 North Perim Plnm (T.N26)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 South Perim Plnm (G.S9)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 South Perim Plnm (M.S19)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 South Perim Plnm (T.S29)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 SSW Perim Plnm (G.SSW7)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 SSW Perim Plnm (M.SSW17)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 SSW Perim Plnm (T.SSW27)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
 ]
 
 

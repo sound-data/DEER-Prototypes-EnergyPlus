@@ -220,6 +220,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "WATER"
   parameter "atu_reheat_control", :default => "DUAL-MAX-LIMIT"
 end
@@ -235,6 +239,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => 3.85
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "WATER"
   parameter "dx_type", :default => "T24"
@@ -450,23 +456,25 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Corridor EL1 Core Perim Spc (G.C5)", "corridor", 1677.17['ft2'], "MAIN", "Level1", nil, nil, "Office"],
-  ["Corridor EL1 South Perim Spc (G.S9)", "corridor", 2789.87['ft2'], "MAIN", "Level1", nil, nil, "Office"],
-  ["Corridor EL2 Core Spc (G.C5)", "corridor", 1677.17['ft2'], "MAIN", "Level2", nil, nil, "Office"],
-  ["Corridor EL2 NNE Perim Spc (G.NNE4)", "corridor", 1664.61['ft2'], "MAIN", "Level2", nil, nil, "Office"],
-  ["Corridor EL2 North Perim Spc (G.N1)", "corridor", 1664.85['ft2'], "MAIN", "Level2", nil, nil, "Office"],
-  ["Corridor EL2 North Perim Spc (G.N3)", "corridor", 3329.23['ft2'], "MAIN", "Level2", nil, nil, "Office"],
-  ["Corridor EL2 SSW Perim Spc (G.SSW2)", "corridor", 1664.62['ft2'], "MAIN", "Level2", nil, nil, "Office"],
-  ["Corridor EL2 South Perim Spc (G.S6)", "corridor", 3329.47['ft2'], "MAIN", "Level2", nil, nil, "Office"],
-  ["Corridor EL2 South Perim Spc (G.S7)", "corridor", 1664.61['ft2'], "MAIN", "Level2", nil, nil, "Office"],
-  ["GuestRm EL1 NNE Perim Spc (G.NNE1)", "guestroom", 1411.6['ft2'], "ALT", "Level1_ALT", nil, nil, "ResidentialLiving"],
-  ["GuestRm EL1 North Perim Spc (G.N3)", "guestroom", 3495.91['ft2'], "ALT", "Level1_ALT", nil, nil, "ResidentialLiving"],
-  ["GuestRm EL1 North Perim Spc (G.N4)", "guestroom", 1751.19['ft2'], "ALT", "Level1_ALT", nil, nil, "ResidentialLiving"],
-  ["GuestRm EL1 SSW Perim Spc (G.SSW8)", "guestroom", 1398.41['ft2'], "ALT", "Level1_ALT", nil, nil, "ResidentialLiving"],
-  ["GuestRm EL1 South Perim Spc (G.S2)", "guestroom", 1391.7['ft2'], "ALT", "Level1_ALT", nil, nil, "ResidentialLiving"],
-  ["Laundry EL1 South Perim Spc (G.S7)", "laundry", 479.41['ft2'], "MAIN", "Level1", nil, nil, "Office"],
-  ["Office EL1 SE Perim Spc (G.SE6)", "office_large", 599.32['ft2'], "MAIN", "Level1", nil, nil, "Office"],
+  ["Corridor EL1 Core Perim Spc (G.C5)", "corridor", 1677.17['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Corridor EL1 South Perim Spc (G.S9)", "corridor", 2789.87['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Corridor EL2 Core Spc (G.C5)", "corridor", 1677.17['ft2'], "MAIN", "Level2", "Level2", "Level2", "Office"],
+  ["Corridor EL2 NNE Perim Spc (G.NNE4)", "corridor", 1664.61['ft2'], "MAIN", "Level2", "Level2", "Level2", "Office"],
+  ["Corridor EL2 North Perim Spc (G.N1)", "corridor", 1664.85['ft2'], "MAIN", "Level2", "Level2", "Level2", "Office"],
+  ["Corridor EL2 North Perim Spc (G.N3)", "corridor", 3329.23['ft2'], "MAIN", "Level2", "Level2", "Level2", "Office"],
+  ["Corridor EL2 SSW Perim Spc (G.SSW2)", "corridor", 1664.62['ft2'], "MAIN", "Level2", "Level2", "Level2", "Office"],
+  ["Corridor EL2 South Perim Spc (G.S6)", "corridor", 3329.47['ft2'], "MAIN", "Level2", "Level2", "Level2", "Office"],
+  ["Corridor EL2 South Perim Spc (G.S7)", "corridor", 1664.61['ft2'], "MAIN", "Level2", "Level2", "Level2", "Office"],
+  ["GuestRm EL1 NNE Perim Spc (G.NNE1)", "guestroom", 1411.6['ft2'], "ALT", "Level1_ALT", "Level1_ALT", "Level1_ALT", "ResidentialLiving"],
+  ["GuestRm EL1 North Perim Spc (G.N3)", "guestroom", 3495.91['ft2'], "ALT", "Level1_ALT", "Level1_ALT", "Level1_ALT", "ResidentialLiving"],
+  ["GuestRm EL1 North Perim Spc (G.N4)", "guestroom", 1751.19['ft2'], "ALT", "Level1_ALT", "Level1_ALT", "Level1_ALT", "ResidentialLiving"],
+  ["GuestRm EL1 SSW Perim Spc (G.SSW8)", "guestroom", 1398.41['ft2'], "ALT", "Level1_ALT", "Level1_ALT", "Level1_ALT", "ResidentialLiving"],
+  ["GuestRm EL1 South Perim Spc (G.S2)", "guestroom", 1391.7['ft2'], "ALT", "Level1_ALT", "Level1_ALT", "Level1_ALT", "ResidentialLiving"],
+  ["Laundry EL1 South Perim Spc (G.S7)", "laundry", 479.41['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Office EL1 SE Perim Spc (G.SE6)", "office_large", 599.32['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
 ]
 
 
