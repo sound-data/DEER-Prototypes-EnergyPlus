@@ -1,0 +1,7 @@
+skip,case_name,:case_type,:condenser_type,:rack_type,:cond_curves_source,:credit_type
+#,Ref_open_with_LED,OPEN,AirCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
+,Ref_open_with_Fluorescent,OPEN,AirCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
+#,Meas_Ref_glassdoor,GLASS-DOOR,AirCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
+#,Ref_open_with_LED,OPEN,EvaporativelyCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
+#,Ref_open_with_Fluorescent,OPEN,EvaporativelyCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
+#,Meas_Ref_glassdoor,GLASS-DOOR,EvaporativelyCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
