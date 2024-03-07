@@ -1565,6 +1565,170 @@ Curve:Quadratic,
   2,               !- Maximum Value of x
   0,               !- Minimum Value of y
   2;               !- Maximum Value of y
+
+<% elsif (dx_type == "Carrier25VNA436 ") %>
+! Following performance curves taken from four-speed SPLIT Heat Pump system in BeOpt (based on Fujitsu 12RLS SPLIT unit testing in NREL report at http://www.nrel.gov/docs/fy11osti/52175.pdf)
+
+Curve:Biquadratic,
+  <%= unitary_name %> Cool-Cap-fT1,   !- Name
+  1.008993521905866,0.006512749025457,0,0.003917565735935,-0.000222646705889,0,   !- Coefficients (list)
+  13.88,          !- Minimum Value of x
+  23.88,          !- Maximum Value of x
+  18.33,          !- Minimum Value of y
+  51.66;          !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= unitary_name %> Cool-EIR-fT1,   !- Name
+  0.429214441601141,-0.003604841598515,0.000045783162727,0.026490875804937,-0.000159212286878,-0.000159062656483,   !- Coefficients (List)
+  13.88,          !- Minimum Value of x
+  23.88,          !- Maximum Value of x
+  18.33,          !- Minimum Value of y
+  51.66;          !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-PLF-fPLR1,   !- Name
+  <%= 1 - cool_coil_cd %>,<%= cool_coil_cd %>,0,     !- Coefficients (List)
+  0,                !- Minimum Value of x
+  1,                !- Maximum Value of x
+  0.7,              !- Minimum Value of y
+  1;                !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-Cap-fFF1,   !- Name
+  1,0,0,           !- Coefficients (List)
+  0,               !- Minimum Value of x
+  2,               !- Maximum Value of x
+  0,               !- Minimum Value of y
+  2;               !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-EIR-fFF1,   !- Name
+  1,0,0,           !- Coefficients (List)
+  0,               !- Minimum Value of x
+  2,               !- Maximum Value of x
+  0,               !- Minimum Value of y
+  2;               !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= unitary_name %> Cool-Cap-fT2,   !- Name
+  1.008993521905866,0.006512749025457,0,0.003917565735935,-0.000222646705889,0,   !- Coefficients (list)
+  13.88,          !- Minimum Value of x
+  23.88,          !- Maximum Value of x
+  18.33,          !- Minimum Value of y
+  51.66;          !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= unitary_name %> Cool-EIR-fT2,   !- Name
+  0.429214441601141,-0.003604841598515,0.000045783162727,0.026490875804937,-0.000159212286878,-0.000159062656483,   !- Coefficients (List)
+  13.88,          !- Minimum Value of x
+  23.88,          !- Maximum Value of x
+  18.33,          !- Minimum Value of y
+  51.66;          !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-PLF-fPLR2,   !- Name
+  <%= 1 - cool_coil_cd %>,<%= cool_coil_cd %>,0,     !- Coefficients (List)
+  0,                !- Minimum Value of x
+  1,                !- Maximum Value of x
+  0.7,              !- Minimum Value of y
+  1;                !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-Cap-fFF2,   !- Name
+  1,0,0,           !- Coefficients (List)
+  0,               !- Minimum Value of x
+  2,               !- Maximum Value of x
+  0,               !- Minimum Value of y
+  2;               !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-EIR-fFF2,   !- Name
+  1,0,0,           !- Coefficients (List)
+  0,               !- Minimum Value of x
+  2,               !- Maximum Value of x
+  0,               !- Minimum Value of y
+  2;               !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= unitary_name %> Cool-Cap-fT3,   !- Name
+  1.008993521905866,0.006512749025457,0,0.003917565735935,-0.000222646705889,0,   !- Coefficients (list)
+  13.88,          !- Minimum Value of x
+  23.88,          !- Maximum Value of x
+  18.33,          !- Minimum Value of y
+  51.66;          !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= unitary_name %> Cool-EIR-fT3,   !- Name
+  0.429214441601141,-0.003604841598515,0.000045783162727,0.026490875804937,-0.000159212286878,-0.000159062656483,   !- Coefficients (List)
+  13.88,          !- Minimum Value of x
+  23.88,          !- Maximum Value of x
+  18.33,          !- Minimum Value of y
+  51.66;          !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-PLF-fPLR3,   !- Name
+  <%= 1 - cool_coil_cd %>,<%= cool_coil_cd %>,0,     !- Coefficients (List)
+  0,                !- Minimum Value of x
+  1,                !- Maximum Value of x
+  0.7,              !- Minimum Value of y
+  1;                !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-Cap-fFF3,   !- Name
+  1,0,0,           !- Coefficients (List)
+  0,               !- Minimum Value of x
+  2,               !- Maximum Value of x
+  0,               !- Minimum Value of y
+  2;               !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-EIR-fFF3,   !- Name
+  1,0,0,           !- Coefficients (List)
+  0,               !- Minimum Value of x
+  2,               !- Maximum Value of x
+  0,               !- Minimum Value of y
+  2;               !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= unitary_name %> Cool-Cap-fT4,   !- Name
+  1.008993521905866,0.006512749025457,0,0.003917565735935,-0.000222646705889,0,   !- Coefficients (list)
+  13.88,          !- Minimum Value of x
+  23.88,          !- Maximum Value of x
+  18.33,          !- Minimum Value of y
+  51.66;          !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= unitary_name %> Cool-EIR-fT4,   !- Name
+  0.429214441601141,-0.003604841598515,0.000045783162727,0.026490875804937,-0.000159212286878,-0.000159062656483,   !- Coefficients (List)
+  13.88,          !- Minimum Value of x
+  23.88,          !- Maximum Value of x
+  18.33,          !- Minimum Value of y
+  51.66;          !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-PLF-fPLR4,   !- Name
+  <%= 1 - cool_coil_cd %>,<%= cool_coil_cd %>,0,     !- Coefficients (List)
+  0,                !- Minimum Value of x
+  1,                !- Maximum Value of x
+  0.7,              !- Minimum Value of y
+  1;                !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-Cap-fFF4,   !- Name
+  1,0,0,           !- Coefficients (List)
+  0,               !- Minimum Value of x
+  2,               !- Maximum Value of x
+  0,               !- Minimum Value of y
+  2;               !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= unitary_name %> Cool-EIR-fFF4,   !- Name
+  1,0,0,           !- Coefficients (List)
+  0,               !- Minimum Value of x
+  2,               !- Maximum Value of x
+  0,               !- Minimum Value of y
+  2;               !- Maximum Value of y
+
 <% end %>
 
 Curve:Biquadratic,
