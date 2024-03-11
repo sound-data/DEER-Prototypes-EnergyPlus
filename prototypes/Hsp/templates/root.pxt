@@ -283,6 +283,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "WATER"
   parameter "atu_reheat_control", :default => "DUAL-MAX-LIMIT"
 end
@@ -298,6 +302,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "WATER"
   parameter "cool_coil_cop", :default => 3.85
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "WATER"
   parameter "dx_type", :default => "PNNL"
@@ -534,56 +540,58 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Dining EL1 North Perim (G.N1)", "dining_fast", 2362.68['ft2'], "MAIN", "Level1", "Level1", nil, "Office"],
-  ["Dining EL1 South Perim (G.S2)", "dining_fast", 1759.04['ft2'], "MAIN", "Level1", "Level1", nil, "Office"],
-  ["Kitchen EL1 West Perim (G.W3)", "kitchen", 1794.236['ft2'], "MAIN", "Level1", nil, nil, "Restaurant"],
-  ["Office EL2 Core (G.C7)", "office_large", 44658.95['ft2'], "MAIN", "Level1", "Level1", nil, "Office"],
-  ["Office EL2 East Perim (G.E1)", "office_large", 5916.16['ft2'], "MAIN", "Level1", "Level1", nil, "Office"],
-  ["Office EL2 North Perim (G.N6)", "office_large", 6002.38['ft2'], "MAIN", "Level1", "Level1", nil, "Office"],
-  ["Office EL2 South Perim (G.S5)", "office_large", 6002.38['ft2'], "MAIN", "Level1", "Level1", nil, "Office"],
-  ["Office EL3 Core (G.C5)", "office_large", 17669.76['ft2'], "MAIN", "Level2", "Level2_ALT", nil, "Health"],
-  ["Office EL3 North Perim (G.N3)", "office_large", 2374.9['ft2'], "MAIN", "Level2", "Level2_ALT", nil, "Health"],
-  ["Office EL3 South Perim (G.S4)", "office_large", 2374.9['ft2'], "MAIN", "Level2", "Level2_ALT", nil, "Health"],
-  ["Office EL3 West Perim (G.W2)", "office_large", 5916.16['ft2'], "MAIN", "Level2", "Level2_ALT", nil, "Health"],
-  ["PatientRoom EL3 Core (G.C8)", "health_patient", 38685.73['ft2'], "MAIN", "Level2", "Level2_ALT", nil, "Health"],
-  ["PatientRoom EL3 East Perim (G.E1)", "health_patient", 5916.16['ft2'], "MAIN", "Level2", "Level2_ALT", nil, "Health"],
-  ["PatientRoom EL3 North Perim (G.N6)", "health_patient", 5199.55['ft2'], "MAIN", "Level2", "Level2_ALT", nil, "Health"],
-  ["PatientRoom EL3 South Perim (G.S7)", "health_patient", 5199.55['ft2'], "MAIN", "Level2", "Level2_ALT", nil, "Health"],
-  ["PatientRoom EL4 Core (G.C5)", "health_patient", 26861.2['ft2'], "MAIN", "Level3", "Level3_ALT", nil, "Health"],
-  ["PatientRoom EL4 North Perim (G.N3)", "health_patient", 3610.27['ft2'], "MAIN", "Level3", "Level3_ALT", nil, "Health"],
-  ["PatientRoom EL4 South Perim (G.S4)", "health_patient", 3610.27['ft2'], "MAIN", "Level3", "Level3_ALT", nil, "Health"],
-  ["PatientRoom EL4 West Perim (G.W2)", "health_patient", 5916.16['ft2'], "MAIN", "Level3", "Level3_ALT", nil, "Health"],
-  ["Surgery EL2 NNW Perim (G.NNW3)", "health_operating", 1572.07['ft2'], "MAIN", "Level1", "Level1", nil, "Office"],
-  ["Surgery EL2 SSW Perim (G.SSW2)", "health_operating", 1572.07['ft2'], "MAIN", "Level1", "Level1", nil, "Office"],
-  ["Surgery EL2 West Perim (G.W4)", "health_operating", 11696.54['ft2'], "MAIN", "Level1", "Level1", nil, "Office"],
-  ["Surgery EL4 Core (G.C8)", "health_operating", 29494.29['ft2'], "MAIN", "Level3", "Level3_ALT", nil, "Health"],
-  ["Surgery EL4 East Perim (G.E1)", "health_operating", 5916.16['ft2'], "MAIN", "Level3", "Level3_ALT", nil, "Health"],
-  ["Surgery EL4 North Perim (G.N6)", "health_operating", 3964.17['ft2'], "MAIN", "Level3", "Level3_ALT", nil, "Health"],
-  ["Surgery EL4 South Perim (G.S7)", "health_operating", 3964.17['ft2'], "MAIN", "Level3", "Level3_ALT", nil, "Health"],
-  ["EL2 Core Plnm zn (G.C14)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL2 East Perim Plnm zn (G.E8)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL2 NNW Perim Plnm zn (G.NNW10)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL2 North Perim Plnm zn (G.N13)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL2 SSW Perim Plnm zn (G.SSW9)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL2 South Perim Plnm zn (G.S12)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL2 West Perim Plnm zn (G.W11)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL3 Core Plnm zn (G.C16)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL3 Core Plnm zn (G.C16) ZN", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL3 East Perim Plnm zn (G.E9)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL3 North Perim Plnm zn (G.N11)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL3 North Perim Plnm zn (G.N14)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL3 South Perim Plnm zn (G.S12)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL3 South Perim Plnm zn (G.S15)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL3 West Perim Plnm zn (G.W10)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL4 Core Plnm zn (G.C13)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL4 Core Plnm zn (G.C16)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL4 East Perim Plnm zn (G.E9)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL4 North Perim Plnm zn (G.N11)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL4 North Perim Plnm zn (G.N14)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL4 South Perim Plnm zn (G.S12)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL4 South Perim Plnm zn (G.S15)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL4 West Perim Plnm zn (G.W10)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
+  ["Dining EL1 North Perim (G.N1)", "dining_fast", 2362.68['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Dining EL1 South Perim (G.S2)", "dining_fast", 1759.04['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Kitchen EL1 West Perim (G.W3)", "kitchen", 1794.236['ft2'], nil, nil, nil, nil, "Restaurant"],
+  ["Office EL2 Core (G.C7)", "office_large", 44658.95['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Office EL2 East Perim (G.E1)", "office_large", 5916.16['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Office EL2 North Perim (G.N6)", "office_large", 6002.38['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Office EL2 South Perim (G.S5)", "office_large", 6002.38['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Office EL3 Core (G.C5)", "office_large", 17669.76['ft2'], "MAIN_ALT", "Level2_ALT", "Level2_ALT", "Level2_ALT", "Health"],
+  ["Office EL3 North Perim (G.N3)", "office_large", 2374.9['ft2'], "MAIN_ALT", "Level2_ALT", "Level2_ALT", "Level2_ALT", "Health"],
+  ["Office EL3 South Perim (G.S4)", "office_large", 2374.9['ft2'], "MAIN_ALT", "Level2_ALT", "Level2_ALT", "Level2_ALT", "Health"],
+  ["Office EL3 West Perim (G.W2)", "office_large", 5916.16['ft2'], "MAIN_ALT", "Level2_ALT", "Level2_ALT", "Level2_ALT", "Health"],
+  ["PatientRoom EL3 Core (G.C8)", "health_patient", 38685.73['ft2'], "MAIN_ALT", "Level2_ALT", "Level2_ALT", "Level2_ALT", "Health"],
+  ["PatientRoom EL3 East Perim (G.E1)", "health_patient", 5916.16['ft2'], "MAIN_ALT", "Level2_ALT", "Level2_ALT", "Level2_ALT", "Health"],
+  ["PatientRoom EL3 North Perim (G.N6)", "health_patient", 5199.55['ft2'], "MAIN_ALT", "Level2_ALT", "Level2_ALT", "Level2_ALT", "Health"],
+  ["PatientRoom EL3 South Perim (G.S7)", "health_patient", 5199.55['ft2'], "MAIN_ALT", "Level2_ALT", "Level2_ALT", "Level2_ALT", "Health"],
+  ["PatientRoom EL4 Core (G.C5)", "health_patient", 26861.2['ft2'], "MAIN_ALT", "Level3_ALT", "Level3_ALT", "Level3_ALT", "Health"],
+  ["PatientRoom EL4 North Perim (G.N3)", "health_patient", 3610.27['ft2'], "MAIN_ALT", "Level3_ALT", "Level3_ALT", "Level3_ALT", "Health"],
+  ["PatientRoom EL4 South Perim (G.S4)", "health_patient", 3610.27['ft2'], "MAIN_ALT", "Level3_ALT", "Level3_ALT", "Level3_ALT", "Health"],
+  ["PatientRoom EL4 West Perim (G.W2)", "health_patient", 5916.16['ft2'], "MAIN_ALT", "Level3_ALT", "Level3_ALT", "Level3_ALT", "Health"],
+  ["Surgery EL2 NNW Perim (G.NNW3)", "health_operating", 1572.07['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Surgery EL2 SSW Perim (G.SSW2)", "health_operating", 1572.07['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Surgery EL2 West Perim (G.W4)", "health_operating", 11696.54['ft2'], "MAIN", "Level1", "Level1", "Level1", "Office"],
+  ["Surgery EL4 Core (G.C8)", "health_operating", 29494.29['ft2'], "MAIN_ALT", "Level3_ALT", "Level3_ALT", "Level3_ALT", "Health"],
+  ["Surgery EL4 East Perim (G.E1)", "health_operating", 5916.16['ft2'], "MAIN_ALT", "Level3_ALT", "Level3_ALT", "Level3_ALT", "Health"],
+  ["Surgery EL4 North Perim (G.N6)", "health_operating", 3964.17['ft2'], "MAIN_ALT", "Level3_ALT", "Level3_ALT", "Level3_ALT", "Health"],
+  ["Surgery EL4 South Perim (G.S7)", "health_operating", 3964.17['ft2'], "MAIN_ALT", "Level3_ALT", "Level3_ALT", "Level3_ALT", "Health"],
+  ["EL2 Core Plnm zn (G.C14)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 East Perim Plnm zn (G.E8)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 NNW Perim Plnm zn (G.NNW10)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 North Perim Plnm zn (G.N13)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 SSW Perim Plnm zn (G.SSW9)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 South Perim Plnm zn (G.S12)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 West Perim Plnm zn (G.W11)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 Core Plnm zn (G.C16)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 Core Plnm zn (G.C16) ZN", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 East Perim Plnm zn (G.E9)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 North Perim Plnm zn (G.N11)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 North Perim Plnm zn (G.N14)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 South Perim Plnm zn (G.S12)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 South Perim Plnm zn (G.S15)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 West Perim Plnm zn (G.W10)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 Core Plnm zn (G.C13)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 Core Plnm zn (G.C16)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 East Perim Plnm zn (G.E9)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 North Perim Plnm zn (G.N11)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 North Perim Plnm zn (G.N14)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 South Perim Plnm zn (G.S12)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 South Perim Plnm zn (G.S15)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 West Perim Plnm zn (G.W10)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
 ]
 
 

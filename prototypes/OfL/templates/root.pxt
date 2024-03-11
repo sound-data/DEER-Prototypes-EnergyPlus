@@ -249,6 +249,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "WATER"
   parameter "atu_reheat_control", :default => "DUAL-MAX-LIMIT"
 end
@@ -264,6 +268,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "WATER"
   parameter "cool_coil_cop", :default => 3.85
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "WATER"
   parameter "dx_type", :default => "PNNL"
@@ -479,37 +485,39 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["LobbyWaiting EL1 East Perim Spc (G.E2)", "lobby", 1395.14['ft2'], "MAIN", "Level1", "F1_ALT", nil, "Warehouse"],
-  ["LobbyWaiting EL1 North Perim Spc (G.N3)", "lobby", 2205.22['ft2'], "MAIN", "Level1", "F1_ALT", nil, "Warehouse"],
-  ["LobbyWaiting EL1 South Perim Spc (G.S1)", "lobby", 2205.22['ft2'], "MAIN", "Level1", "F1_ALT", nil, "Warehouse"],
-  ["LobbyWaiting EL1 West Perim Spc (G.W4)", "lobby", 1395.14['ft2'], "MAIN", "Level1", "F1_ALT", nil, "Warehouse"],
-  ["MechElecRoom EL1 Core Spc (G.C5)", "mech", 10297.0['ft2'], "MAIN", "Level1", "F1_ALT", nil, "Warehouse"],
-  ["OfficeOpen EL1 Core Spc (M.C15)", "office_open", 10297.0['ft2'], "MAIN", "Level2", "F2", nil, "Office"],
-  ["OfficeOpen EL1 Core Spc (T.C25)", "office_open", 10297.0['ft2'], "MAIN", "Level3", "F3", nil, "Office"],
-  ["OfficeSmall EL1 East Perim Spc (M.E12)", "office_large", 1395.14['ft2'], "MAIN", "Level2", "F2", nil, "Office"],
-  ["OfficeSmall EL1 East Perim Spc (T.E22)", "office_large", 1395.14['ft2'], "MAIN", "Level3", "F3", nil, "Office"],
-  ["OfficeSmall EL1 North Perim Spc (M.N13)", "office_large", 2205.22['ft2'], "MAIN", "Level2", "F2", nil, "Office"],
-  ["OfficeSmall EL1 North Perim Spc (T.N23)", "office_large", 2205.22['ft2'], "MAIN", "Level3", "F3", nil, "Office"],
-  ["OfficeSmall EL1 South Perim Spc (M.S11)", "office_large", 2205.22['ft2'], "MAIN", "Level2", "F2", nil, "Office"],
-  ["OfficeSmall EL1 South Perim Spc (T.S21)", "office_large", 2205.22['ft2'], "MAIN", "Level3", "F3", nil, "Office"],
-  ["OfficeSmall EL1 West Perim Spc (M.W14)", "office_large", 1395.14['ft2'], "MAIN", "Level2", "F2", nil, "Office"],
-  ["OfficeSmall EL1 West Perim Spc (T.W24)", "office_large", 1395.14['ft2'], "MAIN", "Level3", "F3", nil, "Office"],
-  ["EL1 Core Plnm (G.C10)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL1 Core Plnm (M.C20)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL1 Core Plnm (T.C30)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL1 East Perim Plnm (G.E7)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL1 East Perim Plnm (M.E17)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL1 East Perim Plnm (T.E27)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL1 North Perim Plnm (G.N8)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL1 North Perim Plnm (M.N18)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL1 North Perim Plnm (T.N28)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL1 South Perim Plnm (G.S6)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL1 South Perim Plnm (M.S16)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL1 South Perim Plnm (T.S26)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
-  ["EL1 West Perim Plnm (G.W9)", "plenum", 0.0['ft2'], "MAIN", "Level1", nil, nil, "Plenum"],
-  ["EL1 West Perim Plnm (M.W19)", "plenum", 0.0['ft2'], "MAIN", "Level2", nil, nil, "Plenum"],
-  ["EL1 West Perim Plnm (T.W29)", "plenum", 0.0['ft2'], "MAIN", "Level3", nil, nil, "Plenum"],
+  ["LobbyWaiting EL1 East Perim Spc (G.E2)", "lobby", 1395.14['ft2'], "MAIN_ALT", "Level1_ALT", "F1_ALT", "F1_ALT", "Warehouse"],
+  ["LobbyWaiting EL1 North Perim Spc (G.N3)", "lobby", 2205.22['ft2'], "MAIN_ALT", "Level1_ALT", "F1_ALT", "F1_ALT", "Warehouse"],
+  ["LobbyWaiting EL1 South Perim Spc (G.S1)", "lobby", 2205.22['ft2'], "MAIN_ALT", "Level1_ALT", "F1_ALT", "F1_ALT", "Warehouse"],
+  ["LobbyWaiting EL1 West Perim Spc (G.W4)", "lobby", 1395.14['ft2'], "MAIN_ALT", "Level1_ALT", "F1_ALT", "F1_ALT", "Warehouse"],
+  ["MechElecRoom EL1 Core Spc (G.C5)", "mech", 10297.0['ft2'], "MAIN_ALT", "Level1_ALT", "F1_ALT", "F1_ALT", "Warehouse"],
+  ["OfficeOpen EL1 Core Spc (M.C15)", "office_open", 10297.0['ft2'], "MAIN", "Level2", "F2", "F2", "Office"],
+  ["OfficeOpen EL1 Core Spc (T.C25)", "office_open", 10297.0['ft2'], "MAIN", "Level3", "F3", "F3", "Office"],
+  ["OfficeSmall EL1 East Perim Spc (M.E12)", "office_large", 1395.14['ft2'], "MAIN", "Level2", "F2", "F2", "Office"],
+  ["OfficeSmall EL1 East Perim Spc (T.E22)", "office_large", 1395.14['ft2'], "MAIN", "Level3", "F3", "F3", "Office"],
+  ["OfficeSmall EL1 North Perim Spc (M.N13)", "office_large", 2205.22['ft2'], "MAIN", "Level2", "F2", "F2", "Office"],
+  ["OfficeSmall EL1 North Perim Spc (T.N23)", "office_large", 2205.22['ft2'], "MAIN", "Level3", "F3", "F3", "Office"],
+  ["OfficeSmall EL1 South Perim Spc (M.S11)", "office_large", 2205.22['ft2'], "MAIN", "Level2", "F2", "F2", "Office"],
+  ["OfficeSmall EL1 South Perim Spc (T.S21)", "office_large", 2205.22['ft2'], "MAIN", "Level3", "F3", "F3", "Office"],
+  ["OfficeSmall EL1 West Perim Spc (M.W14)", "office_large", 1395.14['ft2'], "MAIN", "Level2", "F2", "F2", "Office"],
+  ["OfficeSmall EL1 West Perim Spc (T.W24)", "office_large", 1395.14['ft2'], "MAIN", "Level3", "F3", "F3", "Office"],
+  ["EL1 Core Plnm (G.C10)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 Core Plnm (M.C20)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 Core Plnm (T.C30)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 East Perim Plnm (G.E7)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 East Perim Plnm (M.E17)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 East Perim Plnm (T.E27)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 North Perim Plnm (G.N8)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 North Perim Plnm (M.N18)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 North Perim Plnm (T.N28)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 South Perim Plnm (G.S6)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 South Perim Plnm (M.S16)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 South Perim Plnm (T.S26)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 West Perim Plnm (G.W9)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 West Perim Plnm (M.W19)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 West Perim Plnm (T.W29)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
 ]
 
 

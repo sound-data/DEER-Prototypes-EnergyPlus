@@ -364,6 +364,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "WATER"
   parameter "atu_reheat_control", :default => "DUAL-MAX-LIMIT"
 end
@@ -379,6 +383,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "WATER"
   parameter "cool_coil_cop", :default => 3.85
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "WATER"
   parameter "dx_type", :default => "PNNL"
@@ -632,40 +638,42 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Classroom E2 North Perim (G.N3)", "classroom_class", 5792.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", nil, "School"],
-  ["Classroom E2 South Perim (G.S2)", "classroom_class", 5753.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", nil, "School"],
-  ["Classroom E2 West Perim (G.W1)", "classroom_class", 31295.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", nil, "School"],
-  ["Dining E3 South Perim (G.S1)", "dining_fast", 11890.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", nil, "School"],
-  ["Maintenance E1 West Perim (G.W1)", "industrial_low", 40006.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", nil, "School"],
-  ["Kitchen E3 North Perim (G.N2)", "kitchen", 5228.0['ft2'], "MAIN", "Floor1", nil, nil, "Restaurant"],
-  ["Classroom E4 East Perim (G.E2)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", nil, "Office"],
-  ["Classroom E4 North Perim (G.N3)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", nil, "Office"],
-  ["Classroom E4 South Perim (G.S1)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", nil, "Office"],
-  ["Classroom E4 West Perim (G.W4)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", nil, "Office"],
-  ["Computer E4 Core (G.C5)", "computer", 6335.0['ft2'], "MAIN", "Floor2", nil, nil, "Data"],
-  ["Office E4 Core (G.C6)", "office_large", 57017.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", nil, "Office"],
-  ["Classroom E4 East Perim (M.E14)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", nil, "Office"],
-  ["Classroom E4 North Perim (M.N15)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", nil, "Office"],
-  ["Classroom E4 South Perim (M.S13)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", nil, "Office"],
-  ["Classroom E4 West Perim (M.W16)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", nil, "Office"],
-  ["Computer E4 Core (M.C17)", "computer", 6335.0['ft2'], "MAIN", "Floor3", nil, nil, "Data"],
-  ["Office E4 Core (M.C18)", "office_large", 57017.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", nil, "Office"],
-  ["Classroom E4 East Perim (T.E26)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", nil, "Office"],
-  ["Classroom E4 North Perim (T.N27)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", nil, "Office"],
-  ["Classroom E4 South Perim (T.S25)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", nil, "Office"],
-  ["Classroom E4 West Perim (T.W28)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", nil, "Office"],
-  ["Computer E4 Core (T.C29)", "computer", 6335.0['ft2'], "MAIN", "Floor4", nil, nil, "Data"],
-  ["Office E4 Core (T.C30)", "office_large", 57017.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", nil, "Office"],
-  ["Corridor E9 Core (G.C3)", "corridor", 3748.0['ft2'], "MAIN", "Floor1D", "Floor1D-Sys6", nil, "Office"],
-  ["Dorm E9 North Perim (G.N1)", "guestroom", 10619.0['ft2'], "MAIN", "Floor1D", "Dorm E9 North Perim (G.N1)-Sys1_ALT", nil, "ResidentialLiving"],
-  ["Dorm E9 South Perim (G.S2)", "guestroom", 10619.0['ft2'], "MAIN", "Floor1D", "Dorm E9 South Perim (G.S2)-Sys1_ALT", nil, "ResidentialLiving"],
-  ["Corridor E9 Core (M.C6)", "corridor", 3748.0['ft2'], "MAIN", "Floor2D", "Floor2D-Sys6", nil, "Office"],
-  ["Dorm E9 North Perim (M.N4)", "guestroom", 10619.0['ft2'], "MAIN", "Floor2D", "Dorm E9 North Perim (M.N4)-Sys1_ALT", nil, "ResidentialLiving"],
-  ["Dorm E9 South Perim (M.S5)", "guestroom", 10619.0['ft2'], "MAIN", "Floor2D", "Dorm E9 South Perim (M.S5)-Sys1_ALT", nil, "ResidentialLiving"],
-  ["Corridor E9 Core (T.C9)", "corridor", 3748.0['ft2'], "MAIN", "Floor3D", "Floor3D-Sys6", nil, "Office"],
-  ["Dorm E9 North Perim (T.N7)", "guestroom", 10619.0['ft2'], "MAIN", "Floor3D", "Dorm E9 North Perim (T.N7)-Sys1_ALT", nil, "ResidentialLiving"],
-  ["Dorm E9 South Perim (T.S8)", "guestroom", 10619.0['ft2'], "MAIN", "Floor3D", "Dorm E9 South Perim (T.S8)-Sys1_ALT", nil, "ResidentialLiving"],
+  ["Classroom E2 North Perim (G.N3)", "classroom_class", 5792.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", "Floor1-Sys6", "School"],
+  ["Classroom E2 South Perim (G.S2)", "classroom_class", 5753.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", "Floor1-Sys6", "School"],
+  ["Classroom E2 West Perim (G.W1)", "classroom_class", 31295.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", "Floor1-Sys6", "School"],
+  ["Dining E3 South Perim (G.S1)", "dining_fast", 11890.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", "Floor1-Sys6", "School"],
+  ["Maintenance E1 West Perim (G.W1)", "industrial_low", 40006.0['ft2'], "MAIN", "Floor1", "Floor1-Sys6", "Floor1-Sys6", "School"],
+  ["Kitchen E3 North Perim (G.N2)", "kitchen", 5228.0['ft2'], nil, nil, nil, nil, "Restaurant"],
+  ["Classroom E4 East Perim (G.E2)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", "Floor2-Sys6", "Office"],
+  ["Classroom E4 North Perim (G.N3)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", "Floor2-Sys6", "Office"],
+  ["Classroom E4 South Perim (G.S1)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", "Floor2-Sys6", "Office"],
+  ["Classroom E4 West Perim (G.W4)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", "Floor2-Sys6", "Office"],
+  ["Computer E4 Core (G.C5)", "computer", 6335.0['ft2'], nil, nil, nil, nil, "Data"],
+  ["Office E4 Core (G.C6)", "office_large", 57017.0['ft2'], "MAIN", "Floor2", "Floor2-Sys6", "Floor2-Sys6", "Office"],
+  ["Classroom E4 East Perim (M.E14)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", "Floor3-Sys6", "Office"],
+  ["Classroom E4 North Perim (M.N15)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", "Floor3-Sys6", "Office"],
+  ["Classroom E4 South Perim (M.S13)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", "Floor3-Sys6", "Office"],
+  ["Classroom E4 West Perim (M.W16)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", "Floor3-Sys6", "Office"],
+  ["Computer E4 Core (M.C17)", "computer", 6335.0['ft2'], nil, nil, nil, nil, "Data"],
+  ["Office E4 Core (M.C18)", "office_large", 57017.0['ft2'], "MAIN", "Floor3", "Floor3-Sys6", "Floor3-Sys6", "Office"],
+  ["Classroom E4 East Perim (T.E26)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", "Floor4-Sys6", "Office"],
+  ["Classroom E4 North Perim (T.N27)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", "Floor4-Sys6", "Office"],
+  ["Classroom E4 South Perim (T.S25)", "classroom_class", 12517.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", "Floor4-Sys6", "Office"],
+  ["Classroom E4 West Perim (T.W28)", "classroom_class", 5809.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", "Floor4-Sys6", "Office"],
+  ["Computer E4 Core (T.C29)", "computer", 6335.0['ft2'], nil, nil, nil, nil, "Data"],
+  ["Office E4 Core (T.C30)", "office_large", 57017.0['ft2'], "MAIN", "Floor4", "Floor4-Sys6", "Floor4-Sys6", "Office"],
+  ["Corridor E9 Core (G.C3)", "corridor", 3748.0['ft2'], "MAIN", "Floor1D", "Floor1D-Sys6", "Floor1D-Sys6", "Office"],
+  ["Dorm E9 North Perim (G.N1)", "guestroom", 10619.0['ft2'], "MAIN_ALT", "Floor1D_ALT", "Dorm E9 North Perim (G.N1)-Sys1_ALT", "Dorm E9 North Perim (G.N1)-Sys1_ALT", "ResidentialLiving"],
+  ["Dorm E9 South Perim (G.S2)", "guestroom", 10619.0['ft2'], "MAIN_ALT", "Floor1D_ALT", "Dorm E9 South Perim (G.S2)-Sys1_ALT", "Dorm E9 South Perim (G.S2)-Sys1_ALT", "ResidentialLiving"],
+  ["Corridor E9 Core (M.C6)", "corridor", 3748.0['ft2'], "MAIN", "Floor2D", "Floor2D-Sys6", "Floor2D-Sys6", "Office"],
+  ["Dorm E9 North Perim (M.N4)", "guestroom", 10619.0['ft2'], "MAIN_ALT", "Floor2D_ALT", "Dorm E9 North Perim (M.N4)-Sys1_ALT", "Dorm E9 North Perim (M.N4)-Sys1_ALT", "ResidentialLiving"],
+  ["Dorm E9 South Perim (M.S5)", "guestroom", 10619.0['ft2'], "MAIN_ALT", "Floor2D_ALT", "Dorm E9 South Perim (M.S5)-Sys1_ALT", "Dorm E9 South Perim (M.S5)-Sys1_ALT", "ResidentialLiving"],
+  ["Corridor E9 Core (T.C9)", "corridor", 3748.0['ft2'], "MAIN", "Floor3D", "Floor3D-Sys6", "Floor3D-Sys6", "Office"],
+  ["Dorm E9 North Perim (T.N7)", "guestroom", 10619.0['ft2'], "MAIN_ALT", "Floor3D_ALT", "Dorm E9 North Perim (T.N7)-Sys1_ALT", "Dorm E9 North Perim (T.N7)-Sys1_ALT", "ResidentialLiving"],
+  ["Dorm E9 South Perim (T.S8)", "guestroom", 10619.0['ft2'], "MAIN_ALT", "Floor3D_ALT", "Dorm E9 South Perim (T.S8)-Sys1_ALT", "Dorm E9 South Perim (T.S8)-Sys1_ALT", "ResidentialLiving"],
   ["E1 West Perim Plnm (G.W2)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
   ["E2 North Perim Plnm (G.N6)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
   ["E2 South Perim Plnm (G.S5)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
