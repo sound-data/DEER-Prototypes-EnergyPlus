@@ -343,7 +343,7 @@ import "ref-sys-comp.pxt", :group => "mt_compressor", :prefix => "MT_comp_" do
 end
 
 #Low Temp Chillers
-import "ref-chiller.pxt", :group => "lt_chiller", :predix => "lt_chiller_" do
+import "ref-chiller.pxt", :group => "lt_chiller", :prefix => "lt_chiller_" do
   include "*"
   exclude "chiller_name"
 
@@ -361,7 +361,7 @@ import "ref-chiller.pxt", :group => "lt_chiller", :predix => "lt_chiller_" do
 end
 
 #Medium Temp Chillers
-import "ref-chiller.pxt", :group => "mt_chiller", :predix => "mt_chiller_" do
+import "ref-chiller.pxt", :group => "mt_chiller", :prefix => "mt_chiller_" do
   include "*"
   exclude "chiller_name"
 
