@@ -1,0 +1,8 @@
+skip,case_name,:boiler_eff,:boiler_eff_curve,:curve_evaluation_variable
+,AFUE_84_Non-Condensing_baseline,0.84,NonCond_Boiler_Eff,LeavingBoiler
+,AFUE_83_Non-Condensing_baseline,0.83,NonCond_Boiler_Eff,LeavingBoiler
+#,AFUE_85_Non-Condensing_baseline,0.85,NonCond_Boiler_Eff,LeavingBoiler
+,Msr_AFUE_93_ Condensing_ECM,0.93,Cond_Boiler_Eff,EnteringBoiler
+,Msr_AFUE_94_ Condensing_ECM,0.94,Cond_Boiler_Eff,EnteringBoiler
+,Msr_AFUE_85_Non-Condensing_ECM,0.85,NonCond_Boiler_Eff,LeavingBoiler
+,Msr_AFUE_85.3_Non-Condensing_ECM,0.853,NonCond_Boiler_Eff,LeavingBoiler
