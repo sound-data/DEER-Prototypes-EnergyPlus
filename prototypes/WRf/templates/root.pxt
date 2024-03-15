@@ -313,6 +313,71 @@ import "irrigation.pxt", :group => "irrigation" do
   parameter "landscaping_area", :default => 1000.0['ft2']
 end
 
+###Refrigerated warehouse components parametrization
+##insert statements using these snippet calls will be at the bottom of this script
+
+#Low Temp compressors
+import "ref-sys-comp.pxt", :group => "lt_compressor", :prefix => "LT_comp_" do
+  include "*"
+  exclude "comp_name"
+  exclude "lighting_schedule"
+  
+  parameter "comp_curves_source", :default=>"Bitzer_NH3_Low_OSNA8591-K"
+  parameter "rated_sh", :default =>5
+  parameter "return_gas_temp", :default=>""
+  parameter "liquid_temp", :default=>""
+  parameter "rated_subcooling", :default=> 0
+end
+
+#Medium Temp compressors
+import "ref-sys-comp.pxt", :group => "mt_compressor", :prefix => "MT_comp_" do
+  include "*"
+  exclude "comp_name"
+  exclude "lighting_schedule"
+  
+  parameter "comp_curves_source", :default=>"Bitzer_NH3_Med_OSNA8591-K"
+  parameter "rated_sh", :default =>5
+  parameter "return_gas_temp", :default=>""
+  parameter "liquid_temp", :default=>""
+  parameter "rated_subcooling", :default=> 0
+end
+
+#Low Temp Chillers
+import "ref-chiller.pxt", :group => "lt_chiller", :predix => "lt_chiller_" do
+  include "*"
+  exclude "chiller_name"
+
+  parameter "source_temp", :default =>-26
+  parameter "cap_type", :default =>"CapacityTotalSpecificConditions"
+  parameter "load_factor", :default =>""
+  parameter "rated_cap", :default =>720000
+  parameter "cap_correction_curve_type", :default =>"TabularRHxDT1xTRoom"
+  parameter "rated_RH", :default =>85
+  parameter "cap_correction_curve_name", :default =>"ColmacCoilInc"
+  parameter "shr60_factor", :default =>""
+  parameter "rated_fan_pwr", :default =>2800
+  parameter "rated_air_flow", :default =>20.67
+  parameter "temp_term_defrost_fraction", :default =>0.8
+end
+
+#Medium Temp Chillers
+import "ref-chiller.pxt", :group => "mt_chiller", :predix => "mt_chiller_" do
+  include "*"
+  exclude "chiller_name"
+
+  parameter "source_temp", :default =>-4
+  parameter "cap_type", :default =>"CapacityTotalSpecificConditions"
+  parameter "load_factor", :default =>""
+  parameter "rated_cap", :default =>500000
+  parameter "cap_correction_curve_type", :default =>"TabularRHxDT1xTRoom"
+  parameter "rated_RH", :default =>85
+  parameter "cap_correction_curve_name", :default =>"ColmacCoilInc"
+  parameter "shr60_factor", :default =>""
+  parameter "rated_fan_pwr", :default =>2800
+  parameter "rated_air_flow", :default =>20.67
+  parameter "temp_term_defrost_fraction", :default =>0.8
+end
+
 %>
 <%
 total_roof_area = 500039.21['ft2']
@@ -644,214 +709,69 @@ insert "ref-sys.pxt",
   :cond_curves_source => "LowTemp",
   :working_fluid => "NH3" #Need to be Ammonia NH3
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller1",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+#LT Chillers insertion
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller1"
 
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller2"
 
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller3"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller2",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller4"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller3",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller5"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller4",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller6"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller5",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller7"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller6",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller8"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller7",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller9"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller8",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **lt_chiller,
+  :chiller_name => "LT_Airchiller10"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller9",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+#LT Compressor insertion
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor1"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "LT_Airchiller10",
-  :source_temp => -26,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 360000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor2"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_compressor1",
-  :comp_curves_source=> "Bitzer_NH3_Low_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor3"
 
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor4"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_compressor2",
-  :comp_curves_source=> "Bitzer_NH3_Low_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor5"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_compressor3",
-  :comp_curves_source=> "Bitzer_NH3_Low_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor6"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_compressor4",
-  :comp_curves_source=> "Bitzer_NH3_Low_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor7"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_compressor5",
-  :comp_curves_source=> "Bitzer_NH3_Low_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor8"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_compressor6",
-  :comp_curves_source=> "Bitzer_NH3_Low_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor9"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_compressor7",
-  :comp_curves_source=> "Bitzer_NH3_Low_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-sys-comp.pxt", **lt_compressor,
+  :comp_name => "LT_compressor10"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_compressor8",
-  :comp_curves_source=> "Bitzer_NH3_Low_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
-
-insert "ref-zone.pxt", # for the refrigerated Freezer (LT) zone 
+insert "ref-zone.pxt", # for the refrigerated Freezer (LT) zone, setpoint modification
   :zone_name => "WarehouseCond EL1 North Perim Spc (G.N2)",
   :air_chiller_names => LT_system_air_chiller_names,
   :htg_sp =>
@@ -881,124 +801,68 @@ insert "ref-sys.pxt",
   :cond_curves_source => "MediumTemp",
   :working_fluid => "NH3" #Need to be Ammonia NH3
 
-insert "ref-chiller.pxt",
-  :chiller_name => "MT_Airchiller1",
-  :source_temp => -4,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 160000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+#MT chiller insertion
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller1"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "MT_Airchiller2",
-  :source_temp => -4,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 160000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller2"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "MT_Airchiller3",
-  :source_temp => -4,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 160000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller3"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "MT_Airchiller4",
-  :source_temp => -4,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 160000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller4"
 
-insert "ref-chiller.pxt",
-  :chiller_name => "MT_Airchiller5",
-  :source_temp => -4,
-  :cap_type => "CapacityTotalSpecificConditions",
-  :load_factor => "",
-  :rated_cap => 160000,
-  :cap_correction_curve_type => "TabularRHxDT1xTRoom",
-  :rated_RH => 85,
-  :cap_correction_curve_name => "ColmacCoilInc",
-  :shr60_factor => "",
-  :rated_fan_pwr =>2800,
-  :rated_air_flow =>20.67,
-  :temp_term_defrost_fraction=>0.8
-  
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller5"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_compressor1",
-  :comp_curves_source=>"Bitzer_NH3_Med_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller6"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_compressor2",
-  :comp_curves_source=>"Bitzer_NH3_Med_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller7"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_compressor3",
-  :comp_curves_source=>"Bitzer_NH3_Med_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller8"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_compressor4",
-  :comp_curves_source=>"Bitzer_NH3_Med_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller9"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_compressor5",
-  :comp_curves_source=>"Bitzer_NH3_Med_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+insert "ref-chiller.pxt", **mt_chiller,
+  :chiller_name => "MT_Airchiller10"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_compressor6",
-  :comp_curves_source=>"Bitzer_NH3_Med_OSNA8591-K",
-  :return_gas_temp => "",
-  :rated_sh => 5,
-  :liquid_temp => "",
-  :rated_subcooling => 0
+
+#MT Compressor insertion
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor1"
+
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor2"
+
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor3"
+
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor4"
+
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor5"
+
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor6"
+
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor7"
+
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor8"
+
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor9"
+
+insert "ref-sys-comp.pxt", **mt_compressor,
+  :comp_name => "MT_compressor10"
 
 insert "ref-zone.pxt", # for the refrigerated Coller (MT) zone
   :zone_name => "WarehouseCond EL1 South Perim Spc (G.S1)",
