@@ -701,7 +701,7 @@ end
 #Using performance curves from RefrigeratedWarehouse.idf example file
 #LT system (freezer)
 LT_system_air_chiller_names = ["LT_Airchiller1", "LT_Airchiller2","LT_Airchiller3", "LT_Airchiller4","LT_Airchiller5", "LT_Airchiller6", "LT_Airchiller7", "LT_Airchiller8", "LT_Airchiller9", "LT_Airchiller10"]
-LT_system_compressors = ["LT_compressor1", "LT_compressor2", "LT_compressor3", "LT_compressor4", "LT_compressor5", "LT_compressor6", "LT_compressor7", "LT_compressor8"] 
+LT_system_compressors = ["LT_compressor1", "LT_compressor2", "LT_compressor3", "LT_compressor4", "LT_compressor5", "LT_compressor6", "LT_compressor7", "LT_compressor8", "LT_compressor9", "LT_compressor10"] 
 insert "ref-sys.pxt",
   :ref_system_name => "LT_system",
   :case_walkin_names => LT_system_air_chiller_names,
@@ -710,66 +710,17 @@ insert "ref-sys.pxt",
   :working_fluid => "NH3" #Need to be Ammonia NH3
 
 #LT Chillers insertion
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller1"
-
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller2"
-
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller3"
-
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller4"
-
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller5"
-
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller6"
-
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller7"
-
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller8"
-
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller9"
-
-insert "ref-chiller.pxt", **lt_chiller,
-  :chiller_name => "LT_Airchiller10"
+for chi_name in LT_system_air_chiller_names
+  insert "ref-chiller.pxt", **lt_chiller,
+    :chiller_name => chi_name
+end
 
 #LT Compressor insertion
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor1"
+for cp_name in LT_system_compressors
+  insert "ref-sys-comp.pxt", **lt_compressor,
+    :comp_name => cp_name
+end
 
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor2"
-
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor3"
-
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor4"
-
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor5"
-
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor6"
-
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor7"
-
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor8"
-
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor9"
-
-insert "ref-sys-comp.pxt", **lt_compressor,
-  :comp_name => "LT_compressor10"
 
 insert "ref-zone.pxt", # for the refrigerated Freezer (LT) zone, setpoint modification
   :zone_name => "WarehouseCond EL1 North Perim Spc (G.N2)",
@@ -792,8 +743,8 @@ insert "ref-zone.pxt", # for the refrigerated Freezer (LT) zone, setpoint modifi
   "
 
 #MT system (produce)
-MT_system_air_chiller_names = ["MT_Airchiller1","MT_Airchiller2","MT_Airchiller3","MT_Airchiller4","MT_Airchiller5"]
-MT_system_compressors = ["MT_compressor1","MT_compressor2","MT_compressor3","MT_compressor4","MT_compressor5", "MT_compressor6"]
+MT_system_air_chiller_names = ["MT_Airchiller1","MT_Airchiller2","MT_Airchiller3","MT_Airchiller4","MT_Airchiller5","MT_Airchiller6","MT_Airchiller7","MT_Airchiller8","MT_Airchiller9","MT_Airchiller10"]
+MT_system_compressors = ["MT_compressor1","MT_compressor2","MT_compressor3","MT_compressor4","MT_compressor5", "MT_compressor6", "MT_compressor7", "MT_compressor8", "MT_compressor9", "MT_compressor10"]
 insert "ref-sys.pxt",
   :ref_system_name => "MT_system",
   :case_walkin_names => MT_system_air_chiller_names,
@@ -802,67 +753,18 @@ insert "ref-sys.pxt",
   :working_fluid => "NH3" #Need to be Ammonia NH3
 
 #MT chiller insertion
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller1"
-
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller2"
-
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller3"
-
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller4"
-
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller5"
-
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller6"
-
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller7"
-
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller8"
-
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller9"
-
-insert "ref-chiller.pxt", **mt_chiller,
-  :chiller_name => "MT_Airchiller10"
+for chi_name in MT_system_air_chiller_names
+  insert "ref-chiller.pxt", **mt_chiller,
+    :chiller_name => chi_name
+end
 
 
 #MT Compressor insertion
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor1"
+for cp_name in MT_system_compressors
+  insert "ref-sys-comp.pxt", **mt_compressor,
+    :comp_name => cp_name
+end
 
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor2"
-
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor3"
-
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor4"
-
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor5"
-
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor6"
-
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor7"
-
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor8"
-
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor9"
-
-insert "ref-sys-comp.pxt", **mt_compressor,
-  :comp_name => "MT_compressor10"
 
 insert "ref-zone.pxt", # for the refrigerated Coller (MT) zone
   :zone_name => "WarehouseCond EL1 South Perim Spc (G.S1)",
