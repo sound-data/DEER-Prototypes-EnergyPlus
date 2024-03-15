@@ -9,6 +9,7 @@
 - [ ] Provide a concise description of the measure, bug, or feature. Submit one PR per measure.
 - [ ] For a new measure, attach a workbook named DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx, containing only rows used for post-processing the measure.
 - [ ] Add comments in the code when necessary to facilitate the review process.
+- [ ] Add a comment before the added code, including the author's full name, company, and specifying if it's a bug fix, new measure, or feature.
 - [ ] For a new feature or bug, demonstrate the impact on energy consumption for selected cases with justification using plots and descriptions.
 - [ ] For a new measure, add a summary table showing total energy consumption per simulated case.
 ### PR Reviewer

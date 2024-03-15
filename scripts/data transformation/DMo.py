@@ -8,7 +8,7 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'Brushless Fan Motor'
+measure_name = 'SEER Rated AC/HP'
 
 # %%
 #DMo only script
@@ -30,7 +30,9 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-path = 'Analysis/DMo_Brushless_Fan_Motor_Ex'
+#12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
+#to do: use for loop to loop over each folder, using if-else to process different building types for Res
+path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
 
 # %%
 #extract only the 5th portion of the measure group name for expected_att

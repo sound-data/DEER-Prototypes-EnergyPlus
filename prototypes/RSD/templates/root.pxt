@@ -237,6 +237,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "NONE"
   parameter "atu_reheat_control", :default => nil
 end
@@ -251,6 +255,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_flow_min_method", :default => "Fraction"
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "cool_coil_cop", :default => 3.85
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "COMBUSTION"
@@ -486,15 +492,17 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Dining EL1 East Perim Spc (G.E1)", "dining_fine", 2999.18['ft2'], "Sys7_ALT", "F1", nil, nil, "Restaurant"],
-  ["Kitchen EL1 WNW Perim Spc (G.WNW3)", "kitchen", 1603.08['ft2'], nil, "F1", nil, nil, "Restaurant"],
-  ["LobbyWaiting EL1 SW Perim Spc (G.SW2)", "lobby", 800.58['ft2'], "Sys7_Lobby", "F1", nil, nil, "Restaurant"],
-  ["Restroom EL1 North Perim Spc (G.N4)", "restroom", 200.24['ft2'], "Sys7_Restroom", "F1", nil, nil, "Restaurant"],
-  ["EL1 East Perim Plnm (G.E5)", "plenum", 0.0['ft2'], nil, "F1", nil, nil, "Plenum"],
-  ["EL1 North Perim Plnm (G.N8)", "plenum", 0.0['ft2'], nil, "F1", nil, nil, "Plenum"],
-  ["EL1 SW Perim Plnm (G.SW6)", "plenum", 0.0['ft2'], nil, "F1", nil, nil, "Plenum"],
-  ["EL1 WNW Perim Plnm (G.WNW7)", "plenum", 0.0['ft2'], nil, "F1", nil, nil, "Plenum"],
+  ["Dining EL1 East Perim Spc (G.E1)", "dining_fine", 2999.18['ft2'], "Sys7_ALT", "F1_ALT", "F1_ALT", "F1_ALT", "Restaurant"],
+  ["Kitchen EL1 WNW Perim Spc (G.WNW3)", "kitchen", 1603.08['ft2'], nil, nil, nil, nil, "Restaurant"],
+  ["LobbyWaiting EL1 SW Perim Spc (G.SW2)", "lobby", 800.58['ft2'], "Sys7", "F1", "Sys7_Lobby", "Sys7_Lobby", "Restaurant"],
+  ["Restroom EL1 North Perim Spc (G.N4)", "restroom", 200.24['ft2'], "Sys7", "F1", "Sys7_Restroom", "Sys7_Restroom", "Restaurant"],
+  ["EL1 East Perim Plnm (G.E5)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 North Perim Plnm (G.N8)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 SW Perim Plnm (G.SW6)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 WNW Perim Plnm (G.WNW7)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
 ]
 
 
