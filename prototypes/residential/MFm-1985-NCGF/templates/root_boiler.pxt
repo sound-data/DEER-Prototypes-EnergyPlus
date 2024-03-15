@@ -69,6 +69,16 @@ parameter "burner_eff", :default=>0.78
 #fridge/freezer power level
 parameter "refgfrzr_power_level", :default=>91.0575745
 
+# Boiler Efficiency
+parameter "boiler_eff", :default=>0.8
+
+# Boiler Efficiency Curve
+parameter "boiler_eff_curve", :default=>'Cond_Boiler_Eff'
+
+# Efficiency Curve Temperature Evaluation Variable
+parameter "curve_evaluation_variable", :default=>'LeavingBoiler'
+
+
 #Duct Loss
 parameter "total_leakage_ratio", :default=>0.15  #total leakage ratio
 parameter "number_of_stories", :default=>1  #no. of stories, default one story
@@ -2007,6 +2017,420 @@ Material,
     0.9,                     !- Thermal Absorptance
     0.7,                     !- Solar Absorptance
     0.7;                     !- Visible Absorptance
+
+
+!-   ===========  ALL OBJECTS IN CLASS: COIL:HEATING:WATER ===========
+
+!- Boilers and hot water coils added by Behzad Rizi (Solaris Technical), 2024-01-08
+!- Inputs based on EnergyPlus defaults.
+
+Coil:Heating:Water,
+    DXFG EL1 G_SSE1 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 G_SSE1 Zone Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 G_SSE1 Zone Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 G_SSE1 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 G_SSE1 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 T_SSE27 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 T_SSE27 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 T_SSE27 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 T_SSE27 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 T_SSE27 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 G_WSW1 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 G_WSW1 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 G_WSW1 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 G_WSW1 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 G_WSW1 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 T_WSW27 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 T_WSW27 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 T_WSW27 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 T_WSW27 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 T_WSW27 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 G_E3 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 G_E3 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 G_E3 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 G_E3 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 G_E3 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 T_E29 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 T_E29 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 T_E29 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 T_E29 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 T_E29 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 G_S3 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 G_S3 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 G_S3 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 G_S3 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 G_S3 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 T_S29 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 T_S29 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 T_S29 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 T_S29 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 T_S29 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 G_E5 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 G_E5 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 G_E5 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 G_E5 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 G_E5 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 T_E31 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 T_E31 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 T_E31 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 T_E31 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 T_E31 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 G_S5 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 G_S5 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 G_S5 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 G_S5 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 G_S5 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 T_S31 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 T_S31 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 T_S31 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 T_S31 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 T_S31 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 G_SSW7 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 G_SSW7 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 G_SSW7 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 G_SSW7 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 G_SSW7 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 T_SSW33 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 T_SSW33 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 T_SSW33 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 T_SSW33 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 T_SSW33 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 G_WNW7 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 G_WNW7 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 G_WNW7 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 G_WNW7 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 G_WNW7 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 T_WNW33 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 T_WNW33 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 T_WNW33 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 T_WNW33 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 T_WNW33 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 G_W9 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 G_W9 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 G_W9 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 G_W9 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 G_W9 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 T_W35 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 T_W35 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 T_W35 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 T_W35 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 T_W35 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 G_N9 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 G_N9 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 G_N9 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 G_N9 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 G_N9 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 T_N35 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 T_N35 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 T_N35 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 T_N35 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 T_N35 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 G_W11 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 G_W11 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 G_W11 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 G_W11 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 G_W11 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL1 T_W37 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL1 T_W37 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL1 T_W37 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL1 T_W37 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL1 T_W37 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 G_N11 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 G_N11 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 G_N11 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 G_N11 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 G_N11 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
+
+Coil:Heating:Water,
+    DXFG EL2 T_N37 Water Heating Coil,  !- Name
+    ,                        !- Availability Schedule Name
+    autosize,                !- U-Factor Times Area Value {W/K}
+    autosize,                !- Maximum Water Flow Rate {m3/s}
+    DXFG EL2 T_N37 Coil Water In Node,  !- Water Inlet Node Name
+    DXFG EL2 T_N37 Coil Water Out Node,  !- Water Outlet Node Name
+    DXFG EL2 T_N37 Supply Fan Outlet,  !- Air Inlet Node Name
+    DXFG EL2 T_N37 Air Loop Outlet,  !- Air Outlet Node Name
+    UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+    autosize,                !- Rated Capacity {W}
+    82.2,                    !- Rated Inlet Water Temperature {C}
+    16.6,                    !- Rated Inlet Air Temperature {C}
+    71.1,                    !- Rated Outlet Water Temperature {C}
+    32.2,                    !- Rated Outlet Air Temperature {C}
+    0.5;                     !- Rated Ratio for Air and Water Convection
 
 
 !-   ===========  ALL OBJECTS IN CLASS: MATERIAL:NOMASS ===========
@@ -27840,8 +28264,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_SSE1 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 G_SSE1 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 G_SSE1 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 T_SSE27,        !- Name
@@ -27855,8 +28279,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_SSE27 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 T_SSE27 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 T_SSE27 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 G_WSW1,         !- Name
@@ -27870,8 +28294,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_WSW1 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 G_WSW1 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 G_WSW1 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 T_WSW27,        !- Name
@@ -27885,8 +28309,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_WSW27 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 T_WSW27 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 T_WSW27 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 G_E3,           !- Name
@@ -27900,8 +28324,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_E3 Supply Fan,!- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 G_E3 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 G_E3 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 T_E29,          !- Name
@@ -27915,8 +28339,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_E29 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 T_E29 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 T_E29 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 G_S3,           !- Name
@@ -27930,8 +28354,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_S3 Supply Fan,!- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 G_S3 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 G_S3 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 T_S29,          !- Name
@@ -27945,8 +28369,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_S29 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 T_S29 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 T_S29 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 G_E5,           !- Name
@@ -27960,8 +28384,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_E5 Supply Fan,!- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 G_E5 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 G_E5 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 T_E31,          !- Name
@@ -27975,8 +28399,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_E31 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 T_E31 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 T_E31 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 G_S5,           !- Name
@@ -27990,8 +28414,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_S5 Supply Fan,!- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 G_S5 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 G_S5 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 T_S31,          !- Name
@@ -28005,8 +28429,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_S31 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 T_S31 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 T_S31 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 G_SSW7,         !- Name
@@ -28020,8 +28444,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_SSW7 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 G_SSW7 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 G_SSW7 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 T_SSW33,        !- Name
@@ -28035,8 +28459,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_SSW33 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 T_SSW33 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 T_SSW33 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 G_WNW7,         !- Name
@@ -28050,8 +28474,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_WNW7 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 G_WNW7 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 G_WNW7 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 T_WNW33,        !- Name
@@ -28065,8 +28489,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_WNW33 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 T_WNW33 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 T_WNW33 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 G_W9,           !- Name
@@ -28080,8 +28504,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_W9 Supply Fan,!- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 G_W9 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 G_W9 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 T_W35,          !- Name
@@ -28095,8 +28519,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_W35 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 T_W35 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 T_W35 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 G_N9,           !- Name
@@ -28110,8 +28534,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_N9 Supply Fan,!- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 G_N9 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 G_N9 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 T_N35,          !- Name
@@ -28125,8 +28549,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_N35 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 T_N35 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 T_N35 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 G_W11,          !- Name
@@ -28140,8 +28564,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_W11 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 G_W11 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 G_W11 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL1 T_W37,          !- Name
@@ -28155,8 +28579,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_W37 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL1 T_W37 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL1 T_W37 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 G_N11,          !- Name
@@ -28170,8 +28594,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_N11 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 G_N11 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 G_N11 Water Heating Coil;  !- Heating Coil Name
 
 AirLoopHVAC:UnitaryHeatOnly,
     NCGF EL2 T_N37,          !- Name
@@ -28185,8 +28609,8 @@ AirLoopHVAC:UnitaryHeatOnly,
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_N37 Supply Fan,  !- Supply Fan Name
     BlowThrough,             !- Fan Placement
-    Coil:Heating:Fuel,       !- Heating Coil Object Type
-    DXFG EL2 T_N37 Heating Coil;  !- Heating Coil Name
+    Coil:Heating:Water,       !- Heating Coil Object Type
+    DXFG EL2 T_N37 Water Heating Coil;  !- Heating Coil Name
 
 !-   ===========  ALL OBJECTS IN CLASS: BRANCH ===========
 Branch,
@@ -28725,6 +29149,14 @@ Sizing:Plant,
     Heating,                 !- Loop Type
     48.8888888888889,        !- Design Loop Exit Temperature {C}
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
+
+Sizing:Plant,
+    Hot Water Loop,          !- Plant or Condenser Loop Name
+    Heating,                 !- Loop Type
+    82.2222222222222,        !- Design Loop Exit Temperature {C}
+    5.55555555555556,        !- Loop Design Temperature Difference {deltaC}
+    NonCoincident,           !- Sizing Option
+    1;                       !- Zone Timesteps in Averaging Window
 
 
 !-   ===========  ALL OBJECTS IN CLASS: BRANCH ===========
@@ -32570,6 +33002,255 @@ Branch,
     Water Heater Use Outlet Node_unit48;  !- Component 1 Outlet Node Name
 
 
+Branch,
+    Central Boiler Branch,   !- Name
+    ,                        !- Pressure Drop Curve Name
+    Boiler:HotWater,         !- Component 1 Object Type
+    CentralBoiler,           !- Component 1 Name
+    Boiler Water Inlet Node, !- Component 1 Inlet Node Name
+    Boiler Water Oulet Node; !- Component 1 Outlet Node Name
+
+Branch,
+    Heating Supply Inlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pump:VariableSpeed,      !- Component 1 Object Type
+    HW Circ Pump,            !- Component 1 Name
+    HW Supply Inlet Node,    !- Component 1 Inlet Node Name
+    HW Pump Oulet Node;      !- Component 1 Outlet Node Name
+
+Branch,
+    Heating Supply Outlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Supply Outlet,   !- Component 1 Name
+    Heating Supply Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
+    HW Supply Outlet Node;   !- Component 1 Outlet Node Name
+
+Branch,
+    Heating Demand Inlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Demand Inlet Pipe,  !- Component 1 Name
+    HW Demand Inlet Node,    !- Component 1 Inlet Node Name
+    HW Demand Entrance Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    Heating Demand Outlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Demand Outlet Pipe,  !- Component 1 Name
+    HW Demand Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
+    HW Demand Outlet Node;   !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 G_SSE1 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 G_SSE1 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 G_SSE1 Zone Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 G_SSE1 Zone Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 T_SSE27 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 T_SSE27 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 T_SSE27 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 T_SSE27 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 G_WSW1 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 G_WSW1 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 G_WSW1 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 G_WSW1 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 T_WSW27 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 T_WSW27 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 T_WSW27 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 T_WSW27 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 G_E3 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 G_E3 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 G_E3 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 G_E3 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 T_E29 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 T_E29 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 T_E29 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 T_E29 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 G_S3 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 G_S3 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 G_S3 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 G_S3 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 T_S29 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 T_S29 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 T_S29 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 T_S29 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 G_E5 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 G_E5 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 G_E5 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 G_E5 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 T_E31 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 T_E31 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 T_E31 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 T_E31 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 G_S5 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 G_S5 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 G_S5 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 G_S5 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 T_S31 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 T_S31 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 T_S31 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 T_S31 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 G_SSW7 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 G_SSW7 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 G_SSW7 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 G_SSW7 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 T_SSW33 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 T_SSW33 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 T_SSW33 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 T_SSW33 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 G_WNW7 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 G_WNW7 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 G_WNW7 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 G_WNW7 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 T_WNW33 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 T_WNW33 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 T_WNW33 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 T_WNW33 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 G_W9 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 G_W9 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 G_W9 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 G_W9 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 T_W35 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 T_W35 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 T_W35 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 T_W35 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 G_N9 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 G_N9 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 G_N9 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 G_N9 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 T_N35 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 T_N35 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 T_N35 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 T_N35 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 G_W11 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 G_W11 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 G_W11 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 G_W11 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL1 T_W37 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL1 T_W37 Water Heating Coil,  !- Component 1 Name
+    DXFG EL1 T_W37 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL1 T_W37 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 G_N11 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 G_N11 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 G_N11 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 G_N11 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    DXFG EL2 T_N37 Water Main Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Coil:Heating:Water,      !- Component 1 Object Type
+    DXFG EL2 T_N37 Water Heating Coil,  !- Component 1 Name
+    DXFG EL2 T_N37 Coil Water In Node,  !- Component 1 Inlet Node Name
+    DXFG EL2 T_N37 Coil Water Out Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    Heating Supply Side Bypass Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Supply Side Bypass,  !- Component 1 Name
+    Heating Supply Bypass Inlet Node,  !- Component 1 Inlet Node Name
+    Heating Supply Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    Heating Demand Side Bypass Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Heating Demand Side Bypass,  !- Component 1 Name
+    Heating Demand Bypass Inlet Node,  !- Component 1 Inlet Node Name
+    Heating Demand Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+
 !-   ===========  ALL OBJECTS IN CLASS: BRANCHLIST ===========
 
 BranchList,
@@ -33340,6 +34021,43 @@ BranchList,
     Water Bath Branch_unit48,!- Branch 6 Name
     Mains Makeup Branch_unit48;  !- Branch 7 Name
 
+BranchList,
+    Heating Supply Side Branches,  !- Name
+    Heating Supply Inlet Branch,  !- Branch 1 Name
+    Central Boiler Branch,   !- Branch 2 Name
+    Heating Supply Side Bypass Branch,  !- Branch 3 Name
+    Heating Supply Outlet Branch;  !- Branch 4 Name
+
+BranchList,
+    Heating Demand Side Branches,  !- Name
+    Heating Demand Inlet Branch,  !- Branch 1 Name
+    DXFG EL1 G_SSE1 Water Main Branch,  !- Branch 2 Name
+    DXFG EL1 T_SSE27 Water Main Branch,  !- Branch 3 Name
+    DXFG EL2 G_WSW1 Water Main Branch,  !- Branch 4 Name
+    DXFG EL2 T_WSW27 Water Main Branch,  !- Branch 5 Name
+    DXFG EL1 G_E3 Water Main Branch,  !- Branch 6 Name
+    DXFG EL1 T_E29 Water Main Branch,  !- Branch 7 Name
+    DXFG EL2 G_S3 Water Main Branch,  !- Branch 8 Name
+    DXFG EL2 T_S29 Water Main Branch,  !- Branch 9 Name
+    DXFG EL1 G_E5 Water Main Branch,  !- Branch 10 Name
+    DXFG EL1 T_E31 Water Main Branch,  !- Branch 11 Name
+    DXFG EL2 G_S5 Water Main Branch,  !- Branch 12 Name
+    DXFG EL2 T_S31 Water Main Branch,  !- Branch 13 Name
+    DXFG EL1 G_SSW7 Water Main Branch,  !- Branch 14 Name
+    DXFG EL1 T_SSW33 Water Main Branch,  !- Branch 15 Name
+    DXFG EL2 G_WNW7 Water Main Branch,  !- Branch 16 Name
+    DXFG EL2 T_WNW33 Water Main Branch,  !- Branch 17 Name
+    DXFG EL1 G_W9 Water Main Branch,  !- Branch 18 Name
+    DXFG EL1 T_W35 Water Main Branch,  !- Branch 19 Name
+    DXFG EL2 G_N9 Water Main Branch,  !- Branch 20 Name
+    DXFG EL2 T_N35 Water Main Branch,  !- Branch 21 Name
+    DXFG EL1 G_W11 Water Main Branch,  !- Branch 22 Name
+    DXFG EL1 T_W37 Water Main Branch,  !- Branch 23 Name
+    DXFG EL2 G_N11 Water Main Branch,  !- Branch 24 Name
+    DXFG EL2 T_N37 Water Main Branch,  !- Branch 25 Name
+    Heating Demand Side Bypass Branch,  !- Branch 26 Name
+    Heating Demand Outlet Branch;  !- Branch 27 Name
+
 
 !-   ===========  ALL OBJECTS IN CLASS: CONNECTOR:SPLITTER ===========
 
@@ -34014,6 +34732,41 @@ Connector:Splitter,
     DHW Supply Splitter_unit48,  !- Name
     Mains Inlet Branch_unit48,  !- Inlet Branch Name
     Water Heater Branch_unit48;  !- Outlet Branch 1 Name
+
+Connector:Splitter,
+    Heating Demand Splitter, !- Name
+    Heating Demand Inlet Branch,  !- Inlet Branch Name
+    DXFG EL1 G_SSE1 Water Main Branch,  !- Outlet Branch 1 Name
+    DXFG EL1 T_SSE27 Water Main Branch,  !- Outlet Branch 2 Name
+    DXFG EL2 G_WSW1 Water Main Branch,  !- Outlet Branch 3 Name
+    DXFG EL2 T_WSW27 Water Main Branch,  !- Outlet Branch 4 Name
+    DXFG EL1 G_E3 Water Main Branch,  !- Outlet Branch 5 Name
+    DXFG EL1 T_E29 Water Main Branch,  !- Outlet Branch 6 Name
+    DXFG EL2 G_S3 Water Main Branch,  !- Outlet Branch 7 Name
+    DXFG EL2 T_S29 Water Main Branch,  !- Outlet Branch 8 Name
+    DXFG EL1 G_E5 Water Main Branch,  !- Outlet Branch 9 Name
+    DXFG EL1 T_E31 Water Main Branch,  !- Outlet Branch 10 Name
+    DXFG EL2 G_S5 Water Main Branch,  !- Outlet Branch 11 Name
+    DXFG EL2 T_S31 Water Main Branch,  !- Outlet Branch 12 Name
+    DXFG EL1 G_SSW7 Water Main Branch,  !- Outlet Branch 13 Name
+    DXFG EL1 T_SSW33 Water Main Branch,  !- Outlet Branch 14 Name
+    DXFG EL2 G_WNW7 Water Main Branch,  !- Outlet Branch 15 Name
+    DXFG EL2 T_WNW33 Water Main Branch,  !- Outlet Branch 16 Name
+    DXFG EL1 G_W9 Water Main Branch,  !- Outlet Branch 17 Name
+    DXFG EL1 T_W35 Water Main Branch,  !- Outlet Branch 18 Name
+    DXFG EL2 G_N9 Water Main Branch,  !- Outlet Branch 19 Name
+    DXFG EL2 T_N35 Water Main Branch,  !- Outlet Branch 20 Name
+    DXFG EL1 G_W11 Water Main Branch,  !- Outlet Branch 21 Name
+    DXFG EL1 T_W37 Water Main Branch,  !- Outlet Branch 22 Name
+    DXFG EL2 G_N11 Water Main Branch,  !- Outlet Branch 23 Name
+    DXFG EL2 T_N37 Water Main Branch,  !- Outlet Branch 24 Name
+    Heating Demand Side Bypass Branch;  !- Outlet Branch 25 Name
+
+Connector:Splitter,
+    Heating Supply Splitter, !- Name
+    Heating Supply Inlet Branch,  !- Inlet Branch Name
+    Central Boiler Branch,   !- Outlet Branch 1 Name
+    Heating Supply Side Bypass Branch;  !- Outlet Branch 2 Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: CONNECTOR:MIXER ===========
@@ -34690,6 +35443,41 @@ Connector:Mixer,
     DHW Supply Outlet Branch_unit48,  !- Outlet Branch Name
     Water Heater Branch_unit48;  !- Inlet Branch 1 Name
 
+Connector:Mixer,
+    Heating Demand Mixer,    !- Name
+    Heating Demand Outlet Branch,  !- Outlet Branch Name
+    DXFG EL1 G_SSE1 Water Main Branch,  !- Inlet Branch 1 Name
+    DXFG EL1 T_SSE27 Water Main Branch,  !- Inlet Branch 2 Name
+    DXFG EL2 G_WSW1 Water Main Branch,  !- Inlet Branch 3 Name
+    DXFG EL2 T_WSW27 Water Main Branch,  !- Inlet Branch 4 Name
+    DXFG EL1 G_E3 Water Main Branch,  !- Inlet Branch 5 Name
+    DXFG EL1 T_E29 Water Main Branch,  !- Inlet Branch 6 Name
+    DXFG EL2 G_S3 Water Main Branch,  !- Inlet Branch 7 Name
+    DXFG EL2 T_S29 Water Main Branch,  !- Inlet Branch 8 Name
+    DXFG EL1 G_E5 Water Main Branch,  !- Inlet Branch 9 Name
+    DXFG EL1 T_E31 Water Main Branch,  !- Inlet Branch 10 Name
+    DXFG EL2 G_S5 Water Main Branch,  !- Inlet Branch 11 Name
+    DXFG EL2 T_S31 Water Main Branch,  !- Inlet Branch 12 Name
+    DXFG EL1 G_SSW7 Water Main Branch,  !- Inlet Branch 13 Name
+    DXFG EL1 T_SSW33 Water Main Branch,  !- Inlet Branch 14 Name
+    DXFG EL2 G_WNW7 Water Main Branch,  !- Inlet Branch 15 Name
+    DXFG EL2 T_WNW33 Water Main Branch,  !- Inlet Branch 16 Name
+    DXFG EL1 G_W9 Water Main Branch,  !- Inlet Branch 17 Name
+    DXFG EL1 T_W35 Water Main Branch,  !- Inlet Branch 18 Name
+    DXFG EL2 G_N9 Water Main Branch,  !- Inlet Branch 19 Name
+    DXFG EL2 T_N35 Water Main Branch,  !- Inlet Branch 20 Name
+    DXFG EL1 G_W11 Water Main Branch,  !- Inlet Branch 21 Name
+    DXFG EL1 T_W37 Water Main Branch,  !- Inlet Branch 22 Name
+    DXFG EL2 G_N11 Water Main Branch,  !- Inlet Branch 23 Name
+    DXFG EL2 T_N37 Water Main Branch,  !- Inlet Branch 24 Name
+    Heating Demand Side Bypass Branch;  !- Inlet Branch 25 Name
+
+Connector:Mixer,
+    Heating Supply Mixer,    !- Name
+    Heating Supply Outlet Branch,  !- Outlet Branch Name
+    Central Boiler Branch,   !- Inlet Branch 1 Name
+    Heating Supply Side Bypass Branch;  !- Inlet Branch 2 Name
+
 
 !-   ===========  ALL OBJECTS IN CLASS: CONNECTORLIST ===========
 
@@ -35364,6 +36152,27 @@ ConnectorList,
     DHW Supply Splitter_unit48,  !- Connector 1 Name
     Connector:Mixer,         !- Connector 2 Object Type
     DHW Supply Mixer_unit48; !- Connector 2 Name
+
+ConnectorList,
+    Heating Supply Side Connectors,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    Heating Supply Splitter, !- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    Heating Supply Mixer;    !- Connector 2 Name
+
+ConnectorList,
+    Heating Demand Side Connectors,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    Heating Demand Splitter, !- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    Heating Demand Mixer;    !- Connector 2 Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: NODELIST ===========
+
+NodeList,
+    Hot Water Loop Setpoint Node List,  !- Name
+    HW Supply Outlet Node;   !- Node 1 Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: PIPE:ADIABATIC ===========
@@ -36087,6 +36896,31 @@ Pipe:Adiabatic,
     DHW Demand Inlet Pipe_unit48,  !- Name
     DHW Demand Inlet Node_unit48,  !- Inlet Node Name
     DHW Demand Inlet Pipe Outlet Node_unit48;  !- Outlet Node Name
+
+Pipe:Adiabatic,
+    Heating Supply Outlet,   !- Name
+    Heating Supply Exit Pipe Inlet Node,  !- Inlet Node Name
+    HW Supply Outlet Node;   !- Outlet Node Name
+
+Pipe:Adiabatic,
+    Heating Demand Inlet Pipe,  !- Name
+    HW Demand Inlet Node,    !- Inlet Node Name
+    HW Demand Entrance Pipe Outlet Node;  !- Outlet Node Name
+
+Pipe:Adiabatic,
+    Heating Demand Outlet Pipe,  !- Name
+    HW Demand Exit Pipe Inlet Node,  !- Inlet Node Name
+    HW Demand Outlet Node;   !- Outlet Node Name
+
+Pipe:Adiabatic,
+    Heating Supply Side Bypass,  !- Name
+    Heating Supply Bypass Inlet Node,  !- Inlet Node Name
+    Heating Supply Bypass Outlet Node;  !- Outlet Node Name
+
+Pipe:Adiabatic,
+    Heating Demand Side Bypass,  !- Name
+    Heating Demand Bypass Inlet Node,  !- Inlet Node Name
+    Heating Demand Bypass Outlet Node;  !- Outlet Node Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: PUMP:VARIABLESPEED ===========
@@ -36858,6 +37692,63 @@ Pump:VariableSpeed,
     0,                       !- Coefficient 4 of the Part Load Performance Curve
     0,                       !- Design Minimum Flow Rate {m3/s}
     Intermittent;            !- Pump Control Type
+
+!- Boilers and hot water coils added by Behzad Rizi (Solaris Technical), 2024-01-08
+!- Inputs based on EnergyPlus defaults.
+
+Pump:VariableSpeed,
+    HW Circ Pump,            !- Name
+    HW Supply Inlet Node,    !- Inlet Node Name
+    HW Pump Oulet Node,      !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    179352,                  !- Design Pump Head {Pa}
+    autosize,                !- Design Power Consumption {W}
+    0.9,                     !- Motor Efficiency
+    ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+    ,                        !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    ,                        !- Coefficient 3 of the Part Load Performance Curve
+    ,                        !- Coefficient 4 of the Part Load Performance Curve
+    autosize,                !- Design Minimum Flow Rate {m3/s}
+    Intermittent,            !- Pump Control Type
+    ,                        !- Pump Flow Rate Schedule Name
+    ,                        !- Pump Curve Name
+    ,                        !- Impeller Diameter {m}
+    ,                        !- VFD Control Type
+    ,                        !- Pump RPM Schedule Name
+    ,                        !- Minimum Pressure Schedule {Pa}
+    ,                        !- Maximum Pressure Schedule {Pa}
+    ,                        !- Minimum RPM Schedule {rev/min}
+    ,                        !- Maximum RPM Schedule {rev/min}
+    ,                        !- Zone Name
+    ,                        !- Skin Loss Radiative Fraction
+    PowerPerFlowPerPressure, !- Design Power Sizing Method
+    348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+    1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+    ,                        !- Design Minimum Flow Rate Fraction
+    General;                 !- End-Use Subcategory
+
+
+!-   ===========  ALL OBJECTS IN CLASS: BOILER:HOTWATER ===========
+
+Boiler:HotWater,
+    CentralBoiler,           !- Name
+    NaturalGas,              !- Fuel Type
+    autosize,                !- Nominal Capacity {W}
+    <%= boiler_eff %>,       !- Nominal Thermal Efficiency
+    <%= curve_evaluation_variable %>,           !- Efficiency Curve Temperature Evaluation Variable
+    <%= boiler_eff_curve %>, !- Normalized Boiler Efficiency Curve Name
+    autosize,                !- Design Water Flow Rate {m3/s}
+    0.2,                     !- Minimum Part Load Ratio
+    1,                       !- Maximum Part Load Ratio
+    1,                       !- Optimum Part Load Ratio
+    Boiler Water Inlet Node, !- Boiler Water Inlet Node Name
+    Boiler Water Oulet Node, !- Boiler Water Outlet Node Name
+    99.9,                    !- Water Outlet Upper Temperature Limit {C}
+    LeavingSetpointModulated,!- Boiler Flow Mode
+    ,                        !- Parasitic Electric Load {W}
+    1,                       !- Sizing Factor
+    General;                 !- End-Use Subcategory
 
 
 !-   ===========  ALL OBJECTS IN CLASS: WATERHEATER:MIXED ===========
@@ -40277,6 +41168,33 @@ PlantLoop,
     Optimal;                 !- Load Distribution Scheme
 
 
+PlantLoop,
+    Hot Water Loop,          !- Name
+    Water,                   !- Fluid Type
+    ,                        !- User Defined Fluid Type
+    Hot Loop Operation,      !- Plant Equipment Operation Scheme Name
+    HW Supply Outlet Node,   !- Loop Temperature Setpoint Node Name
+    100,                     !- Maximum Loop Temperature {C}
+    0,                       !- Minimum Loop Temperature {C}
+    autosize,                !- Maximum Loop Flow Rate {m3/s}
+    0,                       !- Minimum Loop Flow Rate {m3/s}
+    autocalculate,           !- Plant Loop Volume {m3}
+    HW Supply Inlet Node,    !- Plant Side Inlet Node Name
+    HW Supply Outlet Node,   !- Plant Side Outlet Node Name
+    Heating Supply Side Branches,  !- Plant Side Branch List Name
+    Heating Supply Side Connectors,  !- Plant Side Connector List Name
+    HW Demand Inlet Node,    !- Demand Side Inlet Node Name
+    HW Demand Outlet Node,   !- Demand Side Outlet Node Name
+    Heating Demand Side Branches,  !- Demand Side Branch List Name
+    Heating Demand Side Connectors,  !- Demand Side Connector List Name
+    SequentialLoad,          !- Load Distribution Scheme
+    ,                        !- Availability Manager List Name
+    SingleSetpoint,          !- Plant Loop Demand Calculation Scheme
+    None,                    !- Common Pipe Simulation
+    None,                    !- Pressure Simulation Type
+    2;                       !- Loop Circulation Time {minutes}
+
+
 !-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTLIST ===========
 
 PlantEquipmentList,
@@ -40518,6 +41436,11 @@ PlantEquipmentList,
     DHW Plant Equipment_unit48,  !- Name
     WaterHeater:Mixed,       !- Equipment 1 Object Type
     Water Heater_unit48;     !- Equipment 1 Name
+
+PlantEquipmentList,
+    Heating Plant,           !- Name
+    Boiler:HotWater,         !- Equipment 1 Object Type
+    CentralBoiler;           !- Equipment 1 Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTOPERATION:HEATINGLOAD ===========
@@ -40810,6 +41733,11 @@ PlantEquipmentOperation:HeatingLoad,
     1000000000000000,        !- Load Range 1 Upper Limit {W}
     DHW Plant Equipment_unit48;  !- Range 1 Equipment List Name
 
+PlantEquipmentOperation:HeatingLoad,
+    Central Boiler Only,     !- Name
+    0,                       !- Load Range 1 Lower Limit {W}
+    999372450999999,         !- Load Range 1 Upper Limit {W}
+    Heating Plant;           !- Range 1 Equipment List Name
 
 !-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTOPERATIONSCHEMES ===========
 
@@ -41101,6 +42029,11 @@ PlantEquipmentOperationSchemes,
     DHW Control Scheme_unit48,  !- Control Scheme 1 Name
     always_avail;            !- Control Scheme 1 Schedule Name
 
+PlantEquipmentOperationSchemes,
+    Hot Loop Operation,      !- Name
+    PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
+    Central Boiler Only,     !- Control Scheme 1 Name
+    heating_sch_DEER;        !- Control Scheme 1 Schedule Name
 
 !-   ===========  ALL OBJECTS IN CLASS: SETPOINTMANAGER:SCHEDULED ===========
 
@@ -46233,6 +47166,12 @@ Output:Variable,
         *,                       !- Key Value
         Cooling Coil Total Cooling Energy ,  !- Variable Name
         Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Boiler NaturalGas Energy ,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
 
     !-   ===========  ALL OBJECTS IN CLASS: OUTPUTCONTROL:TABLE:STYLE ===========
 
@@ -54186,3 +55125,71 @@ Controller:OutdoorAir,
   ,                                                        !- Minimum Fraction of Outdoor Air Schedule Name
   ,                                                        !- Maximum Fraction of Outdoor Air Schedule Name
   ;                                                        !- Mechanical Ventilation Controller Name
+
+!- Boilers and hot water coils added by Behzad Rizi (Solaris Technical), 2024-01-08
+!- Inputs based on EnergyPlus defaults and boiler library.
+
+!-   ===========  ALL OBJECTS IN CLASS: SETPOINTMANAGER:OUTDOORAIRRESET ===========
+
+SetpointManager:OutdoorAirReset,
+    Hot Water Loop Setpoint Manager,  !- Name
+    Temperature,             !- Control Variable
+    93.3333333333333,        !- Setpoint at Outdoor Low Temperature {C}
+    -17.7777777777778,       !- Outdoor Low Temperature {C}
+    40,                      !- Setpoint at Outdoor High Temperature {C}
+    21.1111111111111,        !- Outdoor High Temperature {C}
+    Hot Water Loop Setpoint Node List;  !- Setpoint Node or NodeList Name
+
+SetpointManager:OutdoorAirReset,
+    Boiler Setpoint Manager, !- Name
+    Temperature,             !- Control Variable
+    73.88888888888888,        !- Setpoint at Outdoor Low Temperature {C}
+    -17.7777777777778,       !- Outdoor Low Temperature {C}
+    60,                      !- Setpoint at Outdoor High Temperature {C}
+    21.1111111111111,        !- Outdoor High Temperature {C}
+    Boiler Water Oulet Node; !- Setpoint Node or NodeList Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: CURVE:BICUBIC ===========
+
+Curve:Bicubic,
+    NonCond_Boiler_Eff,      !- Name
+    1.111720116,             !- Coefficient1 Constant
+    0.078614078,             !- Coefficient2 x
+    -.400425756,             !- Coefficient3 x**2
+    0,                       !- Coefficient4 y
+    -.000156783,             !- Coefficient5 y**2
+    0.009384599,             !- Coefficient6 x*y
+    0.234257955,             !- Coefficient7 x**3
+    0.00000132927,           !- Coefficient8 y**3
+    -.004446701,             !- Coefficient9 x**2*y
+    -.0000122498,            !- Coefficient10 x*y**2
+    0.1,                     !- Minimum Value of x
+    1,                       !- Maximum Value of x
+    20,                      !- Minimum Value of y
+    80,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+!-   ===========  ALL OBJECTS IN CLASS: CURVE:BIQUADRATIC ===========
+
+Curve:Biquadratic,
+    Cond_Boiler_Eff,         !- Name
+    1.124970374,             !- Coefficient1 Constant
+    0.014963852,             !- Coefficient2 x
+    -.02599835,              !- Coefficient3 x**2
+    0,                       !- Coefficient4 y
+    -.00000140464,           !- Coefficient5 y**2
+    -.00153624,              !- Coefficient6 x*y
+    0.1,                     !- Minimum Value of x
+    1,                       !- Maximum Value of x
+    30,                      !- Minimum Value of y
+    85,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
