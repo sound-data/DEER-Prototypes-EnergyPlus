@@ -212,7 +212,7 @@ if (control_zone_name.empty?)
   control_type = "Setpoint"
 
 # TRC - enable variable speed operation for cPVVG system type
-elsif ((fan_speed == "VARIABLE") && (heat_coil_type == "WATER" || (heat_coil_type == "DX-AIR" && dx_comp_speed == "CONSTANT")) && (cool_coil_type = "WATER" || (cool_coil_type == "DX-AIR" || dx_comp_speed == "CONSTANT")))
+elsif ((fan_speed == "VARIABLE") && (heat_coil_type == "WATER" || (heat_coil_type == "DX-AIR" && dx_comp_speed == "CONSTANT")) && (cool_coil_type == "WATER" || (cool_coil_type == "DX-AIR" || dx_comp_speed == "CONSTANT")))
   control_type = "SingleZoneVAV"
 else
   control_type = "Load"
