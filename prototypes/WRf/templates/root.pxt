@@ -320,7 +320,6 @@ end
 import "ref-sys-comp.pxt", :group => "lt_compressor", :prefix => "LT_comp_" do
   include "*"
   exclude "comp_name"
-  exclude "lighting_schedule"
   
   parameter "comp_curves_source", :default=>"Bitzer_NH3_Low_OSNA8591-K"
   parameter "rated_sh", :default =>5
@@ -333,7 +332,6 @@ end
 import "ref-sys-comp.pxt", :group => "mt_compressor", :prefix => "MT_comp_" do
   include "*"
   exclude "comp_name"
-  exclude "lighting_schedule"
   
   parameter "comp_curves_source", :default=>"Bitzer_NH3_Med_OSNA8591-K"
   parameter "rated_sh", :default =>5

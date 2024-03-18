@@ -6,20 +6,6 @@ parameter "rated_sh", :default=>5
 parameter "return_gas_temp", :default=>18['C']
 parameter "liquid_temp", :default=>4.4['C']
 parameter "rated_subcooling", :default=>""
-parameter "lighting_schedule", :default=>
-"
-  Through: 12/31,
-  For: WinterDesignDays,
-  Until: 24:00, 0.00,
-  For: SummerDesignDays,
-  Until: 24:00, 1.00,
-  For: AllOtherDays,
-  Until: 02:00, 0.10,
-  Until: 04:00, 0.50,
-  Until: 19:00, 1.00,
-  Until: 20:00, 0.50,
-  Until: 24:00, 0.10;
-"
 %>
 
 Refrigeration:Compressor,
