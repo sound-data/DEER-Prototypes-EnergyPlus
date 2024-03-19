@@ -341,6 +341,7 @@ import "ref-sys-comp.pxt", :group => "mt_compressor", :prefix => "MT_comp_" do
 end
 
 #Low Temp Chillers
+#defrost and heat sch taken from RefrigeratedWarehouse.idf from E+ example files (From Freezer_1AirChiller_1)
 import "ref-chiller.pxt", :group => "lt_chiller", :prefix => "lt_chiller_" do
   include "*"
   exclude "chiller_name"
@@ -356,9 +357,32 @@ import "ref-chiller.pxt", :group => "lt_chiller", :prefix => "lt_chiller_" do
   parameter "rated_fan_pwr", :default =>2800
   parameter "rated_air_flow", :default =>20.67
   parameter "temp_term_defrost_fraction", :default =>0.8
+  parameter "defrost_sch", :default =>
+  "
+  Through: 12/31,          !- Field 1
+  For:AllDays,             !- Field 2
+  Interpolate:Average,     !- Field 3
+  Until: 5:00,0,           !- Field 4
+  Until: 5:20,1,           !- Field 6
+  Until: 22:00,0,          !- Field 8
+  Until: 22:40,1,          !- Field 10
+  Until: 24:00,0;          !- Field 12
+  "
+  parameter "htg_power_sch", :default =>
+  "
+  Through: 12/31,          !- Field 1
+  For:AllDays,             !- Field 2
+  Interpolate:Average,     !- Field 3
+  Until: 5:00,0,           !- Field 4
+  Until: 5:30,1,           !- Field 6
+  Until: 22:00,0,          !- Field 8
+  Until: 22:50,1,          !- Field 10
+  Until: 24:00,0;          !- Field 12
+  "
 end
 
 #Medium Temp Chillers
+#defrost and heat sch (default in template) taken from RefrigeratedWarehouse.idf from E+ example files (From Cooler_1AirChiller_1)
 import "ref-chiller.pxt", :group => "mt_chiller", :prefix => "mt_chiller_" do
   include "*"
   exclude "chiller_name"
