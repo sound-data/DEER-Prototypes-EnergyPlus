@@ -532,8 +532,8 @@ Curve:Quartic,
   1.0 ,                                !- Maximum Value of x
   0.0 ,                                !- Minimum Curve Output
   1.0 ,                                !- Maximum Curve Output
-  Dimensionless ,                      !- Input Unit Type for X
-  Dimensionless ;                      !- Output Unit Type
+  Dimensionless,                      !- Input Unit Type for X
+  Dimensionless;                      !- Output Unit Type
 <% end %>
 
 <% elsif (fan_type == "VARIABLE") %>
