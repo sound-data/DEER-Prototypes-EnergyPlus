@@ -4,6 +4,7 @@
 **DEER Support Email: DeerSupport@dnv.com**
 
 ### PR Author
+- [ ] Make sure the PR branch is up to date with main branch at the time of the PR submission
 - [ ] Craft a succinct title that effectively encapsulates the essence of the pull request, providing a general overview of the proposed changes.
 - [ ] Label the PR with at least one of the following: New Measure, Bug, or Feature.
 - [ ] Provide a concise description of the measure, bug, or feature. Submit one PR per measure.
