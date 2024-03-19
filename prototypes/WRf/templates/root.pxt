@@ -773,7 +773,8 @@ insert "fluid-properties.pxt",
   :working_fluid =>"NH3"
 
 #add chiller curve
-insert "ref-chiller-curve.pxt"
+insert "ref-chiller-curve.pxt",
+  :chiller_make => "ColmacCoilInc"
 
 ### End refrigeration system
 
