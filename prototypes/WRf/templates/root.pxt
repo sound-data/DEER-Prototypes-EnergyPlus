@@ -751,16 +751,12 @@ insert "ref-zone.pxt", # for the refrigerated Freezer (LT) zone, setpoint modifi
   "
   Through: 12/31,          !- Field 1
   For: AllDays,            !- Field 2
-  Until:  7:00,-20.,         !- Field 3
-  Until: 17:00,-20.,         !- Field 5
   Until: 24:00,-20.;         !- Field 7
   ",
   :clg_sp =>
   "
   Through: 12/31,          !- Field 1
   For: AllDays,            !- Field 2
-  Until:  7:00,-18.,         !- Field 3
-  Until: 17:00,-18.,         !- Field 5
   Until: 24:00,-18.;         !- Field 7
   "
 
