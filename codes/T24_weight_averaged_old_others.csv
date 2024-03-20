@@ -1,0 +1,611 @@
+table:   Opaque Envelope Requirements | Climate Zone 1,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.06521132278936016,0.0
+Roofs | Metal Buildings,0.0,0.0,0.05990927390366644,0.0
+Roofs | Mass Heavy,0.0,0.0,0.061236162361623624,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.10700025161754133,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.15954237958303377,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.2944821710999281,0.0
+Floor | Above Crawl Space,0.0,0.0,0.18220049200492006,0.0
+Floors | Mass,0.0,0.0,0.09288964773544213,0.0
+Floors | Other,0.0,0.0,0.04835585909417686,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,0.0,0.20000000000000004,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,0.5,0.0
+Opaque Doors | Swinging,0.0,0.0,0.6999999999999998,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.15411097737120846,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.2817968223399134,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 2,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.06403709292451747,0.0
+Roofs | Metal Buildings,0.0,0.0,0.05959294746746839,0.0
+Roofs | Mass Heavy,0.0,0.0,0.06089275882100372,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.09991852752851538,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.15563955890115438,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.40125458999839353,0.0
+Floor | Above Crawl Space,0.0,0.0,0.17269966071443607,0.0
+Floors | Mass,0.0,0.0,0.10063191081633122,0.0
+Floors | Other,0.0,0.0,0.04609761779083378,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,0.0,0.2,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.45,0.0
+Opaque Doors | Swinging,0.0,0.0,0.6999999999999998,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.1366394898492245,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.3265910687586691,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 3,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.06488301651969491,0.0
+Roofs | Metal Buildings,0.0,0.0,0.05988215809124658,0.0
+Roofs | Mass Heavy,0.0,0.0,0.061072178888383705,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.10831984809965002,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.15998004020891615,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.38698133157463654,0.0
+Floor | Above Crawl Space,0.0,0.0,0.17766361591194932,0.0
+Floors | Mass,0.0,0.0,0.25037232286270467,0.0
+Floors | Other,0.0,0.0,0.071839084555734,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.7299999999999999,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.000000000000001,0.19999999999999998,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.45,0.0
+Opaque Doors | Swinging,0.0,0.0,0.6999999999999998,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.15864797344115253,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.3683560697778895,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 4,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.06350175132191126,0.0
+Roofs | Metal Buildings,0.0,0.0,0.059317200964189326,0.0
+Roofs | Mass Heavy,0.0,0.0,0.060623131133504586,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.09846840163007657,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.15443693557156124,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.410029661812041,0.0
+Floor | Above Crawl Space,0.0,0.0,0.1652399613602933,0.0
+Floors | Mass,0.0,0.0,0.2461546455738226,0.0
+Floors | Other,0.0,0.0,0.07202907001919719,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.000000000000001,0.2,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.4500000000000004,0.0
+Opaque Doors | Swinging,0.0,0.0,0.7000000000000001,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.13790679251643348,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.3489693662565313,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 5,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.06462880824107511,0.0
+Roofs | Metal Buildings,0.0,0.0,0.05949832455153633,0.0
+Roofs | Mass Heavy,0.0,0.0,0.06080868373425173,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.1055128056361376,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.1548424249600379,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.4040404357350068,0.0
+Floor | Above Crawl Space,0.0,0.0,0.17037358331429775,0.0
+Floors | Mass,0.0,0.0,0.24784881889763777,0.0
+Floors | Other,0.0,0.0,0.0719527559055118,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.7299999999999999,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.0,0.20000000000000004,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.45,0.0
+Opaque Doors | Swinging,0.0,0.0,0.7,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.13578594249201278,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.4341573482428115,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 6,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.07149457100528865,0.0
+Roofs | Metal Buildings,0.0,0.0,0.06296285340356074,0.0
+Roofs | Mass Heavy,0.0,0.0,0.06054766875157166,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.1068721259133938,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.15620330399375365,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.40731182398759647,0.0
+Floor | Above Crawl Space,0.0,0.0,0.16315216879348265,0.0
+Floors | Mass,0.0,0.0,0.2502396217360386,0.0
+Floors | Other,0.0,0.0,0.07184506208396223,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.7300000000000001,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.0,0.20000000000000004,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.4500000000000002,0.0
+Opaque Doors | Swinging,0.0,0.0,0.7000000000000001,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.15296838740477822,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.4344036458153153,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 7,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.070822449614832,0.0
+Roofs | Metal Buildings,0.0,0.0,0.06333304817640426,0.0
+Roofs | Mass Heavy,0.0,0.0,0.05955342513508803,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.10209726187506825,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.1512638498659075,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.4505212599950938,0.0
+Floor | Above Crawl Space,0.0,0.0,0.1356447620707687,0.0
+Floors | Mass,0.0,0.0,0.24307049079286683,0.0
+Floors | Other,0.0,0.0,0.07216799591023122,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,4.999999999999999,0.19999999999999998,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.4499999999999995,0.0
+Opaque Doors | Swinging,0.0,0.0,0.7,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.15393953486026138,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.43428425878757004,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 8,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.07079946663555454,0.0
+Roofs | Metal Buildings,0.0,0.0,0.06305896840505724,0.0
+Roofs | Mass Heavy,0.0,0.0,0.060652769344983,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.10621271594715113,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.15321914325905314,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.4087589316965315,0.0
+Floor | Above Crawl Space,0.0,0.0,0.16605995187786296,0.0
+Floors | Mass,0.0,0.0,0.250046524499384,0.0
+Floors | Other,0.0,0.0,0.07185376015768541,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.7300000000000002,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.000000000000001,0.20000000000000007,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.4500000000000002,0.0
+Opaque Doors | Swinging,0.0,0.0,0.7000000000000002,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.12998256742473743,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.4344121549996818,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 9,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.0675402241139432,0.0
+Roofs | Metal Buildings,0.0,0.0,0.06298097071007955,0.0
+Roofs | Mass Heavy,0.0,0.0,0.060720194188638534,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.1007484375548041,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.15302463733474322,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.40665909855583415,0.0
+Floor | Above Crawl Space,0.0,0.0,0.1679253725523328,0.0
+Floors | Mass,0.0,0.0,0.25080271490685085,0.0
+Floors | Other,0.0,0.0,0.07181969752671842,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.7299999999999999,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.000000000000001,0.19999999999999996,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.4499999999999997,0.0
+Opaque Doors | Swinging,0.0,0.0,0.6999999999999998,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.12845131974130608,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.43454249616737695,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 10,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.05954170193959825,0.0
+Roofs | Metal Buildings,0.0,0.0,0.06071875044550816,0.0
+Roofs | Mass Heavy,0.0,0.0,0.059226037097164175,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.08461765726183389,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.1332836955215653,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.5049660768874102,0.0
+Floor | Above Crawl Space,0.0,0.0,0.12658702635487548,0.0
+Floors | Mass,0.0,0.0,0.23036402208498502,0.0
+Floors | Other,0.0,0.0,0.07237199880247407,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.7300000000000001,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.0,0.2,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.4499999999999997,0.0
+Opaque Doors | Swinging,0.0,0.0,0.7,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.1175370977474551,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.2914846728457713,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 11,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.06156934904058009,0.0
+Roofs | Metal Buildings,0.0,0.0,0.05913780448707017,0.0
+Roofs | Mass Heavy,0.0,0.0,0.060787772165128026,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.09453435562316251,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.14906422963321717,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.3494292525869889,0.0
+Floor | Above Crawl Space,0.0,0.0,0.1697950299018754,0.0
+Floors | Mass,0.0,0.0,0.09313841158534507,0.0
+Floors | Other,0.0,0.0,0.047424245731553426,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.0,0.2,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.45,0.0
+Opaque Doors | Swinging,0.0,0.0,0.7,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.12777365914952715,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.3134805899080748,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 12,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.06160166099550669,0.0
+Roofs | Metal Buildings,0.0,0.0,0.059034259622795154,0.0
+Roofs | Mass Heavy,0.0,0.0,0.06064717442872075,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.09492177979903736,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.14949320006107406,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.36709215089647956,0.0
+Floor | Above Crawl Space,0.0,0.0,0.16590515919460735,0.0
+Floors | Mass,0.0,0.0,0.09320284030595183,0.0
+Floors | Other,0.0,0.0,0.07220284030595181,0.4440002137495093
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.0,0.20000000000000004,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.45,0.0
+Opaque Doors | Swinging,0.0,0.0,0.6999999999999998,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.13044411246888632,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.3192187540653756,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 13,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.06101142194715361,0.0
+Roofs | Metal Buildings,0.0,0.0,0.058926536243269656,0.0
+Roofs | Mass Heavy,0.0,0.0,0.06055816825836062,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.09374909272068828,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.14697748567705837,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.3552888693019602,0.0
+Floor | Above Crawl Space,0.0,0.0,0.16344265514797693,0.0
+Floors | Mass,0.0,0.0,0.09316482400505852,0.0
+Floors | Other,0.0,0.0,0.07216482400505853,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.000000000000002,0.20000000000000004,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.4499999999999997,0.0
+Opaque Doors | Swinging,0.0,0.0,0.6999999999999998,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.12622176804397942,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.31014594786309635,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 14,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.059595823287684584,0.0
+Roofs | Metal Buildings,0.0,0.0,0.05844587062831262,0.0
+Roofs | Mass Heavy,0.0,0.0,0.060006267763368405,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.08978891448427996,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.14193509453484168,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.2893913752208415,0.0
+Floor | Above Crawl Space,0.0,0.0,0.1481734081198592,0.0
+Floors | Mass,0.0,0.0,0.1081986647014612,0.0
+Floors | Other,0.0,0.0,0.04808106960536461,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,4.999999999999998,0.2,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.45,0.0
+Opaque Doors | Swinging,0.0,0.0,0.6999999999999998,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.12268865571776155,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.3025541362530414,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 15,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.05763579834014616,0.0
+Roofs | Metal Buildings,0.0,0.0,0.05784477476361534,0.0
+Roofs | Mass Heavy,0.0,0.0,0.059177148827745496,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.07979947148932656,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.13527590734547254,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.2862173087245551,0.0
+Floor | Above Crawl Space,0.0,0.0,0.1252344509009587,0.0
+Floors | Mass,0.0,0.0,0.10933021181716833,0.0
+Floors | Other,0.0,0.0,0.04871542177629133,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,5.000000000000001,0.2,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.45,0.0
+Opaque Doors | Swinging,0.0,0.0,0.7,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.11673107210483605,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.294240629978059,0.0
+
+table:   Opaque Envelope Requirements | Climate Zone 16,,,,
+,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent
+Roofs | Wood Framed and Other,0.0,0.0,0.05951303586926119,0.0
+Roofs | Metal Buildings,0.0,0.0,0.0585327313284035,0.0
+Roofs | Mass Heavy,0.0,0.0,0.06019998327899005,0.0
+Walls Above Grade | Wood Framed and Other,0.0,0.0,0.09028062801689823,0.0
+Walls Above Grade | Metal Framed,0.0,0.0,0.14239522890771256,0.0
+Walls Above Grade | Mass Heavy,0.0,0.0,0.27390911112226823,0.0
+Floor | Above Crawl Space,0.0,0.0,0.1535328707187248,0.0
+Floors | Mass,0.0,0.0,0.06766559319481005,0.0
+Floors | Other,0.0,0.0,0.04172619295238233,0.0
+Slab-On-Grade Floors | Unheated Slabs,0.0,0.0,0.73,0.0
+Slab-On-Grade Floors | Heated Slabs,0.0,9.790350229158749,0.19160898847392474,16.0
+Opaque Doors | Non-Swinging,0.0,0.0,1.3702853905022845,0.0
+Opaque Doors | Swinging,0.0,0.0,0.7000000000000002,0.0
+Walls Above Grade | Metal Building,0.0,0.0,0.12279750801838685,0.0
+Walls Above Grade | Mass Light,0.0,0.0,0.2568229451497997,0.0
+
+table: Fenestration Requirements | Climate Zone 1,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,1.0243281811646296,0.7070848310567937,0.2608892882818116
+Operable Window,1.1176300830782684,0.7463734149540883,0.25545430695233934
+Curtainwall or Storefront,1.1137341495408832,0.7494901617839963,0.26636292085701796
+Glazed Doors,1.1168508963707915,0.7471526016615653,0.24376650634018363
+Skylights | Tubular Daylighting Devices (TDDs),0.8640891445003596,,0.2638504672897196
+Fixed Window | North,0.6292545454545454,0.7261272727272726,0.25
+Operable Window | North,0.6292545454545454,0.7261272727272726,0.25
+Operable Window | Non-North,0.6292545454545454,0.5147636363636363,0.25
+
+table: Fenestration Requirements | Climate Zone 2,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,1.0774720010097993,0.7071522502467124,0.2614050558832305
+Operable Window,1.1100425250961963,0.7325881384088939,0.2558108875605219
+Curtainwall or Storefront,1.105891891124395,0.7359086455863351,0.2674326626815658
+Glazed Doors,1.109212398301836,0.7334182652032543,0.2433589856451178
+Skylights | Tubular Daylighting Devices (TDDs),1.2553646753723637,,0.26453635278727655
+Fixed Window | North,0.9752252198360949,0.7919551953101632,0.25
+Operable Window | North,0.9752252198360949,0.7919551953101632,0.25
+Operable Window | Non-North,0.9752252198360949,0.5894984147873421,0.25
+
+table: Fenestration Requirements | Climate Zone 3,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,1.131315991022136,0.737525556063781,0.2600407939665351
+Operable Window,1.1463185087565684,0.7515397014291978,0.25496819105054536
+Curtainwall or Storefront,1.1427698008633218,0.7543786677437951,0.2649045731516361
+Glazed Doors,1.1456087671779192,0.7522494430078471,0.2443220673708053
+Skylights | Tubular Daylighting Devices (TDDs),1.273547660330394,,0.26279810443680923
+Fixed Window | North,1.0921155784309375,0.8316622401957365,0.25
+Operable Window | North,1.0921155784309375,0.8316622401957365,0.25
+Operable Window | Non-North,1.0921155784309375,0.6574726013070238,0.25
+
+table: Fenestration Requirements | Climate Zone 4,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,1.1076114182339556,0.718360685709887,0.2623097722800383
+Operable Window,1.1225384997516146,0.7320879526977089,0.2563822955666219
+Curtainwall or Storefront,1.1179797172040276,0.7357349787357785,0.26914688669986553
+Glazed Doors,1.1216267432420972,0.7329997092072263,0.2427059479238608
+Skylights | Tubular Daylighting Devices (TDDs),1.2652894011345104,,0.26568746602002474
+Fixed Window | North,1.085193912616593,0.8262237884844658,0.25
+Operable Window | North,1.085193912616593,0.8262237884844658,0.25
+Operable Window | Non-North,1.085193912616593,0.6548357762348925,0.25
+
+table: Fenestration Requirements | Climate Zone 5,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,1.1092596057071813,0.7530801018293765,0.26223243147238173
+Operable Window,1.1253902752991427,0.734432872063427,0.25622260905181243
+Curtainwall or Storefront,1.1209455545478482,0.7379886486644626,0.2686678271554373
+Glazed Doors,1.1157355988396187,0.7194991415546741,0.24424356166005567
+Skylights | Tubular Daylighting Devices (TDDs),1.2656454916819608,,0.2655729086495767
+Operable Window | North,1.0784993475424098,0.8209637730690362,0.25
+Operable Window | Non-North,1.0784993475424098,0.6522854657304418,0.25
+
+table: Fenestration Requirements | Climate Zone 6,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,1.115428346951384,0.7253957360677625,0.26196995647470916
+Operable Window,1.1301141180306489,0.7330124394101567,0.25593126264078253
+Curtainwall or Storefront,1.125877501858661,0.7364017323477468,0.26779378792234776
+Glazed Doors,1.1292667947962511,0.7338597626445541,0.24322141412481987
+Skylights | Tubular Daylighting Devices (TDDs),1.2666229695685152,,0.2652556457853463
+Fixed Window | North,1.0848830021347267,0.8259795016772853,0.25
+Operable Window | North,1.0848830021347267,0.8259795016772853,0.25
+Operable Window | Non-North,1.0848830021347267,0.6754483338416016,0.25
+
+table: Fenestration Requirements | Climate Zone 7,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,1.074646608109863,0.7267254433503121,0.26575795742435265
+Operable Window,1.0874128206438565,0.6958234599546518,0.25846628885583567
+Curtainwall or Storefront,1.0813654714611165,0.7006613393008436,0.275398866567507
+Glazed Doors,1.0829890561580497,0.6912989138613064,0.24258449062383405
+Skylights | Tubular Daylighting Devices (TDDs),1.2527850418356135,,0.2700831352695145
+Operable Window | North,1.0724434796420819,0.8162055911473499,0.25
+Operable Window | Non-North,1.0724434796420819,0.6724865427719241,0.25
+
+table: Fenestration Requirements | Climate Zone 8,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,1.1136038381751598,0.7240980610879194,0.26213404587712036
+Operable Window,1.1285266670136367,0.7316289832659505,0.25602518428958787
+Curtainwall or Storefront,1.1242229639496453,0.7350719457171437,0.2680755528687636
+Glazed Doors,1.1276659264008382,0.7324897238787489,0.24311407509761387
+Skylights | Tubular Daylighting Devices (TDDs),1.26602033102174,,0.26546533036250386
+Fixed Window | North,1.082933330740964,0.8244476170107573,0.25
+Operable Window | North,1.082933330740964,0.8244476170107573,0.25
+Operable Window | Non-North,1.082933330740964,0.6749841263668961,0.25
+
+table: Fenestration Requirements | Climate Zone 9,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,1.1119356523298005,0.7236512113091023,0.2622824755419356
+Operable Window,1.1281341804584761,0.7312892166345419,0.2560491913699514
+Curtainwall or Storefront,1.1238133294799393,0.7347458974173713,0.26814757410985435
+Glazed Doors,1.1272700102627686,0.7321533868302493,0.24308663843434114
+Skylights | Tubular Daylighting Devices (TDDs),1.2654844197161035,,0.2656534599830862
+Fixed Window | North,1.0743768349069125,0.8177246559982884,0.25
+Operable Window | North,1.0743768349069125,0.8177246559982884,0.25
+Operable Window | Non-North,1.0743768349069125,0.6729468654540267,0.25
+
+table: Fenestration Requirements | Climate Zone 10,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,0.8747977409936071,0.57339518287728,0.2781573171617549
+Operable Window,0.9000174676002679,0.57955203604669,0.2659787563293152
+Curtainwall or Storefront,0.8886040702221855,0.5886827539491559,0.2979362689879458
+Glazed Doors,0.8977347881246515,0.5818347155223065,0.23173856419506828
+Skylights | Tubular Daylighting Devices (TDDs),1.1811789520561942,,0.2858867767747857
+Fixed Window | North,0.8684700681096781,0.7299217963340021,0.25
+Operable Window | North,0.8684700681096781,0.7299217963340021,0.25
+Operable Window | Non-North,0.8684700681096781,0.5390061132951179,0.25
+
+table: Fenestration Requirements | Climate Zone 11,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,0.9416534901329477,0.643664076835449,0.26664527043158553
+Operable Window,1.0467822223792407,0.6864919052119306,0.25887450208000284
+Curtainwall or Storefront,1.0404432923220956,0.6915630492576466,0.2766235062400085
+Glazed Doors,1.0455144363678115,0.6877596912233596,0.23985771190856822
+Skylights | Tubular Daylighting Devices (TDDs),0.8980725652971713,,0.2712169250813443
+Fixed Window | North,0.6290074300437413,0.7336206483312361,0.25
+Operable Window | North,0.6290074300437413,0.7336206483312361,0.25
+Operable Window | Non-North,0.6290074300437413,0.48691982743124207,0.25
+
+table: Fenestration Requirements | Climate Zone 12,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,0.940328072968925,0.643942692201428,0.26607415768733006
+Operable Window,1.0500216130568711,0.6888549866803254,0.25871542329758285
+Curtainwall or Storefront,1.043796310701455,0.6938352285646584,0.2761462698927485
+Glazed Doors,1.048776552585788,0.6901000471514087,0.2400395162313339
+Skylights | Tubular Daylighting Devices (TDDs),0.8971182509560996,,0.2704858839011764
+Fixed Window | North,0.6342224724025115,0.7420100642996925,0.25
+Operable Window | North,0.6342224724025115,0.7420100642996925,0.25
+Operable Window | Non-North,0.6342224724025115,0.4916813878457714,0.25
+
+table: Fenestration Requirements | Climate Zone 13,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,0.9285784360689036,0.6357970836766367,0.26792998524593303
+Operable Window,1.031218761553604,0.6751546808957103,0.25962528852783356
+Curtainwall or Storefront,1.0243435554622942,0.680654845768758,0.2788758655835007
+Glazed Doors,1.0298437203353419,0.6765297221139721,0.2389996702539045
+Skylights | Tubular Daylighting Devices (TDDs),0.8985814252045451,,0.2728504474122899
+Fixed Window | North,0.6369153328617724,0.7463420572124163,0.25
+Operable Window | North,0.6369153328617724,0.7463420572124163,0.25
+Operable Window | Non-North,0.6369153328617724,0.49414008652596597,0.25
+
+table: Fenestration Requirements | Climate Zone 14,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,0.8861208015695612,0.6072419935772919,0.27125062226083224
+Operable Window,0.9906679430046116,0.6455976042791816,0.26159641418028706
+Curtainwall or Storefront,0.9823847900186924,0.652224126667917,0.28478924254086113
+Glazed Doors,0.9890113124074276,0.6472542348763655,0.23674695522252912
+Skylights | Tubular Daylighting Devices (TDDs),0.9101434372224226,,0.2770743979931478
+Fixed Window | North,0.6167654954363776,0.7139271013541729,0.25
+Operable Window | North,0.6167654954363776,0.7139271013541729,0.25
+Operable Window | Non-North,0.6167654954363776,0.47574240887669267,0.25
+
+table: Fenestration Requirements | Climate Zone 15,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,0.8312822164416366,0.5712929518146909,0.2758281514513398
+Operable Window,0.9322309570203139,0.6030212322784385,0.2644220475262604
+Curtainwall or Storefront,0.9219294945015566,0.6112624022934445,0.29326614257878114
+Glazed Doors,0.9301706645165624,0.60508152478219,0.23351765996998813
+Skylights | Tubular Daylighting Devices (TDDs),0.9219283207399149,,0.2829125067096081
+Fixed Window | North,0.6069276975815329,0.698101078718118,0.25
+Operable Window | North,0.6069276975815329,0.698101078718118,0.25
+Operable Window | Non-North,0.6069276975815329,0.46676007170487777,0.25
+
+table: Fenestration Requirements | Climate Zone 16,max,max,min,
+,U-Factor,SHGC,VT
+Fixed Window,0.8844735086750395,0.6276714028531879,0.2713928118029307
+Operable Window,0.988424987365189,0.6617585749840277,0.26171127788002174
+Curtainwall or Storefront,0.980059788879459,0.6684507337726115,0.2851338336400652
+Glazed Doors,0.9867519476680429,0.6634316146811736,0.23661568242283226
+Skylights | Tubular Daylighting Devices (TDDs),0.8849483944542869,,0.2772609971095157
+Fixed Window | North,0.6197635584881633,0.7187500723505238,0.25
+Operable Window | North,0.6197635584881633,0.7187500723505238,0.25
+Operable Window | Non-North,0.6197635584881633,0.5089865138623603,0.25
+
+table: Heat Rejection Parameters | Climate Zone 1,,,,
+,value
+cw_wetbulb_design,20.009999999999998
+cw_design_temp,22.33
+cw_approach,5.56
+
+table: Heat Rejection Parameters | Climate Zone 2,,,,
+,value
+cw_wetbulb_design,22.11
+cw_design_temp,27.670000000000005
+cw_approach,5.5600000000000005
+
+table: Heat Rejection Parameters | Climate Zone 3,,,,
+,value
+cw_wetbulb_design,20.009999999999998
+cw_design_temp,25.17
+cw_approach,5.56
+
+table: Heat Rejection Parameters | Climate Zone 4,,,,
+,value
+cw_wetbulb_design,22.610000000000007
+cw_design_temp,28.170000000000012
+cw_approach,5.56
+
+table: Heat Rejection Parameters | Climate Zone 5,,,,
+,value
+cw_wetbulb_design,20.220000000000002
+cw_design_temp,25.780000000000005
+cw_approach,5.56
+
+table: Heat Rejection Parameters | Climate Zone 6,,,,
+,value
+cw_wetbulb_design,23.78
+cw_design_temp,29.330000000000002
+cw_approach,5.56
+
+table: Heat Rejection Parameters | Climate Zone 7,,,,
+,value
+cw_wetbulb_design,21.22
+cw_design_temp,26.779999999999998
+cw_approach,5.559999999999999
+
+table: Heat Rejection Parameters | Climate Zone 8,,,,
+,value
+cw_wetbulb_design,21.500000000000004
+cw_design_temp,27.06000000000001
+cw_approach,5.5600000000000005
+
+table: Heat Rejection Parameters | Climate Zone 9,,,,
+,value
+cw_wetbulb_design,23.72
+cw_design_temp,29.279999999999998
+cw_approach,5.559999999999999
+
+table: Heat Rejection Parameters | Climate Zone 10,,,,
+,value
+cw_wetbulb_design,21.61
+cw_design_temp,27.17
+cw_approach,5.56
+
+table: Heat Rejection Parameters | Climate Zone 11,,,,
+,value
+cw_wetbulb_design,22.610000000000003
+cw_design_temp,28.17
+cw_approach,5.5600000000000005
+
+table: Heat Rejection Parameters | Climate Zone 12,,,,
+,value
+cw_wetbulb_design,22.110000000000003
+cw_design_temp,27.67000000000001
+cw_approach,5.56
+
+table: Heat Rejection Parameters | Climate Zone 13,,,,
+,value
+cw_wetbulb_design,22.0
+cw_design_temp,27.56
+cw_approach,5.5600000000000005
+
+table: Heat Rejection Parameters | Climate Zone 14,,,,
+,value
+cw_wetbulb_design,20.89
+cw_design_temp,26.439999999999994
+cw_approach,5.56
+
+table: Heat Rejection Parameters | Climate Zone 15,,,,
+,value
+cw_wetbulb_design,24.11
+cw_design_temp,29.439999999999998
+cw_approach,5.329999999999999
+
+table: Heat Rejection Parameters | Climate Zone 16,,,,
+,value
+cw_wetbulb_design,20.010000000000005
+cw_design_temp,21.670000000000005
+cw_approach,5.560000000000001
+
+table: Lighting Power Density,,,,
+,LPD
+auditorium,1.3849843432984688
+bank,1.4495733240848279
+classroom_shop,1.1837552402712137
+computer,1.105600824372097
+classroom_class,1.3131401320070724
+conference,1.416299591074374
+corridor,0.6225044087204671
+dining_fine,1.2162784412282148
+dining_fast,1.213740197520592
+exhibit,2.037179993063621
+grocery,1.544783686218461
+guestroom,0.6879970499849468
+gym,0.9847705377542629
+health_operating,1.341793573688123
+health_patient,1.3021969718492068
+industrial_high,1.2529682000122409
+industrial_low,1.141633779617173
+kitchen,1.649437639080378
+lab,1.3241354493920456
+laundry,0.8802033388252068
+lobby,1.4619308536834863
+mech,0.6862947137873354
+office_large,1.2505225256110004
+office_small,1.2221724414596857
+office_open,1.1009690318966563
+plenum,0.015225362884074438
+restroom,0.6015229462245738
+retail_sales,1.8653257924781104
+storage_refrig,0.6292119368072913
+storage_warehouse,0.5949235125847542
+auto,1.054828185265979
+
+table:   Economizer Setpoints,,,,
+,Fixed Drybulb,Differential Dry-bulb
+1,75.0,0.0
+2,73.0,2.0
+3,74.99999999999999,0.0
+4,73.00000000000001,2.0
+5,75.0,0.0
+6,71.00000000000001,4.0
+7,69.0,6.0
+8,71.00000000000001,4.0
+9,71.0,4.0
+10,73.0,2.0
+11,75.00000000000001,0.0
+12,75.00000000000001,0.0
+13,75.0,0.0
+14,75.0,0.0
+15,75.00000000000001,0.0
+16,75.00000000000001,0.0
+
