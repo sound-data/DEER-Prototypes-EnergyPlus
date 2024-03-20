@@ -1,35 +1,28 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-"""Residential data scraping tool (work in progress)
-
+"""EnergyPlus batch results data scraping tool, based on modelkit.
 
 Features:
 * Read from instance-out.sql files using result spec format like modelkit
-* Requires python >= 3.2 and additional package "tqdm"
-
-To do:
-* programmatic api
-* command line interface
+* Outputs disaggregated and aggregated result files, to review individual component sizing
+* Requires python >= 3.7.1 and additional package "tqdm"
 
 Usage:
-    Prerequisite: running models
-    $terminal1> cd C:/Users/user1/source/DEER-Prototypes-EnergyPlus/Analysis/MFm_Furnace_Ex
-    $terminal1> python results.py results
+    Prerequisite: running models, select a query file
+    $terminal1> cd C:/DEER-Prototypes-EnergyPlus/
+    $terminal1> python "scripts/result.py" "commercial measures/SWXX000-00 Measure Name" --queryfile "querylibrary/query_default.txt" --detailfile "commercial measures/SWXX000-00 Measure Name/results-sizing-detail.csv" --aggfile "commercial measures/SWXX000-00 Measure Name/results-sizing-agg.csv"
 
-    Data transformation step
-    $terminal1> cd C:/Users/user1/source/DEER-Prototypes-EnergyPlus
-    $terminal1> python scripts/transform.py
+Changelog
+    * 2024-01-19 Python script to enable updating query without re-running models
+    * 2024-02-08 Improve handling of string type results
+    * 2024-02-08 Handle comment lines and empty results
+    * 2024-02-09 Add argument to control show/hide of "runs" folder in File Name
+    * 2024-02-09 Fix dataframe get notation
 
 @Author: Nicholas Fette <nfette@solaris-technical.com>
 @Date: 2023-11-05
 
-Why this file:
-
-An issue with rakefile.rb is that PXV files are written outside of a rake task.
-`modelkit rake results` triggers writing PXV, which triggers composing IDF, which triggers running IDF, even when not needed!
-One strategy may be to write the PXV to a "fake" file and compare it to the existing PXV file. If there are no changes, then don't modify the file.
-Otherwise, why not establish a task and dependencies for PXV, like for everything else?
 """
 
 ##STEP 0: Setup (import all necessary libraries)
