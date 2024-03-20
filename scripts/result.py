@@ -114,14 +114,27 @@ def get_a_result(sqlfile: Path, resultspec: ResultSpec, aggtype='sum') -> tuple:
             query += """ AND ColumnName <> 'Water';"""
 
     with connect(sqlfile) as conn:
-        sim_sizing_data = pd.read_sql_query(query, conn,  params=asdict(resultspec), dtype={'Value':float})
+        try:
+            sim_sizing_data = pd.read_sql_query(query, conn,  params=asdict(resultspec), dtype={'Value':float})
+        except ValueError:
+            # If user requested a query that returns a string value
+            # To do: aggregation doesn't work with string type results.
+            sim_sizing_data = pd.read_sql_query(query, conn,  params=asdict(resultspec))
 
-    sizing_agg = (
-        sim_sizing_data
-        .groupby(agg_columns)
-        ['Value'].agg(aggtype).iloc[0]
-    )
-    return sim_sizing_data, sizing_agg
+    if sim_sizing_data.empty:
+        # No data found matching result spec
+        return None, None
+    elif len(sim_sizing_data) == 1:
+        # Only one value, no aggregation required
+        return sim_sizing_data, sim_sizing_data.loc[0,'Value']
+    else:
+        # Aggregation requested. Calculate a single float value.
+        sizing_agg = (
+            sim_sizing_data
+            .groupby(agg_columns)
+            ['Value'].agg(aggtype).iloc[0]
+        )
+        return sim_sizing_data, sizing_agg
 
 def gather_sizing_data1(subroot: Path, resultspec: ResultSpec, progressbar=False):
     """
@@ -194,6 +207,8 @@ def parse_query_file(queryfile: Path):
                     listlist_query_path_and_name.append(list_query_path_and_name)
                     list_query_path_and_name = []
                 continue
+            if query_line.startswith("#"):
+                continue
             m = re.match(r'\s*(.+)\s*,\s*(.+)\s*',query_line)
             if m:
                 query_path, user_column_name = m.groups()
@@ -207,7 +222,7 @@ def parse_query_file(queryfile: Path):
         listlist_query_path_and_name.append(list_query_path_and_name)
     return listlist_query_path_and_name
 
-def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False):
+def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False, runspath='runs'):
     r"""
     Read selected data entries from SQL outputs and write to CSV.
     Result set specifications are parsed from query.txt, e.g. (resultspec, name).
@@ -232,7 +247,7 @@ def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False):
         columns_out = ['File Name'] + [name for _,name in list_query_path_and_name]
 
         # Count composed models.
-        runs_root = subroot.joinpath('runs')
+        runs_root = subroot.joinpath(runspath)
         subroot_finished_list = list(runs_root.glob('**/'+FILENAME_FINISHED))
         n_models = len(subroot_finished_list)
 
@@ -244,7 +259,7 @@ def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False):
 
         sim_sizing_data, sizing_agg = [], []
         for sqlfile in myiter:
-            relpath = sqlfile.relative_to(subroot)
+            relpath = sqlfile.relative_to(runs_root)
             # E.g. relpath = Path(r"CZ01\SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace\Msr-Res-GasFurnace-AFUE95-ECM\instance-out.sql")
             relstr = relpath.as_posix() # with forward slashes
             # E.g. relstr = "CZ01/SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace/Msr-Res-GasFurnace-AFUE95-ECM/instance-out.sql"
@@ -254,6 +269,9 @@ def gather_sizing_data2(subroot: Path, queryfile: Path, progressbar=False):
             sizing_agg_row = {"File Name": relstr}
             for resultspec, user_column_name in list_query_path_and_name:
                 a,b = get_a_result(sqlfile, resultspec)
+                if a is None:
+                    # No data found matching the result spec. Skip this and go to next.
+                    continue
                 a["File Name"] = relstr
                 units = a['Units'].iloc[0]
                 sim_sizing_data.append(a)
@@ -280,9 +298,11 @@ def main():
                         help=r'Output file for detailed sizing info, e.g. results-sizing-detail.csv')
     parser.add_argument('-a','--aggfile', type=Path, default='results-sizing-agg.csv',
                         help=r'Output file for aggregated sizing info, e.g. results-sizing-agg.csv')
+    parser.add_argument('-r','--runspath', type=str, default='runs',
+                        help=r'Path within study folder to omit from "File Name" output column.')
 
     pargs = parser.parse_args()
-    result_sets = gather_sizing_data2(pargs.subroot, pargs.queryfile, True)
+    result_sets = gather_sizing_data2(pargs.subroot, pargs.queryfile, True, pargs.runspath)
 
     output1 = BytesIO()
     output2 = BytesIO()
