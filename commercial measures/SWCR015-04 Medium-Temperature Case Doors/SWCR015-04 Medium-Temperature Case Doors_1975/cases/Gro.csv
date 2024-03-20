@@ -1,7 +1,8 @@
-skip,case_name,:case_type,:condenser_type,:rack_type,:cond_curves_source,:credit_type
-#,Ref_open_with_LED,OPEN,AirCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
-,Ref_open_with_Fluorescent,OPEN,AirCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
-#,Meas_Ref_glassdoor,GLASS-DOOR,AirCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
-#,Ref_open_with_LED,OPEN,EvaporativelyCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
-#,Ref_open_with_Fluorescent,OPEN,EvaporativelyCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
-#,Meas_Ref_glassdoor,GLASS-DOOR,EvaporativelyCooled,MED-TEMP,MediumTemp,MULTISHELF-VERTICAL
+skip,case_name,:refsys_condenser_type,:refcomp_rack_type,:mt_deli_case_type,:mt_meat3_case_type,:mt_dairy1_case_type,:mt_dairy2_case_type,:mt_deli_credit_sch_1,:mt_meat3_credit_sch_1,:mt_dairy1_credit_sch_1,:mt_dairy2_credit_sch_1,:mt_deli_credit_sch_2,:mt_meat3_credit_sch_2,:mt_dairy1_credit_sch_2,:mt_dairy2_credit_sch_2,:mt_deli_light_power,:mt_meat3_light_power,:mt_dairy1_light_power,:mt_dairy2_light_power,:mt_deli_case_temp,:mt_meat3_case_temp,:mt_dairy1_case_temp,:mt_dairy2_case_temp
+,NE-Ref_Storage-VertDisplay-Open-LED-AirCond,AIRCOOLED,MED-TEMP,OPEN,OPEN,OPEN,OPEN,0.2,0.2,0.2,0.2,0.2,0.6,0.6,0.6,59,59.06,59.06,59.06,-0.56,-0.56,-0.56,-0.56
+,NE-Ref_Storage-VertDisplay-Open-Flrsnt-AirCond,AIRCOOLED,MED-TEMP,OPEN,OPEN,OPEN,OPEN,0.2,0.2,0.2,0.2,0.2,0.6,0.6,0.6,59,59.06,59.06,59.06,-0.56,-0.56,-0.56,-0.56
+,NE-Ref_Storage-VertDisplay-Glassdoor-LED-AirCond,AIRCOOLED,MED-TEMP,GLASS-DOOR,GLASS-DOOR,GLASS-DOOR,GLASS-DOOR,0.05,0.05,0.05,0.05,0.05,0.1,0.1,0.1,13.1,13.1,13.1,13.1,1.67,1.67,1.67,1.67
+,NE-Ref_Storage-VertDisplay-Open-LED-EvapCond,EVAPORATIVELYCOOLED,MED-TEMP,OPEN,OPEN,OPEN,OPEN,0.2,0.2,0.2,0.2,0.2,0.6,0.6,0.6,59,59.06,59.06,59.06,-0.56,-0.56,-0.56,-0.56
+,NE-Ref_Storage-VertDisplay-Open-Flrsnt-EvapCond,EVAPORATIVELYCOOLED,MED-TEMP,OPEN,OPEN,OPEN,OPEN,0.2,0.2,0.2,0.2,0.2,0.6,0.6,0.6,59,59.06,59.06,59.06,-0.56,-0.56,-0.56,-0.56
+,NE-Ref_Storage-VertDisplay-Glassdoor-LED-EvapCond,EVAPORATIVELYCOOLED,MED-TEMP,GLASS-DOOR,GLASS-DOOR,GLASS-DOOR,GLASS-DOOR,0.05,0.05,0.05,0.05,0.05,0.1,0.1,0.1,13.1,13.1,13.1,13.1,1.67,1.67,1.67,1.67
+#,default,,,,,,,,,,,,,,,,,,,,,,
