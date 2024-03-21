@@ -221,9 +221,16 @@ AirTerminal:SingleDuct:VAV:Reheat,
   Coil:Heating:Electric,   !- Reheat Coil Object Type
 <% elsif (atu_reheat_coil_type == "WATER") %>
   Coil:Heating:Water,      !- Reheat Coil Object Type
-<% end %>
   <%= atu_name %> ATU Heating Coil,  !- Reheat Coil Name
+<% elsif (atu_reheat_coil_type == "STEAM") %>
+  Coil:Heating:Steam,      !- Reheat Coil Object Type
+  <%= atu_name %> ATU Heating Coil,  !- Reheat Coil Name
+<% end %>
+
 <% if (atu_reheat_coil_type == "WATER") %>
+  Autosize,                !- Maximum Hot Water or Steam Flow Rate {m3/s}
+  0.0,                     !- Minimum Hot Water or Steam Flow Rate {m3/s}
+<% elsif (atu_reheat_coil_type == "STEAM") %>
   Autosize,                !- Maximum Hot Water or Steam Flow Rate {m3/s}
   0.0,                     !- Minimum Hot Water or Steam Flow Rate {m3/s}
 <% else %>
@@ -484,4 +491,34 @@ Branch,
   <%= atu_name %> ATU Heating Coil,  !- Component 1 Name
   <%= atu_name %> Heating Coil Demand Inlet Node,  !- Component 1 Inlet Node Name
   <%= atu_name %> Heating Coil Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+<% elsif (atu_reheat_coil_type == "STEAM") %>
+Coil:Heating:Steam,
+  <%= atu_name %> ATU Heating Coil,  !- Name
+  ,                        !- Availability Schedule Name
+  Autosize,                !- Maximum Steam Flow Rate {m3/s}
+  1,                       !- Degree of SubCooling
+  10,                       !- Degree of Loop SubCooling
+  <%= atu_name %> Heating Coil Demand Inlet Node,  !- Water Inlet Node Name
+  <%= atu_name %> Heating Coil Demand Outlet Node,  !- Water Outlet Node Name
+<% if (atu_type == "CAV-IND") %>
+  <%= atu_name %> Secondary Inlet Node,  !- Air Inlet Node Name
+  <%= atu_name %> ATU Heating Coil Outlet Node,  !- Air Outlet Node Name
+<% else %>
+  <%= atu_name %> Damper Outlet Node,  !- Air Inlet Node Name
+  <%= atu_name %> Outlet Node,  !- Air Outlet Node Name
 <% end %>
+  ZoneLoadControl;     !- Coil Control Type
+
+Branch,
+  <%= atu_name %> ATU HW Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Coil:Heating:Steam,      !- Component 1 Object Type
+  <%= atu_name %> ATU Heating Coil,  !- Component 1 Name
+  <%= atu_name %> Heating Coil Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= atu_name %> Heating Coil Demand Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+
+!BranchList,
+!  <%= atu_name %> Branch List,  !- Name
+!  <%= atu_name %> ATU HW Branch;  !- Branch 1 Name

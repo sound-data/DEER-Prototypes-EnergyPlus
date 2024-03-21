@@ -4,7 +4,7 @@ require "modelkit/energyplus"
 parameter "name"
 parameter "branch_names"
 
-parameter "setpoint_type", :default=>"Constant"  # ( Constant | Reset )
+parameter "setpoint_type", :default=>"Reset"  # ( Constant | Reset )
 
 parameter "design_flow", :default=>Autosize
 parameter "design_temp", :default=>180['F']
@@ -27,8 +27,12 @@ parameter "pump_power", :default=>Autosize
 parameter "pump_curve", :default=>"NOT USED"
 
 
-parameter "heating_source", :default=>"BOILER"  # (BOILER | DISTRICT | GSHP | CHP )
-parameter "boiler_duplicate", :default=>false  # Heating Source BOILER Only!!
+parameter "heating_source", :default=>"BOILER"  # (BOILER | STEAMBOILER | DISTRICT | GSHP | CHP )
+parameter "boiler_duplicate", :default=>false  # Heating Source BOILER and STEAMBOILER Only!!
+parameter "boiler_duplicate_1", :default=>false  # Heating Source STEAMBOILER Only!!
+parameter "fluid_type", :default=>"WATER"  # (WATER | STEAM )
+parameter "max_loop_temp", :default=>100  # (100 | 120 )
+parameter "min_loop_temp", :default=>10  # (10 | 10 )
 
 parameter "boiler_type", :default=>"NONCONDENSING"     #  (NONCONDENSING | CONDENSING | ELECTRIC)
 parameter "boiler_fuel", :default=>"NATURALGAS"     #  (NATURALGAS | FUELOIL | ELECTRICITY)
@@ -71,12 +75,12 @@ Schedule:Compact,
 
 PlantLoop,
   <%= name %>,  !- Name
-  Water,                   !- Fluid Type
+  <%= fluid_type %>,                   !- Fluid Type
   ,                        !- User Defined Fluid Type
   <%= name %> Operation Schemes,  !- Plant Equipment Operation Scheme Name
   <%= name %> Supply Outlet Node,  !- Loop Temperature Setpoint Node Name
-  100.0,                   !- Maximum Loop Temperature {C}
-  10.0,                    !- Minimum Loop Temperature {C}
+  <%= max_loop_temp %>,                   !- Maximum Loop Temperature {C}
+  <%= min_loop_temp %>,                   !- Minimum Loop Temperature {C}
   Autosize,                !- Maximum Loop Flow Rate {m3/s}
   0.0,                     !- Minimum Loop Flow Rate {m3/s}
   Autosize,                !- Plant Loop Volume {m3}
@@ -144,6 +148,8 @@ PlantEquipmentList,
   <%= name %> Equipment List, !- Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Equipment 1 Object Type
+<% elsif (heating_source == "STEAMBOILER") %>
+  Boiler:Steam,         !- Equipment 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Equipment 1 Object Type
 <% elsif (heating_source == "GSHP") %>
@@ -159,9 +165,13 @@ PlantEquipmentList,
   <%= name %> Heating Source,  !- Equipment 1 Name
   ChillerHeater:Absorption:DirectFired,         !- Equipment 2 Object Type
   <%= abschiller_name %> Chiller;  !- Equipment 2 Name
-<% elsif (boiler_duplicate) %>
+<% elsif (boiler_duplicate_1) %>
   <%= name %> Heating Source 1,  !- Equipment 1 Name
   Boiler:HotWater,                      !- Equipment 2 Object Type
+  <%= name %> Heating Source 2;  !- Equipment 2 Name
+<% elsif (boiler_duplicate) %>
+  <%= name %> Heating Source 1,  !- Equipment 1 Name
+  Boiler:Steam,                      !- Equipment 2 Object Type
   <%= name %> Heating Source 2;  !- Equipment 2 Name
 <% else %>
   <%= name %> Heating Source;  !- Equipment 1 Name
@@ -198,6 +208,8 @@ Branch,
   Pump:ConstantSpeed,      !- Component 1 Object Type
 <% elsif (pump_type == "VARIABLE") %>
   Pump:VariableSpeed,      !- Component 1 Object Type
+<% elsif (pump_type == "VARIABLESPEEDCONDENSATE") %>
+  Pump:VariableSpeed:Condensate,      !- Component 1 Object Type
 <% end %>
   <%= name %> Pump,           !- Component 1 Name
   <%= name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
@@ -215,6 +227,8 @@ Branch,
   ,                        !- Pressure Drop Curve Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Component 1 Object Type
+<% elsif (heating_source == "STEAMBOILER") %>
+  Boiler:Steam,         !- Component 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Component 1 Object Type
 <% elsif (heating_source == "GSHP") %>
@@ -235,6 +249,8 @@ Branch,
   ,                        !- Pressure Drop Curve Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Component 1 Object Type
+<% elsif (heating_source == "STEAMBOILER") %>
+  Boiler:Steam,         !- Component 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Component 1 Object Type
 <% elsif (heating_source == "GSHP") %>
@@ -256,6 +272,8 @@ Branch,
   ,                        !- Pressure Drop Curve Name
 <% if (heating_source == "BOILER") %>
   Boiler:HotWater,         !- Component 1 Object Type
+<% elsif (heating_source == "STEAMBOILER") %>
+  Boiler:Steam,         !- Component 1 Object Type
 <% elsif (heating_source == "DISTRICT") %>
   DistrictHeating,         !- Component 1 Object Type
 <% elsif (heating_source == "GSHP") %>
@@ -319,6 +337,21 @@ Pump:VariableSpeed,
 <% elsif (pump_control == "INTERMITTENT") %>
   Intermittent;            !- Pump Control Type
 <% end %>
+
+<% elsif (pump_type == "VARIABLESPEEDCONDENSATE") %>
+Pump:VariableSpeed:Condensate,
+  <%= name %> Pump,  !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  Autosize,                      !- Design Steam Volume Flow Rate {m3/s}
+  <%= pump_head %>,   !- Design Pump Head {Pa}
+  <%= pump_power %>,  !- Design Power Consumption {W}
+  <%= pump_eff %>,    !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+  0,                       !- Coefficient 1 of the Part Load Performance Curve
+  3.2485,                       !- Coefficient 2 of the Part Load Performance Curve
+  -4.7443,                       !- Coefficient 3 of the Part Load Performance Curve
+  2.5295;                       !- Coefficient 4 of the Part Load Performance Curve
 
 <% end %>
 
@@ -471,6 +504,79 @@ Curve:Bicubic,
   0.85,                    !- Minimum Curve Output
   0.99;                    !- Maximum Curve Output
 <% end %>
+
+<% elsif (heating_source == "STEAMBOILER") %>
+  <% if (boiler_duplicate) %>
+Boiler:Steam,
+  <%= name %> Heating Source 1,  !- Name
+<% if (boiler_fuel == "NATURALGAS") %>
+  NaturalGas,              !- Fuel Type
+<% elsif (boiler_fuel == "FUELOIL") %>
+  FuelOilNo1,               !- Fuel Type
+<% elsif (boiler_fuel == "ELECTRICITY") %>
+  Electricity,             !- Fuel Type
+<% end %>
+  159958.369, !- Maximum Operating Pressure
+  <%= boiler_eff %>,  !- Theoritical Efficiency
+  100,                    !- Design Outlet Steam Temperature {C}
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  0.00001,                     !- Minimum Part Load Ratio
+  1.0,                     !- Maximum Part Load Ratio
+  0.2,                     !- Optimum Part Load Ratio
+  0.8,                     !- Coefficient 1 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 2 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 3 of Fuel Use Function of Part Load Ratio Curve
+  <%= name %> Heating Source 1 Inlet Node,  !- Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node 1,  !- Steam Outlet Node Name
+  1;                        !- Sizing Factor
+
+Boiler:Steam,
+  <%= name %> Heating Source 2,  !- Name
+<% if (boiler_fuel == "NATURALGAS") %>
+  NaturalGas,              !- Fuel Type
+<% elsif (boiler_fuel == "FUELOIL") %>
+  FuelOilNo1,               !- Fuel Type
+<% elsif (boiler_fuel == "ELECTRICITY") %>
+  Electricity,             !- Fuel Type
+<% end %>
+  159958.369, !- Maximum Operating Pressure
+  <%= boiler_eff %>,  !- Theoritical Efficiency
+  100,                    !- Design Outlet Steam Temperature {C}
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  0.00001,                     !- Minimum Part Load Ratio
+  1.0,                     !- Maximum Part Load Ratio
+  0.2,                     !- Optimum Part Load Ratio
+  0.8,                     !- Coefficient 1 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 2 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 3 of Fuel Use Function of Part Load Ratio Curve
+  <%= name %> Heating Source 2 Inlet Node,  !- Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node 2,  !- Steam Outlet Node Name
+  1;                        !- Sizing Factor
+  <% else %>
+
+Boiler:Steam,
+  <%= name %> Heating Source,  !- Name
+<% if (boiler_fuel == "NATURALGAS") %>
+  NaturalGas,              !- Fuel Type
+<% elsif (boiler_fuel == "FUELOIL") %>
+  FuelOilNo1,               !- Fuel Type
+<% elsif (boiler_fuel == "ELECTRICITY") %>
+  Electricity,             !- Fuel Type
+<% end %>
+  159958.369,           !- Maximum Operating Pressure
+  <%= boiler_eff %>,  !- Theoritical Efficiency
+  100,                    !- Design Outlet Steam Temperature {C}
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  0.00001,                     !- Minimum Part Load Ratio
+  1.0,                     !- Maximum Part Load Ratio
+  0.2,                     !- Optimum Part Load Ratio
+  0.8,                     !- Coefficient 1 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 2 of Fuel Use Function of Part Load Ratio Curve
+  0.1,                     !- Coefficient 3 of Fuel Use Function of Part Load Ratio Curve
+  <%= name %> Heating Source Inlet Node,  !- Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node ,  !- Steam Outlet Node Name
+  1;                        !- Sizing Factor
+  <% end %>
 
 <% elsif (heating_source == "DISTRICT") %>
 DistrictHeating,
@@ -795,28 +901,58 @@ ElectricLoadCenter:Generators,
 Branch,
   <%= name %> Supply Bypass Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
+<% if (fluid_type == "WATER") %>
   Pipe:Adiabatic,          !- Component 1 Object Type
   <%= name %> Supply Equipment Bypass Pipe,  !- Component 1 Name
   <%= name %> Supply Equip Bypass Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Supply Equip Bypass Outlet Node;  !- Component 1 Outlet Node Name
+<% else %>
+  Pipe:Adiabatic:Steam,          !- Component 1 Object Type
+  <%= name %> Supply Equipment Bypass Pipe,  !- Component 1 Name
+  <%= name %> Supply Equip Bypass Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Equip Bypass Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+<% if (fluid_type == "WATER") %>
 Pipe:Adiabatic,
   <%= name %> Supply Equipment Bypass Pipe,  !- Name
   <%= name %> Supply Equip Bypass Inlet Node,  !- Inlet Node Name
   <%= name %> Supply Equip Bypass Outlet Node;  !- Outlet Node Name
+<% else %>
+Pipe:Adiabatic:Steam,
+  <%= name %> Supply Equipment Bypass Pipe,  !- Name
+  <%= name %> Supply Equip Bypass Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Equip Bypass Outlet Node;  !- Outlet Node Name
+<% end %>
 
 Branch,
+<% if (fluid_type == "WATER") %>
   <%= name %> Supply Outlet Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
   Pipe:Adiabatic,          !- Component 1 Object Type
   <%= name %> Supply Outlet Pipe,  !- Component 1 Name
   <%= name %> Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Supply Outlet Node;  !- Component 1 Outlet Node Name
+<% else %>
+  <%= name %> Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic:Steam,          !- Component 1 Object Type
+  <%= name %> Supply Outlet Pipe,  !- Component 1 Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+<% if (fluid_type == "WATER") %>
 Pipe:Adiabatic,
   <%= name %> Supply Outlet Pipe,  !- Name
   <%= name %> Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
   <%= name %> Supply Outlet Node;  !- Outlet Node Name
+<% else %>
+Pipe:Adiabatic:Steam,
+  <%= name %> Supply Outlet Pipe,  !- Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Outlet Node Name
+<% end %>
 
 ConnectorList,
   <%= name %> Supply Connectors,  !- Name
@@ -863,43 +999,91 @@ BranchList,
   <%= name %> Demand Outlet Branch;  !- Branch Name
 
 Branch,
+<% if (fluid_type == "WATER") %>
   <%= name %> Demand Inlet Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
   Pipe:Adiabatic,          !- Component 1 Object Type
   <%= name %> Demand Inlet Pipe,  !- Component 1 Name
   <%= name %> Demand Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+<% else %>
+  <%= name %> Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic:Steam,          !- Component 1 Object Type
+  <%= name %> Demand Inlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+<% if (fluid_type == "WATER") %>
 Pipe:Adiabatic,
   <%= name %> Demand Inlet Pipe,  !- Name
   <%= name %> Demand Inlet Node,  !- Inlet Node Name
   <%= name %> Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+<% else %>
+Pipe:Adiabatic:Steam,
+  <%= name %> Demand Inlet Pipe,  !- Name
+  <%= name %> Demand Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+<% end %>
 
 Branch,
+<% if (fluid_type == "WATER") %>
   <%= name %> Demand Bypass Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
   Pipe:Adiabatic,          !- Component 1 Object Type
   <%= name %> Demand Bypass Pipe,  !- Component 1 Name
   <%= name %> Demand Bypass Pipe Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Demand Bypass Pipe Outlet Node;  !- Component 1 Outlet Node Name
+<% else %>
+  <%= name %> Demand Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic:Steam,          !- Component 1 Object Type
+  <%= name %> Demand Bypass Pipe,  !- Component 1 Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+<% if (fluid_type == "WATER") %>
 Pipe:Adiabatic,
   <%= name %> Demand Bypass Pipe,  !- Name
   <%= name %> Demand Bypass Pipe Inlet Node,  !- Inlet Node Name
   <%= name %> Demand Bypass Pipe Outlet Node;  !- Outlet Node Name
+<% else %>
+Pipe:Adiabatic:Steam,
+  <%= name %> Demand Bypass Pipe,  !- Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Outlet Node Name
+<% end %>
 
 Branch,
+<% if (fluid_type == "WATER") %>
   <%= name %> Demand Outlet Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
   Pipe:Adiabatic,          !- Component 1 Object Type
   <%= name %> Demand Outlet Pipe,  !- Component 1 Name
   <%= name %> Demand Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Demand Outlet Node;  !- Component 1 Outlet Node Name
+<% else %>
+  <%= name %> Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic:Steam,          !- Component 1 Object Type
+  <%= name %> Demand Outlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
 
+<% if (fluid_type == "WATER") %>
 Pipe:Adiabatic,
   <%= name %> Demand Outlet Pipe,  !- Name
   <%= name %> Demand Outlet Pipe Inlet Node,  !- Inlet Node Name
   <%= name %> Demand Outlet Node;  !- Outlet Node Name
+<% else %>
+Pipe:Adiabatic:Steam,
+  <%= name %> Demand Outlet Pipe,  !- Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Outlet Node Name
+<% end %>
 
 ConnectorList,
   <%= name %> Demand Connectors,  !- Name
