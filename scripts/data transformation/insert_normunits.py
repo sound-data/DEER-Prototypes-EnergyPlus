@@ -88,7 +88,7 @@ def insert_normunits1(
     # 3. Lookup tables for NumStor and NumBldg
     # Create CZ:VintYear dictionary based on prototype definitions
     # BldgType, Story-flag, BldgVint, VintYear, BldgLoc, numstor, weight
-    df_numstor2 = pd.read_excel('NumStor2.xlsx', sheet_name='NumStor')
+    df_numstor2 = pd.read_excel(TRANSFORM_PATH / 'NumStor2.xlsx', sheet_name='NumStor')
     df_numbldgs = pd.DataFrame([('DMo',2),('MFm',24),('SFm',2)],columns=['BldgType','numbldgs'])
 
     #%%
@@ -162,8 +162,8 @@ def test():
     # User inputs
 
     # Specify the original files
-    filename_sizing_agg = 'results-sizing-agg-SFm.csv'
-    filename_simannual = 'sfm_annual.csv'
+    filename_sizing_agg = 'results-sizing-agg.csv'
+    filename_simannual = 'sim_annual.csv'
 
     # Specify the files to output from this script
     output_sizing = 'results-per-dwelling.csv'
@@ -202,6 +202,17 @@ def main():
     parser.add_argument('normunit',type=str,help='The label to write for new normalizing units.')
     parser.add_argument('sizing_multiplier',type=float,help='The alternate result file, default results-sizing-agg.csv.',default=1.0)
     parser.add_argument('measure_name',help='The measure name as it appears in Measure_list.xlsx. ')
+    args = parser.parse_args()
+    insert_normunits1(
+        args.filename_sizing_agg,
+        args.filename_simannual,
+        args.output_sizing,
+        args.output_simannual,
+        args.sizing_column,
+        args.normunit,
+        args.sizing_multiplier,
+        args.measure_name
+    )
 
 if __name__ == "__main__":
     # Select testing or command line mode here.
