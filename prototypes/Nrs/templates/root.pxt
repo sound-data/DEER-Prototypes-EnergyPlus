@@ -283,6 +283,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "WATER"
   parameter "atu_reheat_control", :default => "DUAL-MAX-LIMIT"
 end
@@ -298,6 +302,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => 3.85
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "WATER"
   parameter "dx_type", :default => "T24"
@@ -532,27 +538,29 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Corridor EL4 Core Spc (G.C3)", "corridor", 3328.42['ft2'], "MAIN", "F2", "L2_ALT", nil, "Health"],
-  ["Dining EL1 West Perim Spc (G.W1)", "dining_fast", 6303.51['ft2'], "MAIN", "F1", "L1", nil, "Office"],
-  ["Kitchen EL1 East Perim Spc (G.E2)", "kitchen", 2701.87['ft2'], "MAIN", "F1", nil, nil, "Restaurant"],
-  ["Office EL2 Core Spc (G.C1)", "office_large", 3895.75['ft2'], "MAIN", "F1", "L1", nil, "Office"],
-  ["Office EL2 North Perim Spc (G.N3)", "office_large", 5549.46['ft2'], "MAIN", "F1", "L1", nil, "Office"],
-  ["Office EL2 South Perim Spc (G.S2)", "office_large", 5549.38['ft2'], "MAIN", "F1", "L1", nil, "Office"],
-  ["Office EL3 North Perim Spc (G.N3)", "office_large", 2222.58['ft2'], "MAIN", "F1", "L1", nil, "Office"],
-  ["Office EL3 South Perim Spc (G.S2)", "office_large", 2222.55['ft2'], "MAIN", "F1", "L1", nil, "Office"],
-  ["Office EL3 West Perim Spc (G.W1)", "office_large", 1560.27['ft2'], "MAIN", "F1", "L1", nil, "Office"],
-  ["Patient EL4 North Perim Spc (G.N1)", "health_patient", 13348.11['ft2'], "MAIN", "F2", "L2_ALT", nil, "Health"],
-  ["PatientRoom EL4 South Perim Spc (G.S2)", "health_patient", 13324.59['ft2'], "MAIN", "F2", "L2_ALT", nil, "Health"],
-  ["EL2 Core Plnm (G.4)", "plenum", 0.0['ft2'], "MAIN", "F1", nil, nil, "Plenum"],
-  ["EL2 North Plnm (G.4)", "plenum", 0.0['ft2'], "MAIN", "F1", nil, nil, "Plenum"],
-  ["EL2 South Plnm (G.4)", "plenum", 0.0['ft2'], "MAIN", "F1", nil, nil, "Plenum"],
-  ["EL3 North Plnm (G.4)", "plenum", 0.0['ft2'], "MAIN", "F1", nil, nil, "Plenum"],
-  ["EL3 South Plnm (G.4)", "plenum", 0.0['ft2'], "MAIN", "F1", nil, nil, "Plenum"],
-  ["EL3 West Plnm (G.4)", "plenum", 0.0['ft2'], "MAIN", "F1", nil, nil, "Plenum"],
-  ["EL4 Core Plnm (G.4)", "plenum", 0.0['ft2'], "MAIN", "F2", nil, nil, "Plenum"],
-  ["EL4 North Plnm (G.4)", "plenum", 0.0['ft2'], "MAIN", "F2", nil, nil, "Plenum"],
-  ["EL4 South Plnm (G.4)", "plenum", 0.0['ft2'], "MAIN", "F2", nil, nil, "Plenum"],
+  ["Corridor EL4 Core Spc (G.C3)", "corridor", 3328.42['ft2'], "MAIN_ALT", "F2_ALT", "L2_ALT", "L2_ALT", "Health"],
+  ["Dining EL1 West Perim Spc (G.W1)", "dining_fast", 6303.51['ft2'], "MAIN", "F1", "L1", "L1", "Office"],
+  ["Kitchen EL1 East Perim Spc (G.E2)", "kitchen", 2701.87['ft2'], nil, nil, nil, nil, "Restaurant"],
+  ["Office EL2 Core Spc (G.C1)", "office_large", 3895.75['ft2'], "MAIN", "F1", "L1", "L1", "Office"],
+  ["Office EL2 North Perim Spc (G.N3)", "office_large", 5549.46['ft2'], "MAIN", "F1", "L1", "L1", "Office"],
+  ["Office EL2 South Perim Spc (G.S2)", "office_large", 5549.38['ft2'], "MAIN", "F1", "L1", "L1", "Office"],
+  ["Office EL3 North Perim Spc (G.N3)", "office_large", 2222.58['ft2'], "MAIN", "F1", "L1", "L1", "Office"],
+  ["Office EL3 South Perim Spc (G.S2)", "office_large", 2222.55['ft2'], "MAIN", "F1", "L1", "L1", "Office"],
+  ["Office EL3 West Perim Spc (G.W1)", "office_large", 1560.27['ft2'], "MAIN", "F1", "L1", "L1", "Office"],
+  ["Patient EL4 North Perim Spc (G.N1)", "health_patient", 13348.11['ft2'], "MAIN_ALT", "F2_ALT", "L2_ALT", "L2_ALT", "Health"],
+  ["PatientRoom EL4 South Perim Spc (G.S2)", "health_patient", 13324.59['ft2'], "MAIN_ALT", "F2_ALT", "L2_ALT", "L2_ALT", "Health"],
+  ["EL2 Core Plnm (G.4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 North Plnm (G.4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL2 South Plnm (G.4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 North Plnm (G.4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 South Plnm (G.4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL3 West Plnm (G.4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 Core Plnm (G.4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 North Plnm (G.4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL4 South Plnm (G.4)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
 ]
 
 

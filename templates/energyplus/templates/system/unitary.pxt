@@ -56,6 +56,12 @@ parameter "cool_coil_cap", :default => Autosize
 parameter "cool_coil_cop", :default => 3.23
 parameter "cool_coil_evap_eff", :default => 0.9  # Evaporative Condenser Effectiveness
 
+#TRC - Add cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object and the UnitarySystem.
+#Differs from ATU_flow_min_frac because it cannot be autosized and it doesn't override the ventilation requirement.
+parameter "cool_flow_min_frac", :name => "Cooling Minimum Air Flow Fraction",:description => "Cooling Minimum Air Flow Fraction used in sizing:zone object",:default => nil
+#TRC - Add unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+parameter "unitary_no_load_flow_method", :name => "No Load Supply Air Flow Rate Method",:description => "No Load Supply Air Flow Rate Method in AirLoopHVAC:UnitarySysteem",:default => "SupplyAirFlowRate"
+
 
 parameter "heat_coil_type", :default => "COMBUSTION"  # (COMBUSTION | RESISTANCE | DX-AIR | DX-WATER | WATER | STEAM | NONE)
 parameter "heat_coil_cap", :default => Autosize
@@ -204,6 +210,10 @@ parameter "clear_water_storage_tank", :default => ""  # Name of tank for collect
 <%
 if (control_zone_name.empty?)
   control_type = "Setpoint"
+
+# TRC - enable variable speed operation for cPVVG system type
+elsif ((fan_speed == "VARIABLE") && (heat_coil_type == "WATER" || (heat_coil_type == "DX-AIR" && dx_comp_speed == "CONSTANT")) && (cool_coil_type == "WATER" || (cool_coil_type == "DX-AIR" || dx_comp_speed == "CONSTANT")))
+  control_type = "SingleZoneVAV"
 else
   control_type = "Load"
 end
@@ -377,10 +387,16 @@ AirLoopHVAC:UnitarySystem,
   ,                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                        !- Heating Supply Air Flow Rate Per Unit of Capacity {m3/s-W}
-  SupplyAirFlowRate,       !- No Load Supply Air Flow Rate Method
+  <%= unitary_no_load_flow_method %>,       !- No Load Supply Air Flow Rate Method
   <%= fan_flow %>,         !- No Load Supply Air Flow Rate {m3/s}
   ,                        !- No Load Supply Air Flow Rate Per Floor Area {m3/s-m2}
+<%# TRC - add option to set no load fraction of supply air flow rate for cPVVG system type
+    #0.67 is the EnergyPlus default for SupplyAirFlowRate method %>
+<% if (unitary_no_load_flow_method == "FractionOfAutosizedCoolingValue") %>
+  <%= if (cool_flow_min_frac) then (cool_flow_min_frac) else ("0.67") end %>,                        !- No Load Fraction of Autosized Cooling Supply Air Flow Rate
+<% else %>
   ,                        !- No Load Fraction of Autosized Cooling Supply Air Flow Rate
+<% end %>
   ,                        !- No Load Fraction of Autosized Heating Supply Air Flow Rate
   ,                        !- No Load Supply Air Flow Rate Per Unit of Capacity During Cooling Operation {m3/s-W}
   ,                        !- No Load Supply Air Flow Rate Per Unit of Capacity During Heating Operation {m3/s-W}
@@ -516,8 +532,8 @@ Curve:Quartic,
   1.0 ,                                !- Maximum Value of x
   0.0 ,                                !- Minimum Curve Output
   1.0 ,                                !- Maximum Curve Output
-  Dimensionless ,                      !- Input Unit Type for X
-  Dimensionless ;                      !- Output Unit Type
+  Dimensionless,                      !- Input Unit Type for X
+  Dimensionless;                      !- Output Unit Type
 <% end %>
 
 <% elsif (fan_type == "VARIABLE") %>
@@ -1978,7 +1994,8 @@ Coil:Heating:DX:MultiSpeed,
   <%= heat_coil_cap %>,    !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_1 %>,  !- Rated COP
   <%= fan_flow %>,         !- Rated Air Flow Rate {m^3/s}
-  ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2023 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
   <%= unitary_name %> HP_Heat-Cap-fT1,  !- Total Heating Capacity Function of Temperature Curve Name
   <%= unitary_name %> HP_Heat-Cap-fFF1,  !- Total Heating Capacity Function of Flow Fraction Curve Name
   <%= unitary_name %> HP_Heat-EIR-fT1,  !- Energy Input Ratio Function of Temperature Curve Name
@@ -1989,7 +2006,8 @@ Coil:Heating:DX:MultiSpeed,
   Autosize,                !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_2 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
-  ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2023 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
   <%= unitary_name %> HP_Heat-Cap-fT2,  !- Total Heating Capacity Function of Temperature Curve Name
   <%= unitary_name %> HP_Heat-Cap-fFF2,  !- Total Heating Capacity Function of Flow Fraction Curve Name
   <%= unitary_name %> HP_Heat-EIR-fT2,  !- Energy Input Ratio Function of Temperature Curve Name
@@ -2003,7 +2021,8 @@ Coil:Heating:DX:MultiSpeed,
   Autosize,                !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_3 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
-  ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2023 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
   <%= unitary_name %> HP_Heat-Cap-fT3,  !- Total Heating Capacity Function of Temperature Curve Name
   <%= unitary_name %> HP_Heat-Cap-fFF3,  !- Total Heating Capacity Function of Flow Fraction Curve Name
   <%= unitary_name %> HP_Heat-EIR-fT3,  !- Energy Input Ratio Function of Temperature Curve Name
@@ -2017,7 +2036,8 @@ Coil:Heating:DX:MultiSpeed,
   Autosize,                !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_4 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
-  ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
+  ,                        !- 2023 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
   <%= unitary_name %> HP_Heat-Cap-fT4,  !- Total Heating Capacity Function of Temperature Curve Name
   <%= unitary_name %> HP_Heat-Cap-fFF4,  !- Total Heating Capacity Function of Flow Fraction Curve Name
   <%= unitary_name %> HP_Heat-EIR-fT4,  !- Energy Input Ratio Function of Temperature Curve Name
@@ -2818,3 +2838,70 @@ UnitarySystemPerformance:Multispeed,
 # Cool-Cap-fFF4, Cool-EIR-fFF4    coeffs: 1,0,0
 # Same problem for heating curves...
 %>
+
+<%
+    #TRC - UnitarySystemSizing of the no load airflow does not account for ventilation rate when there is a DX coil, so in some cases the no load flow is less than the design ventilation rate.
+    #An EMS program is added to fix this for units configured with DX cooling, CONSTANT compressor speed and variable flow.
+    #This may remain an issue for any Unitary systems with multispeed compressors, two-speed fans or other configurations.
+
+if (cool_coil_type == "DX-AIR" && dx_comp_speed == "CONSTANT" && fan_speed == "VARIABLE")
+replacements = {' ' => '_','-' => '_','.' => '_','(' => '',')' => ''}
+unitary_name_ems = unitary_name.gsub(Regexp.union(replacements.keys), replacements)
+if (cool_flow_min_frac == nil) #if cool_flow_min_frac is default, set to EnergyPlus default for Constant Speed DX systems
+cool_flow_min_frac = 0.67
+end
+%>
+
+EnergyManagementSystem:Actuator,
+    <%= unitary_name_ems %>_MINFLOW,  !- Name
+    <%= unitary_name %> UNITARY,  !- Actuated Component Unique Name
+    UnitarySystem,           !- Actuated Component Type
+    Autosized Supply Air Flow Rate During No Heating or Cooling Operation;  !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+    <%= unitary_name_ems %>_HMINFLOW,  !- Name
+    <%= unitary_name %> UNITARY,  !- Actuated Component Unique Name
+    UnitarySystem,           !- Actuated Component Type
+    Autosized Supply Air Flow Rate During Heating Operation;  !- Actuated Component Control Type
+
+EnergyManagementSystem:ProgramCallingManager,
+    <%= unitary_name_ems %>_SizingAdjustment,        !- Name
+    UnitarySystemSizing,     !- EnergyPlus Model Calling Point
+    <%= unitary_name_ems %>_UnitaryDXMinFlowSizing;  !- Program Name 1
+
+EnergyManagementSystem:Program,
+    <%= unitary_name_ems %>_UnitaryDXMinFlowSizing,  !- Name
+    Set Vent_Flow = <%= unitary_name_ems %>_OA_MFLOW,  !- Program Line 1
+    Set Design_Flow = <%= unitary_name_ems %>_MFLOW,  !- Program Line 2
+    Set Design_HFlow = <%= unitary_name_ems %>_HMFLOW,  !- Program Line 3
+    Set Design_Min_Flow = Design_Flow * <%= cool_flow_min_frac %>,  !- A4
+    IF Vent_Flow >= Design_Flow,  !- A5
+    Set Vent_Flow = Design_Flow * 0.999,  !- A6
+    ENDIF,                   !- A7
+    IF Design_HFlow <= Design_Min_Flow,   !- A8
+    Set Design_HFlow = Design_Min_flow * 1.001,   !- A9
+    Set <%= unitary_name_ems %>_HMINFLOW = Design_Min_Flow * 1.001,   !- A10
+    ENDIF,   !- A11
+    IF Vent_Flow >= Design_HFlow,  !- A12
+    Set <%= unitary_name_ems %>_HMINFLOW = Vent_Flow * 1.001,  !- A13
+    ENDIF,                   !- A14
+    IF Vent_Flow > Design_Min_Flow,  !- A15
+    Set <%= unitary_name_ems %>_MINFLOW = Vent_Flow,  !- A16
+    ENDIF;                   !- A17
+
+EnergyManagementSystem:InternalVariable,
+    <%= unitary_name_ems %>_OA_MFLOW,  !- Name
+    <%= unitary_name %> OA CONTROLLER,  !- Internal Data Index Key Name
+    Outdoor Air Controller Minimum Mass Flow Rate;  !- Internal Data Type
+
+EnergyManagementSystem:InternalVariable,
+    <%= unitary_name_ems %>_MFLOW,  !- Name
+    <%= unitary_name %>,  !- Internal Data Index Key Name
+    Intermediate Air System Main Supply Volume Flow Rate;  !- Internal Data Type
+
+EnergyManagementSystem:InternalVariable,
+    <%= unitary_name_ems %>_HMFLOW,  !- Name
+    <%= unitary_name %>,  !- Internal Data Index Key Name
+    Intermediate Air System Heating Volume Flow Rate;  !- Internal Data Type
+
+<% end %>
