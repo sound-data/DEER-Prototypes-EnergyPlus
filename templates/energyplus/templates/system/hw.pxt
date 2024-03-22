@@ -4,7 +4,7 @@ require "modelkit/energyplus"
 parameter "name"
 parameter "branch_names"
 
-parameter "setpoint_type", :default=>"Reset"  # ( Constant | Reset )
+parameter "setpoint_type", :default=>"Constant"  # ( Constant | Reset )
 
 parameter "design_flow", :default=>Autosize
 parameter "design_temp", :default=>180['F']
