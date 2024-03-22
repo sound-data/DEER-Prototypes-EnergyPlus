@@ -5,8 +5,8 @@ DELETE FROM meas_impacts_vint_wtd WHERE "BldgType" = 'Com';
 INSERT INTO meas_impacts_vint_wtd
 SELECT
 "EnergyImpactID",
-'DEER2024'::VARCHAR as "Version",
-'D24v0'::VARCHAR as "VersionSource",
+'DEER2024'::text as "Version",
+'D24_E+_Com_v1'::text as "VersionSource", --Note Version must reflect prototype version used (COP, sizing, etc.) (Note version)
 date_trunc('second', now()) as "LastMod",
 "PA",
 'Com'::VARCHAR as "BldgType",
