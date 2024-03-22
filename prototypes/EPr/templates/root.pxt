@@ -251,6 +251,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "NONE"
   parameter "atu_reheat_control", :default => nil
 end
@@ -266,6 +270,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => 3.9
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "COMBUSTION"
   parameter "dx_type", :default => "T24"
@@ -502,13 +508,15 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Classroom G.E1", "classroom_class", 5751.45['ft2'], "Classroom G.E1", nil, nil, nil, "School"],
-  ["Classroom G.NNE2", "classroom_class", 3321.39['ft2'], "Classroom G.NNE2", nil, nil, nil, "School"],
-  ["Classroom G.SSE3", "classroom_class", 3321.39['ft2'], "Classroom G.SSE3", nil, nil, nil, "School"],
-  ["Classroom G.W4", "classroom_class", 3354.32['ft2'], "Classroom G.W4", nil, nil, nil, "School"],
-  ["Dining G.SSW1", "dining_fast", 2067.0['ft2'], "Dining G.SSW1", nil, nil, nil, "School"],
-  ["Gymnasium G.N2", "gym", 3747.27['ft2'], "Gymnasium G.N2", nil, nil, nil, "School"],
+  ["Classroom G.E1", "classroom_class", 5751.45['ft2'], "MAIN", "MAIN-G", "Classroom G.E1", "Classroom G.E1", "School"],
+  ["Classroom G.NNE2", "classroom_class", 3321.39['ft2'], "MAIN", "MAIN-G", "Classroom G.NNE2", "Classroom G.NNE2", "School"],
+  ["Classroom G.SSE3", "classroom_class", 3321.39['ft2'], "MAIN", "MAIN-G", "Classroom G.SSE3", "Classroom G.SSE3", "School"],
+  ["Classroom G.W4", "classroom_class", 3354.32['ft2'], "MAIN", "MAIN-G", "Classroom G.W4", "Classroom G.W4", "School"],
+  ["Dining G.SSW1", "dining_fast", 2067.0['ft2'], "MAIN", "MAIN-G", "Dining G.SSW1", "Dining G.SSW1", "School"],
+  ["Gymnasium G.N2", "gym", 3747.27['ft2'], "MAIN", "MAIN-G", "Gymnasium G.N2", "Gymnasium G.N2", "School"],
   ["Kitchen G.E3", "kitchen", 1750.76['ft2'], nil, nil, nil, nil, "Restaurant"],
   ["Plenum G.E5", "plenum", 5751.45['ft2'], nil, nil, nil, nil, "Plenum"],
   ["Plenum G.NNE6", "plenum", 3321.39['ft2'], nil, nil, nil, nil, "Plenum"],

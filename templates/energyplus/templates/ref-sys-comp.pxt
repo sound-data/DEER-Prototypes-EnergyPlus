@@ -1,0 +1,581 @@
+<%#INITIALIZE
+parameter "comp_name"
+parameter "comp_curves_source", :default=>"Carlyle_R-22_Med_06DM808" # (Carlyle_R-22_Low_06CC665 | Carlyle_R-22_Low_06DR718 | Carlyle_R-22_Med_06DM808 | Carlyle_R-22_Med_06DR820 | Copeland_R507_Med_3DS3150ETFE |Copeland_R507_Med_2da3075e | 
+# Copeland_R507_Low_3db30750 | Copeland_R507_Low_3DS3100E |Copeland_R507_Low_4dl3150e | Copeland_R507_Med_3db3100e)
+parameter "rated_sh", :default=>5
+parameter "return_gas_temp", :default=>18['C']
+parameter "liquid_temp", :default=>4.4['C']
+parameter "rated_subcooling", :default=>""
+%>
+
+Refrigeration:Compressor,
+    <%= comp_name %>,  !- Name
+    <%= comp_name %> Power Curve,!- Refrigeration Compressor Power Curve Name
+    <%= comp_name %> Capacity Curve,  !- Refrigeration Compressor Capacity Curve Name
+    <%= rated_sh %>,                        !- Rated Superheat {deltaC}
+    <%= return_gas_temp %>,                    !- Rated Return Gas Temperature {C}
+    <%= liquid_temp %>,                     !- Rated Liquid Temperature {C}
+    <%= rated_subcooling %>;                        !- Rated Subcooling {deltaC}
+
+
+<% if (comp_curves_source == "Carlyle_R-22_Med_06DR820") %>
+
+! Capacity Curve for Carlyle_R-22_Med_06DR820,   !nominal MBtu/h = 42395.1
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    3.849e+004,              !- Coefficient1 Constant
+    1393.,                   !- Coefficient2 x
+    19.32,                   !- Coefficient3 x**2
+    -365.6,                  !- Coefficient4 y
+    1.295,                   !- Coefficient5 y**2
+    -10.41,                  !- Coefficient6 x*y
+    0.09712,                 !- Coefficient7 x**3
+    -0.007640,               !- Coefficient8 y**3
+    -0.1141,                 !- Coefficient9 x**2*y
+    0.004656,                !- Coefficient10 x*y**2
+    -17.8,                   !- Minimum Value of x
+    4.4,                     !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+! Power Curve for Carlyle_R-22_Med_06DR820,   !nominal kW = 5.5
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    1284.,                   !- Coefficient1 Constant
+    -124.3,                  !- Coefficient2 x
+    -3.435,                  !- Coefficient3 x**2
+    153.9,                   !- Coefficient4 y
+    -0.4744,                 !- Coefficient5 y**2
+    4.041,                   !- Coefficient6 x*y
+    -0.02511,                !- Coefficient7 x**3
+    0.001230,                !- Coefficient8 y**3
+    0.03235,                 !- Coefficient9 x**2*y
+    -0.003028,               !- Coefficient10 x*y**2
+    -17.8,                   !- Minimum Value of x
+    4.4,                     !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+<% elsif (comp_curves_source == "Carlyle_R-22_Low_06CC665") %>
+! Capacity Curve for Carlyle_R-22_Low_06CC665,   !nominal MBtu/h = 71847.7
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    7.353e+004,              !- Coefficient1 Constant
+    2513.,                   !- Coefficient2 x
+    32.91,                   !- Coefficient3 x**2
+    -25.69,                  !- Coefficient4 y
+    0.3655,                  !- Coefficient5 y**2
+    -0.8183,                 !- Coefficient6 x*y
+    0.1712,                  !- Coefficient7 x**3
+    -0.003657,               !- Coefficient8 y**3
+    -0.01027,                !- Coefficient9 x**2*y
+    0.009071,                !- Coefficient10 x*y**2
+    -40.0,                   !- Minimum Value of x
+    -17.8,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+! Power Curve for Carlyle_R-22_Low_06CC665,   !nominal kW = 11.7
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    5546.,                   !- Coefficient1 Constant
+    -61.38,                  !- Coefficient2 x
+    -1.599,                  !- Coefficient3 x**2
+    332.9,                   !- Coefficient4 y
+    -0.07860,                !- Coefficient5 y**2
+    5.981,                   !- Coefficient6 x*y
+    0.0008655,               !- Coefficient7 x**3
+    0.003784,                !- Coefficient8 y**3
+    0.02998,                 !- Coefficient9 x**2*y
+    0.01728,                 !- Coefficient10 x*y**2
+    -40.0,                   !- Minimum Value of x
+    -17.8,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+<% elsif (comp_curves_source == "Carlyle_R-22_Low_06DR718") %>
+! Capacity Curve for Carlyle_R-22_Low_06DR718,   !nominal MBtu/h = 18786.0
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    2.861e+004,              !- Coefficient1 Constant
+    1069.,                   !- Coefficient2 x
+    17.73,                   !- Coefficient3 x**2
+    -155.1,                  !- Coefficient4 y
+    -0.08805,                !- Coefficient5 y**2
+    -4.646,                  !- Coefficient6 x*y
+    0.1427,                  !- Coefficient7 x**3
+    -0.002566,               !- Coefficient8 y**3
+    -0.04829,                !- Coefficient9 x**2*y
+    0.002038,                !- Coefficient10 x*y**2
+    -40.0,                   !- Minimum Value of x
+    -17.8,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+! Power Curve for Carlyle_R-22_Low_06DR718,   !nominal kW = 3.5
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    2378.,                   !- Coefficient1 Constant
+    -30.52,                  !- Coefficient2 x
+    -1.571,                  !- Coefficient3 x**2
+    75.14,                   !- Coefficient4 y
+    0.7122,                  !- Coefficient5 y**2
+    1.050,                   !- Coefficient6 x*y
+    -0.01503,                !- Coefficient7 x**3
+    -0.006798,               !- Coefficient8 y**3
+    -0.004701,               !- Coefficient9 x**2*y
+    0.01875,                 !- Coefficient10 x*y**2
+    -40.0,                   !- Minimum Value of x
+    -17.8,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+<% elsif (comp_curves_source == "Carlyle_R-22_Med_06DM808") %>
+! Capacity Curve for Carlyle_R-22_Med_06DM808,   !nominal MBtu/h = 14944.9
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    1.499e+004,              !- Coefficient1 Constant
+    541.8,                   !- Coefficient2 x
+    7.285,                   !- Coefficient3 x**2
+    -118.0,                  !- Coefficient4 y
+    -0.3645,                 !- Coefficient5 y**2
+    -3.050,                  !- Coefficient6 x*y
+    0.03440,                 !- Coefficient7 x**3
+    0.002250,                !- Coefficient8 y**3
+    -0.03927,                !- Coefficient9 x**2*y
+    -0.007307,               !- Coefficient10 x*y**2
+    -17.8,                   !- Minimum Value of x
+    4.4,                     !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+! Power Curve for Carlyle_R-22_Med_06DM808,   !nominal kW = 2.0
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    483.6,                   !- Coefficient1 Constant
+    -53.20,                  !- Coefficient2 x
+    -1.384,                  !- Coefficient3 x**2
+    56.19,                   !- Coefficient4 y
+    0.003688,                !- Coefficient5 y**2
+    1.439,                   !- Coefficient6 x*y
+    -0.008268,               !- Coefficient7 x**3
+    -0.002810,               !- Coefficient8 y**3
+    0.007222,                !- Coefficient9 x**2*y
+    0.006025,                !- Coefficient10 x*y**2
+    -17.8,                   !- Minimum Value of x
+    4.4,                     !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    48.9;                    !- Maximum Value of y
+
+
+<% elsif (comp_curves_source == "Copeland_R507_Med_3DS3150ETFE") %>
+! Capacity Curve for Copeland 3DS3-150E-TFE,   !nominal capacity Btu/h = 116000
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    92241.37321,             !- Coefficient1 Constant
+    3487.956684,             !- Coefficient2 x
+    49.78001253,             !- Coefficient3 x**2
+    -1147.346936,            !- Coefficient4 y
+    4.151607509,             !- Coefficient5 y**2
+    -41.42911058,            !- Coefficient6 x*y
+    0.199326773,             !- Coefficient7 x**3
+    -0.022156868,            !- Coefficient8 y**3
+    -0.533660616,            !- Coefficient9 x**2*y
+    0.047497192,             !- Coefficient10 x*y**2
+    -23.33333333,            !- Minimum Value of x
+    7.222222222,             !- Maximum Value of x
+    21.11111111,             !- Minimum Value of y
+    60,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+! Power Curve for Copeland 3DS3-150E-TFE,   !nominal kW = 15.3
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    4929.638742,             !- Coefficient1 Constant
+    -183.9509222,            !- Coefficient2 x
+    -5.932050142,            !- Coefficient3 x**2
+    291.8639274,             !- Coefficient4 y
+    -1.061847772,            !- Coefficient5 y**2
+    8.961817027,             !- Coefficient6 x*y
+    -0.026506564,            !- Coefficient7 x**3
+    0.000701335,             !- Coefficient8 y**3
+    0.086245598,             !- Coefficient9 x**2*y
+    -0.018536611,            !- Coefficient10 x*y**2
+    -23.33333333,            !- Minimum Value of x
+    7.222222222,             !- Maximum Value of x
+    21.11111111,             !- Minimum Value of y
+    60,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+<% elsif (comp_curves_source == "Copeland_R507_Med_2da3075e") %>
+! Capacity Curve for Copeland 2da3-075e,   !nominal capacity Btu/h = 61900
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    45595.98103,             !- Coefficient1 Constant
+    1848.969994,             !- Coefficient2 x
+    27.8552011,              !- Coefficient3 x**2
+    -353.2125883,            !- Coefficient4 y
+    -3.195074912,            !- Coefficient5 y**2
+    -20.72436183,            !- Coefficient6 x*y
+    0.120193555,             !- Coefficient7 x**3
+    0.023112633,             !- Coefficient8 y**3
+    -0.298795991,            !- Coefficient9 x**2*y
+    0.013740753,             !- Coefficient10 x*y**2
+    -23.3333,                !- Minimum Value of x
+    7.222,                   !- Maximum Value of x
+    21.1111,                 !- Minimum Value of y
+    60,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+! Power Curve for Copeland 2da3-075e,   !nominal kW = 7.72
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    1017.032496,             !- Coefficient1 Constant
+    -117.3567168,            !- Coefficient2 x
+    -3.36448728,             !- Coefficient3 x**2
+    237.1478544,             !- Coefficient4 y
+    -2.2670604,              !- Coefficient5 y**2
+    4.88825928,              !- Coefficient6 x*y
+    -0.01708776,             !- Coefficient7 x**3
+    0.0107892,               !- Coefficient8 y**3
+    0.043821648,             !- Coefficient9 x**2*y
+    -0.00822312,             !- Coefficient10 x*y**2
+    -23.33333333,            !- Minimum Value of x
+    7.222222222,             !- Maximum Value of x
+    21.11111111,             !- Minimum Value of y
+    60,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+<% elsif (comp_curves_source == "Copeland_R507_Med_3db3100e") %>
+! Capacity Curve for Copeland 3db3-100e,   !nominal capacity Btu/h = 87300
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+   67936.01215,             !- Coefficient1 Constant
+    2579.386005,             !- Coefficient2 x
+    37.35814389,             !- Coefficient3 x**2
+    -837.2897304,            !- Coefficient4 y
+    3.5596034,               !- Coefficient5 y**2
+    -30.92121918,            !- Coefficient6 x*y
+    0.174616438,             !- Coefficient7 x**3
+    -0.024134771,            !- Coefficient8 y**3
+    -0.401385862,            !- Coefficient9 x**2*y
+    0.045271498,             !- Coefficient10 x*y**2
+    -23.3333,                !- Minimum Value of x
+    7.222,                   !- Maximum Value of x
+    21.111,                  !- Minimum Value of y
+    60,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+! Power Curve for Copeland 3db3-100e,   !nominal kW = 11.24
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    3991.463936,             !- Coefficient1 Constant
+    -109.8544464,            !- Coefficient2 x
+    -3.76937064,             !- Coefficient3 x**2
+    170.2377576,             !- Coefficient4 y
+    0.26691768,              !- Coefficient5 y**2
+    4.63436964,              !- Coefficient6 x*y
+    -0.0215784,              !- Coefficient7 x**3
+    -0.00659016,             !- Coefficient8 y**3
+    0.030687984,             !- Coefficient9 x**2*y
+    0.00425736,              !- Coefficient10 x*y**2
+    -23.3333,                !- Minimum Value of x
+    7.222,                   !- Maximum Value of x
+    21.111,                  !- Minimum Value of y
+    60,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+<% elsif (comp_curves_source == "Copeland_R507_Low_4dl3150e") %>
+! Capacity Curve for Copeland 4dl3-150e,   !nominal capacity Btu/h = 65100
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+   154790.6583,             !- Coefficient1 Constant
+    4885.015235,             !- Coefficient2 x
+    68.63124682,             !- Coefficient3 x**2
+    -3543.754959,            !- Coefficient4 y
+    50.4632279,              !- Coefficient5 y**2
+    -61.28805651,            !- Coefficient6 x*y
+    0.463293601,             !- Coefficient7 x**3
+    -0.330981383,            !- Coefficient8 y**3
+    -0.367080985,            !- Coefficient9 x**2*y
+    0.309299402,             !- Coefficient10 x*y**2
+    -40,                     !- Minimum Value of x
+    -17.77778,               !- Maximum Value of x
+    21.111,                  !- Minimum Value of y
+    54.44444,                !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+! Power Curve for Copeland 4dl3-150e,   !nominal kW =12.2
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    27615.48746,             !- Coefficient1 Constant
+    698.6848608,             !- Coefficient2 x
+    12.12545376,             !- Coefficient3 x**2
+    -698.2125264,            !- Coefficient4 y
+    18.89061912,             !- Coefficient5 y**2
+    -13.27786344,            !- Coefficient6 x*y
+    0.125078904,             !- Coefficient7 x**3
+    -0.11978928,             !- Coefficient8 y**3
+    -0.08094816,             !- Coefficient9 x**2*y
+    0.192636792,             !- Coefficient10 x*y**2
+    -40,                     !- Minimum Value of x
+    -17.77778,               !- Maximum Value of x
+    21.111,                  !- Minimum Value of y
+    54.44444,                !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+<% elsif (comp_curves_source == "Copeland_R507_Low_3DS3100E") %>
+! Capacity Curve for Copeland 3DS3-100E,   !nominal capacity Btu/h = 84800
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    73109.0872,              !- Coefficient1 Constant
+    2629.81825,              !- Coefficient2 x
+    28.55732441,             !- Coefficient3 x**2
+    -360.7857342,            !- Coefficient4 y
+    -9.631777176,            !- Coefficient5 y**2
+    -27.15436089,            !- Coefficient6 x*y
+    0.068091337,             !- Coefficient7 x**3
+    0.070689478,             !- Coefficient8 y**3
+    -0.290250952,            !- Coefficient9 x**2*y
+    0.004495641,             !- Coefficient10 x*y**2
+    -40,                     !- Minimum Value of x
+    -17.77778,               !- Maximum Value of x
+    21.111,                  !- Minimum Value of y
+    54.44444,                !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+! Power Curve for Copeland 3DS3-100E,   !nominal kW =11.02
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    8711.722614,             !- Coefficient1 Constant
+    83.391576,               !- Coefficient2 x
+    -1.979751458,            !- Coefficient3 x**2
+    117.3602462,             !- Coefficient4 y
+    0.899625452,             !- Coefficient5 y**2
+    -1.093150667,            !- Coefficient6 x*y
+    -0.030272151,            !- Coefficient7 x**3
+    -0.006041542,            !- Coefficient8 y**3
+    -0.036720013,            !- Coefficient9 x**2*y
+    0.042644761,             !- Coefficient10 x*y**2
+    -40,                     !- Minimum Value of x
+    -17.77778,               !- Maximum Value of x
+    21.111,                  !- Minimum Value of y
+    54.44444,                !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+<% elsif (comp_curves_source == "Copeland_R507_Low_3db30750") %>
+! Capacity Curve for Copeland 3db3-0750,   !nominal capacity Btu/h = 84800
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,  !- Name
+    48365.1283,              !- Coefficient1 Constant
+    1135.31104,              !- Coefficient2 x
+    2.134655572,             !- Coefficient3 x**2
+    -490.0406614,            !- Coefficient4 y
+    2.769427165,             !- Coefficient5 y**2
+    -8.764785148,            !- Coefficient6 x*y
+    -0.080229328,            !- Coefficient7 x**3
+    -0.019877117,            !- Coefficient8 y**3
+    -0.030641826,            !- Coefficient9 x**2*y
+    0.013525941,             !- Coefficient10 x*y**2
+    -40,                     !- Minimum Value of x
+    -17.77778,               !- Maximum Value of x
+    21.111,                  !- Minimum Value of y
+    54.44444,                !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+! Power Curve for Copeland 3db3-0750,   !nominal kW =11.02
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,!- Name
+    3910.526197,             !- Coefficient1 Constant
+    62.0143491,              !- Coefficient2 x
+    2.686452395,             !- Coefficient3 x**2
+    241.4897934,             !- Coefficient4 y
+    -1.550971203,            !- Coefficient5 y**2
+    4.498156795,             !- Coefficient6 x*y
+    0.036524705,             !- Coefficient7 x**3
+    0.005441706,             !- Coefficient8 y**3
+    0.006016443,             !- Coefficient9 x**2*y
+    -0.011523546,            !- Coefficient10 x*y**2
+    -40,                     !- Minimum Value of x
+    -17.77778,               !- Maximum Value of x
+    21.111,                  !- Minimum Value of y
+    54.44444,                !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+
+<% elsif (comp_curves_source == "Bitzer_NH3_Low_OSNA8591-K") %>
+
+  ! Capacity Curve for Bitzer OSNA8591-K,   !nominal cooling capacity = 113.4 KW
+  ! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,!- Name
+    5.9117581775E+5,         !- Coefficient1 Constant
+    1.9944781803E+4,         !- Coefficient2 x
+    2.4413189926E+2,         !- Coefficient3 x**2
+    9.4150641764E+1,         !- Coefficient4 y
+    -2.5415128124E+1,        !- Coefficient5 y**2
+    -1.3616277333E+1,        !- Coefficient6 x*y
+    1.0770800973E+0,         !- Coefficient7 x**3
+    -1.1883872511E-1,        !- Coefficient8 y**3
+    -4.2755662184E-1,        !- Coefficient9 x**2*y
+    -3.9157972196E-1,        !- Coefficient10 x*y**2
+    -45.0,                   !- Minimum Value of x
+    -10.0,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    50.0;                    !- Maximum Value of y
+
+! Power Curve for Bitzer OSNA8591-K,   !nominal power = 97.7 kW
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,  !- Name
+    7.0117508049E+4,         !- Coefficient1 Constant
+    7.5839798469E+2,         !- Coefficient2 x
+    -1.4246063754E+1,        !- Coefficient3 x**2
+    -1.0455627807E+2,        !- Coefficient4 y
+    3.7083350676E+1,         !- Coefficient5 y**2
+    -2.5619083665E+0,        !- Coefficient6 x*y
+    -2.7545270129E-1,        !- Coefficient7 x**3
+    -1.3067782147E-1,        !- Coefficient8 y**3
+    2.2062739879E-1,         !- Coefficient9 x**2*y
+    2.1001616178E-1,         !- Coefficient10 x*y**2
+    -45.0,                   !- Minimum Value of x
+    -10.0,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    50.0;                    !- Maximum Value of y
+
+<% elsif (comp_curves_source == "Bitzer_NH3_Med_OSNA8591-K") %>
+
+  ! Capacity Curve for Bitzer OSKA8591-K,   !nominal cooling capacity = 476 KW
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,!- Name
+    4.7581237254E+5,         !- Coefficient1 Constant
+    1.5836010395E+4,         !- Coefficient2 x
+    2.4809754731E+2,         !- Coefficient3 x**2
+    5.8154019974E+3,         !- Coefficient4 y
+    -1.4227382029E+2,        !- Coefficient5 y**2
+    1.9607540381E+2,         !- Coefficient6 x*y
+    1.8625932421E+0,         !- Coefficient7 x**3
+    2.9311106887E-1,         !- Coefficient8 y**3
+    7.0297720032E-1,         !- Coefficient9 x**2*y
+    -2.7310763923E+0,        !- Coefficient10 x*y**2
+    -20.0,                   !- Minimum Value of x
+    12.8,                    !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    53.0;                    !- Maximum Value of y
+
+! Power Curve for Bitzer OSKA8591-K,   !nominal power = 476 kW
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,  !- Name
+    5.3918315894E+4,         !- Coefficient1 Constant
+    1.1536082079E+2,         !- Coefficient2 x
+    1.5324329008E+1,         !- Coefficient3 x**2
+    -1.8819004997E+2,        !- Coefficient4 y
+    5.2031668763E+1,         !- Coefficient5 y**2
+    1.0397602406E+1,         !- Coefficient6 x*y
+    2.0331045919E+0,         !- Coefficient7 x**3
+    -2.5310651862E-1,        !- Coefficient8 y**3
+    -2.6797031295E-1,        !- Coefficient9 x**2*y
+    6.0439117696E-2,         !- Coefficient10 x*y**2
+    -20.0,                   !- Minimum Value of x
+    12.8,                    !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    53.0;                    !- Maximum Value of y
+
+
+    
+
+<% end %>

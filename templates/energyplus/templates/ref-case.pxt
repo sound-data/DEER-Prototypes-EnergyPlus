@@ -11,12 +11,12 @@ parameter "fan_power", :default=>41.0['W/m']
 parameter "light_power", :default=>60.0['W/m']
 parameter "light_power_installed", :default=>""
 parameter "ash_power", :default=>0['W/m']
-parameter "ash_control", :default=>"LINEAR" # (NONE | LINEAR | HEAT-BALANCE-METHOD)
+parameter "ash_control", :default=>"LINEAR" # (NONE | LINEAR | HEAT-BALANCE-METHOD | CONSTANT)
 parameter "ash_frac_to_case", :default=>0.2
 parameter "humidity_at_zero_ash", :default=>35.0
 parameter "height", :default=>0.0['ft']
 parameter "defrost_power", :default=>0['W/m']
-parameter "defrost_type", :default=>"OFF-CYCLE" # (NONE | OFF-CYCLE | ELECTRIC)
+parameter "defrost_type", :default=>"OFF-CYCLE" # (NONE | OFF-CYCLE | ELECTRIC | HOTGAS)
 parameter "case_type", :default=>"OPEN" # (GLASS-DOOR | OPEN | WALK-IN | SELF-CONTAINED)
 parameter "case_credit", :default=>true # (true | false)
 parameter "under_case_hvac_ret_frac", :default=>0
@@ -43,6 +43,8 @@ elsif (ash_control == "LINEAR")
   ash_control_input = "Linear"
 elsif (ash_control == "HEAT-BALANCE-METHOD")
   ash_control_input = "HeatBalanceMethod"
+elsif (ash_control == "CONSTANT")
+  ash_control_input = "Constant"
 else
   puts "[WARNING] Anti-Sweat Heater control type input doesn't match allowable options!"
 end
@@ -53,6 +55,8 @@ elsif (defrost_type == "OFF-CYCLE")
   defrost_type_input = "OffCycle"
 elsif (defrost_type == "ELECTRIC")
   defrost_type_input = "Electric"
+elsif (defrost_type == "HOTGAS")
+  defrost_type_input = "HotGas"
 else
   puts "[WARNING] Defrost type input doesn't match allowable options!"
 end

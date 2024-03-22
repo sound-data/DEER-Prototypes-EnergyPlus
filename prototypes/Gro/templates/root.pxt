@@ -73,7 +73,7 @@ group "space_loads" do # hardcode building-level defaults
     parameter "gas_area", :default => 0['W/ft2']
     parameter "dhw_flow_area", :default => 0.00005['GPM/ft2']
     parameter "dhw_water_heater_fuel", :default => "Gas"
-    parameter "equip_2_area", :default => 5['W/ft2']
+    parameter "equip_2_area", :default => 0['W/ft2']
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "industrial_high", :prefix => "industrial_high_" do
@@ -109,7 +109,7 @@ group "space_loads" do # hardcode building-level defaults
     parameter "gas_area", :default => 0['W/ft2']
     parameter "dhw_flow_area", :default => 0['GPM/ft2']
     parameter "dhw_water_heater_fuel", :default => "Electric"
-    parameter "equip_2_area", :default => 10['W/ft2']
+    parameter "equip_2_area", :default => 0['W/ft2']
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "retail_schs", :prefix => "retail_" do
@@ -205,6 +205,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "NONE"
   parameter "atu_reheat_control", :default => nil
 end
@@ -220,6 +224,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => 3.85
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "COMBUSTION"
   parameter "dx_type", :default => "T24"
@@ -435,13 +441,15 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Grocery Sales EL1 SSE Perim Spc (G.SSE1)", "grocery", 40011.19['ft2'], "Grocery", "F1", nil, nil, "Retail"],
-  ["IndLoadDock EL1 North Perim Spc (G.N3)", "industrial_high", 2851.18['ft2'], "Industrial", "F1", nil, nil, "Retail"],
-  ["Office EL1 SW Perim Spc (G.SW2)", "office_large", 3500.23['ft2'], "Office", "F1", nil, nil, "Retail"],
-  ["RefFoodPrep EL1 Core Spc (G.C4)", "storage_refrig", 1267.14['ft2'], "RefFoodPrep", "F1", nil, nil, "Retail"],
-  ["RefWalkInCool EL1 Core Spc (G.C6)", "storage_refrig", 1559.8['ft2'], "WalkInCool", "F1", nil, nil, "Retail"],
-  ["RefWalkInFreeze EL1 Core Spc (G.C5)", "storage_refrig", 812.31['ft2'], "WalkInFreeze", "F1", nil, nil, "Retail"],
+  ["Grocery Sales EL1 SSE Perim Spc (G.SSE1)", "grocery", 40011.19['ft2'], "Grocery", "F1", "F1", "F1", "Retail"],
+  ["IndLoadDock EL1 North Perim Spc (G.N3)", "industrial_high", 2851.18['ft2'], "Industrial", "F1", "F1", "F1", "Retail"],
+  ["Office EL1 SW Perim Spc (G.SW2)", "office_large", 3500.23['ft2'], "Office", "F1", "F1", "F1", "Retail"],
+  ["RefFoodPrep EL1 Core Spc (G.C4)", "storage_refrig", 1267.14['ft2'], "RefFoodPrep", "F1", "F1", "F1", "Retail"],
+  ["RefWalkInCool EL1 Core Spc (G.C6)", "storage_refrig", 1559.8['ft2'], "WalkInCool", "F1", "F1", "F1", "Retail"],
+  ["RefWalkInFreeze EL1 Core Spc (G.C5)", "storage_refrig", 812.31['ft2'], "WalkInFreeze", "F1", "F1", "F1", "Retail"],
 ]
 
 
@@ -688,6 +696,363 @@ end
 if (landscaping_control)
   insert "irrigation.pxt", **irrigation, **local(:graywater_supply_tank)
 end
+
+### Start Refrigeration systems ###
+# Maybe use a for loop? Systems may have multiple different values for their inputs...
+
+# Compressor rack system
+insert "ref-case.pxt",
+  :case_name => "SelfContainedDisplayCase",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 1000['W/m']
+
+insert "ref-comp.pxt",
+  :rack_name => "SelfContainedDisplay",
+  :case_names => ["SelfContainedDisplayCase"],
+  :rack_type => "SELF-CONTAINED",
+  :heat_rej_location => "Zone",
+  :rack_cop => 4,
+  :fan_power => 175
+
+# System MT_System
+MT_System_case_walkin_names = ["Meat1DisplayCase","FishDisplayCase",  "MT_MelonBakery", "MT_Deli","MT_DeliServ", "MT_Meat2", "MT_Meat3", "MT_Dairy1", "MT_Dairy2", "MT_Produce", "WalkInCooler"]
+MT_System_ref_sys_comp_names = ["MT_Compressor1","MT_Compressor2","MT_Compressor3","MT_Compressor4","MT_Compressor5","MT_Compressor6","MT_Compressor7","MT_Compressor8"]
+insert "ref-sys.pxt",
+  :ref_system_name => "MT_System",
+  :case_walkin_names => MT_System_case_walkin_names,
+  :ref_sys_comp_names => MT_System_ref_sys_comp_names,
+  :cond_curves_source => "MediumTemp"
+
+insert "ref-case.pxt",
+  :case_name => "Meat1DisplayCase",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 399.03['W/m'],
+  :length => 16['ft'],
+  :case_temp => 27['F'],
+  :fan_power => 88.58['W/m'],
+  :light_power => 0 ['W/m'] ,
+  :ash_power => 32.8 ['W/m'],
+  :ash_control => "CONSTANT",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+insert "ref-case.pxt",
+  :case_name => "FishDisplayCase",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 673['W/m'],
+  :length => 20['ft'],
+  :case_temp => 27['F'],
+  :fan_power => 49.21['W/m'],
+  :light_power => 0 ['W/m'] ,
+  :ash_power => 13.12 ['W/m'],
+  :ash_control => "CONSTANT",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  624.99 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+
+insert "ref-case.pxt",
+  :case_name => "MT_MelonBakery",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 1418['W/m'],
+  :length => 20['ft'],
+  :case_temp => 26['F'],
+  :fan_power => 114.83['W/m'],
+  :light_power => 36.09 ['W/m'] ,
+  :ash_power => 36.09 ['W/m'],
+  :ash_control => "CONSTANT",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+insert "ref-case.pxt",
+  :case_name => "MT_Deli",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 1610['W/m'],
+  :length => 25['ft'],
+  :case_temp => 31['F'],
+  :fan_power => 42.62['W/m'],
+  :light_power => 59 ['W/m'] ,
+  :ash_power => 0 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+insert "ref-case.pxt",
+  :case_name => "MT_DeliServ",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 393['W/m'],
+  :length => 16['ft'],
+  :case_temp => 28['F'],
+  :fan_power => 6.56['W/m'],
+  :light_power => 111.55 ['W/m'] ,
+  :ash_power => 111.55 ['W/m'],
+  :ash_control => "CONSTANT",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+insert "ref-case.pxt",
+  :case_name => "MT_Meat2",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 393['W/m'],
+  :length => 36['ft'],
+  :case_temp => 29['F'],
+  :fan_power => 42.65['W/m'],
+  :light_power => 39.37 ['W/m'] ,
+  :ash_power => 65.62 ['W/m'],
+  :ash_control => "CONSTANT",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+insert "ref-case.pxt",
+  :case_name => "MT_Meat3",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 1610.54['W/m'],
+  :length => 35['ft'],
+  :case_temp => 31['F'],
+  :fan_power => 42.65['W/m'],
+  :light_power => 59.06 ['W/m'] ,
+  :ash_power => 0 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+insert "ref-case.pxt",
+  :case_name => "MT_Dairy1",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 1610.54['W/m'],
+  :length => 67.5['ft'],
+  :case_temp => 31['F'],
+  :fan_power => 42.65['W/m'],
+  :light_power => 59.06 ['W/m'] ,
+  :ash_power => 0 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+insert "ref-case.pxt",
+  :case_name => "MT_Dairy2",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 1610.54['W/m'],
+  :length => 67.5['ft'],
+  :case_temp => 31['F'],
+  :fan_power => 42.65['W/m'],
+  :light_power => 59.06 ['W/m'] ,
+  :ash_power => 0 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+insert "ref-case.pxt",
+  :case_name => "MT_Produce",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 740['W/m'],
+  :length => 112['ft'],
+  :case_temp => 40['F'],
+  :fan_power => 32.81['W/m'],
+  :light_power => 39.37 ['W/m'] ,
+  :ash_power => 0 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "OFF-CYCLE",
+  :case_type => "OPEN"
+
+insert "ref-walkin.pxt",
+  :walkin_name => "WalkInCooler",
+  :zone_name => "RefWalkInCool EL1 Core Spc (G.C6)",
+  :capacity => 21980['W'],
+  :op_temp => 35 ['F'],
+  :cool_source_temp => 25 ['F'],
+  :fan_power => 1003 ['W'],
+  :floor_area => 1559.8['ft2'],
+  :total_insulated_area => 3119.6['ft2']
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor1",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor2",
+  :comp_curves_source=>"Copeland_R507_Med_2da3075e"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor3",
+  :comp_curves_source=>"Copeland_R507_Med_3db3100e"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor4",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor5",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor6",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor7",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "MT_Compressor8",
+  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+
+# System LT_System
+LT_System_case_walkin_names = ["LT_ReachinCase1", "LT_ReachinCase2","LT_ICReachinCase", "LT_DualTemp1Case","LT_DualTemp2Case","WalkInFreezer"]
+LT_System_ref_sys_comp_names = ["LT_Compressor1","LT_Compressor2","LT_Compressor3","LT_Compressor4","LT_Compressor5","LT_Compressor6","LT_Compressor7","LT_Compressor8","LT_Compressor9"]
+insert "ref-sys.pxt",
+  :ref_system_name => "LT_System",
+  :case_walkin_names => LT_System_case_walkin_names,
+  :ref_sys_comp_names => LT_System_ref_sys_comp_names,
+  :cond_curves_source => "LowTemp"
+
+insert "ref-case.pxt",
+  :case_name => "LT_ReachinCase1",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 522['W/m'],
+  :latent_heat_ratio =>0.1,
+  :length => 35['ft'],
+  :case_temp => -5['F'],
+  :fan_power => 68.75['W/m'],
+  :light_power => 97.5 ['W/m'] ,
+  :ash_power => 267.5 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  183 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
+
+insert "ref-case.pxt",
+  :case_name => "LT_ReachinCase2",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 522['W/m'],
+  :latent_heat_ratio =>0.1,
+  :length => 35['ft'],
+  :case_temp => -5['F'],
+  :fan_power => 68.75['W/m'],
+  :light_power => 97.5 ['W/m'] ,
+  :ash_power => 267.5 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  183 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
+
+insert "ref-case.pxt",
+  :case_name => "LT_ICReachinCase",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 564['W/m'],
+  :latent_heat_ratio =>0.1,
+  :length => 39['ft'],
+  :case_temp => -12['F'],
+  :fan_power => 68.75['W/m'],
+  :light_power => 97.5 ['W/m'] ,
+  :ash_power => 267.5 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  183 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
+
+insert "ref-case.pxt",
+  :case_name => "LT_DualTemp1Case",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 529['W/m'],
+  :length => 80['ft'],
+  :case_temp => -12['F'],
+  :fan_power => 29.53['W/m'],
+  :light_power => 0 ['W/m'] ,
+  :ash_power => 78.74 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
+
+insert "ref-case.pxt",
+  :case_name => "LT_DualTemp2Case",
+  :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :capacity => 529['W/m'],
+  :length => 80['ft'],
+  :case_temp => -12['F'],
+  :fan_power => 29.53['W/m'],
+  :light_power => 0 ['W/m'] ,
+  :ash_power => 78.74 ['W/m'],
+  :ash_control => "LINEAR",
+  :ash_frac_to_case => 0.6,
+  :defrost_power =>  480.76 ['W/m'],
+  :defrost_type => "HOTGAS",
+  :case_type => "GLASS-DOOR"
+
+insert "ref-walkin.pxt",
+  :walkin_name => "WalkInFreezer",
+  :zone_name => "RefWalkInFreeze EL1 Core Spc (G.C5)",
+  :capacity => 17584['W'],
+  :op_temp => -5 ['F'],
+  :cool_source_temp => -13 ['F'],
+  :fan_power => 963.3 ['W'],
+  :floor_area => 812.31['ft2'],
+  :total_insulated_area => 1624.62['ft2']
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor1",
+  :comp_curves_source=>"Copeland_R507_Low_3db30750"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor2",
+  :comp_curves_source=>"Copeland_R507_Low_4dl3150e"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor3",
+  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor4",
+  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor5",
+  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor6",
+  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor7",
+  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor8",
+  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+
+insert "ref-sys-comp.pxt",
+  :comp_name => "LT_Compressor9",
+  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+
+insert "fluid-properties.pxt",
+  :working_fluid =>"R507"
+
+### End Refrigeration system ###
 
 insert "output.pxt"
 insert "custom.pxt"

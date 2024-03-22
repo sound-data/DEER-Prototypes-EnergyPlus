@@ -200,6 +200,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "NONE"
   parameter "atu_reheat_control", :default => nil
 end
@@ -215,6 +219,8 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => 3.85
+  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "COMBUSTION"
   parameter "dx_type", :default => "T24"
@@ -430,27 +436,29 @@ cw_branches = []
 dhw_branches_gas = []
 dhw_branches_elec = []
 wshp_branches = []
+# TRC - change to use hvac_config consistently throughout prototypes, so new system types can be applied uniformly. Propose that MAIN condititioned spaces have system names under all hvac_configs,
+  # otherwise they may not be assigned a system if hvac_config is changed. Systems defined in irregular_zones should be nil.
 all_zones = [
-  ["Hall EL1 Core Spc (G.C5)", "corridor", 1570.81['ft2'], "MAIN", "F1", "Hall EL1 Core Spc (G.C5)", nil, "Office"],
-  ["OfficeSmall EL1 North Perim Spc (G.N3)", "office_large", 1074.11['ft2'], "MAIN", "F1", "OfficeSmall EL1 North Perim Spc (G.N3)", nil, "Office"],
-  ["OfficeSmall EL1 East Perim Spc (G.E2)", "office_large", 641.31['ft2'], "MAIN", "F1", "OfficeSmall EL1 East Perim Spc (G.E2)", nil, "Office"],
-  ["OfficeSmall EL1 South Perim Spc (G.S1)", "office_large", 1074.11['ft2'], "MAIN", "F1", "OfficeSmall EL1 South Perim Spc (G.S1)", nil, "Office"],
-  ["OfficeSmall EL1 West Perim Spc (G.W4)", "office_large", 641.31['ft2'], "MAIN", "F1", "OfficeSmall EL1 West Perim Spc (G.W4)", nil, "Office"],
-  ["Hall EL1 Core Spc (T.C15)", "corridor", 1570.81['ft2'], "MAIN", "F2", "Hall EL1 Core Spc (T.C15)", nil, "Office"],
-  ["OfficeSmall EL1 East Perim Spc (T.E12)", "office_large", 641.31['ft2'], "MAIN", "F2", "OfficeSmall EL1 East Perim Spc (T.E12)", nil, "Office"],
-  ["OfficeSmall EL1 North Perim Spc (T.N13)", "office_large", 1074.11['ft2'], "MAIN", "F2", "OfficeSmall EL1 North Perim Spc (T.N13)", nil, "Office"],
-  ["OfficeSmall EL1 South Perim Spc (T.S11)", "office_large", 1074.11['ft2'], "MAIN", "F2", "OfficeSmall EL1 South Perim Spc (T.S11)", nil, "Office"],
-  ["OfficeSmall EL1 West Perim Spc (T.W14)", "office_large", 641.31['ft2'], "MAIN", "F2", "OfficeSmall EL1 West Perim Spc (T.W14)", nil, "Office"],
-  ["EL1 Core Plnm (T.C20)", "plenum", 0.0['ft2'], nil, "F2", nil, nil, "Plenum"],
-  ["EL1 East Perim Plnm (T.E17)", "plenum", 0.0['ft2'], nil, "F2", nil, nil, "Plenum"],
-  ["EL1 North Perim Plnm (T.N18)", "plenum", 0.0['ft2'], nil, "F2", nil, nil, "Plenum"],
-  ["EL1 South Perim Plnm (T.S16)", "plenum", 0.0['ft2'], nil, "F2", nil, nil, "Plenum"],
-  ["EL1 West Perim Plnm (T.W19)", "plenum", 0.0['ft2'], nil, "F2", nil, nil, "Plenum"],
-  ["EL1 Core Plnm (G.C10)", "plenum", 0.0['ft2'], nil, "F1", nil, nil, "Plenum"],
-  ["EL1 East Perim Plnm (G.E7)", "plenum", 0.0['ft2'], nil, "F1", nil, nil, "Plenum"],
-  ["EL1 North Perim Plnm (G.N8)", "plenum", 0.0['ft2'], nil, "F1", nil, nil, "Plenum"],
-  ["EL1 South Perim Plnm (G.S6)", "plenum", 0.0['ft2'], nil, "F1", nil, nil, "Plenum"],
-  ["EL1 West Perim Plnm (G.W9)", "plenum", 0.0['ft2'], nil, "F1", nil, nil, "Plenum"],
+  ["Hall EL1 Core Spc (G.C5)", "corridor", 1570.81['ft2'], "MAIN", "F1", "Hall EL1 Core Spc (G.C5)", "Hall EL1 Core Spc (G.C5)", "Office"],
+  ["OfficeSmall EL1 North Perim Spc (G.N3)", "office_large", 1074.11['ft2'], "MAIN", "F1", "OfficeSmall EL1 North Perim Spc (G.N3)", "OfficeSmall EL1 North Perim Spc (G.N3)", "Office"],
+  ["OfficeSmall EL1 East Perim Spc (G.E2)", "office_large", 641.31['ft2'], "MAIN", "F1", "OfficeSmall EL1 East Perim Spc (G.E2)", "OfficeSmall EL1 East Perim Spc (G.E2)", "Office"],
+  ["OfficeSmall EL1 South Perim Spc (G.S1)", "office_large", 1074.11['ft2'], "MAIN", "F1", "OfficeSmall EL1 South Perim Spc (G.S1)", "OfficeSmall EL1 South Perim Spc (G.S1)", "Office"],
+  ["OfficeSmall EL1 West Perim Spc (G.W4)", "office_large", 641.31['ft2'], "MAIN", "F1", "OfficeSmall EL1 West Perim Spc (G.W4)", "OfficeSmall EL1 West Perim Spc (G.W4)", "Office"],
+  ["Hall EL1 Core Spc (T.C15)", "corridor", 1570.81['ft2'], "MAIN", "F2", "Hall EL1 Core Spc (T.C15)", "Hall EL1 Core Spc (T.C15)", "Office"],
+  ["OfficeSmall EL1 East Perim Spc (T.E12)", "office_large", 641.31['ft2'], "MAIN", "F2", "OfficeSmall EL1 East Perim Spc (T.E12)", "OfficeSmall EL1 East Perim Spc (T.E12)", "Office"],
+  ["OfficeSmall EL1 North Perim Spc (T.N13)", "office_large", 1074.11['ft2'], "MAIN", "F2", "OfficeSmall EL1 North Perim Spc (T.N13)", "OfficeSmall EL1 North Perim Spc (T.N13)", "Office"],
+  ["OfficeSmall EL1 South Perim Spc (T.S11)", "office_large", 1074.11['ft2'], "MAIN", "F2", "OfficeSmall EL1 South Perim Spc (T.S11)", "OfficeSmall EL1 South Perim Spc (T.S11)", "Office"],
+  ["OfficeSmall EL1 West Perim Spc (T.W14)", "office_large", 641.31['ft2'], "MAIN", "F2", "OfficeSmall EL1 West Perim Spc (T.W14)", "OfficeSmall EL1 West Perim Spc (T.W14)", "Office"],
+  ["EL1 Core Plnm (T.C20)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 East Perim Plnm (T.E17)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 North Perim Plnm (T.N18)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 South Perim Plnm (T.S16)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 West Perim Plnm (T.W19)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 Core Plnm (G.C10)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 East Perim Plnm (G.E7)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 North Perim Plnm (G.N8)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 South Perim Plnm (G.S6)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
+  ["EL1 West Perim Plnm (G.W9)", "plenum", 0.0['ft2'], nil, nil, nil, nil, "Plenum"],
 ]
 
 
