@@ -19,7 +19,7 @@ parameter "hi_outdoor_temp", :default=>50['F']
 # supply temp schedule?
 
 # Constant speed pump might not be correct yet
-parameter "pump_type", :default=>"CONSTANT"     #  (CONSTANT | VARIABLE)
+parameter "pump_type", :default=>"CONSTANT"     #  (CONSTANT | VARIABLE | VARIABLESPEEDCONDENSATE)
 parameter "pump_eff", :default=>0.6
 parameter "pump_head", :default=>70['ft H2O']
 parameter "pump_control", :default=>"CONTINUOUS"   # (CONTINUOUS | INTERMITTENT)
@@ -27,9 +27,9 @@ parameter "pump_power", :default=>Autosize
 parameter "pump_curve", :default=>"NOT USED"
 
 
+# Updated for steam boiler variant. Behzad Rizi 2024-01-24
 parameter "heating_source", :default=>"BOILER"  # (BOILER | STEAMBOILER | DISTRICT | GSHP | CHP )
 parameter "boiler_duplicate", :default=>false  # Heating Source BOILER and STEAMBOILER Only!!
-parameter "boiler_duplicate_1", :default=>false  # Heating Source STEAMBOILER Only!!
 parameter "fluid_type", :default=>"WATER"  # (WATER | STEAM )
 parameter "max_loop_temp", :default=>100  # (100 | 120 )
 parameter "min_loop_temp", :default=>10  # (10 | 10 )
@@ -165,13 +165,13 @@ PlantEquipmentList,
   <%= name %> Heating Source,  !- Equipment 1 Name
   ChillerHeater:Absorption:DirectFired,         !- Equipment 2 Object Type
   <%= abschiller_name %> Chiller;  !- Equipment 2 Name
-<% elsif (boiler_duplicate_1) %>
+<% elsif (boiler_duplicate and heating_source == "STEAMBOILER") %>
   <%= name %> Heating Source 1,  !- Equipment 1 Name
-  Boiler:HotWater,                      !- Equipment 2 Object Type
+  Boiler:Steam,                      !- Equipment 2 Object Type
   <%= name %> Heating Source 2;  !- Equipment 2 Name
 <% elsif (boiler_duplicate) %>
   <%= name %> Heating Source 1,  !- Equipment 1 Name
-  Boiler:Steam,                      !- Equipment 2 Object Type
+  Boiler:HotWater,                      !- Equipment 2 Object Type
   <%= name %> Heating Source 2;  !- Equipment 2 Name
 <% else %>
   <%= name %> Heating Source;  !- Equipment 1 Name
@@ -338,6 +338,10 @@ Pump:VariableSpeed,
   Intermittent;            !- Pump Control Type
 <% end %>
 
+<%
+# Added for steam boiler variant. Behzad Rizi 2024-01-24
+# PLR performance inputs from EnergyPlus defaults.
+%>
 <% elsif (pump_type == "VARIABLESPEEDCONDENSATE") %>
 Pump:VariableSpeed:Condensate,
   <%= name %> Pump,  !- Name
@@ -506,6 +510,7 @@ Curve:Bicubic,
 <% end %>
 
 <% elsif (heating_source == "STEAMBOILER") %>
+<% # Added for steam boiler variant. Behzad Rizi 2024-01-18 %>
   <% if (boiler_duplicate) %>
 Boiler:Steam,
   <%= name %> Heating Source 1,  !- Name

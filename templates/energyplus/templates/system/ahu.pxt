@@ -291,6 +291,7 @@ if (heat_coil_type == "WATER")
   controllers << "#{ahu_name} Heating Coil Controller"
 end
 if (heat_coil_type == "STEAM")
+# Added for steam boiler variant. Behzad Rizi 2024-01-24
   controllers << "#{ahu_name} Heating Coil Controller"
 end
 
@@ -638,6 +639,7 @@ Branch,
 !   <% elsif (heat_coil_type == "WATER") %>
 !   Coil:Heating:Water,                             !- Component Object Type
 !   <% elsif (heat_coil_type == "STEAM") %>
+!   <% # Added for steam boiler variant. Behzad Rizi 2024-01-24 %>
 !   Coil:Heating:Steam,                             !- Component Object Type
 !   <% end %>
 !   <%= ahu_name %> Heating Coil,                !- Component Name

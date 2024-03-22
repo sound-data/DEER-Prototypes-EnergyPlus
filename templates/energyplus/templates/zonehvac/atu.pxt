@@ -223,6 +223,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
   Coil:Heating:Water,      !- Reheat Coil Object Type
   <%= atu_name %> ATU Heating Coil,  !- Reheat Coil Name
 <% elsif (atu_reheat_coil_type == "STEAM") %>
+<% # Added for steam boiler variant. Behzad Rizi 2024-01-24 %>
   Coil:Heating:Steam,      !- Reheat Coil Object Type
   <%= atu_name %> ATU Heating Coil,  !- Reheat Coil Name
 <% end %>
@@ -231,6 +232,7 @@ AirTerminal:SingleDuct:VAV:Reheat,
   Autosize,                !- Maximum Hot Water or Steam Flow Rate {m3/s}
   0.0,                     !- Minimum Hot Water or Steam Flow Rate {m3/s}
 <% elsif (atu_reheat_coil_type == "STEAM") %>
+<% # Added for steam boiler variant. Behzad Rizi 2024-01-24 %>
   Autosize,                !- Maximum Hot Water or Steam Flow Rate {m3/s}
   0.0,                     !- Minimum Hot Water or Steam Flow Rate {m3/s}
 <% else %>
@@ -493,6 +495,7 @@ Branch,
   <%= atu_name %> Heating Coil Demand Outlet Node;  !- Component 1 Outlet Node Name
 
 <% elsif (atu_reheat_coil_type == "STEAM") %>
+<% # Added for steam boiler variant. Behzad Rizi 2024-01-24 %>
 Coil:Heating:Steam,
   <%= atu_name %> ATU Heating Coil,  !- Name
   ,                        !- Availability Schedule Name

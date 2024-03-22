@@ -325,6 +325,7 @@ AirLoopHVAC:UnitarySystem,
   <%= unitary_name %> Heating Coil,  !- Heating Coil Name
   ,                        !- DX Heating Coil Sizing Ratio
 <% elsif (heat_coil_type == "STEAM") %>
+<% # Added for steam boiler variant. Behzad Rizi 2024-01-08 %>
   Coil:Heating:Steam,      !- Heating Coil Object Type
   <%= unitary_name %> Heating Coil,  !- Heating Coil Name
   ,                        !- DX Heating Coil Sizing Ratio
@@ -2690,6 +2691,7 @@ Branch,
 
 
 <% elsif (heat_coil_type == "STEAM") %>
+<% # Added for steam boiler variant. Behzad Rizi 2024-01-08 %>
 Coil:Heating:Steam,
   <%= unitary_name %> Heating Coil,  !- Name
   ,                        !- Availability Schedule Name
