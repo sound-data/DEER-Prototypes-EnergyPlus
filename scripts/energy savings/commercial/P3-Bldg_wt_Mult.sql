@@ -5,11 +5,11 @@ DROP TABLE IF EXISTS meas_impacts_tmp3;
 CREATE TABLE meas_impacts_tmp3 AS 
 SELECT
 "EnergyImpactID",
-meas_impacts_wtd."PA",
-meas_impacts_wtd."BldgType",
-meas_impacts_wtd."BldgVint",
-meas_impacts_wtd."BldgLoc",
-meas_impacts_wtd."BldgHVAC",
+meas_impacts_vint_wtd."PA",
+meas_impacts_vint_wtd."BldgType",
+meas_impacts_vint_wtd."BldgVint",
+meas_impacts_vint_wtd."BldgLoc",
+meas_impacts_vint_wtd."BldgHVAC",
 sum_bldg as "wt_bldg",
 "NormUnit",
 "NumUnit" * sum_bldg as "NumUnit",
@@ -36,15 +36,15 @@ sum_bldg as "wt_bldg",
 "AMsrUseEUkWh" * sum_bldg as "AMsrUseEUkWh",
 "AMsrUseEUtherm" * sum_bldg as "AMsrUseEUtherm"
 
-from meas_impacts_wtd
+from meas_impacts_vint_wtd
 LEFT JOIN wts_com_bldg on 
- wts_com_bldg.pa       = meas_impacts_wtd."PA" and 
- wts_com_bldg.bldgtype = meas_impacts_wtd."BldgType" and 
- wts_com_bldg.era      = meas_impacts_wtd."BldgVint" and
- wts_com_bldg.bldgloc  = meas_impacts_wtd."BldgLoc"
---WHERE meas_impacts_wtd."BldgLoc" = 'IOU'
-WHERE meas_impacts_wtd."BldgType" <> 'Com' 
-  and not ((meas_impacts_wtd."BldgVint" = 'New') AND (meas_impacts_wtd."BldgLoc" like 'CZ%'))
+ wts_com_bldg.pa       = meas_impacts_vint_wtd."PA" and 
+ wts_com_bldg.bldgtype = meas_impacts_vint_wtd."BldgType" and 
+ wts_com_bldg.era      = meas_impacts_vint_wtd."BldgVint" and
+ wts_com_bldg.bldgloc  = meas_impacts_vint_wtd."BldgLoc"
+--WHERE meas_impacts_vint_wtd."BldgLoc" = 'IOU'
+WHERE meas_impacts_vint_wtd."BldgType" <> 'Com' 
+  and not ((meas_impacts_vint_wtd."BldgVint" = 'New') AND (meas_impacts_vint_wtd."BldgLoc" like 'CZ%'))
 
 --this union part was causing error for chillers.
 UNION
@@ -52,10 +52,10 @@ UNION
 SELECT
 "EnergyImpactID",
 wts_com_bldg.pa AS "PA",
-meas_impacts_wtd."BldgType",
-meas_impacts_wtd."BldgVint",
-meas_impacts_wtd."BldgLoc",
-meas_impacts_wtd."BldgHVAC",
+meas_impacts_vint_wtd."BldgType",
+meas_impacts_vint_wtd."BldgVint",
+meas_impacts_vint_wtd."BldgLoc",
+meas_impacts_vint_wtd."BldgHVAC",
 sum_bldg as "wt_bldg",
 "NormUnit",
 "NumUnit" * sum_bldg as "NumUnit",
@@ -82,14 +82,14 @@ sum_bldg as "wt_bldg",
 "AMsrUseEUkWh" * sum_bldg as "AMsrUseEUkWh",
 "AMsrUseEUtherm" * sum_bldg as "AMsrUseEUtherm"
 
-from meas_impacts_wtd
+from meas_impacts_vint_wtd
 LEFT JOIN wts_com_bldg on 
- wts_com_bldg.bldgtype = meas_impacts_wtd."BldgType" and 
- wts_com_bldg.era      = meas_impacts_wtd."BldgVint" and
- wts_com_bldg.bldgloc  = meas_impacts_wtd."BldgLoc"
---WHERE meas_impacts_wtd."BldgLoc" = 'IOU'
-WHERE meas_impacts_wtd."BldgType" <> 'Com' 
-  and ((meas_impacts_wtd."BldgVint" = 'New') AND (meas_impacts_wtd."BldgLoc" like 'CZ%'))
+ wts_com_bldg.bldgtype = meas_impacts_vint_wtd."BldgType" and 
+ wts_com_bldg.era      = meas_impacts_vint_wtd."BldgVint" and
+ wts_com_bldg.bldgloc  = meas_impacts_vint_wtd."BldgLoc"
+--WHERE meas_impacts_vint_wtd."BldgLoc" = 'IOU'
+WHERE meas_impacts_vint_wtd."BldgType" <> 'Com' 
+  and ((meas_impacts_vint_wtd."BldgVint" = 'New') AND (meas_impacts_vint_wtd."BldgLoc" like 'CZ%'))
 
 ORDER BY 
 "EnergyImpactID",

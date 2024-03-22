@@ -1,8 +1,8 @@
 -- Create the location weighted version of the annual results by summing the results of the previous table,
 --  Add the results to the measure impacts table.
 SET search_path TO "MC_results_database";
-DELETE FROM meas_impacts_wtd WHERE "BldgType" = 'Com';
-INSERT INTO meas_impacts_wtd
+DELETE FROM meas_impacts_vint_wtd WHERE "BldgType" = 'Com';
+INSERT INTO meas_impacts_vint_wtd
 SELECT
 "EnergyImpactID",
 'DEER2024'::VARCHAR as "Version",

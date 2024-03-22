@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS meas_impacts_2024_com;
 CREATE TABLE meas_impacts_2024_com AS 
 SELECT
 
-meas_impacts_wtd."EnergyImpactID"::VARCHAR,
+meas_impacts_vint_wtd."EnergyImpactID"::VARCHAR,
 "Version"::VARCHAR,
 "VersionSource"::VARCHAR, --Note Version must reflect prototype version used (COP, sizing, etc.)
 "LastMod"::TIMESTAMP,
@@ -57,8 +57,8 @@ NULL::FLOAT4 as "AStdEUtherm",
 
 
 FROM
-meas_impacts_wtd
-LEFT JOIN "ImpactProfiles" on "ImpactProfiles"."EnergyImpactID" = meas_impacts_wtd."EnergyImpactID";
+meas_impacts_vint_wtd
+LEFT JOIN "ImpactProfiles" on "ImpactProfiles"."EnergyImpactID" = meas_impacts_vint_wtd."EnergyImpactID";
 
 ALTER TABLE "meas_impacts_2024_com"
 ALTER COLUMN "EnergyImpactID" SET NOT NULL,
