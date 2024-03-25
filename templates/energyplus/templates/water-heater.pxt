@@ -53,7 +53,11 @@ heater1_height = case water_heater_type
                  else 0.7* tank_height
                  end
 
-cop= (uef-0.1513-0.0043*daily_volume)*(2.6-0.0133*loop_sept)/0.8407
+if water_heater_type.include?('hpwh')
+    sensor_height = 0.4* tank_height
+end
+
+cop= (uef-0.1513-0.0043*daily_volume)*(2.6-0.0133*(loop_sept*1.8+32))/0.8407
 
 
 %>
@@ -119,7 +123,7 @@ Fan:OnOff,
 Coil:WaterHeating:AirToWaterHeatPump:Wrapped,
     Packaged HPWH,           !- Name
     <%= water_heater_cap %>,                    !- Rated Heating Capacity {W}
-    2.92,                    !- Rated COP {W/W}
+    <%= cop %>,                    !- Rated COP {W/W}
     0.981,                   !- Rated Sensible Heat Ratio
     19.7,                    !- Rated Evaporator Inlet Air Dry-Bulb Temperature {C}
     13.5,                    !- Rated Evaporator Inlet Air Wet-Bulb Temperature {C}
@@ -142,8 +146,8 @@ WaterHeater:HeatPump:WrappedCondenser,
     always_avail,            !- Availability Schedule Name
     dhw_setpt,               !- Compressor Setpoint Temperature Schedule Name
     2,                       !- Dead Band Temperature Difference {deltaC}
-    0.402,                   !- Condenser Bottom Location {m}
-    0.938,                   !- Condenser Top Location {m}
+    <%= heater2_height %>,   !- Condenser Bottom Location {m}
+    <%= heater1_height %>,   !- Condenser Top Location {m}
     autocalculate,           !- Evaporator Air Flow Rate {m3/s}
     ZoneAirOnly,             !- Inlet Air Configuration
     Zone Exhaust Node,       !- Air Inlet Node Name
@@ -154,7 +158,7 @@ WaterHeater:HeatPump:WrappedCondenser,
     ,                        !- Inlet Air Humidity Schedule Name
     EL7 North Perim Zn (G.N4),  !- Inlet Air Zone Name
     WaterHeater:Stratified,  !- Tank Object Type
-    Water Heater Tank,       !- Tank Name
+    Water Heater_unit3,       !- Tank Name
     Water Heater use inlet node_unit3,  !- Tank Use Side Inlet Node Name
     Water Heater use outlet node_unit3,  !- Tank Use Side Outlet Node Name
     Coil:WaterHeating:AirToWaterHeatPump:Wrapped,  !- DX Coil Object Type
@@ -173,7 +177,7 @@ WaterHeater:HeatPump:WrappedCondenser,
     ,                        !- Outlet Air Splitter Node Name
     ,                        !- Inlet Air Mixer Schedule Name
     MutuallyExclusive,       !- Tank Element Control Logic
-    0.536,                   !- Control Sensor 1 Height In Stratified Tank {m}
+    <%= sensor_height %>,                   !- Control Sensor 1 Height In Stratified Tank {m}
     1;                       !- Control Sensor 1 Weight {dimensionless}
 
 Curve:Biquadratic,
@@ -224,17 +228,29 @@ WaterHeater:Stratified,
     1.916,                   !- Tank Perimeter {m}
     82.2222,                 !- Maximum Temperature Limit {C}
     MasterSlave,             !- Heater Priority Control
+    <% if water_heater_type.include?('hpwh')%>
+    Tank heater Setpoint,    !- Heater 1 Setpoint Temperature Schedule Name
+    11.11,                   !- Heater 1 Deadband Temperature Difference {deltaC}
+    <%= heat_element_cap %>, !- Heater 1 Capacity {W}
+    <% else %>
     dhw_setpt,               !- Heater 1 Setpoint Temperature Schedule Name
     2,                       !- Heater 1 Deadband Temperature Difference {deltaC}
     <%= water_heater_cap %>,              !- Heater 1 Capacity {W}
+    <% end %>
     <%=heater1_height %>,                   !- Heater 1 Height {m}
+    <% if water_heater_type.include?('hpwh')%>
+    Tank heater Setpoint,               !- Heater 2 Setpoint Temperature Schedule Name
+    16.67,                       !- Heater 2 Deadband Temperature Difference {deltaC}
+    0,                       !- Heater 2 Capacity {W}
+    <% else %>
     dhw_setpt,               !- Heater 2 Setpoint Temperature Schedule Name
     2,                       !- Heater 2 Deadband Temperature Difference {deltaC}
-    0,                       !- Heater 2 Capacity {W}
+    <%= heat_element_cap %>, !- Heater 2 Capacity {W}
+    <% end %>
     <%=heater2_height %>,                !- Heater 2 Height {m}
     <% if (water_heater_type =='gas_water_heater') %>
     NaturalGas,              !- Heater Fuel Type
-    <% elsif (water_heater_type =='elec_water_heater') %>
+    <% else %>
     Electricity,             !- Heater Fuel Type
     <% end %>
     <%= thermal_eff %>,      !- Heater Thermal Efficiency
@@ -258,6 +274,8 @@ WaterHeater:Stratified,
     1.7034789,               !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
     <% elsif (water_heater_type =='elec_water_heater') %>
     0.28391315,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <% elsif (water_heater_type =='hpwh') %>
+    0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
     <% end %>
     1,                       !- Skin Loss Fraction to Zone
     0,                       !- Off Cycle Flue Loss Coefficient to Ambient Temperature {W/K}
@@ -313,12 +331,13 @@ PlantEquipmentList,
     DHW Plant Equipment_unit3,  !- Name
     <%if water_heater_type.include?('hpwh') %>
     WaterHeater:HeatPump:WrappedCondenser,  !- Equipment 1 Object Type
+    HPWH_unit3;
     <% else %>
     WaterHeater:Stratified,  !- Equipment 1 Object Type
-    <% end %>
     Water Heater_unit3;      !- Equipment 1 Name
+    <% end %>
+    
 
-<% end %>
 
 <% elsif water_heater_type =='gas_tankless' %>
 WaterHeater:Mixed,
