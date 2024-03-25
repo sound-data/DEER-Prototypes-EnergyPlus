@@ -113,16 +113,7 @@ expected_att = {
                                                     'cAVVG',
                                                     'cWVVG',
                                                     'cDXOH'],
-    'BldgVint': ['Ex','New']+['2015',
-                                '2023',
-                                '2003',
-                                '1975',
-                                '2007',
-                                '2011',
-                                '2020',
-                                '2017',
-                                '1996',
-                                '1985'],
+    'BldgVint': ['Ex','New'],
     'Measure': tech_uniques
 }
 
