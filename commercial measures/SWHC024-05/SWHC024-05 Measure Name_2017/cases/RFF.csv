@@ -1,2 +1,4 @@
-skip,case_name
-,defaults
+skip,case_name,:main_fan_eff
+,NE-HVAC-FanBelt-VBelt-Std,0.55
+,NE-HVAC-FanBelt-CoggedVBelt-Msr,0.561
+,NE-HVAC-FanBelt-SynchVBelt-Msr,0.5775
