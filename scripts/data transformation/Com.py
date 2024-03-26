@@ -113,16 +113,7 @@ expected_att = {
                                                     'cAVVG',
                                                     'cWVVG',
                                                     'cDXOH'],
-    'BldgVint': ['Ex','New']+['2015',
-                                '2023',
-                                '2003',
-                                '1975',
-                                '2007',
-                                '2011',
-                                '2020',
-                                '2017',
-                                '1996',
-                                '1985'],
+    'BldgVint': ['Ex','New'],
     'Measure': tech_uniques
 }
 
@@ -288,8 +279,7 @@ df_annual_raw = pd.DataFrame()
 split_meta_cols_all = pd.DataFrame()
 folder_list = list_folders_in_path(filepath)
 for folder in folder_list:
-    bldgvint = folder[-4:]
-    print(f"looking at vintage {bldgvint} folder..")
+    print(f"looking at folder {folder}..")
     if locate_file(filepath+"/"+folder, 'results-summary.csv') != None:
         #locate_file(filepath+"/"+folder, 'results-summary.csv')
         print(f"'{filepath}/{folder}/results-summary.csv' will be processed.")
@@ -308,24 +298,12 @@ for folder in folder_list:
         print(f"no data found.")
 
 
-
-
 # %%
 #if looping over multiple folders/cohort cases, use a list
-#(supposed to be the actual cohort with &s for Res case)
 #Com version
 
 cohort_cases = list(split_meta_cols_all[1].unique())
-#%%
-#test 2
-#12/21/23, test case for 1 record. ok
-#note the update for annual_raw_parsing_com function
-# cohort_dict = parse_measure_name(cohort_cases[0])
-# sim_annual_filtered = df_annual_raw[df_annual_raw['File Name'].str.contains(cohort_cases[0])].copy()
-# sim_annual_i = annual_raw_parsing_com(sim_annual_filtered, cohort_dict, cohort_cases[0])
-
-#%%
-#test for-loop style. OK for annual. keep this for actual code
+#combine data
 sim_annual_proto = pd.DataFrame()
 for case in cohort_cases:
     print(f'processing all annual data that are grouped in {case}')
@@ -367,8 +345,7 @@ print(os.path.abspath(os.curdir))
 hourly_df = pd.DataFrame(index=range(0,8760))
 
 for folder in folder_list:
-    bldgvint = folder[-4:]
-    print(f"looking at vintage {bldgvint} folder..")
+    print(f"looking at folder {folder}..")
     if 'runs' in list_folders_in_path(f'{filepath}/{folder}'):
         #locate_file(filepath+"/"+folder, 'results-summary.csv')
         print(f"'{filepath}/{folder}/runs' will be processed.")

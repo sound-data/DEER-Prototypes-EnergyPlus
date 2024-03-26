@@ -31,8 +31,8 @@ os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
 #input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path_new and leave other blank.
-path_1975 = 'Analysis/SFm_SEER Rated AC_HP_1975'
-path_1985 = 'Analysis/SFm_SEER Rated AC_HP_1985'
+path_1975 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1975'
+path_1985 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1985'
 path_new = ''
 
 paths = [path_1975, path_1985]

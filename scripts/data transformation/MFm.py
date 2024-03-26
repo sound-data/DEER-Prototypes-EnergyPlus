@@ -30,7 +30,7 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-path = 'Analysis/MFm_SEER Rated AC_HP_Ex'
+path = 'residential measures/SWHC049-03 SEER Rated AC HP_MFm_Ex'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
