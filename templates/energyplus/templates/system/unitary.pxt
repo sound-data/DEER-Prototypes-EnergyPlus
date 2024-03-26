@@ -2871,7 +2871,7 @@ EnergyManagementSystem:ProgramCallingManager,
 
 EnergyManagementSystem:Program,
     <%= unitary_name_ems %>_UnitaryDXMinFlowSizing,  !- Name
-    Set Vent_Flow = <%= unitary_name_ems %>_OA_MFLOW,  !- Program Line 1
+    Set Vent_Flow = <%= unitary_name_ems %>_OA_MFLOW / 1.225,  !- Program Line 1
     Set Design_Flow = <%= unitary_name_ems %>_MFLOW,  !- Program Line 2
     Set Design_HFlow = <%= unitary_name_ems %>_HMFLOW,  !- Program Line 3
     Set Design_Min_Flow = Design_Flow * <%= cool_flow_min_frac %>,  !- A4

@@ -151,6 +151,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 1.0
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "NONE"
   parameter "atu_reheat_control", :default => nil
 end
@@ -166,8 +170,10 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => nil
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate" #TRC - to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "COMBUSTION"
+  parameter "heat_coil_eff", :default => 0.80
   parameter "dx_type", :default => "PNNL"
   parameter "dx_comp_speed", :default => "CONSTANT"
   parameter "aux_heat_coil_type", :default => "NONE"
