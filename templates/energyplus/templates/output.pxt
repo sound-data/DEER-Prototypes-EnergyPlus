@@ -127,3 +127,8 @@ FuelFactors,
 FuelFactors,
   Diesel,                  !- Existing Fuel Resource Name
   1.01;                    !- Source Energy Factor {J/J}
+
+Output:Variable,
+    *,                       !- Key Value
+    Fan Electricity Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
