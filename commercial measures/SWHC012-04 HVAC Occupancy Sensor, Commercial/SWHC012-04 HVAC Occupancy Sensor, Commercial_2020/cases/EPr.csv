@@ -1,0 +1,3 @@
+skip,case_name,:main_heat_coil_type,:main_heat_coil_eff,:main_heat_coil_cop,:main_cool_coil_type,:main_cool_coil_cop,:main_dx_comp_speed,:main_atu_reheat_coil_type,:kitch_heat_coil_type,:kitch_cool_coil_type,:classroom_class_setpoint_temp_schedule,:dining_fast_setpoint_temp_schedule,:gym_setpoint_temp_schedule,:kitchen_setpoint_temp_schedule,:computer_setpoint_temp_schedule
+,NE-HV_Tech-OccSens-DXGF,COMBUSTION,0.81,,DX-AIR,4.11,CONSTANT,RESISTANCE,COMBUSTION,DX-AIR,INPUTSCHEDULE,NON-INPUTSCHEDULE,NON-INPUTSCHEDULE,NON-INPUTSCHEDULE,NON-INPUTSCHEDULE
+,NE-HV_Tech-OccSens-DXGF-NoOccSens,COMBUSTION,0.81,,DX-AIR,4.11,CONSTANT,RESISTANCE,COMBUSTION,DX-AIR,NON-INPUTSCHEDULE,NON-INPUTSCHEDULE,NON-INPUTSCHEDULE,NON-INPUTSCHEDULE,NON-INPUTSCHEDULE
