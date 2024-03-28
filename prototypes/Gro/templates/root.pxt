@@ -373,10 +373,13 @@ import "irrigation.pxt", :group => "irrigation" do
   parameter "landscaping_area", :default => 1000.0['ft2']
 end
 
+
 # new refrigeration template import for parameterization
-import "ref-case.pxt", :prefix => "mt_meatdc1_" do
-  parameter "case_name", :default => "Meat1DisplayCase"
+import "ref-case.pxt", :group => "refcases", :prefix => "refcases_" do
   parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+end
+
+import "ref-case.pxt", :group => "mt_meatdc1", :prefix => "mt_meatdc1_" do
   parameter "capacity", :default => 399.03['W/m']
   parameter "length", :default => 16['ft']
   parameter "case_temp", :default => 27['F']
@@ -390,9 +393,7 @@ import "ref-case.pxt", :prefix => "mt_meatdc1_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-case.pxt", :prefix => "mt_fishdc_" do
-  parameter "case_name", :default => "FishDisplayCase"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "mt_fishdc", :prefix => "mt_fishdc_" do
   parameter "capacity", :default => 673['W/m']
   parameter "length", :default => 20['ft']
   parameter "case_temp", :default => 27['F']
@@ -406,9 +407,7 @@ import "ref-case.pxt", :prefix => "mt_fishdc_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-case.pxt", :prefix => "mt_melon_" do
-  parameter "case_name", :default => "MT_MelonBakery"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "mt_melon", :prefix => "mt_melon_" do
   parameter "capacity", :default => 1418['W/m']
   parameter "length", :default => 20['ft']
   parameter "case_temp", :default => 26['F']
@@ -422,9 +421,7 @@ import "ref-case.pxt", :prefix => "mt_melon_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-case.pxt", :prefix => "mt_deli_" do
-  parameter "case_name", :default => "MT_Deli"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "mt_deli", :prefix => "mt_deli_" do
   parameter "capacity", :default => 1610['W/m']
   parameter "length", :default => 25['ft']
   parameter "case_temp", :default => 31['F']
@@ -438,9 +435,7 @@ import "ref-case.pxt", :prefix => "mt_deli_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-case.pxt", :prefix => "mt_deliserv_" do
-  parameter "case_name", :default => "MT_DeliServ"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "mt_deliserv", :prefix => "mt_deliserv_" do
   parameter "capacity", :default => 393['W/m']
   parameter "length", :default => 16['ft']
   parameter "case_temp", :default => 28['F']
@@ -454,9 +449,7 @@ import "ref-case.pxt", :prefix => "mt_deliserv_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-case.pxt", :prefix => "mt_meat2_" do
-  parameter "case_name", :default => "MT_Meat2"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "mt_meat2", :prefix => "mt_meat2_" do
   parameter "capacity", :default => 393['W/m']
   parameter "length", :default => 36['ft']
   parameter "case_temp", :default => 29['F']
@@ -470,9 +463,7 @@ import "ref-case.pxt", :prefix => "mt_meat2_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-case.pxt", :prefix => "mt_meat3_" do
-  parameter "case_name", :default => "MT_Meat3"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "mt_meat3", :prefix => "mt_meat3_" do
   parameter "capacity", :default => 1610.54['W/m']
   parameter "length", :default => 35['ft']
   parameter "case_temp", :default => 31['F']
@@ -486,9 +477,7 @@ import "ref-case.pxt", :prefix => "mt_meat3_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-case.pxt", :prefix => "mt_dairy1_" do
-  parameter "case_name", :default => "MT_Dairy1"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "mt_dairy1", :prefix => "mt_dairy1_" do
   parameter "capacity", :default => 1610.54['W/m']
   parameter "length", :default => 67.5['ft']
   parameter "case_temp", :default => 31['F']
@@ -502,9 +491,7 @@ import "ref-case.pxt", :prefix => "mt_dairy1_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-case.pxt", :prefix => "mt_dairy2_" do
-  parameter "case_name", :default => "MT_Dairy2"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "mt_dairy2", :prefix => "mt_dairy2_" do
   parameter "capacity", :default => 1610.54['W/m']
   parameter "length", :default => 67.5['ft']
   parameter "case_temp", :default => 31['F']
@@ -518,9 +505,7 @@ import "ref-case.pxt", :prefix => "mt_dairy2_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-case.pxt", :prefix => "mt_produce_" do
-  parameter "case_name", :default => "MT_Produce"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "mt_produce", :prefix => "mt_produce_" do
   parameter "capacity", :default => 740['W/m']
   parameter "length", :default => 112['ft']
   parameter "case_temp", :default => 40['F']
@@ -534,9 +519,7 @@ import "ref-case.pxt", :prefix => "mt_produce_" do
   parameter "case_type", :default => "OPEN"
 end
 
-import "ref-walkin.pxt", :prefix => "mt_wic_" do
-  parameter "walkin_name", :default => "WalkInCooler"
-  parameter "zone_name", :default => "RefWalkInCool EL1 Core Spc (G.C6)"
+import "ref-walkin.pxt", :group => "mt_wic", :prefix => "mt_wic_" do
   parameter "capacity", :default => 21980['W']
   parameter "op_temp", :default => 35 ['F']
   parameter "cool_source_temp", :default => 25 ['F']
@@ -545,11 +528,9 @@ import "ref-walkin.pxt", :prefix => "mt_wic_" do
   parameter "total_insulated_area", :default => 3119.6['ft2']
 end
 
+
 #add low-temp case templates
-
-import "ref-case.pxt", :prefix => "lt_reachin1_" do
-  parameter "case_name", :default => "LT_ReachinCase1"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "lt_reachins", :prefix => "lt_reachins_" do
   parameter "capacity", :default => 522['W/m']
   parameter "latent_heat_ratio", :default =>0.1
   parameter "length", :default => 35['ft']
@@ -564,26 +545,7 @@ import "ref-case.pxt", :prefix => "lt_reachin1_" do
   parameter "case_type", :default => "GLASS-DOOR"
 end
 
-import "ref-case.pxt", :prefix => "lt_reachin2_" do
-  parameter "case_name", :default => "LT_ReachinCase2"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
-  parameter "capacity", :default => 522['W/m']
-  parameter "latent_heat_ratio", :default =>0.1
-  parameter "length", :default => 35['ft']
-  parameter "case_temp", :default => -5['F']
-  parameter "fan_power", :default => 68.75['W/m']
-  parameter "light_power", :default => 97.5 ['W/m']
-  parameter "ash_power", :default => 267.5 ['W/m']
-  parameter "ash_control", :default => "LINEAR"
-  parameter "ash_frac_to_case", :default => 0.6
-  parameter "defrost_power", :default =>  183 ['W/m']
-  parameter "defrost_type", :default => "HOTGAS"
-  parameter "case_type", :default => "GLASS-DOOR"
-end
-
-import "ref-case.pxt", :prefix => "lt_icreachin_" do
-  parameter "case_name", :default => "LT_ICReachinCase"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "lt_icreachin", :prefix => "lt_icreachin_" do
   parameter "capacity", :default => 564['W/m']
   parameter "latent_heat_ratio", :default =>0.1
   parameter "length", :default => 39['ft']
@@ -598,9 +560,7 @@ import "ref-case.pxt", :prefix => "lt_icreachin_" do
   parameter "case_type", :default => "GLASS-DOOR"
 end
 
-import "ref-case.pxt", :prefix => "lt_dualtemp1_" do
-  parameter "case_name", :default => "LT_DualTemp1Case"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "lt_dualtemp1", :prefix => "lt_dualtemp1_" do
   parameter "capacity", :default => 529['W/m']
   parameter "length", :default => 80['ft']
   parameter "case_temp", :default => -12['F']
@@ -614,9 +574,7 @@ import "ref-case.pxt", :prefix => "lt_dualtemp1_" do
   parameter "case_type", :default => "GLASS-DOOR"
 end
 
-import "ref-case.pxt", :prefix => "lt_dualtemp2_" do
-  parameter "case_name", :default => "LT_DualTemp2Case"
-  parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+import "ref-case.pxt", :group => "lt_dualtemp2", :prefix => "lt_dualtemp2_" do
   parameter "capacity", :default => 529['W/m']
   parameter "length", :default => 80['ft']
   parameter "case_temp", :default => -12['F']
@@ -630,9 +588,7 @@ import "ref-case.pxt", :prefix => "lt_dualtemp2_" do
   parameter "case_type", :default => "GLASS-DOOR"
 end
 
-import "ref-walkin.pxt", :prefix => "lt_wif_" do
-  parameter "walkin_name", :default => "WalkInFreezer"
-  parameter "zone_name", :default => "RefWalkInFreeze EL1 Core Spc (G.C5)"
+import "ref-walkin.pxt", :group => "lt_wif", :prefix => "lt_wif_" do
   parameter "capacity", :default => 17584['W']
   parameter "op_temp", :default => -5 ['F']
   parameter "cool_source_temp", :default => -13 ['F']
@@ -972,7 +928,7 @@ end
 # Maybe use a for loop? Systems may have multiple different values for their inputs...
 
 # Compressor rack system
-insert "ref-case.pxt",
+insert "ref-case.pxt", **refcases,
   :case_name => "SelfContainedDisplayCase",
   :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
   :capacity => 1000['W/m']
@@ -994,166 +950,39 @@ insert "ref-sys.pxt",
   :ref_sys_comp_names => MT_System_ref_sys_comp_names,
   :cond_curves_source => "MediumTemp"
 
-insert "ref-case.pxt",
-  :case_name => mt_meatdc1_case_name,
-  :zone_name => mt_meatdc1_zone_name,
-  :capacity => mt_meatdc1_capacity,
-  :length => mt_meatdc1_length,
-  :case_temp => mt_meatdc1_case_temp,
-  :fan_power => mt_meatdc1_fan_power,
-  :light_power => mt_meatdc1_light_power,
-  :ash_power => mt_meatdc1_ash_power,
-  :ash_control => mt_meatdc1_ash_control,
-  :ash_frac_to_case => mt_meatdc1_ash_frac_to_case,
-  :defrost_power =>  mt_meatdc1_defrost_power,
-  :defrost_type => mt_meatdc1_defrost_type,
-  :case_type => mt_meatdc1_case_type
+insert "ref-case.pxt", **refcases, **mt_meatdc1,
+  :case_name => "Meat1DisplayCase"
 
-insert "ref-case.pxt",
-  :case_name => mt_fishdc_case_name,
-  :zone_name => mt_fishdc_zone_name,
-  :capacity => mt_fishdc_capacity,
-  :length => mt_fishdc_length,
-  :case_temp => mt_fishdc_case_temp,
-  :fan_power => mt_fishdc_fan_power,
-  :light_power => mt_fishdc_light_power,
-  :ash_power => mt_fishdc_ash_power,
-  :ash_control => mt_fishdc_ash_control,
-  :ash_frac_to_case => mt_fishdc_ash_frac_to_case,
-  :defrost_power =>  mt_fishdc_defrost_power,
-  :defrost_type => mt_fishdc_defrost_type,
-  :case_type => mt_fishdc_case_type
+insert "ref-case.pxt", **refcases, **mt_fishdc,
+  :case_name => "FishDisplayCase"
 
+insert "ref-case.pxt", **refcases, **mt_melon,
+  :case_name => "MT_MelonBakery"
 
-insert "ref-case.pxt",
-  :case_name => mt_melon_case_name,
-  :zone_name => mt_melon_zone_name,
-  :capacity => mt_melon_capacity,
-  :length => mt_melon_length,
-  :case_temp => mt_melon_case_temp,
-  :fan_power => mt_melon_fan_power,
-  :light_power => mt_melon_light_power,
-  :ash_power => mt_melon_ash_power,
-  :ash_control => mt_melon_ash_control,
-  :ash_frac_to_case => mt_melon_ash_frac_to_case,
-  :defrost_power =>  mt_melon_defrost_power,
-  :defrost_type => mt_melon_defrost_type,
-  :case_type => mt_melon_case_type
+insert "ref-case.pxt", **refcases, **mt_deli,
+  :case_name => "MT_Deli"
 
-insert "ref-case.pxt",
-  :case_name => mt_deli_case_name,
-  :zone_name => mt_deli_zone_name,
-  :capacity => mt_deli_capacity,
-  :length => mt_deli_length,
-  :case_temp => mt_deli_case_temp,
-  :fan_power => mt_deli_fan_power,
-  :light_power => mt_deli_light_power,
-  :ash_power => mt_deli_ash_power,
-  :ash_control => mt_deli_ash_control,
-  :ash_frac_to_case => mt_deli_ash_frac_to_case,
-  :defrost_power =>  mt_deli_defrost_power,
-  :defrost_type => mt_deli_defrost_type,
-  :case_type => mt_deli_case_type
+insert "ref-case.pxt", **refcases, **mt_deliserv,
+  :case_name => "MT_DeliServ"
 
-insert "ref-case.pxt",
-  :case_name => mt_deliserv_case_name,
-  :zone_name => mt_deliserv_zone_name,
-  :capacity => mt_deliserv_capacity,
-  :length => mt_deliserv_length,
-  :case_temp => mt_deliserv_case_temp,
-  :fan_power => mt_deliserv_fan_power,
-  :light_power => mt_deliserv_light_power,
-  :ash_power => mt_deliserv_ash_power,
-  :ash_control => mt_deliserv_ash_control,
-  :ash_frac_to_case => mt_deliserv_ash_frac_to_case,
-  :defrost_power =>  mt_deliserv_defrost_power,
-  :defrost_type => mt_deliserv_defrost_type,
-  :case_type => mt_deliserv_case_type
+insert "ref-case.pxt", **refcases, **mt_meat2,
+  :case_name => "MT_Meat2"
 
-insert "ref-case.pxt",
-  :case_name => mt_meat2_case_name,
-  :zone_name => mt_meat2_zone_name,
-  :capacity => mt_meat2_capacity,
-  :length => mt_meat2_length,
-  :case_temp => mt_meat2_case_temp,
-  :fan_power => mt_meat2_fan_power,
-  :light_power => mt_meat2_light_power,
-  :ash_power => mt_meat2_ash_power,
-  :ash_control => mt_meat2_ash_control,
-  :ash_frac_to_case => mt_meat2_ash_frac_to_case,
-  :defrost_power =>  mt_meat2_defrost_power,
-  :defrost_type => mt_meat2_defrost_type,
-  :case_type => mt_meat2_case_type
+insert "ref-case.pxt", **refcases, **mt_meat3,
+  :case_name => "MT_Meat3"
 
-insert "ref-case.pxt",
-  :case_name => mt_meat3_case_name,
-  :zone_name => mt_meat3_zone_name,
-  :capacity => mt_meat3_capacity,
-  :length => mt_meat3_length,
-  :case_temp => mt_meat3_case_temp,
-  :fan_power => mt_meat3_fan_power,
-  :light_power => mt_meat3_light_power,
-  :ash_power => mt_meat3_ash_power,
-  :ash_control => mt_meat3_ash_control,
-  :ash_frac_to_case => mt_meat3_ash_frac_to_case,
-  :defrost_power =>  mt_meat3_defrost_power,
-  :defrost_type => mt_meat3_defrost_type,
-  :case_type => mt_meat3_case_type
+insert "ref-case.pxt", **refcases, **mt_dairy1,
+  :case_name => "MT_Dairy1"
 
-insert "ref-case.pxt",
-  :case_name => mt_dairy1_case_name,
-  :zone_name => mt_dairy1_zone_name,
-  :capacity => mt_dairy1_capacity,
-  :length => mt_dairy1_length,
-  :case_temp => mt_dairy1_case_temp,
-  :fan_power => mt_dairy1_fan_power,
-  :light_power => mt_dairy1_light_power,
-  :ash_power => mt_dairy1_ash_power,
-  :ash_control => mt_dairy1_ash_control,
-  :ash_frac_to_case => mt_dairy1_ash_frac_to_case,
-  :defrost_power =>  mt_dairy1_defrost_power,
-  :defrost_type => mt_dairy1_defrost_type,
-  :case_type => mt_dairy1_case_type
+insert "ref-case.pxt", **refcases, **mt_dairy2,
+  :case_name => "MT_Dairy2"
 
-insert "ref-case.pxt",
-  :case_name => mt_dairy2_case_name,
-  :zone_name => mt_dairy2_zone_name,
-  :capacity => mt_dairy2_capacity,
-  :length => mt_dairy2_length,
-  :case_temp => mt_dairy2_case_temp,
-  :fan_power => mt_dairy2_fan_power,
-  :light_power => mt_dairy2_light_power,
-  :ash_power => mt_dairy2_ash_power,
-  :ash_control => mt_dairy2_ash_control,
-  :ash_frac_to_case => mt_dairy2_ash_frac_to_case,
-  :defrost_power =>  mt_dairy2_defrost_power,
-  :defrost_type => mt_dairy2_defrost_type,
-  :case_type => mt_dairy2_case_type
+insert "ref-case.pxt", **refcases, **mt_produce,
+  :case_name => "MT_Produce"
 
-insert "ref-case.pxt",
-  :case_name => mt_produce_case_name,
-  :zone_name => mt_produce_zone_name,
-  :capacity => mt_produce_capacity,
-  :length => mt_produce_length,
-  :case_temp => mt_produce_case_temp,
-  :fan_power => mt_produce_fan_power,
-  :light_power => mt_produce_light_power,
-  :ash_power => mt_produce_ash_power,
-  :ash_control => mt_produce_ash_control,
-  :ash_frac_to_case => mt_produce_ash_frac_to_case,
-  :defrost_power =>  mt_produce_defrost_power,
-  :defrost_type => mt_produce_defrost_type,
-  :case_type => mt_produce_case_type
-
-insert "ref-walkin.pxt",
-  :walkin_name => mt_wic_walkin_name,
-  :zone_name => mt_wic_zone_name,
-  :capacity => mt_wic_capacity,
-  :op_temp => mt_wic_op_temp,
-  :cool_source_temp => mt_wic_cool_source_temp,
-  :fan_power => mt_wic_fan_power,
-  :floor_area => mt_wic_floor_area,
-  :total_insulated_area => mt_wic_total_insulated_area
+insert "ref-walkin.pxt", **mt_wic,
+  :walkin_name => "WalkInCooler",
+  :zone_name => "RefWalkInCool EL1 Core Spc (G.C6)"
 
 insert "ref-sys-comp.pxt",
   :comp_name => "MT_Compressor1",
@@ -1196,93 +1025,24 @@ insert "ref-sys.pxt",
   :ref_sys_comp_names => LT_System_ref_sys_comp_names,
   :cond_curves_source => "LowTemp"
 
-insert "ref-case.pxt",
-  :case_name => lt_reachin1_case_name,
-  :zone_name => lt_reachin1_zone_name,
-  :capacity => lt_reachin1_capacity,
-  :latent_heat_ratio =>lt_reachin1_latent_heat_ratio,
-  :length => lt_reachin1_length,
-  :case_temp => lt_reachin1_case_temp,
-  :fan_power => lt_reachin1_fan_power,
-  :light_power => lt_reachin1_light_power,
-  :ash_power => lt_reachin1_ash_power,
-  :ash_control => lt_reachin1_ash_control,
-  :ash_frac_to_case => lt_reachin1_ash_frac_to_case,
-  :defrost_power =>  lt_reachin1_defrost_power,
-  :defrost_type => lt_reachin1_defrost_type,
-  :case_type => lt_reachin1_case_type
+insert "ref-case.pxt", **refcases, **lt_reachins,
+  :case_name => "LT_ReachinCase1"
 
-insert "ref-case.pxt",
-  :case_name => lt_reachin2_case_name,
-  :zone_name => lt_reachin2_zone_name,
-  :capacity => lt_reachin2_capacity,
-  :latent_heat_ratio =>lt_reachin2_latent_heat_ratio,
-  :length => lt_reachin2_length,
-  :case_temp => lt_reachin2_case_temp,
-  :fan_power => lt_reachin2_fan_power,
-  :light_power => lt_reachin2_light_power,
-  :ash_power => lt_reachin2_ash_power,
-  :ash_control => lt_reachin2_ash_control,
-  :ash_frac_to_case => lt_reachin2_ash_frac_to_case,
-  :defrost_power =>  lt_reachin2_defrost_power,
-  :defrost_type => lt_reachin2_defrost_type,
-  :case_type => lt_reachin2_case_type
+insert "ref-case.pxt", **refcases, **lt_reachins,
+  :case_name => "LT_ReachinCase2"
 
-insert "ref-case.pxt",
-  :case_name => lt_icreachin_case_name,
-  :zone_name => lt_icreachin_zone_name,
-  :capacity => lt_icreachin_capacity,
-  :latent_heat_ratio =>lt_icreachin_latent_heat_ratio,
-  :length => lt_icreachin_length,
-  :case_temp => lt_icreachin_case_temp,
-  :fan_power => lt_icreachin_fan_power,
-  :light_power => lt_icreachin_light_power,
-  :ash_power => lt_icreachin_ash_power,
-  :ash_control => lt_icreachin_ash_control,
-  :ash_frac_to_case => lt_icreachin_ash_frac_to_case,
-  :defrost_power =>  lt_icreachin_defrost_power,
-  :defrost_type => lt_icreachin_defrost_type,
-  :case_type => lt_icreachin_case_type
+insert "ref-case.pxt", **refcases, **lt_icreachin,
+  :case_name => "LT_ICReachinCase"
 
-insert "ref-case.pxt",
-  :case_name => lt_dualtemp1_case_name,
-  :zone_name => lt_dualtemp1_zone_name,
-  :capacity => lt_dualtemp1_capacity,
-  :length => lt_dualtemp1_length,
-  :case_temp => lt_dualtemp1_case_temp,
-  :fan_power => lt_dualtemp1_fan_power,
-  :light_power => lt_dualtemp1_light_power,
-  :ash_power => lt_dualtemp1_ash_power,
-  :ash_control => lt_dualtemp1_ash_control,
-  :ash_frac_to_case => lt_dualtemp1_ash_frac_to_case,
-  :defrost_power =>  lt_dualtemp1_defrost_power,
-  :defrost_type => lt_dualtemp1_defrost_type,
-  :case_type => lt_dualtemp1_case_type
+insert "ref-case.pxt", **refcases, **lt_dualtemp1,
+  :case_name => "LT_DualTemp1Case"
 
-insert "ref-case.pxt",
-  :case_name => lt_dualtemp2_case_name,
-  :zone_name => lt_dualtemp2_zone_name,
-  :capacity => lt_dualtemp2_capacity,
-  :length => lt_dualtemp2_length,
-  :case_temp => lt_dualtemp2_case_temp,
-  :fan_power => lt_dualtemp2_fan_power,
-  :light_power => lt_dualtemp2_light_power,
-  :ash_power => lt_dualtemp2_ash_power,
-  :ash_control => lt_dualtemp2_ash_control,
-  :ash_frac_to_case => lt_dualtemp2_ash_frac_to_case,
-  :defrost_power =>  lt_dualtemp2_defrost_power,
-  :defrost_type => lt_dualtemp2_defrost_type,
-  :case_type => lt_dualtemp2_case_type
+insert "ref-case.pxt", **refcases, **lt_dualtemp2,
+  :case_name => "LT_DualTemp2Case"
 
-insert "ref-walkin.pxt",
-  :walkin_name => lt_wif_walkin_name,
-  :zone_name => lt_wif_zone_name,
-  :capacity => lt_wif_capacity,
-  :op_temp => lt_wif_op_temp,
-  :cool_source_temp => lt_wif_cool_source_temp,
-  :fan_power => lt_wif_fan_power,
-  :floor_area => lt_wif_floor_area,
-  :total_insulated_area => lt_wif_total_insulated_area
+insert "ref-walkin.pxt", **lt_wif,
+  :walkin_name => "WalkInFreezer",
+  :zone_name => "RefWalkInFreeze EL1 Core Spc (G.C5)"
 
 insert "ref-sys-comp.pxt",
   :comp_name => "LT_Compressor1",
