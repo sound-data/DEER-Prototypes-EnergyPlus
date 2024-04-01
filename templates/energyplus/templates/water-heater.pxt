@@ -62,6 +62,11 @@ end
 
 cop= (uef-0.1513-0.0043*daily_volume)*(2.6-0.0133*(loop_sept*1.8+32))/0.8407
 
+if water_heater_location =="unconditioned"
+    water_heater_zone= "EL7 North Perim Zn (G.N4)"
+else
+    water_heater_zone= "EL7 South Perim Zn (G.S1)"
+end
 
 %>
 
@@ -92,6 +97,7 @@ Schedule:Constant,
     Temperature,             !- Schedule Type Limits Name
     <%= tank_sept %>;                   !- Hourly Value
 
+<% if water_heater_location== "unconditioned" %>
 ZoneHVAC:EquipmentList,
     <%= water_heater_zone %> Equipment,  !- Name
     SequentialLoad,          !- Load Distribution Scheme
@@ -108,6 +114,7 @@ ZoneHVAC:EquipmentConnections,
     <%= water_heater_name %> zone inlet node,    !- Zone Air Inlet Node or NodeList Name
     <%= water_heater_name %> zone Exhaust Node,       !- Zone Air Exhaust Node or NodeList Name
     <%= water_heater_zone %> Zone Air Node;  !- Zone Air Node Name
+<% end %>
 
 Fan:OnOff,
     <%= water_heater_name %> fan,                !- Name
@@ -118,7 +125,11 @@ Fan:OnOff,
     0.8,                     !- Motor Efficiency
     0.9,                     !- Motor In Airstream Fraction
     <%= water_heater_name %> fan inlet node,     !- Air Inlet Node Name
+    <% if water_heater_location== "unconditioned" %>
     <%= water_heater_name %> zone inlet node,    !- Air Outlet Node Name
+    <% else %>
+    <%= water_heater_name %> fan outlet node,
+    <% end %>
     ,                        !- Fan Power Ratio Function of Speed Ratio Curve Name
     ,                        !- Fan Efficiency Ratio Function of Speed Ratio Curve Name
     Domestic Hot Water;      !- End-Use Subcategory
@@ -154,7 +165,11 @@ WaterHeater:HeatPump:WrappedCondenser,
     autocalculate,           !- Evaporator Air Flow Rate {m3/s}
     ZoneAirOnly,             !- Inlet Air Configuration
     <%= water_heater_name %> zone Exhaust Node,       !- Air Inlet Node Name
+    <% if water_heater_location== "unconditioned" %>
     <%= water_heater_name %> zone inlet node,    !- Air Outlet Node Name
+    <% else %>
+    <%= water_heater_name %> fan outlet node,
+    <% end %>
     ,                        !- Outdoor Air Node Name
     ,                        !- Exhaust Air Node Name
     ,                        !- Inlet Air Temperature Schedule Name

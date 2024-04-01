@@ -1,6 +1,7 @@
 <%#INTERFACE
 import "water-heater.pxt", :group=> "water_heater" do
     include "*"
+    parameter "water_heater_name", :default => "WH_1"
 end
 %>
 
@@ -5761,7 +5762,15 @@ ZoneHVAC:EquipmentList,
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
     ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    <% if (water_heater_location== "conditioned") && (water_heater_type.include?('hpwh')) %>
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+    WaterHeater:HeatPump:WrappedCondenser,  !- Zone Equipment 2 Object Type
+    <%= water_heater_name %>_HPWH,              !- Zone Equipment 2 Name
+    2,                       !- Zone Equipment 2 Cooling Sequence
+    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    <% else %>
     ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+    <% end %>
 
 ZoneHVAC:EquipmentList,
     EL7 North Perim Zn (G.N2) Equipment,  !- Name
@@ -5779,8 +5788,12 @@ ZoneHVAC:EquipmentList,
 ZoneHVAC:EquipmentConnections,
     EL7 South Perim Zn (G.S1),  !- Zone Name
     EL7 South Perim Zn (G.S1) Equipment,  !- Zone Conditioning Equipment List Name
-    EL7 South Perim Zn (G.S1) Supply Inlet,  !- Zone Air Inlet Node or NodeList Name
-    ,                        !- Zone Air Exhaust Node or NodeList Name
+    EL7 South Perim Zn (G.S1) Inlet Nodes,  !- Zone Air Inlet Node or NodeList Name
+    <% if (water_heater_location== "conditioned") && (water_heater_type.include?('hpwh')) %>
+    <%= water_heater_name %> zone Exhaust Node,
+    <% else %>
+     ,                        !- Zone Air Exhaust Node or NodeList Name
+    <% end %>
     EL7 South Perim Zn (G.S1) Zone Air Node,  !- Zone Air Node Name
     EL7 South Perim Zn (G.S1) Return Outlet;  !- Zone Return Air Node or NodeList Name
 
@@ -5792,6 +5805,14 @@ ZoneHVAC:EquipmentConnections,
     EL7 North Perim Zn (G.N2) Zone Air Node,  !- Zone Air Node Name
     EL7 North Perim Zn (G.N2) Return Outlet;  !- Zone Return Air Node or NodeList Name
 
+NodeList,
+    EL7 South Perim Zn (G.S1) Inlet Nodes,  !- Name
+    <% if (water_heater_location== "conditioned") && (water_heater_type.include?('hpwh')) %>
+    <%= water_heater_name %> fan outlet node,    !- Node 1 Name
+    EL7 South Perim Zn (G.S1) Supply Inlet;  !- Node 2 Name
+    <% else %>
+    EL7 South Perim Zn (G.S1) Supply Inlet;  !- Node 1 Name
+    <% end %>
 
 !-   ===========  ALL OBJECTS IN CLASS: FAN:ONOFF ===========
 

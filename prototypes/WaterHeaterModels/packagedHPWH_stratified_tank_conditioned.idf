@@ -123,7 +123,7 @@ RunPeriod,
     1,                       !- Begin Month
     1,                       !- Begin Day of Month
     ,                        !- Begin Year
-    12,                      !- End Month
+    1,                       !- End Month
     31,                      !- End Day of Month
     ,                        !- End Year
     Thursday,                !- Day of Week for Start Day
@@ -5856,7 +5856,11 @@ ZoneHVAC:EquipmentList,
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
     ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
-    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+    WaterHeater:HeatPump:WrappedCondenser,  !- Zone Equipment 2 Object Type
+    HPWH_unit3,              !- Zone Equipment 2 Name
+    2,                       !- Zone Equipment 2 Cooling Sequence
+    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
 
 ZoneHVAC:EquipmentList,
     EL7 North Perim Zn (G.N2) Equipment,  !- Name
@@ -5868,24 +5872,14 @@ ZoneHVAC:EquipmentList,
     ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
     ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
-ZoneHVAC:EquipmentList,
-    EL7 North Perim Zn (G.N4) Equipment,  !- Name
-    SequentialLoad,          !- Load Distribution Scheme
-    WaterHeater:HeatPump:WrappedCondenser,  !- Zone Equipment 1 Object Type
-    HPWH_unit3,              !- Zone Equipment 1 Name
-    1,                       !- Zone Equipment 1 Cooling Sequence
-    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
-    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
-    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
-
 
 !-   ===========  ALL OBJECTS IN CLASS: ZONEHVAC:EQUIPMENTCONNECTIONS ===========
 
 ZoneHVAC:EquipmentConnections,
     EL7 South Perim Zn (G.S1),  !- Zone Name
     EL7 South Perim Zn (G.S1) Equipment,  !- Zone Conditioning Equipment List Name
-    EL7 South Perim Zn (G.S1) Supply Inlet,  !- Zone Air Inlet Node or NodeList Name
-    ,                        !- Zone Air Exhaust Node or NodeList Name
+    EL7 South Perim Zn (G.S1) Inlet Nodes,  !- Zone Air Inlet Node or NodeList Name
+    Zone Exhaust Node,       !- Zone Air Exhaust Node or NodeList Name
     EL7 South Perim Zn (G.S1) Zone Air Node,  !- Zone Air Node Name
     EL7 South Perim Zn (G.S1) Return Outlet;  !- Zone Return Air Node or NodeList Name
 
@@ -5896,13 +5890,6 @@ ZoneHVAC:EquipmentConnections,
     ,                        !- Zone Air Exhaust Node or NodeList Name
     EL7 North Perim Zn (G.N2) Zone Air Node,  !- Zone Air Node Name
     EL7 North Perim Zn (G.N2) Return Outlet;  !- Zone Return Air Node or NodeList Name
-
-ZoneHVAC:EquipmentConnections,
-    EL7 North Perim Zn (G.N4),  !- Zone Name
-    EL7 North Perim Zn (G.N4) Equipment,  !- Zone Conditioning Equipment List Name
-    HPWH zone inlet node,    !- Zone Air Inlet Node or NodeList Name
-    Zone Exhaust Node,       !- Zone Air Exhaust Node or NodeList Name
-    EL7 North Perim Zn (G.N4) Zone Air Node;  !- Zone Air Node Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: FAN:ONOFF ===========
@@ -5927,7 +5914,7 @@ Fan:OnOff,
     0.8,                     !- Motor Efficiency
     0.9,                     !- Motor In Airstream Fraction
     HPWH fan inlet node,     !- Air Inlet Node Name
-    HPWH zone inlet node,    !- Air Outlet Node Name
+    HPWH fan outlet node,    !- Air Outlet Node Name
     ,                        !- Fan Power Ratio Function of Speed Ratio Curve Name
     ,                        !- Fan Efficiency Ratio Function of Speed Ratio Curve Name
     Domestic Hot Water;      !- End-Use Subcategory
@@ -6240,6 +6227,14 @@ ConnectorList,
     DHW Supply Mixer_unit3;  !- Connector 2 Name
 
 
+!-   ===========  ALL OBJECTS IN CLASS: NODELIST ===========
+
+NodeList,
+    EL7 South Perim Zn (G.S1) Inlet Nodes,  !- Name
+    HPWH fan outlet node,    !- Node 1 Name
+    EL7 South Perim Zn (G.S1) Supply Inlet;  !- Node 2 Name
+
+
 !-   ===========  ALL OBJECTS IN CLASS: OUTDOORAIR:NODE ===========
 
 OutdoorAir:Node,
@@ -6385,12 +6380,12 @@ WaterHeater:HeatPump:WrappedCondenser,
     autocalculate,           !- Evaporator Air Flow Rate {m3/s}
     ZoneAirOnly,             !- Inlet Air Configuration
     Zone Exhaust Node,       !- Air Inlet Node Name
-    HPWH zone inlet node,    !- Air Outlet Node Name
+    HPWH fan outlet node,    !- Air Outlet Node Name
     ,                        !- Outdoor Air Node Name
     ,                        !- Exhaust Air Node Name
     ,                        !- Inlet Air Temperature Schedule Name
     ,                        !- Inlet Air Humidity Schedule Name
-    EL7 North Perim Zn (G.N4),  !- Inlet Air Zone Name
+    EL7 South Perim Zn (G.S1),  !- Inlet Air Zone Name
     WaterHeater:Stratified,  !- Tank Object Type
     Water Heater Tank,       !- Tank Name
     Water Heater use inlet node_unit3,  !- Tank Use Side Inlet Node Name
