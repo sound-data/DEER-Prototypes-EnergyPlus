@@ -1,17 +1,3 @@
-<%#INTERFACE
-import "water-heater.pxt", :group=> "water_heater" do
-    include "*"
-end
-%>
-
-<%
-#water heater template
-insert "water-heater.pxt", **water_heater,
-    :water_heater_name =>"WH_1"
-
-insert "site.pxt"
-%>
-
 !-Generator IDFEditor 1.53
 !-Option SortedOrder
 
@@ -62,6 +48,73 @@ Timestep,
     60;                      !- Number of Timesteps per Hour
 
 
+!-   ===========  ALL OBJECTS IN CLASS: SITE:LOCATION ===========
+
+Site:Location,
+    CA_BISHOP-AP Design_Conditions,  !- Name
+    37.37,                   !- Latitude {deg}
+    -118.36,                 !- Longitude {deg}
+    -8.00,                   !- Time Zone {hr}
+    1250.00;                 !- Elevation {m}
+
+
+!-   ===========  ALL OBJECTS IN CLASS: SIZINGPERIOD:DESIGNDAY ===========
+
+SizingPeriod:DesignDay,
+    CA_BISHOP-AP Ann Htg 99.6% Condns DB,  !- Name
+    1,                       !- Month
+    21,                      !- Day of Month
+    WinterDesignDay,         !- Day Type
+    -8.9,                    !- Maximum Dry-Bulb Temperature {C}
+    0.0,                     !- Daily Dry-Bulb Temperature Range {deltaC}
+    DefaultMultipliers,      !- Dry-Bulb Temperature Range Modifier Type
+    ,                        !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,                 !- Humidity Condition Type
+    -8.9,                    !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+    ,                        !- Humidity Condition Day Schedule Name
+    ,                        !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+    ,                        !- Enthalpy at Maximum Dry-Bulb {J/kg}
+    ,                        !- Daily Wet-Bulb Temperature Range {deltaC}
+    87182,                   !- Barometric Pressure {Pa}
+    2.5,                     !- Wind Speed {m/s}
+    0,                       !- Wind Direction {deg}
+    No,                      !- Rain Indicator
+    No,                      !- Snow Indicator
+    No,                      !- Daylight Saving Time Indicator
+    ASHRAEClearSky,          !- Solar Model Indicator
+    ,                        !- Beam Solar Day Schedule Name
+    ,                        !- Diffuse Solar Day Schedule Name
+    ,                        !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub) {dimensionless}
+    ,                        !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud) {dimensionless}
+    0.00;                    !- Sky Clearness
+
+SizingPeriod:DesignDay,
+    CA_BISHOP-AP Ann Clg 0.4% Condns DB=>MCWB,  !- Name
+    7,                       !- Month
+    21,                      !- Day of Month
+    SummerDesignDay,         !- Day Type
+    38.9,                    !- Maximum Dry-Bulb Temperature {C}
+    21.8,                    !- Daily Dry-Bulb Temperature Range {deltaC}
+    DefaultMultipliers,      !- Dry-Bulb Temperature Range Modifier Type
+    ,                        !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,                 !- Humidity Condition Type
+    17.0,                    !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+    ,                        !- Humidity Condition Day Schedule Name
+    ,                        !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+    ,                        !- Enthalpy at Maximum Dry-Bulb {J/kg}
+    ,                        !- Daily Wet-Bulb Temperature Range {deltaC}
+    87182,                   !- Barometric Pressure {Pa}
+    4.3,                     !- Wind Speed {m/s}
+    180,                     !- Wind Direction {deg}
+    No,                      !- Rain Indicator
+    No,                      !- Snow Indicator
+    No,                      !- Daylight Saving Time Indicator
+    ASHRAETau,               !- Solar Model Indicator
+    ,                        !- Beam Solar Day Schedule Name
+    ,                        !- Diffuse Solar Day Schedule Name
+    0.265,                   !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub) {dimensionless}
+    2.649;                   !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud) {dimensionless}
+
 
 !-   ===========  ALL OBJECTS IN CLASS: RUNPERIOD ===========
 
@@ -79,6 +132,19 @@ RunPeriod,
     Yes,                     !- Apply Weekend Holiday Rule
     Yes,                     !- Use Weather File Rain Indicators
     Yes;                     !- Use Weather File Snow Indicators
+
+
+!-   ===========  ALL OBJECTS IN CLASS: RUNPERIODCONTROL:DAYLIGHTSAVINGTIME ===========
+
+RunPeriodControl:DaylightSavingTime,
+    2nd Sunday in March,     !- Start Date
+    1st Sunday in November;  !- End Date
+
+
+!-   ===========  ALL OBJECTS IN CLASS: SITE:WATERMAINSTEMPERATURE ===========
+
+Site:WaterMainsTemperature,
+    CorrelationFromWeatherFile;  !- Calculation Method
 
 
 !-   ===========  ALL OBJECTS IN CLASS: SCHEDULETYPELIMITS ===========
@@ -1882,6 +1948,14 @@ Schedule:Compact,
     117.28;                  !- Field 4
 
 Schedule:Compact,
+    dhw_setpt,               !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until 24:00,             !- Field 3
+    57.22;                   !- Field 4
+
+Schedule:Compact,
     always_avail,            !- Name
     On/Off,                  !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
@@ -2099,6 +2173,27 @@ Schedule:Constant,
     DHWSupplySetpoint,       !- Name
     Temperature,             !- Schedule Type Limits Name
     57.22;                   !- Hourly Value
+
+Schedule:Constant,
+    Tank heater Setpoint,    !- Name
+    Temperature,             !- Schedule Type Limits Name
+    54.44;                   !- Hourly Value
+
+
+!-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:FILE ===========
+
+Schedule:File,
+    hot_water_demand_fraction_schedule,  !- Name
+    fraction,                !- Schedule Type Limits Name
+    SFm_minute_dhw_demand_fraction.csv,  !- File Name
+    1,                       !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No,                      !- Interpolate to Timestep
+    1,                       !- Minutes per Item
+    Yes;                     !- Adjust Schedule for Daylight Savings
+
 
 !-   ===========  ALL OBJECTS IN CLASS: MATERIAL ===========
 
@@ -5773,6 +5868,16 @@ ZoneHVAC:EquipmentList,
     ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
     ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
+ZoneHVAC:EquipmentList,
+    EL7 North Perim Zn (G.N4) Equipment,  !- Name
+    SequentialLoad,          !- Load Distribution Scheme
+    WaterHeater:HeatPump:WrappedCondenser,  !- Zone Equipment 1 Object Type
+    HPWH_unit3,              !- Zone Equipment 1 Name
+    1,                       !- Zone Equipment 1 Cooling Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+
 
 !-   ===========  ALL OBJECTS IN CLASS: ZONEHVAC:EQUIPMENTCONNECTIONS ===========
 
@@ -5792,6 +5897,13 @@ ZoneHVAC:EquipmentConnections,
     EL7 North Perim Zn (G.N2) Zone Air Node,  !- Zone Air Node Name
     EL7 North Perim Zn (G.N2) Return Outlet;  !- Zone Return Air Node or NodeList Name
 
+ZoneHVAC:EquipmentConnections,
+    EL7 North Perim Zn (G.N4),  !- Zone Name
+    EL7 North Perim Zn (G.N4) Equipment,  !- Zone Conditioning Equipment List Name
+    HPWH zone inlet node,    !- Zone Air Inlet Node or NodeList Name
+    Zone Exhaust Node,       !- Zone Air Exhaust Node or NodeList Name
+    EL7 North Perim Zn (G.N4) Zone Air Node;  !- Zone Air Node Name
+
 
 !-   ===========  ALL OBJECTS IN CLASS: FAN:ONOFF ===========
 
@@ -5805,6 +5917,20 @@ Fan:OnOff,
     1,                       !- Motor In Airstream Fraction
     DXGF EL7 Mixed Air Outlet,  !- Air Inlet Node Name
     DXGF EL7 Supply Fan Outlet;  !- Air Outlet Node Name
+
+Fan:OnOff,
+    HPWH fan,                !- Name
+    always_avail,            !- Availability Schedule Name
+    0.7,                     !- Fan Total Efficiency
+    100,                     !- Pressure Rise {Pa}
+    autosize,                !- Maximum Flow Rate {m3/s}
+    0.8,                     !- Motor Efficiency
+    0.9,                     !- Motor In Airstream Fraction
+    HPWH fan inlet node,     !- Air Inlet Node Name
+    HPWH zone inlet node,    !- Air Outlet Node Name
+    ,                        !- Fan Power Ratio Function of Speed Ratio Curve Name
+    ,                        !- Fan Efficiency Ratio Function of Speed Ratio Curve Name
+    Domestic Hot Water;      !- End-Use Subcategory
 
 
 !-   ===========  ALL OBJECTS IN CLASS: COIL:COOLING:DX:SINGLESPEED ===========
@@ -5840,6 +5966,30 @@ Coil:Heating:Fuel,
     autosize,                !- Nominal Capacity {W}
     DXGF EL7 Supply Fan Outlet,  !- Air Inlet Node Name
     DXGF EL7 Heating Coil Outlet;  !- Air Outlet Node Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: COIL:WATERHEATING:AIRTOWATERHEATPUMP:WRAPPED ===========
+
+Coil:WaterHeating:AirToWaterHeatPump:Wrapped,
+    Packaged HPWH,           !- Name
+    1230,                    !- Rated Heating Capacity {W}
+    2.92,                    !- Rated COP {W/W}
+    0.981,                   !- Rated Sensible Heat Ratio
+    19.7,                    !- Rated Evaporator Inlet Air Dry-Bulb Temperature {C}
+    13.5,                    !- Rated Evaporator Inlet Air Wet-Bulb Temperature {C}
+    48.89,                   !- Rated Condenser Water Temperature {C}
+    autocalculate,           !- Rated Evaporator Air Flow Rate {m3/s}
+    Yes,                     !- Evaporator Fan Power Included in Rated COP
+    Zone Exhaust Node,       !- Evaporator Air Inlet Node Name
+    HPWH fan inlet node,     !- Evaporator Air Outlet Node Name
+    ,                        !- Crankcase Heater Capacity {W}
+    10,                      !- Maximum Ambient Temperature for Crankcase Heater Operation {C}
+    WetBulbTemperature,      !- Evaporator Air Temperature Type for Curve Objects
+    HPWH-Htg-Cap-fT_new,     !- Heating Capacity Function of Temperature Curve Name
+    ,                        !- Heating Capacity Function of Air Flow Fraction Curve Name
+    HPWH-Htg-COP-fT_new,     !- Heating COP Function of Temperature Curve Name
+    ,                        !- Heating COP Function of Air Flow Fraction Curve Name
+    HPWH-COP-fPLR;           !- Part Load Fraction Correlation Curve Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: AIRLOOPHVAC:UNITARYSYSTEM ===========
@@ -5970,6 +6120,55 @@ AirLoopHVAC:ReturnPath,
 
 
 !-   ===========  ALL OBJECTS IN CLASS: BRANCH ===========
+
+Branch,
+    Mains Inlet Branch_unit3,!- Name
+    ,                        !- Pressure Drop Curve Name
+    Pump:VariableSpeed,      !- Component 1 Object Type
+    Mains Pressure_unit3,    !- Component 1 Name
+    Mains Inlet Node_unit3,  !- Component 1 Inlet Node Name
+    Mains Pressure Outlet Node_unit3;  !- Component 1 Outlet Node Name
+
+Branch,
+    DHW Supply Outlet Branch_unit3,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    DHW Supply Outlet Pipe_unit3,  !- Component 1 Name
+    DHW Supply Outlet Pipe Inlet Node_unit3,  !- Component 1 Inlet Node Name
+    DHW Supply Outlet Node_unit3;  !- Component 1 Outlet Node Name
+
+Branch,
+    DHW Demand Inlet Branch_unit3,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    DHW Demand Inlet Pipe_unit3,  !- Component 1 Name
+    DHW Demand Inlet Node_unit3,  !- Component 1 Inlet Node Name
+    DHW Demand Inlet Pipe Outlet Node_unit3;  !- Component 1 Outlet Node Name
+
+Branch,
+    Water Use Branch_unit3,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    WaterUse:Connections,    !- Component 1 Object Type
+    DHW water use_unit3,     !- Component 1 Name
+    Water Sink Inlet Node_unit3,  !- Component 1 Inlet Node Name
+    Water Sink outlet Node_unit3;  !- Component 1 Outlet Node Name
+
+Branch,
+    Mains Makeup Branch_unit3,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    Mains Makeup Pipe_unit3, !- Component 1 Name
+    Mains Makeup Pipe Inlet Node_unit3,  !- Component 1 Inlet Node Name
+    Mains Makeup Node_unit3; !- Component 1 Outlet Node Name
+
+Branch,
+    Water Heater Branch_unit3,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    WaterHeater:HeatPump:WrappedCondenser,  !- Component 1 Object Type
+    HPWH_unit3,              !- Component 1 Name
+    Water Heater Use Inlet Node_unit3,  !- Component 1 Inlet Node Name
+    Water Heater Use Outlet Node_unit3;  !- Component 1 Outlet Node Name
+
 Branch,
     DXGF EL7 Main Branch,    !- Name
     ,                        !- Pressure Drop Curve Name
@@ -5978,9 +6177,68 @@ Branch,
     DXGF EL7 Mixed Air Outlet,  !- Component 1 Inlet Node Name
     DXGF EL7 Air Loop Outlet;!- Component 1 Outlet Node Name
 
+
+!-   ===========  ALL OBJECTS IN CLASS: BRANCHLIST ===========
+
+BranchList,
+    DHW Supply Branches_unit3,  !- Name
+    Mains Inlet Branch_unit3,!- Branch 1 Name
+    Water Heater Branch_unit3,  !- Branch 2 Name
+    DHW Supply Outlet Branch_unit3;  !- Branch 3 Name
+
+BranchList,
+    DHW Demand Branches_unit3,  !- Name
+    DHW Demand Inlet Branch_unit3,  !- Branch 1 Name
+    Water Use Branch_unit3,  !- Branch 2 Name
+    Mains Makeup Branch_unit3;  !- Branch 3 Name
+
 BranchList,
     DXGF EL7 Branches,       !- Name
     DXGF EL7 Main Branch;    !- Branch 1 Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: CONNECTOR:SPLITTER ===========
+
+Connector:Splitter,
+    DHW Demand Splitter_unit3,  !- Name
+    DHW Demand Inlet Branch_unit3,  !- Inlet Branch Name
+    Water Use Branch_unit3;  !- Outlet Branch 1 Name
+
+Connector:Splitter,
+    DHW Supply Splitter_unit3,  !- Name
+    Mains Inlet Branch_unit3,!- Inlet Branch Name
+    Water Heater Branch_unit3;  !- Outlet Branch 1 Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: CONNECTOR:MIXER ===========
+
+Connector:Mixer,
+    DHW Demand Mixer_unit3,  !- Name
+    Mains Makeup Branch_unit3,  !- Outlet Branch Name
+    Water Use Branch_unit3;  !- Inlet Branch 1 Name
+
+Connector:Mixer,
+    DHW Supply Mixer_unit3,  !- Name
+    DHW Supply Outlet Branch_unit3,  !- Outlet Branch Name
+    Water Heater Branch_unit3;  !- Inlet Branch 1 Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: CONNECTORLIST ===========
+
+ConnectorList,
+    DHW Demand Connectors_unit3,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    DHW Demand Splitter_unit3,  !- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    DHW Demand Mixer_unit3;  !- Connector 2 Name
+
+ConnectorList,
+    DHW Supply Connectors_unit3,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    DHW Supply Splitter_unit3,  !- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    DHW Supply Mixer_unit3;  !- Connector 2 Name
+
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTDOORAIR:NODE ===========
 
@@ -5995,9 +6253,216 @@ OutdoorAir:NodeList,
     DXGF EL7 Outside Air Inlet;  !- Node or NodeList Name 1
 
 
+!-   ===========  ALL OBJECTS IN CLASS: PIPE:ADIABATIC ===========
+
+Pipe:Adiabatic,
+    DHW Supply Outlet Pipe_unit3,  !- Name
+    DHW Supply Outlet Pipe Inlet Node_unit3,  !- Inlet Node Name
+    DHW Supply Outlet Node_unit3;  !- Outlet Node Name
+
+Pipe:Adiabatic,
+    Mains Makeup Pipe_unit3, !- Name
+    Mains Makeup Pipe Inlet Node_unit3,  !- Inlet Node Name
+    Mains Makeup Node_unit3; !- Outlet Node Name
+
+Pipe:Adiabatic,
+    DHW Demand Inlet Pipe_unit3,  !- Name
+    DHW Demand Inlet Node_unit3,  !- Inlet Node Name
+    DHW Demand Inlet Pipe Outlet Node_unit3;  !- Outlet Node Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: PUMP:VARIABLESPEED ===========
+
+Pump:VariableSpeed,
+    Mains Pressure_unit3,    !- Name
+    Mains Inlet Node_unit3,  !- Inlet Node Name
+    Mains Pressure Outlet Node_unit3,  !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    1,                       !- Design Pump Head {Pa}
+    0,                       !- Design Power Consumption {W}
+    1,                       !- Motor Efficiency
+    0,                       !- Fraction of Motor Inefficiencies to Fluid Stream
+    0,                       !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    0,                       !- Coefficient 3 of the Part Load Performance Curve
+    0,                       !- Coefficient 4 of the Part Load Performance Curve
+    0,                       !- Design Minimum Flow Rate {m3/s}
+    Intermittent;            !- Pump Control Type
+
 
 !-   ===========  ALL OBJECTS IN CLASS: WATERHEATER:STRATIFIED ===========
 
+WaterHeater:Stratified,
+    Water Heater Tank,       !- Name
+    Domestic Hot Water,      !- End-Use Subcategory
+    0.1892706,               !- Tank Volume {m3}
+    1.34,                    !- Tank Height {m}
+    VerticalCylinder,        !- Tank Shape
+    1.916,                   !- Tank Perimeter {m}
+    82.2222,                 !- Maximum Temperature Limit {C}
+    MasterSlave,             !- Heater Priority Control
+    Tank heater Setpoint,    !- Heater 1 Setpoint Temperature Schedule Name
+    11.11,                   !- Heater 1 Deadband Temperature Difference {deltaC}
+    4500,                    !- Heater 1 Capacity {W}
+    0.938,                   !- Heater 1 Height {m}
+    Tank heater Setpoint,    !- Heater 2 Setpoint Temperature Schedule Name
+    16.67,                   !- Heater 2 Deadband Temperature Difference {deltaC}
+    4500,                    !- Heater 2 Capacity {W}
+    0.402,                   !- Heater 2 Height {m}
+    Electricity,             !- Heater Fuel Type
+    0.98,                    !- Heater Thermal Efficiency
+    ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
+    ,                        !- Off Cycle Parasitic Fuel Type
+    ,                        !- Off Cycle Parasitic Heat Fraction to Tank
+    ,                        !- Off Cycle Parasitic Height {m}
+    ,                        !- On Cycle Parasitic Fuel Consumption Rate {W}
+    ,                        !- On Cycle Parasitic Fuel Type
+    ,                        !- On Cycle Parasitic Heat Fraction to Tank
+    ,                        !- On Cycle Parasitic Height {m}
+    Zone,                    !- Ambient Temperature Indicator
+    ,                        !- Ambient Temperature Schedule Name
+    EL7 North Perim Zn (G.N4),  !- Ambient Temperature Zone Name
+    ,                        !- Ambient Temperature Outdoor Air Node Name
+    0.806313346,             !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    1,                       !- Skin Loss Fraction to Zone
+    0,                       !- Off Cycle Flue Loss Coefficient to Ambient Temperature {W/K}
+    1,                       !- Off Cycle Flue Loss Fraction to Zone
+    ,                        !- Peak Use Flow Rate {m3/s}
+    ,                        !- Use Flow Rate Fraction Schedule Name
+    ,                        !- Cold Water Supply Temperature Schedule Name
+    Water Heater use inlet node_unit3,  !- Use Side Inlet Node Name
+    Water Heater use outlet node_unit3,  !- Use Side Outlet Node Name
+    1,                       !- Use Side Effectiveness
+    0,                       !- Use Side Inlet Height {m}
+    autocalculate,           !- Use Side Outlet Height {m}
+    ,                        !- Source Side Inlet Node Name
+    ,                        !- Source Side Outlet Node Name
+    1,                       !- Source Side Effectiveness
+    autocalculate,           !- Source Side Inlet Height {m}
+    ,                        !- Source Side Outlet Height {m}
+    Fixed,                   !- Inlet Mode
+    autosize,                !- Use Side Design Flow Rate {m3/s}
+    autosize,                !- Source Side Design Flow Rate {m3/s}
+    1.5,                     !- Indirect Water Heating Recovery Time {hr}
+    10,                      !- Number of Nodes
+    ,                        !- Additional Destratification Conductivity {W/m-K}
+    ,                        !- Node 1 Additional Loss Coefficient {W/K}
+    ,                        !- Node 2 Additional Loss Coefficient {W/K}
+    ,                        !- Node 3 Additional Loss Coefficient {W/K}
+    ,                        !- Node 4 Additional Loss Coefficient {W/K}
+    ,                        !- Node 5 Additional Loss Coefficient {W/K}
+    ,                        !- Node 6 Additional Loss Coefficient {W/K}
+    ,                        !- Node 7 Additional Loss Coefficient {W/K}
+    ,                        !- Node 8 Additional Loss Coefficient {W/K}
+    ,                        !- Node 9 Additional Loss Coefficient {W/K}
+    ,                        !- Node 10 Additional Loss Coefficient {W/K}
+    ,                        !- Node 11 Additional Loss Coefficient {W/K}
+    ,                        !- Node 12 Additional Loss Coefficient {W/K}
+    IndirectHeatPrimarySetpoint;  !- Source Side Flow Control Mode
+
+
+!-   ===========  ALL OBJECTS IN CLASS: WATERHEATER:SIZING ===========
+
+WaterHeater:Sizing,
+    Water Heater Tank,       !- WaterHeater Name
+    ResidentialHUD-FHAMinimum,  !- Design Mode
+    ,                        !- Time Storage Can Meet Peak Draw {hr}
+    ,                        !- Time for Tank Recovery {hr}
+    ,                        !- Nominal Tank Volume for Autosizing Plant Connections {m3}
+    3,                       !- Number of Bedrooms
+    3;                       !- Number of Bathrooms
+
+
+!-   ===========  ALL OBJECTS IN CLASS: WATERHEATER:HEATPUMP:WRAPPEDCONDENSER ===========
+
+WaterHeater:HeatPump:WrappedCondenser,
+    HPWH_unit3,              !- Name
+    always_avail,            !- Availability Schedule Name
+    dhw_setpt,               !- Compressor Setpoint Temperature Schedule Name
+    2,                       !- Dead Band Temperature Difference {deltaC}
+    0.402,                   !- Condenser Bottom Location {m}
+    0.938,                   !- Condenser Top Location {m}
+    autocalculate,           !- Evaporator Air Flow Rate {m3/s}
+    ZoneAirOnly,             !- Inlet Air Configuration
+    Zone Exhaust Node,       !- Air Inlet Node Name
+    HPWH zone inlet node,    !- Air Outlet Node Name
+    ,                        !- Outdoor Air Node Name
+    ,                        !- Exhaust Air Node Name
+    ,                        !- Inlet Air Temperature Schedule Name
+    ,                        !- Inlet Air Humidity Schedule Name
+    EL7 North Perim Zn (G.N4),  !- Inlet Air Zone Name
+    WaterHeater:Stratified,  !- Tank Object Type
+    Water Heater Tank,       !- Tank Name
+    Water Heater use inlet node_unit3,  !- Tank Use Side Inlet Node Name
+    Water Heater use outlet node_unit3,  !- Tank Use Side Outlet Node Name
+    Coil:WaterHeating:AirToWaterHeatPump:Wrapped,  !- DX Coil Object Type
+    Packaged HPWH,           !- DX Coil Name
+    4.44,                    !- Minimum Inlet Air Temperature for Compressor Operation {C}
+    48.88888888889,          !- Maximum Inlet Air Temperature for Compressor Operation {C}
+    Zone,                    !- Compressor Location
+    ,                        !- Compressor Ambient Temperature Schedule Name
+    Fan:OnOff,               !- Fan Object Type
+    HPWH fan,                !- Fan Name
+    DrawThrough,             !- Fan Placement
+    ,                        !- On Cycle Parasitic Electric Load {W}
+    ,                        !- Off Cycle Parasitic Electric Load {W}
+    Outdoors,                !- Parasitic Heat Rejection Location
+    ,                        !- Inlet Air Mixer Node Name
+    ,                        !- Outlet Air Splitter Node Name
+    ,                        !- Inlet Air Mixer Schedule Name
+    MutuallyExclusive,       !- Tank Element Control Logic
+    0.536,                   !- Control Sensor 1 Height In Stratified Tank {m}
+    1;                       !- Control Sensor 1 Weight {dimensionless}
+
+
+!-   ===========  ALL OBJECTS IN CLASS: PLANTLOOP ===========
+
+PlantLoop,
+    DHW Loop_unit3,          !- Name
+    Water,                   !- Fluid Type
+    ,                        !- User Defined Fluid Type
+    DHW Loop Operation_unit3,!- Plant Equipment Operation Scheme Name
+    DHW Supply Outlet Node_unit3,  !- Loop Temperature Setpoint Node Name
+    100,                     !- Maximum Loop Temperature {C}
+    0,                       !- Minimum Loop Temperature {C}
+    autosize,                !- Maximum Loop Flow Rate {m3/s}
+    0,                       !- Minimum Loop Flow Rate {m3/s}
+    autocalculate,           !- Plant Loop Volume {m3}
+    Mains Inlet Node_unit3,  !- Plant Side Inlet Node Name
+    DHW Supply Outlet Node_unit3,  !- Plant Side Outlet Node Name
+    DHW Supply Branches_unit3,  !- Plant Side Branch List Name
+    DHW Supply Connectors_unit3,  !- Plant Side Connector List Name
+    DHW Demand Inlet Node_unit3,  !- Demand Side Inlet Node Name
+    Mains Makeup Node_unit3, !- Demand Side Outlet Node Name
+    DHW Demand Branches_unit3,  !- Demand Side Branch List Name
+    DHW Demand Connectors_unit3,  !- Demand Side Connector List Name
+    Optimal;                 !- Load Distribution Scheme
+
+
+!-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTLIST ===========
+
+PlantEquipmentList,
+    DHW Plant Equipment_unit3,  !- Name
+    WaterHeater:HeatPump:WrappedCondenser,  !- Equipment 1 Object Type
+    HPWH_unit3;              !- Equipment 1 Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTOPERATION:HEATINGLOAD ===========
+
+PlantEquipmentOperation:HeatingLoad,
+    DHW Control Scheme_unit3,!- Name
+    0.0,                     !- Load Range 1 Lower Limit {W}
+    1000000000000000,        !- Load Range 1 Upper Limit {W}
+    DHW Plant Equipment_unit3;  !- Range 1 Equipment List Name
+
+
+!-   ===========  ALL OBJECTS IN CLASS: PLANTEQUIPMENTOPERATIONSCHEMES ===========
+
+PlantEquipmentOperationSchemes,
+    DHW Loop Operation_unit3,!- Name
+    PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
+    DHW Control Scheme_unit3,!- Control Scheme 1 Name
+    always_avail;            !- Control Scheme 1 Schedule Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:SENSOR ===========
@@ -6227,7 +6692,13 @@ AvailabilityManagerAssignmentList,
     DXGF EL7 Availability;   !- Availability Manager 1 Name
 
 
+!-   ===========  ALL OBJECTS IN CLASS: SETPOINTMANAGER:SCHEDULED ===========
 
+SetpointManager:Scheduled,
+    DHW Loop Setpoint Manager_unit3,  !- Name
+    Temperature,             !- Control Variable
+    dhw_setpt,               !- Schedule Name
+    DHW Supply Outlet Node_unit3;  !- Setpoint Node or NodeList Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: SETPOINTMANAGER:SINGLEZONE:COOLING ===========
@@ -6254,10 +6725,33 @@ SetpointManager:MixedAir,
     DXGF EL7 Mixed Air Outlet;  !- Setpoint Node or NodeList Name
 
 
+!-   ===========  ALL OBJECTS IN CLASS: WATERUSE:EQUIPMENT ===========
+
+WaterUse:Equipment,
+    Hot water use equip,     !- Name
+    Domestic Hot Water,      !- End-Use Subcategory
+    0.00044,                 !- Peak Flow Rate {m3/s}
+    hot_water_demand_fraction_schedule,  !- Flow Rate Fraction Schedule Name
+    ,                        !- Target Temperature Schedule Name
+    ,                        !- Hot Water Supply Temperature Schedule Name
+    ,                        !- Cold Water Supply Temperature Schedule Name
+    EL7 South Perim Zn (G.S1);  !- Zone Name
+
 
 !-   ===========  ALL OBJECTS IN CLASS: WATERUSE:CONNECTIONS ===========
 
-
+WaterUse:Connections,
+    DHW water use_unit3,     !- Name
+    Water Sink Inlet Node_unit3,  !- Inlet Node Name
+    Water Sink Outlet Node_unit3,  !- Outlet Node Name
+    ,                        !- Supply Water Storage Tank Name
+    ,                        !- Reclamation Water Storage Tank Name
+    ,                        !- Hot Water Supply Temperature Schedule Name
+    ,                        !- Cold Water Supply Temperature Schedule Name
+    None,                    !- Drain Water Heat Exchanger Type
+    ,                        !- Drain Water Heat Exchanger Destination
+    ,                        !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
+    Hot water use equip;     !- Water Use Equipment 1 Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: CURVE:QUADRATIC ===========
@@ -6294,6 +6788,14 @@ Curve:Quadratic,
     0.757409168,             !- Coefficient3 x**2
     0.5,                     !- Minimum Value of x
     1.5;                     !- Maximum Value of x
+
+Curve:Quadratic,
+    HPWH-COP-fPLR,           !- Name
+    1,                       !- Coefficient1 Constant
+    0,                       !- Coefficient2 x
+    0,                       !- Coefficient3 x**2
+    0,                       !- Minimum Value of x
+    1;                       !- Maximum Value of x
 
 Curve:Quadratic,
     HPACCoolCapFFF,          !- Name
@@ -6707,6 +7209,96 @@ Curve:Quartic,
 
 !-   ===========  ALL OBJECTS IN CLASS: CURVE:BIQUADRATIC ===========
 
+Curve:Biquadratic,
+    HPWH-Htg-Cap-fT,         !- Name
+    0.563,                   !- Coefficient1 Constant
+    0.0437,                  !- Coefficient2 x
+    0.000039,                !- Coefficient3 x**2
+    0.0055,                  !- Coefficient4 y
+    -.000148,                !- Coefficient5 y**2
+    -.000145,                !- Coefficient6 x*y
+    0,                       !- Minimum Value of x
+    100,                     !- Maximum Value of x
+    0,                       !- Minimum Value of y
+    100,                     !- Maximum Value of y
+    0;                       !- Minimum Curve Output
+
+Curve:Biquadratic,
+    HPWH-Htg-Cap-fT_new,     !- Name
+    0.505,                   !- Coefficient1 Constant
+    0.05116,                 !- Coefficient2 x
+    -0.0002026,              !- Coefficient3 x**2
+    0.005444,                !- Coefficient4 y
+    -0.0001154,              !- Coefficient5 y**2
+    -0.0002472,              !- Coefficient6 x*y
+    0,                       !- Minimum Value of x
+    100,                     !- Maximum Value of x
+    0,                       !- Minimum Value of y
+    100,                     !- Maximum Value of y
+    0;                       !- Minimum Curve Output
+
+Curve:Biquadratic,
+    HPWH-Htg-COP-fT,         !- Name
+    1.1332,                  !- Coefficient1 Constant
+    0.063,                   !- Coefficient2 x
+    -.0000979,               !- Coefficient3 x**2
+    -.00972,                 !- Coefficient4 y
+    -.0000214,               !- Coefficient5 y**2
+    -.000686,                !- Coefficient6 x*y
+    0,                       !- Minimum Value of x
+    100,                     !- Maximum Value of x
+    0,                       !- Minimum Value of y
+    100;                     !- Maximum Value of y
+
+Curve:Biquadratic,
+    HPWH-Htg-COP-fT_new,     !- Name
+    1.192,                   !- Coefficient1 Constant
+    0.04247,                 !- Coefficient2 x
+    -0.0003795,              !- Coefficient3 x**2
+    -0.0111,                 !- Coefficient4 y
+    -0.00000094,             !- Coefficient5 y**2
+    -0.0002657,              !- Coefficient6 x*y
+    0,                       !- Minimum Value of x
+    100,                     !- Maximum Value of x
+    0,                       !- Minimum Value of y
+    100;                     !- Maximum Value of y
+
+Curve:Biquadratic,
+    HPWHHeatingCapFTemp,     !- Name
+    0.369827,                !- Coefficient1 Constant
+    0.043341,                !- Coefficient2 x
+    -0.00023,                !- Coefficient3 x**2
+    0.000466,                !- Coefficient4 y
+    0.000026,                !- Coefficient5 y**2
+    -0.00027,                !- Coefficient6 x*y
+    0.0,                     !- Minimum Value of x
+    40.0,                    !- Maximum Value of x
+    20.0,                    !- Minimum Value of y
+    90.0,                    !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Temperature,             !- Input Unit Type for X
+    Temperature,             !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+Curve:Biquadratic,
+    HPWHHeatingCOPFTemp,     !- Name
+    1.19713,                 !- Coefficient1 Constant
+    0.077849,                !- Coefficient2 x
+    -0.0000016,              !- Coefficient3 x**2
+    -0.02675,                !- Coefficient4 y
+    0.000296,                !- Coefficient5 y**2
+    -0.00112,                !- Coefficient6 x*y
+    0.0,                     !- Minimum Value of x
+    40.0,                    !- Maximum Value of x
+    20.0,                    !- Minimum Value of y
+    90.0,                    !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Temperature,             !- Input Unit Type for X
+    Temperature,             !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
 ! curves for high seer measure
 Curve:Biquadratic,
     DEER DX Cool Cap-fT,     !- Name
@@ -6780,44 +7372,7 @@ Curve:Biquadratic,
     Temperature,             !- Input Unit Type for Y
     Dimensionless;           !- Output Unit Type
 
-
-
-Curve:Biquadratic,
-    HPWHHeatingCapFTemp,     !- Name
-    0.369827,                !- Coefficient1 Constant
-    0.043341,                !- Coefficient2 x
-    -0.00023,                !- Coefficient3 x**2
-    0.000466,                !- Coefficient4 y
-    0.000026,                !- Coefficient5 y**2
-    -0.00027,                !- Coefficient6 x*y
-    0.0,                     !- Minimum Value of x
-    40.0,                    !- Maximum Value of x
-    20.0,                    !- Minimum Value of y
-    90.0,                    !- Maximum Value of y
-    ,                        !- Minimum Curve Output
-    ,                        !- Maximum Curve Output
-    Temperature,             !- Input Unit Type for X
-    Temperature,             !- Input Unit Type for Y
-    Dimensionless;           !- Output Unit Type
-
-Curve:Biquadratic,
-    HPWHHeatingCOPFTemp,     !- Name
-    1.19713,                 !- Coefficient1 Constant
-    0.077849,                !- Coefficient2 x
-    -0.0000016,              !- Coefficient3 x**2
-    -0.02675,                !- Coefficient4 y
-    0.000296,                !- Coefficient5 y**2
-    -0.00112,                !- Coefficient6 x*y
-    0.0,                     !- Minimum Value of x
-    40.0,                    !- Maximum Value of x
-    20.0,                    !- Minimum Value of y
-    90.0,                    !- Maximum Value of y
-    ,                        !- Minimum Curve Output
-    ,                        !- Maximum Curve Output
-    Temperature,             !- Input Unit Type for X
-    Temperature,             !- Input Unit Type for Y
-    Dimensionless;           !- Output Unit Type
-
+!
 Curve:Biquadratic,
     HPACCoolCapFT,           !- Name
     0.766956,                !- Coefficient1 Constant
@@ -7376,38 +7931,53 @@ OutputControl:ReportingTolerances,
 
 Output:Variable,
     *,                       !- Key Value
-    Unitary System Fan Part Load Ratio,  !- Variable Name
-    Hourly;                  !- Reporting Frequency
+    Cooling Coil Total Cooling Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
-    Zone Ventilation Air Change Rate,  !- Variable Name
-    Hourly;                  !- Reporting Frequency
+    Water Heater Electricity Energy ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
-    Heating Coil NaturalGas Energy,  !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Cooling Coil Total Cooling Energy,  !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Unitary System Compressor Part Load Ratio,  !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Site Outdoor Air Drybulb Temperature,  !- Variable Name
-    Hourly;                  !- Reporting Frequency
+    Zone Outdoor Air Drybulb Temperature,  !- Variable Name
+    Timestep;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Zone Mean Air Temperature,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Thermostat Cooling Setpoint Temperature,  !- Variable Name
     Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Use Equipment Total Volume ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Use Equipment Mixed Water Temperature ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Tank Temperature ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Source Side Outlet Temperature ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Use Side Outlet Temperature ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
@@ -7418,6 +7988,102 @@ Output:Variable,
     *,                       !- Key Value
     Water Heater Use Side Mass Flow Rate ,  !- Variable Name
     Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Use Equipment Target Water Temperature ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Use Equipment Hot Water Mass Flow Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Use Equipment Hot Water Temperature ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Use Equipment Hot Water Volume Flow Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Cooling Coil Total Water Heating Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Cooling Coil Water Heating Electricity Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 1 ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 2,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 3,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 4,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 5,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 6,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 7,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 8,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 9,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Temperature Node 10,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Unmet Demand Heat Transfer Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Heater 1 Heating Rate,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Heater 2 Heating Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:METER ===========
 
