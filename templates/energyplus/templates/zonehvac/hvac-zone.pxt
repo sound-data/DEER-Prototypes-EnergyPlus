@@ -27,7 +27,7 @@ parameter "tstat_cool_sch", :name => "Thermostat Cooling Setpoint Schedule", :de
   :default => "", :domain => String
   
 parameter "setpoint_temp_schedule", :name => "Temperature Setpoint Schedule CSV file", :description => "Temperature Setpoint Schedule CSV file",
-  :default => "INPUTSCHEDULE", :domain => String
+  :default => "NON-INPUTSCHEDULE", :domain => String # ["NON-INPUTSCHEDULE", "INPUTSCHEDULE"]
   
 # Schedule can include %1, %2 tags to substitute 'tstat_cool_temp1' and 'tstat_cool_temp2' parameters.
 # If schedule is empty, a schedule is automatically created from the outdoor air schedule with
@@ -456,7 +456,9 @@ if (hvac_mode == "MZ")
   sat_temp_max = atu_reheat_max_sat
 end
 %>
-
+# Behzad Rizi updated for SWHC012
+# These are the schedule for Education Primary school (EPr)
+# Insert the schedule only once and use the same schedule for al the zones
 <% if (setpoint_temp_schedule == "INPUTSCHEDULE") && (zone_name == "Classroom G.E1") %>
   Schedule:File,
     Heating setpoint temperature schedule,  !- Name
@@ -481,6 +483,9 @@ end
     No,                      !- Interpolate to Timestep
     10,                      !- Minutes per Item
     Yes;                     !- Adjust Schedule for Daylight Savings  
+# Behzad Rizi updated for SWHC012
+# These are the schedule for Education Secondary school (ESe)
+# Insert the schedule only once and use the same schedule for al the zones
 <% elsif (setpoint_temp_schedule == "INPUTSCHEDULE") && (zone_name == "Classroom E1 West Perim (G.W1)") %>
   Schedule:File,
     Heating setpoint temperature schedule,  !- Name
@@ -626,7 +631,12 @@ Schedule:Compact,
     <%= zone_name %> Thermostat Type Schedule,  !- Name
     Thermostat Control,      !- Schedule Type Limits Name
     4;                       !- Hourly Value
-<% if (setpoint_temp_schedule == "NON-INPUTSCHEDULE") %>  
+<% if (setpoint_temp_schedule == "INPUTSCHEDULE") %>
+  ThermostatSetpoint:DualSetpoint,
+    <%= zone_name %> Setpoints,  !- Name
+    Heating setpoint temperature schedule,  !- Heating Setpoint Temperature Schedule Name
+    Cooling setpoint temperature schedule;  !- Cooling Setpoint Temperature Schedule Name
+<% else %>
   ThermostatSetpoint:DualSetpoint,
     <%= zone_name %> Setpoints,  !- Name
     <%= zone_name %> Heating Setpoint Schedule,  !- Heating Setpoint Temperature Schedule Name
@@ -636,15 +646,7 @@ Schedule:Compact,
     <%= zone_name %> Cooling Setpoint Schedule,  !- Name
     Temperature,             !- Schedule Type Limits Name
     <%= tstat_cool_sch %>
-<% end %>	 
-
-<% if (setpoint_temp_schedule == "INPUTSCHEDULE") %>
-  ThermostatSetpoint:DualSetpoint,
-    <%= zone_name %> Setpoints,  !- Name
-    Heating setpoint temperature schedule,  !- Heating Setpoint Temperature Schedule Name
-    Cooling setpoint temperature schedule;  !- Cooling Setpoint Temperature Schedule Name
 <% end %>
-
 
 Schedule:Compact,
   <%= zone_name %> Heating Setpoint Schedule,  !- Name
