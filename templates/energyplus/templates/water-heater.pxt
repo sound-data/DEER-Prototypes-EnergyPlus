@@ -288,7 +288,9 @@ WaterHeater:Stratified,
     1.7034789,               !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
     <% elsif (water_heater_type =='elec') %>
     0.28391315,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
-    <% elsif (water_heater_type =='hpwh') %>
+    <% elsif water_heater_type.include?('hpwh') %>
+    0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <% else %>
     0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
     <% end %>
     1,                       !- Skin Loss Fraction to Zone
