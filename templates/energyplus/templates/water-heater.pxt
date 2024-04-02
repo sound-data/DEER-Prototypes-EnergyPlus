@@ -73,7 +73,7 @@ end
 Schedule:File,
     <%= water_heater_name %>_demand_frac_sch,  !- Name
     fraction,                !- Schedule Type Limits Name
-    ../../../../../../../../hot water profile/<%= sch %>,  !- File Name
+    ../../../../../hot water profile/<%= sch %>,  !- File Name
     1,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
