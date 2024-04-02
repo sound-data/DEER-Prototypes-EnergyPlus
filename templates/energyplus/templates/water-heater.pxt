@@ -9,8 +9,8 @@ parameter "sch", :name => "Hot Water Demand Schedule", :description => "Hot Wate
 parameter "peak_flow", :name => "peak flow rate water use equipment", :description => "peak flow rate of total hot water demand",
   :default => 0.00044 ['m3/s'], :domain => Quantity
 
-parameter "water_heater_type", :name => "Water Heater Type", :description => "currently availabily water heater types are gas_water_heater, elec_water_heater, gas_tankless, hpwh, 120v_hpwh",
-  :default => "gas_water_heater", :domain => String
+parameter "water_heater_type", :name => "Water Heater Type", :description => "currently availabily water heater types are gas, elec, gas_tankless, hpwh, 120v_hpwh",
+  :default => "gas", :domain => String
 
 parameter "water_heater_location", :default =>"unconditioned" # unconditioned | conditioned
 parameter "tank_size", :default => 50 ['gal']
@@ -51,8 +51,8 @@ tank_height = case tank_size
 heater2_height = 0.3* tank_height
 
 heater1_height = case water_heater_type
-                 when 'gas_water_heater' then 0.4* tank_height
-                 when 'elec_water_heater' then 0.4* tank_height
+                 when 'gas' then 0.4* tank_height
+                 when 'elec' then 0.4* tank_height
                  else 0.7* tank_height
                  end
 
@@ -266,7 +266,7 @@ WaterHeater:Stratified,
     <%= heat_element_cap %>, !- Heater 2 Capacity {W}
     <% end %>
     <%=heater2_height %>,                !- Heater 2 Height {m}
-    <% if (water_heater_type =='gas_water_heater') %>
+    <% if (water_heater_type =='gas') %>
     NaturalGas,              !- Heater Fuel Type
     <% else %>
     Electricity,             !- Heater Fuel Type
@@ -284,9 +284,9 @@ WaterHeater:Stratified,
     ,                        !- Ambient Temperature Schedule Name
     <%= water_heater_zone %>,  !- Ambient Temperature Zone Name
     ,                        !- Ambient Temperature Outdoor Air Node Name
-    <% if (water_heater_type =='gas_water_heater') %>
+    <% if (water_heater_type =='gas') %>
     1.7034789,               !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
-    <% elsif (water_heater_type =='elec_water_heater') %>
+    <% elsif (water_heater_type =='elec') %>
     0.28391315,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
     <% elsif (water_heater_type =='hpwh') %>
     0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}

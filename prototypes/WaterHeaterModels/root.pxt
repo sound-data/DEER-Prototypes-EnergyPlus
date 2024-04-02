@@ -1,14 +1,15 @@
 <%#INTERFACE
 import "water-heater.pxt", :group=> "water_heater" do
     include "*"
-    parameter "water_heater_name", :default => "WH_1"
 end
+
 %>
 
 <%
+water_heater_name= "WH_" + water_heater_type + "_" + water_heater_location
+
 #water heater template
-insert "water-heater.pxt", **water_heater,
-    :water_heater_name =>"WH_1"
+insert "water-heater.pxt", **water_heater
 
 insert "site.pxt"
 %>
