@@ -456,9 +456,9 @@ if (hvac_mode == "MZ")
   sat_temp_max = atu_reheat_max_sat
 end
 %>
-# Behzad Rizi updated for SWHC012
-# These are the schedule for Education Primary school (EPr)
-# Insert the schedule only once and use the same schedule for al the zones
+! Behzad Rizi updated for SWHC012
+! These are the schedule for Education Primary school (EPr)
+! Insert the schedule only once and use the same schedule for al the zones
 <% if (setpoint_temp_schedule == "INPUTSCHEDULE") && (zone_name == "Classroom G.E1") %>
   Schedule:File,
     Heating setpoint temperature schedule,  !- Name
@@ -483,9 +483,9 @@ end
     No,                      !- Interpolate to Timestep
     10,                      !- Minutes per Item
     Yes;                     !- Adjust Schedule for Daylight Savings  
-# Behzad Rizi updated for SWHC012
-# These are the schedule for Education Secondary school (ESe)
-# Insert the schedule only once and use the same schedule for al the zones
+! Behzad Rizi updated for SWHC012
+! These are the schedule for Education Secondary school (ESe)
+! Insert the schedule only once and use the same schedule for al the zones
 <% elsif (setpoint_temp_schedule == "INPUTSCHEDULE") && (zone_name == "Classroom E1 West Perim (G.W1)") %>
   Schedule:File,
     Heating setpoint temperature schedule,  !- Name
