@@ -27,7 +27,7 @@ After the simulation is done, please make sure simulation is finished successful
 3. 
    NOTE: the example directory **SWXX111-00 Example_SEER_AC** and all its subdirectories are only used to illustrate the workflow for post-processing. The case files and its parameter in this example directory do not reflect how an actual measure should be set up, as they are only the most basic set up for a modelkit run.
    Update on 3/22/2024: the example directory **SWXX111-00 Example_SEER_AC** reflects the vintage consolidation update (with only Ex and New vintages)
-5.  If needed, run DEER_weights_extraction.py to extract the most up-to-date weights table needed for post-procesing.
+5. If the table "wts_com_bldg.csv" is not consistent with the DEER weights table (DEER.BldgWts), run DEER_weights_extraction.py to extract the most up-to-date weights table needed for post-procesing.
 6.	Run the python script to generate three CSV files: 'current_msr_mat.csv', 'sim_annual.csv', and 'sim_hourly_wb.csv'
 7.	Load these three CSV files into the PostgreSQL database management software (see residential section of the README, step 6)
 8.	Run the post-processing SQL queries P1 to P5 for commercial, located in 'scripts/energy savings/commercial/'.
