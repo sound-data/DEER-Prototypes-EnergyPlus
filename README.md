@@ -5,7 +5,7 @@ This repository houses the modeling system developed for transitioning DEER prot
 
 This repository includes Modelkit files for generating EnergyPlus input files and various types of scripts. There's a script for running batch simulations for one or more measures in a specific folder. Python scripts are provided for transforming Modelkit energy consumption results into the DEER database format. Additionally, Python and SQL scripts calculate permutation-level energy savings from simulation outputs. While the current process reuses most of the scripts developed by the previous DEER Ex Ante team to manipulate MASControl3 outputs, future optimization of those scripts and the Modelkit-based modeling framework are planned.
 
-This repository also contains static models (prototypes/WaterHeaterModels) for modeling water heaters in residential homes. These models are not parametrized; they are intended to serve as templates to replace the water heater calculator.
+This repository also contains a template (templates/energyplus/templates) and a root file (prototypes/WaterHeaterModels) for modeling water heaters in residential homes. They are intended to serve as templates to replace the DEER water heater calculator. The root file is based on the existing one-story single family model. Water heter types including gas, electric, tankless, heat pump, and 120V heat pump water heater, can be modeled and are parametrized. Default parameter values are based on DEER water heater calculator, online product specifications, and EnergyPlus examples. 
 
 ## Required Tools and Installation
 To install and use the prototype energy models on Windows (instructions for Mac will be provided in the future), follow these steps:
