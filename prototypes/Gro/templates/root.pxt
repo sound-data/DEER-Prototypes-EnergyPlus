@@ -395,9 +395,7 @@ import "ref-case.pxt", :group => "mt_meatdc1", :prefix => "mt_meatdc1_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "mt_fishdc", :prefix => "mt_fishdc_" do
@@ -413,9 +411,7 @@ import "ref-case.pxt", :group => "mt_fishdc", :prefix => "mt_fishdc_" do
   parameter "defrost_power", :default =>  624.99 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "mt_melon", :prefix => "mt_melon_" do
@@ -431,9 +427,7 @@ import "ref-case.pxt", :group => "mt_melon", :prefix => "mt_melon_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "mt_deli", :prefix => "mt_deli_" do
@@ -449,9 +443,7 @@ import "ref-case.pxt", :group => "mt_deli", :prefix => "mt_deli_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "mt_deliserv", :prefix => "mt_deliserv_" do
@@ -467,9 +459,7 @@ import "ref-case.pxt", :group => "mt_deliserv", :prefix => "mt_deliserv_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "mt_meat2", :prefix => "mt_meat2_" do
@@ -485,9 +475,7 @@ import "ref-case.pxt", :group => "mt_meat2", :prefix => "mt_meat2_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "mt_meat3", :prefix => "mt_meat3_" do
@@ -503,9 +491,7 @@ import "ref-case.pxt", :group => "mt_meat3", :prefix => "mt_meat3_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "mt_dairy1", :prefix => "mt_dairy1_" do
@@ -521,10 +507,8 @@ import "ref-case.pxt", :group => "mt_dairy1", :prefix => "mt_dairy1_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
-end
+  include "credit_sch|available"
+ end
 
 import "ref-case.pxt", :group => "mt_dairy2", :prefix => "mt_dairy2_" do
   parameter "capacity", :default => 1610.54['W/m']
@@ -539,9 +523,7 @@ import "ref-case.pxt", :group => "mt_dairy2", :prefix => "mt_dairy2_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "mt_produce", :prefix => "mt_produce_" do
@@ -557,9 +539,7 @@ import "ref-case.pxt", :group => "mt_produce", :prefix => "mt_produce_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "OFF-CYCLE"
   parameter "case_type", :default => "OPEN"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-walkin.pxt", :group => "mt_wic", :prefix => "mt_wic_" do
@@ -569,7 +549,7 @@ import "ref-walkin.pxt", :group => "mt_wic", :prefix => "mt_wic_" do
   parameter "fan_power", :default => 1003 ['W']
   parameter "floor_area", :default => 1559.8['ft2']
   parameter "total_insulated_area", :default => 3119.6['ft2']
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "available"
 end
 
 
@@ -588,9 +568,7 @@ import "ref-case.pxt", :group => "lt_reachins", :prefix => "lt_reachins_" do
   parameter "defrost_power", :default =>  183 ['W/m']
   parameter "defrost_type", :default => "HOTGAS"
   parameter "case_type", :default => "GLASS-DOOR"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "lt_icreachin", :prefix => "lt_icreachin_" do
@@ -607,9 +585,7 @@ import "ref-case.pxt", :group => "lt_icreachin", :prefix => "lt_icreachin_" do
   parameter "defrost_power", :default =>  183 ['W/m']
   parameter "defrost_type", :default => "HOTGAS"
   parameter "case_type", :default => "GLASS-DOOR"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "lt_dualtemp1", :prefix => "lt_dualtemp1_" do
@@ -625,9 +601,7 @@ import "ref-case.pxt", :group => "lt_dualtemp1", :prefix => "lt_dualtemp1_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "HOTGAS"
   parameter "case_type", :default => "GLASS-DOOR"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-case.pxt", :group => "lt_dualtemp2", :prefix => "lt_dualtemp2_" do
@@ -643,9 +617,7 @@ import "ref-case.pxt", :group => "lt_dualtemp2", :prefix => "lt_dualtemp2_" do
   parameter "defrost_power", :default =>  480.76 ['W/m']
   parameter "defrost_type", :default => "HOTGAS"
   parameter "case_type", :default => "GLASS-DOOR"
-  parameter "credit_sch_1", :default=>0.2
-  parameter "credit_sch_2", :default=>0.6
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "credit_sch|available"
 end
 
 import "ref-walkin.pxt", :group => "lt_wif", :prefix => "lt_wif_" do
@@ -655,19 +627,19 @@ import "ref-walkin.pxt", :group => "lt_wif", :prefix => "lt_wif_" do
   parameter "fan_power", :default => 963.3 ['W']
   parameter "floor_area", :default => 812.31['ft2']
   parameter "total_insulated_area", :default => 1624.62['ft2']
-  parameter "availability_schedule", :default=>1.0 # (TRUE:1 | FALSE:0)
+  include "available"
 end
 
 # Behzad Rizi - new refrigeration template (ref-sys.pxt and ref-comp.pxt) import for parameterization
 import "ref-sys.pxt", :group => "refsys", :prefix => "refsys_" do
-  parameter "cond_fan_power", :default=>2600['W']
-  parameter "cond_subcool", :default=>0['C']
-  parameter "working_fluid", :default=>"R507" # TODO add other fluids R22
-  parameter "condenser_type", :default=>"AirCooled" # (AirCooled | WaterCooled | EvaporativelyCooled)
+  include "cond_fan_power|cond_subcool|working_fluid|condenser_type"
 end
 
-import "ref-comp.pxt", :prefix => "refcomp_" do
-  parameter "rack_type", :default=>"MED-TEMP" # (LOW-TEMP | MED-TEMP | SELF-CONTAINED)
+import "ref-comp.pxt", :group => "refcomp", :prefix => "refcomp_" do
+  parameter "rack_type", :default=> "SELF-CONTAINED"
+  parameter "heat_rej_location", :default=> "Zone"
+  parameter "rack_cop", :default=> 4
+  parameter "fan_power", :default=> 175
 end
 
 #begin template insert process
@@ -705,7 +677,6 @@ if (solar_hot_water)
 else
   dhw_preheat_name = nil
 end
-
 
 insert "general.pxt", **general
 
@@ -999,6 +970,9 @@ end
 
 ### Start Refrigeration systems ###
 # Maybe use a for loop? Systems may have multiple different values for their inputs...
+# Solaris- Refer to "import" statements above
+# - Group attribute - used to pass parameter values e.g. **refcases (splat operator)
+# - Prefix attribute - used to differentiate parameters for multiple systems
 
 # Compressor rack system
 insert "ref-case.pxt", **refcases,
@@ -1006,13 +980,9 @@ insert "ref-case.pxt", **refcases,
   :zone_name => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
   :capacity => 1000['W/m']
 
-insert "ref-comp.pxt",
+insert "ref-comp.pxt", **refcomp,
   :rack_name => "SelfContainedDisplay",
-  :case_names => ["SelfContainedDisplayCase"],
-  :rack_type => "SELF-CONTAINED",
-  :heat_rej_location => "Zone",
-  :rack_cop => 4,
-  :fan_power => 175
+  :case_names => ["SelfContainedDisplayCase"]
 
 # System MT_System
 # Solaris- New parameter "condenser_type" was added to ref-sys.pxt for the MED-TEMP system

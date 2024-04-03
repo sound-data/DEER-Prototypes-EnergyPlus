@@ -11,6 +11,7 @@ parameter "cond_curves_source", :default=>"SelfContained" # (SelfContained | Med
 parameter "cond_fan_power", :default=>2600['W']
 parameter "cond_subcool", :default=>0['C']
 parameter "working_fluid", :default=>"R507" # TODO add other fluids R22
+# Behzad Rizi - parameterize condenser type
 parameter "condenser_type", :default=>"AirCooled" # (AirCooled | WaterCooled | EvaporativelyCooled)
 %>
 
@@ -20,6 +21,7 @@ enduse_subcategory = "#{ref_system_name} Refrigeration"
 
 ref_sys_comp_list = "#{ref_system_name} Compressors List"
 %>
+
 Refrigeration:System,
     <%= ref_system_name %>,           !- Name
     <%= case_walkin_list %>,         !- Refrigerated Case or Walkin or CaseAndWalkInList Name
@@ -28,6 +30,8 @@ Refrigeration:System,
     <%= ref_system_name %> Condenser Air Cooled,        !- Refrigeration Condenser Name
  <% elsif (condenser_type == "EvaporativelyCooled") %>
   <%= ref_system_name %> Condenser Evaporatively Cooled,        !- Refrigeration Condenser Name
+ <% else %>
+ <%   raise("error: unknown option condenser_type = '#{condenser_type}'") %>
  <% end %>
     <%= ref_sys_comp_list %>,   !- Compressor or CompressorList Name
     25.0,                    !- Minimum Condensing Temperature {C}
@@ -90,7 +94,10 @@ Refrigeration:Condenser:AirCooled,
   ,                      !- Evaporative Water Supply Tank Name
   ,                      !- Evaporative Condenser Availability Schedule Name
   General;               !- End-Use Subcategory
+<% else %>
+<%   raise("error: unknown option condenser_type = '#{condenser_type}'") %>
 <% end %>
+
 <% if (cond_curves_source == "SelfContained") %>
   Curve:Linear,
     <%= ref_system_name %> Condenser HR curve,  !- Name
