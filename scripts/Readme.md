@@ -26,8 +26,9 @@ After the simulation is done, please make sure simulation is finished successful
 2. In line 27, or the line defining “measure_name = ..”, specify the corresponding measure folder. In the example code, it is specified as “**SWXX111-00 Example_SEER_AC**”. This should be the same name as the folder name under the directory “commercial measures”. A corresponding measure record with matching cohort/case file names should be present in the workbook ***DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx*** under the same directory.
 3. 
    NOTE: the example directory **SWXX111-00 Example_SEER_AC** and all its subdirectories are only used to illustrate the workflow for post-processing. The case files and its parameter in this example directory do not reflect how an actual measure should be set up, as they are only the most basic set up for a modelkit run.
-4.  If needed, run DEER_weights_extraction.py to extract the most up-to-date weights table needed for post-procesing.
-5.	Run the python script to generate three CSV files: 'current_msr_mat.csv', 'sim_annual.csv', and 'sim_hourly_wb.csv'
-6.	Load these three CSV files into the PostgreSQL database management software (see residential section of the README, step 6)
-7.	Run the post-processing SQL queries P1 to P8 for commercial, located in 'scripts/energy savings/commercial/'.
-8.	Export ‘meas_impacts_2023_com” as the output.
+   Update on 3/22/2024: the example directory **SWXX111-00 Example_SEER_AC** reflects the vintage consolidation update (with only Ex and New vintages)
+5.  If needed, run DEER_weights_extraction.py to extract the most up-to-date weights table needed for post-procesing.
+6.	Run the python script to generate three CSV files: 'current_msr_mat.csv', 'sim_annual.csv', and 'sim_hourly_wb.csv'
+7.	Load these three CSV files into the PostgreSQL database management software (see residential section of the README, step 6)
+8.	Run the post-processing SQL queries P1 to P5 for commercial, located in 'scripts/energy savings/commercial/'.
+9.	Export ‘meas_impacts_2024_com” as the output.
