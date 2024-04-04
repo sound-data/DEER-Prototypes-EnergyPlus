@@ -206,10 +206,10 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => 3.85
-  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
-  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate" #TRC - to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "COMBUSTION"
+  parameter "heat_coil_eff", :default => 0.80
   parameter "dx_type", :default => "T24"
   parameter "dx_comp_speed", :default => "DUAL-EQUAL"
   parameter "aux_heat_coil_type", :default => "NONE"
