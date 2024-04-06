@@ -10,14 +10,22 @@ Features:
 Prerequisite:
     * sim_annual.csv (from data transformation tool)
     * results-sizing-agg.csv (from alternate result query)
+    * Your measure in 'scripts/data transformation/DEER_EnergyPlus_Modelkit_Measure_list.xlsx'
+    * 'scripts/data transformation/NumStor2.xlsx'
 
 Usage:
     cd "C:/DEER-Prototypes-EnergyPlus/residential measures/SWHC001-05 Wall Furnace/SWHC001-05 Wall Furnace_SFm"
     python "C:/DEER-Prototypes-EnergyPlus/scripts/data transformation/insert_normunits.py"
 
+Not implemented:
+* Recognize results from hard-sizing files
+* Commercial buildings types
+
 Changelog
     * 2024-01-19 Python script to enable replacing normunits in sim_annual files.
     * 2024-03-20 Command line and usage documentation
+    * 2024-04-06 Make dependence on measure list and NumStor2 more explicit.
+    * ... Include more error checking and progress statements.
 
 @Author: Nicholas Fette, Behzad Salimian Rizi
 @Date: 2024-01-19
@@ -29,29 +37,31 @@ from pathlib import Path
 import os
 from argparse import ArgumentParser
 
+#%%
+# Assumes this file is located at "DEERROOT/scripts/data transformation/insert_normunits.py"
+TRANSFORM_PATH = Path(os.path.dirname(__file__))
+DEERROOT = TRANSFORM_PATH / '../..'
+DEFAULT_MEASURELIST = TRANSFORM_PATH / 'DEER_EnergyPlus_Modelkit_Measure_list.xlsx'
+
 def insert_normunits1(
-        filename_sizing_agg,
-        filename_simannual,
-        output_sizing,
-        output_simannual,
-        sizing_column,
-        normunit,
-        sizing_multiplier,
-        measure_name
-    ):
-
-    #%%
-
-    # Assumes this file is located at "DEERROOT/scripts/data transformation/insert_normunits.py"
-    TRANSFORM_PATH = Path(os.path.dirname(__file__))
-    DEERROOT = TRANSFORM_PATH / '../..'
-    MEASURELIST_PATH = TRANSFORM_PATH / 'DEER_EnergyPlus_Modelkit_Measure_list.xlsx'
+        filename_sizing_agg: Path,
+        filename_simannual: Path,
+        output_sizing: Path,
+        output_simannual: Path,
+        sizing_column: str,
+        normunit: str,
+        sizing_multiplier: float,
+        measure_name: str,
+        filename_measurelist: Path = DEFAULT_MEASURELIST
+    ) -> None:
 
     # %%
     # 1. Read master workbook for measure / tech list
-    df_master = pd.read_excel(MEASURELIST_PATH, sheet_name='Measure_list', skiprows=4)
+    df_master = pd.read_excel(filename_measurelist, sheet_name='Measure_list', skiprows=4)
     # Specify the name of the measure(e.g. 'Wall Furnace')
     df_measure = df_master[df_master['Measure (general name)'] == measure_name]
+    if len(df_measure) == 0:
+        raise ValueError(f'Measure "{measure_name}" not found in measure list.')
     MEASURE_GROUP_NAMES = list(df_measure['Measure Group Name'].unique())
 
     #generate unique list of measure names
@@ -99,10 +109,13 @@ def insert_normunits1(
     data_columns = df_myunits_raw.columns[1:]
     # Clean up filenames.
     df_myunits_raw['File Name'] = df_myunits_raw['File Name'].str.removeprefix('runs/')
-    print(df_myunits_raw.shape)
+    print("Read sizing data:", df_myunits_raw.shape)
     # Append label columns from Measure List
     df_myunits_raw = df_myunits_raw.merge(df_mapper, on='File Name')
-    print(df_myunits_raw.shape)
+    print("Merged sizing data with measure list:", df_myunits_raw.shape)
+    if len(df_myunits_raw) == 0:
+        raise ValueError(f'No rows matched between sizing data and measure list.')
+
     # Align the NumStor weights to this table.
     df_myunits_raw = (
         df_myunits_raw
@@ -125,6 +138,7 @@ def insert_normunits1(
     df_myunits_weighted = df_myunits_raw.copy()
     #df_myunits_weighted[data_columns] = df_myunits_weighted[data_columns].mul(weights, axis=0)
     df_myunits_weighted[data_columns] = df_myunits_weighted[data_columns].mul(df_myunits_raw['weight'], axis=0)
+    print("Merged sizing data with NumStor weights:", df_myunits_weighted.shape)
     df_myunits_weighted.to_csv('myunits_weighted.csv')
     # Aggregate by label columns and sum weighted values in data columns.
     df_myunits = (
@@ -133,6 +147,7 @@ def insert_normunits1(
         [data_columns.to_list()+['weight']]
         .sum()
     )
+    print("Aggregated weighted values:", df_myunits.shape)
 
     print('Saving',output_sizing)
     df_myunits.to_csv(output_sizing)
@@ -143,7 +158,21 @@ def insert_normunits1(
     index_cols = ['TechID', 'BldgType', 'BldgVint', 'BldgLoc', 'BldgHVAC']
 
     df_mysim_annual = pd.read_csv(filename_simannual, index_col=index_cols)
+    print("Read sim_annual file:", df_mysim_annual.shape)
+
+    # Option 1. Merge would drop mimsatched rows, allowing for error checking, but potentially
+    # dropping rows if sizing data are missing.
+    # Option 2. Reindexing the sizing data: fills sizing data with NaN where missing.
+    # Reindex allows original sim_annual to pass through in case sizing data are missing.
+    merge_check = df_mysim_annual.merge(df_myunits,left_index=True,right_index=True)
+    print("Merge check between sim_annual and sizing data:", merge_check.shape)
+    if len(merge_check) == 0:
+        raise ValueError("No matching rows between sim_annual and sizing data."
+                         " Are vintage labels compatible?")
+    # The following code uses reindex rather than merge.
     df_myunits_sim = df_myunits.reindex(df_mysim_annual.index)
+    print("Re-indexed sizing data based on sim_annual:", df_myunits_sim.shape)
+    df_myunits_sim.to_csv("df_myunits_sim.csv")
     sizing_divisor = (
         df_myunits_sim.reset_index()
         .merge(df_numbldgs, on=['BldgType'])
@@ -201,7 +230,8 @@ def main():
     parser.add_argument('sizing_column',type=str,help='The column name to read for new normalizing units value.')
     parser.add_argument('normunit',type=str,help='The label to write for new normalizing units.')
     parser.add_argument('sizing_multiplier',type=float,help='The alternate result file, default results-sizing-agg.csv.',default=1.0)
-    parser.add_argument('measure_name',help='The measure name as it appears in Measure_list.xlsx. ')
+    parser.add_argument('measure_name',type=str,help='The measure name as it appears in Measure_list.xlsx.')
+    parser.add_argument('--filename_measurelist',type=Path,help='Optional: path to Measure_list.xlsx.', default=DEFAULT_MEASURELIST)
     args = parser.parse_args()
     insert_normunits1(
         args.filename_sizing_agg,
@@ -211,7 +241,8 @@ def main():
         args.sizing_column,
         args.normunit,
         args.sizing_multiplier,
-        args.measure_name
+        args.measure_name,
+        args.filename_measurelist
     )
 
 if __name__ == "__main__":
