@@ -25,9 +25,14 @@ cd "commercial measures/SWXX000-00 Measure Name/SWXX000-00 Measure Name_1975"
 python "../../../scripts/result.py" "."
 ```
 
+The python script has some limitations compared to Modelkit.
+
+1. Does not recognize "hardsize" simulation runs where naming pattern differs (instance-hardsize-out.sql).
+2. Does not recognize missing simulation runs.
+
 3. Using python script to extract additional information for manual review.
 
 ```
 cd C:/DEER-Prototypes-EnergyPlus/
-python "../../scripts/result.py" "commercial measures/SWXX000-00 Measure Name/" --queryfile "querylibrary/query_benchmark.txt" --detailfile "commercial measures/SWXX000-00 Measure Name/results-sizing-detail.csv" --aggfile "commercial measures/SWXX000-00 Measure Name/results-sizing-agg.csv"
+python "scripts/result.py" "commercial measures/SWXX000-00 Measure Name/" --queryfile "querylibrary/query_benchmark.txt" --detailfile "commercial measures/SWXX000-00 Measure Name/results-sizing-detail.csv" --aggfile "commercial measures/SWXX000-00 Measure Name/results-sizing-agg.csv"
 ```
