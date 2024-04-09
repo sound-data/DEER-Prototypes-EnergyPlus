@@ -26,6 +26,7 @@ Changelog
     * 2024-03-20 Command line and usage documentation
     * 2024-04-06 Make dependence on measure list and NumStor2 more explicit.
     * ... Include more error checking and progress statements.
+    * 2024-04-08 Updates for commercial building type compatibility.
 
 @Author: Nicholas Fette, Behzad Salimian Rizi
 @Date: 2024-01-19
@@ -99,7 +100,7 @@ def insert_normunits1(
     # Create CZ:VintYear dictionary based on prototype definitions
     # BldgType, Story-flag, BldgVint, VintYear, BldgLoc, numstor, weight
     df_numstor2 = pd.read_excel(TRANSFORM_PATH / 'NumStor2.xlsx', sheet_name='NumStor')
-    df_numbldgs = pd.DataFrame([('DMo',2),('MFm',24),('SFm',2)],columns=['BldgType','numbldgs'])
+    df_numbldgs = pd.read_excel(TRANSFORM_PATH / 'NumStor2.xlsx', sheet_name='NumBldgs')
 
     #%%
     # 4. Read sizing info and change from 'File Name' to desired index columns.
@@ -119,8 +120,12 @@ def insert_normunits1(
     # Align the NumStor weights to this table.
     df_myunits_raw = (
         df_myunits_raw
+        # "Weight" column used to make weighted average of 1-story and 2-story SFm models.
         .merge(df_numstor2[['BldgType','BldgVint','BldgLoc','Story-flag','weight']],
-            on=['BldgType','BldgVint','BldgLoc','Story-flag'])
+            on=['BldgType','BldgVint','BldgLoc','Story-flag'],
+            how='left')
+        # For building types not found in lookup table, fill in blanks with weight = 1.
+        .assign(weight=lambda x: x['weight'].where(lambda y: y.notna(), 1.0))
     )
     weights = (
         df_myunits_raw[['BldgType','BldgVint','BldgLoc','Story-flag']]
@@ -175,10 +180,11 @@ def insert_normunits1(
     df_myunits_sim.to_csv("df_myunits_sim.csv")
     sizing_divisor = (
         df_myunits_sim.reset_index()
-        .merge(df_numbldgs, on=['BldgType'])
+        .merge(df_numbldgs, on=['BldgType'], how='left')
         .set_index(index_cols)
         ['numbldgs']
     )
+    sizing_divisor = sizing_divisor.where(sizing_divisor.notna(), 1)
     df_mysim_annual['normunit'] = normunit
     df_mysim_annual['numunits'] = df_myunits_sim[sizing_column] * sizing_multiplier / sizing_divisor
 
