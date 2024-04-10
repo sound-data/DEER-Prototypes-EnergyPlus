@@ -42,7 +42,7 @@ from argparse import ArgumentParser
 # Assumes this file is located at "DEERROOT/scripts/data transformation/insert_normunits.py"
 TRANSFORM_PATH = Path(os.path.dirname(__file__))
 DEERROOT = TRANSFORM_PATH / '../..'
-DEFAULT_MEASURELIST = TRANSFORM_PATH / 'DEER_EnergyPlus_Modelkit_Measure_list.xlsx'
+DEFAULT_MEASURELIST = TRANSFORM_PATH / 'DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx'
 
 def insert_normunits1(
         filename_sizing_agg: Path,
