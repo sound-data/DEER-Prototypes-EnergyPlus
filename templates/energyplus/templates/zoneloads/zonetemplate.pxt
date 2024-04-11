@@ -1,4 +1,5 @@
 <%#INITIALIZE
+
 parameter "zone_name"
 parameter "zone_area", :name => "Zone Floor Area", :description => "Zone floor area, used for internal mass calculation",
   :domain => Quantity
@@ -22,7 +23,7 @@ parameter "occ_area", :name => "Occupant Density", :description => "Occupancy pe
 parameter "occ_zone", :name => "Occupants per Zone", :description => "Occupancy per Zone",
   :default => 0
 parameter "occ_sch",
-  :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+  :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;" 
 parameter "thermal_comfort", :default=>false
 
 parameter "light_area", :name => "Lighting Power Density", :description => "Power per area density for interior electric lighting",
@@ -74,16 +75,15 @@ parameter "dhw_temp", :default=>105['F']  # DHW mixed hot water temperature
 parameter "dhw_target", :default=>131['F'] # DHW target temperature
 parameter "dhw_recovery", :default=>false
 parameter "dhw_plantloop", :default=>true
-parameter "dhw_sch",
-  :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
-
+parameter "dhw_sch", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;", :domain => String
 parameter "int_mass_ratio", :name => "Internal Mass Area Ratio", :description => "Internal mass to floor area ratio",
   :default => 2.0, :domain => Numeric
 
 parameter "graywater_storage_tank", :default=> "" # variable creates tank to store graywater from sinks, showers, laundry, dishwashing
 parameter "graywater_supply_tank", :default=> "" # variable creates tank to supply graywater for toilet flushing
-parameter "dhw_loop_configuration", :default=>"DEFAULT-LOOP"
+parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP" # (DEFAULT-LOOP | RECIRCULATION-LOOP)
 %>
+
 <%
 # Calculate infiltration rate from leakage rate by adjusting to normal building pressurization at 5 Pa.
 infil_area_adj = infil_area * (5.0 / 75.0)**0.65
@@ -95,6 +95,9 @@ if dhw_flow_area > 0 && dhw_flow == 0
 elsif dhw_flow_area > 0 && dhw_flow != dhw_flow_area * zone_area
   raise("Error: dhw_flow is not equal to dhw_flow_area * zone_area")
 end
+# puts "Zone #{zone_name}: #{dhw_flow_area}"
+# puts "Zone #{zone_name}: #{dhw_sch}"
+
 %>
 <% if (infil_ach > 0.0 && infiltration_method == 'AirChanges/Hour') %>
 ZoneInfiltration:DesignFlowRate,
@@ -352,10 +355,11 @@ Schedule:Constant,
 <% end %>
 <% end %>
 
+
 <% if dhw_flow > 0 %>
   Schedule:Compact,
     <%= zone_name %> DHW Sch,  !- Name
-    Unit Interval,           !- Schedule Type Limits Name
+    Fraction,           !- Schedule Type Limits Name
     <%= dhw_sch %>
 
   <% if dhw_plantloop %>
@@ -403,8 +407,7 @@ Schedule:Constant,
   <% end %>
   
 !<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-! adding pump after water fixture in demand branches (Note: outlet of water fixture node should be inlet of pump)
-
+! Comment: adding pressure units after water fixture in demand branches (Note: outlet of water fixture node should be the inlet of pump)
 
   <% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
   Branch,
@@ -431,40 +434,6 @@ Schedule:Constant,
   <% end %>
   
 !>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-!  We can define demand branches pumps here in zonetempelate.pxt or by having for loop in dhw.pxt
-!  Pump:VariableSpeed,
-!	<%= zone_name %> DHW Pump,    !- Name
-!	<%= zone_name %> DHW Outlet Node,  !- Inlet Node Name
-!	<%= zone_name %> Pump Oulet Node,  !- Outlet Node Name
-!	autosize,                !- Design Maximum Flow Rate {m3/s}
-!	21521.4467194739,        !- Design Pump Head {Pa}
-!	autosize,                !- Design Power Consumption {W}
-!	0.9,                     !- Motor Efficiency
-!	,                        !- Fraction of Motor Inefficiencies to Fluid Stream
-!	,                        !- Coefficient 1 of the Part Load Performance Curve
-!	1,                       !- Coefficient 2 of the Part Load Performance Curve
-!	,                        !- Coefficient 3 of the Part Load Performance Curve
-!	,                        !- Coefficient 4 of the Part Load Performance Curve
-!	0,                       !- Design Minimum Flow Rate {m3/s}
-!	Intermittent,            !- Pump Control Type
-!	,                        !- Pump Flow Rate Schedule Name
-!	,                        !- Pump Curve Name
-!	,                        !- Impeller Diameter {m}
-!	,                        !- VFD Control Type
-!	,                        !- Pump RPM Schedule Name
-!	,                        !- Minimum Pressure Schedule {Pa}
-!	,                        !- Maximum Pressure Schedule {Pa}
-!	,                        !- Minimum RPM Schedule {rev/min}
-!	,                        !- Maximum RPM Schedule {rev/min}
-!	,                        !- Zone Name
-!	,                        !- Skin Loss Radiative Fraction
-!	PowerPerFlowPerPressure, !- Design Power Sizing Method
-!	348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
-!	1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
-!	,                        !- Design Minimum Flow Rate Fraction
-!	General;                 !- End-Use Subcategory  
-
 
 
   Schedule:Constant,
