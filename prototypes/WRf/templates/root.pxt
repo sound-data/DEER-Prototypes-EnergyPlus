@@ -323,27 +323,27 @@ end
 ##insert statements using these snippet calls will be at the bottom of this script
 
 #Low Temp compressors
-import "ref-sys-comp.pxt", :group => "lt_compressor", :prefix => "LT_comp_" do
+import "ref-sys-comp.pxt", :group => "lt_compressor", :prefix => "lt_comp_" do
   include "*"
   exclude "comp_name"
   
   parameter "comp_curves_source", :default=>"Bitzer_NH3_Low_OSNA8591-K"
-  parameter "rated_sh", :default =>5
+  parameter "rated_sh", :default =>5['C']
   parameter "return_gas_temp", :default=>""
   parameter "liquid_temp", :default=>""
-  parameter "rated_subcooling", :default=> 0
+  parameter "rated_subcooling", :default=> 0['C']
 end
 
 #Medium Temp compressors
-import "ref-sys-comp.pxt", :group => "mt_compressor", :prefix => "MT_comp_" do
+import "ref-sys-comp.pxt", :group => "mt_compressor", :prefix => "mt_comp_" do
   include "*"
   exclude "comp_name"
   
   parameter "comp_curves_source", :default=>"Bitzer_NH3_Med_OSNA8591-K"
-  parameter "rated_sh", :default =>5
+  parameter "rated_sh", :default =>5['C']
   parameter "return_gas_temp", :default=>""
   parameter "liquid_temp", :default=>""
-  parameter "rated_subcooling", :default=> 0
+  parameter "rated_subcooling", :default=> 0['C']
 end
 
 #Low Temp Chillers
