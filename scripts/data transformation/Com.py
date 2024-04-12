@@ -227,7 +227,8 @@ def end_use_rearrange(df_in):
                             df_in['Interior Lighting (kWh)'] +\
                             df_in['Exterior Lighting (kWh)'] +\
                             df_in['Fans (kWh)']+\
-                            df_in['Pumps (kWh)'])
+                            df_in['Pumps (kWh)']+\
+                            df_in['Refrigeration (kWh)'])
 
     df_in['kwh_ltg'] = (df_in['Interior Lighting (kWh)'] +\
                                     df_in['Exterior Lighting (kWh)'])
