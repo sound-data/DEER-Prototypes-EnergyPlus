@@ -642,6 +642,62 @@ import "ref-comp.pxt", :group => "refcomp", :prefix => "refcomp_" do
   parameter "fan_power", :default=> 175
 end
 
+# The Copeland curves imported here were developed by Lei Xu at DNV.
+#Low Temp compressors
+import "ref-sys-comp.pxt", :group => "lt_compressor1", :prefix => "lt_comp1_" do
+  include "*"
+  exclude "comp_name"
+  
+  parameter "comp_curves_source", :default=>"Copeland_R507_Low_3db30750"
+  parameter "return_gas_temp", :default=>65['F']
+  parameter "liquid_temp", :default=>105['F']
+end
+
+import "ref-sys-comp.pxt", :group => "lt_compressor2", :prefix => "lt_comp2_" do
+  include "*"
+  exclude "comp_name"
+  
+  parameter "comp_curves_source", :default=>"Copeland_R507_Low_4dl3150e"
+  parameter "return_gas_temp", :default=>65['F']
+  parameter "liquid_temp", :default=>105['F']
+end
+
+import "ref-sys-comp.pxt", :group => "lt_compressor3", :prefix => "lt_comp3_" do
+  include "*"
+  exclude "comp_name"
+  
+  parameter "comp_curves_source", :default=>"Copeland_R507_Low_3DS3100E"
+  parameter "return_gas_temp", :default=>65['F']
+  parameter "liquid_temp", :default=>105['F']
+end
+
+#Medium Temp compressors
+import "ref-sys-comp.pxt", :group => "mt_compressor1", :prefix => "mt_comp1_" do
+  include "*"
+  exclude "comp_name"
+  
+  parameter "comp_curves_source", :default=>"Copeland_R507_Med_3DS3150ETFE"
+  parameter "return_gas_temp", :default=>65['F']
+  parameter "liquid_temp", :default=>120['F']
+end
+
+import "ref-sys-comp.pxt", :group => "mt_compressor2", :prefix => "mt_comp2_" do
+  include "*"
+  exclude "comp_name"
+  
+  parameter "comp_curves_source", :default=>"Copeland_R507_Med_2da3075e"
+  parameter "return_gas_temp", :default=>65['F']
+  parameter "liquid_temp", :default=>120['F']
+end
+
+import "ref-sys-comp.pxt", :group => "mt_compressor3", :prefix => "mt_comp3_" do
+  include "*"
+  exclude "comp_name"
+  
+  parameter "comp_curves_source", :default=>"Copeland_R507_Med_3db3100e"
+  parameter "return_gas_temp", :default=>65['F']
+  parameter "liquid_temp", :default=>120['F']
+end
 #begin template insert process
 
 %>
@@ -1028,37 +1084,29 @@ insert "ref-walkin.pxt", **mt_wic,
   :walkin_name => "WalkInCooler",
   :zone_name => "RefWalkInCool EL1 Core Spc (G.C6)"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor1",
-  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+insert "ref-sys-comp.pxt", **mt_compressor1,
+  :comp_name => "MT_Compressor1"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor2",
-  :comp_curves_source=>"Copeland_R507_Med_2da3075e"
+insert "ref-sys-comp.pxt", **mt_compressor2,
+  :comp_name => "MT_Compressor2"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor3",
-  :comp_curves_source=>"Copeland_R507_Med_3db3100e"
+insert "ref-sys-comp.pxt", **mt_compressor3,
+  :comp_name => "MT_Compressor3"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor4",
-  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+insert "ref-sys-comp.pxt", **mt_compressor1,
+  :comp_name => "MT_Compressor4"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor5",
-  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+insert "ref-sys-comp.pxt", **mt_compressor1,
+  :comp_name => "MT_Compressor5"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor6",
-  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+insert "ref-sys-comp.pxt", **mt_compressor1,
+  :comp_name => "MT_Compressor6"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor7",
-  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+insert "ref-sys-comp.pxt", **mt_compressor1,
+  :comp_name => "MT_Compressor7"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "MT_Compressor8",
-  :comp_curves_source=>"Copeland_R507_Med_3DS3150ETFE"
+insert "ref-sys-comp.pxt", **mt_compressor1,
+  :comp_name => "MT_Compressor8"
 
 # System LT_System
 # Solaris- New parameter "condenser_type" was added to ref-sys.pxt for the LOW-TEMP system
@@ -1089,41 +1137,32 @@ insert "ref-walkin.pxt", **lt_wif,
   :walkin_name => "WalkInFreezer",
   :zone_name => "RefWalkInFreeze EL1 Core Spc (G.C5)"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor1",
-  :comp_curves_source=>"Copeland_R507_Low_3db30750"
+insert "ref-sys-comp.pxt", **lt_compressor1,
+  :comp_name => "LT_Compressor1"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor2",
-  :comp_curves_source=>"Copeland_R507_Low_4dl3150e"
+insert "ref-sys-comp.pxt", **lt_compressor2,
+  :comp_name => "LT_Compressor2"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor3",
-  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+insert "ref-sys-comp.pxt", **lt_compressor3,
+  :comp_name => "LT_Compressor3"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor4",
-  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+insert "ref-sys-comp.pxt", **lt_compressor3,
+  :comp_name => "LT_Compressor4"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor5",
-  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+insert "ref-sys-comp.pxt", **lt_compressor3,
+  :comp_name => "LT_Compressor5"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor6",
-  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+insert "ref-sys-comp.pxt", **lt_compressor3,
+  :comp_name => "LT_Compressor6"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor7",
-  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+insert "ref-sys-comp.pxt", **lt_compressor3,
+  :comp_name => "LT_Compressor7"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor8",
-  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+insert "ref-sys-comp.pxt", **lt_compressor3,
+  :comp_name => "LT_Compressor8"
 
-insert "ref-sys-comp.pxt",
-  :comp_name => "LT_Compressor9",
-  :comp_curves_source=>"Copeland_R507_Low_3DS3100E"
+insert "ref-sys-comp.pxt", **lt_compressor3,
+  :comp_name => "LT_Compressor9"
 
 insert "fluid-properties.pxt",
   :working_fluid =>"R507"
