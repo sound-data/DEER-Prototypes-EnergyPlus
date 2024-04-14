@@ -212,7 +212,7 @@ if (control_zone_name.empty?)
   control_type = "Setpoint"
 
 # TRC - enable variable speed operation for cPVVG system type
-elsif ((fan_speed == "VARIABLE") && (heat_coil_type == "WATER" || (heat_coil_type == "DX-AIR" && dx_comp_speed == "CONSTANT")) && (cool_coil_type = "WATER" || (cool_coil_type == "DX-AIR" || dx_comp_speed == "CONSTANT")))
+elsif ((fan_speed == "VARIABLE") && (heat_coil_type == "WATER" || (heat_coil_type == "DX-AIR" && dx_comp_speed == "CONSTANT")) && (cool_coil_type == "WATER" || (cool_coil_type == "DX-AIR" || dx_comp_speed == "CONSTANT")))
   control_type = "SingleZoneVAV"
 else
   control_type = "Load"
@@ -532,8 +532,8 @@ Curve:Quartic,
   1.0 ,                                !- Maximum Value of x
   0.0 ,                                !- Minimum Curve Output
   1.0 ,                                !- Maximum Curve Output
-  Dimensionless ,                      !- Input Unit Type for X
-  Dimensionless ;                      !- Output Unit Type
+  Dimensionless,                      !- Input Unit Type for X
+  Dimensionless;                      !- Output Unit Type
 <% end %>
 
 <% elsif (fan_type == "VARIABLE") %>
@@ -2871,7 +2871,7 @@ EnergyManagementSystem:ProgramCallingManager,
 
 EnergyManagementSystem:Program,
     <%= unitary_name_ems %>_UnitaryDXMinFlowSizing,  !- Name
-    Set Vent_Flow = <%= unitary_name_ems %>_OA_MFLOW,  !- Program Line 1
+    Set Vent_Flow = <%= unitary_name_ems %>_OA_MFLOW / 1.225,  !- Program Line 1
     Set Design_Flow = <%= unitary_name_ems %>_MFLOW,  !- Program Line 2
     Set Design_HFlow = <%= unitary_name_ems %>_HMFLOW,  !- Program Line 3
     Set Design_Min_Flow = Design_Flow * <%= cool_flow_min_frac %>,  !- A4
