@@ -12,10 +12,14 @@ parameter "terrain", :default=>"City", :domain=>String
 
 # rename: sizing_heat_factor   I think?
 
+# DNV: EnergyPlus auto-size function consistently underestimates system capacities (compared to survey data of installed
+# capacity like CEUS where the 2006 study has a table of capacity per floor area for several commercial building types).
+# As a quick fix, stakeholders decided to adjusted the heat_sizing_factor and cool_sizing_factor defaults by multiplying the ASHRAE factors 
+# by two to get values of 2.3 and 2.5 for cooling and heating respectively.
 parameter "heat_sizing_factor", :name=>"Heating Sizing Factor", :description=>"Safety factor used in heat sizing calculations",
-  :default=>1.25, :domain=>Numeric  # Interval (0, 10]
+  :default=>2.5, :domain=>Numeric  # Interval (0, 10]
 parameter "cool_sizing_factor", :name=>"Cooling Sizing Factor", :description=>"Safety factor used in cool sizing calculations",
-  :default=>1.15, :domain=>Numeric  # Interval (0, 10]
+  :default=>2.3, :domain=>Numeric  # Interval (0, 10]
 parameter "timestep", :name=>"Timesteps Per Hour", :description=>"Number of simulation timesteps per hour",
   :default=>4, :domain=>Integer  # Interval [1, 60]
 parameter "sizing_window", :name=>"Sizing Window", :description=>"Duration of averaging window for sizing (hours)",
