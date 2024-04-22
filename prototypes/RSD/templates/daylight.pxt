@@ -1,0 +1,36 @@
+<%
+insert 'daylight-controls.pxt',
+  :zone_name=>"Dining EL1 East Perim Spc (G.E1)",
+  :azimuth=>0,
+  :power_frac_min=>0.2,
+  :light_frac_min=>0.2,
+  :reference_points=>2,
+  :x_1=>20.07111048,
+  :y_1=>11.40714,
+  :z_1=>0.762,
+  :fraction_1=>0.264473,
+  :illum_setpoint_1=>187.5,
+  :x_2=>16.300704,
+  :y_2=>5.4864,
+  :z_2=>0.762,
+  :fraction_2=>0.258538,
+  :illum_setpoint_2=>250
+
+insert 'daylight-controls.pxt',
+  :zone_name=>"LobbyWaiting EL1 SW Perim Spc (G.SW2)",
+  :azimuth=>0,
+  :power_frac_min=>0.2,
+  :light_frac_min=>0.2,
+  :reference_points=>2,
+  :x_1=>4.893564,
+  :y_1=>2.7432,
+  :z_1=>0.762,
+  :fraction_1=>0.437798,
+  :illum_setpoint_1=>187.5,
+  :x_2=>4.893564,
+  :y_2=>5.4864,
+  :z_2=>0.762,
+  :fraction_2=>0.252029,
+  :illum_setpoint_2=>250
+
+%>

@@ -1,0 +1,57 @@
+<%# Override this file to add your own EnergyPlus objects. %>
+
+<%#
+A better name for "custom"??
+epilogue, afterword, coda, supplement, appendix, addendum/addenda
+
+addendum = that which is to be added (addenda, plural); extra info like a postscript
+annex =~ attachment or addition; can stand alone, often different author
+appendix = something appended; supplements body of documents
+
+Make your own local copy to override this and add user-defined objects/templates
+- output variables, meters, tables
+- shading surfaces, overhangs
+- additional equip, loads, airflow
+- other templates
+- performance curves (referenced by templates as a parameter)
+%>
+
+Output:Variable,*,Site Outdoor Air Drybulb Temperature,hourly; !- Zone Average [C]
+
+Output:Meter,Electricity:Facility,hourly; !- [J]
+Output:Meter,Gas:Facility,hourly; !- [J]
+
+! Zone
+!Output:Variable,Perimeter_ZN_1,Zone Mean Air Temperature,hourly; !- Zone Average [C]
+
+!Output:Variable,Perimeter_ZN_1.* Setpoint Schedule,Schedule Value,hourly; !- Zone Average []
+!Output:Variable,Perimeter_ZN_1 Air Node,System Node Setpoint Temperature,hourly; !- HVAC Average [C]
+
+!Output:Variable,Perimeter_ZN_1,Zone Heating Setpoint Not Met While Occupied Time,hourly; !- Zone Sum [hr]
+!Output:Variable,Perimeter_ZN_1,Zone Cooling Setpoint Not Met While Occupied Time,hourly; !- Zone Sum [hr]
+
+! Ideal Loads
+!Output:Variable,Perimeter_ZN_1.*,Zone Ideal Loads Zone Total Cooling Rate,hourly; !- HVAC Average [W]
+!Output:Variable,Perimeter_ZN_1.*,Zone Ideal Loads Zone Total Heating Rate,hourly; !- HVAC Average [W]
+!Output:Variable,Perimeter_ZN_1.*,Zone Ideal Loads Outdoor Air Total Cooling Rate,hourly; !- HVAC Average [W]
+!Output:Variable,Perimeter_ZN_1.*,Zone Ideal Loads Outdoor Air Total Heating Rate,hourly; !- HVAC Average [W]
+
+! HVAC Systems
+<% regex = "(Perimeter_ZN_1 ZN|Perimeter_ZN_1 SZ|Perimeter_ZN_1 MZ|MZ).*" %>
+
+!Output:Variable,<%= regex %> Schedule,Schedule Value,hourly; !- Zone Average []
+
+!Output:Variable,<%= regex %> Fan,Fan Electric Power,hourly; !- HVAC Average [W]
+!Output:Variable,<%= regex %> Fan,Fan Runtime Fraction,hourly; !- HVAC Average []
+!Output:Variable,<%= regex %> Heating Coil,Heating Coil Heating Rate,hourly; !- HVAC Average [W]
+!Output:Variable,<%= regex %> Cooling Coil,Cooling Coil Total Cooling Rate,hourly; !- HVAC Average [W]
+!Output:Variable,<%= regex %> Cooling Coil,Cooling Coil Electric Power,hourly; !- HVAC Average [W]
+
+!Output:Variable,<%= regex %> Unitary,Unitary System Fan Part Load Ratio,hourly; !- HVAC Average []
+!Output:Variable,<%= regex %> Unitary,Unitary System Compressor Part Load Ratio,hourly; !- HVAC Average []
+
+!Output:Variable,<%= regex %> ATU,Zone Air Terminal VAV Damper Position,hourly; !- HVAC Average []
+!Output:Variable,<%= regex %> ATU,Zone Air Terminal Minimum Air Flow Fraction,hourly; !- HVAC Average []
+
+!Output:Variable,<%= regex %> Node,System Node Standard Density Volume Flow Rate,hourly; !- HVAC Average [kg/s]
+!Output:Variable,<%= regex %> Node,System Node Temperature,hourly; !- HVAC Average [C]

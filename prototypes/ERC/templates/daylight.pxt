@@ -1,0 +1,19 @@
+<%
+insert 'daylight-controls.pxt',
+  :zone_name=>"Classroom EL1 Spc (G.1)",
+  :azimuth=>0,
+  :power_frac_min=>0.2,
+  :light_frac_min=>0.2,
+  :reference_points=>2,
+  :x_1=>10.07360952,
+  :y_1=>5.8674,
+  :z_1=>0.762,
+  :fraction_1=>0.298586,
+  :illum_setpoint_1=>412.5,
+  :x_2=>7.94000952,
+  :y_2=>5.8674,
+  :z_2=>0.762,
+  :fraction_2=>0.298586,
+  :illum_setpoint_2=>550
+
+%>

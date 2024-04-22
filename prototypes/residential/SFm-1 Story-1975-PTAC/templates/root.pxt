@@ -10400,52 +10400,52 @@ ZoneList,
 !-   ===========  ALL OBJECTS IN CLASS: BUILDINGSURFACE:DETAILED ===========
 
 BuildingSurface:Detailed,
-    EL7 East Wall (G.N2.E4), !- Name
+    EL7 East Wall (G.N2.E4),  !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    41.465632080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    41.465632080000,         !- Vertex 1 Y-coordinate {m}
     0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    48.582712080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    48.582712080000,         !- Vertex 2 Y-coordinate {m}
     0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    48.582712080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    41.465632080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    48.582712080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    41.465632080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 Flr (G.N2.U2),       !- Name
+    EL7 Flr (G.N2.U2),     !- Name
     Floor,                   !- Surface Type
-    Floor abv Crawl Space,   !- Construction Name
+    Floor abv Crawl Space,  !- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
-    Zone,                    !- Space Name
-    EL7 CrwSpc,              !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    41.465632080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 1 Z-coordinate {m}
-    41.465632080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 2 Z-coordinate {m}
-    48.582712080000,         !- Vertex 3 X-coordinate {m}
-    0.000000000000,          !- Vertex 3 Y-coordinate {m}
+    Zone,                  !- Outside Boundary Condition
+    EL7 CrwSpc,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    41.465632080000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 2 X-coordinate {m}
+    41.465632080000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 3 X-coordinate {m}
+    48.582712080000,         !- Vertex 3 Y-coordinate {m}
     0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    48.582712080000,         !- Vertex 4 X-coordinate {m}
-    0.000000000000;          !- Vertex 4 Y-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    48.582712080000,         !- Vertex 4 Y-coordinate {m}
+    0.000000000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 North Wall (G.N2.E5),!- Name
@@ -10520,28 +10520,28 @@ BuildingSurface:Detailed,
     2.590800000000;          !- Vertex 4 Y-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 UnderRf (G.N2.I5),   !- Name
+    EL7 UnderRf (G.N2.I5), !- Name
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL7 North Perim Zn (G.N2),  !- Zone Name
-    Surface,                 !- Space Name
-    EL7 UnderRf (G.N2.I5)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.488424000000,         !- Number of Vertices
-    41.465632080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    41.465632080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    48.582712080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 3 Z-coordinate {m}
-    48.582712080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Surface,                 !- Outside Boundary Condition
+    EL7 UnderRf (G.N2.I5)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.488424000000,         !- Vertex 1 X-coordinate {m}
+    41.465632080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    41.465632080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    48.582712080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 4 X-coordinate {m}
+    48.582712080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 West Wall (G.N2.E6), !- Name
@@ -10568,29 +10568,28 @@ BuildingSurface:Detailed,
     2.590800000000;          !- Vertex 4 Y-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 East Wall (G.N4.E10),!- Name
+    EL7 East Wall (G.N4.E10),  !- Name
     Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
+    Garage Ext Wall,       !- Construction Name
     EL7 North Perim Zn (G.N4),  !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -4.742688000000,         !- Number of Vertices
-    48.884464080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 1 Z-coordinate {m}
-    52.542064080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 2 Z-coordinate {m}
-    52.542064080000,         !- Vertex 3 X-coordinate {m}
-    2.286000000000,          !- Vertex 3 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 3 Z-coordinate {m}
-    48.884464080000,         !- Vertex 4 X-coordinate {m}
-    2.286000000000;          !- Vertex 4 Y-coordinate {m}
-
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -4.742688000000,         !- Vertex 1 X-coordinate {m}
+    48.582712080000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 2 X-coordinate {m}
+    52.846864080000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 3 X-coordinate {m}
+    52.846864080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 4 X-coordinate {m}
+    48.582712080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 BuildingSurface:Detailed,
     EL7 Flr (G.N4.U4),       !- Name
     Floor,                   !- Surface Type
@@ -10882,652 +10881,653 @@ BuildingSurface:Detailed,
     5.087216214941;          !- Vertex 4 Y-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 Roof (G.5.E24),      !- Name
+    EL7 Roof (G.5.E24),    !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -5.353507200000,         !- Number of Vertices
-    33.738952080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -5.353507200000,         !- Vertex 1 Z-coordinate {m}
-    29.471752080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -2.372849400456,         !- Vertex 2 Z-coordinate {m}
-    29.471752080000,         !- Vertex 3 X-coordinate {m}
-    3.980703558267,          !- Vertex 3 Y-coordinate {m}
-    -2.372849400456,         !- Vertex 3 Z-coordinate {m}
-    36.719896080000,         !- Vertex 4 X-coordinate {m}
-    3.980703558267;          !- Vertex 4 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL7 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -5.353507200000,         !- Vertex 1 X-coordinate {m}
+    33.738952080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -5.353507200000,         !- Vertex 2 X-coordinate {m}
+    29.471752080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -2.372849400456,         !- Vertex 3 X-coordinate {m}
+    29.471752080000,         !- Vertex 3 Y-coordinate {m}
+    3.980703558267,          !- Vertex 3 Z-coordinate {m}
+    -2.372849400456,         !- Vertex 4 X-coordinate {m}
+    36.719896080000,         !- Vertex 4 Y-coordinate {m}
+    3.980703558267;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 Soffet (G.5.E14),    !- Name
+    EL7 Soffet (G.5.E14),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    30.081352080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    0.609600000000,          !- Vertex 1 Z-coordinate {m}
-    30.081352080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    0.609600000000,          !- Vertex 2 Z-coordinate {m}
-    49.189264080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    48.579664080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.609600000000,          !- Vertex 1 X-coordinate {m}
+    30.081352080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    30.081352080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    48.579664080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    0.609600000000,          !- Vertex 4 X-coordinate {m}
+    49.189264080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 Soffet (G.5.E16),    !- Name
+    EL7 Soffet (G.5.E16),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -4.742688000000,         !- Number of Vertices
-    48.580304160000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    48.580304160000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    0.609600000000,          !- Vertex 2 Z-coordinate {m}
-    49.189904160000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -4.133088000000,         !- Vertex 3 Z-coordinate {m}
-    49.189904160000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.609600000000,         !- Vertex 1 X-coordinate {m}
+    49.189904160000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    48.580304160000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -4.742688000000,          !- Vertex 3 X-coordinate {m}
+    48.580304160000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -4.133088000000,         !- Vertex 4 X-coordinate {m}
+    49.189904160000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 Soffet (G.5.E18),    !- Name
+    EL7 Soffet (G.5.E18),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -4.743907200000,         !- Number of Vertices
-    48.580304160000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -4.134307200000,         !- Vertex 1 Z-coordinate {m}
-    49.189904160000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -4.134307200000,         !- Vertex 2 Z-coordinate {m}
-    52.847504160000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -4.743907200000,         !- Vertex 3 Z-coordinate {m}
-    52.847504160000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -4.134307200000,         !- Vertex 1 X-coordinate {m}
+    49.189904160000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 2 X-coordinate {m}
+    48.581523360000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 3 X-coordinate {m}
+    52.847504160000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -4.134307200000,         !- Vertex 4 X-coordinate {m}
+    52.847504160000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
+
 
 BuildingSurface:Detailed,
-    EL7 Soffet (G.5.E21),    !- Name
+    EL7 Soffet (G.5.E21),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -10.097444880000,        !- Number of Vertices
-    33.739592160000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    34.349192160000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 2 Z-coordinate {m}
-    52.847504160000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -10.097444880000,        !- Vertex 3 Z-coordinate {m}
-    52.847504160000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -10.097444880000,        !- Vertex 1 X-coordinate {m}
+    33.739592160000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -10.097444880000,         !- Vertex 2 X-coordinate {m}
+    52.847504160000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    52.847504160000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,        !- Vertex 4 X-coordinate {m}
+    34.349192160000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 Soffet (G.5.E23),    !- Name
+    EL7 Soffet (G.5.E23),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -10.097444880000,        !- Number of Vertices
-    33.738952080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -5.354756880000,         !- Vertex 1 Z-coordinate {m}
-    33.738952080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -4.745156880000,         !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 3 Z-coordinate {m}
-    34.348552080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -4.745156880000,        !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -5.354756880000,         !- Vertex 2 X-coordinate {m}
+    33.738952080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -10.097444880000,         !- Vertex 3 X-coordinate {m}
+    33.738952080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 Soffet (G.5.E25),    !- Name
+    EL7 Soffet (G.5.E25),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -5.353507200000,         !- Number of Vertices
-    30.081352080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -4.743907200000,         !- Vertex 1 Z-coordinate {m}
-    30.081352080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -4.743907200000,         !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -5.353507200000,         !- Vertex 3 Z-coordinate {m}
-    33.738952080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -4.743907200000,         !- Vertex 1 X-coordinate {m}
+    30.081352080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -5.353507200000,         !- Vertex 2 X-coordinate {m}
+    30.081352080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -5.353507200000,         !- Vertex 3 X-coordinate {m}
+    33.738952080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -4.743907200000,         !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 UnderRf (G.N2.I5)-mirror,  !- Name
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Surface,                 !- Space Name
-    EL7 UnderRf (G.N2.I5),   !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    41.465632080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 1 Z-coordinate {m}
-    41.465632080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 2 Z-coordinate {m}
-    48.582712080000,         !- Vertex 3 X-coordinate {m}
-    0.000000000000,          !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    48.582712080000,         !- Vertex 4 X-coordinate {m}
-    0.000000000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL7 UnderRf (G.N2.I5), !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    41.465632080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    41.465632080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    48.579664080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    48.579664080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 UnderRf (G.N4.I7)-mirror,  !- Name
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Surface,                 !- Space Name
-    EL7 UnderRf (G.N4.I7),   !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -4.742688000000,         !- Number of Vertices
-    48.579664080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -9.485376000000,         !- Vertex 1 Z-coordinate {m}
-    48.579664080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -9.485376000000,         !- Vertex 2 Z-coordinate {m}
-    52.846864080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 3 Z-coordinate {m}
-    52.846864080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL7 UnderRf (G.N4.I7), !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -4.742688000000,         !- Vertex 1 X-coordinate {m}
+    48.579664080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -9.485376000000,         !- Vertex 2 X-coordinate {m}
+    48.579664080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -9.485376000000,         !- Vertex 3 X-coordinate {m}
+    52.846864080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 4 X-coordinate {m}
+    52.846864080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 UnderRf (G.S1.I3)-mirror,  !- Name
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Surface,                 !- Space Name
-    EL7 UnderRf (G.S1.I3),   !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    34.348552080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 1 Z-coordinate {m}
-    34.348552080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 2 Z-coordinate {m}
-    41.465632080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    41.465632080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL7 UnderRf (G.S1.I3), !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 2 X-coordinate {m}
+    34.348552080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 3 X-coordinate {m}
+    41.465632080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    41.465632080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 UnderRf (G.S3.I6)-mirror,  !- Name
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Surface,                 !- Space Name
-    EL7 UnderRf (G.S3.I6),   !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    30.081352080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 1 Z-coordinate {m}
-    30.081352080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    34.348552080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL7 Roof Zone 1,       !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL7 UnderRf (G.S3.I6), !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    30.081352080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 2 X-coordinate {m}
+    30.081352080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 3 X-coordinate {m}
+    34.348552080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 East Wall (G.S1.E1), !- Name
+    EL7 East Wall (G.S1.E1),  !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    34.348552080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
     0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    41.465632080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    41.465632080000,         !- Vertex 2 Y-coordinate {m}
     0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    41.465632080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    34.348552080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    41.465632080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 Flr (G.S1.U1),       !- Name
+    EL7 Flr (G.S1.U1),     !- Name
     Floor,                   !- Surface Type
-    Floor abv Crawl Space,   !- Construction Name
+    Floor abv Crawl Space,  !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
-    Zone,                    !- Space Name
-    EL7 CrwSpc,              !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    34.348552080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 1 Z-coordinate {m}
-    34.348552080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 2 Z-coordinate {m}
-    41.465632080000,         !- Vertex 3 X-coordinate {m}
-    0.000000000000,          !- Vertex 3 Y-coordinate {m}
+    Zone,                  !- Outside Boundary Condition
+    EL7 CrwSpc,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 2 X-coordinate {m}
+    34.348552080000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 3 X-coordinate {m}
+    41.465632080000,         !- Vertex 3 Y-coordinate {m}
     0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    41.465632080000,         !- Vertex 4 X-coordinate {m}
-    0.000000000000;          !- Vertex 4 Y-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    41.465632080000,         !- Vertex 4 Y-coordinate {m}
+    0.000000000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 North Wall (G.S1.I1),!- Name
+    EL7 North Wall (G.S1.I1),  !- Name
     Wall,                    !- Surface Type
-    EL1 IWall Construction,  !- Construction Name
+    EL1 IWall Construction,!- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
-    Surface,                 !- Space Name
-    EL7 North Wall (G.S1.I1)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    41.465632080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 1 Z-coordinate {m}
-    41.465632080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 2 Z-coordinate {m}
-    41.465632080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    41.465632080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Surface,                 !- Outside Boundary Condition
+    EL7 North Wall (G.S1.I1)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    41.465632080000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 2 X-coordinate {m}
+    41.465632080000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 3 X-coordinate {m}
+    41.465632080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    41.465632080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 South Wall (G.S1.E3),!- Name
+    EL7 South Wall (G.S1.E3),  !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.488424000000,         !- Number of Vertices
-    34.348552080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 1 Z-coordinate {m}
-    34.348552080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 3 Z-coordinate {m}
-    34.348552080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
-
-BuildingSurface:Detailed,
-    EL7 South Wall (G.S1.I2),!- Name
-    Wall,                    !- Surface Type
-    Garage Int Wall,         !- Construction Name
-    EL7 South Perim Zn (G.S1),  !- Zone Name
-    Surface,                 !- Space Name
-    EL7 South Wall (G.S1.I2)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -4.742688000000,         !- Number of Vertices
-    34.348552080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.488424000000,         !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
     0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    34.348552080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
+    -4.742688000000,         !- Vertex 2 X-coordinate {m}
+    34.348552080000,         !- Vertex 2 Y-coordinate {m}
     0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 3 Z-coordinate {m}
-    34.348552080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    -4.742688000000,         !- Vertex 3 X-coordinate {m}
+    34.348552080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 UnderRf (G.S1.I3),   !- Name
+    EL7 South Wall (G.S1.I2),  !- Name
+    Wall,                    !- Surface Type
+    Garage Int Wall,       !- Construction Name
+    EL7 South Perim Zn (G.S1),  !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL7 South Wall (G.S1.I2)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -4.742688000000,         !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    34.348552080000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    34.348552080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
+
+BuildingSurface:Detailed,
+    EL7 UnderRf (G.S1.I3), !- Name
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
-    Surface,                 !- Space Name
-    EL7 UnderRf (G.S1.I3)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.488424000000,         !- Number of Vertices
-    34.348552080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    34.348552080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    41.465632080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 3 Z-coordinate {m}
-    41.465632080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Surface,                 !- Outside Boundary Condition
+    EL7 UnderRf (G.S1.I3)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.488424000000,         !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    34.348552080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    41.465632080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 4 X-coordinate {m}
+    41.465632080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 West Wall (G.S1.E2), !- Name
+    EL7 West Wall (G.S1.E2),  !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
     EL7 South Perim Zn (G.S1),  !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.488424000000,         !- Number of Vertices
-    41.465632080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 1 Z-coordinate {m}
-    34.348552080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.488424000000,         !- Vertex 3 Z-coordinate {m}
-    41.465632080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
-
-BuildingSurface:Detailed,
-    EL7 East Wall (G.S3.E7), !- Name
-    Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
-    EL7 South Perim Zn (G.S3),  !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    30.081352080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.488424000000,         !- Vertex 1 X-coordinate {m}
+    41.465632080000,         !- Vertex 1 Y-coordinate {m}
     0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    34.348552080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
+    -9.488424000000,         !- Vertex 2 X-coordinate {m}
+    34.348552080000,         !- Vertex 2 Y-coordinate {m}
     0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    30.081352080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    -9.488424000000,         !- Vertex 3 X-coordinate {m}
+    34.348552080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.488424000000,         !- Vertex 4 X-coordinate {m}
+    41.465632080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 Flr (G.S3.U3),       !- Name
-    Floor,                   !- Surface Type
-    Exterior Floor,          !- Construction Name
+    EL7 East Wall (G.S3.E7),  !- Name
+    Wall,                    !- Surface Type
+    Garage Ext Wall,       !- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
-    Ground,                  !- Space Name
-    Garage Foundation,       !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    30.081352080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 1 Z-coordinate {m}
-    30.081352080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    0.000000000000,          !- Vertex 3 Y-coordinate {m}
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    30.081352080000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    34.348552080000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    34.348552080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    30.081352080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
+
+BuildingSurface:Detailed,
+    EL7 Flr (G.S3.U3),     !- Name
+    Floor,                   !- Surface Type
+    Exterior Floor,  !- Construction Name
+    EL7 South Perim Zn (G.S3),  !- Zone Name
+    Ground,                  !- Outside Boundary Condition
+    Garage Foundation,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    30.081352080000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 2 X-coordinate {m}
+    30.081352080000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 3 X-coordinate {m}
+    34.348552080000,         !- Vertex 3 Y-coordinate {m}
     0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    34.348552080000,         !- Vertex 4 X-coordinate {m}
-    0.000000000000;          !- Vertex 4 Y-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    0.000000000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 South Wall (G.S1.I2)-mirror,  !- Name
     Wall,                    !- Surface Type
-    Garage Int Wall-mirror,  !- Construction Name
+    Garage Int Wall-mirror,!- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
-    Surface,                 !- Space Name
-    EL7 South Wall (G.S1.I2),!- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.000000000000,          !- Number of Vertices
-    34.348552080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 1 Z-coordinate {m}
-    34.348552080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    34.348552080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
-
-BuildingSurface:Detailed,
-    EL7 South Wall (G.S3.E9),!- Name
-    Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
-    EL7 South Perim Zn (G.S3),  !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -4.742688000000,         !- Number of Vertices
-    30.081352080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
+    Surface,                 !- Outside Boundary Condition
+    EL7 South Wall (G.S1.I2),  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
     0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    30.081352080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
+    -4.742688000000,         !- Vertex 2 X-coordinate {m}
+    34.348552080000,         !- Vertex 2 Y-coordinate {m}
     0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    30.081352080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 3 Z-coordinate {m}
-    30.081352080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    -4.742688000000,         !- Vertex 3 X-coordinate {m}
+    34.348552080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    0.000000000000,          !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 UnderRf (G.S3.I6),   !- Name
+    EL7 South Wall (G.S3.E9),  !- Name
+    Wall,                    !- Surface Type
+    Garage Ext Wall,       !- Construction Name
+    EL7 South Perim Zn (G.S3),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -4.742688000000,         !- Vertex 1 X-coordinate {m}
+    30.081352080000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    30.081352080000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    30.081352080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 4 X-coordinate {m}
+    30.081352080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
+
+BuildingSurface:Detailed,
+    EL7 UnderRf (G.S3.I6), !- Name
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
-    Surface,                 !- Space Name
-    EL7 UnderRf (G.S3.I6)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -4.742688000000,         !- Number of Vertices
-    30.081352080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    30.081352080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    34.348552080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 3 Z-coordinate {m}
-    34.348552080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Surface,                 !- Outside Boundary Condition
+    EL7 UnderRf (G.S3.I6)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -4.742688000000,         !- Vertex 1 X-coordinate {m}
+    30.081352080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
+    30.081352080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    34.348552080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL7 West Wall (G.S3.E8), !- Name
+    EL7 West Wall (G.S3.E8),  !- Name
     Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
+    Garage Ext Wall,       !- Construction Name
     EL7 South Perim Zn (G.S3),  !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -4.742688000000,         !- Number of Vertices
-    34.348552080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 1 Z-coordinate {m}
-    30.081352080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 2 Z-coordinate {m}
-    30.081352080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 3 Z-coordinate {m}
-    34.348552080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -4.742688000000,         !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 2 X-coordinate {m}
+    30.081352080000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 3 X-coordinate {m}
+    30.081352080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -4.742688000000,         !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 East Wall (G.E2.E5), !- Name
+    EL8 East Wall (G.E2.E5),  !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 East Perim Zn (G.E2),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    4.746315120000,          !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    4.746315120000,          !- Vertex 1 Z-coordinate {m}
-    69.477331200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    4.746315120000,          !- Vertex 2 Z-coordinate {m}
-    69.477331200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    4.746315120000,          !- Vertex 3 Z-coordinate {m}
-    64.734643200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 East Perim Zn (G.E2),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.746315120000,          !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    4.746315120000,          !- Vertex 2 X-coordinate {m}
+    69.477331200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    4.746315120000,          !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    4.746315120000,          !- Vertex 4 X-coordinate {m}
+    64.734643200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 East Wall (G.E2.I4), !- Name
+    EL8 East Wall (G.E2.I4),  !- Name
     Wall,                    !- Surface Type
-    Garage Int Wall,         !- Construction Name
-    EL8 East Perim Zn (G.E2),!- Zone Name
-    Surface,                 !- Space Name
-    EL8 East Wall (G.E2.I4)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    4.746315120000,          !- Number of Vertices
-    69.477331200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    4.746315120000,          !- Vertex 1 Z-coordinate {m}
-    74.223067200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    4.746315120000,          !- Vertex 2 Z-coordinate {m}
-    74.223067200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    4.746315120000,          !- Vertex 3 Z-coordinate {m}
-    69.477331200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Garage Int Wall,       !- Construction Name
+    EL8 East Perim Zn (G.E2),  !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 East Wall (G.E2.I4)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.746315120000,          !- Vertex 1 X-coordinate {m}
+    69.477331200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    4.746315120000,          !- Vertex 2 X-coordinate {m}
+    74.223067200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    4.746315120000,          !- Vertex 3 X-coordinate {m}
+    74.223067200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    4.746315120000,          !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 East Wall (G.W1.I1)-mirror,  !- Name
     Wall,                    !- Surface Type
-    EL1 IWall Construction,  !- Construction Name
-    EL8 East Perim Zn (G.E2),!- Zone Name
-    Surface,                 !- Space Name
-    EL8 East Wall (G.W1.I1), !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -2.370764880000,         !- Number of Vertices
-    74.223067200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 2 Z-coordinate {m}
-    64.734643200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 3 Z-coordinate {m}
-    74.223067200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL1 IWall Construction,!- Construction Name
+    EL8 East Perim Zn (G.E2),  !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 East Wall (G.W1.I1),  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -2.370764880000,         !- Vertex 1 X-coordinate {m}
+    74.223067200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 3 X-coordinate {m}
+    64.734643200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 4 X-coordinate {m}
+    74.223067200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 Flr (G.E2.U2),       !- Name
@@ -11554,28 +11554,28 @@ BuildingSurface:Detailed,
     0.000000000000;          !- Vertex 4 Y-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 North Wall (G.E2.E6),!- Name
+    EL8 North Wall (G.E2.E6),  !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 East Perim Zn (G.E2),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    4.746315120000,          !- Number of Vertices
-    74.223067200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 1 Z-coordinate {m}
-    74.223067200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 2 Z-coordinate {m}
-    74.223067200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    4.746315120000,          !- Vertex 3 Z-coordinate {m}
-    74.223067200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 East Perim Zn (G.E2),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.746315120000,          !- Vertex 1 X-coordinate {m}
+    74.223067200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 2 X-coordinate {m}
+    74.223067200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 3 X-coordinate {m}
+    74.223067200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    4.746315120000,          !- Vertex 4 X-coordinate {m}
+    74.223067200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 South Wall (G.E2.E4),!- Name
@@ -11700,940 +11700,916 @@ BuildingSurface:Detailed,
 BuildingSurface:Detailed,
     EL8 North Wall (G.E4.E12),  !- Name
     Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
-    EL8 East Perim Zn (G.E4),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    9.010467120000,          !- Number of Vertices
-    74.220019200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    4.743267120000,          !- Vertex 1 Z-coordinate {m}
-    74.220019200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    4.743267120000,          !- Vertex 2 Z-coordinate {m}
-    74.220019200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    9.010467120000,          !- Vertex 3 Z-coordinate {m}
-    74.220019200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Garage Ext Wall,       !- Construction Name
+    EL8 East Perim Zn (G.E4),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    9.010467120000,          !- Vertex 1 X-coordinate {m}
+    74.220019200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    4.743267120000,          !- Vertex 2 X-coordinate {m}
+    74.220019200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    4.743267120000,          !- Vertex 3 X-coordinate {m}
+    74.220019200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    9.010467120000,          !- Vertex 4 X-coordinate {m}
+    74.220019200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 South Wall (G.E4.E10),  !- Name
     Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
-    EL8 East Perim Zn (G.E4),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    4.743267120000,          !- Number of Vertices
-    69.477331200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    9.010467120000,          !- Vertex 1 Z-coordinate {m}
-    69.477331200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    9.010467120000,          !- Vertex 2 Z-coordinate {m}
-    69.477331200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    4.743267120000,          !- Vertex 3 Z-coordinate {m}
-    69.477331200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Garage Ext Wall,       !- Construction Name
+    EL8 East Perim Zn (G.E4),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.743267120000,          !- Vertex 1 X-coordinate {m}
+    69.477331200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    9.010467120000,          !- Vertex 2 X-coordinate {m}
+    69.477331200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    9.010467120000,          !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    4.743267120000,          !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 UnderRf (G.E4.I7),   !- Name
+    EL8 UnderRf (G.E4.I7), !- Name
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
-    EL8 East Perim Zn (G.E4),!- Zone Name
-    Surface,                 !- Space Name
-    EL8 UnderRf (G.E4.I7)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    4.743267120000,          !- Number of Vertices
-    69.477331200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    9.010467120000,          !- Vertex 1 Z-coordinate {m}
-    69.477331200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    9.010467120000,          !- Vertex 2 Z-coordinate {m}
-    74.220019200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    4.743267120000,          !- Vertex 3 Z-coordinate {m}
-    74.220019200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 East Perim Zn (G.E4),  !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 UnderRf (G.E4.I7)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.743267120000,          !- Vertex 1 X-coordinate {m}
+    69.477331200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    9.010467120000,          !- Vertex 2 X-coordinate {m}
+    69.477331200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    9.010467120000,          !- Vertex 3 X-coordinate {m}
+    74.220019200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    4.743267120000,          !- Vertex 4 X-coordinate {m}
+    74.220019200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Gable (G.5.E19),     !- Name
+    EL8 Gable (G.5.E19),   !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    3,                       !- View Factor to Ground
-    9.011107200000,          !- Number of Vertices
-    68.868950400000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    9.011107200000,          !- Vertex 1 Z-coordinate {m}
-    74.830838400000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    9.011107200000,          !- Vertex 2 Z-coordinate {m}
-    71.849894400000,         !- Vertex 3 X-coordinate {m}
-    3.980688000000,          !- Vertex 3 Y-coordinate {m}
-    ;                        !- Vertex 3 Z-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    3,                       !- Number of Vertices
+    9.011107200000,          !- Vertex 1 X-coordinate {m}
+    68.868950400000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    9.011107200000,          !- Vertex 2 X-coordinate {m}
+    74.830838400000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    9.011107200000,          !- Vertex 3 X-coordinate {m}
+    71.849894400000,         !- Vertex 3 Y-coordinate {m}
+    3.980688000000;          !- Vertex 3 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Gable (G.5.E26),     !- Name
+    EL8 Gable (G.5.E26),   !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    3,                       !- View Factor to Ground
-    -13.755044880000,        !- Number of Vertices
-    70.088150400000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 1 Z-coordinate {m}
-    64.126262400000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 2 Z-coordinate {m}
-    67.107206400000,         !- Vertex 3 X-coordinate {m}
-    3.980688000000,          !- Vertex 3 Y-coordinate {m}
-    ;                        !- Vertex 3 Z-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    3,                       !- Number of Vertices
+    -13.755044880000,        !- Vertex 1 X-coordinate {m}
+    70.088150400000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 2 X-coordinate {m}
+    64.126262400000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 3 X-coordinate {m}
+    67.107206400000,         !- Vertex 3 Y-coordinate {m}
+    3.980688000000;          !- Vertex 3 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Roof (G.5.E13),      !- Name
+    EL8 Roof (G.5.E13),    !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    5,                       !- View Factor to Ground
-    -7.116500880000,         !- Number of Vertices
-    64.125043200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    5.352867120000,          !- Vertex 1 Z-coordinate {m}
-    64.125043200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    0.000579120000,          !- Vertex 2 Z-coordinate {m}
-    69.478625049412,         !- Vertex 3 X-coordinate {m}
-    5.087216214941,          !- Vertex 3 Y-coordinate {m}
-    -4.745156880000,         !- Vertex 3 Z-coordinate {m}
-    69.478625049412,         !- Vertex 4 X-coordinate {m}
-    5.087216214941,          !- Vertex 4 Y-coordinate {m}
-    -7.116500880000,         !- Vertex 4 Z-coordinate {m}
-    67.105700999544,         !- Vertex 5 X-coordinate {m}
-    3.980703558267;          !- Vertex 5 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    5,                       !- Number of Vertices
+    -7.116500880000,         !- Vertex 1 X-coordinate {m}
+    64.125043200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    5.352867120000,          !- Vertex 2 X-coordinate {m}
+    64.125043200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    0.000579120000,          !- Vertex 3 X-coordinate {m}
+    69.478625049412,         !- Vertex 3 Y-coordinate {m}
+    5.087216214941,          !- Vertex 3 Z-coordinate {m}
+    -4.745156880000,         !- Vertex 4 X-coordinate {m}
+    69.478625049412,         !- Vertex 4 Y-coordinate {m}
+    5.087216214941,          !- Vertex 4 Z-coordinate {m}
+    -7.116500880000,         !- Vertex 5 X-coordinate {m}
+    67.105700999544,         !- Vertex 5 Y-coordinate {m}
+    3.980703558267;          !- Vertex 5 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Roof (G.5.E15),      !- Name
+    EL8 Roof (G.5.E15),    !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    5.353507200000,          !- Number of Vertices
-    64.125043200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    5.353507200000,          !- Vertex 1 Z-coordinate {m}
-    68.867731200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    2.372849400456,          !- Vertex 2 Z-coordinate {m}
-    71.851723200000,         !- Vertex 3 X-coordinate {m}
-    3.980703558267,          !- Vertex 3 Y-coordinate {m}
-    -0.000074649412,         !- Vertex 3 Z-coordinate {m}
-    69.477331200000,         !- Vertex 4 X-coordinate {m}
-    5.087216214941;          !- Vertex 4 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    5.353507200000,          !- Vertex 1 X-coordinate {m}
+    64.125043200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    5.353507200000,          !- Vertex 2 X-coordinate {m}
+    68.867731200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    2.372849400456,          !- Vertex 3 X-coordinate {m}
+    71.851723200000,         !- Vertex 3 Y-coordinate {m}
+    3.980703558267,          !- Vertex 3 Z-coordinate {m}
+    -0.000074649412,         !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    5.087216214941;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Roof (G.5.E17),      !- Name
+    EL8 Roof (G.5.E17),    !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    5.353507200000,          !- Number of Vertices
-    68.868950400000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    9.620707200000,          !- Vertex 1 Z-coordinate {m}
-    68.868950400000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    9.620707200000,          !- Vertex 2 Z-coordinate {m}
-    71.849608199544,         !- Vertex 3 X-coordinate {m}
-    3.980703558267,          !- Vertex 3 Y-coordinate {m}
-    2.372563200000,          !- Vertex 3 Z-coordinate {m}
-    71.849608199544,         !- Vertex 4 X-coordinate {m}
-    3.980703558267;          !- Vertex 4 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    5.353507200000,          !- Vertex 1 X-coordinate {m}
+    68.868950400000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    9.620707200000,          !- Vertex 2 X-coordinate {m}
+    68.868950400000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    9.620707200000,          !- Vertex 3 X-coordinate {m}
+    71.849608199544,         !- Vertex 3 Y-coordinate {m}
+    3.980703558267,          !- Vertex 3 Z-coordinate {m}
+    2.372563200000,          !- Vertex 4 X-coordinate {m}
+    71.849608199544,         !- Vertex 4 Y-coordinate {m}
+    3.980703558267;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Roof (G.5.E20),      !- Name
+    EL8 Roof (G.5.E20),    !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    5,                       !- View Factor to Ground
-    2.372563200000,          !- Number of Vertices
-    74.832088080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -10.096804800000,        !- Vertex 1 Z-coordinate {m}
-    74.832088080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -4.744516800000,         !- Vertex 2 Z-coordinate {m}
-    69.478506230588,         !- Vertex 3 X-coordinate {m}
-    5.087216214941,          !- Vertex 3 Y-coordinate {m}
-    0.001219200000,          !- Vertex 3 Z-coordinate {m}
-    69.478506230588,         !- Vertex 4 X-coordinate {m}
-    5.087216214941,          !- Vertex 4 Y-coordinate {m}
-    2.372563200000,          !- Vertex 4 Z-coordinate {m}
-    71.851430280456,         !- Vertex 5 X-coordinate {m}
-    3.980703558267;          !- Vertex 5 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    5,                       !- Number of Vertices
+    2.372563200000,          !- Vertex 1 X-coordinate {m}
+    74.832088080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -10.096804800000,        !- Vertex 2 X-coordinate {m}
+    74.832088080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -4.744516800000,         !- Vertex 3 X-coordinate {m}
+    69.478506230588,         !- Vertex 3 Y-coordinate {m}
+    5.087216214941,          !- Vertex 3 Z-coordinate {m}
+    0.001219200000,          !- Vertex 4 X-coordinate {m}
+    69.478506230588,         !- Vertex 4 Y-coordinate {m}
+    5.087216214941,          !- Vertex 4 Z-coordinate {m}
+    2.372563200000,          !- Vertex 5 X-coordinate {m}
+    71.851430280456,         !- Vertex 5 Y-coordinate {m}
+    3.980703558267;          !- Vertex 5 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Roof (G.5.E22),      !- Name
+    EL8 Roof (G.5.E22),    !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -10.097444880000,        !- Number of Vertices
-    74.832088080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -10.097444880000,        !- Vertex 1 Z-coordinate {m}
-    70.089400080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -7.116787080456,         !- Vertex 2 Z-coordinate {m}
-    67.105408080000,         !- Vertex 3 X-coordinate {m}
-    3.980703558267,          !- Vertex 3 Y-coordinate {m}
-    -4.743863030588,         !- Vertex 3 Z-coordinate {m}
-    69.479800080000,         !- Vertex 4 X-coordinate {m}
-    5.087216214941;          !- Vertex 4 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -10.097444880000,        !- Vertex 1 X-coordinate {m}
+    74.832088080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -10.097444880000,        !- Vertex 2 X-coordinate {m}
+    70.089400080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -7.116787080456,         !- Vertex 3 X-coordinate {m}
+    67.105408080000,         !- Vertex 3 Y-coordinate {m}
+    3.980703558267,          !- Vertex 3 Z-coordinate {m}
+    -4.743863030588,         !- Vertex 4 X-coordinate {m}
+    69.479800080000,         !- Vertex 4 Y-coordinate {m}
+    5.087216214941;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Roof (G.5.E24),      !- Name
+    EL8 Roof (G.5.E24),    !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -10.097444880000,        !- Number of Vertices
-    70.088150400000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -14.364644880000,        !- Vertex 1 Z-coordinate {m}
-    70.088150400000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -14.364644880000,        !- Vertex 2 Z-coordinate {m}
-    67.107492600456,         !- Vertex 3 X-coordinate {m}
-    3.980703558267,          !- Vertex 3 Y-coordinate {m}
-    -7.116500880000,         !- Vertex 3 Z-coordinate {m}
-    67.107492600456,         !- Vertex 4 X-coordinate {m}
-    3.980703558267;          !- Vertex 4 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -10.097444880000,        !- Vertex 1 X-coordinate {m}
+    70.088150400000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -14.364644880000,        !- Vertex 2 X-coordinate {m}
+    70.088150400000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -14.364644880000,        !- Vertex 3 X-coordinate {m}
+    67.107492600456,         !- Vertex 3 Y-coordinate {m}
+    3.980703558267,          !- Vertex 3 Z-coordinate {m}
+    -7.116500880000,         !- Vertex 4 X-coordinate {m}
+    67.107492600456,         !- Vertex 4 Y-coordinate {m}
+    3.980703558267;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Soffet (G.5.E14),    !- Name
+   EL8 Soffet (G.5.E14),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -13.755044880000,        !- Number of Vertices
-    64.125043200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    5.352867120000,          !- Vertex 1 Z-coordinate {m}
-    64.125043200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    4.743267120000,          !- Vertex 2 Z-coordinate {m}
-    64.734643200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 3 Z-coordinate {m}
-    64.734643200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+        4,                       !- Number of Vertices
+        5.352867120000,        !- Vertex 1 X-coordinate {m}
+        64.125043200000,         !- Vertex 1 Y-coordinate {m}
+        2.590800000000,          !- Vertex 1 Z-coordinate {m}
+        -13.755044880000,          !- Vertex 2 X-coordinate {m}
+        64.125043200000,         !- Vertex 2 Y-coordinate {m}
+        2.590800000000,          !- Vertex 2 Z-coordinate {m}
+        -13.755044880000,          !- Vertex 3 X-coordinate {m}
+        64.734643200000,         !- Vertex 3 Y-coordinate {m}
+        2.590800000000,          !- Vertex 3 Z-coordinate {m}
+        4.743267120000,        !- Vertex 4 X-coordinate {m}
+        64.734643200000,         !- Vertex 4 Y-coordinate {m}
+        2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Soffet (G.5.E16),    !- Name
+    EL8 Soffet (G.5.E16),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    5.353507200000,          !- Number of Vertices
-    64.125043200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    5.353507200000,          !- Vertex 1 Z-coordinate {m}
-    68.867731200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    4.743907200000,          !- Vertex 2 Z-coordinate {m}
-    69.477331200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    4.743907200000,          !- Vertex 3 Z-coordinate {m}
-    64.734643200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    5.353507200000,          !- Vertex 1 X-coordinate {m}
+    64.125043200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    4.743907200000,          !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    4.743907200000,          !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    5.353507200000,          !- Vertex 4 X-coordinate {m}
+    68.867731200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Soffet (G.5.E18),    !- Name
+    EL8 Soffet (G.5.E18),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    5.353507200000,          !- Number of Vertices
-    68.868950400000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    9.011107200000,          !- Vertex 1 Z-coordinate {m}
-    68.868950400000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    9.011107200000,          !- Vertex 2 Z-coordinate {m}
-    69.478550400000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    4.743907200000,          !- Vertex 3 Z-coordinate {m}
-    69.478550400000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    9.011107200000,          !- Vertex 1 X-coordinate {m}
+    68.868950400000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    5.353507200000,          !- Vertex 2 X-coordinate {m}
+    68.868950400000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    4.745126400000,          !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    9.011107200000,          !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Soffet (G.5.E21),    !- Name
+    EL8 Soffet (G.5.E21),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487204800000,         !- Number of Vertices
-    74.222488080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    9.011107200000,          !- Vertex 1 Z-coordinate {m}
-    74.222488080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    9.011107200000,          !- Vertex 2 Z-coordinate {m}
-    74.832088080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -10.096804800000,        !- Vertex 3 Z-coordinate {m}
-    74.832088080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    9.011107200000,         !- Vertex 1 X-coordinate {m}
+    74.222488080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487204800000,          !- Vertex 2 X-coordinate {m}
+    74.222488080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -10.096804800000,          !- Vertex 3 X-coordinate {m}
+    74.832088080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    9.011107200000,        !- Vertex 4 X-coordinate {m}
+    74.832088080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Soffet (G.5.E23),    !- Name
+    EL8 Soffet (G.5.E23),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487844880000,         !- Number of Vertices
-    69.479800080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    74.222488080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -10.097444880000,        !- Vertex 2 Z-coordinate {m}
-    74.832088080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -10.097444880000,        !- Vertex 3 Z-coordinate {m}
-    70.089400080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,         !- Vertex 1 X-coordinate {m}
+    69.479800080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -10.097444880000,         !- Vertex 2 X-coordinate {m}
+    70.089400080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -10.097444880000,        !- Vertex 3 X-coordinate {m}
+    74.832088080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,        !- Vertex 4 X-coordinate {m}
+    74.222488080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Soffet (G.5.E25),    !- Name
+    EL8 Soffet (G.5.E25),  !- Name
     Floor,                   !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -13.755044880000,        !- Number of Vertices
-    69.478550400000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    69.478550400000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -10.097444880000,        !- Vertex 2 Z-coordinate {m}
-    70.088150400000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 3 Z-coordinate {m}
-    70.088150400000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,        !- Vertex 1 X-coordinate {m}
+    69.478550400000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -13.755044880000,         !- Vertex 2 X-coordinate {m}
+    69.478550400000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 3 X-coordinate {m}
+    70.088150400000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -10.097444880000,        !- Vertex 4 X-coordinate {m}
+    70.088150400000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 UnderRf (G.E2.I5)-mirror,  !- Name
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Surface,                 !- Space Name
-    EL8 UnderRf (G.E2.I5),   !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    4.746315120000,          !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 2 Z-coordinate {m}
-    74.223067200000,         !- Vertex 3 X-coordinate {m}
-    0.000000000000,          !- Vertex 3 Y-coordinate {m}
-    4.746315120000,          !- Vertex 3 Z-coordinate {m}
-    74.223067200000,         !- Vertex 4 X-coordinate {m}
-    0.000000000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 UnderRf (G.E2.I5), !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    4.743267120000,          !- Vertex 1 X-coordinate {m}
+    64.737112080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 2 X-coordinate {m}
+    64.737112080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 3 X-coordinate {m}
+    74.222488080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    4.743267120000,          !- Vertex 4 X-coordinate {m}
+    74.222488080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 UnderRf (G.E4.I7)-mirror,  !- Name
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Surface,                 !- Space Name
-    EL8 UnderRf (G.E4.I7),   !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    9.010467120000,          !- Number of Vertices
-    69.477331200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    4.743267120000,          !- Vertex 1 Z-coordinate {m}
-    69.477331200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    4.743267120000,          !- Vertex 2 Z-coordinate {m}
-    74.220019200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    9.010467120000,          !- Vertex 3 Z-coordinate {m}
-    74.220019200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 UnderRf (G.E4.I7), !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    9.010467120000,          !- Vertex 1 X-coordinate {m}
+    69.477331200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    4.743267120000,          !- Vertex 2 X-coordinate {m}
+    69.477331200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    4.743267120000,          !- Vertex 3 X-coordinate {m}
+    74.220019200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    9.010467120000,          !- Vertex 4 X-coordinate {m}
+    74.220019200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 UnderRf (G.W1.I3)-mirror,  !- Name
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Surface,                 !- Space Name
-    EL8 UnderRf (G.W1.I3),   !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -2.370764880000,         !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 2 Z-coordinate {m}
-    74.223067200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 3 Z-coordinate {m}
-    74.223067200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 UnderRf (G.W1.I3), !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -2.370764880000,         !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    74.223067200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 4 X-coordinate {m}
+    74.223067200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 UnderRf (G.W3.I6)-mirror,  !- Name
     Floor,                   !- Surface Type
     Interior Floor,          !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Surface,                 !- Space Name
-    EL8 UnderRf (G.W3.I6),   !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487844880000,         !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 2 Z-coordinate {m}
-    69.477331200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 3 Z-coordinate {m}
-    69.477331200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 Roof Zone 1,       !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 UnderRf (G.W3.I6), !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,         !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 East Wall (G.W1.I1), !- Name
+    EL8 East Wall (G.W1.I1),  !- Name
     Wall,                    !- Surface Type
-    EL1 IWall Construction,  !- Construction Name
-    EL8 West Perim Zn (G.W1),!- Zone Name
-    Surface,                 !- Space Name
-    EL8 East Wall (G.W1.I1)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -2.370764880000,         !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 1 Z-coordinate {m}
-    74.223067200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 2 Z-coordinate {m}
-    74.223067200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 3 Z-coordinate {m}
-    64.734643200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL1 IWall Construction,!- Construction Name
+    EL8 West Perim Zn (G.W1),  !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 East Wall (G.W1.I1)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -2.370764880000,         !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 2 X-coordinate {m}
+    74.223067200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 3 X-coordinate {m}
+    74.223067200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 4 X-coordinate {m}
+    64.734643200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Flr (G.W1.U1),       !- Name
+    EL8 Flr (G.W1.U1),     !- Name
     Floor,                   !- Surface Type
-    Floor abv Crawl Space,   !- Construction Name
-    EL8 West Perim Zn (G.W1),!- Zone Name
-    Zone,                    !- Space Name
-    EL8 CrwSpc,              !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -2.370764880000,         !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 2 Z-coordinate {m}
-    74.223067200000,         !- Vertex 3 X-coordinate {m}
-    0.000000000000,          !- Vertex 3 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 3 Z-coordinate {m}
-    74.223067200000,         !- Vertex 4 X-coordinate {m}
-    0.000000000000;          !- Vertex 4 Y-coordinate {m}
+    Floor abv Crawl Space,  !- Construction Name
+    EL8 West Perim Zn (G.W1),  !- Zone Name
+    Zone,                  !- Outside Boundary Condition
+    EL8 CrwSpc,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -2.370764880000,         !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    74.223067200000,         !- Vertex 3 Y-coordinate {m}
+    0.000000000000,          !- Vertex 3 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 4 X-coordinate {m}
+    74.223067200000,         !- Vertex 4 Y-coordinate {m}
+    0.000000000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 North Wall (G.W1.E2),!- Name
+    EL8 North Wall (G.W1.E2),  !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 West Perim Zn (G.W1),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -2.370764880000,         !- Number of Vertices
-    74.223067200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    74.223067200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 2 Z-coordinate {m}
-    74.223067200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 3 Z-coordinate {m}
-    74.223067200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 West Perim Zn (G.W1),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -2.370764880000,         !- Vertex 1 X-coordinate {m}
+    74.223067200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    74.223067200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    74.223067200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 4 X-coordinate {m}
+    74.223067200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 South Wall (G.W1.E1),!- Name
+    EL8 South Wall (G.W1.E1),  !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 West Perim Zn (G.W1),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487844880000,         !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 2 Z-coordinate {m}
-    64.734643200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 3 Z-coordinate {m}
-    64.734643200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 West Perim Zn (G.W1),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,         !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 3 X-coordinate {m}
+    64.734643200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 4 X-coordinate {m}
+    64.734643200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 UnderRf (G.W1.I3),   !- Name
+    EL8 UnderRf (G.W1.I3), !- Name
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
-    EL8 West Perim Zn (G.W1),!- Zone Name
-    Surface,                 !- Space Name
-    EL8 UnderRf (G.W1.I3)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487844880000,         !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -2.370764880000,         !- Vertex 2 Z-coordinate {m}
-    74.223067200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 3 Z-coordinate {m}
-    74.223067200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 West Perim Zn (G.W1),  !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 UnderRf (G.W1.I3)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,         !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -2.370764880000,         !- Vertex 3 X-coordinate {m}
+    74.223067200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 4 X-coordinate {m}
+    74.223067200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 West Wall (G.W1.E3), !- Name
+    EL8 West Wall (G.W1.E3),  !- Name
     Wall,                    !- Surface Type
     Exterior Wall,           !- Construction Name
-    EL8 West Perim Zn (G.W1),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487844880000,         !- Number of Vertices
-    74.223067200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    69.477331200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 2 Z-coordinate {m}
-    69.477331200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 3 Z-coordinate {m}
-    74.223067200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 West Perim Zn (G.W1),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,         !- Vertex 1 X-coordinate {m}
+    74.223067200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    69.477331200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 4 X-coordinate {m}
+    74.223067200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 West Wall (G.W1.I2), !- Name
+    EL8 West Wall (G.W1.I2),  !- Name
     Wall,                    !- Surface Type
-    Garage Int Wall,         !- Construction Name
-    EL8 West Perim Zn (G.W1),!- Zone Name
-    Surface,                 !- Space Name
-    EL8 West Wall (G.W1.I2)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487844880000,         !- Number of Vertices
-    69.477331200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 2 Z-coordinate {m}
-    64.734643200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 3 Z-coordinate {m}
-    69.477331200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Garage Int Wall,       !- Construction Name
+    EL8 West Perim Zn (G.W1),  !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 West Wall (G.W1.I2)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,         !- Vertex 1 X-coordinate {m}
+    69.477331200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    64.734643200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 Flr (G.W3.U3),       !- Name
+    EL8 Flr (G.W3.U3),     !- Name
     Floor,                   !- Surface Type
-    Exterior Floor,          !- Construction Name
-    EL8 West Perim Zn (G.W3),!- Zone Name
-    Ground,                  !- Space Name
-    Garage Foundation,       !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487844880000,         !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 2 Z-coordinate {m}
-    69.477331200000,         !- Vertex 3 X-coordinate {m}
-    0.000000000000,          !- Vertex 3 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 3 Z-coordinate {m}
-    69.477331200000,         !- Vertex 4 X-coordinate {m}
-    0.000000000000;          !- Vertex 4 Y-coordinate {m}
+    Exterior Floor,  !- Construction Name
+    EL8 West Perim Zn (G.W3),  !- Zone Name
+    Ground,                  !- Outside Boundary Condition
+    Garage Foundation,                        !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,         !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    0.000000000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    0.000000000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 North Wall (G.W3.E8),!- Name
+    EL8 North Wall (G.W3.E8),  !- Name
     Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
-    EL8 West Perim Zn (G.W3),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487844880000,         !- Number of Vertices
-    69.477331200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 1 Z-coordinate {m}
-    69.477331200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 2 Z-coordinate {m}
-    69.477331200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 3 Z-coordinate {m}
-    69.477331200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Garage Ext Wall,       !- Construction Name
+    EL8 West Perim Zn (G.W3),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,         !- Vertex 1 X-coordinate {m}
+    69.477331200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 2 X-coordinate {m}
+    69.477331200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 South Wall (G.W3.E7),!- Name
+    EL8 South Wall (G.W3.E7),  !- Name
     Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
-    EL8 West Perim Zn (G.W3),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -13.755044880000,        !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 2 Z-coordinate {m}
-    64.734643200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 3 Z-coordinate {m}
-    64.734643200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Garage Ext Wall,       !- Construction Name
+    EL8 West Perim Zn (G.W3),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -13.755044880000,        !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    64.734643200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 4 X-coordinate {m}
+    64.734643200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 UnderRf (G.W3.I6),   !- Name
+    EL8 UnderRf (G.W3.I6), !- Name
     Ceiling,                 !- Surface Type
     Interior Ceiling,        !- Construction Name
-    EL8 West Perim Zn (G.W3),!- Zone Name
-    Surface,                 !- Space Name
-    EL8 UnderRf (G.W3.I6)-mirror,  !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -13.755044880000,        !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 2 Z-coordinate {m}
-    69.477331200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 3 Z-coordinate {m}
-    69.477331200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    EL8 West Perim Zn (G.W3),  !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 UnderRf (G.W3.I6)-mirror,  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -13.755044880000,        !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 West Wall (G.W1.I2)-mirror,  !- Name
     Wall,                    !- Surface Type
-    Garage Int Wall-mirror,  !- Construction Name
-    EL8 West Perim Zn (G.W3),!- Zone Name
-    Surface,                 !- Space Name
-    EL8 West Wall (G.W1.I2), !- Outside Boundary Condition
-    NoSun,                   !- Outside Boundary Condition Object
-    NoWind,                  !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -9.487844880000,         !- Number of Vertices
-    64.734643200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 1 Z-coordinate {m}
-    69.477331200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 2 Z-coordinate {m}
-    69.477331200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -9.487844880000,         !- Vertex 3 Z-coordinate {m}
-    64.734643200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Garage Int Wall-mirror,!- Construction Name
+    EL8 West Perim Zn (G.W3),  !- Zone Name
+    Surface,                 !- Outside Boundary Condition
+    EL8 West Wall (G.W1.I2),  !- Outside Boundary Condition Object
+    NoSun,                   !- Sun Exposure
+    NoWind,                  !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -9.487844880000,         !- Vertex 1 X-coordinate {m}
+    64.734643200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    69.477331200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 4 X-coordinate {m}
+    64.734643200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
-    EL8 West Wall (G.W3.E9), !- Name
+    EL8 West Wall (G.W3.E9),  !- Name
     Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
-    EL8 West Perim Zn (G.W3),!- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -13.755044880000,        !- Number of Vertices
-    69.477331200000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 1 Z-coordinate {m}
-    64.734643200000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 2 Z-coordinate {m}
-    64.734643200000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -13.755044880000,        !- Vertex 3 Z-coordinate {m}
-    69.477331200000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+    Garage Ext Wall,       !- Construction Name
+    EL8 West Perim Zn (G.W3),  !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -13.755044880000,        !- Vertex 1 X-coordinate {m}
+    69.477331200000,         !- Vertex 1 Y-coordinate {m}
+    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
+    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 3 X-coordinate {m}
+    64.734643200000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    -13.755044880000,        !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
-BuildingSurface:Detailed,
-    E3D108,                  !- Name
-    Wall,                    !- Surface Type
-    Garage Ext Wall,         !- Construction Name
-    EL7 North Perim Zn (G.N4),  !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -4.742688000000,         !- Number of Vertices
-    48.582712080000,         !- Vertex 1 X-coordinate {m}
-    0.000000000000,          !- Vertex 1 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 1 Z-coordinate {m}
-    52.846864080000,         !- Vertex 2 X-coordinate {m}
-    0.000000000000,          !- Vertex 2 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 2 Z-coordinate {m}
-    52.846864080000,         !- Vertex 3 X-coordinate {m}
-    2.590800000000,          !- Vertex 3 Y-coordinate {m}
-    -4.742688000000,         !- Vertex 3 Z-coordinate {m}
-    48.582712080000,         !- Vertex 4 X-coordinate {m}
-    2.590800000000;          !- Vertex 4 Y-coordinate {m}
+
 
 BuildingSurface:Detailed,
     7C5E9E,                  !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -14.364644880000,        !- Number of Vertices
-    64.125043200000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -7.116500880000,         !- Vertex 1 Z-coordinate {m}
-    64.125043200000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -7.116500880000,         !- Vertex 2 Z-coordinate {m}
-    67.105700999544,         !- Vertex 3 X-coordinate {m}
-    3.980703558267,          !- Vertex 3 Y-coordinate {m}
-    -14.364644880000,        !- Vertex 3 Z-coordinate {m}
-    67.105700999544,         !- Vertex 4 X-coordinate {m}
-    3.980703558267;          !- Vertex 4 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -14.364644880000,        !- Vertex 1 X-coordinate {m}
+    64.125043200000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -7.116500880000,         !- Vertex 2 X-coordinate {m}
+    64.125043200000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -7.116500880000,         !- Vertex 3 X-coordinate {m}
+    67.105700999544,         !- Vertex 3 Y-coordinate {m}
+    3.980703558267,          !- Vertex 3 Z-coordinate {m}
+    -14.364644880000,        !- Vertex 4 X-coordinate {m}
+    67.105700999544,         !- Vertex 4 Y-coordinate {m}
+    3.980703558267;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     A15DED,                  !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL8 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    9.620707200000,          !- Number of Vertices
-    74.832088080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    2.372563200000,          !- Vertex 1 Z-coordinate {m}
-    74.832088080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    2.372563200000,          !- Vertex 2 Z-coordinate {m}
-    71.851430280456,         !- Vertex 3 X-coordinate {m}
-    3.980703558267,          !- Vertex 3 Y-coordinate {m}
-    9.620707200000,          !- Vertex 3 Z-coordinate {m}
-    71.851430280456,         !- Vertex 4 X-coordinate {m}
-    3.980703558267;          !- Vertex 4 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL8 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    9.620707200000,          !- Vertex 1 X-coordinate {m}
+    74.832088080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    2.372563200000,          !- Vertex 2 X-coordinate {m}
+    74.832088080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    2.372563200000,          !- Vertex 3 X-coordinate {m}
+    71.851430280456,         !- Vertex 3 Y-coordinate {m}
+    3.980703558267,          !- Vertex 3 Z-coordinate {m}
+    9.620707200000,          !- Vertex 4 X-coordinate {m}
+    71.851430280456,         !- Vertex 4 Y-coordinate {m}
+    3.980703558267;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     99C982,                  !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    -10.097444880000,        !- Number of Vertices
-    53.457104160000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    -10.097444880000,        !- Vertex 1 Z-coordinate {m}
-    46.208960160000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -7.116787080456,         !- Vertex 2 Z-coordinate {m}
-    46.208960160000,         !- Vertex 3 X-coordinate {m}
-    3.980703558267,          !- Vertex 3 Y-coordinate {m}
-    -7.116787080456,         !- Vertex 3 Z-coordinate {m}
-    53.457104160000,         !- Vertex 4 X-coordinate {m}
-    3.980703558267;          !- Vertex 4 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL7 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    -10.097444880000,        !- Vertex 1 X-coordinate {m}
+    53.457104160000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -10.097444880000,        !- Vertex 2 X-coordinate {m}
+    46.208960160000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -7.116787080456,         !- Vertex 3 X-coordinate {m}
+    46.208960160000,         !- Vertex 3 Y-coordinate {m}
+    3.980703558267,          !- Vertex 3 Z-coordinate {m}
+    -7.116787080456,         !- Vertex 4 X-coordinate {m}
+    53.457104160000,         !- Vertex 4 Y-coordinate {m}
+    3.980703558267;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     D47683,                  !- Name
     Roof,                    !- Surface Type
-    EL2 Roof Construction,   !- Construction Name
-    EL7 Roof Zone 1,         !- Zone Name
-    Outdoors,                !- Space Name
-    ,                        !- Outside Boundary Condition
-    SunExposed,              !- Outside Boundary Condition Object
-    WindExposed,             !- Sun Exposure
-    ,                        !- Wind Exposure
-    4,                       !- View Factor to Ground
-    0.609600000000,          !- Number of Vertices
-    29.471752080000,         !- Vertex 1 X-coordinate {m}
-    2.590800000000,          !- Vertex 1 Y-coordinate {m}
-    0.609600000000,          !- Vertex 1 Z-coordinate {m}
-    36.719896080000,         !- Vertex 2 X-coordinate {m}
-    2.590800000000,          !- Vertex 2 Y-coordinate {m}
-    -2.371057799544,         !- Vertex 2 Z-coordinate {m}
-    36.719896080000,         !- Vertex 3 X-coordinate {m}
-    3.980703558267,          !- Vertex 3 Y-coordinate {m}
-    -2.371057799544,         !- Vertex 3 Z-coordinate {m}
-    29.471752080000,         !- Vertex 4 X-coordinate {m}
-    3.980703558267;          !- Vertex 4 Y-coordinate {m}
+    EL2 Roof Construction, !- Construction Name
+    EL7 Roof Zone 1,       !- Zone Name
+    Outdoors,                !- Outside Boundary Condition
+    ,                        !- Outside Boundary Condition Object
+    SunExposed,              !- Sun Exposure
+    WindExposed,             !- Wind Exposure
+    ,                        !- View Factor to Ground
+    4,                       !- Number of Vertices
+    0.609600000000,          !- Vertex 1 X-coordinate {m}
+    29.471752080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    0.609600000000,          !- Vertex 2 X-coordinate {m}
+    36.719896080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -2.371057799544,         !- Vertex 3 X-coordinate {m}
+    36.719896080000,         !- Vertex 3 Y-coordinate {m}
+    3.980703558267,          !- Vertex 3 Z-coordinate {m}
+    -2.371057799544,         !- Vertex 4 X-coordinate {m}
+    29.471752080000,         !- Vertex 4 Y-coordinate {m}
+    3.980703558267;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 CrwSpc East Wall,    !- Name
@@ -15442,7 +15418,7 @@ FenestrationSurface:Detailed,
     EL7 East Door (G.N4.E10.D1),  !- Name
     Door,                    !- Surface Type
     Sgl Lyr Unins Mtl Door,  !- Construction Name
-    E3D108,                  !- Building Surface Name
+    EL7 East Wall (G.N4.E10),                  !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     ,                        !- View Factor to Ground
     ,                        !- Frame and Divider Name
@@ -22934,7 +22910,7 @@ Output:Meter,
     hourly;                  !- Reporting Frequency
 
 Output:Meter,
-    Gas:Facility,            !- Key Name
+    NaturalGas:Facility,            !- Key Name
     hourly;                  !- Reporting Frequency
 
 

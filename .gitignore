@@ -5,6 +5,11 @@ results-summary.csv
 modelkit_cmd_output.txt
 results-profile-elec.csv
 results-profile-gas.csv
+current_msr_mat.csv
+sfm_annual.csv
+sfm_hourly_wb.csv
+sim_annual.csv
+sim_hourly_wb.csv
 
 # OS generated files #
 ######################
@@ -13,3 +18,5 @@ results-profile-gas.csv
 # Other #
 #########
 stderr
+scripts/data transformation/sfm_annual.csv
+scripts/data transformation/sfm_hourly_wb.csv

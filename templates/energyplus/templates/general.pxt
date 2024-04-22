@@ -1,0 +1,242 @@
+<%#INITIALIZE
+parameter "run_name", :name=>"Run Name", :description=>"Descriptive name of this simulation run",
+  :default=>"EnergyPlus Simulation", :domain=>String
+parameter "run_control", :name=>"Run Control", :description=>"Sets the simulation run control type",
+  :default=>"ANNUAL", :domain=>String  # (ANNUAL | SIZING | TEST)
+parameter "orientation", :name=>"Orientation", :description=>"0 = Front faces South, 180 = Front faces North, 90 = Front faces West, 270 = Front faces East",
+  :default=>0, :domain=>Numeric  # Interval [0-360]
+
+parameter "terrain", :default=>"City", :domain=>String
+
+# name runperiods?  "Run Period 1"
+
+# rename: sizing_heat_factor   I think?
+
+# DNV: EnergyPlus auto-size function consistently underestimates system capacities (compared to survey data of installed
+# capacity like CEUS where the 2006 study has a table of capacity per floor area for several commercial building types).
+# As a quick fix, stakeholders decided to adjusted the heat_sizing_factor and cool_sizing_factor defaults by multiplying the ASHRAE factors 
+# by two to get values of 2.3 and 2.5 for cooling and heating respectively.
+parameter "heat_sizing_factor", :name=>"Heating Sizing Factor", :description=>"Safety factor used in heat sizing calculations",
+  :default=>2.5, :domain=>Numeric  # Interval (0, 10]
+parameter "cool_sizing_factor", :name=>"Cooling Sizing Factor", :description=>"Safety factor used in cool sizing calculations",
+  :default=>2.3, :domain=>Numeric  # Interval (0, 10]
+parameter "timestep", :name=>"Timesteps Per Hour", :description=>"Number of simulation timesteps per hour",
+  :default=>4, :domain=>Integer  # Interval [1, 60]
+parameter "sizing_window", :name=>"Sizing Window", :description=>"Duration of averaging window for sizing (hours)",
+  :default=>1, :domain=>Integer  # Interval [1, 24]
+
+parameter "min_hvac_timestep", :default=>1  # Minimum HVAC system timestep (minutes)
+parameter "max_hvac_iterations", :default=>25
+
+parameter "min_warmup_days", :default=>2
+parameter "max_warmup_days", :default=>25
+parameter "loads_convergence", :default=>0.5  # Loads convergence tolerance (fraction of load)
+parameter "temp_convergence", :default=>0.5  # Temperature convergence tolerance (deltaC)
+
+parameter "zone_air_heat_balance_algorithm", :default=>"AnalyticalSolution"
+
+parameter "shadow_frequency", :default=>7  # Shadow calculation frequency (days)
+parameter "max_shadow_figures", :default=>15000  # Maximum figures in shadow overlap calculation
+%>
+<%#
+Rename this whole template??? run_control.pxt  ?
+
+- general, generic
+- the first thing: prologue, preface, initial, origin, start, introduction,
+  primary
+
+- tip, point, entry, entrance, forefront
+
+- antecedent, precursor, anterior
+
+
+
+If run_periods input is added, don't need run_control parameter?
+e.g. if run_periods is nil, or empty [], then do sizing-only run.
+
+Docs says don't need Location object if it's an annual run!
+%>
+
+Version,
+  22.2;                    !- Version Identifier
+
+Building,
+  <%= run_name %>,         !- Name
+  <%= orientation %>,      !- North Axis {deg}
+  <%= terrain %>,          !- Terrain
+  <%= loads_convergence %>,  !- Loads Convergence Tolerance Value
+  <%= temp_convergence %>,  !- Temperature Convergence Tolerance Value {deltaC}
+  FullInteriorAndExterior,  !- Solar Distribution
+  <%= max_warmup_days %>,  !- Maximum Number of Warmup Days
+  <%= min_warmup_days %>;  !- Minimum Number of Warmup Days
+
+SimulationControl,
+  Yes,                     !- Do Zone Sizing Calculation
+  Yes,                     !- Do System Sizing Calculation
+  Yes,                     !- Do Plant Sizing Calculation
+<% if (run_control == "SIZING") %>
+  Yes,                     !- Run Simulation for Sizing Periods
+  No;                      !- Run Simulation for Weather File Run Periods
+<% else %>
+  No,                     !- Run Simulation for Sizing Periods
+  Yes;                     !- Run Simulation for Weather File Run Periods
+<% end %>
+
+<% if (run_control == "ANNUAL") %>
+RunPeriod,
+  Annual,                  !- Name
+  1,                       !- Begin Month
+  1,                       !- Begin Day of Month
+  ,                        !- Begin Year
+  12,                      !- End Month
+  31,                      !- End Day of Month
+  ,                        !- End Year
+  Sunday,                  !- Day of Week for Start Day
+  No,                      !- Use Weather File Holidays and Special Days
+  No,                      !- Use Weather File Daylight Saving Period
+  No,                      !- Apply Weekend Holiday Rule
+  Yes,                     !- Use Weather File Rain Indicators
+  Yes;                     !- Use Weather File Snow Indicators
+<% elsif run_control == "TEST" %>
+RunPeriod,
+  Test,                    !- Name
+  1,                       !- Begin Month
+  1,                       !- Begin Day of Month
+  ,                        !- Begin Year
+  1,                       !- End Month
+  1,                       !- End Day of Month
+  ,                        !- End Year
+  Sunday,                  !- Day of Week for Start Day
+  No,                      !- Use Weather File Holidays and Special Days
+  No,                      !- Use Weather File Daylight Saving Period
+  No,                      !- Apply Weekend Holiday Rule
+  Yes,                     !- Use Weather File Rain Indicators
+  Yes;                     !- Use Weather File Snow Indicators
+<% end %>
+
+Timestep,
+  <%= timestep %>;         !- Number of Timesteps per Hour
+
+Sizing:Parameters,
+  <%= heat_sizing_factor %>,  !- Heating Sizing Factor
+  <%= cool_sizing_factor %>,  !- Cooling Sizing Factor
+  <%= (timestep * sizing_window).to_i %>;  !- Timesteps in Averaging Window
+
+ConvergenceLimits,
+  <%= min_hvac_timestep %>,  !- Minimum System Timestep {minutes}
+  <%= max_hvac_iterations %>;  !- Maximum HVAC Iterations
+
+HeatBalanceAlgorithm,
+  ConductionTransferFunction;  !- Algorithm
+
+ZoneAirHeatBalanceAlgorithm,
+  <%= zone_air_heat_balance_algorithm %>;  !- Algorithm
+
+!ZoneAirMassFlowConservation,
+! to try
+
+SurfaceConvectionAlgorithm:Inside,
+  TARP;                    !- Algorithm
+
+SurfaceConvectionAlgorithm:Outside,
+  DOE-2;                   !- Algorithm
+
+SurfaceProperty:OtherSideConditionsModel,
+  GapConvectionModel,      !- Name
+  GapConvectionRadiation;  !- Type of Modeling
+
+ShadowCalculation,
+  PolygonClipping,         !- Shading Calculation Method
+  Periodic,                !- Shading Calculation Update Frequency Method
+  <%= shadow_frequency %>,  !- Shading Calculation Update Frequency
+  <%= max_shadow_figures %>;  !- Maximum Figures in Shadow Overlap Calculations
+
+ScheduleTypeLimits,
+  Any Number,              !- Name
+  ,                        !- Lower Limit Value
+  ,                        !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Dimensionless;           !- Unit Type
+
+ScheduleTypeLimits,
+  Nonnegative Number,      !- Name
+  0.0,                     !- Lower Limit Value
+  ,                        !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Dimensionless;           !- Unit Type
+
+ScheduleTypeLimits,
+  Unit Interval,           !- Name
+  0.0,                     !- Lower Limit Value
+  1.0,                     !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Dimensionless;           !- Unit Type
+
+ScheduleTypeLimits,
+  Binary Control,          !- Name
+  0,                       !- Lower Limit Value
+  1,                       !- Upper Limit Value
+  Discrete,                !- Numeric Type
+  Control;                 !- Unit Type
+
+ScheduleTypeLimits,
+  Fan Mode Control,        !- Name
+  0,                       !- Lower Limit Value
+  1,                       !- Upper Limit Value
+  Discrete,                !- Numeric Type
+  Control;                 !- Unit Type
+
+ScheduleTypeLimits,
+  Thermostat Control,      !- Name
+  0,                       !- Lower Limit Value
+  4,                       !- Upper Limit Value
+  Discrete,                !- Numeric Type
+  Control;                 !- Unit Type
+
+ScheduleTypeLimits,
+  Temperature,             !- Name
+  -100.0,                  !- Lower Limit Value
+  200.0,                   !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Temperature;             !- Unit Type
+
+ScheduleTypeLimits,
+  Relative Humidity,       !- Name
+  0.0,                     !- Lower Limit Value
+  100.0,                   !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Percent;                 !- Unit Type
+
+ScheduleTypeLimits,
+  Humidity Ratio,          !- Name
+  0.0,                     !- Lower Limit Value
+  0.03,                    !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Dimensionless;           !- Unit Type
+
+
+<%# Save old ones for testing against old templates.
+    These will be deleted later. %>
+ScheduleTypeLimits,
+  On/Off,                  !- Name
+  0,                       !- Lower Limit Value
+  1,                       !- Upper Limit Value
+  Discrete;                !- Numeric Type
+
+ScheduleTypeLimits,
+  Control Type,            !- Name
+  0,                       !- Lower Limit Value
+  4,                       !- Upper Limit Value
+  Discrete;                !- Numeric Type
+
+ScheduleTypeLimits,
+  Humidity,                !- Name
+  10,                      !- Lower Limit Value
+  90,                      !- Upper Limit Value
+  Continuous;              !- Numeric Type
+
+ScheduleTypeLimits,
+  Fraction,                !- Name
+  0.0,                     !- Lower Limit Value
+  1.0,                     !- Upper Limit Value
+  Continuous;              !- Numeric Type

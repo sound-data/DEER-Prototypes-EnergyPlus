@@ -1,0 +1,946 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "name"
+parameter "branch_names"
+
+parameter "setpoint_type", :default=>"Constant"  # ( Constant | Reset )
+
+parameter "design_flow", :default=>Autosize
+parameter "design_temp", :default=>180['F']
+parameter "design_delta", :default=>50['deltaF']
+
+parameter "supply_temp_at_lo", :default=>180['F']
+parameter "lo_outdoor_temp", :default=>20['F']
+parameter "supply_temp_at_hi", :default=>150['F']
+parameter "hi_outdoor_temp", :default=>50['F']
+
+
+# supply temp schedule?
+
+# Constant speed pump might not be correct yet
+parameter "pump_type", :default=>"CONSTANT"     #  (CONSTANT | VARIABLE)
+parameter "pump_eff", :default=>0.6
+parameter "pump_head", :default=>70['ft H2O']
+parameter "pump_control", :default=>"CONTINUOUS"   # (CONTINUOUS | INTERMITTENT)
+parameter "pump_power", :default=>Autosize
+parameter "pump_curve", :default=>"NOT USED"
+
+
+parameter "heating_source", :default=>"BOILER"  # (BOILER | DISTRICT | GSHP | CHP )
+parameter "boiler_duplicate", :default=>false  # Heating Source BOILER Only!!
+
+parameter "boiler_type", :default=>"NONCONDENSING"     #  (NONCONDENSING | CONDENSING | ELECTRIC)
+parameter "boiler_fuel", :default=>"NATURALGAS"     #  (NATURALGAS | FUELOIL | ELECTRICITY)
+parameter "boiler_eff", :default=>0.8   # Nominal efficiency rated at full load at 180F outlet water and 150F inlet water temperature at HHV
+parameter "boiler_cap", :default=>Autosize
+
+parameter "chiller_heatpump_hr", :default=>false  # Chiller heat pump heat recovery
+parameter "chiller_cond_hr", :default=>false  # Chiller condenser heat recovery
+parameter "chiller_hr_temp", :default=>155['F']  # Chiller heat pump heat recovery
+
+parameter "chp_therm_eff", :default=>0.66
+parameter "chp_elec_eff", :default=>0.27
+parameter "chp_type", :default=>"Turbine"  # ( Turbine | CHP ) CHP doesn't seem to work as well...both have pretty strange control problems, but CHP is worse.
+
+parameter "gshp_heating_cop", :default=>4.6
+parameter "gshp_heating_capacity", :default=>200000000['W']
+parameter "gshp_flow_rate", :default=>60['GPM']
+
+parameter "chiller_generator_type", :default=>"HOTWATER"  # For absorption chillers only (HOTWATER | STEAM | DIRECTFIRED)
+# NOTE: If DIRECTFIRED, it should be on supply side as a heating source.
+# If HOTWATER or STEAM, it should be on demand side and go through normal connections: "zones_names"
+
+parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+
+%>
+
+<% chp_type = "Turbine" %>
+
+Sizing:Plant,
+  <%= name %>,  !- Plant or Condenser Loop Name
+  Heating,                 !- Loop Type
+  <%= design_temp %>,  !- Design Loop Exit Temperature {C}
+  <%= design_delta %>;  !- Loop Design Temperature Difference {deltaC}
+
+Schedule:Compact,
+  <%= name %> Operation Schedule,  !- Name
+  Binary Control,          !- Schedule Type Limits Name
+<%= operation_schedule %>
+
+
+PlantLoop,
+  <%= name %>,  !- Name
+  Water,                   !- Fluid Type
+  ,                        !- User Defined Fluid Type
+  <%= name %> Operation Schemes,  !- Plant Equipment Operation Scheme Name
+  <%= name %> Supply Outlet Node,  !- Loop Temperature Setpoint Node Name
+  100.0,                   !- Maximum Loop Temperature {C}
+  10.0,                    !- Minimum Loop Temperature {C}
+  Autosize,                !- Maximum Loop Flow Rate {m3/s}
+  0.0,                     !- Minimum Loop Flow Rate {m3/s}
+  Autosize,                !- Plant Loop Volume {m3}
+  <%= name %> Supply Inlet Node,  !- Plant Side Inlet Node Name
+  <%= name %> Supply Outlet Node,  !- Plant Side Outlet Node Name
+  <%= name %> Supply Branches,!- Plant Side Branch List Name
+  <%= name %> Supply Connectors,  !- Plant Side Connector List Name
+  <%= name %> Demand Inlet Node,  !- Demand Side Inlet Node Name
+  <%= name %> Demand Outlet Node,  !- Demand Side Outlet Node Name
+  <%= name %> Demand Branches,!- Demand Side Branch List Name
+  <%= name %> Demand Connectors,  !- Demand Side Connector List Name
+  Optimal,                 !- Load Distribution Scheme
+  <%= name %> Availability Managers;  !- Availability Manager List Name
+
+<%# NOTE:  Availability manager added above because of problems seen with lack of a manager in the heat recovery loop (for chiller condenser heat recovery?).  %>
+
+<% if (setpoint_type == "Constant") %>
+SetpointManager:Scheduled,
+  <%= name %> Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> Supply Temperature Schedule,  !- Schedule Name
+  <%= name %> Setpoint Nodes;  !- Setpoint Node or NodeList Name
+
+Schedule:Constant,
+  <%= name %> Supply Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= design_temp %>;  !- Hourly Value
+
+<% elsif (setpoint_type == "Reset") %>
+
+SetpointManager:OutdoorAirReset,
+  <%= name %> Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= supply_temp_at_lo %>,  !- Setpoint at Outdoor Low Temperature
+  <%= lo_outdoor_temp %>,  !- Outdoor Low Temperature
+  <%= supply_temp_at_hi %>,  !- Setpoint at Outdoor High Temperature
+  <%= hi_outdoor_temp %>,  !- Outdoor High Temperature
+  <%= name %> Setpoint Nodes;  !- Setpoint Node or NodeList Name
+
+<% end %>
+
+NodeList,
+  <%= name %> Setpoint Nodes,  !- Name
+<% if (boiler_duplicate) %>
+  <%= name %> Supply Equipment Outlet Node 1,  !- Node Name
+  <%= name %> Supply Equipment Outlet Node 2,  !- Node Name
+<% else %>
+  <%= name %> Supply Equipment Outlet Node,  !- Node Name
+<% end %>
+  <%= name %> Supply Outlet Node;  !- Node Name
+
+PlantEquipmentOperationSchemes,
+  <%= name %> Operation Schemes,  !- Name
+  PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
+  <%= name %> Operation Scheme,  !- Control Scheme 1 Name
+  <%= name %> Operation Schedule;  !- Control Scheme 1 Schedule Name
+
+PlantEquipmentOperation:HeatingLoad,
+  <%= name %> Operation Scheme,  !- Name
+  0.0,                     !- Load Range 1 Lower Limit {W}
+  1000000000000000,        !- Load Range 1 Upper Limit {W}
+  <%= name %> Equipment List; !- Priority Control 1 Equipment List Name
+
+PlantEquipmentList,
+  <%= name %> Equipment List, !- Name
+<% if (heating_source == "BOILER") %>
+  Boiler:HotWater,         !- Equipment 1 Object Type
+<% elsif (heating_source == "DISTRICT") %>
+  DistrictHeating,         !- Equipment 1 Object Type
+<% elsif (heating_source == "GSHP") %>
+  HeatPump:WaterToWater:EquationFit:Heating,  !- Equipment 1 Object Type
+<% elsif (heating_source == "CHP") %>
+  <% if (chp_type == "CHP") %>
+  Generator:MicroCHP,
+  <% else %>
+  Generator:MicroTurbine,
+  <% end %>
+<% end %>
+<% if (chiller_generator_type == "DIRECTFIRED") %>
+  <%= name %> Heating Source,  !- Equipment 1 Name
+  ChillerHeater:Absorption:DirectFired,         !- Equipment 2 Object Type
+  <%= abschiller_name %> Chiller;  !- Equipment 2 Name
+<% elsif (boiler_duplicate) %>
+  <%= name %> Heating Source 1,  !- Equipment 1 Name
+  Boiler:HotWater,                      !- Equipment 2 Object Type
+  <%= name %> Heating Source 2;  !- Equipment 2 Name
+<% else %>
+  <%= name %> Heating Source;  !- Equipment 1 Name
+<% end %>
+
+AvailabilityManagerAssignmentList,
+  <%= name %> Availability Managers,  !- Name
+  AvailabilityManager:Scheduled,  !- Availability Manager 1 Object Type
+  <%= name %> Availability Manager;  !- Availability Manager 1 Name
+
+AvailabilityManager:Scheduled,
+  <%= name %> Availability Manager,  !- Name
+  <%= name %> Operation Schedule;  !- Schedule Name
+
+BranchList,
+  <%= name %> Supply Branches,!- Name
+  <%= name %> Supply Inlet Branch,  !- Branch 1 Name
+<% if (boiler_duplicate) %>
+  <%= name %> Supply Equipment Branch 1,  !- Branch 2 Name
+  <%= name %> Supply Equipment Branch 2,  !- Branch 2 Name
+<% else %>
+  <%= name %> Supply Equipment Branch,  !- Branch 2 Name
+<% end %>
+<% if (chiller_generator_type == "DIRECTFIRED") %>
+  <%= name %> Chiller Supply Branch,  !- Branch Name
+<% end %>
+  <%= name %> Supply Bypass Branch,  !- Branch 3 Name
+  <%= name %> Supply Outlet Branch;  !- Branch 4 Name
+
+Branch,
+  <%= name %> Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if (pump_type == "CONSTANT") %>
+  Pump:ConstantSpeed,      !- Component 1 Object Type
+<% elsif (pump_type == "VARIABLE") %>
+  Pump:VariableSpeed,      !- Component 1 Object Type
+<% end %>
+  <%= name %> Pump,           !- Component 1 Name
+  <%= name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
+<% if (chiller_cond_hr) || (chiller_heatpump_hr) %>
+  WaterHeater:Mixed,         !- Component 1 Object Type
+  <%= name %> Chiller Heat Recovery WaterHeater,  !- Component 1 Name
+  <%= name %> Pump Outlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Chiller Heat Recovery WaterHeater Use Side Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+
+<% if (boiler_duplicate) %>
+Branch,
+  <%= name %> Supply Equipment Branch 1,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if (heating_source == "BOILER") %>
+  Boiler:HotWater,         !- Component 1 Object Type
+<% elsif (heating_source == "DISTRICT") %>
+  DistrictHeating,         !- Component 1 Object Type
+<% elsif (heating_source == "GSHP") %>
+  HeatPump:WaterToWater:EquationFit:Heating,  !- Component 1 Object Type
+<% elsif (heating_source == "CHP") %>
+<% if (chp_type == "CHP") %>
+  Generator:MicroCHP,
+<% else %>
+  Generator:MicroTurbine,
+  <% end %>
+<% end %>
+  <%= name %> Heating Source 1,  !- Component 1 Name
+  <%= name %> Heating Source 1 Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node 1;  !- Component 1 Outlet Node Name
+
+Branch,
+  <%= name %> Supply Equipment Branch 2,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if (heating_source == "BOILER") %>
+  Boiler:HotWater,         !- Component 1 Object Type
+<% elsif (heating_source == "DISTRICT") %>
+  DistrictHeating,         !- Component 1 Object Type
+<% elsif (heating_source == "GSHP") %>
+  HeatPump:WaterToWater:EquationFit:Heating,  !- Component 1 Object Type
+<% elsif (heating_source == "CHP") %>
+<% if (chp_type == "CHP") %>
+  Generator:MicroCHP,
+<% else %>
+  Generator:MicroTurbine,
+  <% end %>
+<% end %>
+  <%= name %> Heating Source 2,  !- Component 1 Name
+  <%= name %> Heating Source 2 Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node 2;  !- Component 1 Outlet Node Name
+
+<% else %>
+Branch,
+  <%= name %> Supply Equipment Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if (heating_source == "BOILER") %>
+  Boiler:HotWater,         !- Component 1 Object Type
+<% elsif (heating_source == "DISTRICT") %>
+  DistrictHeating,         !- Component 1 Object Type
+<% elsif (heating_source == "GSHP") %>
+  HeatPump:WaterToWater:EquationFit:Heating,  !- Component 1 Object Type
+<% elsif (heating_source == "CHP") %>
+<% if (chp_type == "CHP") %>
+  Generator:MicroCHP,
+<% else %>
+  Generator:MicroTurbine,
+  <% end %>
+<% end %>
+  <%= name %> Heating Source,  !- Component 1 Name
+  <%= name %> Heating Source Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+
+<% if (chiller_generator_type == "DIRECTFIRED") %>
+Branch,
+  <%= name %> Chiller Supply Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  ChillerHeater:Absorption:DirectFired,         !- Component 1 Object Type
+  <%= abschiller_name %> Chiller,  !- Component 1 Name
+  <%= abschiller_name %> Heat Inlet Node,  !- Component 1 Inlet Node Name
+  <%= abschiller_name %> Heat Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+
+<% if (pump_type == "CONSTANT") %>
+Pump:ConstantSpeed,
+  <%= name %> Pump,  !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  <%= design_flow %>,  !- Rated Flow Rate {m3/s}
+  <%= pump_head %>,  !- Rated Pump Head {Pa}
+  <%= pump_power %>,  !- Rated Power Consumption {W}
+  <%= pump_eff %>,  !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+<%# if (pump_control == "CONTINUOUS") %>
+<%# There's an EnergyPlus bug with continuous, constant speed pumps that causes overheating.  Always use intermittent mode. %>
+  <%# Continuous;              !- Pump Control Type %>
+<%# elsif (pump_control == "INTERMITTENT") %>
+  Intermittent;            !- Pump Control Type
+<%# end %>
+
+<% elsif (pump_type == "VARIABLE") %>
+Pump:VariableSpeed,
+  <%= name %> Pump,  !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  <%= design_flow %>,  !- Rated Flow Rate {m3/s}
+  <%= pump_head %>,  !- Rated Pump Head {Pa}
+  <%= pump_power %>,  !- Rated Power Consumption {W}
+  <%= pump_eff %>,  !- Motor Efficiency
+! Original performance curve as found January 2024, source: ASHRAE 90.1 Hospital EnergyPlus example model 
+!  0,                       !- Coefficient 1 of the Part Load Performance Curve
+!  3.2485,                       !- Coefficient 2 of the Part Load Performance Curve
+!  -4.7443,                       !- Coefficient 3 of the Part Load Performance Curve
+!  2.5295,                       !- Coefficient 4 of the Part Load Performance Curve
+! Updated performance curve, source: CBECC Office Large Template
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+  0.0273,                       !- Coefficient 1 of the Part Load Performance Curve
+  -0.1317,                       !- Coefficient 2 of the Part Load Performance Curve
+  0.6642,                       !- Coefficient 3 of the Part Load Performance Curve
+  0.4445,                       !- Coefficient 4 of the Part Load Performance Curve
+  0.0,                     !- Minimum Flow Rate {m3/s}
+<% if (pump_control == "CONTINUOUS") %>
+  Continuous;              !- Pump Control Type
+<% elsif (pump_control == "INTERMITTENT") %>
+  Intermittent;            !- Pump Control Type
+<% end %>
+
+<% end %>
+
+<% if (heating_source == "BOILER") %>
+  <% if (boiler_duplicate) %>
+Boiler:HotWater,
+  <%= name %> Heating Source 1,  !- Name
+<% if (boiler_fuel == "NATURALGAS") %>
+  NaturalGas,              !- Fuel Type
+<% elsif (boiler_fuel == "FUELOIL") %>
+  FuelOilNo1,               !- Fuel Type
+<% elsif (boiler_fuel == "ELECTRICITY") %>
+  Electricity,             !- Fuel Type
+<% end %>
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  <%= boiler_eff %>,  !- Nominal Thermal Efficiency
+<% if (boiler_type == "CONDENSING") %>
+  EnteringBoiler,          !- Efficiency Curve Temperature Evaluation Variable
+<% else %>
+  LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
+<% end %>
+  <%= name %> Boiler Curve,  !- Normalized Boiler Efficiency Curve Name
+  <%= design_flow %>,  !- Design Water Flow Rate {m3/s}
+  0.0,                     !- Minimum Part Load Ratio
+  1.2,                     !- Maximum Part Load Ratio
+  1.0,                     !- Optimum Part Load Ratio
+  <%= name %> Heating Source 1 Inlet Node,  !- Boiler Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node 1,  !- Boiler Water Outlet Node Name
+  95.0,                    !- Water Outlet Upper Temperature Limit {C}
+  LeavingSetpointModulated,  !- Boiler Flow Mode
+  ,                        !- Parasitic Electric Load {W}
+  ;                        !- Sizing Factor
+
+Boiler:HotWater,
+  <%= name %> Heating Source 2,  !- Name
+<% if (boiler_fuel == "NATURALGAS") %>
+  NaturalGas,              !- Fuel Type
+<% elsif (boiler_fuel == "FUELOIL") %>
+  FuelOilNo1,               !- Fuel Type
+<% elsif (boiler_fuel == "ELECTRICITY") %>
+  Electricity,             !- Fuel Type
+<% end %>
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  <%= boiler_eff %>,  !- Nominal Thermal Efficiency
+<% if (boiler_type == "CONDENSING") %>
+  EnteringBoiler,          !- Efficiency Curve Temperature Evaluation Variable
+<% else %>
+  LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
+<% end %>
+  <%= name %> Boiler Curve,  !- Normalized Boiler Efficiency Curve Name
+  <%= design_flow %>,  !- Design Water Flow Rate {m3/s}
+  0.0,                     !- Minimum Part Load Ratio
+  1.2,                     !- Maximum Part Load Ratio
+  1.0,                     !- Optimum Part Load Ratio
+  <%= name %> Heating Source 2 Inlet Node,  !- Boiler Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node 2,  !- Boiler Water Outlet Node Name
+  95.0,                    !- Water Outlet Upper Temperature Limit {C}
+  LeavingSetpointModulated,  !- Boiler Flow Mode
+  ,                        !- Parasitic Electric Load {W}
+  ;                        !- Sizing Factor
+  <% else %>
+Boiler:HotWater,
+  <%= name %> Heating Source,  !- Name
+<% if (boiler_fuel == "NATURALGAS") %>
+  NaturalGas,              !- Fuel Type
+<% elsif (boiler_fuel == "FUELOIL") %>
+  FuelOilNo1,               !- Fuel Type
+<% elsif (boiler_fuel == "ELECTRICITY") %>
+  Electricity,             !- Fuel Type
+<% end %>
+  <%= boiler_cap %>,  !- Nominal Capacity {W}
+  <%= boiler_eff %>,  !- Nominal Thermal Efficiency
+<% if (boiler_type == "CONDENSING") %>
+  EnteringBoiler,          !- Efficiency Curve Temperature Evaluation Variable
+<% else %>
+  LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
+<% end %>
+  <%= name %> Boiler Curve,  !- Normalized Boiler Efficiency Curve Name
+  <%= design_flow %>,  !- Design Water Flow Rate {m3/s}
+  0.0,                     !- Minimum Part Load Ratio
+  1.2,                     !- Maximum Part Load Ratio
+  1.0,                     !- Optimum Part Load Ratio
+  <%= name %> Heating Source Inlet Node,  !- Boiler Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node,  !- Boiler Water Outlet Node Name
+  95.0,                    !- Water Outlet Upper Temperature Limit {C}
+  LeavingSetpointModulated,  !- Boiler Flow Mode
+  ,                        !- Parasitic Electric Load {W}
+  ;                        !- Sizing Factor
+  <% end %>
+<% if (boiler_type == "ELECTRIC") %>
+  ! Constant Efficiency Boiler Curve
+Curve:Quadratic,
+  <%= name %> Boiler Curve,  !- Name
+  1.0,                     !- Coefficient1 Constant
+  0.0,                     !- Coefficient2 x
+  0.0,                     !- Coefficient3 x**2
+  0,                       !- Minimum Value of x
+  1;                       !- Maximum Value of x
+<% elsif (boiler_type == "NONCONDENSING") %>
+  ! Noncondensing Boiler Curve from EnergyPlusV7-0-0\DataSets\Boilers.idf
+  ! NOTE:  This curve is for leaving water temperature, not entering water!
+Curve:Bicubic,
+  <%= name %> Boiler Curve,  !- Name
+  1.111720116,             !- Coefficient1 Constant
+  0.078614078,             !- Coefficient2 x
+  -0.400425756,            !- Coefficient3 x**2
+  0.0,                     !- Coefficient4 y
+  -0.000156783,            !- Coefficient5 y**2
+  0.009384599,             !- Coefficient6 x*y
+  0.234257955,             !- Coefficient7 x**3
+  1.32927E-06,             !- Coefficient8 y**3
+  -0.004446701,            !- Coefficient9 x**2*y
+  -1.22498E-05,            !- Coefficient10 x*y**2
+  0.1,                     !- Minimum Value of x
+  1.0,                     !- Maximum Value of x
+  15.0,                    !- Minimum Value of y
+  85.0,                    !- Maximum Value of y
+  0.60,                    !- Minimum Curve Output
+  0.85;                    !- Maximum Curve Output
+<% elsif (boiler_type == "T24_NONCONDENSING") %>
+  ! Noncondensing Boiler Curve from CBECC-Com Medium Office prototype
+Curve:Quadratic,
+  <%= name %> Boiler Curve,  !- Name
+  0.6267,                  !- Coefficient1 Constant
+  0.674,                   !- Coefficient2 x
+  -0.3073,                 !- Coefficient3 x**2
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0.75;                    !- Minimum Curve Output
+<% elsif (boiler_type == "CONDENSING") %>
+  ! AERCO MLX-454 Condensing Boiler
+  ! NOTE:  Curve is for entering water temperature.
+  ! Curve fit is "OK" but Table:MultiVariableLookup would probably be better.
+Curve:Bicubic,
+  <%= name %> Boiler Curve,  !- Name
+  1.17905243,             !- Coefficient1 Constant
+  -0.0441358,            !- Coefficient2 x
+  0,                       !- Coefficient3 x**2
+  -0.0031175,             !- Coefficient4 y
+  6.3461E-06,             !- Coefficient5 y**2
+  -0.0003491,            !- Coefficient6 x*y
+  0,                       !- Coefficient7 x**3
+  1.5552E-08,                !- Coefficient8 y**3
+  0,                       !- Coefficient9 x**2*y
+  1.412E-05,             !- Coefficient10 x*y**2
+  0.1,                     !- Minimum Value of x
+  1.0,                     !- Maximum Value of x
+  15.0,                    !- Minimum Value of y
+  85.0,                    !- Maximum Value of y
+  0.85,                    !- Minimum Curve Output
+  0.99;                    !- Maximum Curve Output
+<% end %>
+
+<% elsif (heating_source == "DISTRICT") %>
+DistrictHeating,
+  <%= name %> Heating Source,  !- Name
+  <%= name %> Heating Source Inlet Node,  !- Hot Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node,  !- Hot Water Outlet Node Name
+  1000000000000000;  !- Nominal Capacity {W}
+
+<% elsif (heating_source == "GSHP") %>
+
+  <% gshp_heating_power = gshp_heating_capacity / gshp_heating_cop %>
+
+HeatPump:WaterToWater:EquationFit:Heating,
+  <%= name %> Heating Source,  !- Name
+  <%= name %> Evaporator Inlet Node,  !- Source Side Inlet Node Name
+  <%= name %> Evaporator Outlet Node,  !- Source Side Outlet Node Name
+  <%= name %> Heating Source Inlet Node,  !- Load Side Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node,  !- Load Side Outlet Node Name
+  1,                       !- Rated Load Side Flow Rate {m3/s} <%# Not used since performance is not a function of flow rate (see coefficients 4 & 5 below %>
+  1,                       !- Rated Source Side Flow Rate {m3/s} <%# Not used since performance is not a function of flow rate (see coefficients 4 & 5 below %>
+  <%= gshp_heating_capacity %>,  !- Rated Heating Capacity {W}
+  <%= gshp_heating_power %>,  !- Rated Heating Power Consumption {W}
+  -3.52, !-3.01,           !- Heating Capacity Coefficient 1
+  0, !-0.51,               !- Heating Capacity Coefficient 2 <%# A non-zero coefficient causes negative capacities since the actual performance is not linear %>
+  4.52,                    !- Heating Capacity Coefficient 3
+  0,                       !- Heating Capacity Coefficient 4
+  0,                       !- Heating Capacity Coefficient 5
+  -8.87,                   !- Heating Compressor Power Coefficient 1
+  8.57,                    !- Heating Compressor Power Coefficient 2
+  1.30,                    !- Heating Compressor Power Coefficient 3
+  0,                       !- Heating Compressor Power Coefficient 4
+  0;                       !- Heating Compressor Power Coefficient 5
+
+Branch,
+  <%= name %> GHX Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  HeatPump:WaterToWater:EquationFit:Heating,  !- Component 1 Object Type
+  <%= name %> Heating Source,   !- Component 1 Name
+  <%= name %> Evaporator Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Evaporator Outlet Node;  !- Component 1 Outlet Node Name
+
+<% elsif (heating_source == "CHP") %>
+
+  <% chp_rated_elec_output = 100000000 %>
+
+
+  <% if (chp_type == "CHP") %>
+Generator:MicroCHP,
+  <%= name %> Heating Source,  !- Name
+  MicroCHP Parameters,     !- Performance Parameters Name
+  <%= branch_names[0] %>,        !- Zone Name
+  <%= name %> Heating Source Inlet Node,  !- Cooling Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node,  !- Cooling Water Outlet Node Name
+  ,                        !- Air Inlet Node Name
+  ,                        !- Air Outlet Node Name
+  NaturalGas,              !- Generator Fuel Supply Name
+  <%= name %> Operation Schedule;  !- Availability Schedule Name
+
+Generator:MicroCHP:NonNormalizedParameters,
+  MicroCHP Parameters,     !- Name
+  <%= chp_rated_elec_output %>,  !- Maximum Electric Power {W}
+  0.0000,                  !- Minimum Electric Power {W}
+  0.0000,                  !- Minimum Cooling Water Flow Rate {kg/s}
+  100.0000,                !- Maximum Cooling Water Temperature {C}
+  SenerTechElEff,          !- Electrical Efficiency Curve Name
+  SenerTechThermEff,       !- Thermal Efficiency Curve Name
+  PlantControl,            !- Cooling Water Flow Rate Mode
+  ,                        !- Cooling Water Flow Rate Curve Name
+  SenerTechAirFlow,        !- Air Flow Rate Curve Name
+  1.0E21,                  !- Maximum Net Electrical Power Rate of Change {W/s}
+  1.0E21,                  !- Maximum Fuel Flow Rate of Change {kg/s2}
+  100000000,                   !- Heat Exchanger U-Factor Times Area Value {W/K}
+  0.0001,                  !- Skin Loss U-Factor Times Area Value {W/K}
+  0.5000,                  !- Skin Loss Radiative Fraction
+  0.0001,                  !- Aggregated Thermal Mass of Energy Conversion Portion of Generator {W/K}
+  0.0001,                  !- Aggregated Thermal Mass of Heat Recovery Portion of Generator {W/K}
+  0.0000,                  !- Standby Power {W}
+  TimeDelay,               !- Warm Up Mode
+  ,                        !- Warm Up Fuel Flow Rate Coefficient
+  ,                        !- Nominal Engine Operating Temperature {C}
+  ,                        !- Warm Up Power Coefficient
+  ,                        !- Warm Up Fuel Flow Rate Limit Ratio
+  0.0000,                  !- Warm Up Delay Time {s}
+  0.0000,                  !- Cool Down Power {W}
+  0.0000,                  !- Cool Down Delay Time {s}
+  OptionalCoolDown;        !- Restart Mode
+
+Curve:Biquadratic,
+  SenerTechCoolWaterflow,  !- Name
+  10.00,                  !- Coefficient1 Constant
+  0.0000,                  !- Coefficient2 x
+  0.0000,                  !- Coefficient3 x**2
+  0.0000,                  !- Coefficient4 y
+  0.0000,                  !- Coefficient5 y**2
+  0.0000,                  !- Coefficient6 x*y
+  0.0000,                  !- Minimum Value of x
+  1.0E12,                  !- Maximum Value of x
+  0.0000,                  !- Minimum Value of y
+  1.0E12;                  !- Maximum Value of y
+
+Curve:Quadratic,
+  SenerTechAirFlow,        !- Name
+  0.0000,                  !- Coefficient1 Constant
+  2.0000,                  !- Coefficient2 x
+  -10000.0000,             !- Coefficient3 x**2
+  0.0000,                  !- Minimum Value of x
+  1000000000000.0000;      !- Maximum Value of x
+
+Curve:Triquadratic,
+  SenerTechThermEff,       !- Name
+  <%= chp_therm_eff %>,    !- Coefficient1 Constant
+  0.0000,                  !- Coefficient2 x**2
+  0.0000,                  !- Coefficient3 x
+  0.0000,                  !- Coefficient4 y**2
+  0.0000,                  !- Coefficient5 y
+  0.0000,                  !- Coefficient6 z**2
+  0.0000,                  !- Coefficient7 z
+  0.0000,                  !- Coefficient8 x**2*y**2
+  0.0000,                  !- Coefficient9 x*y
+  0.0000,                  !- Coefficient10 x*y**2
+  0.0000,                  !- Coefficient11 x**2*y
+  0.0000,                  !- Coefficient12 x**2*z**2
+  0.0000,                  !- Coefficient13 x*z
+  0.0000,                  !- Coefficient14 x*z**2
+  0.0000,                  !- Coefficient15 x**2*z
+  0.0000,                  !- Coefficient16 y**2*z**2
+  0.0000,                  !- Coefficient17 y*z
+  0.0000,                  !- Coefficient18 y*z**2
+  0.0000,                  !- Coefficient19 y**2*z
+  0.0000,                  !- Coefficient20 x**2*y**2*z**2
+  0.0000,                  !- Coefficient21 x**2*y**2*z
+  0.0000,                  !- Coefficient22 x**2*y*z**2
+  0.0000,                  !- Coefficient23 x*y**2*z**2
+  0.0000,                  !- Coefficient24 x**2*y*z
+  0.0000,                  !- Coefficient25 x*y**2*z
+  0.0000,                  !- Coefficient26 x*y*z**2
+  0.0000,                  !- Coefficient27 x*y*z
+  0.0000,                  !- Minimum Value of x
+  1000000000.0000,         !- Maximum Value of x
+  0.0000,                  !- Minimum Value of y
+  1000000000.0000,         !- Maximum Value of y
+  0.0000,                  !- Minimum Value of z
+  1000000000.0000;         !- Maximum Value of z
+
+Curve:Triquadratic,
+  SenerTechElEff,          !- Name
+  <%= chp_elec_eff %>,     !- Coefficient1 Constant
+  0.0000,                  !- Coefficient2 x**2
+  0.0000,                  !- Coefficient3 x
+  0.0000,                  !- Coefficient4 y**2
+  0.0000,                  !- Coefficient5 y
+  0.0000,                  !- Coefficient6 z**2
+  0.0000,                  !- Coefficient7 z
+  0.0000,                  !- Coefficient8 x**2*y**2
+  0.0000,                  !- Coefficient9 x*y
+  0.0000,                  !- Coefficient10 x*y**2
+  0.0000,                  !- Coefficient11 x**2*y
+  0.0000,                  !- Coefficient12 x**2*z**2
+  0.0000,                  !- Coefficient13 x*z
+  0.0000,                  !- Coefficient14 x*z**2
+  0.0000,                  !- Coefficient15 x**2*z
+  0.0000,                  !- Coefficient16 y**2*z**2
+  0.0000,                  !- Coefficient17 y*z
+  0.0000,                  !- Coefficient18 y*z**2
+  0.0000,                  !- Coefficient19 y**2*z
+  0.0000,                  !- Coefficient20 x**2*y**2*z**2
+  0.0000,                  !- Coefficient21 x**2*y**2*z
+  0.0000,                  !- Coefficient22 x**2*y*z**2
+  0.0000,                  !- Coefficient23 x*y**2*z**2
+  0.0000,                  !- Coefficient24 x**2*y*z
+  0.0000,                  !- Coefficient25 x*y**2*z
+  0.0000,                  !- Coefficient26 x*y*z**2
+  0.0000,                  !- Coefficient27 x*y*z
+  0.0000,                  !- Minimum Value of x
+  1000000000.0000,         !- Maximum Value of x
+  0.0000,                  !- Minimum Value of y
+  1000000000.0000,         !- Maximum Value of y
+  0.0000,                  !- Minimum Value of z
+  1000000000.0000;         !- Maximum Value of z
+
+Generator:FuelSupply,
+  NaturalGas,              !- Name
+  Scheduled,               !- Fuel Temperature Modeling Mode
+  ,                        !- Fuel Temperature Reference Node Name
+  NaturalGasTemp,          !- Fuel Temperature Schedule Name
+  NullCubic,               !- Compressor Power Function of Fuel Rate Curve Name
+  1.0000,                  !- Compressor Heat Loss Factor
+  GaseousConstituents,     !- Fuel Type
+  ,                        !- Liquid Generic Fuel Lower Heating Value {kJ/kg}
+  ,                        !- Liquid Generic Fuel Higher Heating Value {kJ/kg}
+  ,                        !- Liquid Generic Fuel Molecular Weight {g/mol}
+  ,                        !- Liquid Generic Fuel CO2 Emission Factor
+  8,                       !- Number of Constituents in Gaseous Constituent Fuel Supply
+  METHANE,                 !- Constituent 1 Name
+  0.9490,                  !- Constituent 1 Molar Fraction
+  CarbonDioxide,           !- Constituent 2 Name
+  0.0070,                  !- Constituent 2 Molar Fraction
+  NITROGEN,                !- Constituent 3 Name
+  0.0160,                  !- Constituent 3 Molar Fraction
+  ETHANE,                  !- Constituent 4 Name
+  0.0250,                  !- Constituent 4 Molar Fraction
+  PROPANE,                 !- Constituent 5 Name
+  0.0020,                  !- Constituent 5 Molar Fraction
+  BUTANE,                  !- Constituent 6 Name
+  0.0006,                  !- Constituent 6 Molar Fraction
+  PENTANE,                 !- Constituent 7 Name
+  0.0002,                  !- Constituent 7 Molar Fraction
+  OXYGEN,                  !- Constituent 8 Name
+  0.0002;                  !- Constituent 8 Molar Fraction
+
+Curve:Cubic,
+  NullCubic,               !- Name
+  0.0000,                  !- Coefficient1 Constant
+  0.0000,                  !- Coefficient2 x
+  0.0000,                  !- Coefficient3 x**2
+  0.0000,                  !- Coefficient4 x**3
+  0.0000,                  !- Minimum Value of x
+  0.0000;                  !- Maximum Value of x
+
+Schedule:Constant,
+  NaturalGasTemp,
+  Temperature,
+  22;
+
+ElectricLoadCenter:Distribution,
+  Main Load Center,        !- Name
+  Generator List,          !- Generator List Name
+  FollowThermal,           !- Generator Operation Scheme Type
+  0,                       !- Demand Limit Scheme Purchased Electric Demand Limit {W}
+  ,                        !- Track Schedule Name Scheme Schedule Name
+  ,                        !- Track Meter Scheme Meter Name
+  AlternatingCurrent;      !- Electrical Buss Type
+
+  <% chp_therm_elec_ratio = chp_therm_eff / chp_elec_eff %>
+ElectricLoadCenter:Generators,
+  Generator List,          !- Name
+  <%= name %> Heating Source,  !- Generator 1 Name
+  Generator:MicroCHP,      !- Generator 1 Object Type
+  <%= chp_rated_elec_output %>,  !- Generator 1 Rated Electric Power Output {W}
+  <%= name %> Operation Schedule,  !- Generator 1 Availability Schedule Name
+  <%= chp_therm_elec_ratio %>;  !- Generator 1 Rated Thermal to Electrical Power Ratio
+
+  <% else %>
+
+Generator:MicroTurbine,
+  <%= name %> Heating Source,  !- Name
+  <%= chp_rated_elec_output %>,  !- Reference Electrical Power Output {W}
+  0.0000,                  !- Minimum Full Load Electric Power Output {W}
+  <%= chp_rated_elec_output %>,  !- Maximum Full Load Electric Power Output {W}
+  <%= chp_elec_eff %>,     !- Reference Electrical Efficiency Using Lower Heating Value
+  ,                        !- Reference Combustion Air Inlet Temperature {C}
+  ,                        !- Reference Combustion Air Inlet Humidity Ratio
+  ,                        !- Reference Elevation {m}
+  MicroTurbinePowerCurve,  !- Electrical Power Function of Temperature and Elevation Curve Name
+  MicroTurbineEffCurve,    !- Electrical Efficiency Function of Temperature Curve Name
+  MicroTurbineEffCurve,    !- Electrical Efficiency Function of Part Load Ratio Curve Name
+  NaturalGas,              !- Fuel Type
+  ,                        !- Fuel Higher Heating Value {kJ/kg}
+  ,                        !- Fuel Lower Heating Value {kJ/kg}
+  ,                        !- Standby Power {W}
+  ,                        !- Ancillary Power {W}
+  ,                        !- Ancillary Power Function of Fuel Input Curve Name
+  <%= name %> Heating Source Inlet Node,  !- Heat Recovery Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node,  !- Heat Recovery Water Outlet Node Name
+  <%= chp_therm_eff %>,    !- Reference Thermal Efficiency Using Lower Heating Value
+  25,                      !- Reference Inlet Water Temperature {C}
+  PlantControl,            !- Heat Recovery Water Flow Operating Mode
+  1,                       !- Reference Heat Recovery Water Flow Rate {kg/s}
+  ,                        !- Heat Recovery Water Flow Rate Function of Temperature and Power Curve Name
+  ,                        !- Thermal Efficiency Function of Temperature and Elevation Curve Name
+  ,                        !- Heat Recovery Rate Function of Part Load Ratio Curve Name
+  ,                        !- Heat Recovery Rate Function of Inlet Water Temperature Cuve Name
+  ,                        !- Heat Recovery Rate Function of Water Flow Rate Curve Name
+  0.0,                     !- Minimum Heat Recovery Water Flow Rate {m3/s}
+  100.0,                   !- Maximum Heat Recovery Water Flow Rate {m3/s}
+  100.0;                   !- Maximum Heat Recovery Water Temperature {C}
+
+Curve:Biquadratic,
+  MicroTurbinePowerCurve,  !- Name
+  1.0000,                  !- Coefficient1 Constant
+  0.0000,                  !- Coefficient2 x
+  0.0000,                  !- Coefficient3 x**2
+  0.0000,                  !- Coefficient4 y
+  0.0000,                  !- Coefficient5 y**2
+  0.0000,                  !- Coefficient6 x*y
+  0.0000,                  !- Minimum Value of x
+  1.0E12,                  !- Maximum Value of x
+  0.0000,                  !- Minimum Value of y
+  1.0E12;                  !- Maximum Value of y
+
+Curve:Quadratic,
+  MicroTurbineEffCurve,    !- Name
+  1.0000,                  !- Coefficient1 Constant
+  0.0000,                  !- Coefficient2 x
+  0.0000,                  !- Coefficient3 x**2
+  0.0000,                  !- Minimum Value of x
+  1.0E12,                  !- Maximum Value of x
+  0.0000,                  !- Minimum Value of y
+  1.0E12;                  !- Maximum Value of y
+
+ElectricLoadCenter:Distribution,
+  Main Load Center,        !- Name
+  Generator List,          !- Generator List Name
+  FollowThermal,           !- Generator Operation Scheme Type
+  0,                       !- Demand Limit Scheme Purchased Electric Demand Limit {W}
+  ,                        !- Track Schedule Name Scheme Schedule Name
+  ,                        !- Track Meter Scheme Meter Name
+  AlternatingCurrent;      !- Electrical Buss Type
+
+  <% chp_therm_elec_ratio = chp_therm_eff / chp_elec_eff %>
+ElectricLoadCenter:Generators,
+  Generator List,          !- Name
+  <%= name %> Heating Source,  !- Generator 1 Name
+  Generator:MicroTurbine,  !- Generator 1 Object Type
+  <%= chp_rated_elec_output %>,  !- Generator 1 Rated Electric Power Output {W}
+  <%= name %> Operation Schedule,  !- Generator 1 Availability Schedule Name
+  <%= chp_therm_elec_ratio %>;  !- Generator 1 Rated Thermal to Electrical Power Ratio
+
+  <% end %>
+<% end %>
+
+Branch,
+  <%= name %> Supply Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Supply Equipment Bypass Pipe,  !- Component 1 Name
+  <%= name %> Supply Equip Bypass Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Equip Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Supply Equipment Bypass Pipe,  !- Name
+  <%= name %> Supply Equip Bypass Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Equip Bypass Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Supply Outlet Pipe,  !- Component 1 Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Supply Outlet Pipe,  !- Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= name %> Supply Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Supply Splitter,!- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Supply Mixer;   !- Connector 2 Name
+
+Connector:Splitter,
+  <%= name %> Supply Splitter,!- Name
+  <%= name %> Supply Inlet Branch,  !- Inlet Branch Name
+<% if (boiler_duplicate) %>
+  <%= name %> Supply Equipment Branch 1,  !- Outlet Branch 1 Name
+  <%= name %> Supply Equipment Branch 2,  !- Outlet Branch 1 Name
+<% else %>
+  <%= name %> Supply Equipment Branch,  !- Outlet Branch 1 Name
+<% end %>
+<% if (chiller_generator_type == "DIRECTFIRED") %>
+  <%= name %> Chiller Supply Branch,  !- Branch Name
+<% end %>
+  <%= name %> Supply Bypass Branch;  !- Outlet Branch 2 Name
+
+Connector:Mixer,
+  <%= name %> Supply Mixer,   !- Name
+  <%= name %> Supply Outlet Branch,  !- Outlet Branch Name
+<% if (boiler_duplicate) %>
+  <%= name %> Supply Equipment Branch 1,  !- Outlet Branch 1 Name
+  <%= name %> Supply Equipment Branch 2,  !- Outlet Branch 1 Name
+<% else %>
+  <%= name %> Supply Equipment Branch,  !- Inlet Branch 1 Name
+<% end %>
+<% if (chiller_generator_type == "DIRECTFIRED") %>
+  <%= name %> Chiller Supply Branch,  !- Branch Name
+<% end %>
+  <%= name %> Supply Bypass Branch;  !- Inlet Branch 2 Name
+
+BranchList,
+  <%= name %> Demand Branches,!- Name
+  <%= name %> Demand Inlet Branch,  !- Branch Name
+<% for branch_name in branch_names %>
+  <%= branch_name %> HW Branch,  !- Branch Name
+<% end %>
+  <%= name %> Demand Bypass Branch,  !- Branch Name
+  <%= name %> Demand Outlet Branch;  !- Branch Name
+
+Branch,
+  <%= name %> Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Inlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Inlet Pipe,  !- Name
+  <%= name %> Demand Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Demand Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Bypass Pipe,  !- Component 1 Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Bypass Pipe,  !- Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Outlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Outlet Pipe,  !- Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= name %> Demand Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Demand Splitter,!- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Demand Mixer;   !- Connector 2 Name
+
+Connector:Splitter,
+  <%= name %> Demand Splitter,!- Name
+  <%= name %> Demand Inlet Branch,  !- Inlet Branch Name
+<% for branch_name in branch_names %>
+  <%= branch_name %> HW Branch,  !- Outlet Branch Name
+<% end %>
+  <%= name %> Demand Bypass Branch;  !- Outlet Branch Name
+
+Connector:Mixer,
+  <%= name %> Demand Mixer,   !- Name
+  <%= name %> Demand Outlet Branch,  !- Outlet Branch Name
+<% for branch_name in branch_names %>
+  <%= branch_name %> HW Branch,  !- Inlet Branch Name
+<% end %>
+  <%= name %> Demand Bypass Branch;  !- Inlet Branch Name
+
+<% if (chiller_cond_hr) || (chiller_heatpump_hr) %>
+  <%= insert 'chillerheatrecovery.imf',
+    :name=>name,
+    :design_flow=>design_flow,
+    :design_temp=>design_temp,
+    :design_delta=>design_delta,
+    :pump_eff=>pump_eff,
+    :pump_head=>pump_head,
+    :pump_power=>pump_power,
+    :chiller_heatpump_hr=>chiller_heatpump_hr,
+    :chiller_cond_hr=>chiller_cond_hr,
+    :chiller_hr_temp=>chiller_hr_temp
+  %>
+<% end %>

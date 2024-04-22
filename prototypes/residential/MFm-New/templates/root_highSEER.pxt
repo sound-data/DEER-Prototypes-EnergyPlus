@@ -43076,7 +43076,7 @@ ZoneInfiltration:DesignFlowRate,
                 SimpleAndTabular;        !- Option Type
 
                 Output:Meter,Electricity:Facility,hourly; !- [J]
-                Output:Meter,Gas:Facility,hourly; !- [J]
+                Output:Meter,NaturalGas:Facility,hourly; !- [J]
 
     !
     ! -------------------------------------------------------------
@@ -51542,7 +51542,7 @@ ZoneInfiltration:DesignFlowRate,
        UnitarySystemPerformance:Multispeed,  !- Design Specification Multispeed Object Type
        MultiSpeed Performance;  !- Design Specification Multispeed Object Name
  <% end %>
- 
+
     AirLoopHVAC:UnitarySystem,
         DXFG EL1 T_E29 Unitary System,    !- Name
         Load,                     !- Control Type
@@ -53088,8 +53088,8 @@ ZoneInfiltration:DesignFlowRate,
         None,                     !- Dehumidification Control Type
         ,                         !- Reheat Coil Object Type
         ;                         !- Reheat Coil Name
-<% end %>		
-		
+<% end %>
+
 
     AirLoopHVAC:Unitary:Furnace:HeatCool,
         DXFG EL1 T_W35 Furnace with DX Cooling,    !- Name
@@ -53309,8 +53309,8 @@ ZoneInfiltration:DesignFlowRate,
     <% end %>
         DXFG EL2 G_S3 Mixed Air Outlet,    !- Component 1 Inlet Node Name
         DXFG EL2 G_S3 Air Loop Outlet;    !- Component 1 Outlet Node Name
-		
-<% end %> 
+
+<% end %>
 
     Branch,
         DXFG EL1 T_E29 Main Branch,    !- Name
@@ -53479,7 +53479,7 @@ ZoneInfiltration:DesignFlowRate,
     <% end %>
         DXFG EL2 G_N9 Mixed Air Outlet,    !- Component 1 Inlet Node Name
         DXFG EL2 G_N9 Air Loop Outlet;    !- Component 1 Outlet Node Name
-		
+
 <% end %>
 
     Branch,

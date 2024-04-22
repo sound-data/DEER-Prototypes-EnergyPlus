@@ -1,0 +1,1099 @@
+
+GlobalGeometryRules,
+  UpperLeftCorner,         !- Starting Vertex Position
+  Counterclockwise,        !- Vertex Entry Direction
+  Relative,                !- Coordinate System
+  Relative,                !- Daylighting Reference Point Coordinate System
+  Relative;                !- Rectangular Surface Coordinate System
+
+Zone,
+  EL1 North Perim Plnm (G.N4) ZN Thermal Zone,  !- Name
+  ,                        !- Direction of Relative North
+  ,                        !- X Origin
+  ,                        !- Y Origin
+  ,                        !- Z Origin
+  ,                        !- Type
+  1;                       !- Multiplier
+
+Zone,
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Name
+  ,                        !- Direction of Relative North
+  ,                        !- X Origin
+  ,                        !- Y Origin
+  ,                        !- Z Origin
+  ,                        !- Type
+  1;                       !- Multiplier
+
+Zone,
+  RetailSales EL1 South Perim (G.S1),  !- Name
+  ,                        !- Direction of Relative North
+  ,                        !- X Origin
+  ,                        !- Y Origin
+  ,                        !- Z Origin
+  ,                        !- Type
+  1;                       !- Multiplier
+
+Zone,
+  StockRoom EL1 North Perim (G.N2),  !- Name
+  ,                        !- Direction of Relative North
+  ,                        !- X Origin
+  ,                        !- Y Origin
+  ,                        !- Z Origin
+  ,                        !- Type
+  1;                       !- Multiplier
+
+BuildingSurface:Detailed,
+  EL1 Ceiling (G.N2.I9)-mirror,  !- Name
+  Floor,                   !- Surface Type
+  Interior Floor,  !- Construction Name
+  EL1 North Perim Plnm (G.N4) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 Ceiling (G.N2.I9)-mirror Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Ceiling (G.N2.I9)-mirror Reversed,  !- Name
+  Ceiling,                 !- Surface Type
+  Interior Floor,  !- Construction Name
+  StockRoom EL1 North Perim (G.N2),  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 Ceiling (G.N2.I9)-mirror,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Ceiling (G.S1.I7)-mirror,  !- Name
+  Floor,                   !- Surface Type
+  Interior Floor,  !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 Ceiling (G.S1.I7)-mirror Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048,                   !- Vertex 4 Z-coordinate
+  2.724899808,             !- Vertex 5 X-coordinate
+  27.26439048,             !- Vertex 5 Y-coordinate
+  3.048,                   !- Vertex 5 Z-coordinate
+  2.724899808,             !- Vertex 6 X-coordinate
+  20.44900152,             !- Vertex 6 Y-coordinate
+  3.048,                   !- Vertex 6 Z-coordinate
+  24.5364,                 !- Vertex 7 X-coordinate
+  20.44900152,             !- Vertex 7 Y-coordinate
+  3.048,                   !- Vertex 7 Z-coordinate
+  24.5364,                 !- Vertex 8 X-coordinate
+  27.26439048,             !- Vertex 8 Y-coordinate
+  3.048;                   !- Vertex 8 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Ceiling (G.S1.I7)-mirror Reversed,  !- Name
+  Ceiling,                 !- Surface Type
+  Interior Floor,  !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 Ceiling (G.S1.I7)-mirror,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.048,                   !- Vertex 4 Z-coordinate
+  2.724899808,             !- Vertex 5 X-coordinate
+  20.44900152,             !- Vertex 5 Y-coordinate
+  3.048,                   !- Vertex 5 Z-coordinate
+  2.724899808,             !- Vertex 6 X-coordinate
+  27.26439048,             !- Vertex 6 Y-coordinate
+  3.048,                   !- Vertex 6 Z-coordinate
+  0,                       !- Vertex 7 X-coordinate
+  27.26439048,             !- Vertex 7 Y-coordinate
+  3.048,                   !- Vertex 7 Z-coordinate
+  0,                       !- Vertex 8 X-coordinate
+  0,                       !- Vertex 8 Y-coordinate
+  3.048;                   !- Vertex 8 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.S1.E2), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  27.26439048,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  27.26439048,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.S1.I1), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  13.633704,               !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  13.633704,               !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  27.26439048,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  27.26439048,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.S1.I5)-mirror,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  StockRoom EL1 North Perim (G.N2),  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 East Wall (G.S1.I5)-mirror Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  2.724899808,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  2.724899808,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.S1.I5)-mirror Reversed,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 East Wall (G.S1.I5)-mirror,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  2.724899808,             !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  2.724899808,             !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.S3.E7), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  27.26439048,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  27.26439048,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.S3.I10),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  13.633704,               !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  13.633704,               !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  27.26439048,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  27.26439048,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.S3.I14)-mirror,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  EL1 North Perim Plnm (G.N4) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 East Wall (G.S3.I14)-mirror Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  2.724899808,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  2.724899808,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.S3.I14)-mirror Reversed,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 East Wall (G.S3.I14)-mirror,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  2.724899808,             !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  2.724899808,             !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Flr (G.N2.U2),       !- Name
+  Floor,                   !- Surface Type
+  EL1 Flr (G.N2.U2) SlabOnOrBelowGradeF073,  !- Construction Name
+  StockRoom EL1 North Perim (G.N2),  !- Zone Name
+  ,                        !- Space Name
+  GroundFCfactorMethod,    !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Flr (G.S1.U1),       !- Name
+  Floor,                   !- Surface Type
+  EL1 Flr (G.S1.U1) SlabOnOrBelowGradeF073,  !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  GroundFCfactorMethod,    !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  0,                       !- Vertex 4 Z-coordinate
+  2.724899808,             !- Vertex 5 X-coordinate
+  27.26439048,             !- Vertex 5 Y-coordinate
+  0,                       !- Vertex 5 Z-coordinate
+  2.724899808,             !- Vertex 6 X-coordinate
+  20.44900152,             !- Vertex 6 Y-coordinate
+  0,                       !- Vertex 6 Z-coordinate
+  24.5364,                 !- Vertex 7 X-coordinate
+  20.44900152,             !- Vertex 7 Y-coordinate
+  0,                       !- Vertex 7 Z-coordinate
+  24.5364,                 !- Vertex 8 X-coordinate
+  27.26439048,             !- Vertex 8 Y-coordinate
+  0;                       !- Vertex 8 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.N2.E5),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  StockRoom EL1 North Perim (G.N2),  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  13.63221048,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  13.63221048,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.N2.I8),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  StockRoom EL1 North Perim (G.N2),  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  13.63221048,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  13.63221048,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.N4.E11),  !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  EL1 North Perim Plnm (G.N4) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  13.63221048,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  13.63221048,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.N4.I16),  !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  EL1 North Perim Plnm (G.N4) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  13.63221048,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  13.63221048,             !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.S1.E3),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  2.724899808,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  2.724899808,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.S1.I2),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.S1.I4)-mirror,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  StockRoom EL1 North Perim (G.N2),  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 North Wall (G.S1.I4)-mirror Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  2.724899808,             !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  2.724899808,             !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.S1.I4)-mirror Reversed,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 North Wall (G.S1.I4)-mirror,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.S3.E8),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  2.724899808,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  2.724899808,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.S3.I11),  !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.S3.I13)-mirror,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  EL1 North Perim Plnm (G.N4) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 North Wall (G.S3.I13)-mirror Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  2.724899808,             !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  2.724899808,             !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.S3.I13)-mirror Reversed,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 North Wall (G.S3.I13)-mirror,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Roof (G.N4.E12),     !- Name
+  Roof,                    !- Surface Type
+  Exterior Roof,  !- Construction Name
+  EL1 North Perim Plnm (G.N4) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.6576,                  !- Vertex 2 Z-coordinate
+  2.724899808,             !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.6576,                  !- Vertex 3 Z-coordinate
+  2.724899808,             !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Roof (G.S3.E10),     !- Name
+  Roof,                    !- Surface Type
+  Exterior Roof,  !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.6576,                  !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.6576,                  !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.6576,                  !- Vertex 4 Z-coordinate
+  2.724899808,             !- Vertex 5 X-coordinate
+  20.44900152,             !- Vertex 5 Y-coordinate
+  3.6576,                  !- Vertex 5 Z-coordinate
+  2.724899808,             !- Vertex 6 X-coordinate
+  27.26439048,             !- Vertex 6 Y-coordinate
+  3.6576,                  !- Vertex 6 Z-coordinate
+  0,                       !- Vertex 7 X-coordinate
+  27.26439048,             !- Vertex 7 Y-coordinate
+  3.6576,                  !- Vertex 7 Z-coordinate
+  0,                       !- Vertex 8 X-coordinate
+  0,                       !- Vertex 8 Y-coordinate
+  3.6576;                  !- Vertex 8 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 South Wall (G.S1.E1),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  27.26439048,             !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  27.26439048,             !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 South Wall (G.S3.E6),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  27.26439048,             !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  27.26439048,             !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.S1.E4), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  13.63221048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  13.63221048,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.S1.I3)-mirror,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  StockRoom EL1 North Perim (G.N2),  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 West Wall (G.S1.I3)-mirror Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.S1.I3)-mirror Reversed,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 West Wall (G.S1.I3)-mirror,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.S1.I6), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  RetailSales EL1 South Perim (G.S1),  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.048,                   !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  13.63221048,             !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  13.63221048,             !- Vertex 4 Y-coordinate
+  3.048;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.S3.E9), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  13.63221048,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  13.63221048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.S3.I12)-mirror,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  EL1 North Perim Plnm (G.N4) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 West Wall (G.S3.I12)-mirror Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  20.44900152,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  20.44900152,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  27.26439048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  27.26439048,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.S3.I12)-mirror Reversed,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,  !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 West Wall (G.S3.I12)-mirror,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  24.5364,                 !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  24.5364,                 !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  24.5364,                 !- Vertex 3 X-coordinate
+  20.44900152,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  24.5364,                 !- Vertex 4 X-coordinate
+  20.44900152,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.S3.I15),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  EL1 South Perim Plnm (G.S3) ZN Thermal Zone,  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  27.26439048,             !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  27.26439048,             !- Vertex 2 Y-coordinate
+  3.048,                   !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  13.63221048,             !- Vertex 3 Y-coordinate
+  3.048,                   !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  13.63221048,             !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  EL1 East Win (G.S1.E2.W1),  !- Name
+  Window,                  !- Surface Type
+  Exterior Window,  !- Construction Name
+  EL1 East Wall (G.S1.E2), !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  ,                        !- Number of Vertices
+  27.26439048,             !- Vertex 1 X-coordinate
+  1.880299008,             !- Vertex 1 Y-coordinate
+  2.505456,                !- Vertex 1 Z-coordinate
+  27.26439048,             !- Vertex 2 X-coordinate
+  1.880299008,             !- Vertex 2 Y-coordinate
+  0.9144,                  !- Vertex 2 Z-coordinate
+  27.26439048,             !- Vertex 3 X-coordinate
+  13.633704,               !- Vertex 3 Y-coordinate
+  0.9144,                  !- Vertex 3 Z-coordinate
+  27.26439048,             !- Vertex 4 X-coordinate
+  13.633704,               !- Vertex 4 Y-coordinate
+  2.505456;                !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  EL1 South Win (G.S1.E1.W1),  !- Name
+  Window,                  !- Surface Type
+  Exterior Window,  !- Construction Name
+  EL1 South Wall (G.S1.E1),!- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  ,                        !- Number of Vertices
+  1.880299008,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  2.505456,                !- Vertex 1 Z-coordinate
+  1.880299008,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0.9144,                  !- Vertex 2 Z-coordinate
+  25.38407928,             !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0.9144,                  !- Vertex 3 Z-coordinate
+  25.38407928,             !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  2.505456;                !- Vertex 4 Z-coordinate
+
+Construction:FfactorGroundFloor,
+  EL1 Flr (G.N2.U2) SlabOnOrBelowGradeF073,  !- Name
+  1.26343630645111,        !- F-Factor
+  148.653857609595,        !- Area
+  21.811488;               !- PerimeterExposed
+
+Construction:FfactorGroundFloor,
+  EL1 Flr (G.S1.U1) SlabOnOrBelowGradeF073,  !- Name
+  1.26343630645111,        !- F-Factor
+  594.69313063632,         !- Area
+  100.876608;              !- PerimeterExposed

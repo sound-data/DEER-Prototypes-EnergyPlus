@@ -1,0 +1,495 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "atu_name",
+  :domain => String
+
+# drop all atu_ prefixes!! this will get prefixed externally
+# or maybe change: atu_type => unit_type    but atu_unit_type is redundant...
+
+parameter "atu_type",
+  :default => "CAV", :domain => String  # ["CAV", "CAV-CHB", "CAV-IND", "CAV-DD", "VAV", "VAV-PFP", "VAV-SFP", "VAV-DD"]
+
+parameter "atu_flow",
+  :default => Autosize
+parameter "atu_flow_min_frac",
+  :default => Autosize
+    # Hard-set min primary air flow fraction through terminal to 1.0 for CAV single and dual duct terminals.
+    #CAV chilled beam and induction terminals don't have this input field.
+    #if (atu_type == "CAV" or atu_type == "CAV-DD")
+    #  atu_flow_min_frac = 1.0
+    #end
+    # Seems like Autosize is the better way to go now.
+
+# Change to induction_frac
+parameter "atu_ind_frac",  # Ratio of induced air flow from zones to primary supply flow from central air loop. Only used with induction terminals.
+  :default => 2.5, :domain => Numeric
+
+parameter "atu_fan_rise",  # Terminal fan pressure rise
+  :default => 0.2['in H2O'], :domain => Quantity
+parameter "atu_fan_eff",
+  :default => 0.5, :domain => Numeric
+parameter "atu_fan_motor_eff",
+  :default => 0.85, :domain => Numeric
+parameter "atu_fan_subcat",
+  :default => "ATU Fans", :domain => String
+
+parameter "atu_reheat_coil_type",
+  :default => "RESISTANCE", :domain => String  # (RESISTANCE | WATER | NONE)
+parameter "atu_reheat_coil_eff",
+  :default => 0.98, :domain => Numeric
+parameter "atu_reheat_max_sat",  # Maximum air temp leaving air terminal reheat coil
+  :default => 104['F'], :domain => Quantity
+parameter "atu_reheat_max_frac",  # Maximum air flow fraction during reheat
+  :default => Autosize, :domain => Numeric
+parameter "atu_reheat_control",  # only applies to HW coil; all others do Normal action (single max) anyway
+  :default => "SINGLE-MAX", :domain => String  # (SINGLE-MAX | DUAL-MAX | DUAL-MAX-LIMIT)   add SINGLE-MAX-LIMITS
+
+# Disable leakage temporarily; results in unmet hours currently.
+parameter "atu_leak_supply_frac", :name => "ATU Supply Leakage Fraction", :description=>"Leakage fraction to return plenum in supply ducts upstream of the air terminal unit",
+  :default => 0.0, :domain => Numeric  # Interval [0, 0.5]
+parameter "atu_leak_return_frac", :name => "ATU Return Leakage Fraction", :description=>"Leakage fraction to return plenum in return ducts downstream of the air terminal unit",
+  :default => 0.0, :domain => Numeric  # Interval [0, 0.5]
+
+# ATU must be connected to a return plenum for duct leakage or there will be errors.
+# add rule: fail if there are no ducts or not compatible or something.
+
+# should import from water recycling template!
+parameter "clear_water_storage_tank", :default => ""
+
+
+#TRC - design specification OA name added so VAV terminal units can refer to it to size minimum flowrate
+parameter "design_spec_OA_name", :default => ""
+
+rule "atu_type_cav", :parameters => {:atu_type => "CAV"} do
+  force :atu_flow_min_frac => 1.0  # Unsure about this...both ways work, but slightly different results
+  disable :atu_ind_frac
+  disable :atu_fan_rise
+  disable :atu_fan_eff
+  disable :atu_fan_motor_eff
+  disable :atu_fan_subcat
+  default :atu_reheat_coil_type => "RESISTANCE"
+end
+
+rule "atu_type_cav_chb", :parameters => {:atu_type => "CAV-CHB"} do
+  disable :atu_ind_frac
+  disable :atu_fan_rise
+  disable :atu_fan_eff
+  disable :atu_fan_motor_eff
+  disable :atu_fan_subcat
+  force :atu_reheat_coil_type => "NONE"
+  disable :atu_leak_supply_frac  # Does not support simple duct leakage
+  disable :atu_leak_return_frac
+end
+
+rule "atu_type_cav_ind", :parameters => {:atu_type => "CAV-IND"} do
+  disable :atu_ind_frac
+  disable :atu_fan_rise
+  disable :atu_fan_eff
+  disable :atu_fan_motor_eff
+  disable :atu_fan_subcat
+  force :atu_reheat_coil_type => "WATER"
+  disable :atu_reheat_control
+  disable :atu_leak_supply_frac  # Does not support simple duct leakage
+  disable :atu_leak_return_frac
+end
+
+rule "atu_type_cav_dd", :parameters => {:atu_type => "CAV-DD"} do
+  disable :atu_ind_frac
+  disable :atu_fan_rise
+  disable :atu_fan_eff
+  disable :atu_fan_motor_eff
+  disable :atu_fan_subcat
+  force :atu_reheat_coil_type => "NONE"
+  disable :atu_leak_supply_frac  # Does not support simple duct leakage
+  disable :atu_leak_return_frac
+end
+
+rule "atu_type_vav", :parameters => {:atu_type => "VAV"} do
+  disable :atu_ind_frac
+  disable :atu_fan_rise
+  disable :atu_fan_eff
+  disable :atu_fan_motor_eff
+  disable :atu_fan_subcat
+  default :atu_reheat_coil_type => "RESISTANCE"
+end
+
+rule "atu_type_vav_coil_none", :parameters => {:atu_type => "VAV", :atu_reheat_coil_type => "NONE"} do
+  disable :atu_leak_supply_frac  # Does not support simple duct leakage
+  disable :atu_leak_return_frac
+end
+
+rule "atu_type_vav_pfp", :parameters => {:atu_type => "VAV-PFP"} do
+  disable :atu_ind_frac
+  #restrict :atu_reheat_coil_type => [all except NONE]  # must have a reheat coil
+  default :atu_reheat_coil_type => "RESISTANCE"
+  disable :atu_reheat_control
+  disable :atu_leak_supply_frac  # Does not support simple duct leakage
+  disable :atu_leak_return_frac
+end
+
+rule "atu_type_vav_sfp", :parameters => {:atu_type => "VAV-SFP"} do
+  disable :atu_ind_frac
+  #restrict :atu_reheat_coil_type => [all except NONE]  # must have a reheat coil
+  default :atu_reheat_coil_type => "RESISTANCE"
+  disable :atu_reheat_control
+  disable :atu_leak_supply_frac  # Does not support simple duct leakage
+  disable :atu_leak_return_frac
+end
+
+rule "atu_type_vav_dd", :parameters => {:atu_type => "VAV-DD"} do
+  disable :atu_ind_frac
+  force :atu_reheat_coil_type => "NONE"
+  disable :atu_reheat_control
+  disable :atu_leak_supply_frac  # Does not support simple duct leakage
+  disable :atu_leak_return_frac
+end
+
+rule "atu_reheat_coil_type_resistance", :parameters => {:atu_reheat_coil_type => "RESISTANCE"} do
+  default :atu_reheat_coil_eff => 1.0
+  default :atu_reheat_control => "SINGLE-MAX"  # do not force temporarily until rule override in import
+end
+
+rule "atu_reheat_coil_type_water", :parameters => {:atu_reheat_coil_type => "WATER"} do
+  disable :atu_reheat_coil_eff
+end
+
+rule "atu_reheat_coil_type_none", :parameters => {:atu_reheat_coil_type => "NONE"} do
+  disable :atu_reheat_coil_eff
+  disable :atu_reheat_max_sat
+  disable :atu_reheat_control
+end
+%>
+<%
+if (atu_reheat_control == "SINGLE-MAX")
+  atu_reheat_control_input = "Normal"
+elsif (atu_reheat_control == "DUAL-MAX")
+  atu_reheat_control_input = "Reverse"
+elsif (atu_reheat_control == "DUAL-MAX-LIMIT")
+  atu_reheat_control_input = "ReverseWithLimits"
+end
+%>
+ZoneHVAC:AirDistributionUnit,
+  <%= atu_name %> Air Distribution Unit,  !- Name
+  <%= atu_name %> Outlet Node,  !- Air Distribution Unit Outlet Node Name
+<% if (atu_type == "CAV" or atu_type == "VAV") %>
+<% if (atu_reheat_coil_type == "NONE") %>
+  AirTerminal:SingleDuct:VAV:NoReheat,  !- Air Terminal Object Type
+<% else %>
+  AirTerminal:SingleDuct:VAV:Reheat,  !- Air Terminal Object Type
+<% end %>
+<% elsif (atu_type == "CAV-CHB") %>
+  AirTerminal:SingleDuct:ConstantVolume:CooledBeam,  !- Air Terminal Object Type
+<% elsif (atu_type == "CAV-IND") %>
+  AirTerminal:SingleDuct:ConstantVolume:FourPipeInduction,  !- Air Terminal Object Type
+<% elsif (atu_type == "VAV-PFP") %>
+  AirTerminal:SingleDuct:ParallelPIU:Reheat,  !- Air Terminal Object Type
+<% elsif (atu_type == "VAV-SFP") %>
+  AirTerminal:SingleDuct:SeriesPIU:Reheat,  !- Air Terminal Object Type
+<% elsif (atu_type == "CAV-DD" or atu_type == "VAV-DD") %>
+  AirTerminal:DualDuct:VAV,  !- Air Terminal Object Type
+<% end %>
+<% if (atu_leak_supply_frac.nil?) %>
+  <%= atu_name %> ATU;     !- Air Terminal Name
+<% else %>
+  <%= atu_name %> ATU,     !- Air Terminal Name
+  <%= atu_leak_supply_frac %>,  !- Nominal Upstream Leakage Fraction
+  <%= atu_leak_return_frac %>;  !- Constant Downstream Leakage Fraction
+<% end %>
+
+<% if (atu_type == "CAV" or atu_type == "VAV") %>
+<% if (atu_reheat_coil_type == "NONE") %>
+AirTerminal:SingleDuct:VAV:NoReheat,
+  <%= atu_name %> ATU,     !- Name
+  ,                        !- Availability Schedule Name
+  <%= atu_name %> Outlet Node,  !- Air Outlet Node Name
+  <%= atu_name %> Inlet Node,  !- Air Inlet Node Name
+  <%= atu_flow %>,         !- Maximum Air Flow Rate {m3/s}
+  Constant,                !- Zone Minimum Air Flow Input Method
+  <%= atu_flow_min_frac %>,  !- Constant Minimum Air Flow Fraction
+  ,                        !- Fixed Minimum Air Flow Rate {m3/s}
+  ,                        !- Minimum Air Flow Fraction Schedule Name
+  <% #TRC - add missing field so minimum flow can be autosized to account for OA requirement %>
+  <%= design_spec_OA_name %>;  !- Design Specification Outdoor Air Object Name
+
+<% else %>
+AirTerminal:SingleDuct:VAV:Reheat,
+  <%= atu_name %> ATU,     !- Name
+  ,                        !- Availability Schedule Name
+  <%= atu_name %> Damper Outlet Node,  !- Damper Air Outlet Node Name
+  <%= atu_name %> Inlet Node,  !- Air Inlet Node Name
+  <%= atu_flow %>,         !- Maximum Air Flow Rate {m3/s}
+  Constant,                !- Zone Minimum Air Flow Input Method
+  <%= atu_flow_min_frac %>,  !- Constant Minimum Air Flow Fraction
+  ,                        !- Fixed Minimum Air Flow Rate {m3/s}
+  ,                        !- Minimum Air Flow Fraction Schedule Name
+<% if (atu_reheat_coil_type == "RESISTANCE") %>
+  Coil:Heating:Electric,   !- Reheat Coil Object Type
+<% elsif (atu_reheat_coil_type == "WATER") %>
+  Coil:Heating:Water,      !- Reheat Coil Object Type
+<% end %>
+  <%= atu_name %> ATU Heating Coil,  !- Reheat Coil Name
+<% if (atu_reheat_coil_type == "WATER") %>
+  Autosize,                !- Maximum Hot Water or Steam Flow Rate {m3/s}
+  0.0,                     !- Minimum Hot Water or Steam Flow Rate {m3/s}
+<% else %>
+  ,                        !- Maximum Hot Water or Steam Flow Rate {m3/s}
+  ,                        !- Minimum Hot Water or Steam Flow Rate {m3/s}
+<% end %>
+  <%= atu_name %> Outlet Node,  !- Air Outlet Node Name
+  0.001,                   !- Convergence Tolerance
+  <%= atu_reheat_control_input %>,  !- Damper Heating Action
+  ,                        !- Maximum Flow per Zone Floor Area During Reheat {m3/s-m2}
+  <%= atu_reheat_max_frac %>,                        !- Maximum Flow Fraction During Reheat
+  <%= atu_reheat_max_sat %>,  !- Maximum Reheat Air Temperature {C}
+<%# TRC - change so minimum flow can be autosized to account for OA requirement %>
+  <%= design_spec_OA_name %>;  !- Design Specification Outdoor Air Object Name
+<%#
+Design OA controls the damper to meet outdoor air based on varying number of occupants.
+Do we want this in general? Or only for DCV?
+This fixes a lot of the unmet hours, but seems wrong to omit.
+
+adding DesignSpecification:OutdoorAir might fix it?
+
+NOTE: There can be two DesignSpecification:OutdoorAir objects:
+- one is used in Sizing:Zone to _design_ loads (CFM/person, etc.)
+- second is used here with AirTerminal:SingleDuct:VAV:Reheat for _control_ of OA based
+  on actual occupancy--can be different from design loads if DCV
+%>
+
+<%# THIS must be handled. Can't use arbitrary schedule. %>
+
+<% end %>
+<% elsif (atu_type == "CAV-CHB") %>
+AirTerminal:SingleDuct:ConstantVolume:CooledBeam,
+  <%= atu_name %> ATU,     !- Name
+  ,                        !- Availability Schedule Name
+  Active,                  !- Cooled Beam Type
+  <%= atu_name %> Inlet Node,  !- Supply Air Inlet Node Name
+  <%= atu_name %> Outlet Node,  !- Supply Air Outlet Node Name
+  <%= atu_name %> Chilled Beam CW Inlet Node,  !- Chilled Water Inlet Node Name
+  <%= atu_name %> Chilled Beam CW Outlet Node,  !- Chilled Water Outlet Node Name
+  <%= atu_flow %>,         !- Supply Air Volumetric Flow Rate {m3/s}
+  ,                        !- Maximum Total Chilled Water Volumetric Flow Rate {m3/s}
+  ,                        !- Number of Beams
+  ,                        !- Beam Length {m}
+  ,                        !- Design Inlet Water Temperature {C}
+  ,                        !- Design Outlet Water Temperature {C}
+  ,                        !- Coil Surface Area per Coil Length {m2/m}
+  ,                        !- Model Parameter a
+  ,                        !- Model Parameter n1
+  ,                        !- Model Parameter n2
+  ,                        !- Model Parameter n3
+  ,                        !- Model Parameter a0 {m2/m}
+  ,                        !- Model Parameter K1
+  ,                        !- Model Parameter n
+  ,                        !- Coefficient of Induction Kin
+  ;                        !- Leaving Pipe Inside Diameter {m}
+
+Branch,
+  <%= atu_name %> CW Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  AirTerminal:SingleDuct:ConstantVolume:CooledBeam,  !- Component 1 Object Type
+  <%= atu_name %> ATU,     !- Component 1 Name
+  <%= atu_name %> Chilled Beam CW Inlet Node,  !- Component 1 Inlet Node Name
+  <%= atu_name %> Chilled Beam CW Outlet Node;  !- Component 1 Outlet Node Name
+
+<% elsif (atu_type == "CAV-IND") %>
+AirTerminal:SingleDuct:ConstantVolume:FourPipeInduction,
+  <%= atu_name %> ATU,     !- Name
+  ,                        !- Availability Schedule Name
+  <%= atu_flow %>,         !- Maximum Total Air Flow Rate {m3/s}
+  <%= atu_ind_frac %>,     !- Induction Ratio {}
+  <%= atu_name %> Inlet Node,  !- Supply Air Inlet Node Name
+  <%= atu_name %> Secondary Inlet Node,  !- Induced Air Inlet Node Name
+  <%= atu_name %> Outlet Node,  !- Air Outlet Node Name
+  <%= atu_name %> Heating Coil Demand Inlet Node,  !- Hot Water Inlet Node Name
+  <%= atu_name %> Cooling Coil Demand Inlet Node,  !- Cold Water Inlet Node Name
+  Coil:Heating:Water,      !- Heating Coil Object Type
+  <%= atu_name %> Heating Coil,  !- Heating Coil Name
+  Autosize,                !- Maximum Hot Water Flow Rate {m3/s}
+  0.0,                     !- Minimum Hot Water Flow Rate {m3/s}
+  0.001,                   !- Heating Convergence Tolerance
+  Coil:Cooling:Water,      !- Cooling Coil Object Type
+  <%= atu_name %> Cooling Coil,  !- Cooling Coil Name
+  Autosize,                !- Maximum Cold Water Flow Rate {m3/s}
+  0.0,                     !- Minimum Cold Water Flow Rate {m3/s}
+  0.001,                   !- Cooling Convergence Tolerance
+  <%= atu_name %> ATU Mixer;  !- Zone Mixer Name
+
+AirLoopHVAC:ZoneMixer,
+  <%= atu_name %> ATU Mixer,  !- Name
+  <%= atu_name %> Outlet Node,  !- Outlet Node Name
+  <%= atu_name %> Inlet Node,  !- Inlet Node Name
+  <%= atu_name %> ATU Cooling Coil Outlet Node;  !- Inlet Node Name
+
+Coil:Cooling:Water,
+  <%= atu_name %> Cooling Coil,  !- Name
+  ,                        !- Availability Schedule Name
+  Autosize,                !- Design Water Flow Rate {m3/s}
+  Autosize,                !- Design Air Flow Rate {m3/s}
+  Autosize,                !- Design Inlet Water Temperature {C}
+  Autosize,                !- Design Inlet Air Temperature {C}
+  Autosize,                !- Design Outlet Air Temperature {C}
+  Autosize,                !- Design Inlet Air Humidity Ratio {kg-H2O/kg-air}
+  Autosize,                !- Design Outlet Air Humidity Ratio {kg-H2O/kg-air}
+  <%= atu_name %> Cooling Coil Demand Inlet Node,  !- Water Inlet Node Name
+  <%= atu_name %> Cooling Coil Demand Outlet Node,  !- Water Outlet Node Name
+  <%= atu_name %> ATU Heating Coil Outlet Node,  !- Air Inlet Node Name
+  <%= atu_name %> ATU Cooling Coil Outlet Node,  !- Air Outlet Node Name
+  SimpleAnalysis,          !- Type of Analysis
+  CrossFlow,               !- Heat Exchanger Configuration
+  <%= clear_water_storage_tank %>;  !- Condensate Collection Water Storage Tank Name
+
+Branch,
+  <%= atu_name %> CW Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Coil:Cooling:Water,      !- Component 1 Object Type
+  <%= atu_name %> Cooling Coil,  !- Component 1 Name
+  <%= atu_name %> Cooling Coil Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= atu_name %> Cooling Coil Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+<% elsif (atu_type == "VAV-PFP") %>
+AirTerminal:SingleDuct:ParallelPIU:Reheat,
+  <%= atu_name %> ATU,     !- Name
+  ,                        !- Availability Schedule Name
+  <%= atu_flow %>,         !- Maximum Primary Air Flow Rate {m3/s}
+  Autosize,                !- Maximum Secondary Air Flow Rate {m3/s}
+  <%= atu_flow_min_frac %>,  !- Minimum Primary Air Flow Fraction
+  Autosize,                !- Fan On Flow Fraction
+  <%= atu_name %> Inlet Node,  !- Supply Air Inlet Node Name
+  <%= atu_name %> Secondary Inlet Node,  !- Secondary Air Inlet Node Name
+  <%= atu_name %> Outlet Node,  !- Outlet Node Name
+  <%= atu_name %> Damper Outlet Node,  !- Reheat Coil Air Inlet Node Name
+  <%= atu_name %> ATU Mixer,  !- Zone Mixer Name
+  <%= atu_name %> ATU Fan,  !- Fan Name
+<% if (atu_reheat_coil_type == "RESISTANCE") %>
+  Coil:Heating:Electric,   !- Reheat Coil Object Type
+<% elsif (atu_reheat_coil_type == "WATER") %>
+  Coil:Heating:Water,      !- Reheat Coil Object Type
+<% end %>
+  <%= atu_name %> ATU Heating Coil,  !- Reheat Coil Name
+<% if (atu_reheat_coil_type == "WATER") %>
+  Autosize,                !- Maximum Hot Water or Steam Flow Rate {m3/s}
+  0.0,                     !- Minimum Hot Water or Steam Flow Rate {m3/s}
+<% else %>
+  ,                        !- Maximum Hot Water or Steam Flow Rate {m3/s}
+  ,                        !- Minimum Hot Water or Steam Flow Rate {m3/s}
+<% end %>
+  0.001;                   !- Convergence Tolerance
+
+AirLoopHVAC:ZoneMixer,
+  <%= atu_name %> ATU Mixer,  !- Name
+  <%= atu_name %> Damper Outlet Node,  !- Outlet Node Name
+  <%= atu_name %> Inlet Node,  !- Inlet Node Name
+  <%= atu_name %> ATU Fan Outlet Node;  !- Inlet Node Name
+
+Fan:ConstantVolume,
+  <%= atu_name %> ATU Fan,  !- Name
+  ,                        !- Availability Schedule Name
+  <%= atu_fan_eff %>,      !- Fan Efficiency
+  <%= atu_fan_rise %>,     !- Pressure Rise {Pa}
+  Autosize,                !- Maximum Flow Rate {m3/s}
+  <%= atu_fan_motor_eff %>,  !- Motor Efficiency
+  1.0,                     !- Motor In Airstream Fraction
+  <%= atu_name %> Secondary Inlet Node,  !- Air Inlet Node Name
+  <%= atu_name %> ATU Fan Outlet Node,  !- Air Outlet Node Name
+  <%= atu_fan_subcat %>;   !- End-Use Subcategory
+
+<% elsif (atu_type == "VAV-SFP") %>
+AirTerminal:SingleDuct:SeriesPIU:Reheat,
+  <%= atu_name %> ATU,     !- Name
+  ,                        !- Availability Schedule Name
+  <%= atu_flow %>,         !- Maximum Air Flow Rate {m3/s}
+  Autosize,                !- Maximum Primary Air Flow Rate {m3/s}
+  <%= atu_flow_min_frac %>,  !- Minimum Primary Air Flow Fraction
+  <%= atu_name %> Inlet Node,  !- Supply Air Inlet Node Name
+  <%= atu_name %> Secondary Inlet Node,  !- Secondary Air Inlet Node Name
+  <%= atu_name %> Outlet Node,  !- Outlet Node Name
+  <%= atu_name %> Damper Outlet Node,  !- Reheat Coil Air Inlet Node Name
+  <%= atu_name %> ATU Mixer,  !- Zone Mixer Name
+  <%= atu_name %> ATU Fan,  !- Fan Name
+<% if (atu_reheat_coil_type == "RESISTANCE") %>
+  Coil:Heating:Electric,   !- Reheat Coil Object Type
+<% elsif (atu_reheat_coil_type == "WATER") %>
+  Coil:Heating:Water,      !- Reheat Coil Object Type
+<% end %>
+  <%= atu_name %> ATU Heating Coil,  !- Reheat Coil Name
+<% if (atu_reheat_coil_type == "WATER") %>
+  Autosize,                !- Maximum Hot Water or Steam Flow Rate {m3/s}
+  0.0,                     !- Minimum Hot Water or Steam Flow Rate {m3/s}
+<% else %>
+  ,                        !- Maximum Hot Water or Steam Flow Rate {m3/s}
+  ,                        !- Minimum Hot Water or Steam Flow Rate {m3/s}
+<% end %>
+  0.001;                   !- Convergence Tolerance
+
+AirLoopHVAC:ZoneMixer,
+  <%= atu_name %> ATU Mixer,  !- Name
+  <%= atu_name %> ATU Fan Inlet Node,  !- Outlet Node Name
+  <%= atu_name %> Inlet Node,  !- Inlet Node Name
+  <%= atu_name %> Secondary Inlet Node;  !- Inlet Node Name
+
+Fan:ConstantVolume,
+  <%= atu_name %> ATU Fan,  !- Name
+  ,                        !- Availability Schedule Name
+  <%= atu_fan_eff %>,      !- Fan Efficiency
+  <%= atu_fan_rise %>,     !- Pressure Rise {Pa}
+  Autosize,                !- Maximum Flow Rate {m3/s}
+  <%= atu_fan_motor_eff %>,  !- Motor Efficiency
+  1.0,                     !- Motor In Airstream Fraction
+  <%= atu_name %> ATU Fan Inlet Node,  !- Air Inlet Node Name
+  <%= atu_name %> Damper Outlet Node,  !- Air Outlet Node Name
+  <%= atu_fan_subcat %>;   !- End-Use Subcategory
+
+<% elsif (atu_type == "CAV-DD" or atu_type == "VAV-DD") %>
+AirTerminal:DualDuct:VAV,
+  <%= atu_name %> ATU,     !- Name
+  ,                        !- Availability Schedule Name
+  <%= atu_name %> Outlet Node,  !- Air Outlet Node Name
+  <%= atu_name %> HD Inlet Node,  !- Hot Air Inlet Node Name
+  <%= atu_name %> CD Inlet Node,  !- Cold Air Inlet Node Name
+  <%= atu_flow %>,         !- Maximum Air Flow Rate {m3/s}
+  <%= atu_flow_min_frac %>,  !- Zone Minimum Air Flow Fraction
+<%#TRC - change so minimum flow will be >= OA requirement %>
+  <%= design_spec_OA_name %>;  !- Design Specification Outdoor Air Object Name
+
+<% end %>
+<% if (atu_reheat_coil_type == "RESISTANCE") %>
+Coil:Heating:Electric,
+  <%= atu_name %> ATU Heating Coil,  !- Name
+  ,                        !- Availability Schedule Name
+  <%= atu_reheat_coil_eff %>,  !- Efficiency
+  Autosize,                !- Nominal Capacity {W}
+  <%= atu_name %> Damper Outlet Node,  !- Air Inlet Node Name
+  <%= atu_name %> Outlet Node;  !- Air Outlet Node Name
+<% elsif (atu_reheat_coil_type == "WATER") %>
+Coil:Heating:Water,
+  <%= atu_name %> ATU Heating Coil,  !- Name
+  ,                        !- Availability Schedule Name
+  Autosize,                !- U-Factor Times Area Value {W/K}
+  Autosize,                !- Maximum Water Flow Rate {m3/s}
+  <%= atu_name %> Heating Coil Demand Inlet Node,  !- Water Inlet Node Name
+  <%= atu_name %> Heating Coil Demand Outlet Node,  !- Water Outlet Node Name
+<% if (atu_type == "CAV-IND") %>
+  <%= atu_name %> Secondary Inlet Node,  !- Air Inlet Node Name
+  <%= atu_name %> ATU Heating Coil Outlet Node,  !- Air Outlet Node Name
+<% else %>
+  <%= atu_name %> Damper Outlet Node,  !- Air Inlet Node Name
+  <%= atu_name %> Outlet Node,  !- Air Outlet Node Name
+<% end %>
+  UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+  ,                        !- Rated Capacity {W}
+  ,                        !- Rated Inlet Water Temperature {C}
+  ,                        !- Rated Inlet Air Temperature {C}
+  ,                        !- Rated Outlet Water Temperature {C}
+  ;                        !- Rated Outlet Air Temperature {C}
+
+Branch,
+  <%= atu_name %> ATU HW Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Coil:Heating:Water,      !- Component 1 Object Type
+  <%= atu_name %> ATU Heating Coil,  !- Component 1 Name
+  <%= atu_name %> Heating Coil Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= atu_name %> Heating Coil Demand Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>

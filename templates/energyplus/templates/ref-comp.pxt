@@ -1,0 +1,102 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "rack_name"
+parameter "case_names"
+parameter "rack_type", :default=>"MED-TEMP" # (LOW-TEMP | MED-TEMP | SELF-CONTAINED)
+parameter "rack_cop", :default=>2.5
+parameter "fan_power", :default=>4500['W']
+parameter "heat_rej_location", :default=>"Outdoors"
+%>
+
+<%
+case_list = "#{rack_name} Case List"
+enduse_subcategory = "#{rack_name} Refrigeration"
+%>
+
+Refrigeration:CompressorRack,
+  <%= rack_name %>,        !- Name
+  <%= heat_rej_location %>,                !- Heat Rejection Location
+  <%= rack_cop %>,                     !- Design Compressor Rack COP {W/W}
+  <%= rack_name %> CopFuncTempCurve,  !- Compressor Rack COP Function of Temperature Curve Name
+  <%= fan_power %>,                    !- Design Condenser Fan Power {W}
+  <% if rack_type == "SELF-CONTAINED"%>
+  ,  !- Condenser Fan Power Function of Temperature Curve Name
+  <% else %>
+  <%= rack_name %> FanFuncTempCurve,  !- Condenser Fan Power Function of Temperature Curve Name
+  <% end %>
+  AirCooled,               !- Condenser Type
+  ,                        !- Water-Cooled Condenser Inlet Node Name
+  ,                        !- Water-Cooled Condenser Outlet Node Name
+  ,                        !- Water-Cooled Loop Flow Type
+  ,                        !- Water-Cooled Condenser Outlet Temperature Schedule Name
+  ,                        !- Water-Cooled Condenser Design Flow Rate {m3/s}
+  ,                        !- Water-Cooled Condenser Maximum Flow Rate {m3/s}
+  ,                        !- Water-Cooled Condenser Maximum Water Outlet Temperature {C}
+  ,                        !- Water-Cooled Condenser Minimum Water Inlet Temperature {C}
+  ,                        !- Evaporative Condenser Availability Schedule Name
+  ,                        !- Evaporative Condenser Effectiveness {dimensionless}
+  ,                        !- Evaporative Condenser Air Flow Rate {m3/s}
+  ,                        !- Basin Heater Capacity {W/K}
+  ,                        !- Basin Heater Setpoint Temperature {C}
+  ,                        !- Design Evaporative Condenser Water Pump Power {W}
+  ,                        !- Evaporative Water Supply Tank Name
+  <%= rack_name %> CondenserNode,     !- Condenser Air Inlet Node Name
+  <%= enduse_subcategory %>,           !- End-Use Subcategory
+  <%= case_list %>;  !- Refrigeration Case Name or WalkIn Name or CaseAndWalkInList Name
+
+<% if (rack_type == "LOW-TEMP") %>
+Curve:Quadratic,
+  <%= rack_name %> FanFuncTempCurve,  !- Name
+  0.0000,                  !- Coefficient1 Constant
+  0.0286,                  !- Coefficient2 x
+  0.0000,                  !- Coefficient3 x**2
+  0.0000,                  !- Minimum Value of x
+  35.0000;                 !- Maximum Value of x
+
+<% elsif (rack_type == "MED-TEMP") %>
+Curve:Quadratic,
+  <%= rack_name %> FanFuncTempCurve,  !- Name
+  0.3000,                  !- Coefficient1 Constant
+  0.0200,                  !- Coefficient2 x
+  0.0000,                  !- Coefficient3 x**2
+  10.0000,                 !- Minimum Value of x
+  35.0000;                 !- Maximum Value of x
+
+<% elsif (rack_type == "SELF-CONTAINED") %>
+Curve:Quadratic,
+  <%= rack_name %> FanFuncTempCurve,  !- Name
+  1.0000,                  !- Coefficient1 Constant
+  0.0000,                  !- Coefficient2 x
+  0.0000,                  !- Coefficient3 x**2
+  10.0000,                 !- Minimum Value of x
+  35.0000;                 !- Maximum Value of x
+<% end %>
+
+<% if (rack_type == "SELF-CONTAINED") %>
+Curve:Quadratic,
+  <%= rack_name %> CopFuncTempCurve,  !- Name
+  1.0000,                  !- Coefficient1 Constant
+  0.0000,                  !- Coefficient2 x
+  0.0000,                  !- Coefficient3 x**2
+  0.0000,                  !- Minimum Value of x
+  50.0000;                 !- Maximum Value of x
+
+<% else %>
+Curve:Quadratic,
+  <%= rack_name %> CopFuncTempCurve,  !- Name
+  1.7603,                  !- Coefficient1 Constant
+  -0.0377,                 !- Coefficient2 x
+  0.0004,                  !- Coefficient3 x**2
+  10.0000,                 !- Minimum Value of x
+  35.0000;                 !- Maximum Value of x
+<% end %>
+
+OutdoorAir:Node,
+  <%= rack_name %> CondenserNode;     !- Name
+
+Refrigeration:CaseAndWalkInList,
+  <%= case_list %>,   !- Name
+<% EnergyPlus.each(case_names) do |case_name| %>
+  <%= case_name %>,  !- Case or WalkIn Name
+<% end %>

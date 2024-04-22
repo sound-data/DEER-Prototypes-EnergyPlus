@@ -1,0 +1,525 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+# This template models a drainback system where fluid is only present in the solar collectors when the pump is operating; no additional freeze protection is necessary.
+# All solar collectors are connected in parallel. The working fluid is water.
+
+parameter "system_name"
+
+parameter "design_temp", :default=>140['F']  # Maximum storage tank temperature and pump high-temperature turn off
+
+parameter "pump_eff", :default=>0.9
+parameter "pump_head", :default=>30['ft H2O']
+parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+
+parameter "collector_type", :name => "Solar Hot Water Collector Type", :description => "Type of solar hot water collectors",
+  :default => "GLAZED-FLAT-PLATE", :domain => String  # (GLAZED-FLAT-PLATE | TUBULAR)
+parameter "collector_performance", :name => "Solar Hot Water Collector Performance", :description => "Performance level of solar how water collectors",
+  :default => "MEDIUM", :domain => String  # (LOW | MEDIUM | HIGH)
+parameter "collector_length", :default=>8.0['ft']
+parameter "collector_width", :default=>4.0['ft']
+
+parameter "collector_sizing", :default=>"AREA"  # (AREA | NUMBER)
+parameter "collector_total_area", :default=>320.0['ft2']  # Total collector gross surface area
+parameter "collector_total_number", :default=>10  # Number of collectors in parallel
+
+parameter "delta_temperature_on", :default=>10['deltaF'] # Temperature difference between collector outlet and water heater outlet to turn collector pump on
+parameter "delta_temperature_off", :default=>2['deltaF'] # Temperature difference between collector outlet and water heater outlet to turn collector pump off
+
+parameter "inclination_angle", :default=>45
+parameter "y_offset", :default=>-250['ft']  # Y-coordinate for positioning collector surfaces away from building geometry to prevent obstruction
+
+parameter "storage_tank_volume", :default=>nil  # If nil, storage_tank_volume_per_collector_area is used
+parameter "storage_tank_volume_per_collector_area", :default=>0.075  # Rule of thumb: 75 L per 1 m2 of collector area (ASHRAE HVAC Applications 2015, p.35.11)
+
+parameter "storage_tank_ambient_method", :default=>"TEMPERATURE"  # (TEMPERATURE | ZONE | OUTDOORS)
+parameter "storage_tank_ambient_temp", :default=>70['F']  # Only used if using TEMPERATURE method
+parameter "storage_tank_ambient_zone", :default=>nil  # Only used if using ZONE method
+
+parameter "use_side_connections", :default=>"PLANT-LOOP"  # (PLANT-LOOP | STAND-ALONE)
+parameter "use_side_flow_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"  # Only used if STAND-ALONE connections
+
+%>
+
+<%
+inclination = inclination_angle * Math::PI / 180.0
+collector_area = collector_length * collector_width
+
+if (collector_sizing == "AREA")
+  number_collectors = (collector_total_area.to_f / collector_area).ceil  # Round up to the next integer number
+elsif (collector_sizing == "NUMBER")
+  number_collectors = collector_total_number
+end
+
+if (storage_tank_volume.nil?)
+  storage_tank_volume = storage_tank_volume_per_collector_area * collector_total_area.to_f
+end
+%>
+
+<% if (collector_type == "GLAZED-FLAT-PLATE") %>
+<% if (collector_performance == "HIGH") %>
+SolarCollectorPerformance:FlatPlate,
+  Solene SLCO-40,          !- Name
+  <%= collector_area %>,  !- Gross Area {m2}
+  Water,                   !- Test Fluid
+  0.0000447,               !- Test Flow Rate {m3/s}
+  Inlet,                   !- Test Correlation Type
+  0.784,                   !- Coefficient 1 of Efficiency Equation {dimensionless}
+  -4.2805,                 !- Coefficient 2 of Efficiency Equation {W/m2-K}
+  -0.00484,                !- Coefficient 3 of Efficiency Equation {W/m2-K2}
+  -0.2947,                 !- Coefficient 2 of Incident Angle Modifier
+  -0.0119;                 !- Coefficient 3 of Incident Angle Modifier
+
+<% elsif (collector_performance == "MEDIUM") %>
+SolarCollectorPerformance:FlatPlate,
+  Synergy Solar TC-26.52,  !- Name
+  <%= collector_area %>,  !- Gross Area {m2}
+  Water,                   !- Test Fluid
+  0.0000505,               !- Test Flow Rate {m3/s}
+  Inlet,                   !- Test Correlation Type
+  0.688,                   !- Coefficient 1 of Efficiency Equation {dimensionless}
+  -3.6994,                 !- Coefficient 2 of Efficiency Equation {W/m2-K}
+  -0.01049,                !- Coefficient 3 of Efficiency Equation {W/m2-K2}
+  -0.0558,                 !- Coefficient 2 of Incident Angle Modifier
+  -0.1313;                 !- Coefficient 3 of Incident Angle Modifier
+
+<% elsif (collector_performance == "LOW") %>
+SolarCollectorPerformance:FlatPlate,
+  Genersys PLC 1000-10,    !- Name
+  <%= collector_area %>,  !- Gross Area {m2}
+  Water,                   !- Test Fluid
+  0.0000130,               !- Test Flow Rate {m3/s}
+  Inlet,                   !- Test Correlation Type
+  0.588,                   !- Coefficient 1 of Efficiency Equation {dimensionless}
+  -3.5677,                 !- Coefficient 2 of Efficiency Equation {W/m2-K}
+  -0.00707,                !- Coefficient 3 of Efficiency Equation {W/m2-K2}
+  -0.0415,                 !- Coefficient 2 of Incident Angle Modifier
+  -0.1007;                 !- Coefficient 3 of Incident Angle Modifier
+
+<% end %>
+<% elsif (collector_type == "TUBULAR") %> %>
+<% if (collector_performance == "HIGH") %>
+SolarCollectorPerformance:FlatPlate,
+  Solargenix Energy LLC WS0503,  !- Name
+  <%= collector_area %>,  !- Gross Area {m2}
+  Water,                   !- Test Fluid
+  0.0000410,               !- Test Flow Rate {m3/s}
+  Inlet,                   !- Test Correlation Type
+  0.591,                   !- Coefficient 1 of Efficiency Equation {dimensionless}
+  -4.5502,                 !- Coefficient 2 of Efficiency Equation {W/m2-K}
+  -0.01887,                !- Coefficient 3 of Efficiency Equation {W/m2-K2}
+  0.6317,                  !- Coefficient 2 of Incident Angle Modifier
+  -1.2396;                 !- Coefficient 3 of Incident Angle Modifier
+
+<% elsif (collector_performance == "MEDIUM") %>
+SolarCollectorPerformance:FlatPlate,
+  Beijing Sunda Solar Energy Technology Co Ltd SEIDO 5-8 ASAB,  !- Name
+  <%= collector_area %>,  !- Gross Area {m2}
+  Water,                   !- Test Fluid
+  0.0000410,               !- Test Flow Rate {m3/s}
+  Inlet,                   !- Test Correlation Type
+  0.4886,                  !- Coefficient 1 of Efficiency Equation {dimensionless}
+  -1.5855,                 !- Coefficient 2 of Efficiency Equation {W/m2-K}
+  -0.00524,                !- Coefficient 3 of Efficiency Equation {W/m2-K2}
+  0.9474,                  !- Coefficient 2 of Incident Angle Modifier
+  -1.0762;                 !- Coefficient 3 of Incident Angle Modifier
+
+<% elsif (collector_performance == "LOW") %>
+SolarCollectorPerformance:FlatPlate,
+  BTF Ltd SP-20,           !- Name
+  <%= collector_area %>,  !- Gross Area {m2}
+  Water,                   !- Test Fluid
+  0.0000550,               !- Test Flow Rate {m3/s}
+  Inlet,                   !- Test Correlation Type
+  0.342,                   !- Coefficient 1 of Efficiency Equation {dimensionless}
+  -0.8539,                 !- Coefficient 2 of Efficiency Equation {W/m2-K}
+  -0.00501,                !- Coefficient 3 of Efficiency Equation {W/m2-K2}
+  1.1787,                  !- Coefficient 2 of Incident Angle Modifier
+  -0.6569;                 !- Coefficient 3 of Incident Angle Modifier
+<% end %>
+<% end %>
+
+Schedule:Compact,
+  <%= system_name %> Operation Schedule,  !- Name
+  Binary Control,          !- Schedule Type Limits Name
+  <%= operation_schedule %>
+
+Sizing:Plant,
+  <%= system_name %>,  !- Plant or Condenser Loop Name
+  Heating,                 !- Loop Type
+  <%= design_temp %>,  !- Design Loop Exit Temperature {C}
+  10.0;                    !- Loop Design Temperature Difference {deltaC}
+<%# NOTE: Design temperature difference does not affect water heater sizing. %>
+
+PlantLoop,
+  <%= system_name %>,  !- Name
+  Water,                   !- Fluid Type
+  ,                        !- User Defined Fluid Type
+  <%= system_name %> Operation Schemes,  !- Plant Equipment Operation Scheme Name
+  <%= system_name %> Supply Outlet Node,  !- Loop Temperature Setpoint Node Name
+  100,                     !- Maximum Loop Temperature {C}
+  3,                       !- Minimum Loop Temperature {C}
+  Autosize,                !- Maximum Loop Flow Rate {m3/s}
+  0.0,                     !- Minimum Loop Flow Rate {m3/s}
+  Autocalculate,           !- Plant Loop Volume {m3}
+  <%= system_name %> Supply Inlet Node,  !- Plant Side Inlet Node Name
+  <%= system_name %> Supply Outlet Node,  !- Plant Side Outlet Node Name
+  <%= system_name %> Supply Branches,  !- Plant Side Branch List Name
+  <%= system_name %> Supply Connectors,  !- Plant Side Connector List Name
+  <%= system_name %> Demand Inlet Node,  !- Demand Side Inlet Node Name
+  <%= system_name %> Demand Outlet Node,  !- Demand Side Outlet Node Name
+  <%= system_name %> Demand Branches,      !- Demand Side Branch List Name
+  <%= system_name %> Demand Connectors,    !- Demand Side Connector List Name
+  Optimal,                 !- Load Distribution Scheme
+  <%= system_name %> Availability Managers;  !- Availability Manager List Name
+
+PlantEquipmentOperationSchemes,
+  <%= system_name %> Operation Schemes,  !- Name
+  PlantEquipmentOperation:Uncontrolled,  !- Control Scheme 1 Object Type
+  <%= system_name %> Operation Scheme,  !- Control Scheme 1 Name
+  <%= system_name %> Operation Schedule;  !- Control Scheme 1 Schedule Name
+
+PlantEquipmentOperation:Uncontrolled,
+  <%= system_name %> Operation Scheme,  !- Name
+  <%= system_name %> Equipment List;  !- Range 1 Equipment List Name
+
+PlantEquipmentList,
+  <%= system_name %> Equipment List;  !- Name
+
+SetpointManager:Scheduled,
+  <%= system_name %> Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= system_name %> Supply Temperature Schedule,  !- Schedule Name
+  <%= system_name %> Setpoint Nodes;  !- Setpoint Node or NodeList Name
+
+Schedule:Constant,
+  <%= system_name %> Supply Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= design_temp %>;      !- Hourly Value
+
+NodeList,
+  <%= system_name %> Setpoint Nodes,  !- Name
+  <%= system_name %> Supply Outlet Node;  !- Node 1 Name
+
+AvailabilityManagerAssignmentList,
+  <%= system_name %> Availability Managers,  !- Name
+  AvailabilityManager:Scheduled,  !- Availability Manager 1 Object Type
+  <%= system_name %> Availability Manager;  !- Availability Manager 1 Name
+
+<%# This manager is overridden by an EMS program. A manager is still required here nonetheless. %>
+AvailabilityManager:Scheduled,
+  <%= system_name %> Availability Manager,  !- Name
+  <%= system_name %> Operation Schedule;  !- Schedule Name
+
+BranchList,
+  <%= system_name %> Supply Branches,  !- Name
+  <%= system_name %> Supply Inlet Branch,  !- Branch 1 Name
+  <%= system_name %> Supply Equipment Branch,  !- Branch 2 Name
+  <%= system_name %> Supply Outlet Branch;  !- Branch 3 Name
+
+Branch,
+  <%= system_name %> Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pump:VariableSpeed,      !- Component 1 Object Type
+  <%= system_name %> Pump,  !- Component 1 Name
+  <%= system_name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
+
+Pump:VariableSpeed,
+  <%= system_name %> Pump,  !- Name
+  <%= system_name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Pump Outlet Node,  !- Outlet Node Name
+  Autosize,                !- Rated Flow Rate {m3/s}
+  <%= pump_head %>,  !- Rated Pump Head {Pa}
+  Autosize,                !- Rated Power Consumption {W}
+  <%= pump_eff %>,  !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+  0,                       !- Coefficient 1 of the Part Load Performance Curve
+  1,                       !- Coefficient 2 of the Part Load Performance Curve
+  0,                       !- Coefficient 3 of the Part Load Performance Curve
+  0,                       !- Coefficient 4 of the Part Load Performance Curve
+  0.0,                     !- Minimum Flow Rate {m3/s}
+  Intermittent;            !- Pump Control Type
+
+Branch,
+  <%= system_name %> Supply Equipment Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  WaterHeater:Mixed,       !- Component 1 Object Type
+  <%= system_name %> Storage Tank,  !- Component 1 Name
+  <%= system_name %> Storage Tank Source Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Storage Tank Source Outlet Node;  !- Component 1 Outlet Node Name
+
+WaterHeater:Mixed,
+  <%= system_name %> Storage Tank,  !- Name
+  <%= storage_tank_volume %>,  !- Tank Volume {m3}
+  <%= system_name %> Storage Tank Setpoint Temperature Schedule,  !- Setpoint Temperature Schedule Name
+  2.0,                     !- Deadband Temperature Difference {deltaC}
+  100.0,                   !- Maximum Temperature Limit {C}
+  Cycle,                   !- Heater Control Type
+  0,                       !- Heater Maximum Capacity {W}
+  0,                       !- Heater Minimum Capacity {W}
+  ,                        !- Heater Ignition Minimum Flow Rate {m3/s}
+  ,                        !- Heater Ignition Delay {s}
+  Electricity,             !- Heater Fuel Type
+  0.95,                    !- Heater Thermal Efficiency
+  ,                        !- Part Load Factor Curve Name
+  ,                        !- Off Cycle Parasitic Fuel Consumption Rate {W}
+  ,                        !- Off Cycle Parasitic Fuel Type
+  ,                        !- Off Cycle Parasitic Heat Fraction to Tank
+  ,                        !- On Cycle Parasitic Fuel Consumption Rate {W}
+  ,                        !- On Cycle Parasitic Fuel Type
+  ,                        !- On Cycle Parasitic Heat Fraction to Tank
+<% if (storage_tank_ambient_method == "TEMPERATURE") %>
+  Schedule,                !- Ambient Temperature Indicator
+  <%= system_name %> Storage Tank Ambient Temperature Schedule,  !- Ambient Temperature Schedule Name
+  ,                        !- Ambient Temperature Zone Name
+  ,                        !- Ambient Temperature Outdoor Air Node Name
+<% elsif (storage_tank_ambient_method == "ZONE") %>
+  Zone,                    !- Ambient Temperature Indicator
+  ,                        !- Ambient Temperature Schedule Name
+  <%= storage_tank_ambient_zone %>,  !- Ambient Temperature Zone Name
+  ,                        !- Ambient Temperature Outdoor Air Node Name
+<% elsif (storage_tank_ambient_method == "OUTDOORS") %>
+  Outdoors,                !- Ambient Temperature Indicator
+  ,                        !- Ambient Temperature Schedule Name
+  ,                        !- Ambient Temperature Zone Name
+  <%= system_name %> Outdoor Air Node,  !- Ambient Temperature Outdoor Air Node Name
+<% end %>
+  6.0,                     !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
+  ,                        !- Off Cycle Loss Fraction to Zone
+  6.0,                     !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
+  ,                        !- On Cycle Loss Fraction to Zone
+<% if (use_side_connections == "PLANT-LOOP") %>
+  ,                        !- Peak Use Flow Rate {m3/s}
+  ,                        !- Use Flow Rate Fraction Schedule Name
+  ,                        !- Cold Water Supply Temperature Schedule Name
+  <%= system_name %> Storage Tank Use Inlet Node,  !- Use Side Inlet Node Name
+  <%= system_name %> Storage Tank Use Outlet Node,  !- Use Side Outlet Node Name
+<% elsif (use_side_connections == "STAND-ALONE") %>
+  1.0,                     !- Peak Use Flow Rate {m3/s}
+  <%= system_name %> Use Side Flow Schedule,  !- Use Flow Rate Fraction Schedule Name
+  ,                        !- Cold Water Supply Temperature Schedule Name
+  ,                        !- Use Side Inlet Node Name
+  ,                        !- Use Side Outlet Node Name
+<% end %>
+  1.0,                     !- Use Side Effectiveness
+  <%= system_name %> Storage Tank Source Inlet Node,  !- Source Side Inlet Node Name
+  <%= system_name %> Storage Tank Source Outlet Node,  !- Source Side Outlet Node Name
+  1.0,                     !- Source Side Effectiveness
+  Autosize,                !- Use Side Design Flow Rate {m3/s}
+  Autosize;                !- Source Side Design Flow Rate {m3/s}
+
+Schedule:Constant,
+  <%= system_name %> Storage Tank Setpoint Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= design_temp %>;  !- Hourly Value
+
+<% if (storage_tank_ambient_method == "TEMPERATURE") %>
+Schedule:Constant,
+  <%= system_name %> Storage Tank Ambient Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= storage_tank_ambient_temp %>;  !- Hourly Value
+<% elsif (storage_tank_ambient_method == "OUTDOORS") %>
+OutdoorAir:Node,
+  <%= system_name %> Outdoor Air Node;  !- Name
+<% end %>
+
+<% if (use_side_connections == "STAND-ALONE") %>
+Schedule:Compact,
+  <%= system_name %> Use Side Flow Schedule,  !- Name
+  Unit Interval,           !- Schedule Type Limits Name
+<%= use_side_flow_schedule %>
+<% end %>
+
+Branch,
+  <%= system_name %> Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= system_name %> Supply Outlet Pipe,  !- Component 1 Name
+  <%= system_name %> Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= system_name %> Supply Outlet Pipe,  !- Name
+  <%= system_name %> Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Supply Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= system_name %> Supply Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= system_name %> Supply Splitter,  !- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= system_name %> Supply Mixer;  !- Connector 2 Name
+
+Connector:Splitter,
+  <%= system_name %> Supply Splitter,  !- Name
+  <%= system_name %> Supply Inlet Branch,  !- Inlet Branch Name
+  <%= system_name %> Supply Equipment Branch;  !- Outlet Branch 1 Name
+
+Connector:Mixer,
+  <%= system_name %> Supply Mixer,  !- Name
+  <%= system_name %> Supply Outlet Branch,  !- Outlet Branch Name
+  <%= system_name %> Supply Equipment Branch;  !- Inlet Branch 1 Name
+
+BranchList,
+  <%= system_name %> Demand Branches,  !- Name
+  <%= system_name %> Demand Inlet Branch,  !- Branch Name
+<% for i in 1..number_collectors %>
+  <%= system_name %> Collector <%= i %> Branch,  !- Branch Name
+<% end %>
+  <%= system_name %> Demand Outlet Branch;  !- Branch Name
+
+Branch,
+  <%= system_name %> Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= system_name %> Demand Inlet Pipe,  !- Component 1 Name
+  <%= system_name %> Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= system_name %> Demand Inlet Pipe,  !- Name
+  <%= system_name %> Demand Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+
+<%
+x_origin = 0.0 # Lowest x-coordinate value of first collector
+y_origin = y_offset # Lowest y-coordinate value of first collector
+z_origin = 0.0 # Lowest z-coordinate value of first collector
+collector_spacing = collector_width + (1.0|'ft')
+%>
+
+<% for i in 1..number_collectors %>
+<% collector_x_origin = x_origin + (i - 1) * collector_spacing %>
+
+Branch,
+  <%= system_name %> Collector <%= i%> Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  SolarCollector:FlatPlate:Water,  !- Component 1 Object Type
+  <%= system_name %> Collector <%= i%>,  !- Component 1 Name
+  <%= system_name %> Collector <%= i%> Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Collector <%= i%> Outlet Node;  !- Component 1 Outlet Node Name
+
+SolarCollector:FlatPlate:Water,
+  <%= system_name %> Collector <%= i%>,  !- Name
+<% if (collector_type == "GLAZED-FLAT-PLATE") %>
+<% if (collector_performance == "HIGH") %>
+  Solene SLCO-40,          !- SolarCollectorPerformance Name
+<% elsif (collector_performance == "MEDIUM") %>
+  Synergy Solar TC-26.52,  !- SolarCollectorPerformance Name
+<% elsif (collector_performance == "LOW") %>
+  Genersys PLC 1000-10,    !- SolarCollectorPerformance Name
+<% end %>
+<% elsif (collector_type == "TUBULAR") %>
+<% if (collector_performance == "HIGH") %>
+  Solargenix Energy LLC WS0503,  !- SolarCollectorPerformance Name
+<% elsif (collector_performance == "MEDIUM") %>
+  Beijing Sunda Solar Energy Technology Co Ltd SEIDO 5-8 ASAB,  !- SolarCollectorPerformance Name
+<% elsif (collector_performance == "LOW") %>
+  BTF Ltd SP-20,           !- SolarCollectorPerformance Name
+<% end %>
+<% end %>
+  <%= system_name %> Collector Surface <%= i%>,  !- Surface Name
+  <%= system_name %> Collector <%= i%> Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Collector <%= i%> Outlet Node,  !- Outlet Node Name
+  0.00001;                 !- Maximum Flow Rate {m3/s}
+
+Shading:Site:Detailed,
+  <%= system_name %> Collector Surface <%= i%>,  !- Name
+  ,                        !- Transmittance Schedule Name
+  4,                       !- Number of Vertices
+  <%= collector_x_origin %>,  !- Vertex 1 X-coordinate {m}
+  <%= y_origin + collector_length * Math.cos(inclination) %>,  !- Vertex 1 Y-coordinate {m}
+  <%= z_origin + collector_length * Math.sin(inclination) %>,  !- Vertex 1 Z-coordinate {m}
+  <%= collector_x_origin %>,  !- Vertex 2 X-coordinate {m}
+  <%= y_origin %>,  !- Vertex 2 Y-coordinate {m}
+  <%= z_origin %>,  !- Vertex 2 Z-coordinate {m}
+  <%= collector_x_origin + collector_width %>,  !- Vertex 3 X-coordinate {m}
+  <%= y_origin %>,  !- Vertex 3 Y-coordinate {m}
+  <%= z_origin %>,  !- Vertex 3 Z-coordinate {m}
+  <%= collector_x_origin + collector_width%>,  !- Vertex 4 X-coordinate {m}
+  <%= y_origin + collector_length * Math.cos(inclination) %>,  !- Vertex 4 Y-coordinate {m}
+  <%= z_origin + collector_length * Math.sin(inclination) %>;  !- Vertex 4 Z-coordinate {m}
+<% end %>
+
+Branch,
+  <%= system_name %> Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= system_name %> Demand Outlet Pipe,  !- Component 1 Name
+  <%= system_name %> Demand Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= system_name %> Demand Outlet Pipe,  !- Name
+  <%= system_name %> Demand Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Demand Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= system_name %> Demand Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= system_name %> Demand Splitter,  !- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= system_name %> Demand Mixer;  !- Connector 2 Name
+
+Connector:Splitter,
+  <%= system_name %> Demand Splitter,  !- Name
+  <%= system_name %> Demand Inlet Branch,  !- Inlet Branch Name
+<% EnergyPlus.each((1..number_collectors).to_a) do |i| %>
+  <%= system_name %> Collector <%= i %> Branch,  !- Outlet Branch Name
+<% end %>
+
+Connector:Mixer,
+  <%= system_name %> Demand Mixer,  !- Name
+  <%= system_name %> Demand Outlet Branch,  !- Outlet Branch Name
+<% EnergyPlus.each((1..number_collectors).to_a) do |i| %>
+  <%= system_name %> Collector <%= i %> Branch,  !- Inlet Branch Name
+<% end %>
+
+<% sys_prefix = system_name.delete(' ') %>
+
+EnergyManagementSystem:Sensor,
+  <%= sys_prefix %>OperationSchedule,  !- Name
+  <%= system_name %> Operation Schedule,  !- Output:Variable or Output:Meter Index Key Name
+  Schedule Value;  !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+  <%= sys_prefix %>CollectorOutletTemp,  !- Name
+  <%= system_name %> Collector 1 Outlet Node,  !- Output:Variable or Output:Meter Index Key Name
+  System Node Temperature;  !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+  <%= sys_prefix %>StorageTankOutletTemp,  !- Name
+  <%= system_name %> Storage Tank,  !- Output:Variable or Output:Meter Index Key Name
+  Water Heater Use Side Outlet Temperature;  !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:InternalVariable,
+  <%= sys_prefix %>PumpFlowRateMax,  !- Name
+  <%= system_name %> Pump,  !- Internal Data Index Key Name
+  Pump Maximum Mass Flow Rate; !- Internal Data Type
+
+EnergyManagementSystem:Actuator,
+  <%= sys_prefix %>PumpFlowRate,  !- Name
+  <%= system_name %> Pump,  !-Actuated Component Unique Name
+  Pump,  !- Actuated Component Type
+  Pump Mass Flow Rate;  !- Actuated Component Control Type
+
+EnergyManagementSystem:ProgramCallingManager,
+  <%= system_name %> Program Calling Manager,  !- Name
+  InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
+  <%= sys_prefix %>PumpControl;  !- Program Name 1
+
+EnergyManagementSystem:Program,
+  <%= sys_prefix %>PumpControl,  !- Name
+  SET deltaT = <%= sys_prefix %>CollectorOutletTemp - <%= sys_prefix %>StorageTankOutletTemp,
+  IF <%= sys_prefix %>OperationSchedule == 0,  ! Scheduled turn off
+    SET <%= sys_prefix %>PumpFlowRate = 0,
+  ELSEIF <%= sys_prefix %>CollectorOutletTemp > 100.0,  ! Boiling point turn off
+    SET <%= sys_prefix %>PumpFlowRate = 0,
+  ELSEIF <%= sys_prefix %>StorageTankOutletTemp > <%= design_temp %>,  ! High-temperature turn off
+    SET <%= sys_prefix %>PumpFlowRate = 0,
+  ELSEIF deltaT < <%= delta_temperature_off %>,  ! Differential thermostat turn off
+    SET <%= sys_prefix %>PumpFlowRate = 0,
+  ELSEIF deltaT > <%= delta_temperature_on %>,  ! Differential thermostat turn on
+    SET <%= sys_prefix %>PumpFlowRate = <%= sys_prefix %>PumpFlowRateMax,
+  ENDIF;

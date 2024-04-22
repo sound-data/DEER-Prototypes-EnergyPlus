@@ -1,0 +1,453 @@
+﻿title: 2008 California Efficiency Standards,,,,,
+# PRESCRIPTIVE ENVELOPE CRITERIA FOR NONRESIDENTIAL BUILDINGS (INCLUDING RELOCATABLE PUBLIC SCHOOL BUILDINGS WHERE MANUFACTURER CERTIFIES USE ONLY IN SPECIFIC CLIMATE ZONE; NOT INCLUDING HIGH-RISE RESIDENTIAL BUILDINGS AND GUEST ROOMS OF HOTEL/MOTEL BUILDINGS),,,,,
+# For opaque envelope: see Table 143-B,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 1,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.034,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.16,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.045,,
+Floors | Other,0,0,0.034,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,0,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,0.5,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 2,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.028,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.16,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.045,,
+Floors | Other,0,0,0.034,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,0,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 3,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.039,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.16,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.058,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,0,0,,,
+table:   Opaque Envelope Requirements | Climate Zone 4,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.028,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.184,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.058,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 5,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.039,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.211,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.058,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,0,0,,,
+table:   Opaque Envelope Requirements | Climate Zone 6,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.039,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.227,,
+Walls Above Grade | Mass Heavy,0,0,0.69,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.069,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 7,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.039,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.227,,
+Walls Above Grade | Mass Heavy,0,0,0.69,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.092,,
+Floors | Other,0,0,0.071,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 8,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.028,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.227,,
+Walls Above Grade | Mass Heavy,0,0,0.69,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.092,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 9,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.028,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.196,,
+Walls Above Grade | Mass Heavy,0,0,0.69,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.092,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 10,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Roofs | Wood Framed and Other,0,0,0.028,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.69,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.069,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 11,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Roofs | Wood Framed and Other,0,0,0.028,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Walls Above Grade | Metal Building,0,0,0.057,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.184,,
+Walls Above Grade | Wood Framed and Other,0,0,0.042,,
+Floors | Mass,0,0,0.058,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 12,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"0.75 Thermal Emittance and 0.20 Aged Solar Reflectance (steep-sloped), 0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped)"
+Roofs | Wood Framed and Other,0,0,0.028,,"0.75 Thermal Emittance and 0.20 Aged Solar Reflectance (steep-sloped), 0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped)"
+Walls Above Grade | Metal Building,0,0,0.057,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.253,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.058,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 13,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Roofs | Wood Framed and Other,0,0,0.028,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Walls Above Grade | Metal Building,0,0,0.057,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.211,,
+Walls Above Grade | Wood Framed and Other,0,0,0.059,,
+Floors | Mass,0,0,0.058,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 14,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Roofs | Wood Framed and Other,0,0,0.028,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Walls Above Grade | Metal Building,0,0,0.057,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.184,,
+Walls Above Grade | Wood Framed and Other,0,0,0.042,,
+Floors | Mass,0,0,0.045,,
+Floors | Other,0,0,0.034,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 15,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Roofs | Wood Framed and Other,0,0,0.028,,0.75 Thermal Emittance and 0.55 Aged Solar Reflectance (low-sloped). NR for low-sloped.
+Walls Above Grade | Metal Building,0,0,0.057,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.184,,
+Walls Above Grade | Wood Framed and Other,0,0,0.042,,
+Floors | Mass,0,0,0.058,,
+Floors | Other,0,0,0.039,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,5,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table:   Opaque Envelope Requirements | Climate Zone 16,,,,,
+Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
+Roofs | Metal Buildings,0,0,0.065,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Roofs | Wood Framed and Other,0,0,0.028,,"NR Thermal Emittance, NR Aged Solar Reflectance"
+Walls Above Grade | Metal Building,0,0,0.057,,Air Barrier - Not Required
+Walls Above Grade | Metal Framed,0,0,0.105,,
+Walls Above Grade | Mass Light,0,0,0.17,,
+Walls Above Grade | Mass Heavy,0,0,0.16,,
+Walls Above Grade | Wood Framed and Other,0,0,0.042,,
+Floors | Mass,0,0,0.037,,
+Floors | Other,0,0,0.034,,
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,10,0.2,16,"R-10 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Opaque Doors | Non-Swinging,0,0,0.5,,
+Opaque Doors | Swinging,0,0,0.7,,
+,,,,,
+table: Fenestration Requirements | Climate Zone 1,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,Fenestration Requirements are same for all CZs - copied for each below
+Fixed Window,0.47,0.3,NR,,
+Operable Window,0.47,0.3,NR,,
+Curtainwall or Storefront,0.47,0.3,NR,,
+Glazed Doors,0.47,0.3,NR,,
+"Skylights | Glass, curb mounted",1.11,0.36,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.68,0.36,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.55,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.55,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 2,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.26,NR,,
+Operable Window,0.47,0.26,NR,,
+Curtainwall or Storefront,0.47,0.26,NR,,
+Glazed Doors,0.47,0.26,NR,,
+"Skylights | Glass, curb mounted",1.11,0.32,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.68,0.32,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.34,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.34,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 3,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.26,NR,,
+Operable Window,0.47,0.26,NR,,
+Curtainwall or Storefront,0.47,0.26,NR,,
+Glazed Doors,0.47,0.26,NR,,
+"Skylights | Glass, curb mounted",1.11,0.32,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.82,0.32,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.39,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.39,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 4,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.26,NR,,
+Operable Window,0.47,0.26,NR,,
+Curtainwall or Storefront,0.47,0.26,NR,,
+Glazed Doors,0.47,0.26,NR,,
+"Skylights | Glass, curb mounted",1.11,0.32,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.82,0.32,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.39,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.39,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 5,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.26,NR,,
+Operable Window,0.47,0.26,NR,,
+Curtainwall or Storefront,0.47,0.26,NR,,
+Glazed Doors,0.47,0.26,NR,,
+"Skylights | Glass, curb mounted",1.11,0.32,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.82,0.32,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.39,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.39,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 6,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.31,NR,,
+Operable Window,0.47,0.31,NR,,
+Curtainwall or Storefront,0.47,0.31,NR,,
+Glazed Doors,0.47,0.31,NR,,
+"Skylights | Glass, curb mounted",1.11,0.4,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.82,0.4,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.57,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.57,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 7,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.31,NR,,
+Operable Window,0.47,0.31,NR,,
+Curtainwall or Storefront,0.47,0.31,NR,,
+Glazed Doors,0.47,0.31,NR,,
+"Skylights | Glass, curb mounted",1.11,0.4,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.82,0.4,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.57,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.57,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 8,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.31,NR,,
+Operable Window,0.47,0.31,NR,,
+Curtainwall or Storefront,0.47,0.31,NR,,
+Glazed Doors,0.47,0.31,NR,,
+"Skylights | Glass, curb mounted",1.11,0.4,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.82,0.4,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.57,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.57,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 9,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.31,NR,,
+Operable Window,0.47,0.31,NR,,
+Curtainwall or Storefront,0.47,0.31,NR,,
+Glazed Doors,0.47,0.31,NR,,
+"Skylights | Glass, curb mounted",1.11,0.4,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.82,0.4,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.57,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.57,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 10,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.31,NR,,
+Operable Window,0.47,0.31,NR,,
+Curtainwall or Storefront,0.47,0.31,NR,,
+Glazed Doors,0.47,0.31,NR,,
+"Skylights | Glass, curb mounted",1.11,0.4,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.82,0.4,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.57,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.57,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 11,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.26,NR,,
+Operable Window,0.47,0.26,NR,,
+Curtainwall or Storefront,0.47,0.26,NR,,
+Glazed Doors,0.47,0.26,NR,,
+"Skylights | Glass, curb mounted",1.11,0.32,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.68,0.32,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.34,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.34,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 12,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.26,NR,,
+Operable Window,0.47,0.26,NR,,
+Curtainwall or Storefront,0.47,0.26,NR,,
+Glazed Doors,0.47,0.26,NR,,
+"Skylights | Glass, curb mounted",1.11,0.32,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.68,0.32,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.34,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.34,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 13,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.26,NR,,
+Operable Window,0.47,0.26,NR,,
+Curtainwall or Storefront,0.47,0.26,NR,,
+Glazed Doors,0.47,0.26,NR,,
+"Skylights | Glass, curb mounted",1.11,0.32,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.68,0.32,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.34,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.34,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 14,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.26,NR,,
+Operable Window,0.47,0.26,NR,,
+Curtainwall or Storefront,0.47,0.26,NR,,
+Glazed Doors,0.47,0.26,NR,,
+"Skylights | Glass, curb mounted",1.11,0.31,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.68,0.31,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.27,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.27,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 15,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.26,NR,,
+Operable Window,0.47,0.26,NR,,
+Curtainwall or Storefront,0.47,0.26,NR,,
+Glazed Doors,0.47,0.26,NR,,
+"Skylights | Glass, curb mounted",1.11,0.31,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.68,0.31,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.27,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.27,NR,5% maximum of roof area.,
+,,,,,
+table: Fenestration Requirements | Climate Zone 16,max,max,min,,
+Fenestration Component,U-Factor,SHGC,VT,Notes,
+Fixed Window,0.47,0.3,NR,,
+Operable Window,0.47,0.3,NR,,
+Curtainwall or Storefront,0.47,0.3,NR,,
+Glazed Doors,0.47,0.3,NR,,
+"Skylights | Glass, curb mounted",1.11,0.36,NR,5% maximum of roof area.,
+"Skylights | Glass, deck mounted",0.68,0.36,NR,5% maximum of roof area.,
+"Skylights | Plastic, curb mounted",1.11,0.55,NR,5% maximum of roof area.,
+Skylights | Tubular Daylighting Devices (TDDs),1.11,0.55,NR,5% maximum of roof area.,
+,,,,,
+table:   Economizer Setpoints,,,,,
+Climate Zone,Fixed Drybulb,Differential Dry-bulb,,,
+1,75,0,,,
+2,73,2,,,
+3,75,0,,,
+4,73,2,,,
+5,75,0,,,
+6,71,4,,,
+7,69,6,,,
+8,71,4,,,
+9,71,4,,,
+10,73,2,,,
+11,75,0,,,
+12,75,0,,,
+13,75,0,,,
+14,75,0,,,
+15,75,0,,,
+16,75,0,,,

@@ -1,0 +1,186 @@
+<%#INITIALIZE
+parameter "zone_name"  # name of building's zone where entrance doors are located (usually corridor or lobby)
+parameter "building_height" # total floor to ceiling height, leave out sloped roofs
+parameter "door_area" # vertical area of door opening
+parameter "peak_occupancy"  # max number of occupants in building
+parameter "building_type" # ( OFFICE | RETAIL | PRIMARY-SCHOOL | SECONDARY-SCHOOL | RESTAURANT | HEALTHCARE | HOTEL-APARTMENT )
+
+parameter "vestibule", :name => "Vestibule Control", :description => "Accounts for reduced infiltration due to vestibule entrances",
+  :default => false, :domain => Boolean
+%>
+
+<%
+# Process for setting door opening schedule, air flow coefficients, pressure factor, and entrance infiltration taken from PNNL Study
+# Source: H Cho, K Gowri, B Liu. "Energy Saving Impact of ASHRAE 90.1 Vestibule Requirements: Modeling of Air Infiltration through Door Openings". PNNL-20026, November 2010.
+# Link: http://www.pnl.gov/main/publications/external/technical_reports/PNNL-20026.pdf
+
+# door_opening_factor is how many times one person opens an entry door each hour
+# weekday_opening_schedule is fraction of people using door each weekday hour compared to peak_occupancy header parameter
+# weekend_opening_schedule is fraction of people using door each weekend hour compared to peak_occupancy header parameter
+# for both weekday_opening_schedule and weekend_opening_schedule, first value is for 6-7am (all building types assume no door openings from 12-6am)
+
+case building_type
+when "RESTAURANT"
+  door_opening_factor = 1.0
+  weekday_opening_schedule = [0.144, 0.462, 0.462, 0.462, 0.258, 0.558, 0.829, 0.74, 0.462, 0.258, 0.363, 0.558, 0.829, 0.829, 0.829, 0.558, 0.363, 0.258]
+  weekend_opening_schedule = [0.144, 0.558, 0.558, 0.462, 0.258, 0.462, 0.558, 0.558, 0.462, 0.363, 0.363, 0.363, 0.74, 0.915, 0.74, 0.65, 0.558, 0.363]
+when "HOTEL-APARTMENT"
+  door_opening_factor = 1.0
+  weekday_opening_schedule = [0.1, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 0.1, 0.1, 0.1, 0.1, 0, 0]
+  weekend_opening_schedule = [0.1, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 0.1, 0.1, 0.1, 0.1, 0, 0]
+when "RETAIL"
+  door_opening_factor = 2.0 # people visiting retail buidlings likely stay for less than an hour, so two opening events per person each hour
+  weekday_opening_schedule = [0, 0, 0.1, 0.1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0.1, 0, 0, 0, 0]
+  weekend_opening_schedule = [0, 0, 0.1, 0.1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0.1, 0, 0, 0, 0]
+when "OFFICE"
+  door_opening_factor = 1.0
+  weekday_opening_schedule = [0.1, 1, 0.1, 0.1, 0.1, 0.1, 1, 0.1, 0.1, 0.1, 0.1, 1, 0.1, 0, 0, 0, 0, 0]
+  weekend_opening_schedule = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+when "PRIMARY-SCHOOL"
+  door_opening_factor = 1.0
+  weekday_opening_schedule = [0, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 0.1, 0.1, 0, 0, 0, 0, 0, 0]
+  weekend_opening_schedule = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+when "SECONDARY-SCHOOL"
+  door_opening_factor = 1.0
+  weekday_opening_schedule = [0, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 0.1, 0.1, 0, 0, 0, 0, 0]
+  weekend_opening_schedule = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+when "HEALTHCARE"
+  door_opening_factor = 1.0
+  weekday_opening_schedule = [0.1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0, 0, 0, 0, 0]
+  weekend_opening_schedule = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+end
+
+peak_door_openings = door_opening_factor * peak_occupancy
+
+# Door openings at entrance on weekday and weekend
+door_openings_weekday = weekday_opening_schedule.collect { |x| x * peak_door_openings }
+door_openings_weekend = weekend_opening_schedule.collect { |x| x * peak_door_openings }
+
+# Calculate the air flow coefficient at each hour during the weekday according to amount of door opening (different coefficients for  "with vestibule" vs. "without vestibule")
+# Curve fit based on ASHRAE RP 763.  Curve fit doesn't match well below 30 door openings, so interpolate from 0-30. ASHRAE RP 763 only went up to 450 openings, so linearly extrapolate over 450
+
+air_flow_coefficient_weekday = []
+for door_openings in door_openings_weekday
+  if (vestibule)
+    if (door_openings <= 30)
+      air_flow_coefficient_weekday << door_openings * 64.93983 / 30    # interpolate between zero and 30 people per hour - AFC @ 30 with vestibule = 64.93983 = -0.001439772 * 30 * 30 + 2.542121 * 30 - 10.02801
+    elsif (door_openings > 450)
+      air_flow_coefficient_weekday << 842.3726 + (door_openings - 450) * 1.247766    # extrapolate above 450 since orginal data only goes to 450 - AFC @ 450 with vestibule= 842.3726 = -0.001439772 * 450 * 450 + 2.542121 * 450 - 10.02801
+                                                                                    # AFC @ 449 = 837.3964 = -0.001439772 * 449 * 449 + 2.542121 * 440 - 10.02801
+    else
+      air_flow_coefficient_weekday << (-0.001439772 * door_openings * door_openings) + (2.542121 * door_openings) - 10.02801 # use "with vestibule" curve fit from ASHRAE RP 763
+    end
+  else
+    if (door_openings <= 30)
+      air_flow_coefficient_weekday << door_openings * 107.0456 / 30    # interpolate between zero and 30 people per hour - AFC @ 30 without vestibule = 107.0456 = -0.002474559 * 30 * 30 + 3.826760 * 30 - 5.530068
+    elsif (door_openings > 450)
+      air_flow_coefficient_weekday << 1215.4137 + (door_openings - 450) * 1.602131    # extrapolate above 450 since orginal data only goes to 450 - AFC @ 450 without vestibule = 1215.4137 = -0.002474559 * 450 * 450 + 3.826760 * 450 - 5.530068
+                                                                                    # AFC @ 449 = 1213.8116 = -0.002474559 * 449 * 449 + 3.826760 * 449 - 5.530068
+    else
+      air_flow_coefficient_weekday << (-0.002474559 * door_openings * door_openings) + (3.826760 * door_openings) - 5.530068 # use "without vestibule" curve fit from ASHRAE RP 763
+    end
+  end
+end
+
+# Calculate the air flow coefficient at each hour during the weekend according to amount of door opening (different coefficients for "with vestibule" vs. "without vestibule")
+air_flow_coefficient_weekend = []
+for door_openings in door_openings_weekend
+  if (vestibule)
+    if (door_openings <= 30)
+      air_flow_coefficient_weekend << door_openings * 64.93983 / 30    # interpolate between zero and 30 people per hour - AFC @ 30 with vestibule = 64.93983 = -0.001439772 * 30 * 30 + 2.542121 * 30 - 10.02801
+    elsif (door_openings > 450)
+      air_flow_coefficient_weekend << 842.3726 + (door_openings - 450) * 1.247766    # extrapolate above 450 since orginal data only goes to 450 - AFC @ 450 with vestibule= 842.3726 = -0.001439772 * 450 * 450 + 2.542121 * 450 - 10.02801
+                                                                                    # AFC @ 449 = 837.3964 = -0.001439772 * 449 * 449 + 2.542121 * 440 - 10.02801
+    else
+      air_flow_coefficient_weekend << (-0.001439772 * door_openings * door_openings) + (2.542121 * door_openings) - 10.02801 # use "with vestibule" curve fit from ASHRAE RP 763
+    end
+  else
+    if (door_openings <= 30)
+      air_flow_coefficient_weekend << door_openings * 107.0456 / 30    # interpolate between zero and 30 people per hour - AFC @ 30 without vestibule = 107.0456 = -0.002474559 * 30 * 30 + 3.826760 * 30 - 5.530068
+    elsif (door_openings > 450)
+      air_flow_coefficient_weekend << 1215.4137 + (door_openings - 450) * 1.602131   # extrapolate above 450 since orginal data only goes to 450 - AFC @ 450 without vestibule = 1215.4137 = -0.002474559 * 450 * 450 + 3.826760 * 450 - 5.530068
+                                                                                    # AFC @ 449 = 1213.8116 = -0.002474559 * 449 * 449 + 3.826760 * 449 - 5.530068
+    else
+      air_flow_coefficient_weekend << (-0.002474559 * door_openings * door_openings) + (3.826760 * door_openings) - 5.530068 # use "without vestibule" curve fit from ASHRAE RP 763
+    end
+  end
+end
+
+# Calculate the pressure factor according to building height
+convert_m_to_ft = 1/0.3048
+pressure_factor = -0.0000001828571 * (building_height*convert_m_to_ft) * (building_height*convert_m_to_ft) + 0.0002194286 * building_height*convert_m_to_ft + 0.2752857 # used for T_environment = 60F (PNNL report showed little affect)
+
+# Calculate the infiltration air flow at the main entrance at each hour according to air flow coefficient, door area, and pressure pactor (units are in cfm)
+convert_m2_to_ft2 = 1/(0.3048*0.3048)
+door_infiltration_weekday = air_flow_coefficient_weekday.collect { |x| x * door_area * convert_m2_to_ft2 * pressure_factor }
+door_infiltration_weekend = air_flow_coefficient_weekend.collect { |x| x * door_area * convert_m2_to_ft2 * pressure_factor }
+
+# Find the maximum infiltration air flow (should occur during weekday)
+door_infiltration_array = door_infiltration_weekday | door_infiltration_weekend
+max_door_infiltration = door_infiltration_weekday.max
+
+# Create aggretate weekday and weekend arrays for infiltration schedule normalized by maximum infiltration air flow
+aggregate_infiltration_schedule_array_weekday = door_infiltration_weekday.collect { |x| x / max_door_infiltration }
+aggregate_infiltration_schedule_array_weekend = door_infiltration_weekend.collect { |x| x / max_door_infiltration }
+%>
+
+ZoneInfiltration:DesignFlowRate,
+  <%= zone_name %> Entry Infiltration,  !- Name
+  <%= zone_name %>,  !- Zone Name
+  <%= zone_name %> Entry Infiltration Schedule,  !- Schedule Name
+  Flow/Zone,       !- Design Flow Rate Calculation Method
+  <%= max_door_infiltration|'CFM' %>,                        !- Design Flow Rate {m3/s}
+  ,                        !- Flow per Zone Floor Area {m3/s-m2}
+  ,                        !- Flow per Exterior Surface Area {m3/s-m2}
+  ,        !- Air Changes per Hour
+  ,                        !- Constant Term Coefficient
+  ,                        !- Temperature Term Coefficient
+  ,                        !- Velocity Term Coefficient
+  ;                        !- Velocity Squared Term Coefficient
+
+Schedule:Compact,
+  <%= zone_name %> Entry Infiltration Schedule,  !- Name
+  Any Number,           !- Schedule Type Limits Name
+  Through: 12/31,                                                      !- Field 1
+  For: Weekdays SummerDesignDay WinterDesignDay,                        !- Field 2
+  Until: 06:00, 0,                                                      !- Field 3
+  Until: 07:00, <%= aggregate_infiltration_schedule_array_weekday[0] %>,       !- Field 4
+  Until: 08:00, <%= aggregate_infiltration_schedule_array_weekday[1] %>,       !- Field 5
+  Until: 09:00, <%= aggregate_infiltration_schedule_array_weekday[2] %>,       !- Field 6
+  Until: 10:00, <%= aggregate_infiltration_schedule_array_weekday[3] %>,       !- Field 7
+  Until: 11:00, <%= aggregate_infiltration_schedule_array_weekday[4] %>,       !- Field 8
+  Until: 12:00, <%= aggregate_infiltration_schedule_array_weekday[5] %>,       !- Field 9
+  Until: 13:00, <%= aggregate_infiltration_schedule_array_weekday[6] %>,       !- Field 10
+  Until: 14:00, <%= aggregate_infiltration_schedule_array_weekday[7] %>,       !- Field 11
+  Until: 15:00, <%= aggregate_infiltration_schedule_array_weekday[8] %>,       !- Field 12
+  Until: 16:00, <%= aggregate_infiltration_schedule_array_weekday[9] %>,       !- Field 13
+  Until: 17:00, <%= aggregate_infiltration_schedule_array_weekday[10] %>,       !- Field 14
+  Until: 18:00, <%= aggregate_infiltration_schedule_array_weekday[11] %>,       !- Field 15
+  Until: 19:00, <%= aggregate_infiltration_schedule_array_weekday[12] %>,       !- Field 16
+  Until: 20:00, <%= aggregate_infiltration_schedule_array_weekday[13] %>,       !- Field 17
+  Until: 21:00, <%= aggregate_infiltration_schedule_array_weekday[14] %>,       !- Field 18
+  Until: 22:00, <%= aggregate_infiltration_schedule_array_weekday[15] %>,       !- Field 19
+  Until: 23:00, <%= aggregate_infiltration_schedule_array_weekday[16] %>,       !- Field 20
+  Until: 24:00, <%= aggregate_infiltration_schedule_array_weekday[17] %>,       !- Field 21
+  For: Weekends,                                                        !- Field 22
+  Until: 06:00, 0,                                                      !- Field 23
+  Until: 07:00, <%= aggregate_infiltration_schedule_array_weekend[0] %>,       !- Field 24
+  Until: 08:00, <%= aggregate_infiltration_schedule_array_weekend[1] %>,       !- Field 25
+  Until: 09:00, <%= aggregate_infiltration_schedule_array_weekend[2] %>,       !- Field 26
+  Until: 10:00, <%= aggregate_infiltration_schedule_array_weekend[3] %>,       !- Field 27
+  Until: 11:00, <%= aggregate_infiltration_schedule_array_weekend[4] %>,       !- Field 28
+  Until: 12:00, <%= aggregate_infiltration_schedule_array_weekend[5] %>,       !- Field 29
+  Until: 13:00, <%= aggregate_infiltration_schedule_array_weekend[6] %>,       !- Field 30
+  Until: 14:00, <%= aggregate_infiltration_schedule_array_weekend[7] %>,       !- Field 31
+  Until: 15:00, <%= aggregate_infiltration_schedule_array_weekend[8] %>,       !- Field 32
+  Until: 16:00, <%= aggregate_infiltration_schedule_array_weekend[9] %>,       !- Field 33
+  Until: 17:00, <%= aggregate_infiltration_schedule_array_weekend[10] %>,       !- Field 34
+  Until: 18:00, <%= aggregate_infiltration_schedule_array_weekend[11] %>,       !- Field 35
+  Until: 19:00, <%= aggregate_infiltration_schedule_array_weekend[12] %>,       !- Field 36
+  Until: 20:00, <%= aggregate_infiltration_schedule_array_weekend[13] %>,       !- Field 37
+  Until: 21:00, <%= aggregate_infiltration_schedule_array_weekend[14] %>,       !- Field 38
+  Until: 22:00, <%= aggregate_infiltration_schedule_array_weekend[15] %>,       !- Field 39
+  Until: 23:00, <%= aggregate_infiltration_schedule_array_weekend[16] %>,       !- Field 40
+  Until: 24:00, <%= aggregate_infiltration_schedule_array_weekend[17] %>,       !- Field 41
+  For: AllOtherDays,                                                    !- Field 42
+  Until: 24:00, 0.0;                                                    !- Field 43

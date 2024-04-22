@@ -1,0 +1,65 @@
+<%#INITIALIZE
+parameter "initial_volume", :default=>5['m3'] # initial volume of rainwater storage tank for each timestep
+parameter "storage_water_temperature", :default=>68['F'] # temperature of water in storage tank, assumed to be annual constant
+parameter "clear_water_supply_tank", :default=>"" # ("" | "Clear Water Tank" ) will serve as backup to graywater tank when created
+parameter "graywater_storage_tank", :default=>"" # ("" | "Graywater Tank" )
+parameter "graywater_supply_tank", :default=>"" # ("" | "Graywater Tank" )
+%>
+
+<%
+# Need to create one tank to collect all DHW uses in building EXCEPT toilet flushing (sinks, laundry, dishwashing, showers)
+# Every WaterUse:Connections created in zonetemplate.imf will reference this tank as the Reclamation Water Storage Tank Name
+%>
+
+WaterUse:Storage,
+  <%= graywater_storage_tank %>, !- Name
+  Graywater Reclamation, !- Water Quality Subcategory
+  , !- Maximum Capacity {m3}
+  <%= initial_volume %>, !- Initial Volume {m3}
+  , !- Design In Flow Rate {m3}
+  , !- Design Out Flow Rate {m3}
+  , !- Overflow Destination
+  None, !- Type of Supply Controlled by Float Valve
+  , !- Float Valve On Capacity {m3}
+  , !- Float Valve Off Capacity {m3}
+  , !- Backup Mains Capacity {m3}
+  <%= clear_water_supply_tank %>, !- Other Tank Name
+  ScheduledTemperature, !- Water Thermal Mode
+  <%= graywater_storage_tank %> Temperature Schedule, !- Water Temperature Schedule Name
+  , !- Ambient Temperature Indicator
+  , !- Ambient Temperature Schedule Name
+  , !- Zone Name
+  , !- Tank Surface Area {m2}
+  , !- Tank U Value {W/m2-K}
+  ; !- Tank Outside Surface Material Name
+
+Schedule:Constant,
+  <%= graywater_storage_tank %> Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= storage_water_temperature %>;  !- Hourly Value
+
+<% if (graywater_storage_tank != graywater_supply_tank) %>
+
+WaterUse:Storage,
+  <%= graywater_supply_tank %>, !- Name
+  Graywater Reclamation, !- Water Quality Subcategory
+  , !- Maximum Capacity {m3}
+  <%= initial_volume %>, !- Initial Volume {m3}
+  , !- Design In Flow Rate {m3}
+  , !- Design Out Flow Rate {m3}
+  , !- Overflow Destination
+  None, !- Type of Supply Controlled by Float Valve
+  , !- Float Valve On Capacity {m3}
+  , !- Float Valve Off Capacity {m3}
+  , !- Backup Mains Capacity {m3}
+  <%= clear_water_supply_tank %>, !- Other Tank Name
+  ScheduledTemperature, !- Water Thermal Mode
+  <%= graywater_storage_tank %> Temperature Schedule, !- Water Temperature Schedule Name
+  , !- Ambient Temperature Indicator
+  , !- Ambient Temperature Schedule Name
+  , !- Zone Name
+  , !- Tank Surface Area {m2}
+  , !- Tank U Value {W/m2-K}
+  ; !- Tank Outside Surface Material Name
+
+<% end %>

@@ -1,0 +1,129 @@
+<%#INITIALIZE
+parameter "power_generator",
+  :default => false, :domain => Boolean
+
+parameter "reporting_tolerance", :name => "Reporting Tolerance", :description => "Reporting tolerance for unmet hours",
+  :default => 2['deltaF'], :domain => Quantity
+%>
+
+
+Output:Diagnostics,DisplayExtraWarnings;
+
+Output:SQLite,
+  SimpleAndTabular;        !- Option Type
+
+Output:Surfaces:Drawing,DXF;
+Output:VariableDictionary,IDF;
+Output:Constructions,Constructions;
+Output:Surfaces:List,Details;
+
+OutputControl:Table:Style,
+  CommaAndHTML,            !- Column Separator
+  JtoKWH;               !- Unit Conversion
+
+<%# NOTE: There seems to be a bug with the SystemTimestep frequency. It reports at 5-minute intervals? %>
+EnergyManagementSystem:OutputVariable,
+  Electricity Facility EMS, !- Name
+  EF,                !- EMS Variable Name
+  Summed,            !- Type of Data in Variable
+  ZoneTimestep,  !SystemTimestep,    !- Update Frequency
+  NetMeterProgram,   !- EMS Program or Subroutine
+  J;                 !- Units
+
+
+<% if (power_generator) %>
+
+EnergyManagementSystem:Sensor,
+  EFP_meter,
+  ,
+  ElectricityProduced:Facility;
+
+<% end %>
+
+EnergyManagementSystem:Sensor,
+  EFC_meter,
+  ,
+  Electricity:Facility;
+
+
+EnergyManagementSystem:Program,
+  NetMeterProgram,                      !- Name
+
+<% if (power_generator) %>
+
+  Set EF = EFC_meter - EFP_meter;
+
+<% else %>
+
+  Set EF = EFC_meter;
+
+<% end %>
+
+EnergyManagementSystem:ProgramCallingManager,
+  OutputReporting,                   !- Name
+  EndOfSystemTimestepBeforeHVACReporting,!- EnergyPlus Model Calling Point
+  NetMeterProgram;                      !- Program Name 2
+
+Output:Table:SummaryReports,
+  AnnualBuildingUtilityPerformanceSummary,  !- Report 1 Name
+  InputVerificationandResultsSummary,  !- Report 2 Name
+  ClimaticDataSummary,  !- Report 3 Name
+  EnvelopeSummary,         !- Report 4 Name
+  EquipmentSummary,        !- Report 5 Name
+  ComponentSizingSummary,         !- Report 6 Name
+  HVACSizingSummary,         !- Report 7 Name
+  LightingSummary,         !- Report 8 Name
+  DXReportMonthly,         !- Report 9 Name
+  SystemSummary,           !- Report 10 Name
+  !ZoneComponentLoadSummary,
+  SensibleHeatGainSummary,
+  EnergyConsumptionElectricityNaturalGasMonthly,
+  EndUseEnergyConsumptionElectricityMonthly,
+  EnergyConsumptionDieselFuelOilMonthly,
+  EnergyConsumptionElectricityGeneratedPropaneMonthly,
+  EnergyConsumptionCoalGasolineMonthly,
+  EndUseEnergyConsumptionElectricityMonthly,
+  EndUseEnergyConsumptionNaturalGasMonthly,
+  EndUseEnergyConsumptionDieselMonthly,
+  EndUseEnergyConsumptionFuelOilMonthly,
+  EndUseEnergyConsumptionCoalMonthly,
+  EndUseEnergyConsumptionPropaneMonthly,
+  EndUseEnergyConsumptionGasolineMonthly,
+  ZoneCoolingSummaryMonthly,  !- Report 12 Name
+  ZoneHeatingSummaryMonthly;  !- Report 13 Name
+
+OutputControl:ReportingTolerances,
+  <%= reporting_tolerance %>,  !- Tolerance for Time Heating Setpoint Not Met {deltaC}
+  <%= reporting_tolerance %>;  !- Tolerance for Time Cooling Setpoint Not Met {deltaC}
+
+EnvironmentalImpactFactors,
+  0.775556,                !- District Heating Efficiency
+  3.180952,                !- District Cooling COP
+  0.722069,                !- Steam Conversion Efficiency
+  80.7272,                 !- Total Carbon Equivalent Emission Factor From NOx {kg/kg}
+  6.2727,                  !- Total Carbon Equivalent Emission Factor From CH4 {kg/kg}
+  0.2727;                  !- Total Carbon Equivalent Emission Factor From CO2 {kg/kg}
+
+FuelFactors,
+  Electricity,             !- Existing Fuel Resource Name
+  3.34;                    !- Source Energy Factor {J/J}
+
+FuelFactors,
+  NaturalGas,              !- Existing Fuel Resource Name
+  1.047;                   !- Source Energy Factor {J/J}
+
+FuelFactors,
+  FuelOilNo1,              !- Existing Fuel Resource Name
+  1.01;                    !- Source Energy Factor {J/J}
+
+FuelFactors,
+  FuelOilNo2,              !- Existing Fuel Resource Name
+  1.01;                    !- Source Energy Factor {J/J}
+
+FuelFactors,
+  Propane,                 !- Existing Fuel Resource Name
+  1.01;                    !- Source Energy Factor {J/J}
+
+FuelFactors,
+  Diesel,                  !- Existing Fuel Resource Name
+  1.01;                    !- Source Energy Factor {J/J}

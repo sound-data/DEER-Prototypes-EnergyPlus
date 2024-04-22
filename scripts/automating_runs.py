@@ -1,8 +1,9 @@
 # %%
 import os
 import subprocess
-# To do: Add option to handle existing run folders
-os.chdir("..\\analysis")
+# TODO: Add option to handle existing run folders
+measure_folder_path = "..\\residential measures\\SWBE006-02 Ceiling Insulation" # or "..\\commercial measures\\SWXX000-00 Measure Name", an absolute path is recommended.
+os.chdir(measure_folder_path) 
 current_dir = os.getcwd()
 dir_content = os.listdir(current_dir)
 dir_prototypes = [dir for dir in dir_content if os.path.isdir(f'{current_dir}\\{dir}')]

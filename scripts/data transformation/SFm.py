@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'SEER Rated AC/HP'
+measure_name = 'Wall Furnace'
 
 # %%
 #SFm only script
@@ -30,14 +30,15 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-#input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path1 and leave other blank.
-path1 = 'Analysis/SFm_SEER Rated AC_HP_1975'
-path2 = 'Analysis/SFm_SEER Rated AC_HP_1985'
+#input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path_new and leave other blank.
+path_1975 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1975'
+path_1985 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1985'
+path_new = ''
 
-paths = [path1, path2]
+paths = [path_1975, path_1985]
 
-if any('New' in x for x in paths):
-    paths = [path1]
+if path_new != '' :
+    paths = [path_new]
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -70,6 +71,43 @@ def parse_measure_name(measure_name):
             
 
     return measure_name_dict # returns a dictionary
+
+def parse_measure_name2(cohort_names: pd.Series, verify: bool = False) -> pd.DataFrame:
+    '''Returns a DataFrame with five columns (all type string):
+        ["BldgType","Story","BldgHVAC","BldgVint","TechGroup__TechType"]
+    Each cohort name must match the pattern:
+        "BldgType&Story&BldgHVAC&BldgVint&TechGroup__TechType"
+    Only alphanumeric characters are allowed  [a-zA-Z0-9_], except TechGroup__TechType may contain ampersand (&).
+
+    Parameters
+    ----------
+    cohort_names : pandas.Series
+        The cohort names as from cohorts.csv.
+    verify : bool, default=False
+        If true and name parts do not match `expected_att`, raise an exception.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Structure containing the parts of cohort name.
+    '''
+    result = cohort_names.str.extract(
+        r'(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<Measure>[^/]+)'
+    )
+    if verify:
+        # Check for missing descriptor fields
+        missing = result.isna()
+        if missing.any().any():
+            example = cohort_names[missing.any(axis=1)].iloc[0]
+            raise ValueError(f'Missing descriptor field, e.g. cohort = "{example}"')
+        # Check for unrecognized fields
+        for attr_name,attr_val in expected_att.items():
+            unrecognized = ~result[attr_name].isin(attr_val)
+            if unrecognized.any():
+                example = result[attr_name][unrecognized].iloc[0]
+                raise ValueError(f'Unrecognized descriptor field, e.g. {attr_name} = "{example}"')
+    result.rename({'Measure':'TechGroup__TechType'},axis=1,inplace=True)
+    return result
 
 #function to melt long 8760 col into 24col x365row format
 def long2wide_pivot(df, name):
@@ -492,33 +530,16 @@ sim_annual_f = sim_annual_final[['TechID', 'SizingID', 'BldgType','BldgVint','Bl
        'kwh_ext2', 'thm_tot2', 'thm_equip2', 'thm_htg2', 'thm_shw2', 'lastmod']]
 # %%
 ###Finalize Hourly data
-def vintage_str(name):
-    if 'Ex' in name:
-        return 'Ex'
-    elif 'New' in name:
-        return 'New'
-
-def hvac_str(name):
-    if 'rDXGF' in name:
-        return 'rDXGF'
-    elif 'rDXHP' in name:
-        return 'rDXHP'
-
-def bldgtype_str(name):
-    if 'DMo' in name:
-        return 'DMo'
-    elif 'MFm' in name:
-        return 'MFm'
-    elif 'SFm' in name:
-        return 'SFm'
 
 #hourly data
 #1story
 #rename some fields to fit MC3 output
 #add some placeholder fields to fit MC3 output
-sim_hourly_wb_1s_v1['BldgVint'] = sim_hourly_wb_1s_v1['BldgType'].apply(vintage_str)
-sim_hourly_wb_1s_v1['BldgHVAC'] = sim_hourly_wb_1s_v1['BldgType'].apply(hvac_str)
-sim_hourly_wb_1s_v1['BldgType'] = sim_hourly_wb_1s_v1['BldgType'].apply(bldgtype_str)
+df_tmp = parse_measure_name2(sim_hourly_wb_1s_v1['ID'],verify=True)
+sim_hourly_wb_1s_v1['BldgVint'] = df_tmp['BldgVint']
+sim_hourly_wb_1s_v1['BldgHVAC'] = df_tmp['BldgHVAC']
+sim_hourly_wb_1s_v1['BldgType'] = df_tmp['BldgType']
+del df_tmp
 sim_hourly_wb_1s_v1['SizingID'] = 'None'
 sim_hourly_wb_1s_v1['tstat'] = 0
 sim_hourly_wb_1s_v1['enduse'] = 0
@@ -526,9 +547,11 @@ sim_hourly_wb_1s_v1['enduse'] = 0
 #2story
 #rename some fields to fit MC3 output
 #add some placeholder fields to fit MC3 output
-sim_hourly_wb_2s_v1['BldgVint'] = sim_hourly_wb_2s_v1['BldgType'].apply(vintage_str)
-sim_hourly_wb_2s_v1['BldgHVAC'] = sim_hourly_wb_2s_v1['BldgType'].apply(hvac_str)
-sim_hourly_wb_2s_v1['BldgType'] = sim_hourly_wb_2s_v1['BldgType'].apply(bldgtype_str)
+df_tmp = parse_measure_name2(sim_hourly_wb_2s_v1['ID'],verify=True)
+sim_hourly_wb_2s_v1['BldgVint'] = df_tmp['BldgVint']
+sim_hourly_wb_2s_v1['BldgHVAC'] = df_tmp['BldgHVAC']
+sim_hourly_wb_2s_v1['BldgType'] = df_tmp['BldgType']
+del df_tmp
 sim_hourly_wb_2s_v1['SizingID'] = 'None'
 sim_hourly_wb_2s_v1['tstat'] = 0
 sim_hourly_wb_2s_v1['enduse'] = 0
@@ -601,6 +624,21 @@ sim_hourly_2s_re = sim_hourly_2s[['TechID','SizingID','BldgType','BldgVint','Bld
 sim_hourly_final = pd.merge(sim_hourly_1s_re, sim_hourly_2s_re, on=['TechID', 'SizingID','BldgType','BldgVint','BldgLoc','BldgHVAC','tstat','enduse','daynum'])
 sim_hourly_final['lastmod']=dt.datetime.now()
 
+#%%
+#Create CZ:VintYear dictionary based on prototype definitions
+cz_list1 = ['CZ01','CZ02','CZ03','CZ04','CZ05','CZ06','CZ07','CZ08','CZ09']
+cz_list2 = ['CZ10','CZ11','CZ12','CZ13','CZ14','CZ15','CZ16']
+
+cz_vint_dict1 = {i:'1975' for i in cz_list1}
+cz_vint_dict2 = {i:'1985' for i in cz_list2}
+
+cz_vint_dict = cz_vint_dict1 | cz_vint_dict2
+
+#%%
+##BldgVint label correction for NumStor weights
+sim_annual_f['BldgVint'] = sim_annual_f['BldgLoc'].map(cz_vint_dict)
+sim_hourly_final['BldgVint'] = sim_hourly_final['BldgLoc'].map(cz_vint_dict)
+
 # %%
 ##STEP 4: Measure setup file (current_msr_mat.csv)
 
@@ -616,19 +654,19 @@ metadata_cols['TechID'].unique()
 #if looping over all HVAC types, ignore BldgHVAC filter
 PreTechIDs = df_measure[['PreTechID','Common_PreTechID']].drop_duplicates()
 StdTechIDs = df_measure[['StdTechID','Common_StdTechID']].drop_duplicates()
-MsrTechIDs = df_measure[['MsrTechID','Common_MsrTechID']].drop_duplicates()
+MeasTechIDs = df_measure[['MeasTechID','Common_MeasTechID']].drop_duplicates()
 # %%
 #filter out each pre, std, msr using the Common TechIDs from master table
 metadata_pre = metadata_cols[metadata_cols['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
 metadata_std = metadata_cols[metadata_cols['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]
-metadata_msr = metadata_cols[metadata_cols['TechID'].isin(MsrTechIDs['Common_MsrTechID'].unique())]
+metadata_msr = metadata_cols[metadata_cols['TechID'].isin(MeasTechIDs['Common_MeasTechID'].unique())]
 
 # %%
 #rename to Pre, Std or Msr 
 #both Std and Pre are baseline for SEER rated AC measures
 metadata_pre = metadata_pre.rename(columns={'TechID':'PreTechID'})
 metadata_std = metadata_std.rename(columns={'TechID':'StdTechID'})
-metadata_msr = metadata_msr.rename(columns={'TechID':'MsrTechID'})
+metadata_msr = metadata_msr.rename(columns={'TechID':'MeasTechID'})
 # %%
 #Changing common TechID to actual TechIDs if needed.
 #might only apply to SEER AC/HP
@@ -637,9 +675,9 @@ metadata_msr = metadata_msr.rename(columns={'TechID':'MsrTechID'})
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     metadata_pre_full = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        metadata_pre_mod = metadata_pre.copy()
+        metadata_pre_mod = metadata_pre[metadata_pre['PreTechID']==common_id].copy()
         metadata_pre_mod['PreTechID'] = new_id
         #merge to final df
         metadata_pre_full = pd.concat([metadata_pre_full, metadata_pre_mod])
@@ -665,14 +703,14 @@ else:
     metadata_std_full = metadata_std.copy()
 # %%
 #create msr_metadata sets, assigning appropriate final TechIDs
-if False in list(MsrTechIDs['MsrTechID']==MsrTechIDs['Common_MsrTechID']):
+if False in list(MeasTechIDs['MeasTechID']==MeasTechIDs['Common_MeasTechID']):
     metadata_msr_full = pd.DataFrame()
-    for common_id, new_id in zip(MsrTechIDs['Common_MsrTechID'], MsrTechIDs['MsrTechID']):
+    for common_id, new_id in zip(MeasTechIDs['Common_MeasTechID'], MeasTechIDs['MeasTechID']):
         print(f'common is {common_id}, changing into new id is {new_id}')
         #Identify corresponding common TechID (the last 9 characters indicating SEER levels)
-        metadata_msr_mod = metadata_msr[metadata_msr['MsrTechID']==common_id].copy()
+        metadata_msr_mod = metadata_msr[metadata_msr['MeasTechID']==common_id].copy()
         #Change into final TechID name
-        metadata_msr_mod['MsrTechID'] = new_id
+        metadata_msr_mod['MeasTechID'] = new_id
         #merge to final df
         metadata_msr_full = pd.concat([metadata_msr_full, metadata_msr_mod])
 else:
@@ -690,15 +728,15 @@ else:
     df_measure_set_full = pd.merge(df_measure_baseline_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 # %%
 #Unique sets of each MeasureID with their TechID triplets
-TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MsrTechID']].drop_duplicates()
+TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
 if np.NaN in list(StdTechIDs['StdTechID'].unique()):
-    current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MsrTechID'])
+    current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
 elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
-    current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MsrTechID'])
+    current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
-    current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MsrTechID'])
+    current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
 
 # %%
 #add placeholders, rearrange fields
@@ -706,10 +744,12 @@ current_msr_mat_proto['PreSizingID']='None'
 current_msr_mat_proto['StdSizingID']='None'
 current_msr_mat_proto['MsrSizingID']='None'
 current_msr_mat_proto['SizingSrc']=np.nan
+
+#to be worked on: need to add corresponding indicator for what enduse it is for end use loadshape connections
 current_msr_mat_proto['EU_HrRepVar']=np.nan
 
 current_msr_mat = current_msr_mat_proto[['MeasureID', 'BldgType', 'BldgVint','BldgLoc','BldgHVAC','tstat','PreTechID','PreSizingID',
-                             'StdTechID', 'StdSizingID','MsrTechID','MsrSizingID','SizingSrc','EU_HrRepVar','normunit']]
+                             'StdTechID', 'StdSizingID','MeasTechID','MsrSizingID','SizingSrc','EU_HrRepVar','normunit']]
 current_msr_mat = current_msr_mat.rename(columns={'normunit':'NormUnit'})
 
 #%%
@@ -721,17 +761,17 @@ len(current_msr_mat)
 # Creating updated Sim_annual and Sim_hourly data with distinguished TechID names
 sim_annual_pre_common = sim_annual_f[sim_annual_f['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
 sim_annual_std_common = sim_annual_f[sim_annual_f['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]
-sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MsrTechIDs['Common_MsrTechID'].unique())]
+sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MeasTechIDs['Common_MeasTechID'].unique())]
 # %%
-#Add a TechID col renaming the common TechID to the specific TechID using PreTechIDs, StdTechIDs, MsrTechIDs
+#Add a TechID col renaming the common TechID to the specific TechID using PreTechIDs, StdTechIDs, MeasTechIDs
 
 #create full pre sim_annual sets for different names but the same TechID
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_annual_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_annual_pre_mod = sim_annual_pre_common.copy()
+        sim_annual_pre_mod = sim_annual_pre_common[sim_annual_pre_common['TechID']==common_id].copy()
         sim_annual_pre_mod['TechID'] = new_id
         #merge to final df
         sim_annual_pre = pd.concat([sim_annual_pre, sim_annual_pre_mod])
@@ -756,9 +796,9 @@ else:
     sim_annual_std = sim_annual_std_common.copy()
 # %%
 # create full msr sim_annual sets for different names but the same TechID
-if False in list(MsrTechIDs['MsrTechID']==MsrTechIDs['Common_MsrTechID']):
+if False in list(MeasTechIDs['MeasTechID']==MeasTechIDs['Common_MeasTechID']):
     sim_annual_msr = pd.DataFrame()
-    for common_id, new_id in zip(MsrTechIDs['Common_MsrTechID'], MsrTechIDs['MsrTechID']):
+    for common_id, new_id in zip(MeasTechIDs['Common_MeasTechID'], MeasTechIDs['MeasTechID']):
         print(f'common is {common_id}, changing into new id is {new_id}')
         #Isolate specific common id (old)
         sim_annual_msr_mod = sim_annual_msr_common[sim_annual_msr_common['TechID']==common_id].copy()
@@ -777,15 +817,15 @@ sim_annual_final = pd.concat([sim_annual_pre, sim_annual_std, sim_annual_msr])
 ###same deal with with hourly data, separate into pre std msr, change into specific TechID
 sim_hourly_pre_common = sim_hourly_final[sim_hourly_final['TechID'].isin(PreTechIDs['Common_PreTechID'].unique())]
 sim_hourly_std_common = sim_hourly_final[sim_hourly_final['TechID'].isin(StdTechIDs['Common_StdTechID'].unique())]
-sim_hourly_msr_common = sim_hourly_final[sim_hourly_final['TechID'].isin(MsrTechIDs['Common_MsrTechID'].unique())]
+sim_hourly_msr_common = sim_hourly_final[sim_hourly_final['TechID'].isin(MeasTechIDs['Common_MeasTechID'].unique())]
 
 # %%
 #Pre hourly
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_hourly_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_hourly_pre_mod = sim_hourly_pre_common.copy()
+        sim_hourly_pre_mod = sim_hourly_pre_common[sim_hourly_pre_common['TechID']==common_id].copy()
         sim_hourly_pre_mod['TechID'] = new_id
         #merge to final df
         sim_hourly_pre = pd.concat([sim_hourly_pre, sim_hourly_pre_mod])
@@ -809,9 +849,9 @@ else:
     sim_hourly_std = sim_hourly_std_common.copy()
 # %%
 #Msr hourly
-if False in list(MsrTechIDs['MsrTechID']==MsrTechIDs['Common_MsrTechID']):
+if False in list(MeasTechIDs['MeasTechID']==MeasTechIDs['Common_MeasTechID']):
     sim_hourly_msr = pd.DataFrame()
-    for common_id, new_id in zip(MsrTechIDs['Common_MsrTechID'], MsrTechIDs['MsrTechID']):
+    for common_id, new_id in zip(MeasTechIDs['Common_MeasTechID'], MeasTechIDs['MeasTechID']):
         print(f'common is {common_id}, changing into new id is {new_id}')
         #Isolate specific common id (old)
         sim_hourly_msr_mod = sim_hourly_msr_common[sim_hourly_msr_common['TechID']==common_id].copy()
@@ -832,3 +872,5 @@ sim_hourly_final = pd.concat([sim_hourly_pre, sim_hourly_std, sim_hourly_msr])
 current_msr_mat.to_csv('current_msr_mat.csv', index=False)
 sim_annual_final.to_csv('sfm_annual.csv', index=False)
 sim_hourly_final.to_csv('sfm_hourly_wb.csv', index=False)
+
+# %%

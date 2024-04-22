@@ -1,0 +1,617 @@
+<%#INITIALIZE
+parameter "name"
+parameter "branch_names"
+
+parameter "tower_type", :default=>"VARIABLESPEED"  # (VARIABLESPEED | SINGLESPEED)
+parameter "num_towers", :default=>1
+parameter "design_temp", :default=>85['F']  # Condenser water system supply temperature
+parameter "design_delta", :default=>10['deltaF']  # Condenser water system design temperature difference
+parameter "design_approach", :default=>7['deltaF']  # Condenser water system design approach temperature
+parameter "ct_sizing", :default=>1  # Cooling tower sizing factor
+
+parameter "heat_addition", :default=>false # Used for water source heat pumps (including VRFs)
+
+parameter "heating_supply_temp_setpoint", :default=>85['F']
+parameter "cooling_min_return_temp", :default=>79['F']
+parameter "heating_max_return_temp", :default=>70['F']
+
+parameter "pump_eff", :default=>0.9
+parameter "pump_head", :default=>60['ft H2O']
+
+parameter "model_type", :default=>"CoolToolsUserDefined" # (CoolToolsUserDefined | CoolToolsCrossFlow)
+parameter "wetbulb_design", :default=>25.6['C']
+
+parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+
+parameter "clear_water_supply_tank", :default=>""
+%>
+
+Sizing:Plant,
+  <%= name %>,  !- Plant or Condenser Loop Name
+  Condenser,               !- Loop Type
+  <%= design_temp %>,  !- Design Loop Exit Temperature {C}
+  <%= design_delta %>,  !- Loop Design Temperature Difference {deltaC}
+  Coincident,              !- Sizing Option
+  6,                       !- Zone Timesteps in Averaging Window
+  GlobalCoolingSizingFactor;  !- Coincident Sizing Factor Mode
+
+Schedule:Compact,
+  <%= name %> Operation Schedule,  !- Name
+  On/Off,                  !- Schedule Type Limits Name
+<%= operation_schedule %>
+
+CondenserLoop,
+  <%= name %>,  !- Name
+  Water,                   !- Fluid Type
+  ,                        !- User Defined Fluid Type
+  <%= name %> Operation Schemes,  !- Condenser Equipment Operation Scheme Name
+  <%= name %> Supply Outlet Node,  !- Condenser Loop Temperature Setpoint Node Name or Reference
+  80.0,                    !- Maximum Loop Temperature {C}
+  5.0,                     !- Minimum Loop Temperature {C}
+  Autosize,                !- Maximum Loop Flow Rate {m3/s}
+  0.0,                     !- Minimum Loop Flow Rate {m3/s}
+  Autosize,                !- Condenser Loop Volume {m3}
+  <%= name %> Supply Inlet Node,  !- Condenser Side Inlet Node Name
+  <%= name %> Supply Outlet Node,  !- Condenser Side Outlet Node Name
+  <%= name %> Supply Branches,  !- Condenser Side Branch List Name
+  <%= name %> Supply Connectors,  !- Condenser Side Connector List Name
+  <%= name %> Demand Inlet Node,  !- Demand Side Inlet Node Name
+  <%= name %> Demand Outlet Node,  !- Demand Side Outlet Node Name
+  <%= name %> Demand Branches,  !- Condenser Demand Side Branch List Name
+  <%= name %> Demand Connectors,  !- Condenser Demand Side Connector List Name
+  SequentialLoad;              !- Load Distribution Scheme
+
+<% if (heat_addition) %>
+EnergyManagementSystem:Sensor,
+  <%= name.delete(' ') %>ReturnTemperature,
+  <%= name %> Supply Inlet Node,
+  System Node Temperature;
+
+EnergyManagementSystem:Sensor,
+  Twb,
+  *,
+  Site Outdoor Air Wetbulb Temperature;
+
+EnergyManagementSystem:Actuator,
+  HRSP,
+  <%= name %> Supply Outlet Node,
+  System Node Setpoint,
+  Temperature Setpoint;
+
+EnergyManagementSystem:Program,
+  <%= name.delete(' ') %>LoopSetpointProgram,
+  IF <%= name.delete(' ') %>ReturnTemperature > <%= cooling_min_return_temp %>, ! Cooling
+    SET HRSP = Twb,
+  ELSEIF <%= name.delete(' ') %>ReturnTemperature < <%= heating_max_return_temp %>, !- Heating
+    SET HRSP = <%= heating_supply_temp_setpoint %>,
+  ELSE,
+    SET HRSP = <%= name.delete(' ') %>ReturnTemperature,
+  ENDIF;
+
+EnergyManagementSystem:ProgramCallingManager,
+  <%= name %> Loop Setpoint Program Calling Manager,
+  InsideHVACSystemIterationLoop,
+  <%= name.delete(' ') %>LoopSetpointProgram;
+
+<% else %>
+SetpointManager:FollowOutdoorAirTemperature,
+  <%= name %> Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  OutdoorAirWetBulb,       !- Reference Temperature Type
+  0,                       !- Offset Temperature Difference {deltaC}
+  80,                      !- Maximum Setpoint Temperature {C}
+  5,                       !- Minimum Setpoint Temperature {C}
+  <%= name %> Supply Outlet Node;  !- Setpoint Node or NodeList Name
+<% end %>
+
+!SetpointManager:Scheduled,
+!  <%= name %> Setpoint Manager,  !- Name
+!  Temperature,             !- Control Variable
+!  <%= name %> Setpoint Schedule,  !- Schedule Name
+!  <%= name %> Supply Outlet Node;  !- Setpoint Node or NodeList Name
+
+!Schedule:Compact,
+!  <%= name %> Setpoint Schedule,  !- Name
+!  Temperature,             !- Schedule Type Limits Name
+!  Through: 12/31,          !- Field 1
+!  For: AllDays,            !- Field 2
+!  Until: 24:00,            !- Field 3
+!  <%= design_temp %>;      !- Field 4
+
+CondenserEquipmentOperationSchemes,
+  <%= name %> Operation Schemes,  !- Name
+<% if (heat_addition) %>
+  PlantEquipmentOperation:Uncontrolled,  !- Control Scheme 1 Object Type
+<% else %>
+  PlantEquipmentOperation:CoolingLoad,  !- Control Scheme 1 Object Type
+<% end %>
+  <%= name %> Operation Scheme,  !- Control Scheme 1 Name
+  <%= name %> Operation Schedule;  !- Control Scheme 1 Schedule Name
+
+<% if (heat_addition) %>
+PlantEquipmentOperation:Uncontrolled,
+  <%= name %> Operation Scheme,  !- Name
+  <%= name %> Equipment List;  !- Priority Control 1 Equipment List Name
+<% else %>
+PlantEquipmentOperation:CoolingLoad,
+  <%= name %> Operation Scheme,  !- Name
+  0.0,                     !- Load Range 1 Lower Limit {W}
+  1000000000000,           !- Load Range 1 Upper Limit {W}
+  <%= name %> Equipment List;  !- Priority Control 1 Equipment List Name
+<% end %>
+
+CondenserEquipmentList,
+  <%= name %> Equipment List,  !- Name
+<% if num_towers > 1 %>
+  <% for i in 1..(num_towers - 1) %>
+    <% if (tower_type == "VARIABLESPEED") %>
+      CoolingTower:VariableSpeed,  !- Equipment Object Type
+    <% elsif (tower_type == "SINGLESPEED") %>
+      CoolingTower:SingleSpeed,  !- Equipment Object Type
+    <% end %>
+    <%= name %> Cooling Tower <%= i %>,  !- Equipment Name
+  <% end %>
+  <% if (tower_type == "VARIABLESPEED") %>
+    CoolingTower:VariableSpeed,  !- Equipment Object Type
+  <% elsif (tower_type == "SINGLESPEED") %>
+    CoolingTower:SingleSpeed,  !- Equipment Object Type
+  <% end %>
+  <%= name %> Cooling Tower <%= num_towers %>;  !- Equipment Name
+<% else %>
+  <% if (tower_type == "VARIABLESPEED") %>
+    CoolingTower:VariableSpeed,  !- Equipment 1 Object Type
+  <% elsif (tower_type == "SINGLESPEED") %>
+    CoolingTower:SingleSpeed,  !- Equipment 1 Object Type
+  <% end %>
+  <%= name %> Cooling Tower;  !- Equipment 1 Name
+<% end %>
+
+
+BranchList,
+  <%= name %> Supply Branches,  !- Name
+  <%= name %> Supply Inlet Branch,  !- Branch 1 Name
+  <% if num_towers > 1 %>
+    <% for i in 1..num_towers %>
+    <%= name %> Cooling Tower <%= i %> Branch,  !- Branch 2 Name
+    <% end %>
+  <% else %>
+  <%= name %> Cooling Tower Branch,  !- Branch 2 Name
+  <% end %>
+  <% if (heat_addition) %>
+    <%= name %> Heat Exchanger Branch,  !- Branch 3 Name
+  <% end %>
+  <%= name %> Supply Equipment Bypass Branch,  !- Branch Name
+  <%= name %> Supply Outlet Branch;  !- Branch Name
+
+
+Branch,
+  <%= name %> Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if num_towers > 1 %>
+  HeaderedPumps:VariableSpeed,  !- Component 1 Object Type
+<% else %>
+  Pump:ConstantSpeed,      !- Component 1 Object Type
+<% end %>
+  <%= name %> Pump,      !- Component 1 Name
+  <%= name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
+
+<% if num_towers > 1 %>
+HeaderedPumps:VariableSpeed,
+  <%= name %> Pump,      !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  AUTOSIZE,                !- Total Design Flow Rate
+  <%= num_towers %>,                       !- Number of Pumps in Bank
+  SEQUENTIAL,              !- Flow Sequencing Control Scheme
+  <%= pump_head %>,              !- Design Pump Head
+  autosize,                !- Design Power Consumption
+  <%= pump_eff %>,                     !- Motor Efficiency
+  0,                       !- Fraction of Motor Inefficiencies to Fluid Stream
+  0,                       !- Coefficient 1 of the Part Load Performance Curve
+  0.0216,                  !- Coefficient 2 of the Part Load Performance Curve
+  -0.0325,                 !- Coefficient 3 of the Part Load Performance Curve
+  1.0095,                  !- Coefficient 4 of the Part Load Performance Curve
+  0,                       !- Minimum Flow Rate Fraction
+  Intermittent;            !- Pump Control Type
+<% else %>
+Pump:ConstantSpeed,
+  <%= name %> Pump,      !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  Autosize,                !- Rated Flow Rate {m3/s}
+  <%= pump_head %>,  !- Rated Pump Head {Pa}
+  Autosize,                !- Rated Power Consumption {W}
+  <%= pump_eff %>,  !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+  Intermittent;            !- Pump Control Type
+<% end %>
+
+
+<% if num_towers > 1 %>
+  <% for i in (1..num_towers) %>
+  Branch,
+    <%= name %> Cooling Tower <%= i %> Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    <% if (tower_type == "VARIABLESPEED") %>
+      CoolingTower:VariableSpeed,  !- Component 1 Object Type
+    <% elsif (tower_type == "SINGLESPEED") %>
+      CoolingTower:SingleSpeed,  !- Component 1 Object Type
+    <% end %>
+    <%= name %> Cooling Tower <%= i %>, !- Component 1 Name
+    <%= name %> Cooling Tower <%= i %> Inlet Node,  !- Component 1 Inlet Node Name
+    <%= name %> Cooling Tower <%= i %> Outlet Node;  !- Component 1 Outlet Node Name
+
+  <% end %>
+<% else %>
+Branch,
+  <%= name %> Cooling Tower Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if (tower_type == "VARIABLESPEED") %>
+  CoolingTower:VariableSpeed,  !- Component 1 Object Type
+<% elsif (tower_type == "SINGLESPEED") %>
+  CoolingTower:SingleSpeed,  !- Component 1 Object Type
+<% end %>
+  <%= name %> Cooling Tower, !- Component 1 Name
+  <%= name %> Cooling Tower Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Cooling Tower Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+<%#
+UPDATE:  Not sure if this warning is relevant anymore?
+WARNING:  Hard-sizing the cooling tower UA and Design Water Flow Rate has an impact on total
+annual cooling energy.  Higher values improve the cooling performance without seeming to
+taper off the higher they get.
+If it were possible, it would be better to autosize UA and Design Water Flow Rate while still
+setting Fan Power at zero.  (Not currently possible.)
+%>
+
+<% if (tower_type == "SINGLESPEED") %>
+CoolingTower:SingleSpeed,
+  <%= name %> Cooling Tower,  !- Name
+  <%= name %> Cooling Tower Inlet Node,   !- Water Inlet Node Name
+  <%= name %> Cooling Tower Outlet Node,  !- Water Outlet Node Name
+  Autosize,                ! Design Water Flow Rate {m3/s}
+  Autosize,                ! Design Air Flow Rate {m3/s}
+  Autosize,                ! Design Fan Power {W}
+  Autosize,                ! Design U-Factor Times Area Value {W/K}
+  Autocalculate,           ! Free Convection Air Flow Rate {m3/s}
+  ,                        ! Free Convection Air Flow Rate Sizing Factor
+  Autocalculate,           ! Free Convection U-Factor Times Area Value {W/K}
+  ,                        ! Free Convection U-Factor Times Area Value Sizing Factor
+  UFactorTimesAreaAndDesignWaterFlowRate,  ! Performance Input Method
+  ,                        ! Heat Rejection Capacity and Nominal Capacity Sizing Ratio
+  ,                        ! Nominal Capacity {W}
+  ,                        ! Free Convection Capacity {W}
+  ,                        ! Free Convection Nominal Capacity Sizing Factor
+  35.0,                    ! Design Inlet Air Dry-Bulb Temperature (C)
+  <%= design_temp - design_approach %>,   ! Design Inlet Air Wet-Bulb Temperature {C}
+  <%= design_approach %>,   ! Design Approach Temperature {deltaC}
+  Autosize,                ! Design Range Temperature (deltaC)
+  ,                        ! Basin Heater Capacity {W/K}
+  ,                        ! Basin Heater Setpoint Temperature {C}
+  ,                        ! Basin Heater Operating Schedule Name
+  SaturatedExit,                        ! Evaporation Loss Mode
+  ,                        ! Evaporation Loss Factor
+  0.0080,                        ! Drift Loss Percent
+  ConcentrationRatio,                        ! Blowdown Calculation Mode
+  3.0000,                        ! Blowdown Concentration Ratio
+  ,                        ! Blowdown Makeup Water Usage Schedule Name
+  <%= clear_water_supply_tank %>,                        ! Supply Water Storage Tank Name
+  ,                        ! Outdoor Air Inlet Node Name
+  FanCycling;             ! Capacity Control
+
+<% elsif (tower_type == "VARIABLESPEED") %>
+  <% if num_towers > 1 %>
+    <% for i in 1..num_towers %>
+
+      CoolingTower:VariableSpeed,
+        <%= name %> Cooling Tower <%= i %>,  !- Name
+        <%= name %> Cooling Tower <%= i %> Inlet Node,   !- Water Inlet Node Name
+        <%= name %> Cooling Tower <%= i %> Outlet Node,  !- Water Outlet Node Name
+        <%= model_type %>,    !- Model Type
+        <% if model_type == "CoolToolsUserDefined"%>
+        <%= name %> CoolTools Performance,  !- Model Coefficient Name
+        <% else %>
+        ,  !- Model Coefficient Name
+        <% end %>
+        <%= wetbulb_design %>,                    !- Design Inlet Air Wet-Bulb Temperature {C}
+        <%= design_approach %>,                     !- Design Approach Temperature {deltaC}
+        <%= design_delta %>,                     !- Design Range Temperature {deltaC}
+        Autosize,                !- Design Water Flow Rate {m3/s}
+        Autosize,                !- Design Air Flow Rate {m3/s}
+        Autosize,                !- Design Fan Power {W}
+        <%= name %> CoolingTowerFanRatioCurve,  !- Fan Power Ratio Function of Air Flow Rate Ratio Curve Name
+        0.2,                     !- Minimum Air Flow Rate Ratio
+        0.125,                   !- Fraction of Tower Capacity in Free Convection Regime
+        ,                        !- Basin Heater Capacity
+        ,                        !- Basin Heater Setpoint Temperature
+        ,                        !- Basin Heater Operating Schedule Name
+        ,                        !- Evaporation Loss Mode
+        ,                        !- Evaporation Loss Factor
+        ,                        !- Drift Loss Percent
+        ,                        !- Blowdown Calculation Mode
+        ,                        !- Blowdown Concentration Ratio
+        ,                        !- Blowdown Makeup Water Usage Schedule Name
+        <%= clear_water_supply_tank %>,                        !- Supply Water Storage Tank Name
+        ,                        !- Outdoor Air Inlet Node Name
+        2,                       !- Number of Cells
+        MinimalCell,             !- Cell Control
+        ,                        !- Cell Minimum  Water Flow Rate Fraction
+        ,                        !- Cell Maximum Water Flow Rate Fraction
+        <%= ct_sizing %>;                       !- Sizing Factor
+    <% end %>
+  <% else %>
+  CoolingTower:VariableSpeed,
+    <%= name %> Cooling Tower,  !- Name
+    <%= name %> Cooling Tower Inlet Node,   !- Water Inlet Node Name
+    <%= name %> Cooling Tower Outlet Node,  !- Water Outlet Node Name
+    <%= model_type %>,    !- Model Type
+    <% if model_type == "CoolToolsUserDefined"%>
+    <%= name %> CoolTools Performance,  !- Model Coefficient Name
+    <% else %>
+    ,  !- Model Coefficient Name
+    <% end %>
+    <%= wetbulb_design %>,                    !- Design Inlet Air Wet-Bulb Temperature {C}
+    <%= design_approach %>,                     !- Design Approach Temperature {deltaC}
+    <%= design_delta %>,                     !- Design Range Temperature {deltaC}
+    Autosize,                !- Design Water Flow Rate {m3/s}
+    Autosize,                !- Design Air Flow Rate {m3/s}
+    Autosize,                !- Design Fan Power {W}
+    <%= name %> CoolingTowerFanRatioCurve,  !- Fan Power Ratio Function of Air Flow Rate Ratio Curve Name
+    0.2,                     !- Minimum Air Flow Rate Ratio
+    0.125,                   !- Fraction of Tower Capacity in Free Convection Regime
+    ,                        !- Basin Heater Capacity
+    ,                        !- Basin Heater Setpoint Temperature
+    ,                        !- Basin Heater Operating Schedule Name
+    ,                        !- Evaporation Loss Mode
+    ,                        !- Evaporation Loss Factor
+    ,                        !- Drift Loss Percent
+    ,                        !- Blowdown Calculation Mode
+    ,                        !- Blowdown Concentration Ratio
+    ,                        !- Blowdown Makeup Water Usage Schedule Name
+    <%= clear_water_supply_tank %>,                        !- Supply Water Storage Tank Name
+    ,                        !- Outdoor Air Inlet Node Name
+    2,                       !- Number of Cells
+    MinimalCell,             !- Cell Control
+    ,                        !- Cell Minimum  Water Flow Rate Fraction
+    ,                        !- Cell Maximum Water Flow Rate Fraction
+    1;                       !- Sizing Factor
+  <% end # if num_towers > 1 %>
+
+  <% if model_type == "CoolToolsUserDefined"%>
+CoolingTowerPerformance:CoolTools,
+  <%= name %> CoolTools Performance,  !- Name
+  -1.0,                    !- Minimum Inlet Air Wet-Bulb Temperature {C}
+  26.6667,                 !- Maximum Inlet Air Wet-Bulb Temperature {C}
+  1.1111,                  !- Minimum Range Temperature {deltaC}
+  11.1111,                 !- Maximum Range Temperature {deltaC}
+  1.1111,                  !- Minimum Approach Temperature {deltaC}
+  11.1111,                 !- Maximum Approach Temperature {deltaC}
+  0.75,                    !- Minimum Water Flow Rate Ratio
+  1.25,                    !- Maximum Water Flow Rate Ratio
+  0.52049709836241,        !- Coefficient 1
+  -10.617046395344,        !- Coefficient 2
+  10.7292974722538,        !- Coefficient 3
+  -2.74988377158227,       !- Coefficient 4
+  4.73629943913743,        !- Coefficient 5
+  -8.25759700874711,       !- Coefficient 6
+  1.57640938114136,        !- Coefficient 7
+  6.51119643791324,        !- Coefficient 8
+  1.50433525206692,        !- Coefficient 9
+  -3.2888529287801,        !- Coefficient 10
+  0.0257786145353773,      !- Coefficient 11
+  0.182464289315254,       !- Coefficient 12
+  -0.0818947291400898,     !- Coefficient 13
+  -0.215010003996285,      !- Coefficient 14
+  0.0186741309635284,      !- Coefficient 15
+  0.0536824177590012,      !- Coefficient 16
+  -0.00270968955115031,    !- Coefficient 17
+  0.00112277498589279,     !- Coefficient 18
+  -0.00127758497497718,    !- Coefficient 19
+  0.0000760420796601607,   !- Coefficient 20
+  1.43600088336017,        !- Coefficient 21
+  -0.5198695909109,        !- Coefficient 22
+  0.117339576910507,       !- Coefficient 23
+  1.50492810819924,        !- Coefficient 24
+  -0.135898905926974,      !- Coefficient 25
+  -0.152577581866506,      !- Coefficient 26
+  -0.0533843828114562,     !- Coefficient 27
+  0.00493294869565511,     !- Coefficient 28
+  -0.00796260394174197,    !- Coefficient 29
+  0.000222619828621544,    !- Coefficient 30
+  -0.0543952001568055,     !- Coefficient 31
+  0.00474266879161693,     !- Coefficient 32
+  -0.0185854671815598,     !- Coefficient 33
+  0.00115667701293848,     !- Coefficient 34
+  0.000807370664460284;    !- Coefficient 35
+  <% end %>
+Curve:Cubic,
+  <%= name %> CoolingTowerFanRatioCurve,  !- Name
+  -0.00931516301535329,    !- Coefficient1 Constant
+  0.0512333965844443,      !- Coefficient2 x
+  -0.0838364671381841,     !- Coefficient3 x**2
+  1.04191823356909,        !- Coefficient4 x**3
+  0.15,                    !- Minimum Value of x
+  1.0;                     !- Maximum Value of x
+<% end # tower_type == "VARIABLESPEED" %>
+
+
+<% if (heat_addition) %>
+Branch,
+  <%= name %> Heat Exchanger Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  HeatExchanger:FluidToFluid,  !- Component 1 Object Type
+  <%= name %> Heat Exchanger, !- Component 1 Name
+  <%= name %> Heat Exchanger Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Heat Exchanger Outlet Node;  !- Component 1 Outlet Node Name
+
+HeatExchanger:FluidToFluid,
+  <%= name %> Heat Exchanger,  !- Name
+  <%= name %> Operation Schedule,  !- Availability Schedule Name
+  <%= name %> HX Loop Inlet Node,  !- Loop Demand Side Inlet Node Name
+  <%= name %> HX Loop Outlet Node,  !- Loop Demand Side Outlet Node Name
+  Autosize,                !- Loop Demand Side Design Flow Rate {m3/s}
+  <%= name %> Heat Exchanger Inlet Node,  !- Loop Supply Side Inlet Node Name
+  <%= name %> Heat Exchanger Outlet Node,  !- Loop Supply Side Outlet Node Name
+  Autosize,                !- Loop Supply Side Design Flow Rate {m3/s}
+  Ideal,                   !- Heat Exchange Model Type
+  Autosize,                !- Heat Exchanger U-Factor Times Area Value {W/k}
+  HeatingSetpointModulated,  !- Control Type
+  <%= name %> Supply Outlet Node,  !- Heat Exchanger Setpoint Node Name
+  0.1,                     !- Minimum Temperature Difference to Activate Heat Exchanger {deltaC}
+  LoopToLoop,              !- Heat Transfer Metering End Use Type
+  ,                        !- Component Override Loop Supply Side Inlet Node Name
+  ,                        !- Component Override Loop Demand Side Inlet Node Name
+  ,                        !- Component Override Cooling Control Temperature Mode
+  ;                        !- Sizing Factor
+
+
+Branch,
+  <%= name %> HW Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  HeatExchanger:FluidToFluid,  !- Component 1 Object Type
+  <%= name %> Heat Exchanger, !- Component 1 Name
+  <%= name %> HX Loop Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> HX Loop Outlet Node;  !- Component 1 Outlet Node Name
+
+<% end %>
+
+Branch,
+  <%= name %> Supply Equipment Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Supply Equipment Bypass Pipe,  !- Component 1 Name
+  <%= name %> Supply Equip Bypass Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Equip Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Supply Equipment Bypass Pipe,  !- Name
+  <%= name %> Supply Equip Bypass Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Equip Bypass Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Supply Outlet Pipe,  !- Component 1 Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Supply Outlet Pipe,  !- Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= name %> Supply Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Supply Splitter,  !- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Supply Mixer;  !- Connector 2 Name
+
+Connector:Splitter,
+  <%= name %> Supply Splitter,  !- Name
+  <%= name %> Supply Inlet Branch,  !- Inlet Branch Name
+  <% if num_towers > 1 %>
+    <% for i in 1..num_towers %>
+      <%= name %> Cooling Tower <%= i %> Branch,  !- Outlet Branch 1 Name
+    <% end %>
+    <% if (heat_addition) %>
+      <%= name %> Heat Exchanger Branch,  !- Outlet Branch 2 Name
+    <% end %>
+  <% else %>
+  <%= name %> Cooling Tower Branch,  !- Outlet Branch 1 Name
+    <% if (heat_addition) %>
+      <%= name %> Heat Exchanger Branch,  !- Outlet Branch 2 Name
+    <% end %>
+  <% end %>
+      <%= name %> Supply Equipment Bypass Branch;  !- Outlet Branch 2 Name
+
+Connector:Mixer,
+  <%= name %> Supply Mixer,  !- Name
+  <%= name %> Supply Outlet Branch,  !- Outlet Branch Name
+  <% if num_towers > 1 %>
+    <% for i in 1..num_towers %>
+      <%= name %> Cooling Tower <%= i %> Branch,  !- Inlet Branch 1 Name
+    <% end %>
+    <% if (heat_addition) %>
+      <%= name %> Heat Exchanger Branch,  !- Outlet Branch 2 Name
+    <% end %>
+  <% else %>
+    <%= name %> Cooling Tower Branch,  !- Inlet Branch 1 Name
+    <% if (heat_addition) %>
+      <%= name %> Heat Exchanger Branch,  !- Outlet Branch 2 Name
+    <% end %>
+  <% end %>
+  <%= name %> Supply Equipment Bypass Branch;  !- Inlet Branch 2 Name
+
+BranchList,
+  <%= name %> Demand Branches,  !- Name
+  <%= name %> Demand Inlet Branch,  !- Branch Name
+<% for branch_name in branch_names %>
+  <%= branch_name %> HR Demand Branch,  !- Branch Name
+<% end %>
+  <%= name %> Demand Bypass Branch,  !- Branch Name
+  <%= name %> Demand Outlet Branch;  !- Branch Name
+
+Branch,
+  <%= name %> Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Inlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Inlet Pipe,  !- Name
+  <%= name %> Demand Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Demand Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Bypass Pipe,  !- Component 1 Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Bypass Pipe,  !- Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Outlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Outlet Pipe,  !- Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= name %> Demand Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Demand Splitter,  !- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Demand Mixer;  !- Connector 2 Name
+
+Connector:Splitter,
+  <%= name %> Demand Splitter,!- Name
+  <%= name %> Demand Inlet Branch,  !- Inlet Branch Name
+<% for branch_name in branch_names %>
+  <%= branch_name %> HR Demand Branch,  !- Outlet Branch Name
+<% end %>
+  <%= name %> Demand Bypass Branch;  !- Outlet Branch Name
+
+Connector:Mixer,
+  <%= name %> Demand Mixer,   !- Name
+  <%= name %> Demand Outlet Branch,  !- Outlet Branch Name
+<% for branch_name in branch_names %>
+  <%= branch_name %> HR Demand Branch,  !- Inlet Branch Name
+<% end %>
+  <%= name %> Demand Bypass Branch;  !- Inlet Branch Name

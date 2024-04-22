@@ -1,0 +1,19 @@
+<%
+insert 'daylight-controls.pxt',
+  :zone_name=>"RetailSales EL1 South Perim (G.S1)",
+  :azimuth=>0,
+  :power_frac_min=>0.2,
+  :light_frac_min=>0.2,
+  :reference_points=>2,
+  :x_1=>13.63218,
+  :y_1=>2.505456,
+  :z_1=>0.762,
+  :fraction_1=>0.163524,
+  :illum_setpoint_1=>825,
+  :x_2=>13.63218,
+  :y_2=>5.010912,
+  :z_2=>0.762,
+  :fraction_2=>0.14381,
+  :illum_setpoint_2=>1100
+
+%>

@@ -1,7 +1,7 @@
 title: 2019 California Efficiency Standards,,,
 # PRESCRIPTIVE ENVELOPE CRITERIA FOR  Single family homes,,,
 # For opaque envelope: see Table 140.3-B,,,
-table:   Res Key Prototype Values | Climate Zone CZ01,,,
+table:   Res Key Prototype Values | Climate Zone 1,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -20,7 +20,7 @@ whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,1,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ02,,,
+table:   Res Key Prototype Values | Climate Zone 2,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -39,7 +39,7 @@ whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,2,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ03,,,
+table:   Res Key Prototype Values | Climate Zone 3,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.224118,,"SI unit,Option B, R30"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -58,7 +58,7 @@ whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,3,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ04,,,
+table:   Res Key Prototype Values | Climate Zone 4,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -77,7 +77,7 @@ whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,4,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ05,,,
+table:   Res Key Prototype Values | Climate Zone 5,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.224118,,"SI unit,Option B, R30"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -96,7 +96,7 @@ whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,5,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ06,,,
+table:   Res Key Prototype Values | Climate Zone 6,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.224118,,"SI unit,Option B, R30"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -115,7 +115,7 @@ whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,6,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ07,,,
+table:   Res Key Prototype Values | Climate Zone 7,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.224118,,"SI unit,Option B, R30"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -134,7 +134,7 @@ whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,7,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ08,,,
+table:   Res Key Prototype Values | Climate Zone 8,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -153,7 +153,7 @@ whole house fan,REQ,,
 Door,0.2,,U-IP
 climate_zone,8,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ09,,,
+table:   Res Key Prototype Values | Climate Zone 9,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -172,7 +172,7 @@ whole house fan,REQ,,
 Door,0.2,,U-IP
 climate_zone,9,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ10,,,
+table:   Res Key Prototype Values | Climate Zone 10,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -191,7 +191,7 @@ whole house fan,REQ,,
 Door,0.2,,U-IP
 climate_zone,10,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ11,,,
+table:   Res Key Prototype Values | Climate Zone 11,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -210,7 +210,7 @@ whole house fan,REQ,,
 Door,0.2,,U-IP
 climate_zone,11,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ12,,,
+table:   Res Key Prototype Values | Climate Zone 12,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -229,7 +229,7 @@ whole house fan,REQ,,
 Door,0.2,,U-IP
 climate_zone,12,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ13,,,
+table:   Res Key Prototype Values | Climate Zone 13,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -248,7 +248,7 @@ whole house fan,REQ,,
 Door,0.2,,U-IP
 climate_zone,13,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ14,,,
+table:   Res Key Prototype Values | Climate Zone 14,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -267,7 +267,7 @@ whole house fan,REQ,,
 Door,0.2,,U-IP
 climate_zone,14,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ15,,,
+table:   Res Key Prototype Values | Climate Zone 15,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit
@@ -286,7 +286,7 @@ whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,15,,
 ,,,
-table:   Res Key Prototype Values | Climate Zone CZ16,,,
+table:   Res Key Prototype Values | Climate Zone 16,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
 ceil_consol_layer_conductivity,0.0476386,,SI unit

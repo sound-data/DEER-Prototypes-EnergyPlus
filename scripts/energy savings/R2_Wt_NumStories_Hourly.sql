@@ -80,3 +80,4 @@ sfm_hourly_wb.daynum::int2,
 ((hr24a * (2 - numstor) + hr24b * (numstor - 1)))::numeric(15,3) AS hr24
 from sfm_hourly_wb
 JOIN "NumStor" on "NumStor"."VintYear" = sfm_hourly_wb."BldgVint" and "NumStor"."BldgLoc" = sfm_hourly_wb."BldgLoc"
+;
