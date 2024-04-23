@@ -562,7 +562,7 @@ if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     # Corrects an issue where more than one "Common_PreTechID" in
     # the batch of measures causes the renaming step to fail silently
     # and generate duplicate rows with mismatched data.
-    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']]:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
         metadata_pre_mod = metadata_pre[metadata_pre['PreTechID']==common_id].copy()
         metadata_pre_mod['PreTechID'] = new_id
@@ -660,7 +660,7 @@ sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MeasTechIDs['Co
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_annual_pre = pd.DataFrame()
-    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']]:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
     for new_id in PreTechIDs['PreTechID']:
         print(f'changing to specific PreTechID {new_id}')
         sim_annual_pre_mod = sim_annual_pre_common[sim_annual_pre_common['TechID']==common_id].copy()
@@ -716,7 +716,7 @@ sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MeasTechIDs['Co
 #Pre hourly
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_hourly_pre = pd.DataFrame()
-    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']]:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
         sim_hourly_pre_mod = sim_hourly_pre_common[sim_hourly_pre_common['TechID']==common_id].copy()
         sim_hourly_pre_mod['TechID'] = new_id
