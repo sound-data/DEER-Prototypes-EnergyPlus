@@ -306,7 +306,7 @@ Schedule:Compact,
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
     Until: 24:00,            !- Field 3
-    470;                     !- Field 4
+    2.38;                     !- Field 4
 	
 ! Defining DHW Load Profile Load Schedule (should be zero)		
 Schedule:Compact,
