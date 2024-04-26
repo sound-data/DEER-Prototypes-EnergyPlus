@@ -208,7 +208,7 @@ WaterHeater:HeatPump:WrappedCondenser,
     <%= sensor_height %>,                   !- Control Sensor 1 Height In Stratified Tank {m}
     1;                       !- Control Sensor 1 Weight {dimensionless}
 
-<%# Add curves for 120v plug-in HPWH developed by AWHI/NBI and implemented in ResStock
+<%# Add curves for 120v plug-in HPWH developed by AWHI/NBI and implemented in ResStock %>
 <% if water_heater_type.include?('120v') %>
 
 Curve:Biquadratic,
