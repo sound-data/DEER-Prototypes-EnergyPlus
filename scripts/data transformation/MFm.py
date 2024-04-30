@@ -8,7 +8,7 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'Wall Furnace'
+measure_name = 'SEER Rated AC/HP'
 
 # %%
 #MFm only script
@@ -30,7 +30,7 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-path = 'residential measures/SWHC049-03 SEER Rated AC HP_MFm_Ex'
+path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_MFm_Ex'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -346,7 +346,7 @@ bldgtype = 'MFm'
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['CZ','Value', 'Msr','BldgVint']]
+numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][df_normunits['Msr']==measure_name][['CZ','Value', 'Msr','BldgVint']]
 #%%
 #create numunits object based on what normunit it uses. 
 #numunits can be a single value, or a dictionary
@@ -362,7 +362,13 @@ elif measure_name == 'PTAC / PTHP':
     #create dictionary of {(cz,vintage):numunits}
     numunits = {(cz[i],vint[i]):nvals[i] for i in range(len(cz))}
 else:
-    pass
+    #default (SEER AC/HP normunits)
+    cz = list(numunits_vals['CZ'])
+    #msr = list(numunits_vals['Msr'])
+    nvals = list(numunits_vals['Value']*24) #account for number of dwelling units (to be confirmed 4/30/24)
+    #create dictionary of {(cz,vintage):numunits}
+    numunits = {(cz[i]):nvals[i] for i in range(len(cz))}
+
 
 # %%
 ##Annual Data final field fixes
@@ -381,7 +387,7 @@ if measure_name == 'PTAC / PTHP':
     #Map special dictionary to the correct values
     sim_annual_v1['numunits'] = pd.Series(list(zip(sim_annual_v1['BldgLoc'],sim_annual_v1['BldgVint']))).map(numunits)/24
 else:
-    sim_annual_v1['numunits'] = numunits/24
+    sim_annual_v1['numunits'] = (sim_annual_v1['BldgLoc']).map(numunits)/24
 
 
 sim_annual_v1['lastmod']=dt.datetime.now()

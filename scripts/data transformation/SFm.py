@@ -441,7 +441,7 @@ bldgtype = 'SFm'
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['CZ','Value', 'Msr','BldgVint']]
+numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][df_normunits['Msr']==measure_name][['CZ','Value', 'Msr','BldgVint']]
 
 #%%
 
@@ -471,7 +471,12 @@ elif measure_name == 'PTAC / PTHP':
     #create dictionary of {(cz,vintage):numunits}
     numunits = {(cz[i],vint[i]):nvals[i] for i in range(len(cz))}
 else:
-    pass
+    #default (SEER AC/HP normunits)
+    cz = list(numunits_vals['CZ'])
+    #msr = list(numunits_vals['Msr'])
+    nvals = list(numunits_vals['Value']*2) #account for number of dwelling units (to be confirmed 4/30/24)
+    #create dictionary of {(cz,vintage):numunits}
+    numunits = {(cz[i]):nvals[i] for i in range(len(cz))}
 
 # %%
 #note HVAC type of this dataset
@@ -492,7 +497,8 @@ elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
 elif measure_name == 'PTAC / PTHP':
     sim_annual_1s['numunits'] = (pd.Series(list(zip(sim_annual_1s['BldgLoc'],sim_annual_1s['BldgVint']))).map(numunits))/2
 else:
-    sim_annual_1s['numunits'] = numunits/2
+    #default (SEER/AC/HP normunits)
+    sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
 
 #%%
 sim_annual_2s.reset_index(inplace=True)
