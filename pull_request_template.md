@@ -4,11 +4,11 @@
 **DEER Support Email: DeerSupport@dnv.com**
 
 ### PR Author
-- [ ] Make sure the PR branch is up to date with main branch at the time of the PR submission
+- [X] Make sure the PR branch is up to date with main branch at the time of the PR submission
 - [ ] Craft a succinct title that effectively encapsulates the essence of the pull request, providing a general overview of the proposed changes.
 - [ ] Label the PR with at least one of the following: New Measure, Bug, or Feature.
 - [ ] Provide a concise description of the measure, bug, or feature. Submit one PR per measure.
-- [ ] For a new measure, attach a workbook named DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx, containing only rows used for post-processing the measure.
+- [X] For a new measure, attach a workbook named DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx, containing only rows used for post-processing the measure.
 - [ ] Add comments in the code when necessary to facilitate the review process.
 - [ ] Add a comment before the added code, including the author's full name, company, and specifying if it's a bug fix, new measure, or feature.
 - [ ] For a new feature or bug, demonstrate the impact on energy consumption for selected cases with justification using plots and descriptions.
