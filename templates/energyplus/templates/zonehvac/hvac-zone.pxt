@@ -896,6 +896,7 @@ elsif (hvac_mode == "SZ")
     :fan_subcat => "#{hvac_type} Fans",
     :heat_flow_frac => heat_flow_frac,
     :ahu_type=>ahu_type,
+    :occ_oa_schedule => zone_name,
 # can use `groups` to separately call out unitary and ahu parameters!
     **local(*unitary_parameters),
     **local(
@@ -922,6 +923,7 @@ elsif (hvac_mode == "SZ")
       :oa_econ_lockout,
       :oa_energy_recovery,
       :oa_energy_recovery_power,
+      :dcv_swhc006,
 
       :return_plenum,
       :return_plenum_zone_name)

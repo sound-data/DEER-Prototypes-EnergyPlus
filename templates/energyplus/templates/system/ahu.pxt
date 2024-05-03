@@ -41,6 +41,8 @@ parameter "oa_frac", :default => 0.3  # Sets AHU design OA fraction. Value of 1.
 # maybe: oa_min_flow_frac   or  oa_flow_min_frac
 
 parameter "night_cycle_control_type", :default=>"CYCLE-AHU-FOR-ANY-ZONE" # (NONE | FOLLOW-FAN-SCHEDULE | CYCLE-AHU-FOR-ANY-ZONE | CYCLE-AHU-FOR-CONTROL-ZONE-ONLY | CYCLE-ZONE-FANS-ONLY) Control type used in night cycle availability manager. DOAS systems should use "CYCLE-ZONE-FANS-ONLY"
+parameter "occ_oa_schedule", :default => ""
+parameter "dcv_swhc006", :default => nil # TRC SWHC006-04 - adding a parameter that enables demand control ventilation for SZ systems only
 
 parameter "oa_econ_type", :default => "NONE"  # (NONE | FIXED-DRY-BULB | DIFFERENTIAL-DRY-BULB | FIXED-ENTHALPY | DIFFERENTIAL-ENTHALPY | ELECTRONIC-ENTHALPY | FIXED-DEW-POINT-AND-DRY-BULB | DIFFERENTIAL-DRY-BULB-AND-ENTHALPY) Economizer control type
 parameter "oa_econ_mode", :default => "MODULATE-FLOW" # ( MODULATE-FLOW | MINIMUM-FLOW-WITH-BYPASS ) ModulateFlow = OA flow increased to meet mixed air setpoint, MinimumFlowWithBypass = forces OA flow to remain at minimum
@@ -1038,7 +1040,12 @@ Controller:OutdoorAir,
   <%= oa_econ_lockout %>,  !- Lockout Type
 <% end %>
   FixedMinimum,            !- Minimum Limit Type
+  <%# TRC SWHC006-04 - adding a conditional statement that alternates between default operation and demand control ventilation %>
+  <% if dcv_swhc006==nil %>
   <%= ahu_name %> Outdoor Air Schedule,  !- Minimum Outdoor Air Schedule Name
+  <% else %>
+  <%= occ_oa_schedule %> Occupant Sch,    !- Minimum Outdoor Air Schedule Name
+  <% end %>
 <% if oa_frac_sch != "NONE" %>
   <%= ahu_name %> Outdoor Air Fraction Schedule,                        !- Minimum Fraction of Outdoor Air Schedule Name
 <% else %>
