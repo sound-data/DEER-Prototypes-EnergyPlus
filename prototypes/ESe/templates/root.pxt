@@ -336,6 +336,7 @@ group "hvac_system", :prefix => "main_" do
   parameter "hum_type", :default => "NONE"
   parameter "hum_cap", :default => nil
   parameter "return_plenum", :default => false
+  parameter "swsv005_04_BC", :default => nil #TRC - measure swsv005_04_BC, create economizer repair base case
 end
 
 group "alt_hvac_zone", :prefix => "alt_" do
