@@ -23,19 +23,29 @@ Changelog
 
 ##STEP 0: Setup (import all necessary libraries)
 import re
-from dataclasses import dataclass, asdict, astuple
+from dataclasses import dataclass, asdict
 from sqlite3 import connect, Connection
 from pathlib import Path
-from io import BytesIO
 from functools import cache
 import argparse
 import concurrent.futures
+try:
+    # itertools.batched available only after python 3.12
+    from itertools import batched
+except:
+    from itertools import islice
+    def batched(iterable, n):
+        # batched('ABCDEFG', 3) → ABC DEF G
+        if n < 1:
+            raise ValueError('n must be at least one')
+        it = iter(iterable)
+        while batch := tuple(islice(it, n)):
+            yield batch
 
 # Third-party packages
 import numpy as np
 import pandas as pd
 import tqdm
-import tqdm.asyncio
 
 def get_deer_peak_day(bldgloc: str):
     """Return a for DEER peak period start day lookups.
@@ -147,24 +157,25 @@ def parse_query_file(queryfile: Path):
 
     listlist_query_path_and_name = []
     list_query_path_and_name = []
-    with queryfile.open() as f:
-        for query_line in f:
-            if query_line.isspace():
-                if list_query_path_and_name != []:
-                    listlist_query_path_and_name.append(list_query_path_and_name)
-                    list_query_path_and_name = []
-                continue
-            if query_line.startswith("#"):
-                continue
-            m = re.match(r'\s*(.+)\s*,\s*(.+)\s*',query_line)
-            if m:
-                query_path, user_column_name = m.groups()
-                resultspec = makeResultSpec(query_path)
-            else:
-                query_path = query_line.strip()
-                resultspec = makeResultSpec(query_path)
-                user_column_name = "{ColumnName}/{RowName}".format(**asdict(resultspec))
-            list_query_path_and_name.append((resultspec, user_column_name))
+    lines = queryfile.read_text().split('\n')
+    for query_line in lines:
+        # Blank line indicates a new group
+        if len(query_line.strip()) == 0:
+            if list_query_path_and_name != []:
+                listlist_query_path_and_name.append(list_query_path_and_name)
+                list_query_path_and_name = []
+            continue
+        if query_line.startswith("#"):
+            continue
+        m = re.match(r'\s*(.+)\s*,\s*(.+)\s*',query_line)
+        if m:
+            query_path, user_column_name = m.groups()
+            resultspec = makeResultSpec(query_path)
+        else:
+            query_path = query_line.strip()
+            resultspec = makeResultSpec(query_path)
+            user_column_name = "{ColumnName}/{RowName}".format(**asdict(resultspec))
+        list_query_path_and_name.append((resultspec, user_column_name))
     if list_query_path_and_name != []:
         listlist_query_path_and_name.append(list_query_path_and_name)
     return listlist_query_path_and_name
@@ -361,7 +372,9 @@ def get_sim_tabular(
         )
         return sim_data_detail, sim_data_agg
 
-def get_sim_peak_and_tabular(sqlfile: Path, queryfile: Path, bldgloc: str):
+def get_sim_peak_and_tabular(queryfile: Path,
+                             sqlfile: Path, bldgloc: str, id: str,
+                             idfield='File Name'):
     r"""
     Read selected data entries from SQL outputs.
     Result set specifications are parsed from query.txt, e.g. (resultspec, name).
@@ -374,13 +387,17 @@ def get_sim_peak_and_tabular(sqlfile: Path, queryfile: Path, bldgloc: str):
             The filename of a modelkit-style query.txt file.
         bldgloc: str
             The CEC climate zone, e.g. CZ01 through CZ16.
+        id: str
+            An identifier prepended to the results.
+        idfield: str, default = 'File Name'
+            The dictionary key used to label the given id.
 
     Returns:
         sim_data: dict(str: float | None).
             Mapping of (name, value) from both query results
             and hourly averages over the DEER peak period.
     """
-    sim_data = dict() # To store results
+    sim_data = {idfield: id} # To store results
     with connect(sqlfile) as conn:
         # Start with the query data results
         listlist_query_path_and_name = parse_query_file(queryfile)
@@ -407,7 +424,7 @@ def get_sim_peak_and_tabular(sqlfile: Path, queryfile: Path, bldgloc: str):
 
     return sim_data
 
-def get_runs_instances(study: Path, filename_pattern = 'instance*-out.sql'):
+def get_runs_instances(study: Path, filename_pattern = 'instance*-out.sql', pathsub: tuple =('runs/','')):
     r"""Returns a list of all of SQLite output files in a modelkit study folder.
 
     Assumes that files are placed within a "runs" subfolder under the given study.
@@ -419,28 +436,24 @@ def get_runs_instances(study: Path, filename_pattern = 'instance*-out.sql'):
             E.g. new style: "C:\Users\User1\DEER-Prototypes-EnergyPlus\commercial measures\SWHC012-04 Occupancy Sensor"
         filename_pattern: str, default = 'instance*-out.sql'
             The filename pattern used to search for output files, using glob syntax.
-    """
-    # Note that autosized runs are named instance-out.sql.
-    # Linked-sizing runs are named instance-hardsize-out.sql.
-    # To do: check if there are both autosized and linked-sizing files in the same folder and pick one.
-    list_sqlfile = list(study.glob('**/'+filename_pattern))
-    return list_sqlfile
+        pathsub: (pattern, replacement), default ('runs/', '')
+            A string pattern to replace in the filename.
 
-def gather_sim_data_basic(study: Path, queryfile: Path, pathsub: tuple =('runs/','')):
-    r"""Returns a generator yielding simulation data from each simulation.
-
-    Read selected data entries from SQL outputs as well as DEER Peak period averages of hourly variables.
-    Result set specifications are parsed from query.txt, e.g. (resultspec, name).
-    Output columns will have units appended to name, like "name (Units)".
-
-    Assumes that files are placed within a "runs" subfolder under the given study.
-
-    study: e.g., "C:\Users\User1\DEER-Prototypes-EnergyPlus\Analysis\SFm_Furnace_1975"
+    Returns: list of tuples (sqlfile, bldgloc, filename) where
+        sqlfile: pathlib.Path
+            An EnergyPlus SQLite output file found in the study folder.
+        bldgloc: str
+            CEC Climate zone found in file name.
+        filename: str
+            A cleaned-up version of file path with forward slashes and 'runs/' removed.
     """
     if not isinstance(study, Path):
         study = Path(study)
-    list_sqlfile = get_runs_instances(study)
-    for sqlfile in tqdm.tqdm(list_sqlfile):
+    # To do: check if there are both autosized and linked-sizing files in the same folder and pick one.
+    # Note that autosized runs are named instance-out.sql.
+    # Linked-sizing runs are named instance-hardsize-out.sql.
+    # Sizing-only runs are named instance-size-out.sql.
+    for sqlfile in study.glob('**/'+filename_pattern):
         relpath = sqlfile.relative_to(study)
         # E.g. relpath = Path(r"runs\CZ01\SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace\Msr-Res-GasFurnace-AFUE95-ECM\instance-out.sql")
         relstr = relpath.as_posix() # with forward slashes
@@ -453,20 +466,9 @@ def gather_sim_data_basic(study: Path, queryfile: Path, pathsub: tuple =('runs/'
         # For compatibility with modelkit, may want to remove 'runs/' prefix.
         # E.g. filename = "CZ01/SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace/Msr-Res-GasFurnace-AFUE95-ECM/instance-out.sql"
         filename = re.sub(*pathsub, relstr, 1)
+        yield (sqlfile, bldgloc, filename)
 
-        # Start the load operations and mark each future with its input arguments.
-        sim_data = get_sim_peak_and_tabular(sqlfile, queryfile, bldgloc)
-
-        if sim_data is None:
-            continue
-
-        # Insert a filename header into results tables
-        sim_data_with_filename = {"File Name": filename}
-        sim_data_with_filename.update(sim_data)
-
-        yield sim_data_with_filename
-
-def gather_sim_data_multi(study: Path, queryfile: Path, pathsub: tuple =('runs/','')):
+def gather_sim_data(study: Path, queryfile: Path, parallel=False):
     r"""Returns a generator yielding simulation data from each simulation.
 
     Read selected data entries from SQL outputs as well as DEER Peak period averages of hourly variables.
@@ -476,87 +478,135 @@ def gather_sim_data_multi(study: Path, queryfile: Path, pathsub: tuple =('runs/'
     Assumes that files are placed within a "runs" subfolder under the given study.
 
     study: e.g., "C:\Users\User1\DEER-Prototypes-EnergyPlus\Analysis\SFm_Furnace_1975"
+
+    Returns:
+        Generator yielding dictionary objects.
+
+    Example:
+        >>> for sim_data in gather_sim_data(sqlfile, queryfile):
+        >>>    pass
+        >>> sim_data
+        {
+            "File Name": "mymeasure_vintage/CZ01/cohort/case/instance-out.sql",
+            "Net Site EUI (kWh/m2)": 90.97,
+            "Electricity:Facility [J](Hourly)": 3738615573
+        }
     """
-    if not isinstance(study, Path):
-        study = Path(study)
-    list_sqlfile = get_runs_instances(study)
+    # Make sure queryfile does not give an error before starting main loop.
+    _ = parse_query_file(queryfile)
 
-    # Use a ThreadPoolExecutor to achieve some parallelism.
-    # This should speed up the process if there are a large number of files.
-    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
-        print("Created a thread pool with ",executor._max_workers)
-        future_lookup = dict() # Remember each file when requested.
-        # Queue each operation to read simulation data, returning a future.
-        for sqlfile in list_sqlfile:
-            relpath = sqlfile.relative_to(study)
-            # E.g. relpath = Path(r"runs\CZ01\SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace\Msr-Res-GasFurnace-AFUE95-ECM\instance-out.sql")
-            relstr = relpath.as_posix() # with forward slashes
-            # E.g. relstr = "runs/CZ01/SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace/Msr-Res-GasFurnace-AFUE95-ECM/instance-out.sql"
-            # Search string for climate zone like 'CZ11/'.
-            m = re.search(r"CZ\d\d(?=/)", relstr)
-            if not m:
-                raise ValueError(f'Could not match climate zone in filename: "{relstr}"')
-            bldgloc = m[0]
-            # For compatibility with modelkit, may want to remove 'runs/' prefix.
-            # E.g. filename = "CZ01/SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace/Msr-Res-GasFurnace-AFUE95-ECM/instance-out.sql"
-            filename = re.sub(*pathsub, relstr, 1)
-
+    if not parallel:
+        for sqlfile, bldgloc, filename in tqdm.tqdm(get_runs_instances(study)):
             # Start the load operations and mark each future with its input arguments.
-            future = executor.submit(get_sim_peak_and_tabular, sqlfile, queryfile, bldgloc)
-            future_lookup[future] = (sqlfile, filename)
+            yield get_sim_peak_and_tabular(queryfile, sqlfile, bldgloc, filename)
+    else:
+        list_sqlfile = list(get_runs_instances(study))
+        # Use a concurrent.futures.Executor to achieve some parallelism.
+        # This should speed up the process if there are a large number of files.
+        # In initial testing, ThreadPoolExecutor was 0.5x the speed of a single-threaded loop.
+        # However, ProcessPoolExecutor was 3-4x the speed of a single-threaded loop.
+        #with concurrent.futures.ThreadPoolExecutor() as executor:
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            #print("Created a thread pool with ",executor._max_workers)
+            future_lookup = dict() # Remember each file when requested.
+            # Queue each operation to read simulation data, returning a future.
+            for (sqlfile, bldgloc, filename) in list_sqlfile:
+                # Start the load operations and mark each future with its input arguments.
+                future = executor.submit(get_sim_peak_and_tabular, queryfile, sqlfile, bldgloc, filename)
+                future_lookup[future] = (sqlfile, bldgloc, filename)
 
-        # Wait for futures to complete and show a progress bar.
-        for i,future in zip(
-            tqdm.trange(len(list_sqlfile), desc=study.name), # progress bar
-            concurrent.futures.as_completed(future_lookup)  # waiting for results from parallel threads
-        ):
-            (sqlfile, filename) = future_lookup[future]
-            try:
-                sim_data = future.result()
-            except Exception as exc:
-                print(f'Reading {sqlfile} generated an exception: {exc}')
-                #executor.shutdown()
-            else:
-                # Insert a filename header into results tables
-                sim_data_with_filename = {"File Name": filename}
-                sim_data_with_filename.update(sim_data)
+            # Wait for futures to complete and show a progress bar.
+            import time
+            for i,future in zip(
+                tqdm.trange(len(list_sqlfile), desc=study.name), # progress bar
+                concurrent.futures.as_completed(future_lookup)  # waiting for results from parallel threads
+            ):
+                (sqlfile, bldgloc, filename) = future_lookup[future]
+                try:
+                    sim_data = future.result()
+                except Exception as exc:
+                    print(f'Reading {sqlfile} generated an exception: {exc}')
+                else:
+                    yield sim_data
+                    time.sleep(0.001)
 
-                yield sim_data_with_filename
+def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path,
+                           parallel = True,
+                           chunksize = 100):
+    gather = gather_sim_data(study, queryfile, parallel)
+    with open(csvfile, 'w', newline='') as f:
+        if chunksize is None:
+            # Get all records at once to gaurantee headers are the same for all rows
+            records = list(gather)
+            df_sim_data = pd.DataFrame.from_records(records)
+            df_sim_data.to_csv(f, index=False)
+        else:
+            for i,records in enumerate(batched(gather, chunksize)):
+                df_sim_data = pd.DataFrame.from_records(records)
+                df_sim_data.to_csv(f, index=False)
 
-def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path):
-    records = list(gather_sim_data_basic(study, queryfile))
-    # In initial testing, ThreadPoolExecutor was slower than a single-threaded loop. Not sure why.
-    #records = list(gather_sim_data_multi(study, queryfile))
-    df_sim_data = pd.DataFrame.from_records(records)
-    df_sim_data.to_csv(csvfile)
+def gather_sim_data_to_sqlite(study: Path, queryfile: Path, sqlfile: Path,
+                              parallel = True,
+                              chunksize = 100):
+    gather = gather_sim_data(study, queryfile, parallel)
+    with connect(sqlfile) as conn:
+        conn.execute('DROP TABLE IF EXISTS "sim_data";')
+        if chunksize is None:
+            # Get all records at once to gaurantee headers are the same for all rows
+            records = list(gather)
+            df_sim_data = pd.DataFrame.from_records(records)
+            df_sim_data.to_sql('sim_data', conn, index=False)
+        else:
+            for i,records in enumerate(batched(gather, chunksize)):
+                df_sim_data = pd.DataFrame.from_records(records)
+                df_sim_data.to_sql('sim_data', conn, index=False, if_exists='append')
 
-def gather_sim_data_to_sqlite(study: Path, queryfile: Path, sqlfile: Path):
-    raise NotImplementedError('SQLite output not yet implemented.')
-
-def build_cli_parser(parser: argparse.ArgumentParser, study_kwargs = {}, queryfile_kwargs = {}):
+def build_cli_parser(parser: argparse.ArgumentParser,
+                     study_kwargs = {},
+                     queryfile_kwargs = {},
+                     #outputfile_kwargs = {}
+                     ):
     parser.add_argument('study', type=Path, default='.',
                         help=r'Analysis subfolder, e.g. C:\Users\user1\Desktop\DEER-EnergyPlus-Prototypes\Analysis\SFm_Furnace_1975',
                         **study_kwargs)
     parser.add_argument('-q','--queryfile', type=Path, default='query.txt',
                         help=r'Query file, e.g. query.txt',
                         **queryfile_kwargs)
+    #parser.add_argument('-o','--output', type=Path, default='simdata.csv',
+    #                    help=r'Output file, e.g. simdata.csv',
+    #                    **outputfile_kwargs)
+    parser.add_argument('-P', '--parallel', action='store_false', help='Disable parallel mode.')
+    parser.add_argument('-s', '--sqlite', action='store_true', help='Write output in SQLite format.')
 
 def cli_main():
+    """Starts the script on command line."""
     parser = argparse.ArgumentParser()
     build_cli_parser(parser)
     pargs = parser.parse_args()
-    gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv')
+    if pargs.sqlite:
+        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    else:
+        gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
 
 def gooey_main():
+    """Opens a window for user to input options and start the script."""
     import gooey
     parser = gooey.GooeyParser()
-    # Gooey is not really compatible with Tqdm progress bar.
+    # Gooey is not compatible with Tqdm progress bar without more changes.
     build = gooey.Gooey(build_cli_parser, progress_regex=r"\| (?P<current>\d+)/(?P<total>\d+) \[")
-    build(parser, dict(widget='DirChooser'), dict(widget='FileChooser'))
+    build(parser,
+          study_kwargs = dict(widget='DirChooser'),
+          queryfile_kwargs = dict(widget='FileChooser'),
+          #outputfile_kwargs = dict(widget='FileChooser')
+          )
     pargs = parser.parse_args()
-    gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv')
+    if pargs.sqlite:
+        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+    else:
+        gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
 
 def test():
+    """Starts the script with hard-coded options."""
     #study = Path(r'C:\DEER2026\SWHC012-nick\commercial measures\SWHC012-04 Occupancy Sensor')
     study = Path(r'C:\DEER2026\nf_com_testing\commercial measures\SWXX000-00 Measure Name')
     queryfile = Path(r'..\querylibrary\query_default.txt')
