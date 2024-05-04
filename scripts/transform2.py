@@ -144,6 +144,7 @@ def makeResultSpec(specstr: str) -> ResultSpec:
     fields = specstr.split('/')
     return ResultSpec(*fields)
 
+@cache
 def parse_query_file(queryfile: Path):
     """Reads the query.txt file and returns a list of tuples (resultspec, name)
     where
@@ -309,9 +310,9 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str):
         bldgloc: str
             The CEC climate zone used to lookup up DEER peak period dates.
     Returns:
-        ReportDataWide: pandas.Series
-            Series with shape (N,) where each of N elements represents the average
-            value of the hourly variable over the DEER Peak Period.
+        deer_peak_values: dict
+            Lookup where each item `(k, v)` represents the average value `v`
+            of the hourly variable named `k` over the DEER Peak Period.
     """
     # Get all available hourly results with shape (N, 8760)
     ReportDataWide = get_sim_hourly(conn)
@@ -322,7 +323,10 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str):
     # Get 8760-length mask for DEER Peak Period (normalized)
     dpm = get_deer_peak_multipliers(bldgloc)
     # Compute the average value over the DEER Peak Period
-    deer_peak_values = ReportDataWide.mul(dpm,axis=1).sum(axis=1)
+    # In testing, pandas.DataFrame.mul() takes about 1 ms
+    #deer_peak_values = ReportDataWide.mul(dpm,axis=1).sum(axis=1).to_dict()
+    # In testing, pandas.DataFrame.to_numpy().dot() takes about 7 µs
+    deer_peak_values = dict(zip(ReportDataWide.index, ReportDataWide.to_numpy().dot(dpm)))
     return deer_peak_values
 
 def get_sim_tabular(
@@ -373,31 +377,31 @@ def get_sim_tabular(
         return sim_data_detail, sim_data_agg
 
 def get_sim_peak_and_tabular(queryfile: Path,
-                             sqlfile: Path, bldgloc: str, id: str,
-                             idfield='File Name'):
+                             sqlfile: Path,
+                             bldgloc: str,
+                             metadata: dict):
     r"""
     Read selected data entries from SQL outputs.
     Result set specifications are parsed from query.txt, e.g. (resultspec, name).
     Output columns will have units appended to name, like "name (Units)".
 
     Inputs:
-        sqlfile: Path
-            The filename of an EnergyPlus output file (SQLite format).
         queryfile: Path
             The filename of a modelkit-style query.txt file.
+        sqlfile: Path
+            The filename of an EnergyPlus output file (SQLite format).
         bldgloc: str
             The CEC climate zone, e.g. CZ01 through CZ16.
-        id: str
-            An identifier prepended to the results.
-        idfield: str, default = 'File Name'
-            The dictionary key used to label the given id.
+        metadata: dict
+            An dictionary of identifier information prepended to the results.
+            For compatibility use metadata = {'File Name': 'path/to/model/instance-out.sql'}
 
     Returns:
         sim_data: dict(str: float | None).
             Mapping of (name, value) from both query results
             and hourly averages over the DEER peak period.
     """
-    sim_data = {idfield: id} # To store results
+    sim_data = metadata.copy() # To store results
     with connect(sqlfile) as conn:
         # Start with the query data results
         listlist_query_path_and_name = parse_query_file(queryfile)
@@ -420,7 +424,7 @@ def get_sim_peak_and_tabular(queryfile: Path,
         # Now get the DEER Peak values from hourly data
         deer_peak_values = get_sim_deer_peak(conn, bldgloc)
         if deer_peak_values is not None:
-            sim_data.update(deer_peak_values.to_dict())
+            sim_data.update(deer_peak_values)
 
     return sim_data
 
@@ -439,13 +443,16 @@ def get_runs_instances(study: Path, filename_pattern = 'instance*-out.sql', path
         pathsub: (pattern, replacement), default ('runs/', '')
             A string pattern to replace in the filename.
 
-    Returns: list of tuples (sqlfile, bldgloc, filename) where
+    Returns: list of tuples (sqlfile, bldgloc, metadata) where
         sqlfile: pathlib.Path
             An EnergyPlus SQLite output file found in the study folder.
         bldgloc: str
             CEC Climate zone found in file name.
-        filename: str
-            A cleaned-up version of file path with forward slashes and 'runs/' removed.
+        metadata: dict
+
+        Default metadata fields:
+            'File Name'
+                A cleaned-up version of file path with forward slashes and 'runs/' removed.
     """
     if not isinstance(study, Path):
         study = Path(study)
@@ -463,10 +470,24 @@ def get_runs_instances(study: Path, filename_pattern = 'instance*-out.sql', path
         if not m:
             raise ValueError(f'Could not match climate zone in filename: "{relstr}"')
         bldgloc = m[0]
+
+        metadata = {}
         # For compatibility with modelkit, may want to remove 'runs/' prefix.
         # E.g. filename = "CZ01/SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace/Msr-Res-GasFurnace-AFUE95-ECM/instance-out.sql"
-        filename = re.sub(*pathsub, relstr, 1)
-        yield (sqlfile, bldgloc, filename)
+        metadata['File Name'] = re.sub(*pathsub, relstr, 1)
+
+        # Try to get additional metadata, but don't fail if it doesn't match.
+        patterns = [
+            r'.*/runs/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<TechGroup>\w+)__(?P<TechType>\w+)/(?P<TechID>[^/]+)/instance.*',
+            r'.*/runs/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*'
+        ]
+        for pattern in patterns:
+            m2 = re.match(pattern, relstr)
+            if m2:
+                metadata.update(m2.groupdict())
+                break
+
+        yield (sqlfile, bldgloc, metadata)
 
 def gather_sim_data(study: Path, queryfile: Path, parallel=False):
     r"""Returns a generator yielding simulation data from each simulation.
@@ -492,13 +513,14 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
             "Electricity:Facility [J](Hourly)": 3738615573
         }
     """
+    print(f"Reading from {study}")
     # Make sure queryfile does not give an error before starting main loop.
     _ = parse_query_file(queryfile)
 
     if not parallel:
-        for sqlfile, bldgloc, filename in tqdm.tqdm(get_runs_instances(study)):
+        for sqlfile, bldgloc, metadata in tqdm.tqdm(list(get_runs_instances(study))):
             # Start the load operations and mark each future with its input arguments.
-            yield get_sim_peak_and_tabular(queryfile, sqlfile, bldgloc, filename)
+            yield get_sim_peak_and_tabular(queryfile, sqlfile, bldgloc, metadata)
     else:
         list_sqlfile = list(get_runs_instances(study))
         # Use a concurrent.futures.Executor to achieve some parallelism.
@@ -510,10 +532,10 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
             #print("Created a thread pool with ",executor._max_workers)
             future_lookup = dict() # Remember each file when requested.
             # Queue each operation to read simulation data, returning a future.
-            for (sqlfile, bldgloc, filename) in list_sqlfile:
+            for (sqlfile, bldgloc, metadata) in list_sqlfile:
                 # Start the load operations and mark each future with its input arguments.
-                future = executor.submit(get_sim_peak_and_tabular, queryfile, sqlfile, bldgloc, filename)
-                future_lookup[future] = (sqlfile, bldgloc, filename)
+                future = executor.submit(get_sim_peak_and_tabular, queryfile, sqlfile, bldgloc, metadata)
+                future_lookup[future] = (sqlfile, bldgloc, metadata)
 
             # Wait for futures to complete and show a progress bar.
             import time
@@ -521,7 +543,7 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
                 tqdm.trange(len(list_sqlfile), desc=study.name), # progress bar
                 concurrent.futures.as_completed(future_lookup)  # waiting for results from parallel threads
             ):
-                (sqlfile, bldgloc, filename) = future_lookup[future]
+                (sqlfile, bldgloc, metadata) = future_lookup[future]
                 try:
                     sim_data = future.result()
                 except Exception as exc:
@@ -543,7 +565,7 @@ def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path,
         else:
             for i,records in enumerate(batched(gather, chunksize)):
                 df_sim_data = pd.DataFrame.from_records(records)
-                df_sim_data.to_csv(f, index=False)
+                df_sim_data.to_csv(f, index=False, header=(i==0))
 
 def gather_sim_data_to_sqlite(study: Path, queryfile: Path, sqlfile: Path,
                               parallel = True,
@@ -608,9 +630,9 @@ def gooey_main():
 def test():
     """Starts the script with hard-coded options."""
     #study = Path(r'C:\DEER2026\SWHC012-nick\commercial measures\SWHC012-04 Occupancy Sensor')
-    study = Path(r'C:\DEER2026\nf_com_testing\commercial measures\SWXX000-00 Measure Name')
+    study = Path(r'C:\DEER2026\nf_com_testing_dhw\commercial measures\SWXX000-00 Measure Name')
     queryfile = Path(r'..\querylibrary\query_default.txt')
-    gather_sim_data_to_csv(study, queryfile, 'simdata.csv')
+    gather_sim_data_to_csv(study, queryfile, 'simdata.csv', parallel=False)
 
 if "__main__" == __name__:
     cli_main()
