@@ -123,7 +123,7 @@ def get_deer_peak_multipliers(BldgLoc: str,
     day_of_year_1 = day_of_year_0 + 1
     # Is the hour in the DEER Peak period?
     is_deer_peak_day = (day_of_year_1 >= peak_day) * (day_of_year_1 <= peak_day + days)
-    is_deer_peak_hour = (hour_of_day_0 >= start_hr) * (hour_of_day_0 <= end_hr)
+    is_deer_peak_hour = (hour_of_day_0 >= start_hr) * (hour_of_day_0 < end_hr)
     is_deer_peak = is_deer_peak_day * is_deer_peak_hour
     # Normalize
     multipliers8760 = is_deer_peak / sum(is_deer_peak)
