@@ -428,7 +428,7 @@ def get_sim_peak_and_tabular(queryfile: Path,
 
     return sim_data
 
-def get_runs_instances(study: Path, filename_pattern = 'instance*-out.sql', pathsub: tuple =('runs/','')):
+def get_runs_instances(study: Path, search_pattern = '**/instance*-out.sql', exclude = 'instance-size-out.sql'):
     r"""Returns a list of all of SQLite output files in a modelkit study folder.
 
     Assumes that files are placed within a "runs" subfolder under the given study.
@@ -438,10 +438,10 @@ def get_runs_instances(study: Path, filename_pattern = 'instance*-out.sql', path
             The folder in which to search for simulation outputs.
             E.g. old style: "C:\Users\User1\DEER-Prototypes-EnergyPlus\Analysis\SFm_Furnace_1975"
             E.g. new style: "C:\Users\User1\DEER-Prototypes-EnergyPlus\commercial measures\SWHC012-04 Occupancy Sensor"
-        filename_pattern: str, default = 'instance*-out.sql'
+        search_pattern: str, default = 'instance*-out.sql'
             The filename pattern used to search for output files, using glob syntax.
-        pathsub: (pattern, replacement), default ('runs/', '')
-            A string pattern to replace in the filename.
+        exclude_pattern: str, default = 'instance-size-out.sql'
+            A filename pattern to exclude.
 
     Returns: list of tuples (sqlfile, bldgloc, metadata) where
         sqlfile: pathlib.Path
@@ -452,15 +452,16 @@ def get_runs_instances(study: Path, filename_pattern = 'instance*-out.sql', path
 
         Default metadata fields:
             'File Name'
-                A cleaned-up version of file path with forward slashes and 'runs/' removed.
+                File path relative to study folder, with forward slashes.
     """
     if not isinstance(study, Path):
         study = Path(study)
-    # To do: check if there are both autosized and linked-sizing files in the same folder and pick one.
     # Note that autosized runs are named instance-out.sql.
     # Linked-sizing runs are named instance-hardsize-out.sql.
     # Sizing-only runs are named instance-size-out.sql.
-    for sqlfile in study.glob('**/'+filename_pattern):
+    for sqlfile in study.glob(search_pattern):
+        if sqlfile.match(exclude):
+            continue
         relpath = sqlfile.relative_to(study)
         # E.g. relpath = Path(r"runs\CZ01\SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace\Msr-Res-GasFurnace-AFUE95-ECM\instance-out.sql")
         relstr = relpath.as_posix() # with forward slashes
@@ -474,7 +475,10 @@ def get_runs_instances(study: Path, filename_pattern = 'instance*-out.sql', path
         metadata = {}
         # For compatibility with modelkit, may want to remove 'runs/' prefix.
         # E.g. filename = "CZ01/SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace/Msr-Res-GasFurnace-AFUE95-ECM/instance-out.sql"
-        metadata['File Name'] = re.sub(*pathsub, relstr, 1)
+        # pathsub = (r'runs/','')
+        #metadata['File Name'] = re.sub(*pathsub, relstr, 1)
+        metadata['File Name'] = relstr
+        metadata['BldgLoc'] = bldgloc
 
         # Try to get additional metadata, but don't fail if it doesn't match.
         patterns = [
