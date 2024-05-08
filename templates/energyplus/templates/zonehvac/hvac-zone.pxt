@@ -922,6 +922,7 @@ elsif (hvac_mode == "SZ")
       :oa_econ_lockout,
       :oa_energy_recovery,
       :oa_energy_recovery_power,
+      :swsv005_04_BC,
 
       :return_plenum,
       :return_plenum_zone_name)

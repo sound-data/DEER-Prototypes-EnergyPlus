@@ -30,6 +30,7 @@ parameter "oa_frac_sch", :name => "Outdoor Air Schedule", :description => "Outdo
   :default => "NONE"
 parameter "oa_frac_max_sch", :name => "Outdoor Air Schedule", :description => "Outdoor air schedule controls when ventilation air is supplied",
   :default => "NONE"
+parameter "swsv005_04_BC", :default => nil
 
 parameter "oa_min_flow", :default => Autosize  # Minimum design outdoor air flow rate {m3/s}
 parameter "oa_max_flow", :default => Autosize  # Maximum design outdoor air flow rate {m3/s}
@@ -1058,11 +1059,28 @@ Controller:OutdoorAir,
   BypassWhenWithinEconomizerLimits;  !- Heat Recovery Bypass Control Type
 <%# only show BypassWhenWithinEconomizerLimits when there is heat recovery %>
 
+<% if swsv005_04_BC == nil %>  !-#TRC - Adding swsv005_04_BC for economizer repair base case
 Schedule:Compact,
   <%= ahu_name %> Outdoor Air Schedule,  !- Name
   Unit Interval,           !- Schedule Type Limits Name
   <%= oa_sch %>
-
+<% else %>
+Schedule:Compact,
+  <%= ahu_name %> Outdoor Air Schedule,  !- Name
+  Unit Interval,           !- Schedule Type Limits Name
+  Through: 12/31,
+For: SummerDesignDay WinterDesignDay,
+Until: 24:00,1,
+For: Weekdays,
+Until: 05:00,0,
+Until: 24:00,0,
+For: Saturday,
+Until: 05:00,0,
+Until: 19:00,0,
+Until: 24:00,0,
+For: AllOtherDays,
+Until: 24:00,0.0;
+<% end %>
 
 <% if oa_frac_sch != "NONE" %>
 Schedule:Compact,
