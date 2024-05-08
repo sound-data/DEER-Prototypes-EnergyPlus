@@ -204,6 +204,8 @@ parameter "sat_temp_max", :default => Autosize
 
 parameter "clear_water_storage_tank", :default => ""  # Name of tank for collecting cooling coil condensate
 
+# Solaris Technical 2024-05-07 for linked sizing
+parameter "disable_ems", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 %>
 
@@ -2852,6 +2854,12 @@ cool_flow_min_frac = 0.67
 end
 %>
 
+!- Value of disable_ems = <%= disable_ems %>
+<%
+# Solaris Technical 2024-05-07
+# Because this airflow EMS logic interferes with Modelkit's linked-sizing feature, create a parameter to disable it.
+if (!disable_ems)
+%>
 EnergyManagementSystem:Actuator,
     <%= unitary_name_ems %>_MINFLOW,  !- Name
     <%= unitary_name %> UNITARY,  !- Actuated Component Unique Name
@@ -2903,5 +2911,5 @@ EnergyManagementSystem:InternalVariable,
     <%= unitary_name_ems %>_HMFLOW,  !- Name
     <%= unitary_name %>,  !- Internal Data Index Key Name
     Intermediate Air System Heating Volume Flow Rate;  !- Internal Data Type
-
+<% end %>
 <% end %>
