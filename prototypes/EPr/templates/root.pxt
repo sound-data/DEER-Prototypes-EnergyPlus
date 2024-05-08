@@ -155,6 +155,7 @@ end
 
 group "space_hvac" do
   import "zonehvac/hvac-zone.pxt", :group => "building" do # hardcode building-level defaults
+    include "disable_ems"
     parameter "oa_person", :default => 0['CFM']
     parameter "sat_min_dt", :default => 20.0['deltaF']
   end
