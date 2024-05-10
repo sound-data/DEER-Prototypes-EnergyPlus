@@ -592,7 +592,7 @@ def build_cli_parser(parser: argparse.ArgumentParser,
                      queryfile_kwargs = {},
                      #outputfile_kwargs = {}
                      ):
-    parser.add_argument('study', type=Path, default='.',
+    parser.add_argument('study', type=Path, nargs='?', default='.',
                         help=r'Analysis subfolder, e.g. C:\Users\user1\Desktop\DEER-EnergyPlus-Prototypes\Analysis\SFm_Furnace_1975',
                         **study_kwargs)
     parser.add_argument('-q','--queryfile', type=Path, default='query.txt',
