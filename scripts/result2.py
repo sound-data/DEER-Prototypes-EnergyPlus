@@ -11,7 +11,7 @@ Features:
 Usage:
     Prerequisite: running models, select a query file, path to DEER peak period definitions
     $terminal1> cd C:/DEER-Prototypes-EnergyPlus/
-    $terminal1> python "scripts/transform2.py" "commercial measures/SWXX000-00 Measure Name" --queryfile "querylibrary/query_default.txt"
+    $terminal1> python "scripts/result2.py" "commercial measures/SWXX000-00 Measure Name" --queryfile "querylibrary/query_default.txt"
 
 Changelog
     * 2024-05-01 Adapted result.py for DEER Peak period calculation
