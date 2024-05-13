@@ -24,6 +24,8 @@ AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Hea
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Cooling, Cooling NG
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Interior Equipment, Interior Equipment Elec
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Interior Equipment, Interior Equipment NG
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Water Systems, Water Systems Elec
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Water Systems, Water Systems NG
 
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Heating, Unmet Heating
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Cooling, Unmet Cooling
