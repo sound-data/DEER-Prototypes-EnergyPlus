@@ -8,7 +8,7 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'Brushless Fan Motor'
+measure_name = 'SEER Rated AC/HP'
 
 # %%
 #DMo only script
@@ -30,7 +30,9 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-path = 'Analysis/DMo_Brushless_Fan_Motor_Ex'
+#12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
+#to do: use for loop to loop over each folder, using if-else to process different building types for Res
+path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
 
 # %%
 #extract only the 5th portion of the measure group name for expected_att
@@ -431,9 +433,9 @@ metadata_msr = metadata_msr.rename(columns={'TechID':'MeasTechID'})
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     metadata_pre_full = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        metadata_pre_mod = metadata_pre.copy()
+        metadata_pre_mod = metadata_pre[metadata_pre['PreTechID']==common_id].copy()
         metadata_pre_mod['PreTechID'] = new_id
         #merge to final df
         metadata_pre_full = pd.concat([metadata_pre_full, metadata_pre_mod])
@@ -528,9 +530,9 @@ sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MeasTechIDs['Co
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_annual_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_annual_pre_mod = sim_annual_pre_common.copy()
+        sim_annual_pre_mod = sim_annual_pre_common[sim_annual_pre_common['TechID']==common_id].copy()
         sim_annual_pre_mod['TechID'] = new_id
         #merge to final df
         sim_annual_pre = pd.concat([sim_annual_pre, sim_annual_pre_mod])
@@ -583,9 +585,9 @@ sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MeasTechIDs['Co
 #Pre hourly
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_hourly_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_hourly_pre_mod = sim_hourly_pre_common.copy()
+        sim_hourly_pre_mod = sim_hourly_pre_common[sim_hourly_pre_common['TechID']==common_id].copy()
         sim_hourly_pre_mod['TechID'] = new_id
         #merge to final df
         sim_hourly_pre = pd.concat([sim_hourly_pre, sim_hourly_pre_mod])

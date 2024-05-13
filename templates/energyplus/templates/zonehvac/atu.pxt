@@ -57,6 +57,10 @@ parameter "atu_leak_return_frac", :name => "ATU Return Leakage Fraction", :descr
 # should import from water recycling template!
 parameter "clear_water_storage_tank", :default => ""
 
+
+#TRC - design specification OA name added so VAV terminal units can refer to it to size minimum flowrate
+parameter "design_spec_OA_name", :default => ""
+
 rule "atu_type_cav", :parameters => {:atu_type => "CAV"} do
   force :atu_flow_min_frac => 1.0  # Unsure about this...both ways work, but slightly different results
   disable :atu_ind_frac
@@ -204,7 +208,9 @@ AirTerminal:SingleDuct:VAV:NoReheat,
   Constant,                !- Zone Minimum Air Flow Input Method
   <%= atu_flow_min_frac %>,  !- Constant Minimum Air Flow Fraction
   ,                        !- Fixed Minimum Air Flow Rate {m3/s}
-  ;                        !- Minimum Air Flow Fraction Schedule Name
+  ,                        !- Minimum Air Flow Fraction Schedule Name
+  <% #TRC - add missing field so minimum flow can be autosized to account for OA requirement %>
+  <%= design_spec_OA_name %>;  !- Design Specification Outdoor Air Object Name
 
 <% else %>
 AirTerminal:SingleDuct:VAV:Reheat,
@@ -235,8 +241,9 @@ AirTerminal:SingleDuct:VAV:Reheat,
   <%= atu_reheat_control_input %>,  !- Damper Heating Action
   ,                        !- Maximum Flow per Zone Floor Area During Reheat {m3/s-m2}
   <%= atu_reheat_max_frac %>,                        !- Maximum Flow Fraction During Reheat
-  <%= atu_reheat_max_sat %>;  !- Maximum Reheat Air Temperature {C}
-!  <%= atu_name %> Design OA;  !- Design Specification Outdoor Air Object Name
+  <%= atu_reheat_max_sat %>,  !- Maximum Reheat Air Temperature {C}
+<%# TRC - change so minimum flow can be autosized to account for OA requirement %>
+  <%= design_spec_OA_name %>;  !- Design Specification Outdoor Air Object Name
 <%#
 Design OA controls the damper to meet outdoor air based on varying number of occupants.
 Do we want this in general? Or only for DCV?
@@ -444,7 +451,8 @@ AirTerminal:DualDuct:VAV,
   <%= atu_name %> CD Inlet Node,  !- Cold Air Inlet Node Name
   <%= atu_flow %>,         !- Maximum Air Flow Rate {m3/s}
   <%= atu_flow_min_frac %>,  !- Zone Minimum Air Flow Fraction
-  <%= atu_name %> Design OA;  !- Design Specification Outdoor Air Object Name
+<%#TRC - change so minimum flow will be >= OA requirement %>
+  <%= design_spec_OA_name %>;  !- Design Specification Outdoor Air Object Name
 
 <% end %>
 <% if (atu_reheat_coil_type == "RESISTANCE") %>

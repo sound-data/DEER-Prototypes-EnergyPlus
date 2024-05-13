@@ -480,7 +480,9 @@ Sizing:Zone,
   ,                        !- Cooling Minimum Air Flow per Zone Floor Area {m3/s-m2}
   <% end %>
   ,                        !- Cooling Minimum Air Flow {m3/s}
-  ,                        !- Cooling Minimum Air Flow Fraction
+
+<%#! - TRC Adding cool_flow_min_frac as the minimum flow ratio in cooling.Cannot be autosized and it doesn't override the ventilation requirement. %>
+  <%= cool_flow_min_frac %>,                        !- Cooling Minimum Air Flow Fraction
   DesignDay,               !- Heating Design Air Flow Method
   ,                        !- Heating Design Air Flow Rate {m3/s}
   ,                        !- Heating Maximum Air Flow per Zone Floor Area {m3/s-m2}
@@ -530,6 +532,9 @@ ZoneControl:Thermostat,
   <%= zone_name %> Thermostat Type Schedule,  !- Control Type Schedule Name
 <% if hvac_type == "UH" %>
   ThermostatSetpoint:SingleHeating,  !- Control 1 Object Type
+<%# TRC - addition for DXNH system type (no heating)
+elsif (((atu_reheat_coil_type == "NONE" || atu_reheat_coil_type == nil) && (heat_coil_type == "NONE" || heat_coil_type == nil)) && (sub_heat_type == "NONE" || sub_heat_type == nil)) %>
+  ThermostatSetpoint:SingleCooling,  !- Control 1 Object Type
 <% else %>
   ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
 <% end %>
@@ -544,6 +549,23 @@ Schedule:Constant,
 ThermostatSetpoint:SingleHeating,
   <%= zone_name %> Setpoints,  !- Name
   <%= zone_name %> Heating Setpoint Schedule;  !- Heating Setpoint Temperature Schedule Name
+
+<%# TRC - addition for DXNH system type (no heating)
+elsif (((atu_reheat_coil_type == "NONE" || atu_reheat_coil_type == nil) && (heat_coil_type == "NONE" || heat_coil_type == nil)) && (sub_heat_type == "NONE" || sub_heat_type == nil)) %>
+Schedule:Constant,
+  <%= zone_name %> Thermostat Type Schedule,  !- Name
+  Thermostat Control,      !- Schedule Type Limits Name
+  2;                       !- Hourly Value
+
+ThermostatSetpoint:SingleCooling,
+  <%= zone_name %> Setpoints,  !- Name
+  <%= zone_name %> Cooling Setpoint Schedule;  !- Cooling Setpoint Temperature Schedule Name
+
+Schedule:Compact,
+  <%= zone_name %> Cooling Setpoint Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= tstat_cool_sch %>
+
 <% else %>
 Schedule:Constant,
   <%= zone_name %> Thermostat Type Schedule,  !- Name
@@ -783,7 +805,9 @@ if (oa_type == "DOAS")
   insert "zonehvac/atu.pxt",
     :atu_name => doas_branch_name,  # not ideal, but otherwise 'branch_name' is overwritten
     :atu_type => "CAV",
-    :atu_reheat_coil_type => "NONE"
+    :atu_reheat_coil_type => "NONE",
+    #TRC - added parameter to pass Design Specification OA object to ATU in order to size VAV minimum flowrate
+    :design_spec_OA_name => zone_name + " Design OA"
 
     # plus duct leakage
 end
@@ -797,6 +821,8 @@ elsif (hvac_mode == "SZ" or hvac_mode == "MZ")
   insert "zonehvac/atu.pxt",
     :atu_name => branch_name,
     :atu_reheat_max_sat => sat_temp_max,
+    #TRC - added parameter to pass Design Specification OA object to ATU in order to size VAV minimum flowrate
+    :design_spec_OA_name => zone_name + " Design OA",
     **atu,
     **local(:clear_water_storage_tank)
 
@@ -815,11 +841,13 @@ unitary_parameters = [
 
   :fan_flow_min_frac,
   :fan_flow_min_method,
+  :unitary_no_load_flow_method,
 
   :cool_coil_type,
   :cool_coil_cap,
   :cool_coil_cop,
   :cool_coil_evap_eff,
+  :cool_flow_min_frac,
 
   :heat_coil_type,
   :heat_coil_cap,
