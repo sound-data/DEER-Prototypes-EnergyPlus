@@ -15,6 +15,7 @@ Usage:
 
 Changelog
     * 2024-05-01 Adapted result.py for DEER Peak period calculation
+    * 2024-05-15 Filename patterns updated to match folders like runs1, runs-Asm, etc.
 
 @Author: Nicholas Fette <nfette@solaris-technical.com>
 @Date: 2024-05-01
@@ -482,8 +483,8 @@ def get_runs_instances(study: Path, search_pattern = '**/instance*-out.sql', exc
 
         # Try to get additional metadata, but don't fail if it doesn't match.
         patterns = [
-            r'.*/runs/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<TechGroup>\w+)__(?P<TechType>\w+)/(?P<TechID>[^/]+)/instance.*',
-            r'.*/runs/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*'
+            r'.*/runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<TechGroup>\w+)__(?P<TechType>\w+)/(?P<TechID>[^/]+)/instance.*',
+            r'.*/runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*'
         ]
         for pattern in patterns:
             m2 = re.match(pattern, relstr)
@@ -559,6 +560,9 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
 def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path,
                            parallel = True,
                            chunksize = 100):
+    # 2024-05-15 Todo
+    # User testing observed that inconsistent filenames may result in inconsistent
+    # column alignment in CSV mode. Workaround is to change chunksize=None.
     gather = gather_sim_data(study, queryfile, parallel)
     with open(csvfile, 'w', newline='') as f:
         if chunksize is None:
