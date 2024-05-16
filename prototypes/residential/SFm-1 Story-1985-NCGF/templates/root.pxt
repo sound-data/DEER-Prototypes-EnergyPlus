@@ -68,6 +68,13 @@ parameter "number_of_stories", :default=>1  #no. of stories, default one story
 parameter "conditioned_floor_area", :default =>1453.92|'ft2'  # ft2, default conditioned floor area of 1 story SFm
 parameter "duct_r_value", :default => 4.9['R-IP'] #U-IP effective duct R value = duct R + insulation R
 
+# hardcoded sizing
+parameter "cooling_capacity", :default=>'autosize'
+parameter "heating_capacity", :default=>'autosize'
+parameter "rated_air_flow", :default=>'autosize'
+parameter "sensible_heat_ratio", :default=>'autosize'
+
+
 #shading control
 parameter "shading_control", :default=>'AlwaysOn'
 %>
@@ -114,7 +121,8 @@ for zone in all_zones
     :slave_zone => slave_zone,
     :supply_leakage_frac=>supply_leakage_frac,
     :return_leakage_frac=>return_leakage_frac,
-    :duct_r_value=>duct_r_value
+    :duct_r_value=>duct_r_value,
+    :rated_air_flow=>rated_air_flow
 end
 
 %>
@@ -17041,7 +17049,7 @@ Exterior:Lights,
 !     EL7 South Perim Zn (G.S1),  !- Zone Name
 !     DXGF EL7,                !- Template Unitary System Name
 !     thermostat_living Dual SP Control,  !- Template Thermostat Name
-!     autosize,                !- Supply Air Maximum Flow Rate {m3/s}
+!     <%= rated_air_flow %>,                !- Supply Air Maximum Flow Rate {m3/s}
 !     ,                        !- Zone Heating Sizing Factor
 !     ,                        !- Zone Cooling Sizing Factor
 !     Flow/Person,             !- Outdoor Air Method
@@ -17064,7 +17072,7 @@ Exterior:Lights,
 !     EL7 North Perim Zn (G.N2),  !- Zone Name
 !     DXGF EL7,                !- Template Unitary System Name
 !     thermostat_living Dual SP Control,  !- Template Thermostat Name
-!     autosize,                !- Supply Air Maximum Flow Rate {m3/s}
+!     <%= rated_air_flow %>,                !- Supply Air Maximum Flow Rate {m3/s}
 !     ,                        !- Zone Heating Sizing Factor
 !     ,                        !- Zone Cooling Sizing Factor
 !     Flow/Person,             !- Outdoor Air Method
@@ -17087,7 +17095,7 @@ Exterior:Lights,
 !     EL8 West Perim Zn (G.W1),  !- Zone Name
 !     DXGF EL8,                !- Template Unitary System Name
 !     thermostat_living Dual SP Control,  !- Template Thermostat Name
-!     autosize,                !- Supply Air Maximum Flow Rate {m3/s}
+!     <%= rated_air_flow %>,                !- Supply Air Maximum Flow Rate {m3/s}
 !     ,                        !- Zone Heating Sizing Factor
 !     ,                        !- Zone Cooling Sizing Factor
 !     Flow/Person,             !- Outdoor Air Method
@@ -17110,7 +17118,7 @@ Exterior:Lights,
 !     EL8 East Perim Zn (G.E2),  !- Zone Name
 !     DXGF EL8,                !- Template Unitary System Name
 !     thermostat_living Dual SP Control,  !- Template Thermostat Name
-!     autosize,                !- Supply Air Maximum Flow Rate {m3/s}
+!     <%= rated_air_flow %>,                !- Supply Air Maximum Flow Rate {m3/s}
 !     ,                        !- Zone Heating Sizing Factor
 !     ,                        !- Zone Cooling Sizing Factor
 !     Flow/Person,             !- Outdoor Air Method
@@ -17135,7 +17143,7 @@ Exterior:Lights,
 !     DXGF EL7,                !- Name
 !     always_avail,            !- System Availability Schedule Name
 !     EL7 South Perim Zn (G.S1),  !- Control Zone or Thermostat Location Name
-!     autosize,                !- Supply Fan Maximum Flow Rate {m3/s}
+!     <%= rated_air_flow %>,                !- Supply Fan Maximum Flow Rate {m3/s}
 !     always_avail,            !- Supply Fan Operating Mode Schedule Name
 !     0.7,                     !- Supply Fan Total Efficiency
 !     600,                     !- Supply Fan Delta Pressure {Pa}
@@ -17144,13 +17152,13 @@ Exterior:Lights,
 !     SingleSpeedDX,           !- Cooling Coil Type
 !     ,                        !- Cooling Coil Availability Schedule Name
 !     12,                      !- Cooling Design Supply Air Temperature {C}
-!     autosize,                !- Cooling Coil Gross Rated Total Capacity {W}
-!     autosize,                !- Cooling Coil Gross Rated Sensible Heat Ratio
+!     <%= cooling_capacity %>,                !- Cooling Coil Gross Rated Total Capacity {W}
+!     <%= sensible_heat_ratio %>,                !- Cooling Coil Gross Rated Sensible Heat Ratio
 !     3,                       !- Cooling Coil Gross Rated COP {W/W}
 !     Gas,                     !- Heating Coil Type
 !     ,                        !- Heating Coil Availability Schedule Name
 !     50,                      !- Heating Design Supply Air Temperature {C}
-!     autosize,                !- Heating Coil Capacity {W}
+!     <%= heating_capacity %>,                !- Heating Coil Capacity {W}
 !     0.8,                     !- Gas Heating Coil Efficiency
 !     ,                        !- Gas Heating Coil Parasitic Electric Load {W}
 !     0,                       !- Maximum Outdoor Air Flow Rate {m3/s}
@@ -17392,11 +17400,11 @@ Sizing:System,
     ZoneSum,                 !- System Outdoor Air Method
     1.0,                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
     CoolingDesignCapacity,   !- Cooling Design Capacity Method
-    autosize,                !- Cooling Design Capacity {W}
+    <%= cooling_capacity %>,                !- Cooling Design Capacity {W}
     ,                        !- Cooling Design Capacity Per Floor Area {W/m2}
     ,                        !- Fraction of Autosized Cooling Design Capacity
     HeatingDesignCapacity,   !- Heating Design Capacity Method
-    autosize,                !- Heating Design Capacity {W}
+    <%= heating_capacity %>,                !- Heating Design Capacity {W}
     ,                        !- Heating Design Capacity Per Floor Area {W/m2}
     ,                        !- Fraction of Autosized Heating Design Capacity
     OnOff;                   !- Central Cooling Capacity Control Method
@@ -17431,11 +17439,11 @@ Sizing:System,
     ZoneSum,                 !- System Outdoor Air Method
     1.0,                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
     CoolingDesignCapacity,   !- Cooling Design Capacity Method
-    autosize,                !- Cooling Design Capacity {W}
+    <%= cooling_capacity %>,                !- Cooling Design Capacity {W}
     ,                        !- Cooling Design Capacity Per Floor Area {W/m2}
     ,                        !- Fraction of Autosized Cooling Design Capacity
     HeatingDesignCapacity,   !- Heating Design Capacity Method
-    autosize,                !- Heating Design Capacity {W}
+    <%= heating_capacity %>,                !- Heating Design Capacity {W}
     ,                        !- Heating Design Capacity Per Floor Area {W/m2}
     ,                        !- Fraction of Autosized Heating Design Capacity
     OnOff;                   !- Central Cooling Capacity Control Method
@@ -17507,28 +17515,44 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
     ,                        !- Availability Schedule Name
     EL7 South Perim Zn (G.S1) Zone Equip Inlet,  !- Air Inlet Node Name
     EL7 South Perim Zn (G.S1) Supply Inlet,  !- Air Outlet Node Name
-    autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+    <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+    <% end %>;
 
 AirTerminal:SingleDuct:ConstantVolume:NoReheat,
     EL7 North Perim Zn (G.N2) CV,  !- Name
     ,                        !- Availability Schedule Name
     EL7 North Perim Zn (G.N2) Zone Equip Inlet,  !- Air Inlet Node Name
     EL7 North Perim Zn (G.N2) Supply Inlet,  !- Air Outlet Node Name
-    autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+    <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+    <% end %>;
 
 AirTerminal:SingleDuct:ConstantVolume:NoReheat,
     EL8 West Perim Zn (G.W1) CV,  !- Name
     ,                        !- Availability Schedule Name
     EL8 West Perim Zn (G.W1) Zone Equip Inlet,  !- Air Inlet Node Name
     EL8 West Perim Zn (G.W1) Supply Inlet,  !- Air Outlet Node Name
-    autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+    <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+    <% end %>;
 
 AirTerminal:SingleDuct:ConstantVolume:NoReheat,
     EL8 East Perim Zn (G.E2) CV,  !- Name
     ,                        !- Availability Schedule Name
     EL8 East Perim Zn (G.E2) Zone Equip Inlet,  !- Air Inlet Node Name
     EL8 East Perim Zn (G.E2) Supply Inlet,  !- Air Outlet Node Name
-    autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+    <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+    <% end %>;
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ZONEHVAC:AIRDISTRIBUTIONUNIT ===========
@@ -17643,7 +17667,7 @@ Fan:OnOff,
     always_avail,            !- Availability Schedule Name
     <%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
     125,                     !- Pressure Rise {Pa}
-    autosize,                !- Maximum Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Maximum Flow Rate {m3/s}
     <%= motor_eff %>,                     !- Motor Efficiency
     1,                       !- Motor In Airstream Fraction
     DXGF EL7 Mixed Air Outlet,  !- Air Inlet Node Name
@@ -17655,7 +17679,7 @@ Fan:OnOff,
     always_avail,            !- Availability Schedule Name
     <%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
     125,                     !- Pressure Rise {Pa}
-    autosize,                !- Maximum Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Maximum Flow Rate {m3/s}
     <%= motor_eff %>,                     !- Motor Efficiency
     1,                       !- Motor In Airstream Fraction
     DXGF EL8 Mixed Air Outlet,  !- Air Inlet Node Name
@@ -17670,7 +17694,7 @@ Fan:OnOff,
         always_avail,            !- Availability Schedule Name
         NaturalGas,              !- Fuel Type
         <%= burner_eff %>,                     !- Burner Efficiency
-        autosize,                !- Nominal Capacity {W}
+        <%= heating_capacity %>,                !- Nominal Capacity {W}
         DXGF EL7 Supply Fan Outlet,  !- Air Inlet Node Name
         DXGF EL7 Air Loop Outlet;  !- Air Outlet Node Name
 
@@ -17679,7 +17703,7 @@ Fan:OnOff,
         always_avail,            !- Availability Schedule Name
         NaturalGas,              !- Fuel Type
         <%= burner_eff %>,                     !- Burner Efficiency
-        autosize,                !- Nominal Capacity {W}
+        <%= heating_capacity %>,                !- Nominal Capacity {W}
         DXGF EL8 Supply Fan Outlet,  !- Air Inlet Node Name
         DXGF EL8 Air Loop Outlet;  !- Air Outlet Node Name
 
@@ -17692,7 +17716,7 @@ Fan:OnOff,
             DXGF EL7 Air Loop Outlet,!- Unitary System Air Outlet Node Name
             ,                        !- Supply Air Fan Operating Mode Schedule Name
             80,                      !- Maximum Supply Air Temperature {C}
-            autosize,                !- Heating Supply Air Flow Rate {m3/s}
+            <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
             EL7 South Perim Zn (G.S1),  !- Controlling Zone or Thermostat Location
             Fan:OnOff,               !- Supply Fan Object Type
             DXGF EL7 Supply Fan,     !- Supply Fan Name
@@ -17707,7 +17731,7 @@ Fan:OnOff,
             DXGF EL8 Air Loop Outlet,!- Unitary System Air Outlet Node Name
             ,                        !- Supply Air Fan Operating Mode Schedule Name
             80,                      !- Maximum Supply Air Temperature {C}
-            autosize,                !- Heating Supply Air Flow Rate {m3/s}
+            <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
             EL8 West Perim Zn (G.W1),  !- Controlling Zone or Thermostat Location
             Fan:OnOff,               !- Supply Fan Object Type
             DXGF EL8 Supply Fan,     !- Supply Fan Name

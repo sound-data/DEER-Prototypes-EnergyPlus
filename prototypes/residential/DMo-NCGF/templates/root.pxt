@@ -68,6 +68,7 @@ parameter "fan_total_eff", :default=>0.0
 # GasFurnace Efficiency
 parameter "burner_eff", :default=>0.78
 parameter "heating_coil_capacity", :default=>'autosize'
+parameter "rated_air_flow", :default=>'autosize'
 
 #natural ventilation
 #parameter "min_sp", :default=>15.56
@@ -123,7 +124,8 @@ for zone in all_zones
     :slave_zone => slave_zone,
     :supply_leakage_frac=>supply_leakage_frac,
     :return_leakage_frac=>return_leakage_frac,
-    :duct_r_value=>duct_r_value
+    :duct_r_value=>duct_r_value,
+    :rated_air_flow=>rated_air_flow
 end
 
 %>
@@ -7966,7 +7968,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 West Perim Zn (G.W1) Zone Equip Inlet,             !- Air Inlet Node Name
   EL1 West Perim Zn (G.W1) Supply Inlet,                 !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -8035,7 +8041,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 East Perim Zn (G.E2) Zone Equip Inlet,             !- Air Inlet Node Name
   EL1 East Perim Zn (G.E2) Supply Inlet,                 !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -8104,7 +8114,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 South Perim Zn (G.S1) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 South Perim Zn (G.S1) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -8173,7 +8187,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 North Perim Zn (G.N2) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 North Perim Zn (G.N2) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -8211,7 +8229,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_coil_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -8272,7 +8290,7 @@ Schedule:Compact,
       DXGF EL1 Air Loop Outlet,!- Unitary System Air Outlet Node Name
       ,                        !- Supply Air Fan Operating Mode Schedule Name
       80,                      !- Maximum Supply Air Temperature {C}
-      autosize,                !- Heating Supply Air Flow Rate {m3/s}
+      <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
       EL1 West Perim Zn (G.W1),  !- Controlling Zone or Thermostat Location
       Fan:OnOff,               !- Supply Fan Object Type
       DXGF EL1 Supply Fan,     !- Supply Fan Name
@@ -8368,7 +8386,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXGF EL1 Mixed Air Outlet,                               !- Air Inlet Node Name
@@ -8439,7 +8457,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_coil_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -8493,7 +8511,7 @@ AvailabilityManager:NightCycle,
       DXGF EL2 Air Loop Outlet,!- Unitary System Air Outlet Node Name
       ,                        !- Supply Air Fan Operating Mode Schedule Name
       80,                      !- Maximum Supply Air Temperature {C}
-      autosize,                !- Heating Supply Air Flow Rate {m3/s}
+      <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
       EL2 South Perim Zn (G.S1),  !- Controlling Zone or Thermostat Location
       Fan:OnOff,               !- Supply Fan Object Type
       DXGF EL2 Supply Fan,     !- Supply Fan Name
@@ -8588,7 +8606,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXGF EL2 Mixed Air Outlet,                               !- Air Inlet Node Name
