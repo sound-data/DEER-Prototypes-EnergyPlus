@@ -1,5 +1,5 @@
 <%#INTERFACE
-
+# Mom 1985 NCGF
 parameter "run_control", :default=>"ANNUAL"  # Sets the simulation run period (ANNUAL | SIZING)
 
 parameter "timestep", :default=>"Hourly"
@@ -75,6 +75,12 @@ parameter "number_of_stories", :default=>1  #no. of stories, default one story
 parameter "conditioned_floor_area", :default =>1017.6|'ft2'  # ft2, default conditioned floor area of 1 story SFm
 parameter "duct_r_value", :default => 4.9['R-IP'] #U-IP effective duct R value = duct R + insulation R
 
+# hardcoded sizing
+parameter "cooling_capacity", :default=>'autosize'
+parameter "heating_capacity", :default=>'autosize'
+parameter "rated_air_flow", :default=>'autosize'
+parameter "sensible_heat_ratio", :default=>'autosize'
+
 %>
 
 
@@ -140,7 +146,8 @@ for zone in all_zones
     :slave_zone => slave_zone,
     :supply_leakage_frac=>supply_leakage_frac,
     :return_leakage_frac=>return_leakage_frac,
-    :duct_r_value=>duct_r_value
+    :duct_r_value=>duct_r_value,
+    :rated_air_flow=>rated_air_flow
 end
 
 %>
@@ -27835,7 +27842,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 G_SSE1 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 SSE Perim Zn (G.SSE1),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_SSE1 Supply Fan,  !- Supply Fan Name
@@ -27850,7 +27857,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 T_SSE27 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 SSE Perim Zn (T.SSE27),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_SSE27 Supply Fan,  !- Supply Fan Name
@@ -27865,7 +27872,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 G_WSW1 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 WSW Perim Zn (G.WSW1),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_WSW1 Supply Fan,  !- Supply Fan Name
@@ -27880,7 +27887,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 T_WSW27 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 WSW Perim Zn (T.WSW27),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_WSW27 Supply Fan,  !- Supply Fan Name
@@ -27895,7 +27902,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 G_E3 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 East Perim Zn (G.E3),!- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_E3 Supply Fan,!- Supply Fan Name
@@ -27910,7 +27917,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 T_E29 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 East Perim Zn (T.E29),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_E29 Supply Fan,  !- Supply Fan Name
@@ -27925,7 +27932,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 G_S3 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 South Perim Zn (G.S3),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_S3 Supply Fan,!- Supply Fan Name
@@ -27940,7 +27947,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 T_S29 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 South Perim Zn (T.S29),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_S29 Supply Fan,  !- Supply Fan Name
@@ -27955,7 +27962,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 G_E5 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 East Perim Zn (G.E5),!- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_E5 Supply Fan,!- Supply Fan Name
@@ -27970,7 +27977,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 T_E31 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 East Perim Zn (T.E31),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_E31 Supply Fan,  !- Supply Fan Name
@@ -27985,7 +27992,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 G_S5 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 South Perim Zn (G.S5),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_S5 Supply Fan,!- Supply Fan Name
@@ -28000,7 +28007,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 T_S31 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 South Perim Zn (T.S31),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_S31 Supply Fan,  !- Supply Fan Name
@@ -28015,7 +28022,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 G_SSW7 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 SSW Perim Zn (G.SSW7),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_SSW7 Supply Fan,  !- Supply Fan Name
@@ -28030,7 +28037,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 T_SSW33 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 SSW Perim Zn (T.SSW33),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_SSW33 Supply Fan,  !- Supply Fan Name
@@ -28045,7 +28052,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 G_WNW7 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 WNW Perim Zn (G.WNW7),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_WNW7 Supply Fan,  !- Supply Fan Name
@@ -28060,7 +28067,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 T_WNW33 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 WNW Perim Zn (T.WNW33),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_WNW33 Supply Fan,  !- Supply Fan Name
@@ -28075,7 +28082,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 G_W9 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 West Perim Zn (G.W9),!- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_W9 Supply Fan,!- Supply Fan Name
@@ -28090,7 +28097,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 T_W35 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 West Perim Zn (T.W35),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_W35 Supply Fan,  !- Supply Fan Name
@@ -28105,7 +28112,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 G_N9 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 North Perim Zn (G.N9),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_N9 Supply Fan,!- Supply Fan Name
@@ -28120,7 +28127,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 T_N35 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 North Perim Zn (T.N35),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_N35 Supply Fan,  !- Supply Fan Name
@@ -28135,7 +28142,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 G_W11 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 West Perim Zn (G.W11),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 G_W11 Supply Fan,  !- Supply Fan Name
@@ -28150,7 +28157,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL1 T_W37 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL1 West Perim Zn (T.W37),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL1 T_W37 Supply Fan,  !- Supply Fan Name
@@ -28165,7 +28172,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 G_N11 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 North Perim Zn (G.N11),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 G_N11 Supply Fan,  !- Supply Fan Name
@@ -28180,7 +28187,7 @@ AirLoopHVAC:UnitaryHeatOnly,
     DXFG EL2 T_N37 Air Loop Outlet,  !- Unitary System Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     EL2 North Perim Zn (T.N37),  !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
     DXFG EL2 T_N37 Supply Fan,  !- Supply Fan Name
@@ -46321,7 +46328,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 SSE Perim Zn (G.SSE1) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 SSE Perim Zn (G.SSE1) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+<% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46384,7 +46395,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 East Perim Zn (G.E2) Zone Equip Inlet,             !- Air Inlet Node Name
   EL1 East Perim Zn (G.E2) Supply Inlet,                 !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+ <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46447,7 +46462,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 SSE Perim Zn (T.SSE27) Zone Equip Inlet,           !- Air Inlet Node Name
   EL1 SSE Perim Zn (T.SSE27) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46510,7 +46529,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 East Perim Zn (T.E28) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 East Perim Zn (T.E28) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46574,7 +46597,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 WSW Perim Zn (G.WSW1) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 WSW Perim Zn (G.WSW1) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46637,7 +46664,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 South Perim Zn (G.S2) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 South Perim Zn (G.S2) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46699,7 +46730,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 WSW Perim Zn (T.WSW27) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 WSW Perim Zn (T.WSW27) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46761,7 +46796,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 South Perim Zn (T.S28) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 South Perim Zn (T.S28) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46823,7 +46862,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 East Perim Zn (G.E3) Zone Equip Inlet,             !- Air Inlet Node Name
   EL1 East Perim Zn (G.E3) Supply Inlet,                 !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46887,7 +46930,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 East Perim Zn (G.E4) Zone Equip Inlet,             !- Air Inlet Node Name
   EL1 East Perim Zn (G.E4) Supply Inlet,                 !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -46950,7 +46997,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 East Perim Zn (T.E29) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 East Perim Zn (T.E29) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47013,7 +47064,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 East Perim Zn (T.E30) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 East Perim Zn (T.E30) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47075,7 +47130,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 South Perim Zn (G.S3) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 South Perim Zn (G.S3) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47137,7 +47196,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 South Perim Zn (G.S4) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 South Perim Zn (G.S4) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47198,7 +47261,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 South Perim Zn (T.S29) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 South Perim Zn (T.S29) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47259,7 +47326,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 South Perim Zn (T.S30) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 South Perim Zn (T.S30) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47321,7 +47392,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 East Perim Zn (G.E5) Zone Equip Inlet,             !- Air Inlet Node Name
   EL1 East Perim Zn (G.E5) Supply Inlet,                 !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47385,7 +47460,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 NNE Perim Zn (G.NNE6) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 NNE Perim Zn (G.NNE6) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47449,7 +47528,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 East Perim Zn (T.E31) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 East Perim Zn (T.E31) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47513,7 +47596,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 NNE Perim Zn (T.NNE32) Zone Equip Inlet,           !- Air Inlet Node Name
   EL1 NNE Perim Zn (T.NNE32) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47577,7 +47664,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 South Perim Zn (G.S5) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 South Perim Zn (G.S5) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47641,7 +47732,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 ESE Perim Zn (G.ESE6) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 ESE Perim Zn (G.ESE6) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47705,7 +47800,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 South Perim Zn (T.S31) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 South Perim Zn (T.S31) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47768,7 +47867,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 ESE Perim Zn (T.ESE32) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 ESE Perim Zn (T.ESE32) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47831,7 +47934,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 SSW Perim Zn (G.SSW7) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 SSW Perim Zn (G.SSW7) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47893,7 +48000,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 West Perim Zn (G.W8) Zone Equip Inlet,             !- Air Inlet Node Name
   EL1 West Perim Zn (G.W8) Supply Inlet,                 !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -47955,7 +48066,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 SSW Perim Zn (T.SSW33) Zone Equip Inlet,           !- Air Inlet Node Name
   EL1 SSW Perim Zn (T.SSW33) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48016,7 +48131,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 West Perim Zn (T.W34) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 West Perim Zn (T.W34) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48077,7 +48196,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 WNW Perim Zn (G.WNW7) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 WNW Perim Zn (G.WNW7) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48139,7 +48262,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 North Perim Zn (G.N8) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 North Perim Zn (G.N8) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48207,7 +48334,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 WNW Perim Zn (T.WNW33) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 WNW Perim Zn (T.WNW33) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48269,7 +48400,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 North Perim Zn (T.N34) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 North Perim Zn (T.N34) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48331,7 +48466,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 West Perim Zn (G.W9) Zone Equip Inlet,             !- Air Inlet Node Name
   EL1 West Perim Zn (G.W9) Supply Inlet,                 !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48393,7 +48532,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 West Perim Zn (G.W10) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 West Perim Zn (G.W10) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48455,7 +48598,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 West Perim Zn (T.W35) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 West Perim Zn (T.W35) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48516,7 +48663,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 West Perim Zn (T.W36) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 West Perim Zn (T.W36) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48578,7 +48729,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 North Perim Zn (G.N9) Zone Equip Inlet,            !- Air Inlet Node Name
   EL2 North Perim Zn (G.N9) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48640,7 +48795,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 North Perim Zn (G.N10) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 North Perim Zn (G.N10) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48701,7 +48860,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 North Perim Zn (T.N35) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 North Perim Zn (T.N35) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48763,7 +48926,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 North Perim Zn (T.N36) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 North Perim Zn (T.N36) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48824,7 +48991,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 West Perim Zn (G.W11) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 West Perim Zn (G.W11) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48885,7 +49056,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 NNW Perim Zn (G.NNW12) Zone Equip Inlet,           !- Air Inlet Node Name
   EL1 NNW Perim Zn (G.NNW12) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -48947,7 +49122,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 West Perim Zn (T.W37) Zone Equip Inlet,            !- Air Inlet Node Name
   EL1 West Perim Zn (T.W37) Supply Inlet,                !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -49008,7 +49187,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL1 NNW Perim Zn (T.NNW38) Zone Equip Inlet,           !- Air Inlet Node Name
   EL1 NNW Perim Zn (T.NNW38) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -49069,7 +49252,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 North Perim Zn (G.N11) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 North Perim Zn (G.N11) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -49129,7 +49316,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 ENE Perim Zn (G.ENE12) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 ENE Perim Zn (G.ENE12) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -49190,7 +49381,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 North Perim Zn (T.N37) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 North Perim Zn (T.N37) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -49250,7 +49445,11 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
   ,                                                        !- Availability Schedule Name
   EL2 ENE Perim Zn (T.ENE38) Zone Equip Inlet,           !- Air Inlet Node Name
   EL2 ENE Perim Zn (T.ENE38) Supply Inlet,               !- Air Outlet Node Name
-  autosize,                                                !- Maximum air flow rate {m3/s}
+  <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+  <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+  <% end %>
   ,                                                        !- Design Specification Outdoor Air Object Name
   ;                                                        !- Per Person Ventilation Rate Mode
 
@@ -49270,13 +49469,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -49288,7 +49487,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -49345,7 +49544,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 G_SSE1 Supply Fan Outlet,                       !- Air Inlet Node Name
   DXFG EL1 G_SSE1 Air Loop Outlet,                     !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -49428,7 +49627,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 G_SSE1 Mixed Air Outlet,                        !- Air Inlet Node Name
@@ -49475,13 +49674,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -49493,7 +49692,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -49542,7 +49741,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 T_SSE27 Supply Fan Outlet,                      !- Air Inlet Node Name
   DXFG EL1 T_SSE27 Air Loop Outlet,          !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -49624,7 +49823,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 T_SSE27 Mixed Air Outlet,                       !- Air Inlet Node Name
@@ -49670,13 +49869,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -49688,7 +49887,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -49737,7 +49936,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 G_WSW1 Supply Fan Outlet,                       !- Air Inlet Node Name
   DXFG EL2 G_WSW1 Air Loop Outlet,           !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -49819,7 +50018,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 G_WSW1 Mixed Air Outlet,                        !- Air Inlet Node Name
@@ -49865,13 +50064,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -49883,7 +50082,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -49932,7 +50131,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 T_WSW27 Supply Fan Outlet,                      !- Air Inlet Node Name
   DXFG EL2 T_WSW27 Air Loop Outlet,          !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -50014,7 +50213,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 T_WSW27 Mixed Air Outlet,                       !- Air Inlet Node Name
@@ -50060,13 +50259,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -50078,7 +50277,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -50126,7 +50325,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 G_E3 Supply Fan Outlet,                         !- Air Inlet Node Name
   DXFG EL1 G_E3 Air Loop Outlet,             !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -50208,7 +50407,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 G_E3 Mixed Air Outlet,                          !- Air Inlet Node Name
@@ -50253,13 +50452,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -50271,7 +50470,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -50320,7 +50519,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 T_E29 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL1 T_E29 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -50402,7 +50601,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 T_E29 Mixed Air Outlet,                         !- Air Inlet Node Name
@@ -50447,13 +50646,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -50465,7 +50664,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -50514,7 +50713,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 G_S3 Supply Fan Outlet,                         !- Air Inlet Node Name
   DXFG EL2 G_S3 Air Loop Outlet,             !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -50596,7 +50795,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 G_S3 Mixed Air Outlet,                          !- Air Inlet Node Name
@@ -50641,13 +50840,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -50659,7 +50858,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -50708,7 +50907,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 T_S29 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL2 T_S29 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -50790,7 +50989,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 T_S29 Mixed Air Outlet,                         !- Air Inlet Node Name
@@ -50835,13 +51034,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -50853,7 +51052,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -50902,7 +51101,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 G_E5 Supply Fan Outlet,                         !- Air Inlet Node Name
   DXFG EL1 G_E5 Air Loop Outlet,             !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -50984,7 +51183,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 G_E5 Mixed Air Outlet,                          !- Air Inlet Node Name
@@ -51029,13 +51228,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -51047,7 +51246,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -51096,7 +51295,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 T_E31 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL1 T_E31 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -51178,7 +51377,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 T_E31 Mixed Air Outlet,                         !- Air Inlet Node Name
@@ -51223,13 +51422,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -51241,7 +51440,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -51290,7 +51489,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 G_S5 Supply Fan Outlet,                         !- Air Inlet Node Name
   DXFG EL2 G_S5 Air Loop Outlet,             !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -51372,7 +51571,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 G_S5 Mixed Air Outlet,                          !- Air Inlet Node Name
@@ -51417,13 +51616,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -51435,7 +51634,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -51484,7 +51683,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 T_S31 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL2 T_S31 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -51566,7 +51765,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 T_S31 Mixed Air Outlet,                         !- Air Inlet Node Name
@@ -51631,13 +51830,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -51649,7 +51848,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -51698,7 +51897,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 G_SSW7 Supply Fan Outlet,                       !- Air Inlet Node Name
   DXFG EL1 G_SSW7 Air Loop Outlet,           !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -51780,7 +51979,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 G_SSW7 Mixed Air Outlet,                        !- Air Inlet Node Name
@@ -51846,13 +52045,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -51864,7 +52063,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -51913,7 +52112,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 T_SSW33 Supply Fan Outlet,                      !- Air Inlet Node Name
   DXFG EL1 T_SSW33 Air Loop Outlet,          !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -51995,7 +52194,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 T_SSW33 Mixed Air Outlet,                       !- Air Inlet Node Name
@@ -52061,13 +52260,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -52079,7 +52278,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -52128,7 +52327,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 G_WNW7 Supply Fan Outlet,                       !- Air Inlet Node Name
   DXFG EL2 G_WNW7 Air Loop Outlet,           !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -52210,7 +52409,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 G_WNW7 Mixed Air Outlet,                        !- Air Inlet Node Name
@@ -52276,13 +52475,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -52294,7 +52493,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -52343,7 +52542,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 T_WNW33 Supply Fan Outlet,                      !- Air Inlet Node Name
   DXFG EL2 T_WNW33 Air Loop Outlet,          !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -52425,7 +52624,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 T_WNW33 Mixed Air Outlet,                       !- Air Inlet Node Name
@@ -52491,13 +52690,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -52509,7 +52708,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -52558,7 +52757,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 G_W9 Supply Fan Outlet,                         !- Air Inlet Node Name
   DXFG EL1 G_W9 Air Loop Outlet,             !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -52640,7 +52839,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 G_W9 Mixed Air Outlet,                          !- Air Inlet Node Name
@@ -52706,13 +52905,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -52724,7 +52923,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -52772,7 +52971,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 T_W35 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL1 T_W35 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -52854,7 +53053,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 T_W35 Mixed Air Outlet,                         !- Air Inlet Node Name
@@ -52920,13 +53119,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -52938,7 +53137,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -52985,7 +53184,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 G_N9 Supply Fan Outlet,                         !- Air Inlet Node Name
   DXFG EL2 G_N9 Air Loop Outlet,             !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -53067,7 +53266,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 G_N9 Mixed Air Outlet,                          !- Air Inlet Node Name
@@ -53133,13 +53332,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -53151,7 +53350,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -53199,7 +53398,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 T_N35 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL2 T_N35 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -53281,7 +53480,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 T_N35 Mixed Air Outlet,                         !- Air Inlet Node Name
@@ -53347,13 +53546,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -53365,7 +53564,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -53412,7 +53611,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 G_W11 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL1 G_W11 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -53494,7 +53693,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 G_W11 Mixed Air Outlet,                         !- Air Inlet Node Name
@@ -53560,13 +53759,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -53578,7 +53777,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -53626,7 +53825,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL1 T_W37 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL1 T_W37 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -53708,7 +53907,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL1 T_W37 Mixed Air Outlet,                         !- Air Inlet Node Name
@@ -53774,13 +53973,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -53792,7 +53991,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -53839,7 +54038,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 G_N11 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL2 G_N11 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -53922,7 +54121,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 G_N11 Mixed Air Outlet,                         !- Air Inlet Node Name
@@ -53988,13 +54187,13 @@ Sizing:System,
   No,                                                      !- 100% Outdoor Air in Heating
   0.008,                                                   !- Central Cooling Design Supply Air Humidity Ratio {kg-H2O/kg-air}
   0.008,                                                   !- Central Heating Design Supply Air Humidity Ratio {kg-H2O/kg-air}
-  DesignDay,                                               !- Cooling Supply Air Flow Rate Method
-  0,                                                       !- Cooling Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Cooling Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Cooling Supply Air Flow Rate {m3/s}
   ,                                                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
   ,                                                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-  DesignDay,                                               !- Heating Supply Air Flow Rate Method
-  0,                                                       !- Heating Supply Air Flow Rate {m3/s}
+  Flow/System,                                               !- Heating Supply Air Flow Rate Method
+  <%= rated_air_flow %>,                                                       !- Heating Supply Air Flow Rate {m3/s}
   ,                                                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
   ,                                                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
   ,                                                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -54006,7 +54205,7 @@ Sizing:System,
   ,                                                        !- Cooling Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Cooling Design Capacity
   HeatingDesignCapacity,                                   !- Heating Design Capacity Method
-  autosize,                                                !- Heating Design Capacity {W}
+  <%= heating_capacity %>,                                                !- Heating Design Capacity {W}
   ,                                                        !- Heating Design Capacity Per Floor Area {W/m2}
   ,                                                        !- Fraction of Autosized Heating Design Capacity
   OnOff;                                                   !- Central Cooling Capacity Control Method
@@ -54055,7 +54254,7 @@ Coil:Heating:Fuel,
   ,                                                        !- Availability Schedule Name
   NaturalGas,                                              !- Fuel Type
   <%= burner_eff %>,                                    !- Gas Burner Efficiency
-  autosize,                                                !- Nominal Capacity of the Coil {W}
+  <%= heating_capacity %>,                                                !- Nominal Capacity of the Coil {W}
   DXFG EL2 T_N37 Supply Fan Outlet,                        !- Air Inlet Node Name
   DXFG EL2 T_N37 Air Loop Outlet,            !- Air Outlet Node Name
   ,                                                        !- Coil Temp Setpoint Node
@@ -54137,7 +54336,7 @@ Fan:OnOff,
   always_avail,                                            !- Availability Schedule Name
   <%=supplyfan_total_eff%>,                     !- Fan Total Efficiency
   125,                                                     !- Pressure Rise {Pa}
-  autosize,                                                !- Maximum Flow Rate {m3/s}
+  <%= rated_air_flow %>,                                                !- Maximum Flow Rate {m3/s}
   <%=motor_eff%>,                     !- Motor Efficiency
   1,                                                       !- Motor in Airstream Fraction
   DXFG EL2 T_N37 Mixed Air Outlet,                         !- Air Inlet Node Name
