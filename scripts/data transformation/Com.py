@@ -662,7 +662,6 @@ sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MeasTechIDs['Co
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_annual_pre = pd.DataFrame()
     for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
-    for new_id in PreTechIDs['PreTechID']:
         print(f'changing to specific PreTechID {new_id}')
         sim_annual_pre_mod = sim_annual_pre_common[sim_annual_pre_common['TechID']==common_id].copy()
         sim_annual_pre_mod['TechID'] = new_id
