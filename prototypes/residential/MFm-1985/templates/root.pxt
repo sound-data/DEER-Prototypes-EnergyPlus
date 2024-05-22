@@ -45346,11 +45346,21 @@ Output:Variable,
     Zone Mean Air Temperature ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
 
+Output:Variable,
+    *,                       !- Key Value
+    Cooling Coil Total Cooling Energy ,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 
-    Output:Variable,
-        *,                       !- Key Value
-        Cooling Coil Total Cooling Energy ,  !- Variable Name
-        Hourly;                  !- Reporting Frequency
+Output:Variable,
+    *,                       !- Key Value
+    Unitary System Fan Part Load Ratio ,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Unitary System Compressor Part Load Ratio ,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
 
     !-   ===========  ALL OBJECTS IN CLASS: OUTPUTCONTROL:TABLE:STYLE ===========
 
