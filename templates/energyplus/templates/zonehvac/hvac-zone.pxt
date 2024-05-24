@@ -4,6 +4,10 @@ require "modelkit/energyplus"
 parameter "zone_name"
 parameter "sys_name"
 
+! 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
+parameter "fan_op_fault", :default => false, :type => "Enumeration", :valuelist => "true,false"
+
+
 parameter "hvac_type",
   :default => "CUSTOM", :domain => String  # ["ZN-PTAC", "ZN-PTHP", "ZN-WINAC", "SZ-CAV", "MZ-CAV", "MZ-VAV", "MZ-VRF", "IDEAL", "CUSTOM", "SZ-MAU", "UH"]   there's more
 parameter "hvac_sch", :name => "HVAC Schedule", :description => "Operation schedule that controls availability of HVAC systems",
@@ -867,7 +871,8 @@ unitary_parameters = [
   :aux_heat_coil_type,
   :aux_heat_coil_cap,
   :aux_heat_coil_eff,
-  :aux_heat_coil_fuel
+  :aux_heat_coil_fuel,
+  :fan_op_fault
 ]
 
 # if unitary_parameters are being repeated twice, maybe better to separate unitary system from ahu.pxt...
