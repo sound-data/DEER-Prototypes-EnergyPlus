@@ -11,6 +11,8 @@ parameter "cond_curves_source", :default=>"SelfContained" # (SelfContained | Med
 parameter "cond_fan_power", :default=>2600['W']
 parameter "cond_subcool", :default=>0['C']
 parameter "working_fluid", :default=>"R507" # TODO add other fluids R22
+# Behzad Rizi - parameterize condenser type
+parameter "condenser_type", :default=>"AirCooled" # (AirCooled | WaterCooled | EvaporativelyCooled)
 %>
 
 <%
@@ -24,7 +26,13 @@ Refrigeration:System,
     <%= ref_system_name %>,           !- Name
     <%= case_walkin_list %>,         !- Refrigerated Case or Walkin or CaseAndWalkInList Name
     ,                        !- Refrigeration Transfer Load or TransferLoad List Name
+ <% if (condenser_type == "AirCooled") %>
     <%= ref_system_name %> Condenser Air Cooled,        !- Refrigeration Condenser Name
+ <% elsif (condenser_type == "EvaporativelyCooled") %>
+  <%= ref_system_name %> Condenser Evaporatively Cooled,        !- Refrigeration Condenser Name
+ <% else %>
+ <%   raise("error: unknown option condenser_type = '#{condenser_type}'") %>
+ <% end %>
     <%= ref_sys_comp_list %>,   !- Compressor or CompressorList Name
     25.0,                    !- Minimum Condensing Temperature {C}
     <%= working_fluid %>,                     !- Refrigeration System Working Fluid Type
@@ -52,6 +60,7 @@ Refrigeration:CompressorList,
   <%= ref_sys_comp_name %>,  !- Refrigeration Compressor Name
 <% end %>
 
+<% if (condenser_type == "AirCooled") %>
 Refrigeration:Condenser:AirCooled,
     <%= ref_system_name %> Condenser Air Cooled,        !- Name
     <%= ref_system_name %> Condenser HR curve, !- Rated Effective Total Heat Rejection Rate Curve Name
@@ -61,6 +70,33 @@ Refrigeration:Condenser:AirCooled,
     0.25,                    !- Minimum Fan Air Flow Ratio {dimensionless}
     ,  !- Air Inlet Node Name or Zone Name
     ;           !- End-Use Subcategory
+<% elsif (condenser_type == "EvaporativelyCooled") %>
+! Evaporatively condenser from EnergyPlus default values
+! Behzad Rizi, 2024-03-20
+  Refrigeration:Condenser:EvaporativeCooled,
+  <%= ref_system_name %> Condenser Evaporatively Cooled,        !- Name
+  1.36e+006,             !- Rated Effective Total Heat Rejection Rate
+  ,                      !- Rated Subcooling Temperature Difference {deltaC}
+  TwoSpeed,              !- Condenser Fan Speed Control Type
+  <%= cond_fan_power %>, !- Rated Fan Power {W}
+  0.20,                  !- Minimum Fan Air Flow Ratio {dimensionless}
+  6.63,                  !- Approach Temperature Constant Term {C}
+  0.468,                 !- Approach Temperature Coefficient 2 {C}
+  17.93,                 !- Approach Temperature Coefficient 3 {C}
+  -0.322,                !- Approach Temperature Coefficient 4 {dimensionless}
+  0.5,                   !- Minimum Capacity Factor {dimensionless}
+  5,                     !- Maximum Capacity Factor {dimensionless}
+  ,                      !- Air Inlet Node Name
+  autocalculate,         !- Rated Air Flow Rate
+  200,                   !- Basin Heater Capacity {W}
+  2,                     !- Basin Heater Setpoint Temperature {C}
+  1000,                  !- Rated Water Pump Power {W}
+  ,                      !- Evaporative Water Supply Tank Name
+  ,                      !- Evaporative Condenser Availability Schedule Name
+  General;               !- End-Use Subcategory
+<% else %>
+<%   raise("error: unknown option condenser_type = '#{condenser_type}'") %>
+<% end %>
 
 <% if (cond_curves_source == "SelfContained") %>
   Curve:Linear,

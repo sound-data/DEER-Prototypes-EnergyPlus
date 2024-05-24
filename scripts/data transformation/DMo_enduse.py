@@ -21,7 +21,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'Brushless Fan Motor'
+measure_name = 'Wall Furnace'
 # %%
 ##STEP 1: enduse map table extract
 end_use_map = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='enduses')
@@ -33,7 +33,7 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-path = 'Analysis/DMo_Brushless_Fan_Motor_Ex'
+path = 'Analysis/DMo_Furnace'
 
 #%%
 
@@ -238,9 +238,9 @@ sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MeasTechIDs['Co
 #Pre hourly
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_hourly_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_hourly_pre_mod = sim_hourly_pre_common.copy()
+        sim_hourly_pre_mod = sim_hourly_pre_common[sim_hourly_pre_common['TechID']==common_id].copy()
         sim_hourly_pre_mod['TechID'] = new_id
         #merge to final df
         sim_hourly_pre = pd.concat([sim_hourly_pre, sim_hourly_pre_mod])

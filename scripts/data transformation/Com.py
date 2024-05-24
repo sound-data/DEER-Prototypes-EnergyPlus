@@ -113,16 +113,7 @@ expected_att = {
                                                     'cAVVG',
                                                     'cWVVG',
                                                     'cDXOH'],
-    'BldgVint': ['Ex','New']+['2015',
-                                '2023',
-                                '2003',
-                                '1975',
-                                '2007',
-                                '2011',
-                                '2020',
-                                '2017',
-                                '1996',
-                                '1985'],
+    'BldgVint': ['Ex','New'],
     'Measure': tech_uniques
 }
 
@@ -236,7 +227,8 @@ def end_use_rearrange(df_in):
                             df_in['Interior Lighting (kWh)'] +\
                             df_in['Exterior Lighting (kWh)'] +\
                             df_in['Fans (kWh)']+\
-                            df_in['Pumps (kWh)'])
+                            df_in['Pumps (kWh)']+\
+                            df_in['Refrigeration (kWh)'])
 
     df_in['kwh_ltg'] = (df_in['Interior Lighting (kWh)'] +\
                                     df_in['Exterior Lighting (kWh)'])
@@ -255,7 +247,7 @@ def end_use_rearrange(df_in):
 
     df_in['kwh_venthtg'] =0 #placeholders fields for now
     df_in['kwh_ventclg'] =0
-    df_in['kwh_refg'] = 0 
+    df_in['kwh_refg'] = df_in['Refrigeration (kWh)']
     df_in['kwh_hpsup'] = 0
     df_in['kwh_shw'] = 0
     df_in['kwh_ext'] = 0
@@ -288,8 +280,7 @@ df_annual_raw = pd.DataFrame()
 split_meta_cols_all = pd.DataFrame()
 folder_list = list_folders_in_path(filepath)
 for folder in folder_list:
-    bldgvint = folder[-4:]
-    print(f"looking at vintage {bldgvint} folder..")
+    print(f"looking at folder {folder}..")
     if locate_file(filepath+"/"+folder, 'results-summary.csv') != None:
         #locate_file(filepath+"/"+folder, 'results-summary.csv')
         print(f"'{filepath}/{folder}/results-summary.csv' will be processed.")
@@ -308,24 +299,12 @@ for folder in folder_list:
         print(f"no data found.")
 
 
-
-
 # %%
 #if looping over multiple folders/cohort cases, use a list
-#(supposed to be the actual cohort with &s for Res case)
 #Com version
 
 cohort_cases = list(split_meta_cols_all[1].unique())
-#%%
-#test 2
-#12/21/23, test case for 1 record. ok
-#note the update for annual_raw_parsing_com function
-# cohort_dict = parse_measure_name(cohort_cases[0])
-# sim_annual_filtered = df_annual_raw[df_annual_raw['File Name'].str.contains(cohort_cases[0])].copy()
-# sim_annual_i = annual_raw_parsing_com(sim_annual_filtered, cohort_dict, cohort_cases[0])
-
-#%%
-#test for-loop style. OK for annual. keep this for actual code
+#combine data
 sim_annual_proto = pd.DataFrame()
 for case in cohort_cases:
     print(f'processing all annual data that are grouped in {case}')
@@ -367,8 +346,7 @@ print(os.path.abspath(os.curdir))
 hourly_df = pd.DataFrame(index=range(0,8760))
 
 for folder in folder_list:
-    bldgvint = folder[-4:]
-    print(f"looking at vintage {bldgvint} folder..")
+    print(f"looking at folder {folder}..")
     if 'runs' in list_folders_in_path(f'{filepath}/{folder}'):
         #locate_file(filepath+"/"+folder, 'results-summary.csv')
         print(f"'{filepath}/{folder}/runs' will be processed.")
@@ -581,9 +559,13 @@ metadata_msr = metadata_msr.rename(columns={'TechID':'MeasTechID'})
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     metadata_pre_full = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    # Solaris Technical 2024-04-17
+    # Corrects an issue where more than one "Common_PreTechID" in
+    # the batch of measures causes the renaming step to fail silently
+    # and generate duplicate rows with mismatched data.
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        metadata_pre_mod = metadata_pre.copy()
+        metadata_pre_mod = metadata_pre[metadata_pre['PreTechID']==common_id].copy()
         metadata_pre_mod['PreTechID'] = new_id
         #merge to final df
         metadata_pre_full = pd.concat([metadata_pre_full, metadata_pre_mod])
@@ -679,9 +661,9 @@ sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MeasTechIDs['Co
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_annual_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_annual_pre_mod = sim_annual_pre_common.copy()
+        sim_annual_pre_mod = sim_annual_pre_common[sim_annual_pre_common['TechID']==common_id].copy()
         sim_annual_pre_mod['TechID'] = new_id
         #merge to final df
         sim_annual_pre = pd.concat([sim_annual_pre, sim_annual_pre_mod])
@@ -734,9 +716,9 @@ sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MeasTechIDs['Co
 #Pre hourly
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_hourly_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_hourly_pre_mod = sim_hourly_pre_common.copy()
+        sim_hourly_pre_mod = sim_hourly_pre_common[sim_hourly_pre_common['TechID']==common_id].copy()
         sim_hourly_pre_mod['TechID'] = new_id
         #merge to final df
         sim_hourly_pre = pd.concat([sim_hourly_pre, sim_hourly_pre_mod])

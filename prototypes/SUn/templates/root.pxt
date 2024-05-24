@@ -638,35 +638,6 @@ if (landscaping_control)
   insert "irrigation.pxt", **irrigation, **local(:graywater_supply_tank)
 end
 
-### Start refrigeration system
-air_chiller_names = ["Airchiller1", "Airchiller2"]
-compressors = ["compressor1","cpmpressor2"]
-insert "ref-sys.pxt",
-  :ref_system_name => "Air_Chiller",
-  :case_walkin_names => air_chiller_names,
-  :ref_sys_comp_names => compressors,
-  :cond_curves_source => "LowTemp"
-
-insert "ref-chiller.pxt",
-  :chiller_name => "Airchiller1"
-
-insert "ref-chiller.pxt",
-  :chiller_name => "Airchiller2"
-
-insert "ref-sys-comp.pxt",
-  :comp_name => "compressor1"
-
-insert "ref-sys-comp.pxt",
-  :comp_name => "cpmpressor2"
-
-insert "ref-zone.pxt",
-  :zone_name => "WarehouseCond EL1 South Perim Spc (G.S1)",
-  :air_chiller_names => air_chiller_names
-
-insert "fluid-properties.pxt",
-  :working_fluid =>"R22"
-### End refrigeration system
-
 insert "output.pxt"
 insert "custom.pxt"
 %>

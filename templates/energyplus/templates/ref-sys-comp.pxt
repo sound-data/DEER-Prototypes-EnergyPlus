@@ -2,32 +2,43 @@
 parameter "comp_name"
 parameter "comp_curves_source", :default=>"Carlyle_R-22_Med_06DM808" # (Carlyle_R-22_Low_06CC665 | Carlyle_R-22_Low_06DR718 | Carlyle_R-22_Med_06DM808 | Carlyle_R-22_Med_06DR820 | Copeland_R507_Med_3DS3150ETFE |Copeland_R507_Med_2da3075e | 
 # Copeland_R507_Low_3db30750 | Copeland_R507_Low_3DS3100E |Copeland_R507_Low_4dl3150e | Copeland_R507_Med_3db3100e)
+parameter "rated_sh", :default=>"" # ['C']
 parameter "return_gas_temp", :default=>18['C']
 parameter "liquid_temp", :default=>4.4['C']
-parameter "lighting_schedule", :default=>
-"
-  Through: 12/31,
-  For: WinterDesignDays,
-  Until: 24:00, 0.00,
-  For: SummerDesignDays,
-  Until: 24:00, 1.00,
-  For: AllOtherDays,
-  Until: 02:00, 0.10,
-  Until: 04:00, 0.50,
-  Until: 19:00, 1.00,
-  Until: 20:00, 0.50,
-  Until: 24:00, 0.10;
-"
+parameter "rated_subcooling", :default=>"" # ['C']
+%>
+
+<%
+# 2024-04-03 Nicholas Fette on advice from Roger Baker
+# EnergyPlus expects at most one input from these:
+# * rated superheat (rated_sh)
+# * rated return gas temperature (return_gas_temp)
+
+# Rules with a "not equals" comparison are not yet implemented.
+#rule "return_gas_given", :condition => Proc.new {return_gas_temp != ""} do
+#  force :rated_sh => ""
+#end
+if return_gas_temp != ""
+  rated_sh = ""
+end
+
+# EnergyPlus expects at most one input from these:
+# * rated liquid temperature (liquid_temp)
+# * rated subcooling (rated_subcooling)
+if liquid_temp != ""
+  rated_subcooling = ""
+end
+
 %>
 
 Refrigeration:Compressor,
     <%= comp_name %>,  !- Name
     <%= comp_name %> Power Curve,!- Refrigeration Compressor Power Curve Name
     <%= comp_name %> Capacity Curve,  !- Refrigeration Compressor Capacity Curve Name
-    ,                        !- Rated Superheat {deltaC}
+    <%= rated_sh %>,                        !- Rated Superheat {deltaC}
     <%= return_gas_temp %>,                    !- Rated Return Gas Temperature {C}
     <%= liquid_temp %>,                     !- Rated Liquid Temperature {C}
-    ;                        !- Rated Subcooling {deltaC}
+    <%= rated_subcooling %>;                        !- Rated Subcooling {deltaC}
 
 
 <% if (comp_curves_source == "Carlyle_R-22_Med_06DR820") %>
@@ -502,5 +513,92 @@ Refrigeration:Compressor,
     Dimensionless,           !- Input Unit Type for Y
     Dimensionless;           !- Output Unit Type
 
+
+<% elsif (comp_curves_source == "Bitzer_NH3_Low_OSNA8591-K") %>
+
+  ! Capacity Curve for Bitzer OSNA8591-K,   !nominal cooling capacity = 113.4 KW
+  ! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,!- Name
+    5.9117581775E+5,         !- Coefficient1 Constant
+    1.9944781803E+4,         !- Coefficient2 x
+    2.4413189926E+2,         !- Coefficient3 x**2
+    9.4150641764E+1,         !- Coefficient4 y
+    -2.5415128124E+1,        !- Coefficient5 y**2
+    -1.3616277333E+1,        !- Coefficient6 x*y
+    1.0770800973E+0,         !- Coefficient7 x**3
+    -1.1883872511E-1,        !- Coefficient8 y**3
+    -4.2755662184E-1,        !- Coefficient9 x**2*y
+    -3.9157972196E-1,        !- Coefficient10 x*y**2
+    -45.0,                   !- Minimum Value of x
+    -10.0,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    50.0;                    !- Maximum Value of y
+
+! Power Curve for Bitzer OSNA8591-K,   !nominal power = 97.7 kW
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,  !- Name
+    7.0117508049E+4,         !- Coefficient1 Constant
+    7.5839798469E+2,         !- Coefficient2 x
+    -1.4246063754E+1,        !- Coefficient3 x**2
+    -1.0455627807E+2,        !- Coefficient4 y
+    3.7083350676E+1,         !- Coefficient5 y**2
+    -2.5619083665E+0,        !- Coefficient6 x*y
+    -2.7545270129E-1,        !- Coefficient7 x**3
+    -1.3067782147E-1,        !- Coefficient8 y**3
+    2.2062739879E-1,         !- Coefficient9 x**2*y
+    2.1001616178E-1,         !- Coefficient10 x*y**2
+    -45.0,                   !- Minimum Value of x
+    -10.0,                   !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    50.0;                    !- Maximum Value of y
+
+<% elsif (comp_curves_source == "Bitzer_NH3_Med_OSNA8591-K") %>
+
+  ! Capacity Curve for Bitzer OSKA8591-K,   !nominal cooling capacity = 476 KW
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Capacity Curve,!- Name
+    4.7581237254E+5,         !- Coefficient1 Constant
+    1.5836010395E+4,         !- Coefficient2 x
+    2.4809754731E+2,         !- Coefficient3 x**2
+    5.8154019974E+3,         !- Coefficient4 y
+    -1.4227382029E+2,        !- Coefficient5 y**2
+    1.9607540381E+2,         !- Coefficient6 x*y
+    1.8625932421E+0,         !- Coefficient7 x**3
+    2.9311106887E-1,         !- Coefficient8 y**3
+    7.0297720032E-1,         !- Coefficient9 x**2*y
+    -2.7310763923E+0,        !- Coefficient10 x*y**2
+    -20.0,                   !- Minimum Value of x
+    12.8,                    !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    53.0;                    !- Maximum Value of y
+
+! Power Curve for Bitzer OSKA8591-K,   !nominal power = 476 kW
+! Results in Watts, Inputs:  Sat Suction Temp (C), Sat Discharge Temp (C)
+
+  Curve:Bicubic,
+    <%= comp_name %> Power Curve,  !- Name
+    5.3918315894E+4,         !- Coefficient1 Constant
+    1.1536082079E+2,         !- Coefficient2 x
+    1.5324329008E+1,         !- Coefficient3 x**2
+    -1.8819004997E+2,        !- Coefficient4 y
+    5.2031668763E+1,         !- Coefficient5 y**2
+    1.0397602406E+1,         !- Coefficient6 x*y
+    2.0331045919E+0,         !- Coefficient7 x**3
+    -2.5310651862E-1,        !- Coefficient8 y**3
+    -2.6797031295E-1,        !- Coefficient9 x**2*y
+    6.0439117696E-2,         !- Coefficient10 x*y**2
+    -20.0,                   !- Minimum Value of x
+    12.8,                    !- Maximum Value of x
+    10.0,                    !- Minimum Value of y
+    53.0;                    !- Maximum Value of y
+
+
+    
 
 <% end %>

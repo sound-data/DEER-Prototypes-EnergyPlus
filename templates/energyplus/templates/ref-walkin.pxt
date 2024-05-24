@@ -35,6 +35,8 @@ parameter "door_opening_sch", :default=>
   Until: 21:00,0.2,        !- Field 6
   Until: 24:00,0.02;       !- Field 8
 "
+# Behzad Rizi - Defined "available" to switch off/on refrigerated cases if needed
+parameter "available", :default=> true # (true | false)
 %>
 
 Refrigeration:WalkIn,
@@ -75,7 +77,11 @@ Refrigeration:WalkIn,
 Schedule:Constant,
   <%= walkin_name %> Walkin Availability Sch,  !- Name
   Binary Control,          !- Schedule Type Limits Name
+<% if available %>
   1;                       !- Hourly Value
+<% else %>
+  0;                       !- Hourly Value
+<% end %>
 
 Schedule:Compact,
     <%= walkin_name %> Walkin Heater Sch,      !- Name
