@@ -4,7 +4,7 @@ require "modelkit/energyplus"
 parameter "zone_name"
 parameter "sys_name"
 
-! 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
+# 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
 parameter "fan_op_fault", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 
