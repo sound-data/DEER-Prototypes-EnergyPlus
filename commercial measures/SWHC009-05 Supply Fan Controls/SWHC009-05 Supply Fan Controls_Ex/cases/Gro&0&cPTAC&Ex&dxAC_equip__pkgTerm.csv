@@ -1,0 +1,9 @@
+skip,case_name,:main_hvac_type,:main_cool_coil_type,:main_heat_coil_type,:main_dx_comp_speed,:main_fan_speed,:main_atu_reheat_coil_type,:grocery_fan_op_fault,:industrial_high_fan_op_fault,:office_large_fan_op_fault
+,NE-dxAC_equip-pkgTerm-cPTAC-Occ-Fan-Ctrl,SZ-CAV,DX-AIR,NONE,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE,TRUE
+,NE-dxAC_equip-pkgTerm-cPTAC-Unocc-Fan-Ctrl,SZ-CAV,DX-AIR,NONE,CONSTANT,CONSTANT,RESISTANCE,FALSE,FALSE,FALSE
+,NE-dxAC_equip-pkgTerm-cDXGF-Occ-Fan-Ctrl,SZ-CAV,DX-AIR,COMBUSTION,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE,TRUE
+,NE-dxAC_equip-pkgTerm-cDXGF-Unocc-Fan-Ctrl,SZ-CAV,DX-AIR,COMBUSTION,CONSTANT,CONSTANT,RESISTANCE,FALSE,FALSE,FALSE
+,NE-dxHP_equip-pkgTerm-cDXHP-Occ-Fan-Ctrl,SZ-CAV,DX-AIR,DX-AIR,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE,TRUE
+,NE-dxHP_equip-pkgTerm-cDXHP-Unocc-Fan-Ctrl,SZ-CAV,DX-AIR,DX-AIR,CONSTANT,CONSTANT,RESISTANCE,FALSE,FALSE,FALSE
+,NE-dxHP_equip-pkgTerm-cPVVG-Occ-Fan-Ctrl,SZ-VAV,DX-AIR,COMBUSTION,CONSTANT,VARIABLE,RESISTANCE,TRUE,TRUE,TRUE
+,NE-dxHP_equip-pkgTerm-cPVVG-Unocc-Fan-Ctrl,SZ-VAV,DX-AIR,COMBUSTION,CONSTANT,VARIABLE,RESISTANCE,FALSE,FALSE,FALSE
