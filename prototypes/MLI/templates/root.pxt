@@ -106,12 +106,14 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "storage_warehouse", :prefix => "storage_warehouse_" do
+    include "fan_op_fault"
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "industrial_low", :prefix => "industrial_low_" do
+    include "fan_op_fault"
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
