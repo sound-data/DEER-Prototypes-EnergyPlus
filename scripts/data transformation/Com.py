@@ -24,7 +24,7 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWXX111-00 Example_SEER_AC'
+measure_name = 'SWHC043 Multi_Cap_Com_AC'
 
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
@@ -607,11 +607,14 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if any(isinstance(i, str) for i in list(StdTechIDs['StdTechID'].unique())) == False:
+    # when there is no std tech ID - only pre baseline used in merge
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif any(isinstance(i, str) for i in list(PreTechIDs['PreTechID'].unique())) == False:
+    # when there is no pre tech ID - only std baseline used in merge
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
+    # when both std tech and pre tech ID present - use both
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
     df_measure_set_full = pd.merge(df_measure_baseline_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 
@@ -620,11 +623,14 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if any(isinstance(i, str) for i in list(StdTechIDs['StdTechID'].unique())) == False:
+    # when there is no std tech ID - only pre baseline used in merge
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif any(isinstance(i, str) for i in list(PreTechIDs['PreTechID'].unique())) == False:
+    # when there is no pre tech ID - only std baseline used in merge
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
+    # when both std tech and pre tech ID present - use both
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
 
 # %%
