@@ -88,7 +88,8 @@ expected_att = {
                                     'RtL',
                                     'RtS',
                                     'SCn',
-                                    'SUn'],
+                                    'SUn',
+                                    'WRf'],
     'Story': ['0','1','2'], # NA for Not Applicable
     'BldgHVAC': ['rDXGF','rDXHP','rNCEH','rNCGF'] + ['cWLHP',
                                                     'cSVVG',
