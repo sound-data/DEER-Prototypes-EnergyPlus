@@ -405,6 +405,7 @@ group "hvac_system", :prefix => "main_" do
   parameter "hum_type", :default => "NONE"
   parameter "hum_cap", :default => nil
   parameter "return_plenum", :default => false
+  parameter "dcv_swhc006", :default => nil # TRC SWHC006-02 - adding a Demand Control Ventilation parameter
 end
 
 group "alt_hvac_zone", :prefix => "alt_" do
