@@ -679,6 +679,95 @@ Branch,
     <%= ahu_name %> Return Fan Outlet Node,  !- Air Outlet Node Name
     <%= fan_subcat %>;       !- End-Use Subcategory
   <% end %>
+
+  <% # EMS for return fan energy disaggragation. Assuming it works with Unitary system supply fan on same distibution branch. %>
+  EnergyManagementSystem:Sensor,
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec, !Name
+    <%= ahu_name %> Return Fan, ! Output:Variable or Output:Meter Index Key Name
+    Fan Electricity Energy; ! Output:Variable or Output:Meter Name
+
+  <% if (unitary[:cool_coil_type] == "NONE") && (unitary[:heat_coil_type] == "NONE") %>
+  EnergyManagementSystem:Program,
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_fan_calc,  !- Name
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent = <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec;
+  <% else %> 
+    <% if (unitary[:heat_coil_type] != "NONE") && (unitary[:cool_coil_type] != "NONE")%>
+  EnergyManagementSystem:Program,
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_fan_calc,  !- Name
+      <% if (unitary[:aux_heat_coil_type] != "NONE") %>
+    If <%= ahu_name.gsub(/[ .()-]/, '_')%>_Supply_htg_Elec > 0 || <%= ahu_name.gsub(/[ .()-]/, '_')%>_Supply_htg_aux_Elec > 0, ! At least one of coils is ON => Htg
+      <% else %>
+    If <%= ahu_name.gsub(/[ .()-]/, '_')%>_Supply_htg_Elec > 0, ! When no aux coil.
+      <% end %>
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg = <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent = 0,
+    ElseIf <%= ahu_name.gsub(/[ .()-]/, '_')%>_Supply_clg_Elec > 0, ! Clg coil is ON => Clg
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg = <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent = 0,
+    Else, ! Clg coil is OFF and both htg coils are OFF => Ventilation
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent = <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec,
+    EndIf; 
+    <% elsif (unitary[:cool_coil_type] != "NONE") # no heating coil %>
+  EnergyManagementSystem:Program,
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_fan_calc,  !- Name
+    If <%= ahu_name.gsub(/[ .()-]/, '_')%>_Supply_clg_Elec > 0, ! Clg coil is ON => Clg
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg = <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent = 0,
+    Else, ! Clg coil is OFF and both htg coils are OFF => Ventilation
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent = <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec,
+    EndIf;
+    <% elsif (unitary[:heat_coil_type] != "NONE") # no cooling coil %>
+  EnergyManagementSystem:Program,
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_fan_calc,  !- Name
+      <% if (unitary[:aux_heat_coil_type] != "NONE") %>
+    If <%= ahu_name.gsub(/[ .()-]/, '_')%>_Supply_htg_Elec > 0 || <%= ahu_name.gsub(/[ .()-]/, '_')%>_Supply_htg_aux_Elec > 0, ! At least one of coils is ON => Htg
+      <% elsif (unitary[:heat_coil_type] != "NONE") # heat_coil_type == None =>> aux coil is None by rule %> 
+    If <%= ahu_name.gsub(/[ .()-]/, '_')%>_Supply_htg_Elec > 0, ! When no aux coil.
+      <% end %>
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg = <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent = 0,
+    Else, ! Clg coil is OFF and both htg coils are OFF => Ventilation
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg = 0,
+    Set <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent = <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec,
+    EndIf;
+    <% end %>
+  <% end %> 
+
+  EnergyManagementSystem:OutputVariable,
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg_output, !- Name
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_htg,          !- EMS Variable Name
+    Summed,                  !- Type of Data in Variable
+    SystemTimestep,          !- Update Frequency
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+    J;                      !- Units
+
+  EnergyManagementSystem:OutputVariable,
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg_output, !- Name
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_clg,          !- EMS Variable Name
+    Summed,                  !- Type of Data in Variable
+    SystemTimestep,          !- Update Frequency
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+    J;                      !- Units
+
+  EnergyManagementSystem:OutputVariable,
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent_output, !- Name
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_vent,          !- EMS Variable Name
+    Summed,                  !- Type of Data in Variable
+    SystemTimestep,          !- Update Frequency
+    <%= ahu_name.gsub(/[ .()-]/, '_')%>_Return_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+    J;                      !- Units
+
 <% end %>
 
 AirLoopHVAC:OutdoorAirSystem,
@@ -910,7 +999,7 @@ Coil:Cooling:Water,
   <%= ahu_name %> Run Around Heat Outlet Node,  !- Air Inlet Node Name
   <%= ahu_name %> Run Around Coil Outlet Node,  !- Air Outlet Node Name
   SimpleAnalysis,          !- Type of Analysis
-  CrossFlow;               !- Heat Exchanger Configuration
+  CrossFloJ;               !- Heat Exchanger Configuration
 
 Controller:WaterCoil,
   <%= ahu_name %> Run Around Cooling Mode Controller,  !- Name

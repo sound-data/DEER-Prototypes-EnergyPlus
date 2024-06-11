@@ -1,6 +1,7 @@
 <%#INITIALIZE
 require "modelkit/energyplus"
 
+
 parameter "unitary_name"
 
 parameter "doas", :default => false
@@ -568,6 +569,115 @@ Fan:VariableVolume,
 <% end %>
   <%= fan_subcat %>;       !- End-Use Subcategory
 <% end %>
+
+<% # EMS for supply fan energy disaggragation. %>
+EnergyManagementSystem:Sensor,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec, !Name
+  <%= unitary_name %> Supply Fan, ! Output:Variable or Output:Meter Index Key Name
+  Fan Electricity Energy; ! Output:Variable or Output:Meter Name
+
+<% if heat_coil_type != "NONE" %>
+EnergyManagementSystem:Sensor,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_htg_Elec, !Name
+  <%= unitary_name %> Heating Coil, ! Output:Variable or Output:Meter Index Key Name
+  Heating Coil Heating Energy; ! Output:Variable or Output:Meter Name
+<% end %>
+
+<% if cool_coil_type != "NONE" %>
+EnergyManagementSystem:Sensor,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_clg_Elec, !Name
+  <%= unitary_name %> Cooling Coil, ! Output:Variable or Output:Meter Index Key Name
+  Cooling Coil Total Cooling Energy; ! Output:Variable or Output:Meter Name
+<% end %>
+
+<% if (aux_heat_coil_type != "NONE") %>
+EnergyManagementSystem:Sensor,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_htg_aux_Elec, !Name
+  <%= unitary_name %> Aux Heating Coil, ! Output:Variable or Output:Meter Index Key Name
+  Heating Coil Heating Energy; ! Output:Variable or Output:Meter Name
+<% end %>
+
+<% if (cool_coil_type == "NONE") && (heat_coil_type == "NONE") %>
+EnergyManagementSystem:Program,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_fan_calc,  !- Name
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent = <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec;
+<% else %> 
+  <% if (heat_coil_type != "NONE") && (cool_coil_type != "NONE")%>
+EnergyManagementSystem:Program,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_fan_calc,  !- Name
+    <% if (aux_heat_coil_type != "NONE") %>
+  If <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_htg_Elec > 0 || <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_htg_aux_Elec > 0, ! At least one of coils is ON => Htg
+    <% else %>
+  If <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_htg_Elec > 0, ! When no aux coil.
+    <% end %>
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg = <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent = 0,
+  ElseIf <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_clg_Elec > 0, ! Clg coil is ON => Clg
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg = <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent = 0,
+  Else, ! Clg coil is OFF and both htg coils are OFF => Ventilation
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent = <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec,
+  EndIf; 
+  <% elsif (cool_coil_type != "NONE") # no heating coil %>
+EnergyManagementSystem:Program,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_fan_calc,  !- Name
+  If <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_clg_Elec > 0, ! Clg coil is ON => Clg
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg = <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent = 0,
+  Else, ! Clg coil is OFF and both htg coils are OFF => Ventilation
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent = <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec,
+  EndIf;
+  <% elsif (heat_coil_type != "NONE") # no cooling coil %>
+EnergyManagementSystem:Program,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_fan_calc,  !- Name
+    <% if (aux_heat_coil_type != "NONE") %>
+  If <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_htg_Elec > 0 || <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_htg_aux_Elec > 0, ! At least one of coils is ON => Htg
+    <% elsif (heat_coil_type != "NONE") # heat_coil_type == None =>> aux coil is None by rule %> 
+  If <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_htg_Elec > 0, ! When no aux coil.
+    <% end %>
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg = <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent = 0,
+  Else, ! Clg coil is OFF and both htg coils are OFF => Ventilation
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg = 0,
+  Set <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent = <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec,
+  EndIf;
+  <% end %> 
+<% end %> 
+
+EnergyManagementSystem:OutputVariable,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg_output, !- Name
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_htg,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
+EnergyManagementSystem:OutputVariable,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg_output, !- Name
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_clg,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
+EnergyManagementSystem:OutputVariable,
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent_output, !- Name
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_vent,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= unitary_name.gsub(/[ .()-]/, '_')%>_Supply_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
 
 <% if (cool_coil_type == "DX-AIR" and dx_comp_speed_num == 1) %>
 Coil:Cooling:DX:SingleSpeed,

@@ -1,6 +1,7 @@
 <%#INITIALIZE
 require "modelkit/energyplus"
 
+
 parameter "atu_name",
   :domain => String
 
@@ -169,6 +170,56 @@ elsif (atu_reheat_control == "DUAL-MAX-LIMIT")
   atu_reheat_control_input = "ReverseWithLimits"
 end
 %>
+
+<% if (atu_type == "VAV-PFP" or atu_type == "VAV-SFP") %>
+<% # EMS for terminal unit fan energy disaggragation. %>
+EnergyManagementSystem:Sensor,
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec, !Name
+  <%= atu_name %> ATU Fan, ! Output:Variable or Output:Meter Index Key Name
+  Fan Electricity Energy; ! Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_htg_Elec, !Name
+  <%= atu_name %> ATU Heating Coil, ! Output:Variable or Output:Meter Index Key Name
+  Heating Coil Heating Energy; ! Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Program,
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_fan_calc,  !- Name
+  If <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_htg_Elec > 0,
+  Set <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_htg = <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec,
+  Set <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_clg = 0,
+  Set <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_vent = 0,
+  Else, ! htg coil is OFF => Ventilation
+  Set <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_vent = <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec,
+  Set <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_htg = 0,
+  Set <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_clg = 0,
+  EndIf;
+
+EnergyManagementSystem:OutputVariable,
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_htg_output, !- Name
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_htg,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
+EnergyManagementSystem:OutputVariable,
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_clg_output, !- Name
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_clg,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
+EnergyManagementSystem:OutputVariable,
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_vent_output, !- Name
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_vent,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= atu_name.gsub(/[ .()-]/, '_') %>_TU_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+<% end %>
+
 ZoneHVAC:AirDistributionUnit,
   <%= atu_name %> Air Distribution Unit,  !- Name
   <%= atu_name %> Outlet Node,  !- Air Distribution Unit Outlet Node Name

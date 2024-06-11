@@ -76,6 +76,62 @@ Fan:OnOff,
   ,                        !- Fan Efficiency Ratio Function of Speed Ratio Curve Name
   <%= fan_subcat %>;       !- End-Use Subcategory
 
+<% # EMS for VRF TU fan energy disaggragation. %>
+EnergyManagementSystem:Sensor,
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec, !Name
+  <%= name %> Fan, ! Output:Variable or Output:Meter Index Key Name
+  Fan Electricity Energy; ! Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_clg_Elec, !Name
+  <%= name %> Cooling Coil, ! Output:Variable or Output:Meter Index Key Name
+  Cooling Coil Total Cooling Energy; ! Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_htg_Elec, !Name
+  <%= name %> Heating Coil, ! Output:Variable or Output:Meter Index Key Name
+  Heating Coil Heating Energy; ! Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Program,
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_fan_calc,  !- Name
+  If <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_htg_Elec > 0,
+  Set <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_htg = <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec,
+  Set <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_clg = 0,
+  Set <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_vent = 0,
+  ElseIf <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_clg_Elec > 0, ! Clg coil is ON => Clg
+  Set <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_htg = 0,
+  Set <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_clg = <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec,
+  Set <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_vent = 0,
+  Else, ! Clg coil is OFF and htg coil is OFF => Ventilation
+  Set <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_htg = 0,
+  Set <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_clg = 0,
+  Set <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_vent = <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec,
+  EndIf;
+
+EnergyManagementSystem:OutputVariable,
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_htg_output, !- Name
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_htg,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
+EnergyManagementSystem:OutputVariable,
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_clg_output, !- Name
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_clg,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
+EnergyManagementSystem:OutputVariable,
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_vent_output, !- Name
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_vent,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= name.gsub(/[ .()-]/, '_') %>_vrf_TU_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
 Coil:Cooling:DX:VariableRefrigerantFlow,
   <%= name %> Cooling Coil,  !- Name
   ,                        !- Availability Schedule Name

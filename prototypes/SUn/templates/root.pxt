@@ -1,4 +1,6 @@
 <%#INTERFACE
+
+
 import "general.pxt", :group => "general" do
   include "*"
   exclude "min*|max*|*convergence"
@@ -321,6 +323,12 @@ end
 
 %>
 <%
+fan_names_htg = []
+fan_names_clg = []
+fan_names_vent = []
+program_names = []
+%>
+<%
 total_roof_area = 500039.21['ft2']
 
 if (graywater_recycling)
@@ -352,6 +360,7 @@ if (solar_hot_water)
 else
   dhw_preheat_name = nil
 end
+
 
 insert "general.pxt", **general
 
@@ -494,6 +503,61 @@ for zone in all_zones
     **( this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
 
   branch_name = "#{zone_name} #{this_hvac_type}"
+  hvac_mode = this_hvac_type[0..1]
+
+  if (hvac_mode == "UH")
+    fan_names_htg << "#{zone_name.gsub(/[ .()-]/, '_')}_UH_Fan_Elec_htg_output"
+    fan_names_clg << "#{zone_name.gsub(/[ .()-]/, '_')}_UH_Fan_Elec_clg_output"
+    fan_names_vent << "#{zone_name.gsub(/[ .()-]/, '_')}_UH_Fan_Elec_vent_output"
+    program_names << "#{zone_name.gsub(/[ .()-]/, '_')}_UH_Fan_Elec_Fan_calc"
+  end
+  # hvac-zone.pxt ==> ahu.pxt ==> unitary.pxt
+  if (hvac_mode == "SZ") # condition that triggers insert "system/ahu.pxt" within hvac-zone.pxt
+    if (this_hvac[:fan_return]) # fan_return can be forced based on rules defined in hvac-zone.pxt. If error review system type and fan configurations
+      fan_names_htg << "#{branch_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_htg_output"
+      fan_names_clg << "#{branch_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_clg_output"
+      fan_names_vent << "#{branch_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_vent_output"
+      program_names << "#{branch_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_Fan_calc"
+    end
+    # ahu.pxt ==> unitary.pxt
+    fan_names_htg << "#{branch_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_htg_output"
+    fan_names_clg << "#{branch_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_clg_output"
+    fan_names_vent << "#{branch_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_vent_output"
+    program_names << "#{branch_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_Fan_calc"
+  end
+  # hvac-zone.pxt ==> unitary.pxt
+  if (hvac_mode == "ZN")
+    fan_names_htg << "#{branch_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_htg_output"
+    fan_names_clg << "#{branch_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_clg_output"
+    fan_names_vent << "#{branch_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_vent_output"
+    program_names << "#{branch_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_Fan_calc"
+  end
+  # hvac-zone.pxt ==> vrf.pxt
+  if (this_hvac_type == "MZ-VRF")
+    fan_names_htg << "#{branch_name.gsub(/[ .()-]/, '_')}_vrf_TU_Fan_Elec_htg_output"
+    fan_names_clg << "#{branch_name.gsub(/[ .()-]/, '_')}_vrf_TU_Fan_Elec_clg_output"
+    fan_names_vent << "#{branch_name.gsub(/[ .()-]/, '_')}_vrf_TU_Fan_Elec_vent_output"
+    program_names << "#{branch_name.gsub(/[ .()-]/, '_')}_vrf_TU_Fan_Elec_Fan_calc"
+  end
+  # hvac-zone.pxt ==> atu.pxt
+  if (this_hvac_zone[:oa_type] == "DOAS")
+    doas_branch_name = "#{zone_name} MZ-DOAS"
+    if (this_hvac[:atu_type] == "VAV-PFP" or this_hvac[:atu_type] == "VAV-SFP")
+      fan_names_htg << "#{doas_branch_name.gsub(/[ .()-]/, '_')}_TU_Fan_Elec_htg_output"
+      fan_names_clg << "#{doas_branch_name.gsub(/[ .()-]/, '_')}_TU_Fan_Elec_clg_output"
+      fan_names_vent << "#{doas_branch_name.gsub(/[ .()-]/, '_')}_TU_Fan_Elec_vent_output"
+      program_names << "#{doas_branch_name.gsub(/[ .()-]/, '_')}_TU_Fan_Elec_Fan_calc"
+    end
+  end
+
+  if (hvac_mode == "SZ" or hvac_mode == "MZ")
+    if (this_hvac[:atu_type] == "VAV-PFP" or this_hvac[:atu_type] == "VAV-SFP")
+      fan_names_htg << "#{branch_name.gsub(/[ .()-]/, '_')}_TU_Fan_Elec_htg_output"
+      fan_names_clg << "#{branch_name.gsub(/[ .()-]/, '_')}_TU_Fan_Elec_clg_output"
+      fan_names_vent << "#{branch_name.gsub(/[ .()-]/, '_')}_TU_Fan_Elec_vent_output"
+      program_names << "#{branch_name.gsub(/[ .()-]/, '_')}_TU_Fan_Elec_Fan_calc"
+    end
+  end
 
   if (this_hvac_type == "MZ-VRF")
     vrfc_branches[sys_name] ||= []
@@ -568,9 +632,21 @@ systems_table.each_key do |system_name|
       :fan_subcat => "#{hvac_zone[:hvac_type]} Fans",
       :return_plenum_zone_name => "#{system_name} Plenum",
       **this_hvac_system
+    
+    ahu_name = "#{system_type}-#{system_name}"
+    if (this_hvac_system[:fan_return]) # fan_return can be forced based on rules defined in hvac-zone.pxt. If error review system type and fan configurations
+      fan_names_htg << "#{ahu_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_htg_output"
+      fan_names_clg << "#{ahu_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_clg_output"
+      fan_names_vent << "#{ahu_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_vent_output"
+      program_names << "#{ahu_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_Fan_calc"
+    end
+    fan_names_htg << "#{ahu_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_htg_output"
+    fan_names_clg << "#{ahu_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_clg_output"
+    fan_names_vent << "#{ahu_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_vent_output"
+    program_names << "#{ahu_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_Fan_calc"
+
   end
 end
-
 
 
 if (not doas_branches.empty?)
@@ -582,6 +658,18 @@ if (not doas_branches.empty?)
     :oa_sch => doas_oa_sch,
     :op_sch => doas_oa_sch,
     :fan_mode => "CONTINUOUS"
+
+  if (doas_fan_return) # fan_return can be forced based on rules defined in hvac-zone.pxt. If error review system type and fan configurations
+    fan_names_htg << "#{doas_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_htg_output"
+    fan_names_clg << "#{doas_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_clg_output"
+    fan_names_vent << "#{doas_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_vent_output"
+    program_names << "#{doas_name.gsub(/[ .()-]/, '_')}_Return_Fan_Elec_Fan_calc"
+  end
+
+  fan_names_htg << "#{doas_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_htg_output"
+  fan_names_clg << "#{doas_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_clg_output"
+  fan_names_vent << "#{doas_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_vent_output"
+  program_names << "#{doas_name.gsub(/[ .()-]/, '_')}_Supply_Fan_Elec_Fan_calc"
 
   if (doas_heat_coil_type == "WATER")
     hw_branches << doas_name
@@ -641,3 +729,17 @@ end
 insert "output.pxt"
 insert "custom.pxt"
 %>
+
+<%
+if !program_names.empty?
+  insert "fanstuff/fan_meters.pxt",
+    :fan_names_htg => fan_names_htg,
+    :fan_names_clg => fan_names_clg,
+    :fan_names_vent => fan_names_vent,
+    :program_names => program_names
+end
+%>
+
+
+
+

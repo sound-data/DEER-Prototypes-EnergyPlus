@@ -65,32 +65,34 @@ EnergyManagementSystem:ProgramCallingManager,
   NetMeterProgram;                      !- Program Name 2
 
 Output:Table:SummaryReports,
-  AnnualBuildingUtilityPerformanceSummary,  !- Report 1 Name
-  InputVerificationandResultsSummary,  !- Report 2 Name
-  ClimaticDataSummary,  !- Report 3 Name
-  EnvelopeSummary,         !- Report 4 Name
-  EquipmentSummary,        !- Report 5 Name
-  ComponentSizingSummary,         !- Report 6 Name
-  HVACSizingSummary,         !- Report 7 Name
-  LightingSummary,         !- Report 8 Name
-  DXReportMonthly,         !- Report 9 Name
-  SystemSummary,           !- Report 10 Name
-  !ZoneComponentLoadSummary,
-  SensibleHeatGainSummary,
-  EnergyConsumptionElectricityNaturalGasMonthly,
-  EndUseEnergyConsumptionElectricityMonthly,
-  EnergyConsumptionDieselFuelOilMonthly,
-  EnergyConsumptionElectricityGeneratedPropaneMonthly,
-  EnergyConsumptionCoalGasolineMonthly,
-  EndUseEnergyConsumptionElectricityMonthly,
-  EndUseEnergyConsumptionNaturalGasMonthly,
-  EndUseEnergyConsumptionDieselMonthly,
-  EndUseEnergyConsumptionFuelOilMonthly,
-  EndUseEnergyConsumptionCoalMonthly,
-  EndUseEnergyConsumptionPropaneMonthly,
-  EndUseEnergyConsumptionGasolineMonthly,
-  ZoneCoolingSummaryMonthly,  !- Report 12 Name
-  ZoneHeatingSummaryMonthly;  !- Report 13 Name
+  AllSummary;
+!  AnnualBuildingUtilityPerformanceSummary,  !- Report 1 Name
+!  InputVerificationandResultsSummary,  !- Report 2 Name
+!  ClimaticDataSummary,  !- Report 3 Name
+!  EnvelopeSummary,         !- Report 4 Name
+!  EquipmentSummary,        !- Report 5 Name
+!  ComponentSizingSummary,         !- Report 6 Name
+!  HVACSizingSummary,         !- Report 7 Name
+!  LightingSummary,         !- Report 8 Name
+!  DXReportMonthly,         !- Report 9 Name
+!  SystemSummary,           !- Report 10 Name
+!  ZoneComponentLoadSummary,
+!  SensibleHeatGainSummary,
+!  EnergyConsumptionElectricityNaturalGasMonthly,
+!  EndUseEnergyConsumptionElectricityMonthly,
+!  EnergyConsumptionDieselFuelOilMonthly,
+!  EnergyConsumptionElectricityGeneratedPropaneMonthly,
+!  EnergyConsumptionCoalGasolineMonthly,
+!  EndUseEnergyConsumptionElectricityMonthly,
+!  EndUseEnergyConsumptionNaturalGasMonthly,
+!  EndUseEnergyConsumptionDieselMonthly,
+!  EndUseEnergyConsumptionFuelOilMonthly,
+!  EndUseEnergyConsumptionCoalMonthly,
+!  EndUseEnergyConsumptionPropaneMonthly,
+!  EndUseEnergyConsumptionGasolineMonthly,
+!  ZoneCoolingSummaryMonthly,  !- Report 12 Name
+!  ZoneHeatingSummaryMonthly;  !- Report 13 Name
+
 
 OutputControl:ReportingTolerances,
   <%= reporting_tolerance %>,  !- Tolerance for Time Heating Setpoint Not Met {deltaC}
