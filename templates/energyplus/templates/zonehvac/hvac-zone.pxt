@@ -391,6 +391,9 @@ rule "hvac_type_ideal", :parameters => {:hvac_type => "IDEAL"} do
 
 # disable sub_heat and exh_fan
 
+# Solaris Technical 2024-05-07 for linked sizing
+parameter "disable_ems", :default => false, :type => "Enumeration", :valuelist => "true,false"
+
 end
 
 
@@ -867,7 +870,9 @@ unitary_parameters = [
   :aux_heat_coil_type,
   :aux_heat_coil_cap,
   :aux_heat_coil_eff,
-  :aux_heat_coil_fuel
+  :aux_heat_coil_fuel,
+
+  :disable_ems
 ]
 
 # if unitary_parameters are being repeated twice, maybe better to separate unitary system from ahu.pxt...
