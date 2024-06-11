@@ -55,3 +55,11 @@ Output:Meter,Gas:Facility,hourly; !- [J]
 
 !Output:Variable,<%= regex %> Node,System Node Standard Density Volume Flow Rate,hourly; !- HVAC Average [kg/s]
 !Output:Variable,<%= regex %> Node,System Node Temperature,hourly; !- HVAC Average [C]
+
+! For Fan disaggregation EMS
+Output:Variable,*,Fan Electricity Rate,hourly; !- HVAC Average [W]
+Output:Variable,*,Fan Electricity Energy,hourly; !- HVAC Sum [W]
+Output:Variable,*,Cooling Coil Total Cooling Energy,hourly; !- HVAC Sum [J]
+Output:Variable,*,Cooling Coil Total Cooling Rate,hourly; !- HVAC Average [W]
+Output:Variable,*,Heating Coil Heating Energy,hourly; !- HVAC Sum [J]
+Output:Variable,*,Heating Coil Heating Rate,hourly; !- HVAC Average [W]

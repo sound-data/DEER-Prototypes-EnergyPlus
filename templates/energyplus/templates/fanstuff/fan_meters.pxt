@@ -1,0 +1,79 @@
+<%#INTERFACE
+require "modelkit/energyplus"
+
+parameter "fan_names_htg"
+parameter "fan_names_clg"
+parameter "fan_names_vent"
+parameter "program_names"
+
+%>
+EnergyManagementSystem:ProgramCallingManager,
+  Fan_NRJ_Disaggregation_Manager,  !- Name
+  EndOfSystemTimestepBeforeHVACReporting,  !- EnergyPlus Model Calling Point
+<% EnergyPlus.each_with_index(program_names) do |program_name, index| %>
+  <%= program_name %>,   !- Program Name
+<% end %>
+
+Meter:Custom,
+  Fans Cooling Energy,      !- Name
+  Electricity,             !- Resource Type
+<% EnergyPlus.each_with_index(fan_names_clg) do |fan_name_clg, index| %>
+  ,                        !- Key Name
+  <%= fan_name_clg %>,   !- Output Variable or Meter Name
+<% end %>
+
+Meter:Custom,
+  Fans Heating Energy,      !- Name
+  Electricity,             !- Resource Type
+<% EnergyPlus.each_with_index(fan_names_htg) do |fan_name_htg, index| %>
+  ,                        !- Key Name
+  <%= fan_name_htg %>,   !- Output Variable or Meter Name
+<% end %>
+
+Meter:Custom,
+  Fans Ventilation Energy,      !- Name
+  Electricity,             !- Resource Type
+<% EnergyPlus.each_with_index(fan_names_vent) do |fan_name_vent, index| %>
+  ,                        !- Key Name
+  <%= fan_name_vent %>,   !- Output Variable or Meter Name
+<% end %>
+
+<% for fan_clg in fan_names_clg %>
+Meter:Custom,
+  <%= fan_clg %>_custom,      !- Name
+  Electricity,             !- Resource Type
+  ,                        !- Key Name
+  <%= fan_clg %>;   !- Output Variable or Meter Name
+<% end %>
+
+<% for fan_htg in fan_names_htg %>
+Meter:Custom,
+  <%= fan_htg %>_custom,      !- Name
+  Electricity,             !- Resource Type
+  ,                        !- Key Name
+  <%= fan_htg %>;   !- Output Variable or Meter Name
+<% end %>
+
+<% for fan_vent in fan_names_vent %>
+Meter:Custom,
+  <%= fan_vent %>_custom,      !- Name
+  Electricity,             !- Resource Type
+  ,                        !- Key Name
+  <%= fan_vent %>;   !- Output Variable or Meter Name
+<% end %>
+
+<% for fan_clg in fan_names_clg %>
+Output:Meter,<%= fan_clg %>_custom,hourly;
+<% end %>
+
+<% for fan_htg in fan_names_htg %>
+Output:Meter,<%= fan_htg %>_custom,hourly;
+<% end %>
+
+<% for fan_vent in fan_names_vent %>
+Output:Meter,<%= fan_vent %>_custom,hourly;
+<% end %>
+
+Output:Meter,Fans Cooling Energy,hourly;
+Output:Meter,Fans Heating Energy,hourly;
+Output:Meter,Fans Ventilation Energy,hourly;

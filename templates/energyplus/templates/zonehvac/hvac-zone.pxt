@@ -1050,6 +1050,53 @@ Fan:ConstantVolume,
   <%= zone_name %> UH Inlet Node,  !- Air Inlet Node Name
   <%= zone_name %> UH Fan Outlet Node;  !- Air Outlet Node Name
 
+<% # EMS for unit heater fan energy disaggragation. %>
+EnergyManagementSystem:Sensor,
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec, !Name
+  <%= zone_name %> UH Fan, ! Output:Variable or Output:Meter Index Key Name
+  Fan Electricity Energy; ! Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Sensor,
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_htg_Elec, !Name
+  <%= zone_name %> UH Coil, ! Output:Variable or Output:Meter Index Key Name
+  Heating Coil Heating Energy; ! Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Program,
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_fan_calc,  !- Name
+  If <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_htg_Elec > 0,
+  Set <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_htg = <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec,
+  Set <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_clg = 0,
+  Set <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_vent = 0,
+  Else, ! htg coil is OFF => Ventilation
+  Set <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_vent = <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec,
+  Set <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_htg = 0,
+  Set <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_clg = 0,
+  EndIf;
+
+EnergyManagementSystem:OutputVariable,
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_htg_output, !- Name
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_htg,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
+EnergyManagementSystem:OutputVariable,
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_clg_output, !- Name
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_clg,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
+EnergyManagementSystem:OutputVariable,
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_vent_output, !- Name
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_vent,          !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  SystemTimestep,          !- Update Frequency
+  <%= zone_name.gsub(/[ .()-]/, '_') %>_UH_Fan_Elec_fan_calc,  !- EMS Program or Subroutine Name
+  J;                      !- Units
+
 <% if ( heat_coil_type == 'COMBUSTION') %>
 Coil:Heating:Fuel,
   <%= zone_name %> UH Coil,  !- Name
