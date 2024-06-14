@@ -1,5 +1,0 @@
-skip,case_name,:main_hvac_type,:main_cool_coil_type,:main_heat_coil_type,:main_dx_comp_speed,:main_fan_speed,:main_atu_reheat_coil_type,:office_large_fan_op_fault,:auditorium_fan_op_fault
-,AC_only,SZ-CAV,DX-AIR,NONE,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE
-#,AC_with_Gas_heat,SZ-CAV,DX-AIR,COMBUSTION,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE
-#,Heat_pump,SZ-CAV,DX-AIR,DX-AIR,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE
-#,Variable Volume AC Unit with Gas Heat,SZ-VAV,DX-AIR,COMBUSTION,CONSTANT,VARIABLE,RESISTANCE,TRUE,TRUE
