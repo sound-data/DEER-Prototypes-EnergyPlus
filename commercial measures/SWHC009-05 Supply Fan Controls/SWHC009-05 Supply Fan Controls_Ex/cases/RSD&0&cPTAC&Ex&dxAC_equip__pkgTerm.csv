@@ -1,9 +1,9 @@
-skip,case_name,:main_hvac_type,:main_cool_coil_type,:main_heat_coil_type,:main_dx_comp_speed,:main_fan_speed,:main_atu_reheat_coil_type,:dining_fine_fan_op_fault,:kitchen_fan_op_fault,:lobby_fan_op_fault,:restroom_fan_op_fault
-,NE-dxAC_equip-pkgTerm-cPTAC-Occ-Fan-Ctrl,SZ-CAV,DX-AIR,NONE,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE,TRUE,TRUE
-,NE-dxAC_equip-pkgTerm-cPTAC-Unocc-Fan-Ctrl,SZ-CAV,DX-AIR,NONE,CONSTANT,CONSTANT,RESISTANCE,FALSE,FALSE,FALSE,FALSE
-,NE-dxAC_equip-pkgTerm-cDXGF-Occ-Fan-Ctrl,SZ-CAV,DX-AIR,COMBUSTION,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE,TRUE,TRUE
-,NE-dxAC_equip-pkgTerm-cDXGF-Unocc-Fan-Ctrl,SZ-CAV,DX-AIR,COMBUSTION,CONSTANT,CONSTANT,RESISTANCE,FALSE,FALSE,FALSE,FALSE
-,NE-dxHP_equip-pkgTerm-cDXHP-Occ-Fan-Ctrl,SZ-CAV,DX-AIR,DX-AIR,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE,TRUE,TRUE
-,NE-dxHP_equip-pkgTerm-cDXHP-Unocc-Fan-Ctrl,SZ-CAV,DX-AIR,DX-AIR,CONSTANT,CONSTANT,RESISTANCE,FALSE,FALSE,FALSE,FALSE
-,NE-dxHP_equip-pkgTerm-cPVVG-Occ-Fan-Ctrl,SZ-VAV,DX-AIR,COMBUSTION,CONSTANT,VARIABLE,RESISTANCE,TRUE,TRUE,TRUE,TRUE
-,NE-dxHP_equip-pkgTerm-cPVVG-Unocc-Fan-Ctrl,SZ-VAV,DX-AIR,COMBUSTION,CONSTANT,VARIABLE,RESISTANCE,FALSE,FALSE,FALSE,FALSE
+skip,case_name,:main_hvac_type,:main_cool_coil_type,:main_heat_coil_type,:main_dx_comp_speed,:main_fan_speed,:main_atu_reheat_coil_type,:dining_fine_fan_op_fault,:kitchen_fan_op_fault,:lobby_fan_op_fault,:restroom_fan_op_fault,:heat_sizing_factor,:cool_sizing_factor,:main_atu_reheat_control,:main_fan_rise,:main_dx_type,:main_cool_flow_min_frac,:main_unitary_no_load_flow_method,:main_sat_reset_type,:main_sat_temp_max,:main_design_peak_load,:main_oa_econ_type,:main_cool_coil_cop,:main_fan_motor_eff,:main_heat_coil_cop,:main_heat_coil_eff,:main_heat_flow_frac
+,NE-dxAC_equip-pkgTerm-cPTAC-Occ-Fan-Ctrl,SZ-CAV,DX-AIR,NONE,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE,TRUE,TRUE,1.25,1.15,nil,3.877['in H2O'],PNNL,,,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,0.87,,0.8,1
+,NE-dxAC_equip-pkgTerm-cPTAC-Unocc-Fan-Ctrl,SZ-CAV,DX-AIR,NONE,CONSTANT,CONSTANT,RESISTANCE,FALSE,FALSE,FALSE,FALSE,1.25,1.15,nil,3.877['in H2O'],PNNL,,,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,0.87,,0.8,1
+,NE-dxAC_equip-pkgTerm-cDXGF-Occ-Fan-Ctrl,SZ-CAV,DX-AIR,COMBUSTION,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE,TRUE,TRUE,1.25,1.15,nil,3.877['in H2O'],PNNL,,,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,0.87,,0.8,1
+,NE-dxAC_equip-pkgTerm-cDXGF-Unocc-Fan-Ctrl,SZ-CAV,DX-AIR,COMBUSTION,CONSTANT,CONSTANT,RESISTANCE,FALSE,FALSE,FALSE,FALSE,1.25,1.15,nil,3.877['in H2O'],PNNL,,,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,0.87,,0.8,1
+,NE-dxHP_equip-pkgTerm-cDXHP-Occ-Fan-Ctrl,SZ-CAV,DX-AIR,DX-AIR,CONSTANT,CONSTANT,RESISTANCE,TRUE,TRUE,TRUE,TRUE,1.25,1.15,nil,3.877['in H2O'],PNNL,,,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,0.87,3.738,0.8,1
+,NE-dxHP_equip-pkgTerm-cDXHP-Unocc-Fan-Ctrl,SZ-CAV,DX-AIR,DX-AIR,CONSTANT,CONSTANT,RESISTANCE,FALSE,FALSE,FALSE,FALSE,1.25,1.15,nil,3.877['in H2O'],PNNL,,,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,0.87,3.738,0.8,1
+,NE-dxHP_equip-pkgTerm-cPVVG-Occ-Fan-Ctrl,SZ-VAV,DX-AIR,COMBUSTION,CONSTANT,VARIABLE,RESISTANCE,TRUE,TRUE,TRUE,TRUE,1.25,1.15,nil,3.877['in H2O'],PNNL,0.67,FractionOfAutosizedCoolingValue,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,0.87,,0.8,1
+,NE-dxHP_equip-pkgTerm-cPVVG-Unocc-Fan-Ctrl,SZ-VAV,DX-AIR,COMBUSTION,CONSTANT,VARIABLE,RESISTANCE,FALSE,FALSE,FALSE,FALSE,1.25,1.15,nil,3.877['in H2O'],PNNL,0.67,FractionOfAutosizedCoolingValue,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,0.87,,0.8,1
