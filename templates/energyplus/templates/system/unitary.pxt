@@ -2845,7 +2845,7 @@ Coil:Heating:Electric,
 <% end %>
 <% end %>
 
-<% if (cool_coil_type == "DX-AIR" and dx_comp_speed_num > 1) %>
+<% if (cool_coil_type == "DX-AIR" and dx_comp_speed_num == 2) %>
   <% if dx_type.include? "PNNL" %>
 UnitarySystemPerformance:Multispeed,
   <%= unitary_name %> Multispeed Performance,  !- Name
