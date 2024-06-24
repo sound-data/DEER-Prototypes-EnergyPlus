@@ -1,0 +1,3 @@
+skip,case_name,:infiltration_reduction,:door_thermal_resistance
+,RB-BldgShell-Door-Ex,0,0.1215
+,RB-BldgShell-addDoorEff,0.046109,1.036
