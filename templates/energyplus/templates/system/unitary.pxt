@@ -2978,5 +2978,5 @@ EnergyManagementSystem:InternalVariable,
     <%= unitary_name_ems %>_HMFLOW,  !- Name
     <%= unitary_name %>,  !- Internal Data Index Key Name
     Intermediate Air System Heating Volume Flow Rate;  !- Internal Data Type
-
 <% end %>
+
