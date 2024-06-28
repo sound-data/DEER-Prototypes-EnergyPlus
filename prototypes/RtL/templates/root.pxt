@@ -278,7 +278,7 @@ group "hvac_system", :prefix => "main_" do
   parameter "hum_type", :default => "NONE"
   parameter "hum_cap", :default => nil
   parameter "return_plenum", :default => false
-  #TRC - SWHC041-05 updates measure: Adding the following variables to parameterize the multi-speed operation air flow ratio and associated supply fan power for UnitarySystems
+  #TRC - SWHC023-05, SWHC041-05 updates measure: Adding the following variables to parameterize the multi-speed operation air flow ratio and associated supply fan power for UnitarySystems
   parameter "single_mode_operation", :default => "No"
   parameter "low_heating_supply_air_ratio", :default => 0.75
   parameter "low_cooling_supply_air_ratio", :default => 0.75
