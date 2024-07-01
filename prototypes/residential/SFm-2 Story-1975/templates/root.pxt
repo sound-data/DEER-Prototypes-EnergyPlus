@@ -80,6 +80,12 @@ parameter "number_of_stories", :default=>2  #no. of stories, default two story
 parameter "conditioned_floor_area", :default =>2907.2|'ft2'  # ft2, default conditioned floor area of 2 story SFm
 parameter "duct_r_value", :default => 4.9['R-IP'] #U-IP effective duct R value = duct R + insulation R
 
+# hardcoded sizing
+parameter "cooling_capacity", :default=>'autosize'
+parameter "heating_capacity", :default=>'autosize'
+parameter "rated_air_flow", :default=>'autosize'
+parameter "sensible_heat_ratio", :default=>'autosize'
+
 #shading control
 parameter "shading_control", :default=>'AlwaysOn'
 %>
@@ -124,7 +130,8 @@ for zone in all_zones
     :slave_zone => slave_zone,
     :supply_leakage_frac=>supply_leakage_frac,
     :return_leakage_frac=>return_leakage_frac,
-    :duct_r_value=>duct_r_value
+    :duct_r_value=>duct_r_value,
+    :rated_air_flow=>rated_air_flow
 end
 
 %>
@@ -17424,13 +17431,13 @@ Sizing:System,
     No,                      !- 100% Outdoor Air in Heating
     0.008,                   !- Central Cooling Design Supply Air Humidity Ratio {kgWater/kgDryAir}
     0.008,                   !- Central Heating Design Supply Air Humidity Ratio {kgWater/kgDryAir}
-    DesignDay,               !- Cooling Supply Air Flow Rate Method
-    ,                        !- Cooling Supply Air Flow Rate {m3/s}
+    Flow/System,               !- Cooling Supply Air Flow Rate Method
+    <%= rated_air_flow %>,                        !- Cooling Supply Air Flow Rate {m3/s}
     ,                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
     ,                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
     ,                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-    DesignDay,               !- Heating Supply Air Flow Rate Method
-    ,                        !- Heating Supply Air Flow Rate {m3/s}
+    Flow/System,               !- Heating Supply Air Flow Rate Method
+    <%= rated_air_flow %>,                        !- Heating Supply Air Flow Rate {m3/s}
     ,                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
     ,                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
     ,                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -17438,11 +17445,11 @@ Sizing:System,
     ZoneSum,                 !- System Outdoor Air Method
     1.0,                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
     CoolingDesignCapacity,   !- Cooling Design Capacity Method
-    autosize,                !- Cooling Design Capacity {W}
+    <%= cooling_capacity %>,                !- Cooling Design Capacity {W}
     ,                        !- Cooling Design Capacity Per Floor Area {W/m2}
     ,                        !- Fraction of Autosized Cooling Design Capacity
     HeatingDesignCapacity,   !- Heating Design Capacity Method
-    autosize,                !- Heating Design Capacity {W}
+    <%= heating_capacity %>,                !- Heating Design Capacity {W}
     ,                        !- Heating Design Capacity Per Floor Area {W/m2}
     ,                        !- Fraction of Autosized Heating Design Capacity
     OnOff;                   !- Central Cooling Capacity Control Method
@@ -17463,13 +17470,13 @@ Sizing:System,
     No,                      !- 100% Outdoor Air in Heating
     0.008,                   !- Central Cooling Design Supply Air Humidity Ratio {kgWater/kgDryAir}
     0.008,                   !- Central Heating Design Supply Air Humidity Ratio {kgWater/kgDryAir}
-    DesignDay,               !- Cooling Supply Air Flow Rate Method
-    ,                        !- Cooling Supply Air Flow Rate {m3/s}
+    Flow/System,               !- Cooling Supply Air Flow Rate Method
+    <%= rated_air_flow %>,                        !- Cooling Supply Air Flow Rate {m3/s}
     ,                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
     ,                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
     ,                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
-    DesignDay,               !- Heating Supply Air Flow Rate Method
-    ,                        !- Heating Supply Air Flow Rate {m3/s}
+    Flow/System,               !- Heating Supply Air Flow Rate Method
+    <%= rated_air_flow %>,                        !- Heating Supply Air Flow Rate {m3/s}
     ,                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
     ,                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
     ,                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
@@ -17477,11 +17484,11 @@ Sizing:System,
     ZoneSum,                 !- System Outdoor Air Method
     1.0,                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
     CoolingDesignCapacity,   !- Cooling Design Capacity Method
-    autosize,                !- Cooling Design Capacity {W}
+    <%= cooling_capacity %>,                !- Cooling Design Capacity {W}
     ,                        !- Cooling Design Capacity Per Floor Area {W/m2}
     ,                        !- Fraction of Autosized Cooling Design Capacity
     HeatingDesignCapacity,   !- Heating Design Capacity Method
-    autosize,                !- Heating Design Capacity {W}
+    <%= heating_capacity %>,                !- Heating Design Capacity {W}
     ,                        !- Heating Design Capacity Per Floor Area {W/m2}
     ,                        !- Fraction of Autosized Heating Design Capacity
     OnOff;                   !- Central Cooling Capacity Control Method
@@ -17553,28 +17560,44 @@ AirTerminal:SingleDuct:ConstantVolume:NoReheat,
     always_avail,            !- Availability Schedule Name
     EL2 Zn (G.1) Zone Equip Inlet,  !- Air Inlet Node Name
     EL2 Zn (G.1) Supply Inlet,  !- Air Outlet Node Name
-    autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+    <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+    <% end %>;
 
 AirTerminal:SingleDuct:ConstantVolume:NoReheat,
     EL2 Zn (T.2) CV,       !- Name
     always_avail,            !- Availability Schedule Name
     EL2 Zn (T.2) Zone Equip Inlet,  !- Air Inlet Node Name
     EL2 Zn (T.2) Supply Inlet,  !- Air Outlet Node Name
-    autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+    <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+    <% end %>;
 
 AirTerminal:SingleDuct:ConstantVolume:NoReheat,
     EL5 Zn (G.1) CV,       !- Name
     always_avail,            !- Availability Schedule Name
     EL5 Zn (G.1) Zone Equip Inlet,  !- Air Inlet Node Name
     EL5 Zn (G.1) Supply Inlet,  !- Air Outlet Node Name
-    autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+    <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+    <% end %>;
 
 AirTerminal:SingleDuct:ConstantVolume:NoReheat,
     EL5 Zn (T.2) CV,       !- Name
     always_avail,            !- Availability Schedule Name
     EL5 Zn (T.2) Zone Equip Inlet,  !- Air Inlet Node Name
     EL5 Zn (T.2) Supply Inlet,  !- Air Outlet Node Name
-    autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% if rated_air_flow == 'autosize' %>                  !- Maximum air flow rate {m3/s}
+	<%= rated_air_flow %>,
+    <% else %>  
+        <%= rated_air_flow / 2 %>,                                                
+    <% end %>;
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ZONEHVAC:AIRDISTRIBUTIONUNIT ===========
@@ -17689,7 +17712,7 @@ Fan:OnOff,
     always_avail,            !- Availability Schedule Name
     <%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
     125,                     !- Pressure Rise {Pa}
-    autosize,                !- Maximum Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Maximum Flow Rate {m3/s}
     <%= motor_eff %>,                     !- Motor Efficiency
     1,                       !- Motor In Airstream Fraction
     DXGF EL2 Mixed Air Outlet,  !- Air Inlet Node Name
@@ -17701,7 +17724,7 @@ Fan:OnOff,
     always_avail,            !- Availability Schedule Name
     <%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
     125,                     !- Pressure Rise {Pa}
-    autosize,                !- Maximum Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Maximum Flow Rate {m3/s}
     <%= motor_eff %>,                     !- Motor Efficiency
     1,                       !- Motor In Airstream Fraction
     DXGF EL5 Mixed Air Outlet,  !- Air Inlet Node Name
@@ -17905,10 +17928,10 @@ COIL:COOLING:DX:MULTISPEED,
 Coil:Cooling:DX:SingleSpeed,
     DXGF EL2 Cooling Coil,   !- Name
     always_avail,            !- Availability Schedule Name
-    autosize,                !- Gross Rated Total Cooling Capacity {W}
-    autosize,                !- Gross Rated Sensible Heat Ratio
+    <%= cooling_capacity %>,                !- Gross Rated Total Cooling Capacity {W}
+    <%= sensible_heat_ratio %>,                !- Gross Rated Sensible Heat Ratio
     <%=cooling_coil_cop%>,                   !- Gross Rated Cooling COP {W/W}
-    autosize,                !- Rated Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Rated Air Flow Rate {m3/s}
     ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
     DXGF EL2 Heating Coil Outlet,  !- Air Inlet Node Name
     DXGF EL2 Air Loop Outlet,!- Air Outlet Node Name
@@ -17928,10 +17951,10 @@ Coil:Cooling:DX:SingleSpeed,
 Coil:Cooling:DX:SingleSpeed,
     DXGF EL5 Cooling Coil,   !- Name
     always_avail,            !- Availability Schedule Name
-    autosize,                !- Gross Rated Total Cooling Capacity {W}
-    autosize,                !- Gross Rated Sensible Heat Ratio
+    <%= cooling_capacity %>,                !- Gross Rated Total Cooling Capacity {W}
+    <%= sensible_heat_ratio %>,                !- Gross Rated Sensible Heat Ratio
     <%=cooling_coil_cop%>,                   !- Gross Rated Cooling COP {W/W}
-    autosize,                !- Rated Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Rated Air Flow Rate {m3/s}
     ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
     DXGF EL5 Heating Coil Outlet,  !- Air Inlet Node Name
     DXGF EL5 Air Loop Outlet,!- Air Outlet Node Name
@@ -17957,7 +17980,7 @@ Coil:Heating:Fuel,
     always_avail,            !- Availability Schedule Name
     NaturalGas,              !- Fuel Type
     <%=burner_eff%>,                    !- Burner Efficiency
-    autosize,                !- Nominal Capacity {W}
+    <%= heating_capacity %>,                !- Nominal Capacity {W}
     DXGF EL2 Supply Fan Outlet,  !- Air Inlet Node Name
     DXGF EL2 Heating Coil Outlet;  !- Air Outlet Node Name
 
@@ -17966,7 +17989,7 @@ Coil:Heating:Fuel,
     always_avail,            !- Availability Schedule Name
     NaturalGas,              !- Fuel Type
     <%=burner_eff%>,                    !- Burner Efficiency
-    autosize,                !- Nominal Capacity {W}
+    <%= heating_capacity %>,                !- Nominal Capacity {W}
     DXGF EL5 Supply Fan Outlet,  !- Air Inlet Node Name
     DXGF EL5 Heating Coil Outlet;  !- Air Outlet Node Name
 
@@ -17999,17 +18022,17 @@ AirLoopHVAC:UnitarySystem,
     ,                         !- Supplemental Heating Coil Object Type
     ,                         !- Supplemental Heating Coil Name
     SupplyAirFlowRate,        !- Cooling Supply Air Flow Rate Method
-    autosize,                 !- Cooling Supply Air Flow Rate
+    <%= rated_air_flow %>,                 !- Cooling Supply Air Flow Rate
     ,                         !- Cooling Supply Air Flow Rate Per Floor Area
     ,                         !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
     ,                         !- Cooling Supply Air Flow Rate Per Unit of Capacity
     SupplyAirFlowRate,        !- Heating Supply Air Flow Rate Method
-    autosize,                 !- Heating Supply Air Flow Rate
+    <%= rated_air_flow %>,                 !- Heating Supply Air Flow Rate
     ,                         !- Heating Supply Air Flow Rate Per Floor Area
     ,                         !- Heating Fraction of Autosized Heating Supply Air Flow Rate
     ,                         !- Heating Supply Air Flow Rate Per Unit of Capacity
     SupplyAirFlowRate,        !- No Load Supply Air Flow Rate Method
-    autosize,                 !- No Load Supply Air Flow Rate
+    <%= rated_air_flow %>,                 !- No Load Supply Air Flow Rate
     ,                         !- No Load Supply Air Flow Rate Per Floor Area
     ,                         !- No Load Fraction of Autosized Cooling Supply Air Flow Rate
     ,                         !- No Load Fraction of Autosized Heating Supply Air Flow Rate
@@ -18058,17 +18081,17 @@ AirLoopHVAC:UnitarySystem,
     ,                         !- Supplemental Heating Coil Object Type
     ,                         !- Supplemental Heating Coil Name
     SupplyAirFlowRate,        !- Cooling Supply Air Flow Rate Method
-    autosize,                 !- Cooling Supply Air Flow Rate
+    <%= rated_air_flow %>,                 !- Cooling Supply Air Flow Rate
     ,                         !- Cooling Supply Air Flow Rate Per Floor Area
     ,                         !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
     ,                         !- Cooling Supply Air Flow Rate Per Unit of Capacity
     SupplyAirFlowRate,        !- Heating Supply Air Flow Rate Method
-    autosize,                 !- Heating Supply Air Flow Rate
+    <%= rated_air_flow %>,                 !- Heating Supply Air Flow Rate
     ,                         !- Heating Supply Air Flow Rate Per Floor Area
     ,                         !- Heating Fraction of Autosized Heating Supply Air Flow Rate
     ,                         !- Heating Supply Air Flow Rate Per Unit of Capacity
     SupplyAirFlowRate,        !- No Load Supply Air Flow Rate Method
-    autosize,                 !- No Load Supply Air Flow Rate
+    <%= rated_air_flow %>,                 !- No Load Supply Air Flow Rate
     ,                         !- No Load Supply Air Flow Rate Per Floor Area
     ,                         !- No Load Fraction of Autosized Cooling Supply Air Flow Rate
     ,                         !- No Load Fraction of Autosized Heating Supply Air Flow Rate
@@ -18114,8 +18137,8 @@ AirLoopHVAC:Unitary:Furnace:HeatCool,
     DXGF EL2 Air Loop Outlet,!- Furnace Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Cooling Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     ,                        !- No Load Supply Air Flow Rate {m3/s}
     EL2 Zn (G.1),          !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type
@@ -18134,8 +18157,8 @@ AirLoopHVAC:Unitary:Furnace:HeatCool,
     DXGF EL5 Air Loop Outlet,!- Furnace Air Outlet Node Name
     ,                        !- Supply Air Fan Operating Mode Schedule Name
     80,                      !- Maximum Supply Air Temperature {C}
-    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
-    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Cooling Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Heating Supply Air Flow Rate {m3/s}
     ,                        !- No Load Supply Air Flow Rate {m3/s}
     EL5 Zn (G.1),          !- Controlling Zone or Thermostat Location
     Fan:OnOff,               !- Supply Fan Object Type

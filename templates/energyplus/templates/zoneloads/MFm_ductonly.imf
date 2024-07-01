@@ -7,6 +7,7 @@ parameter "zone_name"
 parameter "zone_area"
 parameter "slave_zone"
 parameter "number_of_stories", :default=>1
+parameter "rated_air_flow", :default=>'autosize'
 
 # Duct leakage
 parameter "system_name", :default=>nil
@@ -46,7 +47,7 @@ AirLoopHVAC,
   <%= system_name %>,                !- Name
   ,                        !- Controller List Name
   <%= system_name %> Availability Managers,  !- Availability Manager List Name
-  autosize,                !- Design Supply Air Flow Rate {m3/s}
+  <%= rated_air_flow %>,                !- Design Supply Air Flow Rate {m3/s}
   <%= system_name %> Branches,       !- Branch List Name
   ,                        !- Connector List Name
   <%= system_name %> Mixed Air Outlet,  !- Supply Side Inlet Node Name
@@ -102,7 +103,7 @@ AirLoopHVAC:ZoneMixer,
     <%= system_name %>,                !- Name
     ,                        !- Controller List Name
     <%= system_name %> Availability Managers,  !- Availability Manager List Name
-    autosize,                !- Design Supply Air Flow Rate {m3/s}
+    <%= rated_air_flow %>,                !- Design Supply Air Flow Rate {m3/s}
     <%= system_name %> Branches,       !- Branch List Name
     ,                        !- Connector List Name
     <%= system_name %> Mixed Air Outlet,  !- Supply Side Inlet Node Name
