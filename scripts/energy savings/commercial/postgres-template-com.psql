@@ -1,0 +1,104 @@
+/*
+postgres-template-com.psql
+Nicholas Fette, created 2023-01-05, modeified 2024-04-22
+
+Automate workflow in PostgreSQL:
+Set up support tables, import results data , and run all the post-processing scripts.
+Warning: deletes the results data currently in the designated database schema.
+
+Setup steps:
+  Copy the template to your measure folder and rename the file,
+  e.g. "commercial measures/SWHC012/postgres-com-SWHC012.psql".
+  Edit import statements to import each file from data transformation steps.
+  For any customizations such as importing and updating results from additional data sources,
+  document modifications with a comment.
+
+Usage on command line (substitute your measure folder for SWXX000)
+  cd "C:/DEER-Prototypes-EnergyPlus/commercial measures/SWXX000"
+  psql -d "postgres" -U "postgres" -f "postgres-com-SWXX000.psql"
+
+Substitute the database name (-d) and user name (-U) based on your installation settings.
+
+If psql is not recognized, you may need to configure the PATH.
+After installing one of pgAdmin, dbeaver, or postgresql for example:
+  set "path=%PATH%;%LOCALAPPDATA%\Programs\pgAdmin 4\v6\runtime"
+  set "path=%PATH%;C:\Program Files\PostgreSQL\15\bin"
+
+Within an open interactive psql session:
+  \cd 'C:/DEER-Prototypes-EnergyPlus/commercial measures/SWXX000/'
+  \i postgres-com-SWXX000.psql
+
+*/
+
+\set ON_ERROR_STOP on
+
+-- Set variables for this PSQL session.
+\set DEERROOT '../../'
+\set SCRIPTS :'DEERROOT' 'scripts/'
+\set SCHEMAFILES :'DEERROOT' 'schema/'
+\set ENERGYSAVINGSCOM :'SCRIPTS' 'energy savings/commercial/'
+\set STUDY './'
+\set SCHEMANAME 'MC_results_database'
+\echo 'Assuming scripts are located in ' :'ENERGYSAVINGSCOM'
+\echo 'Assuming measure results are located in subfolders of ' :'STUDY'
+\echo 'Assuming schema name ' :'SCHEMANAME'
+
+\echo Creating the schema and support tables.
+CREATE SCHEMA IF NOT EXISTS :"SCHEMANAME";
+SET search_path TO :"SCHEMANAME";
+
+\echo Loading support tables
+
+\echo peakperspec
+\i :'SCHEMAFILES' 'create_peakperspec.sql'
+truncate "peakperspec";
+\copy "peakperspec" FROM :'ENERGYSAVINGSCOM' 'peakperspec.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo wts_com_bldg
+\i :'SCHEMAFILES' 'create_wts_com_bldg.sql'
+truncate "wts_com_bldg";
+\copy "wts_com_bldg" FROM :'ENERGYSAVINGSCOM' 'wts_com_bldg.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Placeholder tables for imported data
+
+\i :'SCHEMAFILES' 'create_current_msr_mat.sql'
+\i :'SCHEMAFILES' 'create_sim_annual.sql'
+\i :'SCHEMAFILES' 'create_sim_hourly_wb.sql'
+
+\echo Import current_msr_mat
+truncate "current_msr_mat";
+-- Add as many lines as you have individual folders within the measure.
+\copy "current_msr_mat" FROM :'STUDY' 'SWXX000-00 Measure Name_Ex/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM :'STUDY' 'SWXX000-00 Measure Name_New/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM :'STUDY' 'SWXX000-00 Measure Name_Htl_Ex/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "current_msr_mat" FROM :'STUDY' 'SWXX000-00 Measure Name_Htl_New/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Import sim_annual
+truncate "sim_annual";
+-- Add as many lines as you have individual folders within the measure.
+\copy "sim_annual" FROM :'STUDY' 'SWXX000-00 Measure Name_Ex/sim_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_annual" FROM :'STUDY' 'SWXX000-00 Measure Name_New/sim_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_annual" FROM :'STUDY' 'SWXX000-00 Measure Name_Htl_Ex/sim_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_annual" FROM :'STUDY' 'SWXX000-00 Measure Name_Htl_New/sim_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Import sim_hourly_wb
+truncate "sim_hourly_wb";
+-- Add as many lines as you have individual folders within the measure.
+\copy "sim_hourly_wb" FROM :'STUDY' 'SWXX000-00 Measure Name_Ex/sim_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_hourly_wb" FROM :'STUDY' 'SWXX000-00 Measure Name_New/sim_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_hourly_wb" FROM :'STUDY' 'SWXX000-00 Measure Name_Htl_Ex/sim_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+\copy "sim_hourly_wb" FROM :'STUDY' 'SWXX000-00 Measure Name_Htl_New/sim_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Run step P1
+\i :'ENERGYSAVINGSCOM' 'P1-Create-sim_peakper_2023.sql'
+\echo Run step P2
+\i :'ENERGYSAVINGSCOM' 'P2-Calc_MsrImpacts_2023.sql'
+\echo Run step P3
+\i :'ENERGYSAVINGSCOM' 'P3-Bldg_wt_Mult.sql'
+\echo Run step P4
+\i :'ENERGYSAVINGSCOM' 'P4-SumBldg.sql'
+\echo Run step P5
+\i :'ENERGYSAVINGSCOM' 'P5-roundDEER.sql'
+
+\echo Write file meas_impacts_2024_com.csv (in the current directory).
+\copy "meas_impacts_2024_com" to 'meas_impacts_2024_com.csv' WITH (FORMAT csv, HEADER)
