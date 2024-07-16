@@ -391,11 +391,10 @@ rule "hvac_type_ideal", :parameters => {:hvac_type => "IDEAL"} do
 
 # disable sub_heat and exh_fan
 
-# Solaris Technical 2024-05-07 for linked sizing
-parameter "disable_ems", :default => false, :type => "Enumeration", :valuelist => "true,false"
-
 end
 
+# Solaris Technical 2024-05-07 for linked sizing
+parameter "disable_ems", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 # These imports must come AFTER the hvac_type conditions:
 #   Could be a problem because `import` (e.g., of unitary.pxt) is needed first to define the parameters,
