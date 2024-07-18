@@ -2927,6 +2927,12 @@ cool_flow_min_frac = 0.67
 end
 %>
 
+!- Value of disable_ems = <%= disable_ems %>
+<%
+# Solaris Technical 2024-05-07
+# Because this airflow EMS logic interferes with Modelkit's linked-sizing feature, create a parameter to disable it.
+if (!disable_ems)
+%>
 EnergyManagementSystem:Actuator,
     <%= unitary_name_ems %>_MINFLOW,  !- Name
     <%= unitary_name %> UNITARY,  !- Actuated Component Unique Name
@@ -2979,4 +2985,4 @@ EnergyManagementSystem:InternalVariable,
     <%= unitary_name %>,  !- Internal Data Index Key Name
     Intermediate Air System Heating Volume Flow Rate;  !- Internal Data Type
 <% end %>
-
+<% end %>
