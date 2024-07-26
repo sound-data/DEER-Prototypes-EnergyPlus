@@ -631,8 +631,9 @@ import "ref-walkin.pxt", :group => "lt_wif", :prefix => "lt_wif_" do
 end
 
 # Behzad Rizi - new refrigeration template (ref-sys.pxt and ref-comp.pxt) import for parameterization
+# Behzad Rizi, 05/03/2024 - added new parameters "suction_temperature_control" and "cond_fan_speed_control_type"
 import "ref-sys.pxt", :group => "refsys", :prefix => "refsys_" do
-  include "cond_fan_power|cond_subcool|working_fluid|condenser_type"
+  include "cond_fan_power|cond_subcool|working_fluid|condenser_type|suction_temperature_control|cond_fan_speed_control_type"
 end
 
 import "ref-comp.pxt", :group => "refcomp", :prefix => "refcomp_" do
@@ -1042,6 +1043,7 @@ insert "ref-comp.pxt", **refcomp,
 
 # System MT_System
 # Solaris- New parameter "condenser_type" was added to ref-sys.pxt for the MED-TEMP system
+# Behzad Rizi, 05/03/2024 - New parameter "suction_temperature_control" and "cond_fan_speed_control_type" were added to ref-sys.pxt for the MED-TEMP system
 MT_System_case_walkin_names = ["Meat1DisplayCase","FishDisplayCase",  "MT_MelonBakery", "MT_Deli","MT_DeliServ", "MT_Meat2", "MT_Meat3", "MT_Dairy1", "MT_Dairy2", "MT_Produce", "WalkInCooler"]
 MT_System_ref_sys_comp_names = ["MT_Compressor1","MT_Compressor2","MT_Compressor3","MT_Compressor4","MT_Compressor5","MT_Compressor6","MT_Compressor7","MT_Compressor8"]
 insert "ref-sys.pxt", **refsys,
@@ -1110,6 +1112,7 @@ insert "ref-sys-comp.pxt", **mt_compressor1,
 
 # System LT_System
 # Solaris- New parameter "condenser_type" was added to ref-sys.pxt for the LOW-TEMP system
+# Behzad Rizi, 05/03/2024 - New parameter "suction_temperature_control" and "cond_fan_speed_control_type" were added to ref-sys.pxt for the LOW-TEMP system
 LT_System_case_walkin_names = ["LT_ReachinCase1", "LT_ReachinCase2","LT_ICReachinCase", "LT_DualTemp1Case","LT_DualTemp2Case","WalkInFreezer"]
 LT_System_ref_sys_comp_names = ["LT_Compressor1","LT_Compressor2","LT_Compressor3","LT_Compressor4","LT_Compressor5","LT_Compressor6","LT_Compressor7","LT_Compressor8","LT_Compressor9"]
 insert "ref-sys.pxt", **refsys,
