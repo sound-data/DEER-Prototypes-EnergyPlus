@@ -367,10 +367,12 @@ for folder in folder_list:
             #loop path of each file, read corresponding file
             full_path = hrly_subpath + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
             df = pd.read_csv(full_path, low_memory=False)
+            #remove traling spaces on col headers
+            df.columns = df.columns.str.rstrip()
         
             #8/1/2024 update: extract the electricy column only
             #if for enduse hourly, then extract the relevant end use column
-            extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly) '])
+            extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
             
             #create the column name based on the permutations
             col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
