@@ -31,8 +31,10 @@ parameter "chiller_generator_type", :default=>"HOTWATER"  # For absorption chill
 # NOTE: If DIRECTFIRED is selected, the heating_source must be set to "ABSORPTIONCHILLER" for hotwater.imf.
 
 parameter "num_chillers", :default=>1
-parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004 )
+parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (Model 9 WC Chiller | Model 7 WC Chiller | TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004)
+														# Solaris - 2024-06-12 Added two more water cooled chiller (Model 9 WC Chiller | Model 7 WC Chiller)
 parameter "chiller_cop", :default=>2.87  # Chiller nominal COP
+										# Solaris - 2024-06-12 Added more chiller nominal COP for water-cooled chiller reformulated EIR (4.8 | 5.0 | 5.4 | 5.6 | 6.0 | 6.1 | 6.4 | 6.5)
 parameter "chiller_sizing", :default=>1.0  # Chiller sizing factor (formerly to counteract oversizing problem; as of 7.2 chiller seems to undersize)
 parameter "chiller_condenser", :default=>"AIRCOOLED"  # Chiller condenser type (AIRCOOLED | WATERCOOLED | EVAPCOOLED)
 parameter "chiller_heatpump_hr", :default=>false  # Chiller heat pump heat recovery
@@ -61,6 +63,7 @@ parameter "hi_outdoor_temp", :default=>80['F']  # Outside air high temperature f
 
 parameter "chw_temp_ref", :default=>6.67['C'] # Reference Leaving Chilled Water Temperature
 parameter "cw_temp_ref", :default=>34.4444['C'] # Reference Leaving Condenser Water Temperature
+parameter "chiller_plr_curve", :default=>"ChillerPartLoadWithLift"  # Chiller PLR Curve (ChillerPartLoadWithLift | Bicubic | Quadratic)
 
 parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
@@ -535,7 +538,12 @@ Chiller:Electric:ReformulatedEIR,
   Autosize,                !- Reference Condenser Water Flow Rate {m3/s}
   <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
   <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
+  !Behzad Rizi - 2024-06-17 - Changed LeavingCondenserWaterTemperature to Lift 
+<% if (chiller_plr_curve == "ChillerPartLoadWithLift") %>
+  Lift,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
+<% else %>
   LeavingCondenserWaterTemperature,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
+<% end %>
   <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
   0.1,                    !- Minimum Part Load Ratio {}
   1.0,                     !- Maximum Part Load Ratio {}
@@ -2003,6 +2011,129 @@ Curve:Bicubic,
   36.52,                   !- Maximum Value of x
   0.19,                    !- Minimum Value of y
   1.03;                    !- Maximum Value of y
+
+! Solaris - 2024-06-12 Added water-cooled chiller performance curves(Chiller:Electric:ReformulatedEIR) 
+! Model 7 performance curves for 12% Path B PLE improvement
+<% elsif (chiller_model == "Model 7 WC Chiller") %>
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.989616849,             !- Coefficient1 Constant
+  0.029621942,              !- Coefficient2 x
+  0.000137363,            !- Coefficient3 x**2
+  -0.007781822,             !- Coefficient4 y
+  0.000103918,            !- Coefficient5 y**2
+  -0.00020792,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.544578782,             !- Coefficient1 Constant
+  -0.011128038,            !- Coefficient2 x
+  0.00061257,             !- Coefficient3 x**2
+  0.000848405,            !- Coefficient4 y
+  0.0005857,             !- Coefficient5 y**2
+  -0.000966413,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+	  	  
+Curve:ChillerPartLoadWithLift,
+  <%= name %> Chiller PLR Curve,    !- Name
+  0.162615058,             !- Coefficient1 C1
+  -0.078715236,            !- Coefficient2 C2
+  0.394265877,             !- Coefficient3 C3
+  -0.843913483,             !- Coefficient4 C4
+  0.283449427,            !- Coefficient5 C5
+  1.100071665,             !- Coefficient6 C6
+  0.000000E+00,            !- Coefficient7 C7
+  0.000000E+00,             !- Coefficient8 C8
+  0.000000E+00,            !- Coefficient9 C9
+  0.000000E+00,            !- Coefficient10 C10
+  0.000000E+00,            !- Coefficient11 C11
+  0.000000E+00,            !- Coefficient12 C12
+  0.36,                  !- Minimum Value of x
+  1.08,                  !- Maximum Value of x
+  0.1,                     !- Minimum Value of y
+  1,                       !- Maximum Value of y
+  -0.035,                  !- Minimum Value of z
+  0.3144,                  !- Maximum Value of z
+  ,                        !- Minimum Curve Output
+  ,                        !- Maximum Curve Output
+  Dimensionless,           !- Input Unit Type for x
+  Dimensionless,           !- Input Unit Type for y
+  Dimensionless,           !- Input Unit Type for z
+  Dimensionless;           !- Output Unit Type
+
+! Solaris - 2024-06-12 Added water-cooled chiller performance curves(Chiller:Electric:ReformulatedEIR)
+! Model 9 performance curves for 17% Path B PLE improvement
+<% elsif (chiller_model == "Model 9 WC Chiller") %>
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  1.833870,             !- Coefficient1 Constant
+  -0.018299,              !- Coefficient2 x
+  0.004437,            !- Coefficient3 x**2
+  -0.054290,             !- Coefficient4 y
+  0.000876,            !- Coefficient5 y**2
+  -0.000356,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  1.097221,             !- Coefficient1 Constant
+  -0.013698,            !- Coefficient2 x
+  0.001890,             !- Coefficient3 x**2
+  -0.031726,            !- Coefficient4 y
+  0.001072,             !- Coefficient5 y**2
+  -0.001329,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+	  
+Curve:ChillerPartLoadWithLift,
+  <%= name %> Chiller PLR Curve,    !- Name
+  0.087760714,             !- Coefficient1 C1
+  -0.111975778,            !- Coefficient2 C2
+  0.31630787,             !- Coefficient3 C3
+  -0.214192565,             !- Coefficient4 C4
+  0.277130448,            !- Coefficient5 C5
+  0.629734788,             !- Coefficient6 C6
+  0.000000E+00,            !- Coefficient7 C7
+  0.000000E+00,             !- Coefficient8 C8
+  0.000000E+00,            !- Coefficient9 C9
+  0.000000E+00,            !- Coefficient10 C10
+  0.000000E+00,            !- Coefficient11 C11
+  0.000000E+00,            !- Coefficient12 C12
+  0.35,                  !- Minimum Value of x
+  1.08,                  !- Maximum Value of x
+  0.1,                     !- Minimum Value of y
+  1,                       !- Maximum Value of y
+  -0.035,                  !- Minimum Value of z
+  0.3144,                  !- Maximum Value of z
+  ,                        !- Minimum Curve Output
+  ,                        !- Maximum Curve Output
+  Dimensionless,           !- Input Unit Type for x
+  Dimensionless,           !- Input Unit Type for y
+  Dimensionless,           !- Input Unit Type for z
+  Dimensionless;           !- Output Unit Type
+
+
+
 
 <% elsif (chiller_model == "WC PD 2010 A Large") %>
 
