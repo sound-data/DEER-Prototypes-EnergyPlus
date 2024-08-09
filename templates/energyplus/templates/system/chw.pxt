@@ -33,6 +33,7 @@ parameter "chiller_generator_type", :default=>"HOTWATER"  # For absorption chill
 parameter "num_chillers", :default=>1
 parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (Model 9 WC Chiller | Model 7 WC Chiller | TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004)
 														# Solaris - 2024-06-12 Added two more water cooled chiller (Model 9 WC Chiller | Model 7 WC Chiller)
+														# Solaris(Behzad S. Rizi) - 2024-08-09 Added two more water cooled chiller (Carrier  WC Centrifugal 19XR 1234kW/5.39COP/VSD | Trane WC Screw RTHB 1051kW/5.05COP/Valve)
 parameter "chiller_cop", :default=>2.87  # Chiller nominal COP
 										# Solaris - 2024-06-12 Added more chiller nominal COP for water-cooled chiller reformulated EIR (4.8 | 5.0 | 5.4 | 5.6 | 6.0 | 6.1 | 6.4 | 6.5)
 parameter "chiller_sizing", :default=>1.0  # Chiller sizing factor (formerly to counteract oversizing problem; as of 7.2 chiller seems to undersize)
@@ -64,7 +65,6 @@ parameter "hi_outdoor_temp", :default=>80['F']  # Outside air high temperature f
 parameter "chw_temp_ref", :default=>6.67['C'] # Reference Leaving Chilled Water Temperature
 parameter "cw_temp_ref", :default=>34.4444['C'] # Reference Leaving Condenser Water Temperature
 parameter "chiller_plr_curve", :default=>"ChillerPartLoadWithLift"  # Chiller PLR Curve (ChillerPartLoadWithLift | Bicubic | Quadratic)
-
 parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
 %>
@@ -1921,7 +1921,81 @@ Curve:Bicubic,
   36.52,                   !- Maximum Value of x
   0.19,                    !- Minimum Value of y
   1.03;                    !- Maximum Value of y
+  
+! Solaris(Behzad S. Rizi) - 2024-08-09 Added water-cooled centrifugal chiller performance curves as the basecase 
+<% elsif (chiller_model == "WC Cent Carrier 19XR 1234kW/5.39COP/VSD") %>
 
+Curve:Biquadratic,
+    <%= name %> Chiller Cap Curve,  !- Name
+    5.905815E-01,            !- Coefficient1 Constant
+    1.190927E-01,            !- Coefficient2 x
+    -6.727309E-03,           !- Coefficient3 x**2
+    -9.580836E-03,           !- Coefficient4 y
+    -3.034704E-04,           !- Coefficient5 y**2
+    1.540686E-03,            !- Coefficient6 x*y
+    7.22,                    !- Minimum Value of x
+    12.78,                   !- Maximum Value of x
+    12.78,                   !- Minimum Value of y
+    26.67;                   !- Maximum Value of y
+	
+Curve:Biquadratic,
+    <%= name %> Chiller EIR Curve,  !- Name
+    3.771659E-01,            !- Coefficient1 Constant
+    1.144965E-01,            !- Coefficient2 x
+    -8.186893E-03,           !- Coefficient3 x**2
+    -3.372584E-03,           !- Coefficient4 y
+    1.689440E-04,            !- Coefficient5 y**2
+    1.008523E-03,            !- Coefficient6 x*y
+    7.22,                    !- Minimum Value of x
+    12.78,                   !- Maximum Value of x
+    12.78,                   !- Minimum Value of y
+    26.67;                   !- Maximum Value of y
+	
+ Curve:Quadratic,
+    <%= name %> Chiller PLR Curve,  !- Name
+    1.495681E-01,            !- Coefficient1 Constant
+    -1.449639E-01,           !- Coefficient2 x
+    9.941070E-01,            !- Coefficient3 x**2
+    0.19,                    !- Minimum Value of x
+    1.02;                    !- Maximum Value of x 
+
+! Solaris(Behzad S. Rizi) - 2024-08-09 Added water-cooled screw chiller performance curves as the basecase 	
+<% elsif (chiller_model == "Screw WC Trane RTHB 1051kW/5.05COP/Valve") %>
+
+Curve:Biquadratic,
+    <%= name %> Chiller Cap Curve,  !- Name
+    9.482157E-01,            !- Coefficient1 Constant
+    3.306737E-02,            !- Coefficient2 x
+    -6.450072E-05,           !- Coefficient3 x**2
+    -3.756522E-03,           !- Coefficient4 y
+    -6.501672E-05,           !- Coefficient5 y**2
+    2.517986E-15,            !- Coefficient6 x*y
+    4.44,                    !- Minimum Value of x
+    8.89,                    !- Maximum Value of x
+    23.89,                   !- Minimum Value of y
+    35.00;                   !- Maximum Value of y
+
+Curve:Biquadratic,
+    <%= name %> Chiller EIR Curve,  !- Name
+    4.904181E-01,            !- Coefficient1 Constant
+    -5.530317E-03,           !- Coefficient2 x
+    1.209907E-03,            !- Coefficient3 x**2
+    9.122333E-03,            !- Coefficient4 y
+    5.923591E-04,            !- Coefficient5 y**2
+    -1.469958E-03,           !- Coefficient6 x*y
+    4.44,                    !- Minimum Value of x
+    8.89,                    !- Maximum Value of x
+    23.89,                   !- Minimum Value of y
+    35.00;                   !- Maximum Value of y
+	
+Curve:Quadratic,
+    <%= name %> Chiller PLR Curve,  !- Name
+    2.590465E-01,            !- Coefficient1 Constant
+    2.148987E-01,            !- Coefficient2 x
+    5.265039E-01,            !- Coefficient3 x**2
+    0.20,                    !- Minimum Value of x
+    1.01;                    !- Maximum Value of x
+	
 <% elsif (chiller_model == "WC PD 2010 B") %>
 
 Curve:Biquadratic,
