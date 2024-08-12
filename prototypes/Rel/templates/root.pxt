@@ -589,10 +589,10 @@ end
 
 vrfc_branches.each_key do |sys_name|
   insert "system/vrfc.pxt", **vrf,
-    :name => "#{hvac_type}-#{sys_name}",
+    :name => "#{this_hvac_type}-#{sys_name}",
     :branches => vrfc_branches[sys_name],
-    :op_sch => hvac_sch,
-    **local(:cool_coil_cop, :heat_coil_cop)
+    :cool_coil_cop => this_hvac[:cool_coil_cop],
+    :heat_coil_cop => this_hvac[:heat_coil_cop]
 end
 
 systems_table.each_key do |system_name|
