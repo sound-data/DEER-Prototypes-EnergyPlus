@@ -16,7 +16,7 @@ parameter "fan_power_per_flow_pressure", :default => 1.67  # W/((m3/s)-Pa) (only
 parameter "fan_low_speed_flow_frac", :default => 0.66 # (only relevant when fan_type = "SYSTEM-MODEL" and fan_speed = "DUAL")
 parameter "fan_low_speed_power_frac", :default => 0.4 # (only relevant when fan_type = "SYSTEM-MODEL" and fan_speed = "DUAL")
 
-#TRC - "SWHC023-05" measure: Adding the following variables to parameterize the multi-speed operation air flow ratio and associated supply fan power for UnitarySystems
+#TRC - SWHC023-03, SWHC041-05 measure: Adding the following variables to parameterize the multi-speed operation air flow ratio and associated supply fan power for UnitarySystems
 parameter "low_heating_supply_air_ratio", :default => 0.75
 parameter "low_cooling_supply_air_ratio", :default => 0.75
 parameter "ventilation_supply_air_ratio", :default => 0.4
