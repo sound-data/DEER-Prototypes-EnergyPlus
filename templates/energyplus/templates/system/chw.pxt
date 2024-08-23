@@ -2122,10 +2122,10 @@ Curve:Biquadratic,
 Curve:ChillerPartLoadWithLift,
   <%= name %> Chiller PLR Curve,    !- Name
   0.162615058,             !- Coefficient1 C1
-  -0.078715236,            !- Coefficient2 C2
-  0.394265877,             !- Coefficient3 C3
-  -0.843913483,             !- Coefficient4 C4
-  0.283449427,            !- Coefficient5 C5
+  -0.843913483,            !- Coefficient2 C2 
+  0.283449427,             !- Coefficient3 C3 
+  -0.078715236,             !- Coefficient4 C4 
+  0.394265877,            !- Coefficient5 C5 
   1.100071665,             !- Coefficient6 C6
   0.000000E+00,            !- Coefficient7 C7
   0.000000E+00,             !- Coefficient8 C8
@@ -2182,11 +2182,11 @@ Curve:Biquadratic,
 Curve:ChillerPartLoadWithLift,
   <%= name %> Chiller PLR Curve,    !- Name
   0.087760714,             !- Coefficient1 C1
-  -0.111975778,            !- Coefficient2 C2
-  0.31630787,             !- Coefficient3 C3
-  -0.214192565,             !- Coefficient4 C4
-  0.277130448,            !- Coefficient5 C5
-  0.629734788,             !- Coefficient6 C6
+  -0.214192565,            !- Coefficient2 C2 
+  0.277130448,             !- Coefficient3 C3 
+  -0.111975778,             !- Coefficient4 C4 
+  0.31630787,            !- Coefficient5 C5 
+  0.629734788,             !- Coefficient6 C6 
   0.000000E+00,            !- Coefficient7 C7
   0.000000E+00,             !- Coefficient8 C8
   0.000000E+00,            !- Coefficient9 C9
