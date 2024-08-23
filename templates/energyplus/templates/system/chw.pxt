@@ -33,9 +33,10 @@ parameter "chiller_generator_type", :default=>"HOTWATER"  # For absorption chill
 parameter "num_chillers", :default=>1
 parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (Model 9 WC Chiller | Model 7 WC Chiller | TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004)
 														# Solaris - 2024-06-12 Added two more water cooled chiller (Model 9 WC Chiller | Model 7 WC Chiller)
-														# Solaris(Behzad S. Rizi) - 2024-08-09 Added two more water cooled chiller (Carrier  WC Centrifugal 19XR 1234kW/5.39COP/VSD | Trane WC Screw RTHB 1051kW/5.05COP/Valve)
+														# Solaris(Behzad S. Rizi) - 2024-08-09 & 2024-08-22 Added two water cooled chiller models for the basecases(ElectricEIR & ReformulatedEIR)>>>(ElectricEIRChiller Carrier 19XR 1234kW/5.39COP/VSD & ReformEIRChiller Carrier 19XR 1234kW/5.39COP/VSD | ElectricEIRChiller Trane RTHB 1051kW/5.05COP/Valve & ReformEIRChiller Trane RTHB 1051kW/5.05COP/Valve)
 parameter "chiller_cop", :default=>2.87  # Chiller nominal COP
 										# Solaris - 2024-06-12 Added more chiller nominal COP for water-cooled chiller reformulated EIR (4.8 | 5.0 | 5.4 | 5.6 | 6.0 | 6.1 | 6.4 | 6.5)
+parameter "wc_option", :default=>"Reformulated"  # (EIR | Reformulated)										
 parameter "chiller_sizing", :default=>1.0  # Chiller sizing factor (formerly to counteract oversizing problem; as of 7.2 chiller seems to undersize)
 parameter "chiller_condenser", :default=>"AIRCOOLED"  # Chiller condenser type (AIRCOOLED | WATERCOOLED | EVAPCOOLED)
 parameter "chiller_heatpump_hr", :default=>false  # Chiller heat pump heat recovery
@@ -313,7 +314,11 @@ PlantEquipmentList,
 <% if (cooling_source == "CHILLER") %>
   <% if (chiller_type == "ELECTRIC") %>
     <% if (chiller_condenser == "WATERCOOLED") %>
+      <% if (wc_option == "EIR") %>
+  Chiller:Electric:EIR,    !- Equipment 1 Object Type
+      <% else %>
   Chiller:Electric:ReformulatedEIR,  !- Equipment 1 Object Type
+      <% end %>
     <% else %>
   Chiller:Electric:EIR,    !- Equipment 1 Object Type
     <% end %>
@@ -333,7 +338,11 @@ PlantEquipmentList,
   <% for i in (1..num_chillers-1) %>
   <%= name %> Chiller <%= i %>,        !- Equipment 1 Name
   <% if (chiller_condenser == "WATERCOOLED") %>
+    <% if (wc_option == "EIR") %>
+  Chiller:Electric:EIR,    !- Equipment 2 Object Type
+    <% else %>
   Chiller:Electric:ReformulatedEIR,  !- Equipment 2 Object Type
+    <% end %>
   <% else %>
   Chiller:Electric:EIR,    !- Equipment 2 Object Type
   <% end %>
@@ -505,7 +514,11 @@ Branch,
 <% if (cooling_source == "CHILLER") %>
   <% if (chiller_type == "ELECTRIC") %>
     <% if (chiller_condenser == "WATERCOOLED") %>
+      <% if (wc_option == "EIR") %>
+  Chiller:Electric:EIR,    !- Component 1 Object Type
+      <% else %>
   Chiller:Electric:ReformulatedEIR,  !- Component 1 Object Type
+      <% end %>
     <% else %>
   Chiller:Electric:EIR,    !- Component 1 Object Type
     <% end %>
@@ -527,7 +540,9 @@ Branch,
 
 <% if (cooling_source == "CHILLER") %>
 <% if (chiller_type == "ELECTRIC") %>
+
 <% if (chiller_condenser == "WATERCOOLED") %>
+<% if (wc_option == "Reformulated") %>
 Chiller:Electric:ReformulatedEIR,
   <%= name %> Chiller <%= i %>,  !- Name
   Autosize,                !- Reference Capacity {W}
@@ -568,8 +583,50 @@ Branch,
   <%= name %> Chiller <%= i %>,   !- Component 1 Name
   <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
+  
+  <% else %>
+# if cw_option is "EIR"
+Chiller:Electric:EIR,
+  <%= name %> Chiller <%= i %>,  !- Name
+  Autosize,                !- Reference Capacity {W}
+  <%= chiller_cop %>,  !- Reference COP {}
+  <%= chw_temp_ref %>,                    !- Reference Leaving Chilled Water Temperature {C}
+  <%= cw_temp_ref %>,                    !- Reference Leaving Condenser Water Temperature {C}
+  <%= design_flow %>,  !- Reference Chilled Water Flow Rate {m3/s}
+  Autosize,                !- Reference Condenser Fluid Flow Rate {m3/s}
+  <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
+  <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
+  <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
+  0.15,                    !- Minimum Part Load Ratio {}
+  1.0,                     !- Maximum Part Load Ratio {}
+  0.8,                     !- Optimum Part Load Ratio {}
+  0.15,                    !- Minimum Unloading Ratio {}
+  <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Chilled Water Outlet Node Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Condenser Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node,                        !- Condenser Outlet Node Name
+  WaterCooled,     !- Condenser Type
+  ,                        !- Condenser Fan Power Ratio {W/W}
+  1.0,                     !- Fraction of Compressor Electric Consumption Rejected by Condenser {}
+  2.0,                     !- Leaving Chilled Water Lower Temperature Limit {C}
+  <%= chiller_flow_mode %>,  !- Chiller Flow Mode
+  0.0,                     !- Design Heat Recovery Water Flow Rate {m3/s}
+  ,                        !- Heat Recovery Inlet Node Name
+  ,                        !- Heat Recovery Outlet Node Name
+  <%= chiller_sizing %>;  !- Sizing Factor
+  
+Branch,
+  <%= name %> <%= i %> HR Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Chiller:Electric:EIR,    !- Component 1 Object Type
+  <%= name %> Chiller <%= i %>,   !- Component 1 Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
+  
+  <% end %>
 
 <% else %>
+! If chiller condenser is aircooled 
 Chiller:Electric:EIR,
   <%= name %> Chiller <%= i %>,  !- Name
   Autosize,                !- Reference Capacity {W}
