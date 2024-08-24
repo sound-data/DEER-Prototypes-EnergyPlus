@@ -5,10 +5,11 @@ import numpy as np
 import os
 import sys
 import datetime as dt
+from itertools import islice
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_DCV.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -24,7 +25,7 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWHC043 Multi_Cap_Com_AC'
+measure_name = 'SWHC006-04 SZ DCV'
 
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
@@ -205,17 +206,27 @@ def annual_raw_parsing_com(df, cohort_dict, case):
 
     df['TechID'] = split_meta_cols_all[split_meta_cols_all[1]==case][2]
     df['file'] = split_meta_cols_all[split_meta_cols_all[1]==case][3]
-    
-    #COM modelkit output is kBtu for the time being. change this after fix
 
-    annual_df_v1 = df[['TechID', 'file', 'BldgLoc', 'BldgType','BldgHVAC','BldgVint','Story', 'TechGroup_TechType','Total (kWh)', 'Heating (kWh)', 'Cooling (kWh)',
-       'Interior Lighting (kWh)', 'Exterior Lighting (kWh)',
-       'Interior Equipment (kWh)', 'Exterior Equipment (kWh)', 'Fans (kWh)',
-       'Pumps (kWh)', 'Heat Rejection (kWh)', 'Humidification (kWh)',
-       'Heat Recovery (kWh)', 'Water Systems (kWh)', 'Refrigeration (kWh)',
-       'Generators (kWh)', 'Heating Elec (kWh)', 'Cooling Elec (kWh)',
-       'Heating NG (kWh)', 'Cooling NG (kWh)', 'Interior Equipment Elec (kWh)',
-       'Interior Equipment NG (kWh)']]
+    #temp fix 8/22/2024 for branching between normunit types
+    if df_measure['Normunit'].unique()[0]!='Cap-Tons':
+        annual_df_v1 = df[['TechID', 'file', 'BldgLoc', 'BldgType','BldgHVAC','BldgVint','Story', 'TechGroup_TechType','Total (kWh)', 'Heating (kWh)', 'Cooling (kWh)',
+        'Interior Lighting (kWh)', 'Exterior Lighting (kWh)',
+        'Interior Equipment (kWh)', 'Exterior Equipment (kWh)', 'Fans (kWh)',
+        'Pumps (kWh)', 'Heat Rejection (kWh)', 'Humidification (kWh)',
+        'Heat Recovery (kWh)', 'Water Systems (kWh)', 'Refrigeration (kWh)',
+        'Generators (kWh)', 'Heating Elec (kWh)', 'Cooling Elec (kWh)',
+        'Heating NG (kWh)', 'Cooling NG (kWh)', 'Interior Equipment Elec (kWh)',
+        'Interior Equipment NG (kWh)']]
+    else:
+        annual_df_v1 = df[['TechID', 'file', 'BldgLoc', 'BldgType','BldgHVAC','BldgVint','Story', 'TechGroup_TechType','Total (kWh)', 'Heating (kWh)', 'Cooling (kWh)',
+        'Interior Lighting (kWh)', 'Exterior Lighting (kWh)',
+        'Interior Equipment (kWh)', 'Exterior Equipment (kWh)', 'Fans (kWh)',
+        'Pumps (kWh)', 'Heat Rejection (kWh)', 'Humidification (kWh)',
+        'Heat Recovery (kWh)', 'Water Systems (kWh)', 'Refrigeration (kWh)',
+        'Generators (kWh)', 'Heating Elec (kWh)', 'Cooling Elec (kWh)',
+        'Heating NG (kWh)', 'Cooling NG (kWh)', 'Interior Equipment Elec (kWh)',
+        'Interior Equipment NG (kWh)', 'Bldg Condition Area (m2)',
+        'Bldg Total Area (m2)','Total Cool Coil Capacity (W)']]
     
     return annual_df_v1
 
@@ -266,6 +277,17 @@ def end_use_rearrange(df_in):
 
     df_in['deskw_ltg'] = 1 #placeholders fields for now
     df_in['deskw_equ'] = 1
+    
+    #temp fix for generalizing script 8/23/24
+    if df_measure['Normunit'].unique()[0]!='Cap-Tons':
+        pass
+    else:
+        #area and normunits, added on 7/24/2024
+        #convert m2 to ft2
+        df_in['bldg_cond_area_ft2'] = df_in['Bldg Condition Area (m2)']*10.763
+        df_in['bldg_tot_area_ft2'] = df_in['Bldg Total Area (m2)']*10.763
+        #convert W to kbtuh
+        df_in['total_cool_cap_kbtuh'] = df_in['Total Cool Coil Capacity (W)']*3.41/1000
 
     return df_in
 
@@ -286,9 +308,22 @@ for folder in folder_list:
         #locate_file(filepath+"/"+folder, 'results-summary.csv')
         print(f"'{filepath}/{folder}/results-summary.csv' will be processed.")
         #insert subsequent processing here
+
+        #determine number of runs
         df_raw = pd.read_csv(filepath+"/"+folder+'/results-summary.csv', usecols=['File Name'])
         num_runs = len(df_raw['File Name'].dropna().unique()) - 1 
-        annual_df = pd.read_csv(filepath+"/"+folder+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+
+        with open(filepath+"/"+folder+'/results-summary.csv', 'r') as temp_f:
+            # get No of columns in each line, with islice specifying start and end line index
+            col_count = [ len(l.split(",")) for l in islice(temp_f, num_runs+2, 2*num_runs+2) ]
+        max_col = max(col_count)
+
+        #read raw csv 
+        annual_df = pd.read_csv(filepath+"/"+folder+'/results-summary.csv', nrows=num_runs+1, skiprows=num_runs+2, names=range(max_col))
+        annual_df.columns = annual_df.iloc[0]
+        annual_df = annual_df[1:]
+
+        #subsequent processes
         split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
         #concat each dataset
@@ -299,7 +334,40 @@ for folder in folder_list:
     else:
         print(f"no data found.")
 
+#reset index, some index shift happened during for loop
+split_meta_cols_all.reset_index(inplace=True)
+#%%
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+df_annual_raw.to_csv('temp.csv', index=False)
+#reread csv with ragged cols to create placeholder headers
+df_annual_raw = pd.read_csv('temp.csv')
 
+#%%
+if df_measure['Normunit'].unique()[0]!='Cap-Tons':
+    df_annual_raw = df_annual_raw[['File Name', 'Total (kWh)', 'Heating (kWh)', 'Cooling (kWh)',
+        'Interior Lighting (kWh)', 'Exterior Lighting (kWh)',
+        'Interior Equipment (kWh)', 'Exterior Equipment (kWh)', 'Fans (kWh)',
+        'Pumps (kWh)', 'Heat Rejection (kWh)', 'Humidification (kWh)',
+        'Heat Recovery (kWh)', 'Water Systems (kWh)', 'Refrigeration (kWh)',
+        'Generators (kWh)', 'Heating Elec (kWh)', 'Cooling Elec (kWh)',
+        'Heating NG (kWh)', 'Cooling NG (kWh)', 'Interior Equipment Elec (kWh)',
+        'Interior Equipment NG (kWh)']]
+else:
+    #normunit1_index = df_annual_raw.columns.tolist().index('SingleSpeed Coil Cool Capacity (W)')
+    #sum up multiple coil capacities into one
+    sum_cols = df_annual_raw.loc[:,'SingleSpeed Coil Cool Capacity (W)':]
+    df_annual_raw['Total Cool Coil Capacity (W)'] = sum_cols.sum(axis=1)
+
+    #rearrange fields with capacity
+    df_annual_raw = df_annual_raw[['File Name', 'Total (kWh)', 'Heating (kWh)', 'Cooling (kWh)',
+        'Interior Lighting (kWh)', 'Exterior Lighting (kWh)',
+        'Interior Equipment (kWh)', 'Exterior Equipment (kWh)', 'Fans (kWh)',
+        'Pumps (kWh)', 'Heat Rejection (kWh)', 'Humidification (kWh)',
+        'Heat Recovery (kWh)', 'Water Systems (kWh)', 'Refrigeration (kWh)',
+        'Generators (kWh)', 'Heating Elec (kWh)', 'Cooling Elec (kWh)',
+        'Heating NG (kWh)', 'Cooling NG (kWh)', 'Interior Equipment Elec (kWh)',
+        'Interior Equipment NG (kWh)', 'Bldg Condition Area (m2)',
+        'Bldg Total Area (m2)','Total Cool Coil Capacity (W)']]
 # %%
 #if looping over multiple folders/cohort cases, use a list
 #Com version
@@ -315,11 +383,21 @@ for case in cohort_cases:
     sim_annual_proto = pd.concat([sim_annual_proto, sim_annual_i])
     print('ok.')
 sim_annual_proto = end_use_rearrange(sim_annual_proto)
-sim_annual_v1 = sim_annual_proto[['TechID', 'BldgLoc', 'BldgType', 'BldgHVAC', 'BldgVint', 'kwh_tot', 'kwh_ltg', 'kwh_task',
+
+#quick branch split based on whether normunit is cap-tons. may need optimization after standardizng query.txt
+if df_measure['Normunit'].unique()[0]!='Cap-Tons':
+    sim_annual_v1 = sim_annual_proto[['TechID', 'BldgLoc', 'BldgType', 'BldgHVAC', 'BldgVint', 'kwh_tot', 'kwh_ltg', 'kwh_task',
     'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
     'kwh_venthtg', 'kwh_ventclg',
     'kwh_refg', 'kwh_hpsup', 'kwh_shw', 'kwh_ext', 'thm_tot', 'thm_equip',
     'thm_htg', 'thm_shw', 'deskw_ltg', 'deskw_equ']].drop_duplicates().copy()
+
+else:
+    sim_annual_v1 = sim_annual_proto[['TechID', 'BldgLoc', 'BldgType', 'BldgHVAC', 'BldgVint', 'kwh_tot', 'kwh_ltg', 'kwh_task',
+        'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
+        'kwh_venthtg', 'kwh_ventclg',
+        'kwh_refg', 'kwh_hpsup', 'kwh_shw', 'kwh_ext', 'thm_tot', 'thm_equip',
+        'thm_htg', 'thm_shw', 'deskw_ltg', 'deskw_equ','bldg_cond_area_ft2','bldg_tot_area_ft2','total_cool_cap_kbtuh']].drop_duplicates().copy()
 
 
 #========================
@@ -358,7 +436,19 @@ for folder in folder_list:
 
         df_raw = pd.read_csv(subpath+'/'+'/results-summary.csv', usecols=['File Name'])
         num_runs = len(df_raw['File Name'].dropna().unique()) - 1
-        annual_df = pd.read_csv(subpath+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+
+
+        with open(filepath+"/"+folder+'/results-summary.csv', 'r') as temp_f:
+            # get No of columns in each line, with islice specifying start and end line index
+            col_count = [ len(l.split(",")) for l in islice(temp_f, num_runs+2, 2*num_runs+2) ]
+        max_col = max(col_count)
+
+        #read raw csv 
+        annual_df = pd.read_csv(filepath+"/"+folder+'/results-summary.csv', nrows=num_runs+1, skiprows=num_runs+2, names=range(max_col))
+        annual_df.columns = annual_df.iloc[0]
+        annual_df = annual_df[1:]
+
+
         split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
         for i in range(0,num_runs):
@@ -367,10 +457,12 @@ for folder in folder_list:
             #loop path of each file, read corresponding file
             full_path = hrly_subpath + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
             df = pd.read_csv(full_path, low_memory=False)
-            
-            #extract the last column (the total elec hrly profile)
+            #remove traling spaces on col headers
+            df.columns = df.columns.str.rstrip()
+
+            #8/1/2024 update: extract the electricy column only
             #if for enduse hourly, then extract the relevant end use column
-            extracted_df = pd.DataFrame(df.iloc[:,-1])
+            extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
             
             #create the column name based on the permutations
             col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
@@ -472,7 +564,9 @@ bldgtype = 'Com'
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 # %%
+#normunit selection. By default it is the normunit defined on Measure_List
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+normunit = df_measure['Normunit'].unique()[0]
 # %%
 ##Annual Data final field fixes
 
@@ -482,22 +576,57 @@ sim_annual_v1['SizingID'] = 'None'
 sim_annual_v1['tstat'] = 0
 #now Norm unit is read from measure master table
 #this may need to be modified based on the measure
-sim_annual_v1['normunit'] = df_normunits['Normunit'].unique()[0]
+
+#%%
+#normunit choice
+if normunit == 'Cap-Tons':
+    sim_annual_v1['normunit'] = 'Cap-Tons'
+else:
+    #if no specified normunits, use Area-ft2-BA by default
+    #8/23/24, by default, normunit should be whatever is defined in initial measure list
+    sim_annual_v1['normunit'] = normunit
 
 #%%
 #add area based on building type
 #also add normunit (also the area) for the example measure
 #code may need to be tweaked if normalizing unit is different for a specific measure
 
-area_lookup = df_normunits[['BldgType', 'Value']]
-sim_annual_v2 = pd.merge(sim_annual_v1, area_lookup, on='BldgType')
-sim_annual_v2['numunits'] = sim_annual_v2['Value']
-sim_annual_v2['measarea'] = sim_annual_v2['Value']
+# area_lookup = df_normunits[['BldgType', 'Value']]
+# sim_annual_v2 = pd.merge(sim_annual_v1, area_lookup, on='BldgType')
+unit_lookup = df_normunits[['BldgType', 'normunit', 'Value']]
+if normunit == 'Each':
+    unit_table = unit_lookup[unit_lookup['normunit']=='Each'][['normunit','Value']]
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on='normunit')
+elif normunit == 'Cap-Tons':
+    sim_annual_v2 = sim_annual_v1
+else:
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on='normunit')
+
+#this line is covered below
+#sim_annual_v2['numunits'] = sim_annual_v2['Value']
+# sim_annual_v2['measarea'] = sim_annual_v2['Value']
+
+
+#%%
+#numunit based on normunit choice
+if normunit == 'Cap-Tons':
+    sim_annual_v2['numunits'] = sim_annual_v2['total_cool_cap_kbtuh']/12
+else:
+    #if no specified normunits, use Area-ft2-BA by default   
+    sim_annual_v2['numunits'] = sim_annual_v2['Value']
+
+
+#%%
+#do area separately after normunit merge
+area_lookup = df_normunits[df_normunits['normunit']=='Area-ft2-BA'][['BldgType','total_area_m2']]
+
+sim_annual_v3 = pd.merge(sim_annual_v2, area_lookup, on='BldgType')
+sim_annual_v3['measarea'] = sim_annual_v3['total_area_m2']
 
 # %%
-sim_annual_v2['lastmod']=dt.datetime.now()
+sim_annual_v3['lastmod']=dt.datetime.now()
 #rearrange columns
-sim_annual_f = sim_annual_v2[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
+sim_annual_f = sim_annual_v3[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
        'normunit', 'numunits', 'measarea', 'kwh_tot', 'kwh_ltg', 'kwh_task',
        'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
        'kwh_venthtg', 'kwh_ventclg', 'kwh_refg', 'kwh_hpsup', 'kwh_shw',
