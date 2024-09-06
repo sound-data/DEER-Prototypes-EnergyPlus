@@ -20,5 +20,5 @@ engine = 'C:\EnergyPlusV9-5-0'  # Must be an absolute path
 #engine = '/Applications/EnergyPlus-22-2-0'  # Must be an absolute path
 #engine = '/Applications/EnergyPlus-9-2-0'  # Must be an absolute path
 readvars = true
-keep = false
+keep = true
 output-files = "eplusout.err; eplusout.sql; eplustbl.htm; eplusvar.csv"
