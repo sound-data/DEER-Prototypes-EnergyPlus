@@ -217,6 +217,7 @@ parameter "sat_temp_max", :default => Autosize
 
 parameter "clear_water_storage_tank", :default => ""  # Name of tank for collecting cooling coil condensate
 
+parameter "disable_ems", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 %>
 
@@ -246,8 +247,8 @@ if (dx_comp_speed == "CONSTANT")
 elsif (dx_comp_speed == "TWO-SPEED")
   dx_comp_speed_num = 2
   cool_coil_cd = 0
-  cool_coil_cop_1 = cool_coil_cop
-  cool_coil_cop_2 = cool_coil_cop * 1.0148883375
+  cool_coil_cop_1 = cool_coil_cop * 1.0148883375
+  cool_coil_cop_2 = cool_coil_cop 
   if heat_coil_type.include?("DX")
     heat_coil_cd = 0
     heat_coil_cop_1 = heat_coil_cop * 1.0148883375
@@ -256,11 +257,11 @@ elsif (dx_comp_speed == "TWO-SPEED")
 elsif (dx_comp_speed == "DUAL")
   dx_comp_speed_num = 2
   cool_coil_cd = 0.11
-  cool_coil_cop_1 = cool_coil_cop * 0.9
+  cool_coil_cop_1 = cool_coil_cop / 0.9
   cool_coil_cop_2 = cool_coil_cop
   if heat_coil_type.include?("DX")
     heat_coil_cd = 0.11
-    heat_coil_cop_1 = heat_coil_cop * 0.9
+    heat_coil_cop_1 = heat_coil_cop / 0.9
     heat_coil_cop_2 = heat_coil_cop
   end
 elsif (dx_comp_speed == "DUAL-EQUAL")
@@ -270,21 +271,21 @@ elsif (dx_comp_speed == "DUAL-EQUAL")
   cool_coil_cop_2 = cool_coil_cop
   if heat_coil_type.include?("DX")
     heat_coil_cd = 0.11
-    heat_coil_cop_1 = heat_coil_cop * 0.9
+    heat_coil_cop_1 = heat_coil_cop / 0.9
     heat_coil_cop_2 = heat_coil_cop
   end
 elsif (dx_comp_speed == "VARIABLE")
   dx_comp_speed_num = 4
   cool_coil_cd = 0.25
-  cool_coil_cop_1 = cool_coil_cop * 0.7
-  cool_coil_cop_2 = cool_coil_cop * 0.75
-  cool_coil_cop_3 = cool_coil_cop * 0.9
+  cool_coil_cop_1 = cool_coil_cop / 0.7
+  cool_coil_cop_2 = cool_coil_cop / 0.75
+  cool_coil_cop_3 = cool_coil_cop / 0.9
   cool_coil_cop_4 = cool_coil_cop
   if heat_coil_type.include?("DX")
     heat_coil_cd = 0.24
-    heat_coil_cop_1 = heat_coil_cop * 0.7
-    heat_coil_cop_2 = heat_coil_cop * 0.75
-    heat_coil_cop_3 = heat_coil_cop * 0.9
+    heat_coil_cop_1 = heat_coil_cop / 0.7
+    heat_coil_cop_2 = heat_coil_cop / 0.75
+    heat_coil_cop_3 = heat_coil_cop / 0.9
     heat_coil_cop_4 = heat_coil_cop
   end
 end
@@ -850,7 +851,7 @@ Coil:Cooling:DX:MultiSpeed,
   ,                        !- Basin Heater Operating Schedule Name
   Electricity,             !- Fuel Type
   <%= dx_comp_speed_num %>,  !- Number of Speeds
-  <%= cool_coil_cap %>,    !- Speed 1 Gross Rated Total Cooling Capacity {W}
+  Autosize,    !- Speed 1 Gross Rated Total Cooling Capacity {W}
   Autosize,                !- Speed 1 Gross Rated Sensible Heat Ratio
   <%= cool_coil_cop_1 %>,  !- Speed 1 Gross Rated Cooling COP
   <%= fan_flow %>,         !- Speed 1 Rated Air Flow Rate {m^3/s}
@@ -876,7 +877,11 @@ Coil:Cooling:DX:MultiSpeed,
   Autosize,                !- Speed 1 Evaporative Condenser Air Flow Rate {m^3/s}
   ,                        !- Speed 1 Rated Evaporative Condenser Pump Power Consumption {W}
 <% end %>
+<% if (dx_comp_speed_num == 2) %>
+  <%= cool_coil_cap %>,                !- Speed 2 Gross Rated Total Cooling Capacity {W}
+<% else %>
   Autosize,                !- Speed 2 Gross Rated Total Cooling Capacity {W}
+<% end %>
   Autosize,                !- Speed 2 Gross Rated Sensible Heat Ratio
   <%= cool_coil_cop_2 %>,  !- Speed 2 Gross Rated Cooling COP
   Autosize,                !- Speed 2 Rated Air Flow Rate {m^3/s}
@@ -932,7 +937,7 @@ Coil:Cooling:DX:MultiSpeed,
   ;                        !- Speed 3 Rated Evaporative Condenser Pump Power Consumption {W}
 <% else %>
   ,                        !- Speed 3 Rated Evaporative Condenser Pump Power Consumption {W}
-  Autosize,                !- Speed 4 Gross Rated Total Cooling Capacity {W}
+  <%= cool_coil_cap %>,                !- Speed 4 Gross Rated Total Cooling Capacity {W}
   Autosize,                !- Speed 4 Gross Rated Sensible Heat Ratio
   <%= cool_coil_cop_4 %>,  !- Speed 4 Gross Rated Cooling COP
   Autosize,                !- Speed 4 Rated Air Flow Rate {m^3/s}
@@ -2066,7 +2071,7 @@ Coil:Heating:DX:MultiSpeed,
   Electricity,             !- Fuel Type
   ,                        !- Region number for Calculating HSPF
   <%= dx_comp_speed_num %>,  !- Number of Speeds
-  <%= heat_coil_cap %>,    !- Rated Total Heating Capacity {W}
+  Autosize,    !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_1 %>,  !- Rated COP
   <%= fan_flow %>,         !- Rated Air Flow Rate {m^3/s}
   ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
@@ -2078,7 +2083,11 @@ Coil:Heating:DX:MultiSpeed,
   <%= unitary_name %> HP_Heat-PLF-fPLR1,  !- Part Load Fraction Correlation Curve Name
   0.2,                     !- Rated Waste Heat Fraction of Power Input
   <%= unitary_name %> HP_Heat-Waste,  !- Waste Heat Function of Temperature Curve Name
+<% if (dx_comp_speed_num == 2) %>
+  <%= heat_coil_cap %>,
+<% else %>
   Autosize,                !- Rated Total Heating Capacity {W}
+<% end %>
   <%= heat_coil_cop_2 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
   ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
@@ -2108,7 +2117,7 @@ Coil:Heating:DX:MultiSpeed,
   <%= unitary_name %> HP_Heat-Waste;  !- Waste Heat Function of Temperature Curve Name
 <% else %>
   <%= unitary_name %> HP_Heat-Waste,  !- Waste Heat Function of Temperature Curve Name
-  Autosize,                !- Rated Total Heating Capacity {W}
+  <%= heat_coil_cap %>,                !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_4 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
   ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
@@ -2927,6 +2936,12 @@ cool_flow_min_frac = 0.67
 end
 %>
 
+!- Value of disable_ems = <%= disable_ems %>
+<%
+# Solaris Technical 2024-05-07
+# Because this airflow EMS logic interferes with Modelkit's linked-sizing feature, create a parameter to disable it.
+if (!disable_ems)
+%>
 EnergyManagementSystem:Actuator,
     <%= unitary_name_ems %>_MINFLOW,  !- Name
     <%= unitary_name %> UNITARY,  !- Actuated Component Unique Name
@@ -2979,4 +2994,4 @@ EnergyManagementSystem:InternalVariable,
     <%= unitary_name %>,  !- Internal Data Index Key Name
     Intermediate Air System Heating Volume Flow Rate;  !- Internal Data Type
 <% end %>
-
+<% end %>
