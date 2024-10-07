@@ -30,6 +30,10 @@ parameter "ceil_insul_layer_thickness", :default=>0.000001['m']
 # zone infiltration
 parameter "infiltration_ACH", :default=>0.35
 
+# door construction
+parameter "door_thermal_resistance", :default=>0.214702851['R-SI']  #TRC SWBE013-01
+
+
 # Thermostat Setpoint
 parameter "heating_sch_DEER_mrn", :default=>15.56
 parameter "heating_sch_DEER_day", :default=>15.56
@@ -69,6 +73,8 @@ parameter "number_of_stories", :default=>1  #no. of stories, default one story
 parameter "conditioned_floor_area", :default =>1017.6|'ft2'  # ft2, default conditioned floor area of 1 story SFm
 parameter "duct_r_value", :default => 4.9['R-IP'] #U-IP effective duct R value = duct R + insulation R
 
+#Door Infiltration Reduction measures-cases-parameters
+parameter "infiltration_reduction", :default=>0.0  # TRC SWBE013-01, SWBE014-01; default is no reduction from base case (ACH)
 %>
 
 
@@ -2064,7 +2070,7 @@ Material:NoMass,
 Material:NoMass,
     Dbl Lyr Unins Mtl Door,  !- Name
     Rough,                   !- Roughness
-    0.214702851;             !- Thermal Resistance {m2-K/W}
+<%=door_thermal_resistance%>;             !- Thermal Resistance {m2-K/W}
 
 Material:NoMass,
     EL1 Ceilg,               !- Name
@@ -25035,7 +25041,7 @@ ZoneInfiltration:DesignFlowRate,
     ,                        !- Design Flow Rate {m3/s}
     ,    !- Flow per Zone Floor Area {m3/s-m2}
     ,                        !- Flow per Exterior Surface Area {m3/s-m2}
-    <%= infiltration_ACH %>,                    !- Air Changes per Hour {1/hr}
+    <%= infiltration_ACH - infiltration_reduction %>,                    !- Air Changes per Hour {1/hr}
     1,                       !- Constant Term Coefficient
     ,                        !- Temperature Term Coefficient
     ,                        !- Velocity Term Coefficient
