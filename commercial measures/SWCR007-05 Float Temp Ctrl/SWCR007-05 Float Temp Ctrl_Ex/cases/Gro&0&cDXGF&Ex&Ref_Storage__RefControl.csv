@@ -1,0 +1,10 @@
+skip,case_name,:refsys_condenser_type,:refsys_suction_temperature_control,:refsys_cond_fan_speed_control_type
+#,defaults,,,
+,NE-Ref_Storage-RefControl-FltSucTemp-AirCool ,AirCooled,FloatSuctionTemperature,TwoSpeed
+#,NE-Ref_Storage-RefControl-FixSucTemp-AirCool ,AirCooled,ConstantSuctionTemperature,TwoSpeed
+#,NE-Ref_Storage-RefControl-FltSucTemp-AirCool-VSDFan ,AirCooled,FloatSuctionTemperature,VariableSpeed
+#,NE-Ref_Storage-RefControl-FixSucTemp-AirCool-VSDFan ,AirCooled,ConstantSuctionTemperature,VariableSpeed
+,NE-Ref_Storage-RefControl-FltSucTemp-EvapCool ,EvaporativelyCooled,FloatSuctionTemperature,TwoSpeed
+#,NE-Ref_Storage-RefControl-FixSucTemp-EvapCool ,EvaporativelyCooled,ConstantSuctionTemperature,TwoSpeed
+#,NE-Ref_Storage-RefControl-FltSucTemp-EvapCool-VSDFan ,EvaporativelyCooled,FloatSuctionTemperature,VariableSpeed
+#,NE-Ref_Storage-RefControl-FixSucTemp-EvapCool-VSDFan ,EvaporativelyCooled,ConstantSuctionTemperature,VariableSpeed
