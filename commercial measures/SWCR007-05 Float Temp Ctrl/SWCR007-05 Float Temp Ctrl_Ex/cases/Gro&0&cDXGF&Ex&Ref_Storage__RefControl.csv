@@ -1,0 +1,10 @@
+skip,case_name,:refsys_condenser_type,:refsys_cond_fan_speed_control_type,:refsys_cond_sct_delta,:refsys_cond_floating
+#,defaults,,,,
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool ,AirCooled,TwoSpeed,6.67,TRUE
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool ,AirCooled,TwoSpeed,6.67,FALSE
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-VSDFan ,AirCooled,VariableSpeed,6.67,TRUE
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-VSDFan ,AirCooled,VariableSpeed,6.67,FALSE
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool ,EvaporativelyCooled,TwoSpeed,9.44,TRUE
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool ,EvaporativelyCooled,TwoSpeed,9.44,FALSE
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-VSDFan ,EvaporativelyCooled,VariableSpeed,9.44,TRUE
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-VSDFan ,EvaporativelyCooled,VariableSpeed,9.44,FALSE

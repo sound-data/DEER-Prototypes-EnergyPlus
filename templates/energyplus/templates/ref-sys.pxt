@@ -13,6 +13,13 @@ parameter "cond_subcool", :default=>0['C']
 parameter "working_fluid", :default=>"R507" # TODO add other fluids R22
 # Behzad Rizi - parameterize condenser type
 parameter "condenser_type", :default=>"AirCooled" # (AirCooled | WaterCooled | EvaporativelyCooled)
+# Behzad Rizi, 05/03/2024 - parameterize condenser fan type & suction temperature control
+parameter "suction_temperature_control", :default=>"ConstantSuctionTemperature" # (ConstantSuctionTemperature | FloatSuctionTemperature)	
+parameter "cond_fan_speed_control_type", :default=>"TwoSpeed" # (TwoSpeed | Fixed | VariableSpeed)
+# Afshin Faramarzi & Behzad Rizi, 11/11/2024 - parameterize saturated condensing temperature(SCT)
+parameter "cond_sct_delta", :default=>12 # in ['degF']
+#Behzad Rizi - parameterize activation mode for EMS object to control the saturated condensing temperature(SCT)
+parameter "cond_floating", :default=>false, :domain => Boolean # (true | false)
 %>
 
 <%
@@ -36,7 +43,7 @@ Refrigeration:System,
     <%= ref_sys_comp_list %>,   !- Compressor or CompressorList Name
     25.0,                    !- Minimum Condensing Temperature {C}
     <%= working_fluid %>,                     !- Refrigeration System Working Fluid Type
-    ConstantSuctionTemperature,  !- Suction Temperature Control Type
+    <%= suction_temperature_control %>,  !- Suction Temperature Control Type
     ,                        !- Mechanical Subcooler Name
     ,                        !- Liquid Suction Heat Exchanger Subcooler Name
  <% if suction_gains %>
@@ -65,7 +72,7 @@ Refrigeration:Condenser:AirCooled,
     <%= ref_system_name %> Condenser Air Cooled,        !- Name
     <%= ref_system_name %> Condenser HR curve, !- Rated Effective Total Heat Rejection Rate Curve Name
     <%= cond_subcool %>,                      !- Rated Subcooling Temperature Difference {deltaC}
-    TwoSpeed,                !- Condenser Fan Speed Control Type
+    <%= cond_fan_speed_control_type %>,                !- Condenser Fan Speed Control Type
     <%= cond_fan_power %>,                   !- Rated Fan Power {W}
     0.25,                    !- Minimum Fan Air Flow Ratio {dimensionless}
     ,  !- Air Inlet Node Name or Zone Name
@@ -77,7 +84,7 @@ Refrigeration:Condenser:AirCooled,
   <%= ref_system_name %> Condenser Evaporatively Cooled,        !- Name
   1.36e+006,             !- Rated Effective Total Heat Rejection Rate
   ,                      !- Rated Subcooling Temperature Difference {deltaC}
-  TwoSpeed,              !- Condenser Fan Speed Control Type
+  <%= cond_fan_speed_control_type %>,              !- Condenser Fan Speed Control Type
   <%= cond_fan_power %>, !- Rated Fan Power {W}
   0.20,                  !- Minimum Fan Air Flow Ratio {dimensionless}
   6.63,                  !- Approach Temperature Constant Term {C}
@@ -121,3 +128,37 @@ Refrigeration:Condenser:AirCooled,
     22.2;                    !- Maximum Value of x
 <% end %>
 
+!Afshin Faramarzi and Behzad Rizi, 11/11/2024 - added EnergyManagementSystem to the model to control saturated condensing temperature 	
+<% if (cond_floating) %>
+EnergyManagementSystem:Sensor,
+T_sensor_<%= ref_system_name %>,                    !- Name
+*,                       !- Output:Variable or Output:Meter Index Key Name
+<% if (condenser_type == "EvaporativelyCooled") %>
+Site Outdoor Air Wetbulb Temperature;  !- Output:Variable or Output:Meter Name
+<% else %>
+Site Outdoor Air Drybulb Temperature;  !- Output:Variable or Output:Meter Name
+<% end %>
+
+EnergyManagementSystem:Actuator,
+    CondensingTempOverride<%= ref_system_name %>,   !- Name
+    <%= ref_system_name %>,                         !- Actuated Component Unique Name
+    Refrigeration:System,                           !- Actuated Component Type
+    Minimum Condensing Temperature;                 !- Actuated Component Control Type
+	
+EnergyManagementSystem:OutputVariable,
+<%= ref_system_name %> Cond Temp,    !- Name
+CondensingTempOverride<%= ref_system_name %>,       !- EMS Variable Name
+Averaged,                !- Type of Data in Variable
+SystemTimestep,          !- Update Frequency
+CondTempControl<%= ref_system_name %>,       !- EMS Program or Subroutine Name
+C;                       !- Units	
+
+EnergyManagementSystem:ProgramCallingManager,
+    Ref Sys Cond Temp Management <%= ref_system_name %>,  !- Name
+    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
+    CondTempControl<%= ref_system_name %>;       !- Program Name 1
+	
+EnergyManagementSystem:Program,	
+CondTempControl<%= ref_system_name %>,       !- Name
+SET CondensingTempOverride<%= ref_system_name %> = T_sensor_<%= ref_system_name %> + <%= cond_sct_delta %>;  !- Program Line 1
+<% end %>
