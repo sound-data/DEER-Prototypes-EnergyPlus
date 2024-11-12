@@ -17,7 +17,7 @@ parameter "condenser_type", :default=>"AirCooled" # (AirCooled | WaterCooled | E
 parameter "suction_temperature_control", :default=>"ConstantSuctionTemperature" # (ConstantSuctionTemperature | FloatSuctionTemperature)	
 parameter "cond_fan_speed_control_type", :default=>"TwoSpeed" # (TwoSpeed | Fixed | VariableSpeed)
 # Afshin Faramarzi & Behzad Rizi, 11/11/2024 - parameterize saturated condensing temperature(SCT)
-parameter "deadband", :default=>12 # in ['degF']
+parameter "cond_sct_delta", :default=>12 # in ['degF']
 %>
 
 <%
@@ -153,7 +153,7 @@ C;                       !- Units
 	
 EnergyManagementSystem:Program,	
 CondTempControlMT,       !- Name
-SET CondensingTempOverrideMT = Tamb + <%= deadband %>;  !- Program Line 1
+SET CondensingTempOverrideMT = Tamb + <%= cond_sct_delta %>;  !- Program Line 1
 
 EnergyManagementSystem:ProgramCallingManager,
     Ref Sys Cond Temp Management MT,  !- Name
@@ -183,7 +183,7 @@ C;                       !- Units
 	
 EnergyManagementSystem:Program,	
 CondTempControlMT,       !- Name
-SET CondensingTempOverrideMT = Twet + <%= deadband %>;  !- Program Line 1
+SET CondensingTempOverrideMT = Twet + <%= cond_sct_delta %>;  !- Program Line 1
 
 EnergyManagementSystem:ProgramCallingManager,
     Ref Sys Cond Temp Management MT,  !- Name
@@ -211,7 +211,7 @@ C;                       !- Units
 	
 EnergyManagementSystem:Program,	
 CondTempControlLT,       !- Name
-SET CondensingTempOverrideLT = Tamb + <%= deadband %>;  !- Program Line 1
+SET CondensingTempOverrideLT = Tamb + <%= cond_sct_delta %>;  !- Program Line 1
 
 EnergyManagementSystem:ProgramCallingManager,
     Ref Sys Cond Temp Management LT,  !- Name
@@ -236,7 +236,7 @@ C;                       !- Units
 	
 EnergyManagementSystem:Program,	
 CondTempControlLT,       !- Name
-SET CondensingTempOverrideLT = Twet + <%= deadband %>;  !- Program Line 1
+SET CondensingTempOverrideLT = Twet + <%= cond_sct_delta %>;  !- Program Line 1
 
 EnergyManagementSystem:ProgramCallingManager,
     Ref Sys Cond Temp Management LT,  !- Name
