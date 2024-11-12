@@ -139,11 +139,6 @@ Site Outdoor Air Wetbulb Temperature;  !- Output:Variable or Output:Meter Name
 Site Outdoor Air Drybulb Temperature;  !- Output:Variable or Output:Meter Name
 <% end %>
 
-EnergyManagementSystem:Sensor,
-Twet<%= ref_system_name %>,                    !- Name
-*,                       !- Output:Variable or Output:Meter Index Key Name
-Site Outdoor Air Wetbulb Temperature;  !- Output:Variable or Output:Meter Name
-
 EnergyManagementSystem:Actuator,
     CondensingTempOverride<%= ref_system_name %>,   !- Name
     <%= ref_system_name %>,                         !- Actuated Component Unique Name
