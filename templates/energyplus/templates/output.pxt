@@ -29,7 +29,8 @@ EnergyManagementSystem:OutputVariable,
   ZoneTimestep,  !SystemTimestep,    !- Update Frequency
   NetMeterProgram,   !- EMS Program or Subroutine
   J;                 !- Units
- 
+
+
 <% if (power_generator) %>
 
 EnergyManagementSystem:Sensor,
@@ -43,6 +44,7 @@ EnergyManagementSystem:Sensor,
   EFC_meter,
   ,
   Electricity:Facility;
+
 
 EnergyManagementSystem:Program,
   NetMeterProgram,                      !- Name
