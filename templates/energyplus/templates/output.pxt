@@ -1,6 +1,4 @@
 <%#INITIALIZE
-parameter "deadband", :default=>12 # in ['degF']
-
 parameter "power_generator",
   :default => false, :domain => Boolean
 
@@ -31,22 +29,6 @@ EnergyManagementSystem:OutputVariable,
   ZoneTimestep,  !SystemTimestep,    !- Update Frequency
   NetMeterProgram,   !- EMS Program or Subroutine
   J;                 !- Units
-
-EnergyManagementSystem:OutputVariable,
-    MT Ref Sys Cond Temp,    !- Name
-    CondensingTempOverrideMT,!- EMS Variable Name
-    Averaged,                !- Type of Data in Variable
-    SystemTimestep,          !- Update Frequency
-    CondTempControlMT,       !- EMS Program or Subroutine Name
-    C;                       !- Units
- 
-EnergyManagementSystem:OutputVariable,
-    LT Ref Sys Cond Temp,    !- Name
-    CondensingTempOverrideLT,!- EMS Variable Name
-    Averaged,                !- Type of Data in Variable
-    SystemTimestep,          !- Update Frequency
-    CondTempControlLT,       !- EMS Program or Subroutine Name
-    C;                       !- Units
  
 <% if (power_generator) %>
 
@@ -61,40 +43,6 @@ EnergyManagementSystem:Sensor,
   EFC_meter,
   ,
   Electricity:Facility;
-
-
-
-EnergyManagementSystem:Sensor,
-    Tamb,                    !- Name
-    *,                       !- Output:Variable or Output:Meter Index Key Name
-    Site Outdoor Air Drybulb Temperature;  !- Output:Variable or Output:Meter Name
-
-
-
-!-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:ACTUATOR ===========
- 
-EnergyManagementSystem:Actuator,
-    CondensingTempOverrideMT,!- Name
-    MT_System,               !- Actuated Component Unique Name
-    Refrigeration:System,    !- Actuated Component Type
-    Minimum Condensing Temperature;  !- Actuated Component Control Type
- 
-EnergyManagementSystem:Actuator,
-    CondensingTempOverrideLT,!- Name
-    LT_System,               !- Actuated Component Unique Name
-    Refrigeration:System,    !- Actuated Component Type
-    Minimum Condensing Temperature;  !- Actuated Component Control Type
-	
-	
-EnergyManagementSystem:Program,
-    CondTempControlMT,       !- Name
-    SET CondensingTempOverrideMT = Tamb + 12;  !- Program Line 1
- 
-EnergyManagementSystem:Program,
-    CondTempControlLT,       !- Name
-    SET CondensingTempOverrideLT = Tamb + 12;  !- Program Line 1
-
-
 
 EnergyManagementSystem:Program,
   NetMeterProgram,                      !- Name
@@ -113,17 +61,6 @@ EnergyManagementSystem:ProgramCallingManager,
   OutputReporting,                   !- Name
   EndOfSystemTimestepBeforeHVACReporting,!- EnergyPlus Model Calling Point
   NetMeterProgram;                      !- Program Name 2
-
-EnergyManagementSystem:ProgramCallingManager,
-    Ref Sys Cond Temp Management MT,  !- Name
-    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
-    CondTempControlMT;       !- Program Name 1
- 
-EnergyManagementSystem:ProgramCallingManager,
-    Ref Sys Cond Temp Management LT,  !- Name
-    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
-    CondTempControlLT;       !- Program Name 1
-
 
 Output:Table:SummaryReports,
   AnnualBuildingUtilityPerformanceSummary,  !- Report 1 Name

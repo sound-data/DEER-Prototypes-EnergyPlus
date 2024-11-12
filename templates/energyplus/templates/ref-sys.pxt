@@ -16,6 +16,8 @@ parameter "condenser_type", :default=>"AirCooled" # (AirCooled | WaterCooled | E
 # Behzad Rizi, 05/03/2024 - parameterize condenser fan type & suction temperature control
 parameter "suction_temperature_control", :default=>"ConstantSuctionTemperature" # (ConstantSuctionTemperature | FloatSuctionTemperature)	
 parameter "cond_fan_speed_control_type", :default=>"TwoSpeed" # (TwoSpeed | Fixed | VariableSpeed)
+# Afshin Faramarzi & Behzad Rizi, 11/11/2024 - parameterize saturated condensing temperature(SCT)
+parameter "deadband", :default=>12 # in ['degF']
 %>
 
 <%
@@ -124,3 +126,122 @@ Refrigeration:Condenser:AirCooled,
     22.2;                    !- Maximum Value of x
 <% end %>
 
+#Afshin Faramarzi and Behzad Rizi, 11/11/2024 - added EnergyManagementSystem to the model to control saturated condensing temperature 
+!-   ===========  ALL OBJECTS IN CLASS: ENERGYMANAGEMENTSYSTEM:ACTUATOR ===========
+
+<% if (ref_system_name == "MT_System") %>
+<% if (condenser_type == "AirCooled") %>
+
+EnergyManagementSystem:Sensor,
+Tamb,                    !- Name
+*,                       !- Output:Variable or Output:Meter Index Key Name
+Site Outdoor Air Drybulb Temperature;  !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Actuator,
+    CondensingTempOverrideMT,!- Name
+    MT_System,               !- Actuated Component Unique Name
+    Refrigeration:System,    !- Actuated Component Type
+    Minimum Condensing Temperature;  !- Actuated Component Control Type
+	
+EnergyManagementSystem:OutputVariable,
+MT Ref Sys Cond Temp,    !- Name
+CondensingTempOverrideMT,!- EMS Variable Name
+Averaged,                !- Type of Data in Variable
+SystemTimestep,          !- Update Frequency
+CondTempControlMT,       !- EMS Program or Subroutine Name
+C;                       !- Units	
+	
+EnergyManagementSystem:Program,	
+CondTempControlMT,       !- Name
+SET CondensingTempOverrideMT = Tamb + <%= deadband %>;  !- Program Line 1
+
+EnergyManagementSystem:ProgramCallingManager,
+    Ref Sys Cond Temp Management MT,  !- Name
+    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
+    CondTempControlMT;       !- Program Name 1
+	
+<% elsif (condenser_type == "EvaporativelyCooled") %>
+
+EnergyManagementSystem:Sensor,
+Twet,                    !- Name
+*,                       !- Output:Variable or Output:Meter Index Key Name
+Site Outdoor Air Wetbulb Temperature;  !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:Actuator,
+    CondensingTempOverrideMT,!- Name
+    MT_System,               !- Actuated Component Unique Name
+    Refrigeration:System,    !- Actuated Component Type
+    Minimum Condensing Temperature;  !- Actuated Component Control Type
+	
+EnergyManagementSystem:OutputVariable,
+MT Ref Sys Cond Temp,    !- Name
+CondensingTempOverrideMT,!- EMS Variable Name
+Averaged,                !- Type of Data in Variable
+SystemTimestep,          !- Update Frequency
+CondTempControlMT,       !- EMS Program or Subroutine Name
+C;                       !- Units	
+	
+EnergyManagementSystem:Program,	
+CondTempControlMT,       !- Name
+SET CondensingTempOverrideMT = Twet + <%= deadband %>;  !- Program Line 1
+
+EnergyManagementSystem:ProgramCallingManager,
+    Ref Sys Cond Temp Management MT,  !- Name
+    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
+    CondTempControlMT;       !- Program Name 1
+<% end %>  ! end for (if condenser type)
+
+
+<% elsif (ref_system_name == "LT_System") %>
+<% if (condenser_type == "AirCooled") %>
+
+EnergyManagementSystem:Actuator,
+    CondensingTempOverrideLT,!- Name
+    LT_System,               !- Actuated Component Unique Name
+    Refrigeration:System,    !- Actuated Component Type
+    Minimum Condensing Temperature;  !- Actuated Component Control Type
+	
+EnergyManagementSystem:OutputVariable,
+LT Ref Sys Cond Temp,    !- Name
+CondensingTempOverrideLT,!- EMS Variable Name
+Averaged,                !- Type of Data in Variable
+SystemTimestep,          !- Update Frequency
+CondTempControlLT,       !- EMS Program or Subroutine Name
+C;                       !- Units	
+	
+EnergyManagementSystem:Program,	
+CondTempControlLT,       !- Name
+SET CondensingTempOverrideLT = Tamb + <%= deadband %>;  !- Program Line 1
+
+EnergyManagementSystem:ProgramCallingManager,
+    Ref Sys Cond Temp Management LT,  !- Name
+    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
+    CondTempControlLT;       !- Program Name 1
+	
+<% elsif (condenser_type == "EvaporativelyCooled") %>
+
+EnergyManagementSystem:Actuator,
+    CondensingTempOverrideLT,!- Name
+    LT_System,               !- Actuated Component Unique Name
+    Refrigeration:System,    !- Actuated Component Type
+    Minimum Condensing Temperature;  !- Actuated Component Control Type
+	
+EnergyManagementSystem:OutputVariable,
+LT Ref Sys Cond Temp,    !- Name
+CondensingTempOverrideLT,!- EMS Variable Name
+Averaged,                !- Type of Data in Variable
+SystemTimestep,          !- Update Frequency
+CondTempControlLT,       !- EMS Program or Subroutine Name
+C;                       !- Units	
+	
+EnergyManagementSystem:Program,	
+CondTempControlLT,       !- Name
+SET CondensingTempOverrideLT = Twet + <%= deadband %>;  !- Program Line 1
+
+EnergyManagementSystem:ProgramCallingManager,
+    Ref Sys Cond Temp Management LT,  !- Name
+    InsideHVACSystemIterationLoop,  !- EnergyPlus Model Calling Point
+    CondTempControlLT;       !- Program Name 1
+<% end %>  ! end for (if condenser type)
+
+<% end %>
