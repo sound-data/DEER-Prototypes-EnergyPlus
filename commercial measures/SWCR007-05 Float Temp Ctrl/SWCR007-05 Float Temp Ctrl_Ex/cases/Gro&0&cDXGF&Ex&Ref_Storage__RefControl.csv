@@ -1,4 +1,4 @@
-skip,case_name,:refsys_condenser_type,:refsys_cond_fan_speed_control_type,:refsys_deadband
+skip,case_name,:refsys_condenser_type,:refsys_cond_fan_speed_control_type,:refsys_cond_sct_delta
 #,defaults,,,
 ,NE-Ref_Storage-RefControl-FltSucTemp-AirCool ,AirCooled,TwoSpeed,12
 #,NE-Ref_Storage-RefControl-FixSucTemp-AirCool ,AirCooled,TwoSpeed,12
