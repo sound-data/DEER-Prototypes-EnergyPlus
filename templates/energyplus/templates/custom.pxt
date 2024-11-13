@@ -57,6 +57,6 @@ Output:Meter,Gas:Facility,hourly; !- [J]
 !Output:Variable,<%= regex %> Node,System Node Temperature,hourly; !- HVAC Average [C]
 
 !Afshin Faramarzi and Behzad Rizi, 11/11/2024 - added output variable to QC the results coming from EMS part
-Output:Variable,*,Site Outdoor Air Wetbulb Temperature,hourly; !- Zone Average [C]
-Output:Variable,*,MT_System Cond Temp,hourly;
-Output:Variable,*,LT_System Cond Temp,hourly;
+!Output:Variable,*,Site Outdoor Air Wetbulb Temperature,hourly; !- Zone Average [C]
+!Output:Variable,*,MT_System Cond Temp,hourly;
+!Output:Variable,*,LT_System Cond Temp,hourly;
