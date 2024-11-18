@@ -20,6 +20,7 @@ parameter "cond_fan_speed_control_type", :default=>"TwoSpeed" # (TwoSpeed | Fixe
 parameter "cond_sct_delta", :default=>12 # in ['degF']
 #Behzad Rizi - parameterize activation mode for EMS object to control the saturated condensing temperature(SCT)
 parameter "cond_floating", :default=>false, :domain => Boolean # (true | false)
+parameter "cond_min_temp", :default=>25['C']
 %>
 
 <%
@@ -41,7 +42,7 @@ Refrigeration:System,
  <%   raise("error: unknown option condenser_type = '#{condenser_type}'") %>
  <% end %>
     <%= ref_sys_comp_list %>,   !- Compressor or CompressorList Name
-    25.0,                    !- Minimum Condensing Temperature {C}
+    <%= cond_min_temp %>,                    !- Minimum Condensing Temperature {C}
     <%= working_fluid %>,                     !- Refrigeration System Working Fluid Type
     <%= suction_temperature_control %>,  !- Suction Temperature Control Type
     ,                        !- Mechanical Subcooler Name
@@ -160,5 +161,6 @@ EnergyManagementSystem:ProgramCallingManager,
 	
 EnergyManagementSystem:Program,	
 CondTempControl<%= ref_system_name %>,       !- Name
-SET CondensingTempOverride<%= ref_system_name %> = T_sensor_<%= ref_system_name %> + <%= cond_sct_delta %>;  !- Program Line 1
+SET CondensingTempOverride<%= ref_system_name %> = T_sensor_<%= ref_system_name %> + <%= cond_sct_delta %>,  !- Program Line 1
+SET CondensingTempOverride<%= ref_system_name %> = @Max <%= cond_min_temp %> CondensingTempOverride<%= ref_system_name %>;  !- Program Line 2
 <% end %>
