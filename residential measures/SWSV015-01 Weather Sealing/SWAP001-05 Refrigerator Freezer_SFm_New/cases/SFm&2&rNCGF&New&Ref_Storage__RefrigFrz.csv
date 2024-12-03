@@ -1,0 +1,5 @@
+skip,case_name,:refgfrzr_power_level,:sizing_parameter,:supplyfan_total_eff,:motor_eff,:pressure_rise
+,ResRefgLiv-RefgFrzr-900kWh,122.56,1.2,0.7,0.9,150
+,Msr-Res-Refg-dKWH-Cond-500kWh,68.08,1.2,0.7,0.9,150
+,ResRefgLiv-Frzr-1400kWh,190.64,1.2,0.7,0.9,150
+,Msr-Res-Frzr-dKWH-Cond-1000kWh,136.18,1.2,0.7,0.9,150

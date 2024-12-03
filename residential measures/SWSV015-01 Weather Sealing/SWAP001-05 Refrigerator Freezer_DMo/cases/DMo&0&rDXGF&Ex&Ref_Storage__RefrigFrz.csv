@@ -1,0 +1,5 @@
+skip,case_name,:refgfrzr_power_level
+,ResRefgLiv-RefgFrzr-900kWh,122.56
+,Msr-Res-Refg-dKWH-Cond-500kWh,68.08
+,ResRefgLiv-Frzr-1400kWh,190.64
+,Msr-Res-Frzr-dKWH-Cond-1000kWh,136.18
