@@ -9,7 +9,7 @@ from itertools import islice
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_DCV.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_enhancedVentilation.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -25,7 +25,7 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWHC006-04 SZ DCV'
+measure_name = 'SWHC023-05 EnhVent'
 
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
@@ -579,11 +579,13 @@ sim_annual_v1['tstat'] = 0
 
 #%%
 #normunit choice
+#11/27/2024 update, accomodating if normunit = 'Each'
 if normunit == 'Cap-Tons':
     sim_annual_v1['normunit'] = 'Cap-Tons'
 else:
     #if no specified normunits, use Area-ft2-BA by default
     #8/23/24, by default, normunit should be whatever is defined in initial measure list
+    #this will also apply to normunit = 'Each'
     sim_annual_v1['normunit'] = normunit
 
 #%%
