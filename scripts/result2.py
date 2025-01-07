@@ -22,6 +22,9 @@ Changelog
 
 """
 
+# Select columns from hourly files to apply DEER peak calculation
+DEERPEAK_COLUMNS = ["Electricity:Facility [J](Hourly)"]
+
 ##STEP 0: Setup (import all necessary libraries)
 import re
 from dataclasses import dataclass, asdict
@@ -317,6 +320,7 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str):
     """
     # Get all available hourly results with shape (N, 8760)
     ReportDataWide = get_sim_hourly(conn)
+    ReportDataWide = ReportDataWide.loc[DEERPEAK_COLUMNS]
     if ReportDataWide.shape[1] != 8760:
         # No hourly data. This can happen if simulation created the output file but failed to complete.
         # Or if the file represents a sizing run.
