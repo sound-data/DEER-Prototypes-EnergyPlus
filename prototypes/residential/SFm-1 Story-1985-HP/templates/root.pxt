@@ -29,6 +29,9 @@ parameter "ceil_insul_layer_thickness", :default=>0.000001['m']
 # zone infiltration
 parameter "infiltration_ACH", :default=>0.35
 
+# door construction
+parameter "door_thermal_resistance", :default=>0.366309204064694['R-SI']  #TRC SWBE013-01
+
 # Thermostat Setpoint
 parameter "heating_sch_DEER_mrn", :default=>15.56
 parameter "heating_sch_DEER_day", :default=>15.56
@@ -84,6 +87,9 @@ parameter "duct_r_value", :default => 4.9['R-IP'] #U-IP effective duct R value =
 
 #shading control
 parameter "shading_control", :default=>'AlwaysOn'
+
+#Door Infiltration Reduction measures-cases-parameters
+parameter "infiltration_reduction", :default=>0.0  # TRC SWBE013-01, SWBE014-01; default is no reduction from base case (ACH)
 %>
 
 <%
@@ -9896,7 +9902,7 @@ Material:NoMass,
 Material:NoMass,
     Sgl Lyr Unins Mtl Door,!- Name
     Rough,                   !- Roughness
-    0.366309204064694;       !- Thermal Resistance {m2-K/W}
+<%=door_thermal_resistance%>;       !- Thermal Resistance {m2-K/W}
 
 Material:NoMass,
     Other Wd Door,         !- Name
@@ -16876,7 +16882,7 @@ ZoneInfiltration:DesignFlowRate,
     ,                        !- Design Flow Rate {m3/s}
     ,                        !- Flow per Zone Floor Area {m3/s-m2}
     ,                        !- Flow per Exterior Surface Area {m3/s-m2}
-    <%= infiltration_ACH %>,                    !- Air Changes per Hour {1/hr}
+    <%= infiltration_ACH - infiltration_reduction %>,                    !- Air Changes per Hour {1/hr}
     1,                       !- Constant Term Coefficient
     ,                        !- Temperature Term Coefficient
     ,                        !- Velocity Term Coefficient
@@ -16890,7 +16896,7 @@ ZoneInfiltration:DesignFlowRate,
     ,                        !- Design Flow Rate {m3/s}
     ,                        !- Flow per Zone Floor Area {m3/s-m2}
     ,                        !- Flow per Exterior Surface Area {m3/s-m2}
-    <%= infiltration_ACH %>,                    !- Air Changes per Hour {1/hr}
+    <%= infiltration_ACH - infiltration_reduction %>,                    !- Air Changes per Hour {1/hr}
     1,                       !- Constant Term Coefficient
     ,                        !- Temperature Term Coefficient
     ,                        !- Velocity Term Coefficient
