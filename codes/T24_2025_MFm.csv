@@ -1,6 +1,6 @@
-title: 2019 California Efficiency Standards,,,
+title: 2025 California Efficiency Standards,,,
 # PRESCRIPTIVE ENVELOPE CRITERIA FOR  Multi-family homes,,,
-# For opaque envelope: see Table 140.3-B,,,
+# For opaque envelope: see Table 170.2-A,,,
 table:   Res Key Prototype Values | Climate Zone 1,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
@@ -10,11 +10,11 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,NR,,
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
+Roofing,NR,,Option B
+Vertical Fenestration U-Factor,0.28,,IP unit
 Vertical Fenestration SHGC,0.52,,RASS 2019 data
 Door,0.2,,U-IP
 climate_zone,1,,
@@ -28,7 +28,7 @@ wall_consol_layer_conductivity,0.0419186,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,NR,,
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,REQ,,
 Slab Floor,NR,,
 Roofing,NR,,
@@ -46,12 +46,12 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,NR,,
-Duct Insulation,6,,"IP unit, R value"
+Duct Insulation,6,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,REQ,,
 Slab Floor,NR,,
-Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
-Vertical Fenestration SHGC,0.5,,
+Roofing,NR,,Option B
+Vertical Fenestration U-Factor,0.28,,IP unit
+Vertical Fenestration SHGC,0.5,,RASS 2019 data
 Door,0.2,,U-IP
 climate_zone,3,,
 ,,,
@@ -64,11 +64,11 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,19,,R IP
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
+Roofing,NR,,Option B
+Vertical Fenestration U-Factor,0.28,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
 climate_zone,4,,
@@ -82,12 +82,12 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,NR,,R IP
-Duct Insulation,6,,"IP unit, R value"
+Duct Insulation,6,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,REQ,,
 Slab Floor,NR,,
-Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
-Vertical Fenestration SHGC,0.51,,
+Roofing,NR,,Option B
+Vertical Fenestration U-Factor,0.28,,IP unit
+Vertical Fenestration SHGC,0.51,,RASS 2019 data
 Door,0.2,,U-IP
 climate_zone,5,,
 ,,,
@@ -100,10 +100,10 @@ wall_consol_layer_conductivity,0.0419186,,SI unit
 wall_insulation_layer_thickness,0.01905,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,NR,,R IP
-Duct Insulation,6,,"IP unit, R value"
+Duct Insulation,6,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,REQ,,
 Slab Floor,NR,,
-Roofing,NR,,
+Roofing,NR,,Option B
 Vertical Fenestration U-Factor,0.34,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
@@ -118,10 +118,10 @@ wall_consol_layer_conductivity,0.0419186,,SI unit
 wall_insulation_layer_thickness,0.01905,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,NR,,R IP
-Duct Insulation,6,,"IP unit, R value"
+Duct Insulation,6,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,REQ,,
 Slab Floor,NR,,
-Roofing,NR,,
+Roofing,NR,,Option B
 Vertical Fenestration U-Factor,0.34,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
@@ -136,10 +136,10 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,19,,R IP
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,NR,,
+Roofing,NR,,Option B
 Vertical Fenestration U-Factor,0.3,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
@@ -154,10 +154,10 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,19,,R IP
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,NR,,
+Roofing,NR,,Option B
 Vertical Fenestration U-Factor,0.3,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
@@ -172,10 +172,10 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,13,,R IP
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,NR,,
+Roofing,NR,,Option B
 Vertical Fenestration U-Factor,0.3,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
@@ -190,11 +190,11 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,19,,R IP
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
+Roofing,NR,,Option B
+Vertical Fenestration U-Factor,0.28,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
 climate_zone,11,,
@@ -208,10 +208,10 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,19,,R IP
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,NR,,
+Roofing,NR,,Option B
 Vertical Fenestration U-Factor,0.3,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
@@ -226,11 +226,11 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,19,,R IP
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,REQ,,"0.63 Solar reflect, 0.75 thermal emittance"
-Vertical Fenestration U-Factor,0.3,,IP unit
+Roofing,REQ,,"Option B; 0.63 Solar reflect, 0.75 thermal emittance"
+Vertical Fenestration U-Factor,0.28,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
 climate_zone,13,,
@@ -244,11 +244,11 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,19,,R IP
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
+Roofing,NR,,Option B
+Vertical Fenestration U-Factor,0.28,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
 climate_zone,14,,
@@ -262,11 +262,11 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,19,,R IP
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
-Roofing,REQ,,"0.63 Solar reflect, 0.75 thermal emittance"
-Vertical Fenestration U-Factor,0.3,,IP unit
+Roofing,REQ,,"Option B; 0.63 Solar reflect, 0.75 thermal emittance"
+Vertical Fenestration U-Factor,0.28,,IP unit
 Vertical Fenestration SHGC,0.23,,
 Door,0.2,,U-IP
 climate_zone,15,,
@@ -280,11 +280,11 @@ wall_consol_layer_conductivity,0.041918605,,SI unit
 wall_insulation_layer_thickness,0.0508,,SI unit
 wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,13,,
-Duct Insulation,8,,"IP unit, R value"
+Duct Insulation,8,,"IP unit, R value (Table 170.2-K)"
 Radiant Barrier,NR,,
 Slab Floor,REQ,,"R7, U 0.58"
-Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
-Vertical Fenestration SHGC,0.5,,
+Roofing,NR,,Option B
+Vertical Fenestration U-Factor,0.28,,IP unit
+Vertical Fenestration SHGC,0.5,,RASS 2019 data
 Door,0.2,,U-IP
 climate_zone,16,,
