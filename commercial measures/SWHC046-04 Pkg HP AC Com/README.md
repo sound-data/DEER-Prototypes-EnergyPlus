@@ -22,14 +22,14 @@ python "result2.py" . --queryfile "query_SWHC046.txt"
 
 Repeat for subfolder `SWHC046-04 Pkg HP AC Com_Htl_Ex`. Use simdata.csv to perform QC, calculate UEC for all categories of load, and obtain DEER Peak results bypassing the next step.
 
-For commercial sector weighted averages, post-process according to instructions in https://github.com/sound-data/DEER-Prototypes-EnergyPlus/tree/main/scripts. The 
+For commercial sector weighted averages, post-process according to instructions in [../../scripts](../../scripts). The command line steps include:
 
 ```
 cd "C:/DEER-Prototypes-EnergyPlus"
 cd "scripts/data transformation"
-cd "commercial measures/SWHC046-04 Pkg HP AC Com"
 REM Generate current_msr_mat.csv, sim_annual.csv, and sim_hourly_wb.csv.
 python Com.py
+REM Optionally, copy the outputs to the measure folder
 copy "current_msr_mat.csv" "commercial measures/SWHC046-04 Pkg HP AC Com"
 copy "sim_annual.csv" "commercial measures/SWHC046-04 Pkg HP AC Com"
 copy "sim_hourly_wb.csv" "commercial measures/SWHC046-04 Pkg HP AC Com"
