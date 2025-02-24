@@ -1,6 +1,6 @@
-title: 2019 California Efficiency Standards,,,
+title: 2025 California Efficiency Standards,,,
 # PRESCRIPTIVE ENVELOPE CRITERIA FOR  Single family homes,,,
-# For opaque envelope: see Table 140.3-B,,,
+# For opaque envelope: see Table 150.1-A,,,
 table:   Res Key Prototype Values | Climate Zone 1,,,
 Envelope Component,Value,Extent,Notes
 ceil_consol_layer_thickness,0.2838824,,"SI unit,Option B, R38"
@@ -14,7 +14,7 @@ Duct Insulation,8,,"IP unit, R value"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
 Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
+Vertical Fenestration U-Factor,0.27,,IP unit
 Vertical Fenestration SHGC,0.52,,RASS 2019 data
 whole house fan,NR,,
 Door,0.2,,U-IP
@@ -33,7 +33,7 @@ Duct Insulation,8,,"IP unit, R value"
 Radiant Barrier,REQ,,
 Slab Floor,NR,,
 Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
+Vertical Fenestration U-Factor,0.27,,IP unit
 Vertical Fenestration SHGC,0.23,,
 whole house fan,NR,,
 Door,0.2,,U-IP
@@ -52,8 +52,8 @@ Duct Insulation,6,,"IP unit, R value"
 Radiant Barrier,REQ,,
 Slab Floor,NR,,
 Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
-Vertical Fenestration SHGC,0.5,,
+Vertical Fenestration U-Factor,0.27,,IP unit
+Vertical Fenestration SHGC,0.5,,RASS 2019 data
 whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,3,,
@@ -71,7 +71,7 @@ Duct Insulation,8,,"IP unit, R value"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
 Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
+Vertical Fenestration U-Factor,0.27,,IP unit
 Vertical Fenestration SHGC,0.23,,
 whole house fan,NR,,
 Door,0.2,,U-IP
@@ -90,8 +90,8 @@ Duct Insulation,6,,"IP unit, R value"
 Radiant Barrier,REQ,,
 Slab Floor,NR,,
 Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
-Vertical Fenestration SHGC,0.51,,
+Vertical Fenestration U-Factor,0.27,,IP unit
+Vertical Fenestration SHGC,0.51,,RASS 2019 data
 whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,5,,
@@ -204,7 +204,7 @@ Duct Insulation,8,,"IP unit, R value"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
 Roofing,REQ,,"0.2 Solar reflect, 0.75 thermal emittance"
-Vertical Fenestration U-Factor,0.3,,IP unit
+Vertical Fenestration U-Factor,0.27,,IP unit
 Vertical Fenestration SHGC,0.23,,
 whole house fan,REQ,,
 Door,0.2,,U-IP
@@ -223,7 +223,7 @@ Duct Insulation,8,,"IP unit, R value"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
 Roofing,REQ,,"0.2 Solar reflect, 0.75 thermal emittance"
-Vertical Fenestration U-Factor,0.3,,IP unit
+Vertical Fenestration U-Factor,0.27,,IP unit
 Vertical Fenestration SHGC,0.23,,
 whole house fan,REQ,,
 Door,0.2,,U-IP
@@ -242,7 +242,7 @@ Duct Insulation,8,,"IP unit, R value"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
 Roofing,REQ,,"0.2 Solar reflect, 0.75 thermal emittance"
-Vertical Fenestration U-Factor,0.3,,IP unit
+Vertical Fenestration U-Factor,0.27,,IP unit
 Vertical Fenestration SHGC,0.23,,
 whole house fan,REQ,,
 Door,0.2,,U-IP
@@ -261,7 +261,7 @@ Duct Insulation,8,,"IP unit, R value"
 Radiant Barrier,NR,,
 Slab Floor,NR,,
 Roofing,REQ,,"0.2 Solar reflect, 0.75 thermal emittance"
-Vertical Fenestration U-Factor,0.3,,IP unit
+Vertical Fenestration U-Factor,0.27,,IP unit
 Vertical Fenestration SHGC,0.23,,
 whole house fan,REQ,,
 Door,0.2,,U-IP
@@ -278,10 +278,10 @@ wall_insulation_layer_conductivity,0.02884,,SI unit
 Below Roof Deck Insulation,19,,R IP
 Duct Insulation,8,,"IP unit, R value"
 Radiant Barrier,NR,,
-Slab Floor,NR,,
+Slab Floor,NR,,"IP unit, R value"
 Roofing,REQ,,"0.2 Solar reflect, 0.75 thermal emittance"
 Vertical Fenestration U-Factor,0.3,,IP unit
-Vertical Fenestration SHGC,0.23,,
+Vertical Fenestration SHGC,0.2,,
 whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,15,,
@@ -299,8 +299,8 @@ Duct Insulation,8,,"IP unit, R value"
 Radiant Barrier,NR,,
 Slab Floor,REQ,,"R7, U 0.58"
 Roofing,NR,,
-Vertical Fenestration U-Factor,0.3,,IP unit
-Vertical Fenestration SHGC,0.5,,
+Vertical Fenestration U-Factor,0.27,,IP unit
+Vertical Fenestration SHGC,0.5,,RASS 2019 data
 whole house fan,NR,,
 Door,0.2,,U-IP
 climate_zone,16,,
