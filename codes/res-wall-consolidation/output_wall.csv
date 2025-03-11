@@ -1,0 +1,81 @@
+lookup_id,wall_base_type,wall_cont_thick,wall_cont_cond,wall_cav_thick,wall_cav_cond
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ01,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ02,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ03,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ04,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ05,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ06,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ07,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ08,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ09,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ10,Steel Framing at 16 in. on center,0.47213114745599993,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ11,Steel Framing at 16 in. on center,0.50526315792,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ12,Steel Framing at 16 in. on center,0.50526315792,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ13,Steel Framing at 16 in. on center,0.50526315792,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ14,Steel Framing at 16 in. on center,0.50526315792,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ15,Steel Framing at 16 in. on center,0.50526315792,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ16,Steel Framing at 16 in. on center,0.50526315792,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ01",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ02",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ03",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ04",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ05",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ06",Wood Framing at 16 in. on center,0.443076922944,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ07",Wood Framing at 16 in. on center,0.443076922944,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ08",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ09",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ10",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ11",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ12",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ13",Wood Framing at 16 in. on center,0.488135593152,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ14",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ15",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ16",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ01",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ02",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ03",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ04",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ05",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ06",Wood Framing at 16 in. on center,0.443076922944,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ07",Wood Framing at 16 in. on center,0.443076922944,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ08",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ09",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ10",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ11",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ12",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ13",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ14",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ15",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ16",Wood Framing at 16 in. on center,0.5647058824319999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ01,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ02,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ03,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ04,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ05,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ06,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ07,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ08,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ09,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ10,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ11,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ12,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ13,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ14,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ15,Concrete with Wood Framing,0.3744,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ16,Concrete with Wood Framing,0.4896,0.0288,0.0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ01,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ02,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ03,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ04,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ05,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ06,Wood Framing at 16 in. on center,0.443076922944,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ07,Wood Framing at 16 in. on center,0.443076922944,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ08,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ09,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ10,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ11,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ12,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ13,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ14,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ15,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ16,Wood Framing at 16 in. on center,0.599999999904,0.0288,0,0.0288
