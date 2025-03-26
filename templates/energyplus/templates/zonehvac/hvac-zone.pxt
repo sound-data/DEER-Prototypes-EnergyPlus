@@ -393,6 +393,8 @@ rule "hvac_type_ideal", :parameters => {:hvac_type => "IDEAL"} do
 
 end
 
+# Solaris Technical 2024-05-07 for linked sizing
+parameter "disable_ems", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 # These imports must come AFTER the hvac_type conditions:
 #   Could be a problem because `import` (e.g., of unitary.pxt) is needed first to define the parameters,
@@ -842,6 +844,17 @@ unitary_parameters = [
   :fan_flow_min_frac,
   :fan_flow_min_method,
   :unitary_no_load_flow_method,
+  :low_heating_supply_air_ratio,
+  :low_cooling_supply_air_ratio,
+  :ventilation_supply_air_ratio,
+  :single_mode_operation,
+  :fan_speed_1_flow_frac,
+  :fan_speed_1_power_frac,
+  :fan_speed_2_flow_frac,
+  :fan_speed_2_power_frac,
+  :fan_speed_3_flow_frac,
+  :fan_speed_3_power_frac,
+  :constant_fan_speed_power_frac,
 
   :cool_coil_type,
   :cool_coil_cap,
@@ -867,7 +880,9 @@ unitary_parameters = [
   :aux_heat_coil_type,
   :aux_heat_coil_cap,
   :aux_heat_coil_eff,
-  :aux_heat_coil_fuel
+  :aux_heat_coil_fuel,
+
+  :disable_ems
 ]
 
 # if unitary_parameters are being repeated twice, maybe better to separate unitary system from ahu.pxt...
