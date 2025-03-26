@@ -7,7 +7,10 @@ parameter "sch", :name => "Hot Water Demand Schedule", :description => "Hot Wate
   :default => "SFm_minute_dhw_demand_fraction.csv", :domain => String
 
 parameter "peak_flow", :name => "peak flow rate water use equipment", :description => "peak flow rate of total hot water demand",
-  :default => 0.00044 ['m3/s'], :domain => Quantity
+  :default => 0.00044 ['m3/s'], :domain => Quantity #peak flow for SFm adjusted for use temperature
+
+parameter "dhw_use_setpt_t", :name => "peak flow rate water use equipment", :description => "temperature of DHW at peak_flow",
+  :default => 135 ['F'], :domain => Quantity #TRC: HW use temperature
 
 parameter "water_heater_type", :name => "Water Heater Type", :description => "currently availabily water heater types are gas, elec, gas_tankless, hpwh, 120v_hpwh",
   :default => "gas", :domain => String
@@ -19,6 +22,8 @@ parameter "heat_element_cap", :name => "heating element capacity for hpwh each",
 parameter "uef", :default => 3.52
 parameter "thermal_eff", :description => "efficiency for non heat pump water heater",:default => 0.79
 parameter "draw_pattern", :default => "HI"
+parameter "tank_element_control_logic", :default => "Simultaneous" #TRC: For HPWHs, options are Simultaneous or MutuallyExclusive use of electric resistance and HP
+parameter "tank_height", :default => nil #TRC allows default tank height to be overridden
 
 parameter "parasitic_power", :default=> 0 ['BTUH'] #gas water heater 350btuh, gas tankless 50W
 parameter "parasitic_fuel", :default=> "NaturalGas" #Electricity
@@ -42,11 +47,13 @@ tank_size = case water_heater_type
             else tank_size['gal']
             end
 
-tank_height = case tank_size
-              when 50 then 53 ['in']
-              when 80 then 63 ['in']
-              else 53 ['in']
-              end
+if tank_height == nil
+    tank_height = case tank_size
+                when 50 then 53 ['in']
+                when 80 then 63 ['in']
+                else 53 ['in']
+                end
+end
 
 heater2_height = 0.3* tank_height
 
@@ -57,7 +64,7 @@ heater1_height = case water_heater_type
                  end
 
 if water_heater_type.include?('hpwh')
-    sensor_height = 0.4* tank_height
+    sensor_height = 0.7* tank_height #TRC: using a setpoint height lower than the coil height results in overheating at the top of the tank
 end
 
 cop= (uef-0.1513-0.0043*daily_volume)*(2.6-0.0133*(loop_sept*1.8+32))/0.8407
@@ -81,6 +88,12 @@ Schedule:File,
     No,                      !- Interpolate to Timestep
     1,                       !- Minutes per Item
     Yes;                     !- Adjust Schedule for Daylight Savings
+
+! DHW WaterUse:Equipment use temperature
+Schedule:Constant,
+    dhw_use_setpt,    !- Name
+    Temperature,             !- Schedule Type Limits Name
+    <%= dhw_use_setpt_t %>;                   !- Hourly Value (corresponds to schedule and peak flow rate)
 
 ! DHW loop setpoint
 Schedule:Compact,
@@ -141,7 +154,7 @@ Coil:WaterHeating:AirToWaterHeatPump:Wrapped,
     0.981,                   !- Rated Sensible Heat Ratio
     19.7,                    !- Rated Evaporator Inlet Air Dry-Bulb Temperature {C}
     13.5,                    !- Rated Evaporator Inlet Air Wet-Bulb Temperature {C}
-    48.89,                   !- Rated Condenser Water Temperature {C}
+    <%= loop_sept %>,                   !- Rated Condenser Water Temperature {C} (corresponds to UEF -> COP equation)
     autocalculate,           !- Rated Evaporator Air Flow Rate {m3/s}
     Yes,                     !- Evaporator Fan Power Included in Rated COP
     <%= water_heater_name %> zone Exhaust Node,       !- Evaporator Air Inlet Node Name
@@ -194,9 +207,42 @@ WaterHeater:HeatPump:WrappedCondenser,
     ,                        !- Inlet Air Mixer Node Name
     ,                        !- Outlet Air Splitter Node Name
     ,                        !- Inlet Air Mixer Schedule Name
-    MutuallyExclusive,       !- Tank Element Control Logic
+    <%= tank_element_control_logic %>,       !- Tank Element Control Logic
     <%= sensor_height %>,                   !- Control Sensor 1 Height In Stratified Tank {m}
     1;                       !- Control Sensor 1 Weight {dimensionless}
+
+<%# Add curves for 120v plug-in HPWH developed by AWHI/NBI and implemented in ResStock %>
+<% if water_heater_type.include?('120v') %>
+
+Curve:Biquadratic,
+    <%= water_heater_name %>-Htg-Cap-fT_new,     !- Name
+    0.636,                   !- Coefficient1 Constant
+    0.0227,                 !- Coefficient2 x
+    0.000406,              !- Coefficient3 x**2
+    -0.000437,                !- Coefficient4 y
+    0,              !- Coefficient5 y**2
+    0,              !- Coefficient6 x*y
+    0,                       !- Minimum Value of x
+    100,                     !- Maximum Value of x
+    0,                       !- Minimum Value of y
+    100,                     !- Maximum Value of y
+    0;                       !- Minimum Curve Output
+
+Curve:Biquadratic,
+    <%= water_heater_name %>-Htg-COP-fT_new,     !- Name
+    1.17977858818095,                   !- Coefficient1 Constant
+    0.0301183438423715,                 !- Coefficient2 x
+    0.000206318341610479,              !- Coefficient3 x**2
+    -0.019352993529396,                 !- Coefficient4 y
+    0.00013405980085366,             !- Coefficient5 y**2
+    -0.0003025958862054,              !- Coefficient6 x*y
+    0,                       !- Minimum Value of x
+    100,                     !- Maximum Value of x
+    0,                       !- Minimum Value of y
+    100;                     !- Maximum Value of y
+
+
+<% else %>
 
 Curve:Biquadratic,
     <%= water_heater_name %>-Htg-Cap-fT_new,     !- Name
@@ -224,6 +270,8 @@ Curve:Biquadratic,
     100,                     !- Maximum Value of x
     0,                       !- Minimum Value of y
     100;                     !- Maximum Value of y
+
+<% end %>
 
 Curve:Quadratic,
     <%= water_heater_name %>-COP-fPLR,           !- Name
@@ -418,7 +466,7 @@ WaterUse:Equipment,
     Domestic Hot Water,      !- End-Use Subcategory
     <%= peak_flow %>,                 !- Peak Flow Rate {m3/s}
     <%= water_heater_name %>_demand_frac_sch,  !- Flow Rate Fraction Schedule Name
-    ,                        !- Target Temperature Schedule Name
+    dhw_use_setpt,                        !- Target Temperature Schedule Name
     ,                        !- Hot Water Supply Temperature Schedule Name
     ,                        !- Cold Water Supply Temperature Schedule Name
     <%= water_use_zone %>;  !- Zone Name
@@ -429,7 +477,7 @@ WaterUse:Connections,
     <%= water_heater_name %> Water Sink Outlet Node,  !- Outlet Node Name
     ,                        !- Supply Water Storage Tank Name
     ,                        !- Reclamation Water Storage Tank Name
-    ,                        !- Hot Water Supply Temperature Schedule Name
+    <%= water_heater_name %>_dhw_setpt,                        !- Hot Water Supply Temperature Schedule Name
     ,                        !- Cold Water Supply Temperature Schedule Name
     None,                    !- Drain Water Heat Exchanger Type
     ,                        !- Drain Water Heat Exchanger Destination
