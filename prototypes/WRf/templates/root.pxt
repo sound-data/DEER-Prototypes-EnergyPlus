@@ -89,6 +89,7 @@ end
 
 group "space_hvac" do
   import "zonehvac/hvac-zone.pxt", :group => "building" do # hardcode building-level defaults
+    include "disable_ems"
     parameter "oa_person", :default => 0['CFM']
     parameter "sat_min_dt", :default => 20.0['deltaF']
   end
@@ -151,6 +152,10 @@ group "hvac_zone", :prefix => "main_" do
   parameter "oa_type", :default => "UNIT"
   parameter "heat_flow_frac", :default => 1.0
   parameter "atu_flow_min_frac", :default => Autosize
+#TRC - Adding cool_flow_min_frac as the minimum flow ratio in cooling in the sizing:zone object.
+#   Differs from ATU_flow_min_frac because ATU_flow_min_frac overrides the ventilation requirement.
+#   If ATU_flow_min_frac is autosized, then the VAV minimum flow fraction will be the greater of the ventilation rate and cool_flow_min_frac.
+  parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "NONE"
   parameter "atu_reheat_control", :default => nil
 end
@@ -166,8 +171,10 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => nil
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate" #TRC - to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "COMBUSTION"
+  parameter "heat_coil_eff", :default => 0.80
   parameter "dx_type", :default => "PNNL"
   parameter "dx_comp_speed", :default => "CONSTANT"
   parameter "aux_heat_coil_type", :default => "NONE"
@@ -317,27 +324,27 @@ end
 ##insert statements using these snippet calls will be at the bottom of this script
 
 #Low Temp compressors
-import "ref-sys-comp.pxt", :group => "lt_compressor", :prefix => "LT_comp_" do
+import "ref-sys-comp.pxt", :group => "lt_compressor", :prefix => "lt_comp_" do
   include "*"
   exclude "comp_name"
   
   parameter "comp_curves_source", :default=>"Bitzer_NH3_Low_OSNA8591-K"
-  parameter "rated_sh", :default =>5
+  parameter "rated_sh", :default =>5['C']
   parameter "return_gas_temp", :default=>""
   parameter "liquid_temp", :default=>""
-  parameter "rated_subcooling", :default=> 0
+  parameter "rated_subcooling", :default=> 0['C']
 end
 
 #Medium Temp compressors
-import "ref-sys-comp.pxt", :group => "mt_compressor", :prefix => "MT_comp_" do
+import "ref-sys-comp.pxt", :group => "mt_compressor", :prefix => "mt_comp_" do
   include "*"
   exclude "comp_name"
   
   parameter "comp_curves_source", :default=>"Bitzer_NH3_Med_OSNA8591-K"
-  parameter "rated_sh", :default =>5
+  parameter "rated_sh", :default =>5['C']
   parameter "return_gas_temp", :default=>""
   parameter "liquid_temp", :default=>""
-  parameter "rated_subcooling", :default=> 0
+  parameter "rated_subcooling", :default=> 0['C']
 end
 
 #Low Temp Chillers
@@ -572,7 +579,7 @@ for zone in all_zones
     :sys_name => "#{this_hvac_type}-#{sys_name}",
     :clear_water_storage_tank => condensate_collection,
     :clear_water_supply_tank => clear_water_supply_tank,
-    **( this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
+    **( space_hvac.building | this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
 
   branch_name = "#{zone_name} #{this_hvac_type}"
 
@@ -630,10 +637,10 @@ end
 
 vrfc_branches.each_key do |sys_name|
   insert "system/vrfc.pxt", **vrf,
-    :name => "#{hvac_type}-#{sys_name}",
+    :name => "#{this_hvac_type}-#{sys_name}",
     :branches => vrfc_branches[sys_name],
-    :op_sch => hvac_sch,
-    **local(:cool_coil_cop, :heat_coil_cop)
+    :cool_coil_cop => this_hvac[:cool_coil_cop],
+    :heat_coil_cop => this_hvac[:heat_coil_cop]
 end
 
 systems_table.each_key do |system_name|

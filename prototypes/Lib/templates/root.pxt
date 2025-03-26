@@ -125,6 +125,7 @@ end
 
 group "space_hvac" do
   import "zonehvac/hvac-zone.pxt", :group => "building" do # hardcode building-level defaults
+    include "disable_ems"
     parameter "oa_person", :default => 0['CFM']
     parameter "sat_min_dt", :default => 20.0['deltaF']
   end
@@ -225,10 +226,10 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_return", :default => false
   parameter "cool_coil_type", :default => "DX-AIR"
   parameter "cool_coil_cop", :default => 3.85
-  #TRC - Adding unitary_no_load_flow_method to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
-  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate" #TRC - to parameterize the sizing of the no load (minimum) flow for UnitarySystems with DX cooling
   parameter "heat_coil_cop", :default => nil
   parameter "heat_coil_type", :default => "COMBUSTION"
+  parameter "heat_coil_eff", :default => 0.80
   parameter "dx_type", :default => "T24"
   parameter "dx_comp_speed", :default => "DUAL-EQUAL"
   parameter "aux_heat_coil_type", :default => "NONE"
@@ -550,7 +551,7 @@ for zone in all_zones
     :sys_name => "#{this_hvac_type}-#{sys_name}",
     :clear_water_storage_tank => condensate_collection,
     :clear_water_supply_tank => clear_water_supply_tank,
-    **( this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
+    **( space_hvac.building | this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
 
   branch_name = "#{zone_name} #{this_hvac_type}"
 
@@ -608,10 +609,10 @@ end
 
 vrfc_branches.each_key do |sys_name|
   insert "system/vrfc.pxt", **vrf,
-    :name => "#{hvac_type}-#{sys_name}",
+    :name => "#{this_hvac_type}-#{sys_name}",
     :branches => vrfc_branches[sys_name],
-    :op_sch => hvac_sch,
-    **local(:cool_coil_cop, :heat_coil_cop)
+    :cool_coil_cop => this_hvac[:cool_coil_cop],
+    :heat_coil_cop => this_hvac[:heat_coil_cop]
 end
 
 systems_table.each_key do |system_name|

@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'SEER Rated AC/HP'
+measure_name = 'Wall Furnace'
 
 # %%
 #MFm only script
@@ -448,9 +448,9 @@ metadata_msr = metadata_msr.rename(columns={'TechID':'MeasTechID'})
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     metadata_pre_full = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        metadata_pre_mod = metadata_pre.copy()
+        metadata_pre_mod = metadata_pre[metadata_pre['PreTechID']==common_id].copy()
         metadata_pre_mod['PreTechID'] = new_id
         #merge to final df
         metadata_pre_full = pd.concat([metadata_pre_full, metadata_pre_mod])
@@ -543,9 +543,9 @@ sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MeasTechIDs['Co
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_annual_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_annual_pre_mod = sim_annual_pre_common.copy()
+        sim_annual_pre_mod = sim_annual_pre_common[sim_annual_pre_common['TechID']==common_id].copy()
         sim_annual_pre_mod['TechID'] = new_id
         #merge to final df
         sim_annual_pre = pd.concat([sim_annual_pre, sim_annual_pre_mod])
@@ -598,9 +598,9 @@ sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MeasTechIDs['Co
 #Pre hourly
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_hourly_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_hourly_pre_mod = sim_hourly_pre_common.copy()
+        sim_hourly_pre_mod = sim_hourly_pre_common[sim_hourly_pre_common['TechID']==common_id].copy()
         sim_hourly_pre_mod['TechID'] = new_id
         #merge to final df
         sim_hourly_pre = pd.concat([sim_hourly_pre, sim_hourly_pre_mod])

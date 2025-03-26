@@ -11,1058 +11,1060 @@ CREATE TABLE "ImpactProfiles" (
 WITH (OIDS=FALSE)
 ;
 
-INSERT INTO "ImpactProfiles" VALUES ('perCycle-Dishwash-StdSize-ElecDHW-0p65EF', 'ClothesDishWasher', '');
-INSERT INTO "ImpactProfiles" VALUES ('perCycle-Dishwash-StdSize-ElecDHW-0p68EF', 'ClothesDishWasher', '');
-INSERT INTO "ImpactProfiles" VALUES ('perCycle-Dishwash-StdSize-GasDHW-0p65EF', 'ClothesDishWasher', '');
-INSERT INTO "ImpactProfiles" VALUES ('perCycle-Dishwash-StdSize-GasDHW-0p68EF', 'ClothesDishWasher', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Dec-Typ-ntxv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Dec-Typ-txv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Inc-High-ntxv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Inc-High-txv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Inc-Low-ntxv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Inc-Low-txv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Inc-Typ-ntxv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Inc-Typ-txv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-CFL', 'DEER:Com:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-CFL_OSbldg', 'DEER:Com:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-CFL_OSnone', 'DEER:Com:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-CFL_OSspc', 'DEER:Com:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-CFL', 'DEER:Com:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-CFL_OSbldg', 'DEER:Com:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-CFL_OSnone', 'DEER:Com:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-CFL_OSspc', 'DEER:Com:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-ILtg-SI-dWatt', 'DEER:Com:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-Exit', 'DEER:Com:Indoor_Exit', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-Exit', 'DEER:Com:Indoor_Exit', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-HB_OSbldg', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-HB_OSnone', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-HB_OSspc', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-HB_OSbldg', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-HB_OSnone', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-HB_OSspc', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-LF', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-LF_OSbldg', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-LF_OSnone', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-IEbase-LF_OSspc', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-LF', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-LF_OSbldg', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-LF_OSbldg-kL', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-LF_OSnone', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-dWatt-LF_OSspc', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-ILtg-HB-dWatt', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-ILtg-HW-dWatt', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-ILtg-HW-dWatt-kL', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-kLumen-110LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-kLumen-125LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-kLumen-85LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Iltg-kLumen-95LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-Cmn-kLumen-110LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-Cmn-kLumen-125LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-Cmn-kLumen-85LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-Cmn-kLumen-95LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldRecipChlr-2Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-1Cmp-gte150tons-11.1EER', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-1Cmp-gte150tons-12.1EER', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-1Cmp-lt150tons-11.1EER', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-1Cmp-lt150tons-12.1EER', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-2Cmp-AllSizes-10.5EER-14.26IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-2Cmp-AllSizes-11.5EER-15.62IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-2Cmp-AllSizes-11EER-14.94IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-2Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-gte150tons-11.1EER-15.4IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-gte150tons-12.1EER-16.9IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-lt150tons-11.1EER-15.1IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirCldScrewChlr-lt150tons-12.1EER-16.6IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-150to299tons-0.519kwpton-0.468IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-150to299tons-0.549kwpton-0.495IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.519kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.519kwpton-0.457IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.549kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.54kwpton-0.308IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.54kwpton-0.34IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.572kwpton-0.36IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.476kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.504kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.506kwpton-0.289IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.506kwpton-0.332IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.536kwpton-0.351IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-400to599tons-0.476kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-400to599tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-400to599tons-0.504kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-400to599tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-AllSizes-VarSpd-dkWton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte300tons-0.476kwpton-0.42IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte400tons-0.497kwpton-0.284IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte600tons-0.476kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte600tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte600tons-0.504kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte600tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.519kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.519kwpton-0.457IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.549kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.591kwpton-0.337IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.591kwpton-0.374IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.626kwpton-0.396IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-300to399tons-0.476kwpton-0.442IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-300to399tons-0.504kwpton-0.468IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-400to599tons-0.476kwpton-0.425IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-400to599tons-0.504kwpton-0.5IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-gte600tons-0.476kwpton-0.425IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-gte600tons-0.504kwpton-0.45IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-lt150tons-0.519kwpton-0.468IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-lt150tons-0.549kwpton-0.495IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-150to299tons-0.54kwpton-0.274IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-150to299tons-0.54kwpton-0.34IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-150to299tons-0.572kwpton-0.36IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-300to399tons-0.506kwpton-0.257IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-300to399tons-0.506kwpton-0.332IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-300to399tons-0.536kwpton-0.351IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-400to599tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-400to599tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-AllSizes-VarSpd-dkWton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-gte400tons-0.497kwpton-0.252IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-gte600tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-gte600tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-lt150tons-0.591kwpton-0.374IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-lt150tons-0.591kwpton-0.3IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-lt150tons-0.626kwpton-0.396IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-150to299tons-0.54kwpton-0.274IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-150to299tons-0.54kwpton-0.34IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-150to299tons-0.572kwpton-0.36IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-300to399tons-0.506kwpton-0.257IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-300to399tons-0.506kwpton-0.332IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-300to399tons-0.536kwpton-0.351IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-400to599tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-400to599tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-AllSizes-VarSpd-dkWton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-gte400tons-0.497kwpton-0.252IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-gte600tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-gte600tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-lt150tons-0.591kwpton-0.374IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-lt150tons-0.591kwpton-0.3IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-lt150tons-0.626kwpton-0.396IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldRecipChlr-2Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-150to299tons-0.561kwpton-0.459IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-150to299tons-0.578kwpton-0.374IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-150to299tons-0.594kwpton-0.486IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-150to299tons-0.612kwpton-0.396IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-150to299tons-0.561kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-150to299tons-0.594kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-150to299tons-0.594kwpton-0.417IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-300to599tons-0.519kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-300to599tons-0.549kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-300to599tons-0.549kwpton-0.385IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-75to149tons-0.612kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-75to149tons-0.648kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-75to149tons-0.648kwpton-0.454IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-AllSizes-VarSpd-dkWton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-gte600tons-0.476kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-gte600tons-0.504kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-gte600tons-0.504kwpton-0.353IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-lt75tons-0.638kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-lt75tons-0.675kwpton', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-lt75tons-0.675kwpton-0.473IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-300to599tons-0.519kwpton-0.442IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-300to599tons-0.531kwpton-0.349IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-300to599tons-0.549kwpton-0.468IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-300to599tons-0.563kwpton-0.369IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-75to149tons-0.612kwpton-0.476IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-75to149tons-0.638kwpton-0.417IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-75to149tons-0.648kwpton-0.504IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-75to149tons-0.675kwpton-0.441IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-gte600tons-0.476kwpton-0.425IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-gte600tons-0.497kwpton-0.323IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-gte600tons-0.504kwpton-0.45IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-gte600tons-0.527kwpton-0.342IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-lt75tons-0.638kwpton-0.51IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-lt75tons-0.663kwpton-0.425IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-lt75tons-0.675kwpton-0.54IPLV', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrCldScrewChlr-lt75tons-0.702kwpton-0.45IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NB-HVAC-DuctSeal-high', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NB-HVAC-DuctSeal-low', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to65kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to65kBtuh-15p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to65kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to65kBtuh-16p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to65kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to65kBtuh-17p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to65kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to65kBtuh-18p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt55kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt55kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt55kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt55kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-45to55kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-45to55kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-45to55kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-45to55kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to65kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to65kBtuh-15p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to65kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to65kBtuh-16p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to65kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to65kBtuh-17p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to65kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to65kBtuh-18p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt45kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt45kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt45kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt45kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-135to239kBtuh-11p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-135to239kBtuh-12p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-135to239kBtuh-12p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-10p8eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-10p8eer_MZ', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-10p8eer_SZ', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-11p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-11p5eer_MZ', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-11p5eer_SZ', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-12p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-12p5eer_MZ', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-12p5eer_SZ', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-11p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-11p5eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-12p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-12p0eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-13p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-13p0eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-11p5eer-woutPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-11p5eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-12p0eer-woutPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-12p0eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-12p5eer-woutPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-12p5eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-13p0eer-woutPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-13p0eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to135kBtuh-12p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to135kBtuh-12p5eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-10p2eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-11p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-12p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-11.25to14ton-13.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-11.25to14ton-15.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-14to20ton-12.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-14to20ton-14.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-20to24ton-11.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-20to24ton-13.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-24to35ton-10.9EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-24to35ton-11.4EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-6to11.25ton-13.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-6to11.25ton-15.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-gt35ton-10.9EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHP-gt35ton-11.4EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-11.25to14ton-13EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-11.25to14ton-15.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-14to20ton-12.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-14to20ton-14EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-20to24ton-11.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-20to24ton-13.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-24to35ton-10.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-24to35ton-11.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-5.4to11.25ton-13EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-5.4to11.25ton-15.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-gt35ton-10.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('VarRefgHR-gt35ton-11.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-55to65kBtuh-15p0seer-8p2hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-55to65kBtuh-15p0seer-8p2hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-55to65kBtuh-16p0seer-8p5hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-55to65kBtuh-16p0seer-8p5hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-55to65kBtuh-17p0seer-9p0hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-55to65kBtuh-17p0seer-9p0hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-lt55kBtuh-15p0seer-8p2hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-lt55kBtuh-16p0seer-8p5hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-lt55kBtuh-17p0seer-9p0hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to65kBtuh-15p0seer-8p7hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to65kBtuh-15p0seer-8p7hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to65kBtuh-16p0seer-9p0hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to65kBtuh-16p0seer-9p0hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to65kBtuh-17p0seer-9p4hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to65kBtuh-17p0seer-9p4hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to65kBtuh-18p0seer-9p7hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to65kBtuh-18p0seer-9p7hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt55kBtuh-15p0seer-8p7hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt55kBtuh-16p0seer-9p0hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt55kBtuh-17p0seer-9p4hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt55kBtuh-18p0seer-9p7hspf', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-135to239kBtuh-11p5eer-3p2cop', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-135to239kBtuh-12p0eer-3p2cop', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-240to759kBtuh-10p5eer-3p2cop', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-240to759kBtuh-10p8eer-3p2cop', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-65to134kBtuh-11p5eer-3p4cop', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-65to134kBtuh-11p5eer-3p4cop-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-65to134kBtuh-12p0eer-3p4cop', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-65to134kBtuh-12p0eer-3p4cop-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-11.25to14ton-13.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-11.25to14ton-15.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-14to20ton-12.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-14to20ton-14.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-20to24ton-11.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-20to24ton-13.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-24to35ton-10.9EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-24to35ton-11.4EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-6to11.25ton-13.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-6to11.25ton-15.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-gt35ton-10.9EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHP-gt35ton-11.4EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-11.25to14ton-13EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-11.25to14ton-15.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-14to20ton-12.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-14to20ton-14EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-20to24ton-11.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-20to24ton-13.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-24to35ton-10.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-24to35ton-11.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-5.4to11.25ton-13EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-5.4to11.25ton-15.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-gt35ton-10.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-VarRefgHR-gt35ton-11.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Freezer-ARP', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Freezer-ARP15-PGE', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Freezer-ARP15-SCE', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Freezer-ARP15-SDG', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Frzr-dKWH-Cond', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refg-dKWH-Cond', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refg-dKWH-Uncond', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refrig-ARP', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refrig-ARP15-PGE', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refrig-ARP15-SCE', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refrig-ARP15-SDG', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refrig-ARP-SCE', 'DEER:RefgFrzr_HighEff', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Frzr-dKWH-Cond-Wtd-PGE', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Frzr-dKWH-Cond-Wtd-SCE', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Frzr-dKWH-Cond-Wtd-SDG', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refg-dKWH-Cond-Wtd-PGE', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refg-dKWH-Cond-Wtd-SCE', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refg-dKWH-Cond-Wtd-SDG', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-BlowInIns-R0-R13', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-CeilIns-R0-R30', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-CeilIns-R0-R38', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-CeilIns-VintR-AddR11', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-CeilIns-VintR-AddR19', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-CeilIns-VintR-AddR30', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-CeilIns-VintR-AddR38', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-CeilIns-VintR-ToR38', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-CeilIns-VintR-ToR44', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-BS-CeilIns-VintR-ToR50', 'DEER:Res:BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-ElecDHW-ElecDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-ElecDHW-ElecDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-ElecDHW-ElecDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-ElecDHW-GasDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-ElecDHW-GasDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-ElecDHW-GasDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-GasDHW-ElecDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-GasDHW-ElecDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-GasDHW-ElecDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-GasDHW-GasDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-GasDHW-GasDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-GasDHW-GasDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Front-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-ElecDHW-ElecDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-ElecDHW-ElecDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-ElecDHW-ElecDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-ElecDHW-GasDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-ElecDHW-GasDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-ElecDHW-GasDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-GasDHW-ElecDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-GasDHW-ElecDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-GasDHW-ElecDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-GasDHW-GasDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-GasDHW-GasDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-GasDHW-GasDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-CW-Top-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-ElecDHW-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-ElecDHW-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-ElecDHW-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-GasDHW-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-GasDHW-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-GasDHW-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-Tier1-Front', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-Tier1-Top', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-Tier2-Front', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-Tier2-Top', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-Tier3-Front', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-Tier3-Top', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep30G-3p24EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep30G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep40G-3p24EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep40G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep50G-3p24EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep50G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep60G-3p17EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep60G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep75G-3p06EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-rep75G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-HI-0p81UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-HI-0p87UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-LW-0p81UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-LW-0p87UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-MD-0p81UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-MD-0p87UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-30G-HD-0p68UEF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-30G-MD-0p64UEF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-40G-HD-0p68UEF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-40G-MD-0p64UEF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-50G-HD-0p68UEF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-50G-MD-0p64UEF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p65EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p70EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p72EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p65EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p70EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p67EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p70EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p78EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p80EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p78EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p80EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-DuctSeal-HighToLow', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-DuctSeal-MedToLow', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-RefChrg-IncTyp-DuctLoss-MedToLow', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Inc-NTXV-typ', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-45to65kBtuh-15S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-45to65kBtuh-16S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-45to65kBtuh-17S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-45to65kBtuh-18S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-45to65kBtuh-19S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-45to65kBtuh-20S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-45to65kBtuh-21S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-ge45kBtuh-14S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-ge45kBtuh-15S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-ge45kBtuh-16S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-ge45kBtuh-17S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-ge45kBtuh-18S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-ge45kBtuh-19S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-ge45kBtuh-20S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-ge45kBtuh-21S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-lt45kBtuh-14S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-lt45kBtuh-15S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-lt45kBtuh-16S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-lt45kBtuh-17S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-lt45kBtuh-18S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-lt45kBtuh-19S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-lt45kBtuh-20S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-lt45kBtuh-21S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResEvapAC-45to65kBtuh-17p4S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResEvapAC-ge45kBtuh-17p4S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResEvapAC-lt45kBtuh-17p4S', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-15p0S-8p7H', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-16p0S-9p0H', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-17p0S-9p4H', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-18p0S-9p7H', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-WholeHouseFan-0.7CFMp-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-WholeHouseFan-0.7CFMp-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-WholeHouseFan-1.5CFMp-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-WholeHouseFan-1.5CFMp-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-WholeHouseFan-2.0CFMp-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-WholeHouseFan-2.0CFMp-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-WholeHouseFan-3.0CFMp-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-WholeHouseFan-3.0CFMp-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WHFan-0.7-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WHFan-0.7-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WHFan-1.5-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WHFan-1.5-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WHFan-2.0-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WHFan-2.0-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WHFan-3.0-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WHFan-3.0-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-15S-8.7H', 'DEER:Res:HVAC_Eff_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-16S-9H', 'DEER:Res:HVAC_Eff_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-17S-9.4H', 'DEER:Res:HVAC_Eff_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-18S-9.7H', 'DEER:Res:HVAC_Eff_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Furnace-dHIR', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Furnace-ECM-Upgrade', 'DEER:Res:HVAC_Eff_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE81', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE81-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE90', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE90-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE91', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE91-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE92', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE92-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE93', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE93-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE94', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE94-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE95', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE95-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE96', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE96-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE97', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE97-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE98', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-GasFurnace-AFUE98-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-Cmn-dWatt-CFL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-Cmn-dWatt-LF', 'DEER:Res:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-Cmn-dWatt-LF-kL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-Cmn-IEbase-dWatt-CFL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-Cmn-IEbase-dWatt-LF', 'DEER:Res:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-dWatt-CFL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-dWatt-IEbase-CFL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Iltg-SI-dWatt', 'DEER:Res:Indoor_CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Oltg-dWatt', 'DEER:Res:Outdoor_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Oltg-dWatt-CFL', 'DEER:Res:Outdoor_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Oltg-dWatt-SI', 'DEER:Res:Outdoor_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MFDuctSeal-24pct-12pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MFDuctSeal-40pct-12pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MHDuctSeal-25pct-15pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MHDuctSeal-35pct-15pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-RefChrg-DuctLoss-Typ-Dec', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-RefChrg-DuctLoss-Typ-Inc', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-SFDuctSeal-24pct-12pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-SFDuctSeal-40pct-12pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg2018-Dec-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg2018-Inc-16pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg2018-Inc-4pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg2018-Inc-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Dec-NTXV-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Dec-TXV-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Inc-NTXV-16pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Inc-NTXV-4pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Inc-TXV-16pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Inc-TXV-4pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Inc-TXV-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-DuctSeal-HighToLow-wtd', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-DuctSeal-MedToLow-wtd', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-RCA-wtd', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-RefrigCharge-wtd', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('CeilIns-VintR-R38', 'DEER:Res_BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('CeilIns-VintR-R44', 'DEER:Res_BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('CeilIns-VintR-R50', 'DEER:Res_BldgShell_Ins', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('DemandCtl-WtrHt-Elec-44unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('DemandCtl-WtrHt-Elec-88unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('DemandCtl-WtrHt-Gas-44unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('DemandCtl-WtrHt-Gas-88unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('DemandCtl-WtrHt-HP-44unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('DemandCtl-WtrHt-HP-88unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('airAC-SpltPkg-gte760kBtuh-10p0eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('All-Oltg-dWatt', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('All-Oltg-dWatt-MS', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Furnace-dHIR', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Com-RefrigCharge-wtd', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('dxHP-pkgSEER-55to64kBtuh-14p5seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('dxHP-pkgSEER-lt55kBtuh-14p5seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('dxHP-spltSEER-55to64kBtuh-14p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('dxHP-spltSEER-lt55kBtuh-14p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE90', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE90-ECM-lt65kBtuh', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE91', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE91-ECM-lt65kBtuh', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE92', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE92-ECM-lt65kBtuh', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE93', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE93-ECM-lt65kBtuh', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE94', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE94-ECM-lt65kBtuh', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE95', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE95-ECM-lt65kBtuh', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE96', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE96-ECM-lt65kBtuh', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE97', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE97-ECM-lt65kBtuh', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE98', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Furnace-Pkg-AFUE98-ECM-lt65kBtuh', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Grnhs-Shell-LIR_to_LIR_Tcurt', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Grnhs-Shell-LowIRroof', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Grnhs-Shell-LowIR-SingleLayer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Grnhs-Shell-LowIR_ThermCurt', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Grnhs-Shell-Tcurt_to_LIR_Tcurt', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Grnhs-Shell-ThermCurt', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-Furnace-ECM-Upgrade', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to64kBtuh-13p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-55to64kBtuh-14p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt55kBtuh-13p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt55kBtuh-14p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to64kBtuh-13p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-55to64kBtuh-14p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt55kBtuh-13p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt55kBtuh-14p0seer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-110to134kBtuh-11p0eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-110to134kBtuh-11p5eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-110to134kBtuh-12p0eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-110to134kBtuh-12p5eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-135to239kBtuh-10p8eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-10p5eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-9p8eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-11p0eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-9p5eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-9p7eer', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-55to64kBtuh-13p0seer-7p7hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-55to64kBtuh-14p0seer-8p0hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-55to64kBtuh-15p0seer-8p5hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-lt55kBtuh-13p0seer-7p7hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-lt55kBtuh-14p0seer-8p0hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-lt55kBtuh-15p0seer-8p5hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to64kBtuh-13p0seer-7p7hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to64kBtuh-14p5seer-8p5hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-55to64kBtuh-15p0seer-9p0hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt55kBtuh-13p0seer-7p7hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt55kBtuh-14p5seer-8p5hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt55kBtuh-15p0seer-9p0hspf', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-110to134kBtuh-11p5eer-3p4cop', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-110to134kBtuh-12p0eer-3p4cop', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-65to109kBtuh-11p5eer-3p4cop', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-65to109kBtuh-12p0eer-3p4cop', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-gte760kBtuh-10p0eer-3p2cop', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-gte760kBtuh-10p2eer-3p2cop', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirPkgRecip-AllSizes-1p008kwpton', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-AirScrew-AllSizes-1p008kwpton', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Cent-150to299tons-0p507kwpton-ConstSpd', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Cent-150to299tons-0p507kwpton-VSD', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Cent-gte300tons-0p461kwpton-ConstSpd', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Cent-gte300tons-0p461kwpton-VSD', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Cent-lt150tons-0p560kwpton-ConstSpd', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Cent-lt150tons-0p560kwpton-VSD', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Cent-lt150tons-0p700kwpton-1FrctnlsComp', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Cent-lt150tons-0p700kwpton-gt1FrctnlsComp', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Screw-150to299tons-0p574kwpton', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Screw-gte300tons-0p511kwpton', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-Screw-lt150tons-0p632kwpton', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrRecip-150to299tons-0p588kwpton', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrRecip-gte300tons-0p536kwpton', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrRecip-lt150tons-0p672kwpton', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Dec-high', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Dec-typ', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Inc-high', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-RefChg-Inc-typ', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-LrgInst-Elec-gt12kW', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-LrgStrg-Elec-gt12kW', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlInst-Elec-lte12kW-lt2G', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-Elec-lte12kW-30G-0p95EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-Elec-lte12kW-40G-0p94EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-Elec-lte12kW-50G-0p93EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-Elec-lte12kW-60G-0p92EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-Elec-lte12kW-75G-0p91EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-30G-2p00EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-30G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-30G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-40G-2p00EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-40G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-40G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-50G-2p00EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-50G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-50G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-60G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-60G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-75G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NE-WtrHt-SmlStrg-HP-lte12kW-75G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-83p0Et-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-85p0ET-Atm', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-85p0Et-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-90p0Et-CndLow', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-90p0Et-CndReset', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-90p0Et-CndStd', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-94p0ET-Cnd', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-94p0Et-CndLow', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-94p0Et-CndReset', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-300to2500kBtuh-94p0Et-CndStd', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-83p0Et-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-85p0EC-Atm', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-85p0EC-Drft', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-85p0Et-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-90p0Et-CndLow', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-90p0Et-CndReset', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-90p0Et-CndStd', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-94p0Et-CndLow', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-94p0Et-CndReset', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-gt2500kBtuh-94p0Et-CndStd', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-84p0AFUE-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-84p5AFUE-Atm', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-84p5AFUE-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-85p0AFUE-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-87p0AFUE-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-90p0AFUE-CndLow', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-90p0AFUE-CndReset', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-90p0AFUE-CndStd', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-94p0AFUE-Cnd', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-94p0AFUE-CndLow', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-94p0AFUE-CndReset', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-HW-lt300kBtuh-94p0AFUE-CndStd', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-300to2500kBtuh-81p0Et-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-300to2500kBtuh-82p0Et-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-300to2500kBtuh-85p0ET-Atm', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-300to2500kBtuh-85p0ET-Drft', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-gt2500kBtuh-80p0EC-Atm', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-gt2500kBtuh-80p0EC-Drft', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-gt2500kBtuh-80p0Et-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-gt2500kBtuh-81p0Et-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-gt2500kBtuh-82p0Et-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-lt300kBtuh-82p0AFUE-Atm', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-lt300kBtuh-82p0AFUE-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-HVAC-Blr-Stm-lt300kBtuh-83p0AFUE-Drft', 'NULL', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-LrgInst-Gas-gt200kBtuh-0p80Et', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-LrgInst-Gas-gt200kBtuh-0p85Et', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-LrgInst-Gas-gt200kBtuh-0p90Et', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-LrgStrg-Gas-gte75kBtuh-0p83Et', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-LrgStrg-Gas-gte75kBtuh-0p90Et', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-MedInst-Gas-76to200kBtuh-0p80Et', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-MedInst-Gas-76to200kBtuh-0p85Et', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-MedInst-Gas-76to200kBtuh-0p90Et', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p82EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlInst-Gas-lte75kBtuh-lt2G-0p82EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-30G-HD-0p68UEF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-30G-MD-0p64UEF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-40G-HD-0p68UEF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-40G-MD-0p64UEF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-50G-HD-0p68UEF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-50G-MD-0p64UEF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p65EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p70EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p72EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p65EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p67EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p70EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p82EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p67EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p70EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p82EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p66EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p70EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p78EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p80EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p82EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p66EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p70EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p78EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p80EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p82EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('NRes-Oltg-Gar-dWatt', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier1-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier1-Top', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier2-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier2-Top', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier3-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier1-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier1-Top', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier2-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier2-Top', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier3-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier1-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier1-Top', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier2-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier2-Top', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier3-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffDW-StdSize-GasDHW-180EAEU', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-Appl-EffDW-StdSize-GasDHW-260EAEU', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MFRefChrg-Dec-high-24pct-12pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MFRefChrg-Dec-typ-24pct-12pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MFRefChrg-Inc-high-24pct-12pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MFRefChrg-Inc-typ-24pct-12pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MHRefChrg-Dec-high-25pct-15pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MHRefChrg-Dec-typ-25pct-15pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MHRefChrg-Inc-high-25pct-15pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-MHRefChrg-Inc-typ-25pct-15pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-SFRefChrg-Dec-high-24pct-12pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-SFRefChrg-Dec-typ-24pct-12pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-SFRefChrg-Inc-high-24pct-12pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RB-HV-SFRefChrg-Inc-typ-24pct-12pct', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier1-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier1-Top', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier2-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier2-Top', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier3-Front', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-Appl-EffDW-StdSize-ElecDHW-180EAEU', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-Appl-EffDW-StdSize-ElecDHW-260EAEU', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Dec-high', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Dec-typ', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Inc-high', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-RefChrg-Inc-typ', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-13S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-14S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-15S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-16S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-17S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-18S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-19S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-20S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResAC-21S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResEvapAC-17p4S', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-13p0S-8p1H', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-14p0S-8p6H', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-15p0S-8p8H', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-HV-ResHP-16p0S-8p4H', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Freezer-ARP-SCE', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Freezer-ARP-SDG', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refrig-ARP-PGE', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Refrig-ARP-SDG', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlInst-Elec-lte12kW-lt2G', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-Elec-lte12kW-30G-0p95EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-Elec-lte12kW-40G-0p94EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-Elec-lte12kW-50G-0p93EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-Elec-lte12kW-60G-0p92EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-Elec-lte12kW-75G-0p91EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-30G-2p00EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-30G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-30G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-40G-2p00EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-40G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-40G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-50G-2p00EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-50G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-50G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-60G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-60G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-75G-2p20EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RE-WtrHt-SmlStrg-HP-lte12kW-75G-2p40EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p82EF-40g', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF-40g', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlInst-Gas-lte75kBtuh-lt2G-0p82EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p66EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p70EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p62EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p66EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p70EF', 'NULL', 'NULL');
-INSERT INTO "ImpactProfiles" VALUES ('IR006', 'PGE:AGRICULTURAL:14 = Agricultural', '');
-INSERT INTO "ImpactProfiles" VALUES ('IR007', 'PGE:AGRICULTURAL:14 = Agricultural', '');
-INSERT INTO "ImpactProfiles" VALUES ('IR008', 'PGE:AGRICULTURAL:14 = Agricultural', '');
-INSERT INTO "ImpactProfiles" VALUES ('IR009', 'PGE:AGRICULTURAL:14 = Agricultural', '');
-INSERT INTO "ImpactProfiles" VALUES ('PR002', 'PGE:INDUSTRIAL:11 = Industrial Process', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Plg-PwrStrip-Tier2Adv-msr1-v0', 'RES:DEER:RefgFrzr_HighEff', 'WinterOnly');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FrzrRecyc-dKWH-Wtd-PGE', 'Res:DEER:RefgFrzr_Recycling', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FrzrRecyc-dKWH-Wtd-SCE', 'Res:DEER:RefgFrzr_Recycling', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FrzrRecyc-dKWH-Wtd-SDG', 'Res:DEER:RefgFrzr_Recycling', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-RefgRecyc-dKWH-Wtd-PGE', 'Res:DEER:RefgFrzr_Recycling', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-RefgRecyc-dKWH-Wtd-SCE', 'Res:DEER:RefgFrzr_Recycling', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-RefgRecyc-dKWH-Wtd-SDG', 'Res:DEER:RefgFrzr_Recycling', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-RefgFrz-dKWH-Uncond', 'Res:DEER:RefgFrzr_Recyc-UnConditioned', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-DHWSavingsKit-Both', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-DHWSavingsKit-Elec', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-DHWSavingsKit-Gas', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerKit-Both-1.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerKit-Elec-1.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerKit-Gas-1.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerLav-Both-0.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerLav-Both-1.0', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerLav-Both-1.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerLav-Elec-0.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerLav-Elec-1.0', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerLav-Elec-1.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerLav-Gas-0.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerLav-Gas-1.0', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-FaucetAerLav-Gas-1.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Both-1.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Both-1.6', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Both-1.7', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Both-2.0', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Elec-1.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Elec-1.6', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Elec-1.7', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Elec-2.0', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHdFlowRes-Both-1.6', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHdFlowRes-Elec-1.6', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHdFlowRes-Gas-1.6', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Gas-1.5', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Gas-1.6', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Gas-1.7', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShowerHd-Gas-2.0', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShwrFlowRes-Both', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShwrFlowRes-Elec', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Res-ShwrFlowRes-Gas', 'Res-DHWFixture', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-14541', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-26010', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-28785', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-54146', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-64293', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-69302', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-75840', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-82783', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-84587', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-90678', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-92194', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-93262', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-93796', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('PR-97000', 'SCE:Industrial:Industrial', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('FS-77556', 'SCE:NON_RES:DEER:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH120206B-Rev05-Msr002', 'SCG:NON_RES:DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH120206C-Rev05-Msr002', 'SCG:NON_RES:DEER:HVAC_Split-Package_HP', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSDGENRPR0001-Rev00-Msr001', 'SDG:14-MLI-Manufacturing-LightIndustry-COMP_AIR', 'WinterOnly');
-INSERT INTO "ImpactProfiles" VALUES ('WPSDGENRPR0001-Rev00-Msr002', 'SDG:14-MLI-Manufacturing-LightIndustry-COMP_AIR', 'WinterOnly');
-INSERT INTO "ImpactProfiles" VALUES ('WPSDGERECS0001-Rev01-Msr001', 'SDG:19-RES-AllResidential-WAT_HEAT', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSDGENROE0001-Rev01-Msr001', 'SDG:NON_res:DEER:Indoor_Non-CFL_Ltg', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-180-EAEU', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('Appl-Dishwash-StdSize-260-EAEU', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Oltg-DuskDawn-dWatt', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('Com-Oltg-dWatt', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-003', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-004', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-005', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-006', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-007', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-008', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-009', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-010', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-013', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-016', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-017', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-018', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-019', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-020', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-021', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-022', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-023', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-024', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-025', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-026', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-027', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-028', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-029', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-030', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-031', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-032', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-033', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-034', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-035', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-036', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-037', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-038', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-039', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-044', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-045', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-046', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-047', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-048', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-049', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-050', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-051', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-053', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-054', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-055', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-056', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-057', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-058', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-059', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-060', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-062', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-063', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-064', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-065', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-069', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-070', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-071', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-073', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-075', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-082', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-083', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-084', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-085', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-086', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-087', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-088', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-089', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-090', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-091', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-095', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-098', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-099', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-100', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-101', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-102', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-123', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-205', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-206', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-207', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-218', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-219', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-220', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-221', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-222', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-223', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-224', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-225', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-226', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-306', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-307', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-308', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-309', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-401', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-405', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-406', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-407', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-426', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-427', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-428', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-429', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-430', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-431', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-435', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-436', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-437', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('D03-441', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('Dishwasher-EnStar-Level1-wtd', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('Dishwasher-EnStar-Level2-wtd', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('dxHP-pkgSEER-lt65kBtuh-14p5seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('dxHP-spltSEER-lt65kBtuh-14p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt65kBtuh-13p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt65kBtuh-14p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt65kBtuh3phs-12p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt65kBtuh3phs-13p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Pkg-lt65kBtuh3phs-14p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt65kBtuh-13p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt65kBtuh-14p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt65kBtuh3phs-12p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt65kBtuh3phs-13p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-Split-lt65kBtuh3phs-14p0seer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to89kBtuh-11p0eer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to89kBtuh-11p5eer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-65to89kBtuh-12p0eer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-90to134kBtuh-11p0eer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-90to134kBtuh-11p5eer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airAC-SpltPkg-90to134kBtuh-12p0eer', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-lt65kBtuh-13p0seer-8p1hspf', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-lt65kBtuh-14p0seer-8p6hspf', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Pkg-lt65kBtuh-15p0seer-8p6hspf', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt65kBtuh-13p0seer-7p7hspf', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt65kBtuh-14p5seer-8p5hspf', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-Split-lt65kBtuh-15p0seer-9p0hspf', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-65to89kBtuh-11p5eer-3p4cop', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-65to89kBtuh-12p0eer-3p4cop', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-90to134kBtuh-11p5eer-3p4cop', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-airHP-SpltPkg-90to134kBtuh-12p0eer-3p4cop', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NE-HVAC-Chlr-WtrRecip-AllSizes-0p672kwpton', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p82EF-40g', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p84EF-82EF', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF-40g', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF-82EF', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('Oltg-24hr-dWatt', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Oltg-Cmn-dWatt-CFL', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('Res-Oltg-DuskDawn-dWatt', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p67EF', '', '');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH120206A-Rev08-Msr004', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH120206A-Rev08-Msr005', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH120206A-Rev08-Msr006', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH120206B-Rev05-Msr001', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH120206C-Rev05-Msr001', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH120206C-Rev05-Msr003', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH120206C-Rev05-Msr004', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH150309A-Rev00-Msr001', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH150309A-Rev00-Msr002', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGNRWH150309A-Rev00-Msr003', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGREWH120618A-Rev01-Msr001', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSCGREWH120618A-Rev01-Msr003', '', 'Annual');
-INSERT INTO "ImpactProfiles" VALUES ('WPSDGENRAG0001-Rev01-Msr001', '', '');
+INSERT INTO "ImpactProfiles" VALUES
+  ('perCycle-Dishwash-StdSize-ElecDHW-0p65EF', 'ClothesDishWasher', ''),
+  ('perCycle-Dishwash-StdSize-ElecDHW-0p68EF', 'ClothesDishWasher', ''),
+  ('perCycle-Dishwash-StdSize-GasDHW-0p65EF', 'ClothesDishWasher', ''),
+  ('perCycle-Dishwash-StdSize-GasDHW-0p68EF', 'ClothesDishWasher', ''),
+  ('NE-HVAC-RefChg-Dec-Typ-ntxv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-RefChg-Dec-Typ-txv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-RefChg-Inc-High-ntxv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-RefChg-Inc-High-txv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-RefChg-Inc-Low-ntxv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-RefChg-Inc-Low-txv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-RefChg-Inc-Typ-ntxv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-RefChg-Inc-Typ-txv', 'DEER:Com:HVAC_Split-Package_AC', 'Annual'),
+  ('Com-Iltg-dWatt-CFL', 'DEER:Com:Indoor_CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-CFL_OSbldg', 'DEER:Com:Indoor_CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-CFL_OSnone', 'DEER:Com:Indoor_CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-CFL_OSspc', 'DEER:Com:Indoor_CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-CFL', 'DEER:Com:Indoor_CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-CFL_OSbldg', 'DEER:Com:Indoor_CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-CFL_OSnone', 'DEER:Com:Indoor_CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-CFL_OSspc', 'DEER:Com:Indoor_CFL_Ltg', 'Annual'),
+  ('Com-ILtg-SI-dWatt', 'DEER:Com:Indoor_CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-Exit', 'DEER:Com:Indoor_Exit', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-Exit', 'DEER:Com:Indoor_Exit', 'Annual'),
+  ('Com-Iltg-dWatt-HB_OSbldg', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-HB_OSnone', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-HB_OSspc', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-HB_OSbldg', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-HB_OSnone', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-HB_OSspc', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-LF', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-LF_OSbldg', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-LF_OSnone', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-IEbase-LF_OSspc', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-LF', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-LF_OSbldg', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-LF_OSbldg-kL', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-LF_OSnone', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-dWatt-LF_OSspc', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-ILtg-HB-dWatt', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-ILtg-HW-dWatt', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-ILtg-HW-dWatt-kL', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-kLumen-110LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-kLumen-125LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-kLumen-85LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Com-Iltg-kLumen-95LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Res-Iltg-Cmn-kLumen-110LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Res-Iltg-Cmn-kLumen-125LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Res-Iltg-Cmn-kLumen-85LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Res-Iltg-Cmn-kLumen-95LPW', 'DEER:Com:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldRecipChlr-2Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-1Cmp-gte150tons-11.1EER', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-1Cmp-gte150tons-12.1EER', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-1Cmp-lt150tons-11.1EER', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-1Cmp-lt150tons-12.1EER', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-2Cmp-AllSizes-10.5EER-14.26IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-2Cmp-AllSizes-11.5EER-15.62IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-2Cmp-AllSizes-11EER-14.94IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-2Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-gte150tons-11.1EER-15.4IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-gte150tons-12.1EER-16.9IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-lt150tons-11.1EER-15.1IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-AirCldScrewChlr-lt150tons-12.1EER-16.6IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-150to299tons-0.519kwpton-0.468IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-150to299tons-0.549kwpton-0.495IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.519kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.519kwpton-0.457IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.549kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.54kwpton-0.308IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.54kwpton-0.34IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-150to299tons-0.572kwpton-0.36IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.476kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.504kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.506kwpton-0.289IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.506kwpton-0.332IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-300to399tons-0.536kwpton-0.351IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-400to599tons-0.476kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-400to599tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-400to599tons-0.504kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-400to599tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-AllSizes-VarSpd-dkWton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte300tons-0.476kwpton-0.42IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte400tons-0.497kwpton-0.284IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte600tons-0.476kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte600tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte600tons-0.504kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-gte600tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.519kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.519kwpton-0.457IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.549kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.591kwpton-0.337IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.591kwpton-0.374IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-1Cmp-lt150tons-0.626kwpton-0.396IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-300to399tons-0.476kwpton-0.442IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-300to399tons-0.504kwpton-0.468IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-400to599tons-0.476kwpton-0.425IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-400to599tons-0.504kwpton-0.5IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-gte600tons-0.476kwpton-0.425IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-gte600tons-0.504kwpton-0.45IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-lt150tons-0.519kwpton-0.468IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-Conv-lt150tons-0.549kwpton-0.495IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-150to299tons-0.54kwpton-0.274IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-150to299tons-0.54kwpton-0.34IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-150to299tons-0.572kwpton-0.36IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-300to399tons-0.506kwpton-0.257IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-300to399tons-0.506kwpton-0.332IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-300to399tons-0.536kwpton-0.351IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-400to599tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-400to599tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-AllSizes-VarSpd-dkWton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-gte400tons-0.497kwpton-0.252IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-gte600tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-gte600tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-lt150tons-0.591kwpton-0.374IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-lt150tons-0.591kwpton-0.3IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-1Cmp-lt150tons-0.626kwpton-0.396IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-150to299tons-0.54kwpton-0.274IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-150to299tons-0.54kwpton-0.34IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-150to299tons-0.572kwpton-0.36IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-300to399tons-0.506kwpton-0.257IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-300to399tons-0.506kwpton-0.332IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-300to399tons-0.536kwpton-0.351IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-400to599tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-400to599tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-AllSizes-VarSpd-dkWton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-gte400tons-0.497kwpton-0.252IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-gte600tons-0.497kwpton-0.323IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-gte600tons-0.527kwpton-0.342IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-lt150tons-0.591kwpton-0.374IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-lt150tons-0.591kwpton-0.3IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldCentChlr-NoFric-2Cmp-lt150tons-0.626kwpton-0.396IPLV-VarSpd-CndRlf', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldRecipChlr-2Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-150to299tons-0.561kwpton-0.459IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-150to299tons-0.578kwpton-0.374IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-150to299tons-0.594kwpton-0.486IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-150to299tons-0.612kwpton-0.396IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-150to299tons-0.561kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-150to299tons-0.594kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-150to299tons-0.594kwpton-0.417IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-300to599tons-0.519kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-300to599tons-0.549kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-300to599tons-0.549kwpton-0.385IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-75to149tons-0.612kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-75to149tons-0.648kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-75to149tons-0.648kwpton-0.454IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-AllSizes-dkWton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-AllSizes-VarSpd-dkWton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-gte600tons-0.476kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-gte600tons-0.504kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-gte600tons-0.504kwpton-0.353IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-lt75tons-0.638kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-lt75tons-0.675kwpton', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-1Cmp-lt75tons-0.675kwpton-0.473IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-300to599tons-0.519kwpton-0.442IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-300to599tons-0.531kwpton-0.349IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-300to599tons-0.549kwpton-0.468IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-300to599tons-0.563kwpton-0.369IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-75to149tons-0.612kwpton-0.476IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-75to149tons-0.638kwpton-0.417IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-75to149tons-0.648kwpton-0.504IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-75to149tons-0.675kwpton-0.441IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-gte600tons-0.476kwpton-0.425IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-gte600tons-0.497kwpton-0.323IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-gte600tons-0.504kwpton-0.45IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-gte600tons-0.527kwpton-0.342IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-lt75tons-0.638kwpton-0.51IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-lt75tons-0.663kwpton-0.425IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-lt75tons-0.675kwpton-0.54IPLV', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NE-HVAC-Chlr-WtrCldScrewChlr-lt75tons-0.702kwpton-0.45IPLV-VarSpd', 'DEER:HVAC_Chillers', 'Annual'),
+  ('NB-HVAC-DuctSeal-high', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NB-HVAC-DuctSeal-low', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-55to65kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-55to65kBtuh-15p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-55to65kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-55to65kBtuh-16p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-55to65kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-55to65kBtuh-17p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-55to65kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-55to65kBtuh-18p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-lt55kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-lt55kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-lt55kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Pkg-lt55kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-45to55kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-45to55kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-45to55kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-45to55kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-55to65kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-55to65kBtuh-15p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-55to65kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-55to65kBtuh-16p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-55to65kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-55to65kBtuh-17p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-55to65kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-55to65kBtuh-18p0seer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-lt45kBtuh-15p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-lt45kBtuh-16p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-lt45kBtuh-17p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-Split-lt45kBtuh-18p0seer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-135to239kBtuh-11p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-135to239kBtuh-12p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-135to239kBtuh-12p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-10p8eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-10p8eer_MZ', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-10p8eer_SZ', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-11p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-11p5eer_MZ', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-11p5eer_SZ', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-12p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-12p5eer_MZ', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-12p5eer_SZ', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-11p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-11p5eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-12p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-12p0eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-13p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-13p0eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-11p5eer-woutPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-11p5eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-12p0eer-woutPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-12p0eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-12p5eer-woutPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-12p5eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-13p0eer-woutPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to134kBtuh-13p0eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to135kBtuh-12p5eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-65to135kBtuh-12p5eer-wPreEcono', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-10p2eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-11p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-12p0eer', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-11.25to14ton-13.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-11.25to14ton-15.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-14to20ton-12.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-14to20ton-14.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-20to24ton-11.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-20to24ton-13.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-24to35ton-10.9EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-24to35ton-11.4EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-6to11.25ton-13.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-6to11.25ton-15.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-gt35ton-10.9EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHP-gt35ton-11.4EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-11.25to14ton-13EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-11.25to14ton-15.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-14to20ton-12.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-14to20ton-14EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-20to24ton-11.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-20to24ton-13.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-24to35ton-10.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-24to35ton-11.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-5.4to11.25ton-13EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-5.4to11.25ton-15.5EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-gt35ton-10.7EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('VarRefgHR-gt35ton-11.2EER', 'DEER:HVAC_Split-Package_AC', 'Annual'),
+  ('NE-HVAC-airHP-Pkg-55to65kBtuh-15p0seer-8p2hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Pkg-55to65kBtuh-15p0seer-8p2hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Pkg-55to65kBtuh-16p0seer-8p5hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Pkg-55to65kBtuh-16p0seer-8p5hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Pkg-55to65kBtuh-17p0seer-9p0hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Pkg-55to65kBtuh-17p0seer-9p0hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Pkg-lt55kBtuh-15p0seer-8p2hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Pkg-lt55kBtuh-16p0seer-8p5hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Pkg-lt55kBtuh-17p0seer-9p0hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-55to65kBtuh-15p0seer-8p7hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-55to65kBtuh-15p0seer-8p7hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-55to65kBtuh-16p0seer-9p0hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-55to65kBtuh-16p0seer-9p0hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-55to65kBtuh-17p0seer-9p4hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-55to65kBtuh-17p0seer-9p4hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-55to65kBtuh-18p0seer-9p7hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-55to65kBtuh-18p0seer-9p7hspf-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-lt55kBtuh-15p0seer-8p7hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-lt55kBtuh-16p0seer-9p0hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-lt55kBtuh-17p0seer-9p4hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-Split-lt55kBtuh-18p0seer-9p7hspf', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-SpltPkg-135to239kBtuh-11p5eer-3p2cop', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-SpltPkg-135to239kBtuh-12p0eer-3p2cop', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-SpltPkg-240to759kBtuh-10p5eer-3p2cop', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-SpltPkg-240to759kBtuh-10p8eer-3p2cop', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-SpltPkg-65to134kBtuh-11p5eer-3p4cop', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-SpltPkg-65to134kBtuh-11p5eer-3p4cop-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-SpltPkg-65to134kBtuh-12p0eer-3p4cop', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-airHP-SpltPkg-65to134kBtuh-12p0eer-3p4cop-wPreEcono', 'DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('NE-HVAC-VarRefgHP-11.25to14ton-13.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-11.25to14ton-15.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-14to20ton-12.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-14to20ton-14.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-20to24ton-11.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-20to24ton-13.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-24to35ton-10.9EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-24to35ton-11.4EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-6to11.25ton-13.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-6to11.25ton-15.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-gt35ton-10.9EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHP-gt35ton-11.4EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-11.25to14ton-13EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-11.25to14ton-15.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-14to20ton-12.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-14to20ton-14EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-20to24ton-11.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-20to24ton-13.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-24to35ton-10.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-24to35ton-11.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-5.4to11.25ton-13EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-5.4to11.25ton-15.5EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-gt35ton-10.7EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('NE-HVAC-VarRefgHR-gt35ton-11.2EER', 'DEER:HVAC_Split-Package_HP', 'Winter-Only'),
+  ('Res-Freezer-ARP', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Freezer-ARP15-PGE', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Freezer-ARP15-SCE', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Freezer-ARP15-SDG', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Frzr-dKWH-Cond', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Refg-dKWH-Cond', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Refg-dKWH-Uncond', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Refrig-ARP', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Refrig-ARP15-PGE', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Refrig-ARP15-SCE', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Refrig-ARP15-SDG', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Refrig-ARP-SCE', 'DEER:RefgFrzr_HighEff', 'Annual'),
+  ('Res-Frzr-dKWH-Cond-Wtd-PGE', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual'),
+  ('Res-Frzr-dKWH-Cond-Wtd-SCE', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual'),
+  ('Res-Frzr-dKWH-Cond-Wtd-SDG', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual'),
+  ('Res-Refg-dKWH-Cond-Wtd-PGE', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual'),
+  ('Res-Refg-dKWH-Cond-Wtd-SCE', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual'),
+  ('Res-Refg-dKWH-Cond-Wtd-SDG', 'DEER:RefgFrzr_Recyc-Conditioned', 'Annual'),
+  ('RB-BS-BlowInIns-R0-R13', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('RB-BS-CeilIns-R0-R30', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('RB-BS-CeilIns-R0-R38', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('RB-BS-CeilIns-VintR-AddR11', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('RB-BS-CeilIns-VintR-AddR19', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('RB-BS-CeilIns-VintR-AddR30', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('RB-BS-CeilIns-VintR-AddR38', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('RB-BS-CeilIns-VintR-ToR38', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('RB-BS-CeilIns-VintR-ToR44', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('RB-BS-CeilIns-VintR-ToR50', 'DEER:Res:BldgShell_Ins', 'Annual'),
+  ('Appl-CW-Front-ElecDHW-ElecDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-ElecDHW-ElecDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-ElecDHW-ElecDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-ElecDHW-GasDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-ElecDHW-GasDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-ElecDHW-GasDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-GasDHW-ElecDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-GasDHW-ElecDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-GasDHW-ElecDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-GasDHW-GasDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-GasDHW-GasDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-GasDHW-GasDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Front-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-ElecDHW-ElecDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-ElecDHW-ElecDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-ElecDHW-ElecDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-ElecDHW-GasDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-ElecDHW-GasDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-ElecDHW-GasDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-GasDHW-ElecDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-GasDHW-ElecDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-GasDHW-ElecDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-GasDHW-GasDry-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-GasDHW-GasDry-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-GasDHW-GasDry-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-CW-Top-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-Dishwash-StdSize-ElecDHW-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-Dishwash-StdSize-ElecDHW-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-Dishwash-StdSize-ElecDHW-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-Dishwash-StdSize-GasDHW-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-Dishwash-StdSize-GasDHW-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-Dishwash-StdSize-GasDHW-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-Dishwash-StdSize-Tier1', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-Dishwash-StdSize-Tier2', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('Appl-Dishwash-StdSize-Tier3', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RB-Appl-EffCW-med-Tier1-Front', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RB-Appl-EffCW-med-Tier1-Top', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RB-Appl-EffCW-med-Tier2-Front', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RB-Appl-EffCW-med-Tier2-Top', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RB-Appl-EffCW-med-Tier3-Front', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RB-Appl-EffCW-med-Tier3-Top', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep30G-3p24EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep30G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep40G-3p24EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep40G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep50G-3p24EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep50G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep60G-3p17EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep60G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep75G-3p06EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-rep75G-3p50EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-HI-0p81UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-HI-0p87UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-LW-0p81UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-LW-0p87UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-MD-0p81UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlInst-Gas-Ite175kBtuh-It2G-MD-0p87UEF-40g', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-30G-HD-0p68UEF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-30G-MD-0p64UEF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-40G-HD-0p68UEF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-40G-MD-0p64UEF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-50G-HD-0p68UEF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-Ite75kBtuh-50G-MD-0p64UEF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p65EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p70EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p72EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p65EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p70EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p67EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p70EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p78EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p80EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p78EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p80EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p82EF', 'DEER:Res:ClothesDishWasher', 'Annual'),
+  ('RB-HV-DuctSeal-HighToLow', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RB-HV-DuctSeal-MedToLow', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RB-HV-RefChrg-IncTyp-DuctLoss-MedToLow', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-RefChrg-Inc-NTXV-typ', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-45to65kBtuh-15S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-45to65kBtuh-16S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-45to65kBtuh-17S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-45to65kBtuh-18S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-45to65kBtuh-19S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-45to65kBtuh-20S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-45to65kBtuh-21S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-ge45kBtuh-14S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-ge45kBtuh-15S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-ge45kBtuh-16S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-ge45kBtuh-17S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-ge45kBtuh-18S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-ge45kBtuh-19S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-ge45kBtuh-20S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-ge45kBtuh-21S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-lt45kBtuh-14S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-lt45kBtuh-15S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-lt45kBtuh-16S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-lt45kBtuh-17S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-lt45kBtuh-18S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-lt45kBtuh-19S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-lt45kBtuh-20S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResAC-lt45kBtuh-21S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResEvapAC-45to65kBtuh-17p4S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResEvapAC-ge45kBtuh-17p4S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResEvapAC-lt45kBtuh-17p4S', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResHP-15p0S-8p7H', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResHP-16p0S-9p0H', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResHP-17p0S-9p4H', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResHP-18p0S-9p7H', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-WholeHouseFan-0.7CFMp-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-WholeHouseFan-0.7CFMp-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-WholeHouseFan-1.5CFMp-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-WholeHouseFan-1.5CFMp-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-WholeHouseFan-2.0CFMp-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-WholeHouseFan-2.0CFMp-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-WholeHouseFan-3.0CFMp-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-WholeHouseFan-3.0CFMp-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('WHFan-0.7-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('WHFan-0.7-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('WHFan-1.5-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('WHFan-1.5-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('WHFan-2.0-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('WHFan-2.0-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('WHFan-3.0-ECM', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('WHFan-3.0-PSC', 'DEER:Res:HVAC_Eff_AC', 'Annual'),
+  ('RE-HV-ResHP-15S-8.7H', 'DEER:Res:HVAC_Eff_HP', 'Annual'),
+  ('RE-HV-ResHP-16S-9H', 'DEER:Res:HVAC_Eff_HP', 'Annual'),
+  ('RE-HV-ResHP-17S-9.4H', 'DEER:Res:HVAC_Eff_HP', 'Annual'),
+  ('RE-HV-ResHP-18S-9.7H', 'DEER:Res:HVAC_Eff_HP', 'Annual'),
+  ('Res-Furnace-dHIR', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-Furnace-ECM-Upgrade', 'DEER:Res:HVAC_Eff_HP', 'Annual'),
+  ('Res-GasFurnace-AFUE81', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE81-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE90', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE90-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE91', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE91-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE92', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE92-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE93', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE93-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE94', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE94-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE95', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE95-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE96', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE96-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE97', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE97-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE98', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-GasFurnace-AFUE98-ECM', 'DEER:Res:HVAC_Eff_HP', 'Winter-Only'),
+  ('Res-Iltg-Cmn-dWatt-CFL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual'),
+  ('Res-Iltg-Cmn-dWatt-LF', 'DEER:Res:Indoor_CFL_Ltg', 'Annual'),
+  ('Res-Iltg-Cmn-dWatt-LF-kL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual'),
+  ('Res-Iltg-Cmn-IEbase-dWatt-CFL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual'),
+  ('Res-Iltg-Cmn-IEbase-dWatt-LF', 'DEER:Res:Indoor_CFL_Ltg', 'Annual'),
+  ('Res-Iltg-dWatt-CFL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual'),
+  ('Res-Iltg-dWatt-IEbase-CFL', 'DEER:Res:Indoor_CFL_Ltg', 'Annual'),
+  ('Res-Iltg-SI-dWatt', 'DEER:Res:Indoor_CFL_Ltg', 'Annual'),
+  ('Res-Oltg-dWatt', 'DEER:Res:Outdoor_Ltg', 'Annual'),
+  ('Res-Oltg-dWatt-CFL', 'DEER:Res:Outdoor_Ltg', 'Annual'),
+  ('Res-Oltg-dWatt-SI', 'DEER:Res:Outdoor_Ltg', 'Annual'),
+  ('RB-HV-MFDuctSeal-24pct-12pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RB-HV-MFDuctSeal-40pct-12pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RB-HV-MHDuctSeal-25pct-15pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RB-HV-MHDuctSeal-35pct-15pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RB-HV-RefChrg-DuctLoss-Typ-Dec', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RB-HV-RefChrg-DuctLoss-Typ-Inc', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RB-HV-SFDuctSeal-24pct-12pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RB-HV-SFDuctSeal-40pct-12pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg2018-Dec-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg2018-Inc-16pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg2018-Inc-4pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg2018-Inc-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg-Dec-NTXV-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg-Dec-TXV-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg-Inc-NTXV-16pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg-Inc-NTXV-4pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg-Inc-TXV-16pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg-Inc-TXV-4pct', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('RE-HV-RefChrg-Inc-TXV-typ', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('Res-DuctSeal-HighToLow-wtd', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('Res-DuctSeal-MedToLow-wtd', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('Res-RCA-wtd', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('Res-RefrigCharge-wtd', 'DEER:Res:Refg_Chrg_Duct_Seal', 'Annual'),
+  ('CeilIns-VintR-R38', 'DEER:Res_BldgShell_Ins', 'Annual'),
+  ('CeilIns-VintR-R44', 'DEER:Res_BldgShell_Ins', 'Annual'),
+  ('CeilIns-VintR-R50', 'DEER:Res_BldgShell_Ins', 'Annual'),
+  ('DemandCtl-WtrHt-Elec-44unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual'),
+  ('DemandCtl-WtrHt-Elec-88unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual'),
+  ('DemandCtl-WtrHt-Gas-44unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual'),
+  ('DemandCtl-WtrHt-Gas-88unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual'),
+  ('DemandCtl-WtrHt-HP-44unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual'),
+  ('DemandCtl-WtrHt-HP-88unitMFbldg', 'Mfm-HotWaterCirc-DemandControl', 'Annual'),
+  ('airAC-SpltPkg-gte760kBtuh-10p0eer', 'NULL', 'NULL'),
+  ('All-Oltg-dWatt', 'NULL', 'NULL'),
+  ('All-Oltg-dWatt-MS', 'NULL', 'NULL'),
+  ('Com-Furnace-dHIR', 'NULL', 'NULL'),
+  ('Com-RefrigCharge-wtd', 'NULL', 'NULL'),
+  ('dxHP-pkgSEER-55to64kBtuh-14p5seer', 'NULL', 'NULL'),
+  ('dxHP-pkgSEER-lt55kBtuh-14p5seer', 'NULL', 'NULL'),
+  ('dxHP-spltSEER-55to64kBtuh-14p0seer', 'NULL', 'NULL'),
+  ('dxHP-spltSEER-lt55kBtuh-14p0seer', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE90', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE90-ECM-lt65kBtuh', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE91', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE91-ECM-lt65kBtuh', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE92', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE92-ECM-lt65kBtuh', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE93', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE93-ECM-lt65kBtuh', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE94', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE94-ECM-lt65kBtuh', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE95', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE95-ECM-lt65kBtuh', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE96', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE96-ECM-lt65kBtuh', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE97', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE97-ECM-lt65kBtuh', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE98', 'NULL', 'NULL'),
+  ('Furnace-Pkg-AFUE98-ECM-lt65kBtuh', 'NULL', 'NULL'),
+  ('Grnhs-Shell-LIR_to_LIR_Tcurt', 'NULL', 'NULL'),
+  ('Grnhs-Shell-LowIRroof', 'NULL', 'NULL'),
+  ('Grnhs-Shell-LowIR-SingleLayer', 'NULL', 'NULL'),
+  ('Grnhs-Shell-LowIR_ThermCurt', 'NULL', 'NULL'),
+  ('Grnhs-Shell-Tcurt_to_LIR_Tcurt', 'NULL', 'NULL'),
+  ('Grnhs-Shell-ThermCurt', 'NULL', 'NULL'),
+  ('NE-Furnace-ECM-Upgrade', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-Pkg-55to64kBtuh-13p0seer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-Pkg-55to64kBtuh-14p0seer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-Pkg-lt55kBtuh-13p0seer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-Pkg-lt55kBtuh-14p0seer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-Split-55to64kBtuh-13p0seer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-Split-55to64kBtuh-14p0seer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-Split-lt55kBtuh-13p0seer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-Split-lt55kBtuh-14p0seer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-110to134kBtuh-11p0eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-110to134kBtuh-11p5eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-110to134kBtuh-12p0eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-110to134kBtuh-12p5eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-135to239kBtuh-10p8eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-10p5eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-240to759kBtuh-9p8eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-65to109kBtuh-11p0eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-9p5eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airAC-SpltPkg-gte760kBtuh-9p7eer', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Pkg-55to64kBtuh-13p0seer-7p7hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Pkg-55to64kBtuh-14p0seer-8p0hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Pkg-55to64kBtuh-15p0seer-8p5hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Pkg-lt55kBtuh-13p0seer-7p7hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Pkg-lt55kBtuh-14p0seer-8p0hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Pkg-lt55kBtuh-15p0seer-8p5hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Split-55to64kBtuh-13p0seer-7p7hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Split-55to64kBtuh-14p5seer-8p5hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Split-55to64kBtuh-15p0seer-9p0hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Split-lt55kBtuh-13p0seer-7p7hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Split-lt55kBtuh-14p5seer-8p5hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-Split-lt55kBtuh-15p0seer-9p0hspf', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-SpltPkg-110to134kBtuh-11p5eer-3p4cop', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-SpltPkg-110to134kBtuh-12p0eer-3p4cop', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-SpltPkg-65to109kBtuh-11p5eer-3p4cop', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-SpltPkg-65to109kBtuh-12p0eer-3p4cop', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-SpltPkg-gte760kBtuh-10p0eer-3p2cop', 'NULL', 'NULL'),
+  ('NE-HVAC-airHP-SpltPkg-gte760kBtuh-10p2eer-3p2cop', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-AirPkgRecip-AllSizes-1p008kwpton', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-AirScrew-AllSizes-1p008kwpton', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Cent-150to299tons-0p507kwpton-ConstSpd', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Cent-150to299tons-0p507kwpton-VSD', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Cent-gte300tons-0p461kwpton-ConstSpd', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Cent-gte300tons-0p461kwpton-VSD', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Cent-lt150tons-0p560kwpton-ConstSpd', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Cent-lt150tons-0p560kwpton-VSD', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Cent-lt150tons-0p700kwpton-1FrctnlsComp', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Cent-lt150tons-0p700kwpton-gt1FrctnlsComp', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Screw-150to299tons-0p574kwpton', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Screw-gte300tons-0p511kwpton', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-Screw-lt150tons-0p632kwpton', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-WtrRecip-150to299tons-0p588kwpton', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-WtrRecip-gte300tons-0p536kwpton', 'NULL', 'NULL'),
+  ('NE-HVAC-Chlr-WtrRecip-lt150tons-0p672kwpton', 'NULL', 'NULL'),
+  ('NE-HVAC-RefChg-Dec-high', 'NULL', 'NULL'),
+  ('NE-HVAC-RefChg-Dec-typ', 'NULL', 'NULL'),
+  ('NE-HVAC-RefChg-Inc-high', 'NULL', 'NULL'),
+  ('NE-HVAC-RefChg-Inc-typ', 'NULL', 'NULL'),
+  ('NE-WtrHt-LrgInst-Elec-gt12kW', 'NULL', 'NULL'),
+  ('NE-WtrHt-LrgStrg-Elec-gt12kW', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlInst-Elec-lte12kW-lt2G', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-Elec-lte12kW-30G-0p95EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-Elec-lte12kW-40G-0p94EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-Elec-lte12kW-50G-0p93EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-Elec-lte12kW-60G-0p92EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-Elec-lte12kW-75G-0p91EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-30G-2p00EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-30G-2p20EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-30G-2p40EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-40G-2p00EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-40G-2p20EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-40G-2p40EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-50G-2p00EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-50G-2p20EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-50G-2p40EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-60G-2p20EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-60G-2p40EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-75G-2p20EF', 'NULL', 'NULL'),
+  ('NE-WtrHt-SmlStrg-HP-lte12kW-75G-2p40EF', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-83p0Et-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-85p0ET-Atm', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-85p0Et-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-90p0Et-CndLow', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-90p0Et-CndReset', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-90p0Et-CndStd', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-94p0ET-Cnd', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-94p0Et-CndLow', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-94p0Et-CndReset', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-300to2500kBtuh-94p0Et-CndStd', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-83p0Et-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-85p0EC-Atm', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-85p0EC-Drft', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-85p0Et-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-90p0Et-CndLow', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-90p0Et-CndReset', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-90p0Et-CndStd', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-94p0Et-CndLow', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-94p0Et-CndReset', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-gt2500kBtuh-94p0Et-CndStd', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-84p0AFUE-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-84p5AFUE-Atm', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-84p5AFUE-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-85p0AFUE-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-87p0AFUE-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-90p0AFUE-CndLow', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-90p0AFUE-CndReset', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-90p0AFUE-CndStd', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-94p0AFUE-Cnd', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-94p0AFUE-CndLow', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-94p0AFUE-CndReset', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-HW-lt300kBtuh-94p0AFUE-CndStd', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-Stm-300to2500kBtuh-81p0Et-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-Stm-300to2500kBtuh-82p0Et-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-Stm-300to2500kBtuh-85p0ET-Atm', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-Stm-300to2500kBtuh-85p0ET-Drft', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-Stm-gt2500kBtuh-80p0EC-Atm', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-Stm-gt2500kBtuh-80p0EC-Drft', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-Stm-gt2500kBtuh-80p0Et-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-Stm-gt2500kBtuh-81p0Et-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-Stm-gt2500kBtuh-82p0Et-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-Stm-lt300kBtuh-82p0AFUE-Atm', 'NULL', 'NULL'),
+  ('NG-HVAC-Blr-Stm-lt300kBtuh-82p0AFUE-Drft', 'NULL', 'Annual'),
+  ('NG-HVAC-Blr-Stm-lt300kBtuh-83p0AFUE-Drft', 'NULL', 'Annual'),
+  ('NG-WtrHt-LrgInst-Gas-gt200kBtuh-0p80Et', 'NULL', 'NULL'),
+  ('NG-WtrHt-LrgInst-Gas-gt200kBtuh-0p85Et', 'NULL', 'NULL'),
+  ('NG-WtrHt-LrgInst-Gas-gt200kBtuh-0p90Et', 'NULL', 'NULL'),
+  ('NG-WtrHt-LrgStrg-Gas-gte75kBtuh-0p83Et', 'NULL', 'NULL'),
+  ('NG-WtrHt-LrgStrg-Gas-gte75kBtuh-0p90Et', 'NULL', 'NULL'),
+  ('NG-WtrHt-MedInst-Gas-76to200kBtuh-0p80Et', 'NULL', 'NULL'),
+  ('NG-WtrHt-MedInst-Gas-76to200kBtuh-0p85Et', 'NULL', 'NULL'),
+  ('NG-WtrHt-MedInst-Gas-76to200kBtuh-0p90Et', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p82EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlInst-Gas-lte75kBtuh-lt2G-0p82EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-30G-HD-0p68UEF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-30G-MD-0p64UEF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-40G-HD-0p68UEF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-40G-MD-0p64UEF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-50G-HD-0p68UEF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-Ite75kBtuh-50G-MD-0p64UEF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p62EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p65EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p70EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p72EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p62EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p65EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p67EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p70EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p82EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p62EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p67EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p70EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p82EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p62EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p66EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p70EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p78EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p80EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p82EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p62EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p66EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p70EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p78EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p80EF', 'NULL', 'NULL'),
+  ('NG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p82EF', 'NULL', 'NULL'),
+  ('NRes-Oltg-Gar-dWatt', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier1-Front', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier1-Top', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier2-Front', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier2-Top', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-ElecDHW-GasCDryer-Tier3-Front', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier1-Front', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier1-Top', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier2-Front', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier2-Top', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-ElecCDryer-Tier3-Front', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier1-Front', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier1-Top', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier2-Front', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier2-Top', 'NULL', 'NULL'),
+  ('RB-Appl-EffCW-med-GasDHW-GasCDryer-Tier3-Front', 'NULL', 'NULL'),
+  ('RB-Appl-EffDW-StdSize-GasDHW-180EAEU', 'NULL', 'NULL'),
+  ('RB-Appl-EffDW-StdSize-GasDHW-260EAEU', 'NULL', 'NULL'),
+  ('RB-HV-MFRefChrg-Dec-high-24pct-12pct', 'NULL', 'NULL'),
+  ('RB-HV-MFRefChrg-Dec-typ-24pct-12pct', 'NULL', 'NULL'),
+  ('RB-HV-MFRefChrg-Inc-high-24pct-12pct', 'NULL', 'NULL'),
+  ('RB-HV-MFRefChrg-Inc-typ-24pct-12pct', 'NULL', 'NULL'),
+  ('RB-HV-MHRefChrg-Dec-high-25pct-15pct', 'NULL', 'NULL'),
+  ('RB-HV-MHRefChrg-Dec-typ-25pct-15pct', 'NULL', 'NULL'),
+  ('RB-HV-MHRefChrg-Inc-high-25pct-15pct', 'NULL', 'NULL'),
+  ('RB-HV-MHRefChrg-Inc-typ-25pct-15pct', 'NULL', 'NULL'),
+  ('RB-HV-SFRefChrg-Dec-high-24pct-12pct', 'NULL', 'NULL'),
+  ('RB-HV-SFRefChrg-Dec-typ-24pct-12pct', 'NULL', 'NULL'),
+  ('RB-HV-SFRefChrg-Inc-high-24pct-12pct', 'NULL', 'NULL'),
+  ('RB-HV-SFRefChrg-Inc-typ-24pct-12pct', 'NULL', 'NULL'),
+  ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier1-Front', 'NULL', 'NULL'),
+  ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier1-Top', 'NULL', 'NULL'),
+  ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier2-Front', 'NULL', 'NULL'),
+  ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier2-Top', 'NULL', 'NULL'),
+  ('RE-Appl-EffCW-med-ElecDHW-ElecCDryer-Tier3-Front', 'NULL', 'NULL'),
+  ('RE-Appl-EffDW-StdSize-ElecDHW-180EAEU', 'NULL', 'NULL'),
+  ('RE-Appl-EffDW-StdSize-ElecDHW-260EAEU', 'NULL', 'NULL'),
+  ('RE-HV-RefChrg-Dec-high', 'NULL', 'NULL'),
+  ('RE-HV-RefChrg-Dec-typ', 'NULL', 'NULL'),
+  ('RE-HV-RefChrg-Inc-high', 'NULL', 'NULL'),
+  ('RE-HV-RefChrg-Inc-typ', 'NULL', 'NULL'),
+  ('RE-HV-ResAC-13S', 'NULL', 'NULL'),
+  ('RE-HV-ResAC-14S', 'NULL', 'NULL'),
+  ('RE-HV-ResAC-15S', 'NULL', 'NULL'),
+  ('RE-HV-ResAC-16S', 'NULL', 'NULL'),
+  ('RE-HV-ResAC-17S', 'NULL', 'NULL'),
+  ('RE-HV-ResAC-18S', 'NULL', 'NULL'),
+  ('RE-HV-ResAC-19S', 'NULL', 'NULL'),
+  ('RE-HV-ResAC-20S', 'NULL', 'NULL'),
+  ('RE-HV-ResAC-21S', 'NULL', 'NULL'),
+  ('RE-HV-ResEvapAC-17p4S', 'NULL', 'NULL'),
+  ('RE-HV-ResHP-13p0S-8p1H', 'NULL', 'NULL'),
+  ('RE-HV-ResHP-14p0S-8p6H', 'NULL', 'NULL'),
+  ('RE-HV-ResHP-15p0S-8p8H', 'NULL', 'NULL'),
+  ('RE-HV-ResHP-16p0S-8p4H', 'NULL', 'NULL'),
+  ('Res-Freezer-ARP-SCE', 'NULL', 'NULL'),
+  ('Res-Freezer-ARP-SDG', 'NULL', 'NULL'),
+  ('Res-Refrig-ARP-PGE', 'NULL', 'NULL'),
+  ('Res-Refrig-ARP-SDG', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlInst-Elec-lte12kW-lt2G', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-Elec-lte12kW-30G-0p95EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-Elec-lte12kW-40G-0p94EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-Elec-lte12kW-50G-0p93EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-Elec-lte12kW-60G-0p92EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-Elec-lte12kW-75G-0p91EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-30G-2p00EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-30G-2p20EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-30G-2p40EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-40G-2p00EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-40G-2p20EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-40G-2p40EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-50G-2p00EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-50G-2p20EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-50G-2p40EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-60G-2p20EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-60G-2p40EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-75G-2p20EF', 'NULL', 'NULL'),
+  ('RE-WtrHt-SmlStrg-HP-lte12kW-75G-2p40EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p82EF-40g', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF-40g', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlInst-Gas-lte75kBtuh-lt2G-0p82EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-30G-0p62EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p62EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-50G-0p62EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p62EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p66EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-60G-0p70EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p62EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p66EF', 'NULL', 'NULL'),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-75G-0p70EF', 'NULL', 'NULL'),
+  ('IR006', 'PGE:AGRICULTURAL:14 = Agricultural', ''),
+  ('IR007', 'PGE:AGRICULTURAL:14 = Agricultural', ''),
+  ('IR008', 'PGE:AGRICULTURAL:14 = Agricultural', ''),
+  ('IR009', 'PGE:AGRICULTURAL:14 = Agricultural', ''),
+  ('PR002', 'PGE:INDUSTRIAL:11 = Industrial Process', 'Annual'),
+  ('Res-Plg-PwrStrip-Tier2Adv-msr1-v0', 'RES:DEER:RefgFrzr_HighEff', 'WinterOnly'),
+  ('Res-FrzrRecyc-dKWH-Wtd-PGE', 'Res:DEER:RefgFrzr_Recycling', 'Annual'),
+  ('Res-FrzrRecyc-dKWH-Wtd-SCE', 'Res:DEER:RefgFrzr_Recycling', 'Annual'),
+  ('Res-FrzrRecyc-dKWH-Wtd-SDG', 'Res:DEER:RefgFrzr_Recycling', 'Annual'),
+  ('Res-RefgRecyc-dKWH-Wtd-PGE', 'Res:DEER:RefgFrzr_Recycling', 'Annual'),
+  ('Res-RefgRecyc-dKWH-Wtd-SCE', 'Res:DEER:RefgFrzr_Recycling', 'Annual'),
+  ('Res-RefgRecyc-dKWH-Wtd-SDG', 'Res:DEER:RefgFrzr_Recycling', 'Annual'),
+  ('Res-RefgFrz-dKWH-Uncond', 'Res:DEER:RefgFrzr_Recyc-UnConditioned', 'Annual'),
+  ('Res-DHWSavingsKit-Both', 'Res-DHWFixture', 'Annual'),
+  ('Res-DHWSavingsKit-Elec', 'Res-DHWFixture', 'Annual'),
+  ('Res-DHWSavingsKit-Gas', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerKit-Both-1.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerKit-Elec-1.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerKit-Gas-1.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerLav-Both-0.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerLav-Both-1.0', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerLav-Both-1.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerLav-Elec-0.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerLav-Elec-1.0', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerLav-Elec-1.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerLav-Gas-0.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerLav-Gas-1.0', 'Res-DHWFixture', 'Annual'),
+  ('Res-FaucetAerLav-Gas-1.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Both-1.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Both-1.6', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Both-1.7', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Both-2.0', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Elec-1.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Elec-1.6', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Elec-1.7', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Elec-2.0', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHdFlowRes-Both-1.6', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHdFlowRes-Elec-1.6', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHdFlowRes-Gas-1.6', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Gas-1.5', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Gas-1.6', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Gas-1.7', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShowerHd-Gas-2.0', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShwrFlowRes-Both', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShwrFlowRes-Elec', 'Res-DHWFixture', 'Annual'),
+  ('Res-ShwrFlowRes-Gas', 'Res-DHWFixture', 'Annual'),
+  ('PR-14541', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-26010', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-28785', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-54146', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-64293', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-69302', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-75840', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-82783', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-84587', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-90678', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-92194', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-93262', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-93796', 'SCE:Industrial:Industrial', 'Annual'),
+  ('PR-97000', 'SCE:Industrial:Industrial', 'Annual'),
+  ('FS-77556', 'SCE:NON_RES:DEER:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('WPSCGNRWH120206B-Rev05-Msr002', 'SCG:NON_RES:DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('WPSCGNRWH120206C-Rev05-Msr002', 'SCG:NON_RES:DEER:HVAC_Split-Package_HP', 'Annual'),
+  ('WPSDGENRPR0001-Rev00-Msr001', 'SDG:14-MLI-Manufacturing-LightIndustry-COMP_AIR', 'WinterOnly'),
+  ('WPSDGENRPR0001-Rev00-Msr002', 'SDG:14-MLI-Manufacturing-LightIndustry-COMP_AIR', 'WinterOnly'),
+  ('WPSDGERECS0001-Rev01-Msr001', 'SDG:19-RES-AllResidential-WAT_HEAT', 'Annual'),
+  ('WPSDGENROE0001-Rev01-Msr001', 'SDG:NON_res:DEER:Indoor_Non-CFL_Ltg', 'Annual'),
+  ('Appl-Dishwash-StdSize-180-EAEU', '', ''),
+  ('Appl-Dishwash-StdSize-260-EAEU', '', ''),
+  ('Com-Oltg-DuskDawn-dWatt', '', ''),
+  ('Com-Oltg-dWatt', '', ''),
+  ('D03-003', '', ''),
+  ('D03-004', '', ''),
+  ('D03-005', '', ''),
+  ('D03-006', '', ''),
+  ('D03-007', '', ''),
+  ('D03-008', '', ''),
+  ('D03-009', '', ''),
+  ('D03-010', '', ''),
+  ('D03-013', '', ''),
+  ('D03-016', '', ''),
+  ('D03-017', '', ''),
+  ('D03-018', '', ''),
+  ('D03-019', '', ''),
+  ('D03-020', '', ''),
+  ('D03-021', '', ''),
+  ('D03-022', '', ''),
+  ('D03-023', '', ''),
+  ('D03-024', '', ''),
+  ('D03-025', '', ''),
+  ('D03-026', '', ''),
+  ('D03-027', '', ''),
+  ('D03-028', '', ''),
+  ('D03-029', '', ''),
+  ('D03-030', '', ''),
+  ('D03-031', '', ''),
+  ('D03-032', '', ''),
+  ('D03-033', '', ''),
+  ('D03-034', '', ''),
+  ('D03-035', '', ''),
+  ('D03-036', '', ''),
+  ('D03-037', '', ''),
+  ('D03-038', '', ''),
+  ('D03-039', '', ''),
+  ('D03-044', '', ''),
+  ('D03-045', '', ''),
+  ('D03-046', '', ''),
+  ('D03-047', '', ''),
+  ('D03-048', '', ''),
+  ('D03-049', '', ''),
+  ('D03-050', '', ''),
+  ('D03-051', '', ''),
+  ('D03-053', '', ''),
+  ('D03-054', '', ''),
+  ('D03-055', '', ''),
+  ('D03-056', '', ''),
+  ('D03-057', '', ''),
+  ('D03-058', '', ''),
+  ('D03-059', '', ''),
+  ('D03-060', '', ''),
+  ('D03-062', '', ''),
+  ('D03-063', '', ''),
+  ('D03-064', '', ''),
+  ('D03-065', '', ''),
+  ('D03-069', '', ''),
+  ('D03-070', '', ''),
+  ('D03-071', '', ''),
+  ('D03-073', '', ''),
+  ('D03-075', '', ''),
+  ('D03-082', '', ''),
+  ('D03-083', '', ''),
+  ('D03-084', '', ''),
+  ('D03-085', '', ''),
+  ('D03-086', '', ''),
+  ('D03-087', '', ''),
+  ('D03-088', '', ''),
+  ('D03-089', '', ''),
+  ('D03-090', '', ''),
+  ('D03-091', '', ''),
+  ('D03-095', '', ''),
+  ('D03-098', '', ''),
+  ('D03-099', '', ''),
+  ('D03-100', '', ''),
+  ('D03-101', '', ''),
+  ('D03-102', '', ''),
+  ('D03-123', '', ''),
+  ('D03-205', '', ''),
+  ('D03-206', '', ''),
+  ('D03-207', '', ''),
+  ('D03-218', '', ''),
+  ('D03-219', '', ''),
+  ('D03-220', '', ''),
+  ('D03-221', '', ''),
+  ('D03-222', '', ''),
+  ('D03-223', '', ''),
+  ('D03-224', '', ''),
+  ('D03-225', '', ''),
+  ('D03-226', '', ''),
+  ('D03-306', '', ''),
+  ('D03-307', '', ''),
+  ('D03-308', '', ''),
+  ('D03-309', '', ''),
+  ('D03-401', '', ''),
+  ('D03-405', '', ''),
+  ('D03-406', '', ''),
+  ('D03-407', '', ''),
+  ('D03-426', '', ''),
+  ('D03-427', '', ''),
+  ('D03-428', '', ''),
+  ('D03-429', '', ''),
+  ('D03-430', '', ''),
+  ('D03-431', '', ''),
+  ('D03-435', '', ''),
+  ('D03-436', '', ''),
+  ('D03-437', '', ''),
+  ('D03-441', '', ''),
+  ('Dishwasher-EnStar-Level1-wtd', '', ''),
+  ('Dishwasher-EnStar-Level2-wtd', '', ''),
+  ('dxHP-pkgSEER-lt65kBtuh-14p5seer', '', ''),
+  ('dxHP-spltSEER-lt65kBtuh-14p0seer', '', ''),
+  ('NE-HVAC-airAC-Pkg-lt65kBtuh-13p0seer', '', ''),
+  ('NE-HVAC-airAC-Pkg-lt65kBtuh-14p0seer', '', ''),
+  ('NE-HVAC-airAC-Pkg-lt65kBtuh3phs-12p0seer', '', ''),
+  ('NE-HVAC-airAC-Pkg-lt65kBtuh3phs-13p0seer', '', ''),
+  ('NE-HVAC-airAC-Pkg-lt65kBtuh3phs-14p0seer', '', ''),
+  ('NE-HVAC-airAC-Split-lt65kBtuh-13p0seer', '', ''),
+  ('NE-HVAC-airAC-Split-lt65kBtuh-14p0seer', '', ''),
+  ('NE-HVAC-airAC-Split-lt65kBtuh3phs-12p0seer', '', ''),
+  ('NE-HVAC-airAC-Split-lt65kBtuh3phs-13p0seer', '', ''),
+  ('NE-HVAC-airAC-Split-lt65kBtuh3phs-14p0seer', '', ''),
+  ('NE-HVAC-airAC-SpltPkg-65to89kBtuh-11p0eer', '', ''),
+  ('NE-HVAC-airAC-SpltPkg-65to89kBtuh-11p5eer', '', ''),
+  ('NE-HVAC-airAC-SpltPkg-65to89kBtuh-12p0eer', '', ''),
+  ('NE-HVAC-airAC-SpltPkg-90to134kBtuh-11p0eer', '', ''),
+  ('NE-HVAC-airAC-SpltPkg-90to134kBtuh-11p5eer', '', ''),
+  ('NE-HVAC-airAC-SpltPkg-90to134kBtuh-12p0eer', '', ''),
+  ('NE-HVAC-airHP-Pkg-lt65kBtuh-13p0seer-8p1hspf', '', ''),
+  ('NE-HVAC-airHP-Pkg-lt65kBtuh-14p0seer-8p6hspf', '', ''),
+  ('NE-HVAC-airHP-Pkg-lt65kBtuh-15p0seer-8p6hspf', '', ''),
+  ('NE-HVAC-airHP-Split-lt65kBtuh-13p0seer-7p7hspf', '', ''),
+  ('NE-HVAC-airHP-Split-lt65kBtuh-14p5seer-8p5hspf', '', ''),
+  ('NE-HVAC-airHP-Split-lt65kBtuh-15p0seer-9p0hspf', '', ''),
+  ('NE-HVAC-airHP-SpltPkg-65to89kBtuh-11p5eer-3p4cop', '', ''),
+  ('NE-HVAC-airHP-SpltPkg-65to89kBtuh-12p0eer-3p4cop', '', ''),
+  ('NE-HVAC-airHP-SpltPkg-90to134kBtuh-11p5eer-3p4cop', '', ''),
+  ('NE-HVAC-airHP-SpltPkg-90to134kBtuh-12p0eer-3p4cop', '', ''),
+  ('NE-HVAC-Chlr-WtrRecip-AllSizes-0p672kwpton', '', ''),
+  ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p82EF-40g', '', ''),
+  ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p84EF-82EF', '', 'Annual'),
+  ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF-40g', '', ''),
+  ('NG-WtrHt-SmlInst-Gas-150kBtuh-lt2G-0p92EF-82EF', '', 'Annual'),
+  ('Oltg-24hr-dWatt', '', ''),
+  ('Res-Oltg-Cmn-dWatt-CFL', '', ''),
+  ('Res-Oltg-DuskDawn-dWatt', '', ''),
+  ('RG-WtrHt-SmlStrg-Gas-lte75kBtuh-40G-0p67EF', '', ''),
+  ('WPSCGNRWH120206A-Rev08-Msr004', '', 'Annual'),
+  ('WPSCGNRWH120206A-Rev08-Msr005', '', 'Annual'),
+  ('WPSCGNRWH120206A-Rev08-Msr006', '', 'Annual'),
+  ('WPSCGNRWH120206B-Rev05-Msr001', '', 'Annual'),
+  ('WPSCGNRWH120206C-Rev05-Msr001', '', 'Annual'),
+  ('WPSCGNRWH120206C-Rev05-Msr003', '', 'Annual'),
+  ('WPSCGNRWH120206C-Rev05-Msr004', '', 'Annual'),
+  ('WPSCGNRWH150309A-Rev00-Msr001', '', 'Annual'),
+  ('WPSCGNRWH150309A-Rev00-Msr002', '', 'Annual'),
+  ('WPSCGNRWH150309A-Rev00-Msr003', '', 'Annual'),
+  ('WPSCGREWH120618A-Rev01-Msr001', '', 'Annual'),
+  ('WPSCGREWH120618A-Rev01-Msr003', '', 'Annual'),
+  ('WPSDGENRAG0001-Rev01-Msr001', '', '')
+;
 
 ALTER TABLE "ImpactProfiles" ADD PRIMARY KEY ("EnergyImpactID");
