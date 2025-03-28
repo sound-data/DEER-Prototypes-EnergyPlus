@@ -6,6 +6,8 @@ parameter "sys_name"
 
 # 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
 parameter "operation_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+parameter "fan_mode_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+parameter "outdoor_air_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 
 parameter "hvac_type",
@@ -526,7 +528,11 @@ DesignSpecification:OutdoorAir,
 Schedule:Compact,
   <%= zone_name %> OA Schedule,  !- Name
   Binary Control,          !- Schedule Type Limits Name
-  <%= oa_sch %>
+  <% if (outdoor_air_schedule) %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
+  <% else %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 0;
+  <% end %>
 
 
 <% end %>
@@ -872,7 +878,9 @@ unitary_parameters = [
   :aux_heat_coil_cap,
   :aux_heat_coil_eff,
   :aux_heat_coil_fuel,
-  :operation_schedule
+  :operation_schedule,
+  :fan_mode_schedule,
+  :outdoor_air_schedule
 ]
 
 # if unitary_parameters are being repeated twice, maybe better to separate unitary system from ahu.pxt...

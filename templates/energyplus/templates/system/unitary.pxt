@@ -9,6 +9,8 @@ parameter "control_zone_name", :default => ""
 # 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
 parameter "op_sch", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 parameter "operation_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+parameter "fan_mode_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+parameter "outdoor_air_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 parameter "fan_type", :default => "SYSTEM-MODEL" # (ON-OFF | VAV | SYSTEM-MODEL )
 parameter "fan_speed", :default => "CONSTANT"  # (CONSTANT | DUAL| VARIABLE)  Fan:SystemModel allows multi-speed => DUAL
@@ -445,7 +447,11 @@ Schedule:Compact,
 Schedule:Compact,
   <%= unitary_name %> Fan Mode Schedule,  !- Name
   Fan Mode Control,        !- Schedule Type Limits Name
-  <%= fan_mode_sch %>
+  <% if (fan_mode_schedule) %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
+  <% else %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 0;
+  <% end %>
 
 
 <% if (fan_type == "ON-OFF") %>
