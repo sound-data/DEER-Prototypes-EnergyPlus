@@ -531,7 +531,12 @@ Schedule:Constant,
 Schedule:Compact,
   <%= ahu_name %> Operation Schedule,  !- Name
   Binary Control,          !- Schedule Type Limits Name
+  <% if (operation_schedule) %>
   <%= op_sch %>
+  <% else %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
+  <% end %>
+
 
 
 BranchList,
