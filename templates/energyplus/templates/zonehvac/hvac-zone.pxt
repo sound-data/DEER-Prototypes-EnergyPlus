@@ -5,7 +5,7 @@ parameter "zone_name"
 parameter "sys_name"
 
 # 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
-parameter "fan_op_fault", :default => false, :type => "Enumeration", :valuelist => "true,false"
+parameter "operation_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 
 parameter "hvac_type",
@@ -872,7 +872,7 @@ unitary_parameters = [
   :aux_heat_coil_cap,
   :aux_heat_coil_eff,
   :aux_heat_coil_fuel,
-  :fan_op_fault
+  :operation_schedule
 ]
 
 # if unitary_parameters are being repeated twice, maybe better to separate unitary system from ahu.pxt...

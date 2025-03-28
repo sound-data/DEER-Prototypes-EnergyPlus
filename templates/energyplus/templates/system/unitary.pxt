@@ -436,9 +436,9 @@ Schedule:Compact,
   <%= unitary_name %> Schedule,  !- Name
   Binary Control,          !- Schedule Type Limits Name
   <% if (operation_schedule) %>
-  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
-  <% else %>
   <%= op_sch %>
+  <% else %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
   <% end %>
 
 
