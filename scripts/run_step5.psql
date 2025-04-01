@@ -1,0 +1,193 @@
+/*
+run_step5.psql
+Nicholas Fette, 2023-01-05
+
+Import all the results data into PostgreSQL, and run all the post-processing scripts.
+Warning: deletes the results data currently in the database.
+
+Usage on command line:
+  cd "C:/.../DEER-Prototypes-EnergyPlus/scripts/"
+  psql -d "dbname" -U "dbuser" -f "run_step5.psql" -v import_sfm= -v import_sim=
+To trigger additional steps for Duct_Opt or Duct_Seal
+  psql -d "dbname" -U "dbuser" -f "run_step5.psql" -v Duct_Opt=
+  psql -d "dbname" -U "dbuser" -f "run_step5.psql" -v Duct_Seal=
+
+If psql is not recognized, you may need to configure the PATH.
+After installing one of pgAdmin, dbeaver, or postgresql for example:
+  set "path=%PATH%;%LOCALAPPDATA%\Programs\pgAdmin 4\v6\runtime"
+  set "path=%PATH%;C:\Program Files\PostgreSQL\15\bin"
+
+Within an open interactive psql session:
+  \cd 'C:/.../DEER-Prototypes-EnergyPlus/scripts/'
+  \i run_step5.psql
+*/
+
+\set ON_ERROR_STOP on
+
+-- Uncomment these lines to import sfm and sim files respectively.
+--\set import_sfm
+\set import_sim
+
+-- Configure the location from which to get CSV files.
+-- Alternatively, specify these on command line.
+-- E.g, psql ... -v file0="./folder/current_msr_mat.csv" -v file1="sim_annual.csv" -v file2="sim_hourly_wb.csv" -v file3="sfm_annual.csv" -v file4="sfm_hourly_wb.csv"
+\if :{?file0}
+  --pass
+\else
+  \set file0 'results/current_msr_mat.csv'
+\endif
+\if :{?file1}
+  --pass
+\else
+  \set file1 'results/sim_annual.csv'
+\endif
+\if :{?file2}
+  --pass
+\else
+  \set file2 'results/sim_hourly_wb.csv'
+\endif
+\if :{?file3}
+  --pass
+\else
+  \set file3 'results/sfm_annual.csv'
+\endif
+\if :{?file4}
+  --pass
+\else
+  \set file4 'results/sfm_hourly_wb.csv'
+\endif
+
+-- Uncomment these lines if need to apply corrections.
+-- Or, use command line arguments: -v Duct_Opt= -v Duct_Seal=
+--\set Duct_Opt
+--\set Duct_Seal
+
+
+CREATE SCHEMA IF NOT EXISTS "MC_results_database";
+SET search_path TO "MC_results_database";
+
+\echo Import current_msr_mat
+\i 'schema/create_current_msr_mat.sql'
+truncate "current_msr_mat";
+\set command '\\copy "current_msr_mat" FROM ' :'file0' ' WITH (FORMAT csv, HEADER MATCH)'
+:command
+--\copy "current_msr_mat" FROM 'results/<insert your path 1>/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "current_msr_mat" FROM 'results/<insert your path 2>/current_msr_mat.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Import sim_annual
+\i 'schema/create_sim_annual.sql'
+\if :{?import_sim}
+truncate "sim_annual";
+\set command '\\copy "sim_annual" FROM ' :'file1' ' WITH (FORMAT csv, HEADER MATCH)'
+:command
+\endif
+-- If data comes from multiple folders, uncomment lines below.
+--\copy "sim_annual" FROM 'results/<insert your path 1>/sim_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "sim_annual" FROM 'results/<insert your path 2>/sim_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Import sim_hourly_wb
+\i 'schema/create_sim_hourly_wb.sql'
+\if :{?import_sim}
+truncate "sim_hourly_wb";
+\set command '\\copy "sim_hourly_wb" FROM ' :'file2' ' WITH (FORMAT csv, HEADER MATCH)'
+:command
+\endif
+-- If data comes from multiple folders, uncomment lines below.
+--\copy "sim_hourly_wb" FROM 'results/<insert your path 1>/sim_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "sim_hourly_wb" FROM 'results/<insert your path 2>/sim_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Import sfm_annual
+\i 'schema/create_sfm_annual.sql'
+\if :{?import_sfm}
+truncate "sfm_annual";
+\set command '\\copy "sfm_annual" FROM ' :'file3' ' WITH (FORMAT csv, HEADER MATCH)'
+:command
+\endif
+--\copy "sfm_annual" FROM 'results/<insert your path 1>/sfm_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "sfm_annual" FROM 'results/<insert your path 2>/sfm_annual.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Import sfm_hourly_wb
+\i 'schema/create_sfm_hourly_wb.sql'
+\if :{?import_sfm}
+truncate "sfm_hourly_wb";
+\set command '\\copy "sfm_hourly_wb" FROM ' :'file4' ' WITH (FORMAT csv, HEADER MATCH)'
+:command
+\endif
+--\copy "sfm_hourly_wb" FROM 'results/<insert your path 1>/sfm_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+--\copy "sfm_hourly_wb" FROM 'results/<insert your path 2>/sfm_hourly_wb.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Loading support tables
+\echo FloorArea_2022
+\i 'schema/create_FloorArea_2022.sql'
+truncate "FloorArea_2022";
+\copy "FloorArea_2022" FROM 'energy savings/FloorArea_2022.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo NumBldgs
+\i 'schema/create_NumBldgs.sql'
+truncate "NumBldgs";
+\copy "NumBldgs" FROM 'energy savings/NumBldgs.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo NumStor
+\i 'schema/create_NumStor.sql'
+truncate "NumStor";
+\copy "NumStor" FROM 'energy savings/NumStor.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo ImpactProfiles
+\i 'energy savings/ImpactProfiles.sql'
+
+\echo peakperspec
+\i 'schema/create_peakperspec.sql'
+truncate "peakperspec";
+\copy "peakperspec" FROM 'energy savings/peakperspec.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo wts_res_hvac
+\i 'schema/create_wts_res_hvac.sql'
+truncate "wts_res_hvac";
+\copy "wts_res_hvac" FROM 'energy savings/wts_res_hvac.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo wts_res_bldg_2022
+\i 'schema/create_wts_res_bldg_2022.sql'
+truncate "wts_res_bldg_2022";
+\copy "wts_res_bldg_2022" FROM 'energy savings/wts_res_bldg_2022.csv' WITH (FORMAT csv, HEADER MATCH)
+
+\echo Run step R1
+\i 'energy savings/R1_Wt_NumStories_Annual.sql'
+\echo Run step R2
+\i 'energy savings/R2_Wt_NumStories_Hourly.sql'
+\echo Run step R3
+\i 'energy savings/R3_Sum_Annual.sql'
+\echo Run step R4
+\i 'energy savings/R4_Sum_Hourly.sql'
+
+\echo Run step P1
+\i 'energy savings/P1-Create-sim_peakper_2022.sql'
+\echo Run step P2
+\i 'energy savings/P2-Calc_MsrImpacts_2022.sql'
+
+-- Only run these for duct optimization.
+\if :{?Duct_Opt}
+  \i 'energy savings/P2.1A-Duct_Opt_correction_factor_2022.sql'
+  \i 'energy savings/P2.1B-Duct_Opt_correction_factor_2022.sql'
+\endif
+
+-- Only run these for duct seal.
+\if :{?Duct_Seal}
+  \i 'energy savings/P2.1A-Duct_Seal_correction_factor_2022.sql'
+  \i 'energy savings/P2.1B-Duct_Seal_correction_factor_2022.sql'
+\endif
+
+\echo Run step P3
+\i 'energy savings/P3-HVAC_wt_Mult.sql'
+\echo Run step P4
+\i 'energy savings/P4-HVAC_wt_sum.sql'
+\echo Run step P5
+\i 'energy savings/P5_VintSub_2022_all.sql'
+\echo Run step P6
+\i 'energy savings/P6_BldgMult_2022.sql'
+\echo Run step P7
+\i 'energy savings/P7_SumBldg_2022.sql'
+\echo Run step P8
+\i 'energy savings/P8_RoundDEER_2022.sql'
+
+\echo Write file meas_impacts_2022_res.csv (in the current directory).
+\copy "meas_impacts_2022_res" to 'results/meas_impacts_2022_res.csv' WITH (FORMAT csv, HEADER)
