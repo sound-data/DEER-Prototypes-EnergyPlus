@@ -632,13 +632,4 @@ Connector:Mixer,
   <%= branch_name %> HR Demand Branch,  !- Inlet Branch Name
 <% end %>
   <%= name %> Demand Bypass Branch;  !- Inlet Branch Name
-
-Output:Variable,
-    *,                       !- Key Value
-    Pump Mass Flow Rate,     !- Variable Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Cooling Tower Mass Flow Rate,  !- Variable Name
-    Hourly;                  !- Reporting Frequency
+	
