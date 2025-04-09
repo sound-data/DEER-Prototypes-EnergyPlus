@@ -1,0 +1,10 @@
+skip,case_name,:ductless,:use_dummy_return_plenum,:vfd_curve_name,:supplyfan_total_eff,:motor_eff,:cooling_coil_cop,:coil_type,:hvac_type,:heating_coil_cop
+,Pre-RE-HV-DHP-13S,TRUE,FALSE,VFD_Fan_Curve,0.12,0.24,3.28,multispeed,unitary_system,2.2854
+,Std-RE-HV-DHP-15S,TRUE,FALSE,VFD_Fan_Curve,0.12,0.24,3.61,multispeed,unitary_system,2.637
+,Msr-RE-HV-DHP-16S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,3.75,multispeed,unitary_system,2.6956
+,Msr-RE-HV-DHP-17S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,3.89,multispeed,unitary_system,2.7835
+,Msr-RE-HV-DHP-18S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,4.01,multispeed,unitary_system,2.8714
+,Msr-RE-HV-DHP-19S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,4.12,multispeed,unitary_system,2.93
+,Msr-RE-HV-DHP-20S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,4.22,multispeed,unitary_system,3.0179
+,Msr-RE-HV-DHP-21S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,4.31,multispeed,unitary_system,3.1058
+,Msr-RE-HV-DHP-22S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,4.39,multispeed,unitary_system,3.1937
