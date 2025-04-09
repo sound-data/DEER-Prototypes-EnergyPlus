@@ -74,7 +74,8 @@ group "space_loads" do # hardcode building-level defaults
     parameter "dhw_flow_area", :default => 0.00015['GPM/ft2']
     parameter "dhw_water_heater_fuel", :default => "Gas"
     parameter "equip_2_area", :default => 0['W/ft2']
-	
+	#Solaris - Behzad S. Rizi - Added new parameter "setpoint_temp_schedule" for classroom zones
+	parameter "setpoint_temp_schedule", :default => ""
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "gym", :prefix => "gym_" do
@@ -816,7 +817,6 @@ for zone in irregular_zones
     :zone_name => zone_name,
     :zone_area => zone_area,
     :sys_name => sys_name,
-	:setpoint_temp_schedule => kitchen_setpoint_temp_schedule, 
     **(space_hvac.building | zone_hvac_group)
 
   branch_name = "#{zone_name} SZ-#{zone_ahu_type}"

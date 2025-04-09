@@ -164,28 +164,26 @@ group "space_hvac" do
     parameter "oa_area", :default => 0.38['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
-	parameter "setpoint_temp_schedule", :default => "NON-INPUTSCHEDULE"
+	#Solaris - Behzad S. Rizi - Added new parameter "setpoint_temp_schedule" for classroom zones
+	parameter "setpoint_temp_schedule", :default => ""
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "dining_fast", :prefix => "dining_fast_" do
     parameter "oa_area", :default => 0.5['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
-	parameter "setpoint_temp_schedule", :default => "NON-INPUTSCHEDULE"
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "gym", :prefix => "gym_" do
     parameter "oa_area", :default => 0.5['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
-	parameter "setpoint_temp_schedule", :default => "NON-INPUTSCHEDULE"
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "kitchen", :prefix => "kitchen_" do
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0.7['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
-	parameter "setpoint_temp_schedule", :default => "NON-INPUTSCHEDULE"
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "plenum", :prefix => "plenum_" do
@@ -739,7 +737,6 @@ for zone in irregular_zones
     :zone_name => zone_name,
     :zone_area => zone_area,
     :sys_name => sys_name,
-	:setpoint_temp_schedule => kitchen_setpoint_temp_schedule,
     **(space_hvac.building | zone_hvac_group)
 
   branch_name = "#{zone_name} SZ-#{zone_ahu_type}"
