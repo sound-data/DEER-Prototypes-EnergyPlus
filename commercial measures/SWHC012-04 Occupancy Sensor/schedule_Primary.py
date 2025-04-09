@@ -23,19 +23,19 @@ def determine_temperature_status(day_type, hour, minute):
 # Function to check if a date falls within a holiday range
 def is_holiday(date):
     holidays = {
-        "Winterbreak": (datetime(2024, 1, 1), datetime(2024, 1, 8)),
-        "Martin Luther King Day": datetime(2024, 1, 15),
-        "Presidents Day": datetime(2024, 1, 19),
-        "Spring Break": (datetime(2024, 3, 25), datetime(2024, 3, 29)),
-        "Cesar Chavez Day": datetime(2024, 4, 1),
-        "Holiday": datetime(2024, 4, 24),
-        "Memorial Day": datetime(2024, 5, 27),
-        "Independence Day": datetime(2024, 7, 4),
-        "Labor Day": datetime(2024, 9, 2),
-        "Veterans Day": datetime(2024, 11, 11),
-        "Thanksgiving": (datetime(2024, 11, 28), datetime(2024, 11, 29)),
-        "Winterbreak 2": (datetime(2024, 12, 16), datetime(2024, 12, 31)),
-        "Summer Break": (datetime(2024, 6, 10), datetime(2024, 8, 11))
+        "Winterbreak": (datetime(2023, 1, 1), datetime(2023, 1, 8)),
+        "Martin Luther King Day": datetime(2023, 1, 15),
+        "Presidents Day": datetime(2023, 1, 19),
+        "Spring Break": (datetime(2023, 3, 25), datetime(2023, 3, 29)),
+        "Cesar Chavez Day": datetime(2023, 4, 1),
+        "Holiday": datetime(2023, 4, 24),
+        "Memorial Day": datetime(2023, 5, 27),
+        "Independence Day": datetime(2023, 7, 4),
+        "Labor Day": datetime(2023, 9, 2),
+        "Veterans Day": datetime(2023, 11, 11),
+        "Thanksgiving": (datetime(2023, 11, 28), datetime(2023, 11, 29)),
+        "Winterbreak 2": (datetime(2023, 12, 16), datetime(2023, 12, 31)),
+        "Summer Break": (datetime(2023, 6, 10), datetime(2023, 8, 11))
     }
     for holiday, date_range in holidays.items():
         if isinstance(date_range, tuple):
@@ -48,19 +48,19 @@ def is_holiday(date):
 
 # Function to check the day type
 def day_type(date):
-    if datetime(2024, 1, 1) <= date <= datetime(2024, 6, 10) or datetime(2024, 8, 12) <= date <= datetime(2024, 12, 31):
+    if datetime(2023, 1, 1) <= date <= datetime(2023, 6, 10) or datetime(2023, 8, 12) <= date <= datetime(2023, 12, 31):
         if date.weekday() < 5 and not is_holiday(date):
             return "School_Wkday"
         else:
             return "Wkend" if date.weekday() >= 5 else ""
-    elif datetime(2024, 6, 10) <= date <= datetime(2024, 8, 11):
+    elif datetime(2023, 6, 10) <= date <= datetime(2023, 8, 11):
         return "Summer_Wkday" if date.weekday() < 5 else "Wkend"
     else:
         return ""
 
 # Generate list of dates from 1/1/24 to 12/31/24
-start_date = datetime(2024, 1, 1)
-end_date = datetime(2024, 12, 31)
+start_date = datetime(2023, 1, 1)
+end_date = datetime(2023, 12, 31)
 date_range = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
 
 # Generate list of timestamps for every 10 minutes of the day
