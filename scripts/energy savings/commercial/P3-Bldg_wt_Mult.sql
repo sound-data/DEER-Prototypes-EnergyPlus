@@ -37,7 +37,7 @@ sum_bldg as "wt_bldg",
 "AMsrUseEUtherm" * sum_bldg as "AMsrUseEUtherm"
 
 from meas_impacts_vint_wtd
-LEFT JOIN wts_com_bldg on 
+INNER JOIN wts_com_bldg on 
  wts_com_bldg.pa       = meas_impacts_vint_wtd."PA" and 
  wts_com_bldg.bldgtype = meas_impacts_vint_wtd."BldgType" and 
  wts_com_bldg.era      = meas_impacts_vint_wtd."BldgVint" and
@@ -83,7 +83,7 @@ sum_bldg as "wt_bldg",
 "AMsrUseEUtherm" * sum_bldg as "AMsrUseEUtherm"
 
 from meas_impacts_vint_wtd
-LEFT JOIN wts_com_bldg on 
+INNER JOIN wts_com_bldg on 
  wts_com_bldg.bldgtype = meas_impacts_vint_wtd."BldgType" and 
  wts_com_bldg.era      = meas_impacts_vint_wtd."BldgVint" and
  wts_com_bldg.bldgloc  = meas_impacts_vint_wtd."BldgLoc"
