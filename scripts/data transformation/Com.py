@@ -16,14 +16,6 @@ measure_group_names = list(df_master['Measure Group Name'].unique())
 #generate unique list of measure names for Com
 
 df_com = df_master[df_master['Sector']=='Com']
-#df_com['Common_PreTechID'] = df_com['PreTechID']
-#df_com['Common_StdTechID'] = df_com['StdTechID']
-#df_com['Common_MeasTechID'] = df_com['MeasTechID']
-
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-file_path_temp = r"C:\Users\afaramarzi\Desktop\test\df_com.csv"
-df_com.to_csv(file_path_temp, index=False)
-#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 measures = list(df_com['Modelkit Folder Primary Name'].unique())
 # %%
@@ -32,14 +24,10 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWHC024-05 Fan Belt'
-
+measure_name = 'SWXX111-00 Example_SEER_AC'
 
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
-columns_with_nan = df_measure.columns[df_measure.isna().any()].tolist()
-print(f'*********!!!!!!!*********Columns with NaN values:{columns_with_nan}')
-print(f'df_com:{df_com}')
 # %%
 #### Define path
 
@@ -100,7 +88,8 @@ expected_att = {
                                     'RtL',
                                     'RtS',
                                     'SCn',
-                                    'SUn'],
+                                    'SUn',
+                                    'WRf'],
     'Story': ['0','1','2'], # NA for Not Applicable
     'BldgHVAC': ['rDXGF','rDXHP','rNCEH','rNCGF'] + ['cWLHP',
                                                     'cSVVG',
@@ -136,8 +125,7 @@ def parse_measure_name(measure_name):
     measure_name_split = measure_name.split('&', 4) 
     # Check here if the presented name has 5 attributes as expected:
     if not len(measure_name_split) == 5:
-       print(f'the measure name that has problem: {measure_name}')
-       sys.exit('The case name must have at least 5 attributes similar to < BldgType&Story&BldgHVAC&BldgVint&TechGroup__TechType >')
+        sys.exit('The case name must have at least 5 attributes similar to < BldgType&Story&BldgHVAC&BldgVint&TechGroup__TechType >')
     
     attributes = list(expected_att.keys())
     measure_name_dict = {attributes[i]: measure_name_split[i] for i in range(0,5)}
@@ -145,8 +133,6 @@ def parse_measure_name(measure_name):
     # Check here if the presented attributes are as expected:
     for att in attributes:
         if measure_name_dict[att] not in expected_att[att]:
-            #print(f'!!!!!!!!!!!!!!{measure_name_dict[att]}')
-            #print(f'!!!!!!!!!!!!!!{expected_att[att]}')
             sys.exit(f'Attribute <{measure_name_dict[att]}> was not expected')
             
 
@@ -221,8 +207,7 @@ def annual_raw_parsing_com(df, cohort_dict, case):
     df['file'] = split_meta_cols_all[split_meta_cols_all[1]==case][3]
     
     #COM modelkit output is kBtu for the time being. change this after fix
-    
-    #print(f'!!!!!!!!!!!!!!!!!!!!!!{df.columns}')
+
     annual_df_v1 = df[['TechID', 'file', 'BldgLoc', 'BldgType','BldgHVAC','BldgVint','Story', 'TechGroup_TechType','Total (kWh)', 'Heating (kWh)', 'Cooling (kWh)',
        'Interior Lighting (kWh)', 'Exterior Lighting (kWh)',
        'Interior Equipment (kWh)', 'Exterior Equipment (kWh)', 'Fans (kWh)',
@@ -243,7 +228,8 @@ def end_use_rearrange(df_in):
                             df_in['Interior Lighting (kWh)'] +\
                             df_in['Exterior Lighting (kWh)'] +\
                             df_in['Fans (kWh)']+\
-                            df_in['Pumps (kWh)'])
+                            df_in['Pumps (kWh)']+\
+                            df_in['Refrigeration (kWh)'])
 
     df_in['kwh_ltg'] = (df_in['Interior Lighting (kWh)'] +\
                                     df_in['Exterior Lighting (kWh)'])
@@ -262,7 +248,7 @@ def end_use_rearrange(df_in):
 
     df_in['kwh_venthtg'] =0 #placeholders fields for now
     df_in['kwh_ventclg'] =0
-    df_in['kwh_refg'] = 0 
+    df_in['kwh_refg'] = df_in['Refrigeration (kWh)']
     df_in['kwh_hpsup'] = 0
     df_in['kwh_shw'] = 0
     df_in['kwh_ext'] = 0
@@ -296,14 +282,13 @@ split_meta_cols_all = pd.DataFrame()
 folder_list = list_folders_in_path(filepath)
 for folder in folder_list:
     print(f"looking at folder {folder}..")
-    if locate_file(filepath+"/"+folder, 'results-summary_new.csv') != None:
-        #locate_file(filepath+"/"+folder, 'results-summary_new.csv')
-        print(f"'{filepath}/{folder}/results-summary_new.csv' will be processed.")
+    if locate_file(filepath+"/"+folder, 'results-summary.csv') != None:
+        #locate_file(filepath+"/"+folder, 'results-summary.csv')
+        print(f"'{filepath}/{folder}/results-summary.csv' will be processed.")
         #insert subsequent processing here
-        df_raw = pd.read_csv(filepath+"/"+folder+'/results-summary_new.csv', usecols=['File Name'])
+        df_raw = pd.read_csv(filepath+"/"+folder+'/results-summary.csv', usecols=['File Name'])
         num_runs = len(df_raw['File Name'].dropna().unique()) - 1 
-        print(f'!!!!!!!!!!!!!!!!!!!!!!{num_runs}')
-        annual_df = pd.read_csv(filepath+"/"+folder+'/results-summary_new.csv', nrows=num_runs, skiprows=(num_runs+2))
+        annual_df = pd.read_csv(filepath+"/"+folder+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
         split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
         #concat each dataset
@@ -312,7 +297,6 @@ for folder in folder_list:
 
         print("processed.")
     else:
-        print(filepath+"/"+folder)
         print(f"no data found.")
 
 
@@ -327,7 +311,6 @@ for case in cohort_cases:
     print(f'processing all annual data that are grouped in {case}')
     cohort_dict = parse_measure_name(case)
     sim_annual_filtered = df_annual_raw[df_annual_raw['File Name'].str.contains(case)].copy()
-    #print(f'!!!!!!!!!!!!!!!!!!!!!!{sim_annual_filtered.columns}')
     sim_annual_i = annual_raw_parsing_com(sim_annual_filtered, cohort_dict, case)
     sim_annual_proto = pd.concat([sim_annual_proto, sim_annual_i])
     print('ok.')
@@ -366,16 +349,16 @@ hourly_df = pd.DataFrame(index=range(0,8760))
 for folder in folder_list:
     print(f"looking at folder {folder}..")
     if 'runs' in list_folders_in_path(f'{filepath}/{folder}'):
-        #locate_file(filepath+"/"+folder, 'results-summary_new.csv')
+        #locate_file(filepath+"/"+folder, 'results-summary.csv')
         print(f"'{filepath}/{folder}/runs' will be processed.")
 
         subpath = filepath + "/" + folder
         hrly_subpath = filepath + "/" + folder + "/runs"
         print(hrly_subpath)
 
-        df_raw = pd.read_csv(subpath+'/'+'/results-summary_new.csv', usecols=['File Name'])
+        df_raw = pd.read_csv(subpath+'/'+'/results-summary.csv', usecols=['File Name'])
         num_runs = len(df_raw['File Name'].dropna().unique()) - 1
-        annual_df = pd.read_csv(subpath+'/'+'/results-summary_new.csv', nrows=num_runs, skiprows=num_runs+2)
+        annual_df = pd.read_csv(subpath+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
         split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
         for i in range(0,num_runs):
@@ -384,10 +367,12 @@ for folder in folder_list:
             #loop path of each file, read corresponding file
             full_path = hrly_subpath + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
             df = pd.read_csv(full_path, low_memory=False)
-            
-            #extract the last column (the total elec hrly profile)
+            #remove traling spaces on col headers
+            df.columns = df.columns.str.rstrip()
+        
+            #8/1/2024 update: extract the electricy column only
             #if for enduse hourly, then extract the relevant end use column
-            extracted_df = pd.DataFrame(df.iloc[:,-1])
+            extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
             
             #create the column name based on the permutations
             col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
@@ -491,6 +476,8 @@ print(os.path.abspath(os.curdir))
 # %%
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
 # %%
+normunit = df_measure['Normunit'].unique()[0]
+#%%
 ##Annual Data final field fixes
 
 #normunit = buildng area(conditioned) for default / example measure
@@ -499,22 +486,33 @@ sim_annual_v1['SizingID'] = 'None'
 sim_annual_v1['tstat'] = 0
 #now Norm unit is read from measure master table
 #this may need to be modified based on the measure
-sim_annual_v1['normunit'] = df_normunits['Normunit'].unique()[0]
+sim_annual_v1['Normunit'] = normunit
 
 #%%
 #add area based on building type
 #also add normunit (also the area) for the example measure
 #code may need to be tweaked if normalizing unit is different for a specific measure
 
-area_lookup = df_normunits[['BldgType', 'Value']]
-sim_annual_v2 = pd.merge(sim_annual_v1, area_lookup, on='BldgType')
+unit_lookup = df_normunits[['BldgType', 'Normunit', 'Value']]
+if normunit == 'Each':
+    unit_table = unit_lookup[unit_lookup['Normunit']=='Each'][['Normunit','Value']]
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on='Normunit')
+else:
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on='Normunit')
 sim_annual_v2['numunits'] = sim_annual_v2['Value']
-sim_annual_v2['measarea'] = sim_annual_v2['Value']
+
+#%%
+#do area separately after normunit merge
+area_lookup = df_normunits[df_normunits['Normunit']=='Area-ft2-BA'][['BldgType','total_area_m2']]
+
+sim_annual_v3 = pd.merge(sim_annual_v2, area_lookup, on='BldgType')
+sim_annual_v3['measarea'] = sim_annual_v3['total_area_m2']
 
 # %%
-sim_annual_v2['lastmod']=dt.datetime.now()
+sim_annual_v3['lastmod']=dt.datetime.now()
+sim_annual_v3 = sim_annual_v3.rename(columns={'Normunit':'normunit'})
 #rearrange columns
-sim_annual_f = sim_annual_v2[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
+sim_annual_f = sim_annual_v3[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
        'normunit', 'numunits', 'measarea', 'kwh_tot', 'kwh_ltg', 'kwh_task',
        'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
        'kwh_venthtg', 'kwh_ventclg', 'kwh_refg', 'kwh_hpsup', 'kwh_shw',
@@ -554,8 +552,6 @@ metadata_cols['TechID'].unique()
 #if looping over all HVAC types, ignore BldgHVAC filter
 PreTechIDs = df_measure[['PreTechID','Common_PreTechID']].drop_duplicates()
 StdTechIDs = df_measure[['StdTechID','Common_StdTechID']].drop_duplicates()
-columns_with_nan = df_measure.columns[df_measure.isna().any()].tolist()
-print(f'*********!!!!!!!!!!!!!Columns with NaN values:{columns_with_nan}')
 MeasTechIDs = df_measure[['MeasTechID','Common_MeasTechID']].drop_duplicates()
 # %%
 #filter out each pre, std, msr using the Common TechIDs from master table
@@ -579,9 +575,13 @@ metadata_msr = metadata_msr.rename(columns={'TechID':'MeasTechID'})
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     metadata_pre_full = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    # Solaris Technical 2024-04-17
+    # Corrects an issue where more than one "Common_PreTechID" in
+    # the batch of measures causes the renaming step to fail silently
+    # and generate duplicate rows with mismatched data.
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        metadata_pre_mod = metadata_pre.copy()
+        metadata_pre_mod = metadata_pre[metadata_pre['PreTechID']==common_id].copy()
         metadata_pre_mod['PreTechID'] = new_id
         #merge to final df
         metadata_pre_full = pd.concat([metadata_pre_full, metadata_pre_mod])
@@ -623,11 +623,14 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if any(isinstance(i, str) for i in list(StdTechIDs['StdTechID'].unique())) == False:
+    # when there is no std tech ID - only pre baseline used in merge
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif any(isinstance(i, str) for i in list(PreTechIDs['PreTechID'].unique())) == False:
+    # when there is no pre tech ID - only std baseline used in merge
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
+    # when both std tech and pre tech ID present - use both
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
     df_measure_set_full = pd.merge(df_measure_baseline_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 
@@ -636,11 +639,14 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if any(isinstance(i, str) for i in list(StdTechIDs['StdTechID'].unique())) == False:
+    # when there is no std tech ID - only pre baseline used in merge
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif any(isinstance(i, str) for i in list(PreTechIDs['PreTechID'].unique())) == False:
+    # when there is no pre tech ID - only std baseline used in merge
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
+    # when both std tech and pre tech ID present - use both
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
 
 # %%
@@ -677,9 +683,9 @@ sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MeasTechIDs['Co
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_annual_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_annual_pre_mod = sim_annual_pre_common.copy()
+        sim_annual_pre_mod = sim_annual_pre_common[sim_annual_pre_common['TechID']==common_id].copy()
         sim_annual_pre_mod['TechID'] = new_id
         #merge to final df
         sim_annual_pre = pd.concat([sim_annual_pre, sim_annual_pre_mod])
@@ -692,7 +698,6 @@ else:
 if False in list(StdTechIDs['StdTechID']==StdTechIDs['Common_StdTechID']):
     sim_annual_std = pd.DataFrame()
     for common_id, new_id in zip(StdTechIDs['Common_StdTechID'], StdTechIDs['StdTechID']):
-        print(f'******************{StdTechIDs}')
         print(f'common is {common_id}, changing into new id is {new_id}')
         #Isolate specific common id (old)
         sim_annual_std_mod = sim_annual_std_common[sim_annual_std_common['TechID']==common_id].copy()
@@ -733,9 +738,9 @@ sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MeasTechIDs['Co
 #Pre hourly
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_hourly_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID','PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_hourly_pre_mod = sim_hourly_pre_common.copy()
+        sim_hourly_pre_mod = sim_hourly_pre_common[sim_hourly_pre_common['TechID']==common_id].copy()
         sim_hourly_pre_mod['TechID'] = new_id
         #merge to final df
         sim_hourly_pre = pd.concat([sim_hourly_pre, sim_hourly_pre_mod])
