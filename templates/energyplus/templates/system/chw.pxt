@@ -32,9 +32,7 @@ parameter "chiller_generator_type", :default=>"HOTWATER"  # For absorption chill
 
 parameter "num_chillers", :default=>1
 parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004 )
-													   # Solaris - 2024-06-12 Added two more air cooled chiller (Carrier 30XA350 1138.7kW/3COP | Carrier 30XA240 801.6kW/3COP)
 parameter "chiller_cop", :default=>2.87  # Chiller nominal COP
-										 # Solaris - 2024-06-05 Added more chiller nominal COP for air-cooled chiller (2.96 | 3.26 | 3.55)
 parameter "chiller_sizing", :default=>1.0  # Chiller sizing factor (formerly to counteract oversizing problem; as of 7.2 chiller seems to undersize)
 parameter "chiller_condenser", :default=>"AIRCOOLED"  # Chiller condenser type (AIRCOOLED | WATERCOOLED | EVAPCOOLED)
 parameter "chiller_heatpump_hr", :default=>false  # Chiller heat pump heat recovery
@@ -1425,99 +1423,6 @@ Curve:Quadratic,
   -0.0266,                 !- Coefficient3 x**2
   0.0,                     !- Minimum Value of x
   1.2;                     !- Maximum Value of x
-
-! Solaris - 2024-06-05 Added air-cooled chiller performance curves 
-<% elsif (chiller_model == "Carrier 30XA350 1138.7kW/3COP") %>
-! Manufacturer = Carrier, Model Line = XA
-! Reference Capacity = 1138.7 kW (324.1 tons)
-! Compressor Type = Screw, Condenser Type = Air-cooled
-! Refrigerant = R134-A
-
-! Cooling Capacity Function of Temperature Curve
-! x = Leaving Chilled Water Temperature and y = Entering Condenser Air Temperature
-Curve:Biquadratic,
-  <%= name %> Chiller Cap Curve,  !- Name
-  0.6437892993,            !- Coefficient1 Constant
-  0.0441272832,            !- Coefficient2 x
-  0.0003715371,            !- Coefficient3 x**2
-  0.0150460969,            !- Coefficient4 y
-  -0.0002532552,           !- Coefficient5 y**2
-  -0.0007157791,           !- Coefficient6 x*y
-  4.44,                    !- Minimum Value of x
-  10,                      !- Maximum Value of x
-  29.44,                   !- Minimum Value of y
-  46.11;                   !- Maximum Value of y
-
-! EIR Function of Temperature Curve
-! x = Leaving Chilled Water Temperature and y = Entering Condenser Air Temperature
-
-Curve:Biquadratic,
-  <%= name %> Chiller EIR Curve,  !- Name
-  0.0117002801,            !- Coefficient1 Constant
-  0.051309634,             !- Coefficient2 x
-  -0.0003751471,           !- Coefficient3 x**2
-  0.023109214,             !- Coefficient4 y
-  0.0001603722,            !- Coefficient5 y**2
-  -0.0014283413,           !- Coefficient6 x*y
-  4.44,                    !- Minimum Value of x
-  10,                      !- Maximum Value of x
-  29.44,                   !- Minimum Value of y
-  46.11;                   !- Maximum Value of y
-
-Curve:Quadratic,
-  <%= name %> Chiller PLR Curve,  !- Name
-  0.0,                     !- Coefficient1 Constant
-  1.0,                     !- Coefficient2 x
-  0.0,                     !- Coefficient3 x**2
-  0.15,                    !- Minimum Value of x
-  1.0;                     !- Maximum Value of x
-
-! Solaris - 2024-06-05 Added air-cooled chiller performance curves  
-<% elsif (chiller_model == "Carrier 30XA240 801.6kW/3COP") %>
-! Manufacturer = Carrier, Model Line = XA
-! Reference Capacity = 801.6 kW (228.1 tons)
-! Compressor Type = Screw, Condenser Type = Air-cooled
-! Refrigerant = R134-A
-
-! Cooling Capacity Function of Temperature Curve
-! x = Leaving Chilled Water Temperature and y = Entering Condenser Air Temperature
-
-Curve:Biquadratic,
-  <%= name %> Chiller Cap Curve,  !- Name
-  0.7844608307,            !- Coefficient1 Constant
-  0.0496965209,            !- Coefficient2 x
-  -0.0007704563,           !- Coefficient3 x**2
-  0.0062651469,            !- Coefficient4 y
-  -0.0001580228,           !- Coefficient5 y**2
-  -0.0004502762,           !- Coefficient6 x*y
-  4.44,                    !- Minimum Value of x
-  10,                      !- Maximum Value of x
-  29.44,                   !- Minimum Value of y
-  46.11;                   !- Maximum Value of y
-
-! EIR Function of Temperature Curve
-! x = Leaving Chilled Water Temperature and y = Entering Condenser Air Temperature
-
-Curve:Biquadratic,
-  <%= name %> Chiller EIR Curve,  !- Name
-  -0.3078657246,           !- Coefficient1 Constant
-  0.0607254323,            !- Coefficient2 x
-  0.000999675,             !- Coefficient3 x**2
-  0.0391939439,            !- Coefficient4 y
-  -0.0000010751,           !- Coefficient5 y**2
-  -0.0021290772,           !- Coefficient6 x*y
-  4.44,                    !- Minimum Value of x
-  10,                      !- Maximum Value of x
-  29.44,                   !- Minimum Value of y
-  46.11;                   !- Maximum Value of y
-
-Curve:Quadratic,
-  <%= name %> Chiller PLR Curve,  !- Name
-  0.0,                     !- Coefficient1 Constant
-  1.0,                     !- Coefficient2 x
-  0.0,                     !- Coefficient3 x**2
-  0.15,                    !- Minimum Value of x
-  1.0;                     !- Maximum Value of x
 
 <% elsif (chiller_model == "WC Screw Default 90.1-2004") %>
 ! ElectricEIRChiller Carrier 23XL 1062kW/5.50COP/Valve
