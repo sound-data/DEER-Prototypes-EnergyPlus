@@ -1,0 +1,4 @@
+skip,case_name,:main_cool_coil_type,:chw_pump_type,:chw_chiller_condenser,:cw_num_towers,:cw_tower_type,:chw_chiller_model,:chw_cw_temp_ref,:cw_pump_min_flow_rate
+,NE-Chiller-PumpCtrl-Full-Std,WATER,CONSTANT,WATERCOOLED,1,SINGLESPEED,WC Centrifugal Default 90.1-2004,34.44,0
+,NE-Chiller-CWPumpCtrl-Full-Msr,WATER,CONSTANT,WATERCOOLED,1,VARIABLESPEED,WC Centrifugal Default 90.1-2004,29.44,7.3
+,NE-Chiller-CHWPumpCtrl-Full-Msr,WATER,VARIABLE,WATERCOOLED,1,SINGLESPEED,WC Centrifugal Default 90.1-2004,29.44,0
