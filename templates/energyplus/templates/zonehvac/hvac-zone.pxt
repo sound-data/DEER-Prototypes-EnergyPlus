@@ -25,6 +25,11 @@ parameter "tstat_heat_temp2", :name => "Thermostat Heating Setpoint Temperature 
 
 parameter "tstat_cool_sch", :name => "Thermostat Cooling Setpoint Schedule", :description => "Thermostat cooling temperature setpoint schedule",
   :default => "", :domain => String
+
+#Solaris - Behzad S. Rizi - Added new parameter "setpoint_temp_schedule" for classroom zones for EPr, ESe and ERC
+parameter "setpoint_temp_schedule", :name => "Temperature Setpoint Schedule CSV file", :description => "Temperature Setpoint Schedule CSV file",
+  :default => "", :domain => String # ["Schedule_Primary.csv", "Schedule_Secondary.csv"]
+  
 # Schedule can include %1, %2 tags to substitute 'tstat_cool_temp1' and 'tstat_cool_temp2' parameters.
 # If schedule is empty, a schedule is automatically created from the outdoor air schedule with
 # 'tstat_cool_temp1' used during "on" hours (1) and 'tstat_cool_temp2' used during "off" hours (0).
@@ -569,28 +574,60 @@ Schedule:Compact,
   <%= tstat_cool_sch %>
 
 <% else %>
-Schedule:Constant,
-  <%= zone_name %> Thermostat Type Schedule,  !- Name
-  Thermostat Control,      !- Schedule Type Limits Name
-  4;                       !- Hourly Value
 
-ThermostatSetpoint:DualSetpoint,
-  <%= zone_name %> Setpoints,  !- Name
-  <%= zone_name %> Heating Setpoint Schedule,  !- Heating Setpoint Temperature Schedule Name
-  <%= zone_name %> Cooling Setpoint Schedule;  !- Cooling Setpoint Temperature Schedule Name
+  Schedule:Constant,
+    <%= zone_name %> Thermostat Type Schedule,  !- Name
+    Thermostat Control,      !- Schedule Type Limits Name
+    4;                       !- Hourly Value
 
-Schedule:Compact,
-  <%= zone_name %> Cooling Setpoint Schedule,  !- Name
-  Temperature,             !- Schedule Type Limits Name
-  <%= tstat_cool_sch %>
+  ThermostatSetpoint:DualSetpoint,
+    <%= zone_name %> Setpoints,  !- Name
+    <%= zone_name %> Heating Setpoint Schedule,  !- Heating Setpoint Temperature Schedule Name
+    <%= zone_name %> Cooling Setpoint Schedule;  !- Cooling Setpoint Temperature Schedule Name
+
+! Solaris - Behzad S. Rizi - Added if statement to assign cooling/heating temp setpoint from schedule:file for the classroom zones
+<% if setpoint_temp_schedule.include?('csv') %>
+  Schedule:File,
+	<%=zone_name %> Cooling Setpoint Schedule,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+	../../../../../../<%= setpoint_temp_schedule %>,  !- File Name
+    4,                       !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No,                      !- Interpolate to Timestep
+    10,                      !- Minutes per Item
+    Yes;                     !- Adjust Schedule for Daylight Savings
+<% else %>
+  Schedule:Compact,
+    <%= zone_name %> Cooling Setpoint Schedule,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+    <%= tstat_cool_sch %>
 
 <% end %>
+<% end %>
+
+! Solaris - Behzad S. Rizi - Added if statement to assign cooling/heating temp setpoint from schedule:file for the classroom zones
+<% if setpoint_temp_schedule.include?('csv') %>
+  Schedule:File,
+	<%=zone_name %> Heating Setpoint Schedule,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+	../../../../../../<%= setpoint_temp_schedule %>,  !- File Name
+    3,                       !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No,                      !- Interpolate to Timestep
+    10,                      !- Minutes per Item
+    Yes;                     !- Adjust Schedule for Daylight Savings
+<% else %>
 
 Schedule:Compact,
   <%= zone_name %> Heating Setpoint Schedule,  !- Name
   Temperature,             !- Schedule Type Limits Name
   <%= tstat_heat_sch %>
 
+<% end %>
 <% branch_name = "#{zone_name} #{hvac_type}" %>
 
 <% if (hstat_min) %>
