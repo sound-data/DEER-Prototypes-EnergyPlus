@@ -616,7 +616,7 @@ Branch,
   <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
   
   <% else %>
-# if cw_option is "EIR"
+<%# if cw_option is "EIR" %>
 Chiller:Electric:EIR,
   <%= name %> Chiller <%= i %>,  !- Name
   Autosize,                !- Reference Capacity {W}
@@ -657,7 +657,7 @@ Branch,
   <% end %>
 
 <% else %>
-! If chiller condenser is aircooled 
+<%# If chiller condenser is aircooled %>
 Chiller:Electric:EIR,
   <%= name %> Chiller <%= i %>,  !- Name
   Autosize,                !- Reference Capacity {W}
