@@ -31,12 +31,37 @@ parameter "chiller_generator_type", :default=>"HOTWATER"  # For absorption chill
 # NOTE: If DIRECTFIRED is selected, the heating_source must be set to "ABSORPTIONCHILLER" for hotwater.imf.
 
 parameter "num_chillers", :default=>1
-parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (Model 9 WC Chiller | Model 7 WC Chiller | TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004)
-														# Solaris - 2024-06-12 Added two more water cooled chiller (Model 9 WC Chiller | Model 7 WC Chiller)
-														# Solaris(Behzad S. Rizi) - 2024-08-09 & 2024-08-22 Added two water cooled chiller models for the basecases(ElectricEIR & ReformulatedEIR)>>>(ElectricEIRChiller Carrier 19XR 1234kW/5.39COP/VSD & ReformEIRChiller Carrier 19XR 1234kW/5.39COP/VSD | ElectricEIRChiller Trane RTHB 1051kW/5.05COP/Valve & ReformEIRChiller Trane RTHB 1051kW/5.05COP/Valve)
+
+# Behzad S. Rizi, Solaris Technical - 2024-06-12 (for SWHC005)
+# Proposed Water cooled chiller performance curve options for SWHC005 testing:
+# Added "Model 9 WC Chiller" (ElectricEIRChiller type, EIR_fPLR curve type = Lift, curves provided by email Energy Solutions)
+# Added "Model 7 WC Chiller" (ElectricEIRChiller type, EIR_fPLR curve type = Lift, curves provided by email Energy Solutions)
+
+# Behzad S. Rizi, Solaris Technical - 2024-08-09 (for SWHC005)
+# Proposed two water cooled chiller models for SWHC005 testing as a base case:
+# Added "WC Cent Carrier 19XR 1234kW/5.39COP/VSD" (ElectricEIRChiller type)
+# Added "WC Trane RTHB 1051kW/5.05COP/Valve" (ElectricEIRChiller type)
+
+# Behzad S. Rizi, Solaris Technical - 2024-08-22 (for SWHC005)
+# Proposed two water cooled chiller models for SWHC005 testing as a base case:
+# Added "ReformEIRChiller WC Cent Carrier 19XR 1234kW/5.39COP/VSD" (ReformEIRChiller type)
+# Added "ReformEIRChiller Screw WC Trane RTHB 1051kW/5.05COP/Valve" (ReformEIRChiller type)
+
+# Nicholas Fette, Solaris Technical - 2024-08-30 (for SWHC005)
+# Revised chiller model for the base case screw type
+# Added "ReformEIRChiller Screw WC Carrier 23XL 1062kW/5.50COP/Valve" (ReformEIRChiller type)
+# Removed "ReformEIRChiller Screw WC Trane RTHB 1051kW/5.05COP/Valve" (ReformEIRChiller type)
+
+parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004)
+
+# Behzad S. Rizi, Solaris Technical, 2024-06-12 (for SWHC005)
+# Added more chiller nominal COP for water-cooled chiller reformulated EIR (4.8 | 5.0 | 5.4 | 5.6 | 6.0 | 6.1 | 6.4 | 6.5)
 parameter "chiller_cop", :default=>2.87  # Chiller nominal COP
-										# Solaris - 2024-06-12 Added more chiller nominal COP for water-cooled chiller reformulated EIR (4.8 | 5.0 | 5.4 | 5.6 | 6.0 | 6.1 | 6.4 | 6.5)
-parameter "wc_option", :default=>"Reformulated"  # (EIR | Reformulated)										
+
+# Behzad S. Rizi, Solaris Technical, 2024-08-09 & 2024-08-22
+# Added new parameter for switching water cooled chiller object type between standard "EIR" and new "Reformulated" chiller
+parameter "wc_option", :default=>"Reformulated"  # (EIR | Reformulated)
+
 parameter "chiller_sizing", :default=>1.0  # Chiller sizing factor (formerly to counteract oversizing problem; as of 7.2 chiller seems to undersize)
 parameter "chiller_condenser", :default=>"AIRCOOLED"  # Chiller condenser type (AIRCOOLED | WATERCOOLED | EVAPCOOLED)
 parameter "chiller_heatpump_hr", :default=>false  # Chiller heat pump heat recovery
@@ -65,7 +90,12 @@ parameter "hi_outdoor_temp", :default=>80['F']  # Outside air high temperature f
 
 parameter "chw_temp_ref", :default=>6.67['C'] # Reference Leaving Chilled Water Temperature
 parameter "cw_temp_ref", :default=>34.4444['C'] # Reference Leaving Condenser Water Temperature
+
+# Behzad S. Rizi, Solaris Technical, 2024-06-17, for SWHC005
+# Created parameter to enable Lift type EIR_fPLR curves from EnergySolutions (e.g. "Model 9 WC Chiller")
+# (Chiller:Electric:ReformulatedEIR input field "Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type")
 parameter "chiller_plr_curve", :default=>"ChillerPartLoadWithLift"  # Chiller PLR Curve (ChillerPartLoadWithLift | Bicubic | Quadratic)
+
 parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
 %>
@@ -553,7 +583,8 @@ Chiller:Electric:ReformulatedEIR,
   Autosize,                !- Reference Condenser Water Flow Rate {m3/s}
   <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
   <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
-  !Behzad Rizi - 2024-06-17 - Changed LeavingCondenserWaterTemperature to Lift 
+
+<%# Behzad S. Rizi, Solaris Technical - 2024-06-17 - Option to change EIR_fPLR type from LeavingCondenserWaterTemperature to Lift %>
 <% if (chiller_plr_curve == "ChillerPartLoadWithLift") %>
   Lift,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
 <% else %>
@@ -1978,7 +2009,11 @@ Curve:Bicubic,
   0.19,                    !- Minimum Value of y
   1.03;                    !- Maximum Value of y
   
-! Solaris(Behzad S. Rizi) - 2024-08-09 Added water-cooled centrifugal chiller performance curves as the basecase >>> ElectricEIRChiller Carrier 19XR 1234kW/5.39COP/VSD
+<%
+# Behzad S. Rizi, Solaris Technical 2024-08-09, for SWHC005
+# Added water-cooled centrifugal chiller performance curves for use as a base case
+# >>> ElectricEIRChiller Carrier 19XR 1234kW/5.39COP/VSD
+%>
 <% elsif (chiller_model == "WC Cent Carrier 19XR 1234kW/5.39COP/VSD") %>
 
 Curve:Biquadratic,
@@ -2015,7 +2050,11 @@ Curve:Biquadratic,
     0.19,                    !- Minimum Value of x
     1.02;                    !- Maximum Value of x 
 
-! Solaris(Behzad S. Rizi) - 2024-08-22 Added water-cooled centrifugal chiller performance curves as the basecase >>> ReformEIRChiller Carrier 19XR 1234kW/5.39COP/VSD
+<%
+# Behzad S. Rizi, Solaris Technical, 2024-08-22, for SWHC005
+# Added water-cooled centrifugal chiller performance curves for use in the base case of SWHC005
+# >>> ReformEIRChiller Carrier 19XR 1234kW/5.39COP/VSD
+%>
 <% elsif (chiller_model == "ReformEIRChiller WC Cent Carrier 19XR 1234kW/5.39COP/VSD") %>
 
   Curve:Biquadratic,
@@ -2069,7 +2108,11 @@ Curve:Biquadratic,
     0.19,                    !- Minimum Value of y
     1.02;                    !- Maximum Value of y
 
-! Solaris(Behzad S. Rizi) - 2024-08-09 Added water-cooled screw chiller performance curves as the basecase 	>>> ElectricEIRChiller Trane RTHB 1051kW/5.05COP/Valve
+<%
+# Behzad S. Rizi, Solaris Technical - 2024-08-09, for SWHC005
+# Added water-cooled screw chiller performance curves option as the basecase
+# >>> ElectricEIRChiller Trane RTHB 1051kW/5.05COP/Valve
+%>
 <% elsif (chiller_model == "Screw WC Trane RTHB 1051kW/5.05COP/Valve") %>
 
 Curve:Biquadratic,
@@ -2106,7 +2149,11 @@ Curve:Quadratic,
     0.20,                    !- Minimum Value of x
     1.01;                    !- Maximum Value of x
 
-! Solaris(Behzad S. Rizi) - 2024-08-22 Added water-cooled screw chiller performance curves as the basecase 	>>> ReformEIRChiller Screw WC Carrier 23XL 1062kW/5.50COP/Valve
+<%
+# Behzad S. Rizi, Solaris Technical, - 2024-08-22, for SWHC005
+# Added water-cooled screw chiller performance curves as the basecase
+# >>> ReformEIRChiller Screw WC Carrier 23XL 1062kW/5.50COP/Valve
+%>
 <% elsif (chiller_model == "ReformEIRChiller Screw WC Carrier 23XL 1062kW/5.50COP/Valve") %>
 
 Curve:Biquadratic,
@@ -2250,9 +2297,13 @@ Curve:Bicubic,
   0.19,                    !- Minimum Value of y
   1.03;                    !- Maximum Value of y
 
-! Solaris - 2024-06-12 Added water-cooled chiller performance curves(Chiller:Electric:ReformulatedEIR) 
-! Model 7 performance curves for 12% Path B PLE improvement
+<%
+# Behzad S. Rizi, Solaris Technical - 2024-06-12, for SWHC005
+# Added water-cooled chiller performance curves(Chiller:Electric:ReformulatedEIR)
+# Performance curves provided by Energy Solutions
+%>
 <% elsif (chiller_model == "Model 7 WC Chiller") %>
+! "Model 7" performance curves for 12% Path B PLE improvement
 Curve:Biquadratic,
   <%= name %> Chiller Cap Curve,  !- Name
   0.989616849,             !- Coefficient1 Constant
@@ -2310,9 +2361,13 @@ Curve:ChillerPartLoadWithLift,
   Dimensionless,           !- Input Unit Type for z
   Dimensionless;           !- Output Unit Type
 
-! Solaris - 2024-06-12 Added water-cooled chiller performance curves(Chiller:Electric:ReformulatedEIR)
-! Model 9 performance curves for 17% Path B PLE improvement
+<%
+# Behzad S. Rizi, Solaris Technical, - 2024-06-12, for SWHC005
+# Added water-cooled chiller performance curves(Chiller:Electric:ReformulatedEIR)
+# Performance curves provided by Energy Solutions
+%>
 <% elsif (chiller_model == "Model 9 WC Chiller") %>
+! Model 9 performance curves for 17% Path B PLE improvement
 Curve:Biquadratic,
   <%= name %> Chiller Cap Curve,  !- Name
   1.833870,             !- Coefficient1 Constant
