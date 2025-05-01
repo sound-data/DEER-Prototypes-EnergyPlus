@@ -92,9 +92,10 @@ parameter "chw_temp_ref", :default=>6.67['C'] # Reference Leaving Chilled Water 
 parameter "cw_temp_ref", :default=>34.4444['C'] # Reference Leaving Condenser Water Temperature
 
 # Behzad S. Rizi, Solaris Technical, 2024-06-17, for SWHC005
+# Nicholas Fette, Solaris Technical, 2025-05-01 Revised from chiller_plr_type logic to chiller_eir_fplr_type value
 # Created parameter to enable Lift type EIR_fPLR curves from EnergySolutions (e.g. "Model 9 WC Chiller")
 # (Chiller:Electric:ReformulatedEIR input field "Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type")
-parameter "chiller_plr_curve", :default=>"ChillerPartLoadWithLift"  # Chiller PLR Curve (ChillerPartLoadWithLift | Bicubic | Quadratic)
+parameter "chiller_eir_fplr_type", :default=>"LeavingCondenserWaterTemperature"  # (LeavingCondenserWaterTemperature | Lift)
 
 parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
@@ -623,11 +624,7 @@ Chiller:Electric:ReformulatedEIR,
   <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
 
 <%# Behzad S. Rizi, Solaris Technical - 2024-06-17 - Option to change EIR_fPLR type from LeavingCondenserWaterTemperature to Lift %>
-<% if (chiller_plr_curve == "ChillerPartLoadWithLift") %>
-  Lift,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
-<% else %>
-  LeavingCondenserWaterTemperature,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
-<% end %>
+  <%= chiller_eir_fplr_type %>,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
   <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
   0.1,                    !- Minimum Part Load Ratio {}
   1.0,                     !- Maximum Part Load Ratio {}
