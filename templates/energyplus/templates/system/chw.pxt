@@ -572,7 +572,45 @@ Branch,
 <% if (chiller_type == "ELECTRIC") %>
 
 <% if (chiller_condenser == "WATERCOOLED") %>
-<% if (wc_option == "Reformulated") %>
+  <% if (wc_option == "EIR") %>
+Chiller:Electric:EIR,
+  <%= name %> Chiller <%= i %>,  !- Name
+  Autosize,                !- Reference Capacity {W}
+  <%= chiller_cop %>,  !- Reference COP {}
+  <%= chw_temp_ref %>,                    !- Reference Leaving Chilled Water Temperature {C}
+  <%= cw_temp_ref %>,                    !- Reference Leaving Condenser Water Temperature {C}
+  <%= design_flow %>,  !- Reference Chilled Water Flow Rate {m3/s}
+  Autosize,                !- Reference Condenser Fluid Flow Rate {m3/s}
+  <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
+  <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
+  <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
+  0.15,                    !- Minimum Part Load Ratio {}
+  1.0,                     !- Maximum Part Load Ratio {}
+  0.8,                     !- Optimum Part Load Ratio {}
+  0.15,                    !- Minimum Unloading Ratio {}
+  <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Chilled Water Outlet Node Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Condenser Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node,                        !- Condenser Outlet Node Name
+  WaterCooled,     !- Condenser Type
+  ,                        !- Condenser Fan Power Ratio {W/W}
+  1.0,                     !- Fraction of Compressor Electric Consumption Rejected by Condenser {}
+  2.0,                     !- Leaving Chilled Water Lower Temperature Limit {C}
+  <%= chiller_flow_mode %>,  !- Chiller Flow Mode
+  0.0,                     !- Design Heat Recovery Water Flow Rate {m3/s}
+  ,                        !- Heat Recovery Inlet Node Name
+  ,                        !- Heat Recovery Outlet Node Name
+  <%= chiller_sizing %>;  !- Sizing Factor
+
+Branch,
+  <%= name %> <%= i %> HR Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Chiller:Electric:EIR,    !- Component 1 Object Type
+  <%= name %> Chiller <%= i %>,   !- Component 1 Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
+
+  <% else # wc_option not "EIR" %>
 Chiller:Electric:ReformulatedEIR,
   <%= name %> Chiller <%= i %>,  !- Name
   Autosize,                !- Reference Capacity {W}
@@ -614,49 +652,9 @@ Branch,
   <%= name %> Chiller <%= i %>,   !- Component 1 Name
   <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
-  
-  <% else %>
-<%# if cw_option is "EIR" %>
-Chiller:Electric:EIR,
-  <%= name %> Chiller <%= i %>,  !- Name
-  Autosize,                !- Reference Capacity {W}
-  <%= chiller_cop %>,  !- Reference COP {}
-  <%= chw_temp_ref %>,                    !- Reference Leaving Chilled Water Temperature {C}
-  <%= cw_temp_ref %>,                    !- Reference Leaving Condenser Water Temperature {C}
-  <%= design_flow %>,  !- Reference Chilled Water Flow Rate {m3/s}
-  Autosize,                !- Reference Condenser Fluid Flow Rate {m3/s}
-  <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
-  <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
-  <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
-  0.15,                    !- Minimum Part Load Ratio {}
-  1.0,                     !- Maximum Part Load Ratio {}
-  0.8,                     !- Optimum Part Load Ratio {}
-  0.15,                    !- Minimum Unloading Ratio {}
-  <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
-  <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Chilled Water Outlet Node Name
-  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Condenser Inlet Node Name
-  <%= name %> Chiller <%= i %> Water Outlet Node,                        !- Condenser Outlet Node Name
-  WaterCooled,     !- Condenser Type
-  ,                        !- Condenser Fan Power Ratio {W/W}
-  1.0,                     !- Fraction of Compressor Electric Consumption Rejected by Condenser {}
-  2.0,                     !- Leaving Chilled Water Lower Temperature Limit {C}
-  <%= chiller_flow_mode %>,  !- Chiller Flow Mode
-  0.0,                     !- Design Heat Recovery Water Flow Rate {m3/s}
-  ,                        !- Heat Recovery Inlet Node Name
-  ,                        !- Heat Recovery Outlet Node Name
-  <%= chiller_sizing %>;  !- Sizing Factor
-  
-Branch,
-  <%= name %> <%= i %> HR Demand Branch,  !- Name
-  ,                        !- Pressure Drop Curve Name
-  Chiller:Electric:EIR,    !- Component 1 Object Type
-  <%= name %> Chiller <%= i %>,   !- Component 1 Name
-  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
-  <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
-  
-  <% end %>
+  <% end # water cooled chiller object type (wc_option) %>
 
-<% else %>
+<% else # chiller_condenser not WATERCOOLED %>
 <%# If chiller condenser is aircooled %>
 Chiller:Electric:EIR,
   <%= name %> Chiller <%= i %>,  !- Name
