@@ -8,7 +8,6 @@ This repository supports the simulation and post-processing workflow for evaluat
 ```
 /
 ├── query_wcc.txt
-├── result_wcc.py
 ├── result2.py
 └── simdata.csv (generated)
 ```
