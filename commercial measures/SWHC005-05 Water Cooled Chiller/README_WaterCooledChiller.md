@@ -34,7 +34,7 @@ To normalize results by cooling capacity, the following procedure is used:
    Execute `result2.py` to extract and sum the capacities from all simulation runs.
 
    ```bash
-   python result2.py
+   python result2.py . -q query_wcc.txt
    ```
 
    The resulting file `simdata.csv` will contain chiller cooling capacities in watts (W).
