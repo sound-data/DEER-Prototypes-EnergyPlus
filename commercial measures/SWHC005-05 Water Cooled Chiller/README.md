@@ -3,6 +3,30 @@
 
 This repository supports the simulation and post-processing workflow for evaluating the **statewide water-cooled chiller energy efficiency measure**.
 
+## Prototype and template customization for this measure
+
+Initial work (2024)
+- Added water-cooled chiller performance curve definitions from Energy Solutions research and from EnergyPlus library file "[chiller.idf](https://github.com/NREL/EnergyPlus/tree/develop/datasets)".
+- Added new parameter `(chw_)wc_option` to allow switching water-cooled chiller object type from Chiller:Electric:ReformulatedEIR to Chiller:Electric:EIR (in the `chw.pxt` template).
+- Added new parameter `(chw_)chiller_eir_fplr_type` to support Lift type EIR curve as a function of PLR. Initially, we do not propose linking this to chiller_model (in chw.pxt).
+- Introduced query file for collecting data for IPLV and chiller cooling capacity (query_wcc.txt).
+- Measure setup for chillers reflects distinct offerings varying by chiller type, capacity, and tier since code requirements vary by chiller type and capacity.
+
+Revisions (2025)
+- Apply 2025 Title 24 updates to SWHC005.
+- Tech runs for screw type chiller are defined but skipped for simulation.
+
+### Performance curves proposed to add to chw.pxt
+
+Measure case performance curve candidates
+- "Model 9 WC Chiller" (ReformEIRChiller type, EIR_fPLR curve type = Lift, curves provided by email Energy Solutions)
+- "Model 7 WC Chiller" (ReformEIRChiller type, EIR_fPLR curve type = Lift, curves provided by email Energy Solutions)
+Base case performance curve candidates from EnergyPlus dataset chillers.idf
+- Added "WC Cent Carrier 19XR 1234kW/5.39COP/VSD" (ElectricEIRChiller type)
+- Added "WC Trane RTHB 1051kW/5.05COP/Valve" (ElectricEIRChiller type)
+- Added "ReformEIRChiller WC Cent Carrier 19XR 1234kW/5.39COP/VSD" (ReformEIRChiller type)
+- Added "ReformEIRChiller Screw WC Carrier 23XL 1062kW/5.50COP/Valve" (ReformEIRChiller type)
+
 ## 📁 Project Structure
 
 ```
