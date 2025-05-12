@@ -1,0 +1,800 @@
+<%#INITIALIZE
+
+# this template adds zone level residential HVAC equipment, developed by TRC for SWWH037-01
+
+parameter "zone_name", :default => nil
+parameter "system_name", :default => nil
+parameter "secondary_zone", :default => nil
+parameter "hydronic_system_name", :default => nil
+
+# Cooling COP
+parameter "cool_type", :default => "DX" #DX, NC
+parameter "cooling_coil_cop", :default=>3.28
+parameter "cooling_coil_cop2", :default=>3.28
+parameter "fan_power_per_flow", :default=>773.3 #rated fan power for cooling coil calculations
+# Heating Eff
+parameter "heat_type", :default => "GF" #DX, GF, EH, HW, ST
+parameter "burner_eff", :default=>0.78
+parameter "heating_coil_cop", :default => 2.26
+parameter "design_hw_temp", :default => 73.88 ['C']
+#hvac type
+parameter "hvac_type", :default=>"" #"", "unitary_system"
+parameter "coil_type", :default =>"" #"", 'multispeed' (multispeed only works with hvac_type=='unitary_system')
+# Fan
+parameter "supplyfan_total_eff", :default=>0.12
+parameter "motor_eff", :default=>0.24
+parameter "pressure_rise", :default=>125
+#parameter "vfd_curve_name", :default=>"" #"" for constant speed, "VFD_Fan_Curve" for variable speed does not work with Fan:OnOff
+
+
+#parameter "heat_coil_object_type",:default => nil
+#parameter "cool_coil_object_type",:default => nil
+
+%>
+
+<%
+heat_coil_object_type = ""
+cool_coil_object_type = ""
+#Heating Coil Type
+    if heat_type == "EH"
+        heat_coil_object_type = "Coil:Heating:Electric"
+    elsif heat_type == "DX"
+        if coil_type == "multispeed" and hvac_type == "unitary_system"
+            heat_coil_object_type = "Coil:Heating:DX:MultiSpeed"
+        else
+            heat_coil_object_type = "Coil:Heating:DX:SingleSpeed"
+        end
+    elsif heat_type == "HW"
+        heat_coil_object_type = "Coil:Heating:Water"
+    elsif heat_type == "ST"
+        heat_coil_object_type = "Coil:Heating:Steam"
+    else
+        heat_coil_object_type = "Coil:Heating:Fuel"
+    end
+
+#Cooling Coil Type
+    if cool_type != "NC"
+        if coil_type == "multispeed" and hvac_type == "unitary_system"
+            cool_coil_object_type = "Coil:Cooling:DX:MultiSpeed"
+        else
+            cool_coil_object_type = "Coil:Cooling:DX:SingleSpeed"
+        end
+    end
+%>
+!Sizing:zone objects
+    Sizing:Zone,
+        <%= zone_name %>,  !- Zone or ZoneList Name
+        SupplyAirTemperature,    !- Zone Cooling Design Supply Air Temperature Input Method
+        12,                      !- Zone Cooling Design Supply Air Temperature {C}
+        ,                        !- Zone Cooling Design Supply Air Temperature Difference {deltaC}
+        SupplyAirTemperature,    !- Zone Heating Design Supply Air Temperature Input Method
+        32.2,                      !- Zone Heating Design Supply Air Temperature {C}
+        ,                        !- Zone Heating Design Supply Air Temperature Difference {deltaC}
+        0.008,                   !- Zone Cooling Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+        0.008,                   !- Zone Heating Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+        ,                        !- Design Specification Outdoor Air Object Name
+        ,                        !- Zone Heating Sizing Factor
+        ,                        !- Zone Cooling Sizing Factor
+        DesignDay,               !- Cooling Design Air Flow Method
+        0,                       !- Cooling Design Air Flow Rate {m3/s}
+        ,                        !- Cooling Minimum Air Flow per Zone Floor Area {m3/s-m2}
+        ,                        !- Cooling Minimum Air Flow {m3/s}
+        0,                       !- Cooling Minimum Air Flow Fraction
+        DesignDay,               !- Heating Design Air Flow Method
+        0,                       !- Heating Design Air Flow Rate {m3/s}
+        ,                        !- Heating Maximum Air Flow per Zone Floor Area {m3/s-m2}
+        ,                        !- Heating Maximum Air Flow {m3/s}
+        0,                       !- Heating Maximum Air Flow Fraction
+        ,                        !- Design Specification Zone Air Distribution Object Name
+        ,                        !- Account for Dedicated Outdoor Air System
+        ,                        !- Dedicated Outdoor Air System Control Strategy
+        ,                        !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
+        ;                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+    <% if secondary_zone %>
+    Sizing:Zone,
+        <%= secondary_zone %>,  !- Zone or ZoneList Name
+        SupplyAirTemperature,    !- Zone Cooling Design Supply Air Temperature Input Method
+        12,                      !- Zone Cooling Design Supply Air Temperature {C}
+        ,                        !- Zone Cooling Design Supply Air Temperature Difference {deltaC}
+        SupplyAirTemperature,    !- Zone Heating Design Supply Air Temperature Input Method
+        32.2,                      !- Zone Heating Design Supply Air Temperature {C}
+        ,                        !- Zone Heating Design Supply Air Temperature Difference {deltaC}
+        0.008,                   !- Zone Cooling Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+        0.008,                   !- Zone Heating Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+        ,                        !- Design Specification Outdoor Air Object Name
+        ,                        !- Zone Heating Sizing Factor
+        ,                        !- Zone Cooling Sizing Factor
+        DesignDay,               !- Cooling Design Air Flow Method
+        0,                       !- Cooling Design Air Flow Rate {m3/s}
+        ,                        !- Cooling Minimum Air Flow per Zone Floor Area {m3/s-m2}
+        ,                        !- Cooling Minimum Air Flow {m3/s}
+        0,                       !- Cooling Minimum Air Flow Fraction
+        DesignDay,               !- Heating Design Air Flow Method
+        0,                       !- Heating Design Air Flow Rate {m3/s}
+        ,                        !- Heating Maximum Air Flow per Zone Floor Area {m3/s-m2}
+        ,                        !- Heating Maximum Air Flow {m3/s}
+        0,                       !- Heating Maximum Air Flow Fraction
+        ,                        !- Design Specification Zone Air Distribution Object Name
+        ,                        !- Account for Dedicated Outdoor Air System
+        ,                        !- Dedicated Outdoor Air System Control Strategy
+        ,                        !- Dedicated Outdoor Air Low Setpoint Temperature for Design {C}
+        ;                        !- Dedicated Outdoor Air High Setpoint Temperature for Design {C}
+    <% end %>
+
+!Sizing:system objects
+    Sizing:System,
+        <%= system_name %>,                !- AirLoop Name
+        Sensible,                !- Type of Load to Size On
+        ,                       !- Design Outdoor Air Flow Rate {m3/s}
+        1,                       !- Central Heating Maximum System Air Flow Ratio
+        7,                       !- Preheat Design Temperature {C}
+        0.008,                   !- Preheat Design Humidity Ratio {kgWater/kgDryAir}
+        11,                      !- Precool Design Temperature {C}
+        0.008,                   !- Precool Design Humidity Ratio {kgWater/kgDryAir}
+        12,                      !- Central Cooling Design Supply Air Temperature {C}
+        32.2,                      !- Central Heating Design Supply Air Temperature {C}
+        NonCoincident,           !- Type of Zone Sum to Use
+        No,                      !- 100% Outdoor Air in Cooling
+        No,                      !- 100% Outdoor Air in Heating
+        0.008,                   !- Central Cooling Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+        0.008,                   !- Central Heating Design Supply Air Humidity Ratio {kgWater/kgDryAir}
+        DesignDay,               !- Cooling Supply Air Flow Rate Method
+        ,                        !- Cooling Supply Air Flow Rate {m3/s}
+        ,                        !- Cooling Supply Air Flow Rate Per Floor Area {m3/s-m2}
+        ,                        !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
+        ,                        !- Cooling Supply Air Flow Rate Per Unit Cooling Capacity {m3/s-W}
+        DesignDay,               !- Heating Supply Air Flow Rate Method
+        ,                        !- Heating Supply Air Flow Rate {m3/s}
+        ,                        !- Heating Supply Air Flow Rate Per Floor Area {m3/s-m2}
+        ,                        !- Heating Fraction of Autosized Heating Supply Air Flow Rate
+        ,                        !- Heating Fraction of Autosized Cooling Supply Air Flow Rate
+        ,                        !- Heating Supply Air Flow Rate Per Unit Heating Capacity {m3/s-W}
+        ZoneSum,                 !- System Outdoor Air Method
+        1.0,                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
+        CoolingDesignCapacity,   !- Cooling Design Capacity Method
+        autosize,                !- Cooling Design Capacity {W}
+        ,                        !- Cooling Design Capacity Per Floor Area {W/m2}
+        ,                        !- Fraction of Autosized Cooling Design Capacity
+        HeatingDesignCapacity,   !- Heating Design Capacity Method
+        autosize,                !- Heating Design Capacity {W}
+        ,                        !- Heating Design Capacity Per Floor Area {W/m2}
+        ,                        !- Fraction of Autosized Heating Design Capacity
+        OnOff;                   !- Central Cooling Capacity Control Method
+
+!ZoneControl:Thermostat objects
+    ZoneControl:Thermostat,
+        <%= zone_name %> Thermostat,  !- Name
+        <%= zone_name %>,  !- Zone or ZoneList Name
+        HVACTemplate-Always 4,   !- Control Type Schedule Name
+        ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
+        thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
+    <% if secondary_zone %>
+    ZoneControl:Thermostat,
+        <%= secondary_zone %> Thermostat,  !- Name
+        <%= secondary_zone %>,  !- Zone or ZoneList Name
+        HVACTemplate-Always 4,   !- Control Type Schedule Name
+        ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
+        thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
+    <% end %>
+
+!AirTerminal:SingleDuct:ConstantVolume:NoReheat objects
+    AirTerminal:SingleDuct:ConstantVolume:NoReheat,
+        <%= zone_name %> CV,  !- Name
+        ,                        !- Availability Schedule Name
+        <%= zone_name %> Zone Equip Inlet,  !- Air Inlet Node Name
+        <%= zone_name %> Supply Inlet,  !- Air Outlet Node Name
+        autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% if secondary_zone %>
+    AirTerminal:SingleDuct:ConstantVolume:NoReheat,
+        <%= secondary_zone %> CV,  !- Name
+        ,                        !- Availability Schedule Name
+        <%= secondary_zone %> Zone Equip Inlet,  !- Air Inlet Node Name
+        <%= secondary_zone %> Supply Inlet,  !- Air Outlet Node Name
+        autosize;                !- Maximum Air Flow Rate {m3/s}
+    <% end %>
+
+!ZoneHVAC:AirDistributionUnit objects
+    ZoneHVAC:AirDistributionUnit,
+        <%= zone_name %> ATU,  !- Name
+        <%= zone_name %> Supply Inlet,  !- Air Distribution Unit Outlet Node Name
+        AirTerminal:SingleDuct:ConstantVolume:NoReheat,  !- Air Terminal Object Type
+        <%= zone_name %> CV;  !- Air Terminal Name
+    <% if secondary_zone %>
+    ZoneHVAC:AirDistributionUnit,
+        <%= secondary_zone %> ATU,  !- Name
+        <%= secondary_zone %> Supply Inlet,  !- Air Distribution Unit Outlet Node Name
+        AirTerminal:SingleDuct:ConstantVolume:NoReheat,  !- Air Terminal Object Type
+        <%= secondary_zone %> CV;  !- Air Terminal Name
+    <% end %>
+
+!ZoneHVAC:EquipmentList objects
+    ZoneHVAC:EquipmentList,
+        <%= zone_name %> Equipment,  !- Name
+        SequentialLoad,          !- Load Distribution Scheme
+        ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
+        <%= zone_name %> ATU,  !- Zone Equipment 1 Name
+        1,                       !- Zone Equipment 1 Cooling Sequence
+        1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+        ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+        ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+    <% if secondary_zone %>
+    ZoneHVAC:EquipmentList,
+        <%= secondary_zone %> Equipment,  !- Name
+        SequentialLoad,          !- Load Distribution Scheme
+        ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
+        <%= secondary_zone %> ATU,  !- Zone Equipment 1 Name
+        1,                       !- Zone Equipment 1 Cooling Sequence
+        1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+        ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+        ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+    <% end %>
+
+!ZoneHVAC:EquipmentConnections objects
+    ZoneHVAC:EquipmentConnections,
+        <%= zone_name %>,  !- Zone Name
+        <%= zone_name %> Equipment,  !- Zone Conditioning Equipment List Name
+        <%= zone_name %> Supply Inlet,  !- Zone Air Inlet Node or NodeList Name
+        ,                        !- Zone Air Exhaust Node or NodeList Name
+        <%= zone_name %> Zone Air Node,  !- Zone Air Node Name
+        <%= zone_name %> Return Outlet;  !- Zone Return Air Node or NodeList Name
+    <% if secondary_zone %>
+    ZoneHVAC:EquipmentConnections,
+        <%= secondary_zone %>,  !- Zone Name
+        <%= secondary_zone %> Equipment,  !- Zone Conditioning Equipment List Name
+        <%= secondary_zone %> Supply Inlet,  !- Zone Air Inlet Node or NodeList Name
+        ,                        !- Zone Air Exhaust Node or NodeList Name
+        <%= secondary_zone %> Zone Air Node,  !- Zone Air Node Name
+        <%= secondary_zone %> Return Outlet;  !- Zone Return Air Node or NodeList Name
+    <% end %>
+
+!Fan:OnOff
+    Fan:OnOff,
+        <%= system_name %> Supply Fan,     !- Name
+        always_avail,            !- Availability Schedule Name
+        <%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
+        <%= pressure_rise %>,                     !- Pressure Rise {Pa}
+        autosize,                !- Maximum Flow Rate {m3/s}
+        <%= motor_eff %>,                     !- Motor Efficiency
+        1,                       !- Motor In Airstream Fraction
+        <%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
+        <%= system_name %> Supply Fan Outlet,  !- Air Outlet Node Name
+        ; !-fan power ratio function of speed ratio curve name
+
+!Cooling Coils
+    <% if cool_type == "DX" %>
+        <% if coil_type =='multispeed' %>
+        COIL:COOLING:DX:MULTISPEED,
+            <%= system_name %> Cooling Coil,    !- Name
+            ,                         !- Availability Schedule Name
+            <%= system_name %> <%= heat_type == "DX" ? "Supply Fan Outlet" : "Heating Coil Outlet" %>,  !- Air Inlet Node Name
+            <%= system_name %> <%= heat_type == "DX" ? "Cooling Coil Outlet" : "Air Loop Outlet" %>,!- Air Outlet Node Name
+            ,                         !- Condenser Air Inlet Node Name
+            AirCooled,                !- Condenser Type
+            -25,                      !- Minimum Outdoor DryBulb Temperature for Compressor Operation
+            ,                         !- Supply Water Storage Tank Name
+            ,                         !- Condensate Collection Water Storage Tank Name
+            No,                       !- Apply Part Load Fraction to Speeds Greater than 1
+            No,                       !- Apply Latent Degradation to Speeds Greater than 1
+            0,                        !- Crankcase Heater Capacity
+            10,                       !- Maximum Outdoor DryBulb Temperature for Crankcase Heater Operation
+            0,                        !- Basin Heater Capacity
+            2,                        !- Basin Heater Setpoint Temperature
+            ,                         !- Basin Heater Operating Schedule Name
+            Electricity,              !- Fuel Type
+            2,                        !- Number of Speeds
+            autosize,                 !- Speed 1 Gross Rated Total Cooling Capacity
+            autosize,                 !- Speed 1 Gross Rated Sensible Heat Ratio
+            <%= cooling_coil_cop %>,    !- Speed 1 Gross Rated Cooling COP
+            autosize,                 !- Speed 1 Rated Air Flow Rate
+            ,                    !- Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
+            DEER DX Cool Cap-fT,    !- Speed 1 Total Cooling Capacity Function of Temperature Curve Name
+            DEER DX Cool Cap-FF,    !- Speed 1 Total Cooling Capacity Function of Flow Fraction Curve Name
+            DEER DX Cool EIR-fT,    !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
+            DEER DX Cool EIR-FF,    !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
+            DOE2 DX Coil PLF,    !- Speed 1 Part Load Fraction Correlation Curve Name
+            0,                        !- Speed 1 Nominal Time for Condensate Removal to Begin
+            0,                        !- Speed 1 Ratio of Initial Moisture Evaporation Rate and Steady State Latent Capacity
+            0,                        !- Speed 1 Maximum Cycling Rate
+            0,                        !- Speed 1 Latent Capacity Time Constant
+            0.2,                      !- Speed 1 Rated Waste Heat Fraction of Power Input
+            ,                         !- Speed 1 Waste Heat Function of Temperature Curve Name
+            0.9,                      !- Speed 1 Evaporative Condenser Effectiveness
+            ,                         !- Speed 1 Evaporative Condenser Air Flow Rate
+            ,                         !- Speed 1 Rated Evaporative Condenser Pump Power Consumption
+            autosize,                 !- Speed 2 Gross Rated Total Cooling Capacity
+            autosize,                 !- Speed 2 Gross Rated Sensible Heat Ratio
+            <%= cooling_coil_cop2 %>,    !- Speed 2 Gross Rated Cooling COP
+            autosize,                 !- Speed 2 Rated Air Flow Rate
+            ,                    !- Speed 2 Rated Evaporator Fan Power Per Volume Flow Rate
+            DEER DX Cool Cap-fT,    !- Speed 2 Total Cooling Capacity Function of Temperature Curve Name
+            DEER DX Cool Cap-FF,    !- Speed 2 Total Cooling Capacity Function of Flow Fraction Curve Name
+            DEER DX Cool EIR-fT,    !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
+            DEER DX Cool EIR-FF,    !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
+            DOE2 DX Coil PLF,    !- Speed 2 Part Load Fraction Correlation Curve Name
+            0,                        !- Speed 2 Nominal Time for Condensate Removal to Begin
+            0,                        !- Speed 2 Ratio of Initial Moisture Evaporation Rate and steady state Latent Capacity
+            0,                        !- Speed 2 Maximum Cycling Rate
+            0,                        !- Speed 2 Latent Capacity Time Constant
+            0.2,                      !- Speed 2 Rated Waste Heat Fraction of Power Input
+            ,                         !- Speed 2 Waste Heat Function of Temperature Curve Name
+            0.9,                      !- Speed 2 Evaporative Condenser Effectiveness
+            ,                         !- Speed 2 Evaporative Condenser Air Flow Rate
+            ,                         !- Speed 2 Rated Evaporative Condenser Pump Power Consumption
+            ,                         !- Speed 3 Gross Rated Total Cooling Capacity
+            ,                         !- Speed 3 Gross Rated Sensible Heat Ratio
+            3,                        !- Speed 3 Gross Rated Cooling COP
+            ,                         !- Speed 3 Rated Air Flow Rate
+            ,                    !- Speed 3 Rated Evaporator Fan Power Per Volume Flow Rate
+            ,                         !- Speed 3 Total Cooling Capacity Function of Temperature Curve Name
+            ,                         !- Speed 3 Total Cooling Capacity Function of Flow Fraction Curve Name
+            ,                         !- Speed 3 Energy Input Ratio Function of Temperature Curve Name
+            ,                         !- Speed 3 Energy Input Ratio Function of Flow Fraction Curve Name
+            ,                         !- Speed 3 Part Load Fraction Correlation Curve Name
+            0,                        !- Speed 3 Nominal Time for Condensate Removal to Begin
+            0,                        !- Speed 3 Ratio of Initial Moisture Evaporation Rate and steady state Latent Capacity
+            0,                        !- Speed 3 Maximum Cycling Rate
+            0,                        !- Speed 3 Latent Capacity Time Constant
+            0.2,                      !- Speed 3 Rated Waste Heat Fraction of Power Input
+            ,                         !- Speed 3 Waste Heat Function of Temperature Curve Name
+            0.9,                      !- Speed 3 Evaporative Condenser Effectiveness
+            ,                         !- Speed 3 Evaporative Condenser Air Flow Rate
+            ,                         !- Speed 3 Rated Evaporative Condenser Pump Power Consumption
+            ,                         !- Speed 4 Gross Rated Total Cooling Capacity
+            ,                         !- Speed 4 Gross Rated Sensible Heat Ratio
+            3,                        !- Speed 4 Gross Rated Cooling COP
+            ,                         !- Speed 4 Rated Air Flow Rate
+            ,                    !- Speed 4 Rated Evaporator Fan Power Per Volume Flow Rate
+            ,                         !- Speed 4 Total Cooling Capacity Function of Temperature Curve Name
+            ,                         !- Speed 4 Total Cooling Capacity Function of Flow Fraction Curve Name
+            ,                         !- Speed 4 Energy Input Ratio Function of Temperature Curve Name
+            ,                         !- Speed 4 Energy Input Ratio Function of Flow Fraction Curve Name
+            ,                         !- Speed 4 Part Load Fraction Correlation Curve Name
+            0,                        !- Speed 4 Nominal Time for Condensate Removal to Begin
+            0,                        !- Speed 4 Ratio of Initial Moisture Evaporation Rate and steady state Latent Capacity
+            0,                        !- Speed 4 Maximum Cycling Rate
+            0,                        !- Speed 4 Latent Capacity Time Constant
+            0.2,                      !- Speed 4 Rated Waste Heat Fraction of Power Input
+            ,                         !- Speed 4 Waste Heat Function of Temperature Curve Name
+            0.9;                      !- Speed 4 Evaporative Condenser Effectiveness
+        <% else %>
+        Coil:Cooling:DX:SingleSpeed,
+            <%= system_name %> Cooling Coil,   !- Name
+            always_avail,            !- Availability Schedule Name
+            autosize,                !- Gross Rated Total Cooling Capacity {W}
+            autosize,                !- Gross Rated Sensible Heat Ratio
+            <%= cooling_coil_cop %>,               !- Gross Rated Cooling COP {W/W}
+            autosize,                !- Rated Air Flow Rate {m3/s}
+            ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
+            <%= system_name %> <%= heat_type == "DX" ? "Supply Fan Outlet" : "Heating Coil Outlet" %>,  !- Air Inlet Node Name
+            <%= system_name %> <%= heat_type == "DX" ? "Cooling Coil Outlet" : "Air Loop Outlet" %>,  !- Air Outlet Node Name
+        <% if hvac_type=='unitary_system' %>
+            DEER DX Cool Cap-fT,
+            DEER DX Cool Cap-FF,
+            DEER DX Cool EIR-fT,
+            DEER DX Cool EIR-FF,
+        <%else %>
+            DOE2 DX Coil Cap-FT, !- Total Cooling Capacity Function of Temperature Curve Name
+            DOE2 DX Coil Cap-FF, !- Total Cooling Capacity Function of Flow Fraction Curve Name
+            DOE2 DX Coil EIR-FT, !- Energy Input Ratio Function of Temperature Curve Name
+            DOE2 DX Coil EIR-FF, !- Energy Input Ratio Function of Flow Fraction Curve Name
+        <%end%>
+            DOE2 DX Coil PLF;    !- Part Load Fraction Correlation Curve Name
+        <% end %>
+    <% end %>
+
+!Heating Coils
+    <% if heat_type == "EH" %>
+        Coil:Heating:Electric,
+            <%= system_name %> Heating Coil,   !- Name
+            always_avail,            !- Availability Schedule Name
+            1,                       !- Efficiency
+            autosize,                !- Nominal Capacity {W}
+            <%= system_name %> Supply Fan Outlet,  !- Air Inlet Node Name
+            <% if cool_type == "NC" %>
+                <%= system_name %> Air Loop Outlet;  !- Air Outlet Node Name
+            <% else %>
+                <%= system_name %> Heating Coil Outlet;  !- Air Outlet Node Name
+            <% end %>
+    <% elsif heat_type == "GF" %>
+        Coil:Heating:Fuel,
+            <%= system_name %> Heating Coil,   !- Name
+            always_avail,            !- Availability Schedule Name
+            NaturalGas,              !- Fuel Type
+            <%= burner_eff %>,                     !- Burner Efficiency
+            autosize,                !- Nominal Capacity {W}
+            <%= system_name %> Supply Fan Outlet,  !- Air Inlet Node Name
+            <% if cool_type == "NC" %>
+                <%= system_name %> Air Loop Outlet;  !- Air Outlet Node Name
+            <% else %>
+                <%= system_name %> Heating Coil Outlet;  !- Air Outlet Node Name
+            <% end %>
+    <% elsif heat_type == "DX" %>
+        <% if coil_type == 'multispeed' %>
+            Coil:Heating:DX:MultiSpeed,
+                <%= system_name %> Heating Coil,   !- Name
+                always_avail,            !- Availability Schedule Name
+                <%= system_name %> Cooling Coil Outlet,  !- Air Inlet Node Name
+                <%= system_name %> Heating Coil Outlet,  !- Air Outlet Node Name
+                -8,                      !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
+                ,                        !- Outdoor Dry-Bulb Temperature to Turn On Compressor {C}
+                ,                        !- Crankcase Heater Capacity {W}
+                10,                      !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
+                Defrost_EIR_FT,          !- Defrost Energy Input Ratio Function of Temperature Curve Name
+                5,                       !- Maximum Outdoor Dry-Bulb Temperature for Defrost Operation {C}
+                ReverseCycle,            !- Defrost Strategy
+                Timed,                   !- Defrost Control
+                0.058333,                !- Defrost Time Period Fraction
+                ,                        !- Resistive Defrost Heater Capacity {W}
+                No,                      !- Apply Part Load Fraction to Speeds Greater than 1
+                Electricity,             !- Fuel Type
+                4,                       !- Region number for Calculating HSPF
+                2,                       !- Number of Speeds
+                autosize,                !- Speed 1 Gross Rated Heating Capacity {W}
+                <%= heating_coil_cop %>, !- Speed 1 Gross Rated Heating COP {W/W}
+                autosize,                !- Speed 1 Rated Air Flow Rate {m3/s}
+                ,        !- Speed 1 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
+                DEER DX Heat Cap-fT,     !- Speed 1 Heating Capacity Function of Temperature Curve Name
+                DEER DX Heat Cap-FF,     !- Speed 1 Heating Capacity Function of Flow Fraction Curve Name
+                DEER DX Heat EIR-fT,     !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
+                DEER DX HeatEIR-FF,      !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
+                HPACCOOLPLFFPLR,         !- Speed 1 Part Load Fraction Correlation Curve Name
+                0.2,                     !- Speed 1 Rated Waste Heat Fraction of Power Input {dimensionless}
+                ,                        !- Speed 1 Waste Heat Function of Temperature Curve Name
+                autosize,                !- Speed 2 Gross Rated Heating Capacity {W}
+                <%= heating_coil_cop %>,  !- Speed 2 Gross Rated Heating COP {W/W}
+                autosize,                !- Speed 2 Rated Air Flow Rate {m3/s}
+                ,        !- Speed 2 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
+                DEER DX Heat Cap-fT,     !- Speed 2 Heating Capacity Function of Temperature Curve Name
+                DEER DX Heat Cap-FF,     !- Speed 2 Heating Capacity Function of Flow Fraction Curve Name
+                DEER DX Heat EIR-fT,     !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
+                DEER DX HeatEIR-FF,      !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
+                HPACCOOLPLFFPLR,         !- Speed 2 Part Load Fraction Correlation Curve Name
+                0.2,                     !- Speed 2 Rated Waste Heat Fraction of Power Input {dimensionless}
+                ,                        !- Speed 2 Waste Heat Function of Temperature Curve Name
+                ,                        !- Speed 3 Gross Rated Heating Capacity {W}
+                ,                        !- Speed 3 Gross Rated Heating COP {W/W}
+                ,                        !- Speed 3 Rated Air Flow Rate {m3/s}
+                ,                   !- Speed 3 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
+                ,                        !- Speed 3 Heating Capacity Function of Temperature Curve Name
+                ,                        !- Speed 3 Heating Capacity Function of Flow Fraction Curve Name
+                ,                        !- Speed 3 Energy Input Ratio Function of Temperature Curve Name
+                ,                        !- Speed 3 Energy Input Ratio Function of Flow Fraction Curve Name
+                ,                        !- Speed 3 Part Load Fraction Correlation Curve Name
+                0.2,                     !- Speed 3 Rated Waste Heat Fraction of Power Input {dimensionless}
+                ,                        !- Speed 3 Waste Heat Function of Temperature Curve Name
+                ,                        !- Speed 4 Gross Rated Heating Capacity {W}
+                ,                        !- Speed 4 Gross Rated Heating COP {W/W}
+                ,                        !- Speed 4 Rated Air Flow Rate {m3/s}
+                ,                   !- Speed 4 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
+                ,                        !- Speed 4 Heating Capacity Function of Temperature Curve Name
+                ,                        !- Speed 4 Heating Capacity Function of Flow Fraction Curve Name
+                ,                        !- Speed 4 Energy Input Ratio Function of Temperature Curve Name
+                ,                        !- Speed 4 Energy Input Ratio Function of Flow Fraction Curve Name
+                ,                        !- Speed 4 Part Load Fraction Correlation Curve Name
+                0.2,                     !- Speed 4 Rated Waste Heat Fraction of Power Input {dimensionless}
+                ,                        !- Speed 4 Waste Heat Function of Temperature Curve Name
+                ,                        !- Zone Name for Evaporator Placement
+                ,                        !- Speed 1 Secondary Coil Air Flow Rate {m3/s}
+                1.25,                    !- Speed 1 Secondary Coil Fan Flow Scaling Factor {m3/s}
+                ,                        !- Speed 1 Nominal Sensible Heat Ratio of Secondary Coil {m3/s}
+                ,                        !- Speed 1 Sensible Heat Ratio Modifier Function of Temperature Curve Name
+                ,                        !- Speed 1 Sensible Heat Ratio Modifier Function of Flow Fraction Curve Name
+                ,                        !- Speed 2 Secondary Coil Air Flow Rate {m3/s}
+                1.25,                    !- Speed 2 Secondary Coil Fan Flow Scaling Factor {m3/s}
+                ,                        !- Speed 2 Nominal Sensible Heat Ratio of Secondary Coil {m3/s}
+                ,                        !- Speed 2 Sensible Heat Ratio Modifier Function of Temperature Curve Name
+                ,                        !- Speed 2 Sensible Heat Ratio Modifier Function of Flow Fraction Curve Name
+                ,                        !- Speed 3 Secondary Coil Air Flow Rate {m3/s}
+                1.25,                    !- Speed 3 Secondary Coil Fan Flow Scaling Factor {m3/s}
+                ,                        !- Speed 3 Nominal Sensible Heat Ratio of Secondary Coil {m3/s}
+                ,                        !- Speed 3 Sensible Heat Ratio Modifier Function of Temperature Curve Name
+                ,                        !- Speed 3 Sensible Heat Ratio Modifier Function of Flow Fraction Curve Name
+                ,                        !- Speed 4 Secondary Coil Air Flow Rate {m3/s}
+                1.25;                    !- Speed 4 Secondary Coil Fan Flow Scaling Factor {m3/s}
+        <% else %>
+            Coil:Heating:DX:SingleSpeed,
+                <%= system_name %> Heating Coil,   !- Name
+                always_avail,            !- Availability Schedule Name
+                autosize,                !- Gross Rated Heating Capacity {W}
+                <%= heating_coil_cop %>,                     !- Gross Rated Heating COP {W/W}
+                autosize,                !- Rated Air Flow Rate {m3/s}
+                ,                        !- Rated Supply Fan Power Per Volume Flow Rate {W/(m3/s)}
+                <%= system_name %> Cooling Coil Outlet,  !- Air Inlet Node Name
+                <%= system_name %> Heating Coil Outlet,  !- Air Outlet Node Name
+                <% if hvac_type=='unitary_system' %>
+                DEER DX Heat Cap-fT,
+                DEER DX Heat Cap-FF,
+                DEER DX Heat EIR-fT,
+                DEER DX HeatEIR-FF,
+                <% else %>
+                HPACHeatCapFT,           !- Heating Capacity Function of Temperature Curve Name
+                HPACHeatCapFFF,          !- Heating Capacity Function of Flow Fraction Curve Name
+                HPACHeatEIRFT,           !- Energy Input Ratio Function of Temperature Curve Name
+                HPACHeatEIRFFF,          !- Energy Input Ratio Function of Flow Fraction Curve Name
+                <% end %>
+                HPACCOOLPLFFPLR,         !- Part Load Fraction Correlation Curve Name
+                Defrost_EIR_FT,                        !- Defrost Energy Input Ratio Function of Temperature Curve Name
+                -5.0,                    !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
+                ,                        !- Outdoor Dry-Bulb Temperature to Turn On Compressor {C}
+                5.0,                     !- Maximum Outdoor Dry-Bulb Temperature for Defrost Operation {C}
+                40,                   !- Crankcase Heater Capacity {W}
+                10.0,                    !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
+                ReverseCycle,               !- Defrost Strategy
+                OnDemand,                   !- Defrost Control
+                0.166667,                !- Defrost Time Period Fraction
+                20000;                   !- Resistive Defrost Heater Capacity {W}
+        <% end %>
+    <% elsif heat_type == "HW" %>
+        Coil:Heating:Water,
+            <%= system_name %> Heating Coil,  !- Name
+            ,                        !- Availability Schedule Name
+            autosize,                !- U-Factor Times Area Value {W/K}
+            autosize,                !- Maximum Water Flow Rate {m3/s}
+            <%= system_name %> Heating Coil Water In Node,  !- Water Inlet Node Name
+            <%= system_name %> Heating Coil Water Out Node,  !- Water Outlet Node Name
+            <%= system_name %> Supply Fan Outlet,  !- Air Inlet Node Name
+            <% if cool_type == "NC" %>
+                <%= system_name %> Air Loop Outlet,  !- Air Outlet Node Name
+            <% else %>
+                <%= system_name %> Heating Coil Outlet,  !- Air Outlet Node Name
+            <% end %>
+            UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+            autosize,                !- Rated Capacity {W}
+            <%= design_hw_temp %>,                    !- Rated Inlet Water Temperature {C}
+            16.6,                    !- Rated Inlet Air Temperature {C}
+            <%= design_hw_temp - 5.55 ['C'] %>,                    !- Rated Outlet Water Temperature {C}
+            32.2,                    !- Rated Outlet Air Temperature {C}
+            0.5;                     !- Rated Ratio for Air and Water Convection
+    <% elsif heat_type == "ST" %>
+        Coil:Heating:Steam,
+            <%= system_name %> Heating Coil,  !- Name
+            ,                        !- Availability Schedule Name
+            autosize,                !- Maximum Steam Flow Rate {m3/s}
+            ,                        !- Degree of SubCooling {C}
+            20,                      !- Degree of Loop SubCooling {C}
+            <%= system_name %> Heating Coil Water In Node,  !- Water Inlet Node Name
+            <%= system_name %> Heating Coil Water Out Node,  !- Water Outlet Node Name
+            <%= system_name %> Supply Fan Outlet,  !- Air Inlet Node Name
+            <% if cool_type == "NC" %>
+                <%= system_name %> Air Loop Outlet,  !- Air Outlet Node Name
+            <% else %>
+                <%= system_name %> Heating Coil Outlet,  !- Air Outlet Node Name
+            <% end %>
+            ZoneLoadControl;         !- Coil Control Type
+    <% end %>    
+
+!Unitary Systems
+    <% if cool_type != "NC" %>
+        <% if hvac_type=='unitary_system' %>
+            AirLoopHVAC:UnitarySystem,
+                <%= system_name %> Unitary System,    !- Name
+                Load,                     !- Control Type
+                <%= zone_name %>,    !- Controlling Zone or Thermostat Location
+                None,                     !- Dehumidification Control Type
+                always_avail,             !- Availability Schedule Name
+                <%= system_name %> Mixed Air Outlet,    !- Air Inlet Node Name
+                <%= system_name %> Air Loop Outlet,    !- Air Outlet Node Name
+                Fan:OnOff,                !- Supply Fan Object Type
+                <%= system_name %> Supply Fan,    !- Supply Fan Name
+                BlowThrough,              !- Fan Placement
+                ,                         !- Supply Air Fan Operating Mode Schedule Name
+                <%= heat_coil_object_type %>,        !- Heating Coil Object Type
+                <%= system_name %> Heating Coil,    !- Heating Coil Name
+                1,                        !- DX Heating Coil Sizing Ratio
+                <%= cool_coil_object_type %>,    !- Cooling Coil Object Type
+                <%= system_name %> Cooling Coil,    !- Cooling Coil Name
+                No,                       !- Use DOAS DX Cooling Coil
+                2,                        !- Minimum Supply Air Temperature
+                SensibleOnlyLoadControl,    !- Latent Load Control
+                <% if heat_type == "DX" %>
+                Coil:Heating:Electric,   !- Supplemental Heating Coil Object Type
+                <%= system_name %> Supplemental Heating Coil,   !- Supplemental Heating Coil Name
+                <% else %>
+                ,                         !- Supplemental Heating Coil Object Type
+                ,                         !- Supplemental Heating Coil Name
+                <% end %>
+                SupplyAirFlowRate,        !- Cooling Supply Air Flow Rate Method
+                autosize,                 !- Cooling Supply Air Flow Rate
+                ,                         !- Cooling Supply Air Flow Rate Per Floor Area
+                ,                         !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
+                ,                         !- Cooling Supply Air Flow Rate Per Unit of Capacity
+                SupplyAirFlowRate,        !- Heating Supply Air Flow Rate Method
+                autosize,                 !- Heating Supply Air Flow Rate
+                ,                         !- Heating Supply Air Flow Rate Per Floor Area
+                ,                         !- Heating Fraction of Autosized Heating Supply Air Flow Rate
+                ,                         !- Heating Supply Air Flow Rate Per Unit of Capacity
+                SupplyAirFlowRate,        !- No Load Supply Air Flow Rate Method
+                autosize,                 !- No Load Supply Air Flow Rate
+                ,                         !- No Load Supply Air Flow Rate Per Floor Area
+                ,                         !- No Load Fraction of Autosized Cooling Supply Air Flow Rate
+                ,                         !- No Load Fraction of Autosized Heating Supply Air Flow Rate
+                ,                         !- No Load Supply Air Flow Rate Per Unit of Capacity During Cooling Operation
+                ,                         !- No Load Supply Air Flow Rate Per Unit of Capacity During Heating Operation
+                32.2,                       !- Maximum Supply Air Temperature
+                21,                       !- Maximum Outdoor DryBulb Temperature for Supplemental Heater Operation
+                ,                         !- Outdoor DryBulb Temperature Sensor Node Name
+                2.5,                      !- Maximum Cycling Rate
+                60,                       !- Heat Pump Time Constant
+                0.01,                     !- Fraction of OnCycle Power Use
+                60,                       !- Heat Pump Fan Delay Time
+                ,                         !- Ancillary OnCycle Electric Power
+                ,                         !- Ancillary OffCycle Electric Power
+                ,                         !- Design Heat Recovery Water Flow Rate
+                80,                      !- Maximum Temperature for Heat Recovery {C}
+                ,                        !- Heat Recovery Water Inlet Node Name
+                ,                        !- Heat Recovery Water Outlet Node Name
+                UnitarySystemPerformance:Multispeed,  !- Design Specification Multispeed Object Type
+                <%= system_name %> MultiSpeed Performance;  !- Design Specification Multispeed Object Name
+            UnitarySystemPerformance:Multispeed,
+                <%= system_name %> MultiSpeed Performance,  !- Name
+                <%= (heat_type == "DX" && coil_type == "multispeed") ? 2 : 1 %>,                       !- Number of Speeds for Heating
+                2,                       !- Number of Speeds for Cooling
+                No,                      !- Single Mode Operation
+                1,                       !- No Load Supply Air Flow Rate Ratio
+                autosize,                !- Heating Speed 1 Supply Air Flow Ratio
+                autosize,                !- Cooling Speed 1 Supply Air Flow Ratio
+                autosize,                !- Heating Speed 2 Supply Air Flow Ratio
+                autosize;                !- Cooling Speed 2 Supply Air Flow Ratio
+            <% if heat_type == "DX" %>
+                Coil:Heating:Electric,
+                    <%= system_name %> Supplemental Heating Coil,   !- Name
+                    always_avail,            !- Availability Schedule Name
+                    1,                       !- Efficiency
+                    autosize,                !- Nominal Capacity {W}
+                    <%= system_name %> Heating Coil Outlet,  !- Air Inlet Node Name
+                    <%= system_name %> Air Loop Outlet;!- Air Outlet Node Name
+            <% end %>
+        <% else %>
+            <% if heat_type == "GF" or heat_type == "EH" or heat_type == "HW" or heat_type == "ST" %>
+                AirLoopHVAC:Unitary:Furnace:HeatCool,
+                    <%= system_name %> Unitary System,  !- Name
+                    always_avail,            !- Availability Schedule Name
+                    <%= system_name %> Mixed Air Outlet,  !- Furnace Air Inlet Node Name
+                    <%= system_name %> Air Loop Outlet,!- Furnace Air Outlet Node Name
+                    ,                        !- Supply Air Fan Operating Mode Schedule Name
+                    32.2,                      !- Maximum Supply Air Temperature {C}
+                    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
+                    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+                    ,                        !- No Load Supply Air Flow Rate {m3/s}
+                    <%= zone_name %>,  !- Controlling Zone or Thermostat Location
+                    Fan:OnOff,               !- Supply Fan Object Type
+                    <%= system_name %> Supply Fan,     !- Supply Fan Name
+                    BlowThrough,             !- Fan Placement
+                    <%= heat_coil_object_type %>,        !- Heating Coil Object Type
+                    <%= system_name %> Heating Coil,   !- Heating Coil Name
+                    <%= cool_coil_object_type %>,    !- Cooling Coil Object Type
+                    <%= system_name %> Cooling Coil,   !- Cooling Coil Name
+                    None;                    !- Dehumidification Control Type
+            <% elsif heat_type == "DX" %>
+                AirLoopHVAC:UnitaryHeatPump:AirToAir,
+                    <%= system_name %> Unitary System,      !- Name
+                    always_avail,            !- Availability Schedule Name
+                    <%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
+                    <%= system_name %> Air Loop Outlet,!- Air Outlet Node Name
+                    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
+                    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+                    ,                        !- No Load Supply Air Flow Rate {m3/s}
+                    <%= zone_name %>,  !- Controlling Zone or Thermostat Location
+                    Fan:OnOff,               !- Supply Air Fan Object Type
+                    <%= system_name %> Supply Fan,     !- Supply Air Fan Name
+                    <%= heat_coil_object_type %>,  !- Heating Coil Object Type
+                    <%= system_name %> Heating Coil,   !- Heating Coil Name
+                    <%= cool_coil_object_type %>,    !- Cooling Coil Object Type
+                    <%= system_name %> Cooling Coil,   !- Cooling Coil Name
+                    Coil:Heating:Electric,   !- Supplemental Heating Coil Object Type
+                    <%= system_name %> Supplemental Heating Coil,   !- Supplemental Heating Coil Name
+                    32.2,                      !- Maximum Supply Air Temperature from Supplemental Heater {C}
+                    21,                      !- Maximum Outdoor Dry-Bulb Temperature for Supplemental Heater Operation {C}
+                    BlowThrough,             !- Fan Placement
+                    ,                        !- Supply Air Fan Operating Mode Schedule Name
+                    None;                    !- Dehumidification Control Type
+                Coil:Heating:Electric,
+                    <%= system_name %> Supplemental Heating Coil,   !- Name
+                    always_avail,            !- Availability Schedule Name
+                    1,                       !- Efficiency
+                    autosize,                !- Nominal Capacity {W}
+                    <%= system_name %> Heating Coil Outlet,  !- Air Inlet Node Name
+                    <%= system_name %> Air Loop Outlet;!- Air Outlet Node Name
+            <% end %>
+        <% end %>
+    <% else %>
+        AirLoopHVAC:UnitaryHeatOnly,
+            <%= system_name %> Unitary System,                !- Name
+            ,                        !- Availability Schedule Name
+            <%= system_name %> Mixed Air Outlet,  !- Unitary System Air Inlet Node Name
+            <%= system_name %> Air Loop Outlet,!- Unitary System Air Outlet Node Name
+            ,                        !- Supply Air Fan Operating Mode Schedule Name
+            32.2,                      !- Maximum Supply Air Temperature {C}
+            autosize,                !- Heating Supply Air Flow Rate {m3/s}
+            <%= zone_name %>,  !- Controlling Zone or Thermostat Location
+            Fan:OnOff,               !- Supply Fan Object Type
+            <%= system_name %> Supply Fan,     !- Supply Fan Name
+            BlowThrough,             !- Fan Placement
+            <%= heat_coil_object_type %>,        !- Heating Coil Object Type
+            <%= system_name %> Heating Coil;   !- Heating Coil Name
+    <% end %>
+
+!AirLoopHVAC splitters, connectors and branches
+    AirLoopHVAC:ZoneSplitter,
+        <%= system_name %> Zone Splitter,  !- Name
+        <%= system_name %> Supply Path Inlet,  !- Inlet Node Name
+        <% if secondary_zone %>
+        <%= zone_name %> Zone Equip Inlet,  !- Outlet 1 Node Name
+        <%= secondary_zone %> Zone Equip Inlet;  !- Outlet 2 Node Name
+        <% else %>
+        <%= zone_name %> Zone Equip Inlet;  !- Outlet 1 Node Name
+        <% end %>
+    AirLoopHVAC:SupplyPath,
+        <%= system_name %> Supply Path,    !- Name
+        <%= system_name %> Supply Path Inlet,  !- Supply Air Path Inlet Node Name
+        AirLoopHVAC:ZoneSplitter,!- Component 1 Object Type
+        <%= system_name %> Zone Splitter;  !- Component 1 Name
+    Branch,
+        <%= system_name %> Main Branch,    !- Name
+        ,                        !- Pressure Drop Curve Name
+        <% if cool_type == "NC" %>
+            AirLoopHVAC:UnitaryHeatOnly,  !- Component 1 Object Type
+        <% else %>
+            <% if hvac_type=='unitary_system' %>
+                AirLoopHVAC:UnitarySystem,                      !- Component 1 Object Type
+            <% else %>
+                <% if heat_type == "DX" %>
+                AirLoopHVAC:UnitaryHeatPump:AirToAir,  !- Component 1 Object Type
+                <% else %>
+                AirLoopHVAC:Unitary:Furnace:HeatCool,  !- Component 1 Object Type
+                <% end %>
+            <% end %>
+        <% end %>
+        <%= system_name %> Unitary System,  !- Component 1 Name
+        <%= system_name %> Mixed Air Outlet,  !- Component 1 Inlet Node Name
+        <%= system_name %> Air Loop Outlet;!- Component 1 Outlet Node Name
+    BranchList,
+        <%= system_name %> Branches,       !- Name
+        <%= system_name %> Main Branch;    !- Branch 1 Name
+    OutdoorAir:Node,
+        <%= system_name %> Cooling Coil Condenser Inlet,  !- Name
+        -1;                      !- Height Above Ground {m}
+    OutdoorAir:NodeList,
+        <%= system_name %> Outside Air Inlet;  !- Node or NodeList Name 1
+    <% if heat_type == "HW" or heat_type == "ST" %>
+        Branch,
+            <%= system_name %> Heating Coil Branch,  !- Name
+            ,                        !- Pressure Drop Curve Name
+            <%= heat_coil_object_type %>,      !- Component 1 Object Type
+            <%= system_name %> Heating Coil,  !- Component 1 Name
+            <%= system_name %> Heating Coil Water In Node,  !- Component 1 Inlet Node Name
+            <%= system_name %> Heating Coil Water Out Node;  !- Component 1 Outlet Node Name
+    <% end %>
+
+!Availability Managers
+    AvailabilityManager:NightCycle,
+        <%= system_name %> Availability,   !- Name
+        HVACTemplate-Always 1,   !- Applicability Schedule Name
+        always_avail,            !- Fan Schedule Name
+        StayOff,                 !- Control Type
+        0.2,                     !- Thermostat Tolerance {deltaC}
+        FixedRunTime,            !- Cycling Run Time Control Type
+        3600;                    !- Cycling Run Time {s}
+    AvailabilityManagerAssignmentList,
+        <%= system_name %> Availability Managers,  !- Name
+        AvailabilityManager:NightCycle,  !- Availability Manager 1 Object Type
+        <%= system_name %> Availability;   !- Availability Manager 1 Name
+
+!Setpoint Managers
+    SetpointManager:SingleZone:Cooling,
+        <%= system_name %> Economizer Supply Air Temp Manager,  !- Name
+        Temperature,             !- Control Variable
+        13,                      !- Minimum Supply Air Temperature {C}
+        45,                      !- Maximum Supply Air Temperature {C}
+        <%= zone_name %>,  !- Control Zone Name
+        <%= zone_name %> Zone Air Node,  !- Zone Node Name
+        <%= zone_name %> Supply Inlet,  !- Zone Inlet Node Name
+        <%= system_name %> Air Loop Outlet;!- Setpoint Node or NodeList Name
+    SetpointManager:MixedAir,
+        <%= system_name %> Cooling Coil Air Temp Manager,  !- Name
+        Temperature,             !- Control Variable
+        <%= system_name %> Air Loop Outlet,!- Reference Setpoint Node Name
+        <%= system_name %> Mixed Air Outlet,  !- Fan Inlet Node Name
+        <%= system_name %> Supply Fan Outlet,  !- Fan Outlet Node Name
+        <%= system_name %> Mixed Air Outlet;  !- Setpoint Node or NodeList Name
+

@@ -1,0 +1,373 @@
+<%#INITIALIZE
+
+# this template adds hydronic system level equipment, developed by TRC for SWWH037-01
+
+parameter "hydronic_system_name", :default => nil
+parameter "branch_names", :default => nil
+parameter "design_hw_temp", :default => 73.88 ['C']
+parameter "min_hw_temp", :default => 60 ['C']
+parameter "heat_type", :default => "HW" #"HW" "ST"
+parameter "pipe_type", :default => "Pipe:Adiabatic"
+parameter "boiler_type", :default => "Boiler:HotWater"
+parameter "pump_type", :default => "Pump:VariableSpeed"
+
+rule "st_loop_rule", :parameters => {:heat_type => "ST"} do
+  default :design_hw_temp => 104.444['C']
+  default :pipe_type => "Pipe:Adiabatic:Steam"
+  default :boiler_type => "Boiler:Steam"
+  default :pump_type => "Pump:VariableSpeed:Condensate"
+end
+
+%>
+
+<% 
+
+%>
+
+! <%= hydronic_system_name %> branches
+    Branch,
+        <%= hydronic_system_name %> Central Boiler Branch,   !- Name
+        ,                        !- Pressure Drop Curve Name
+        <%= boiler_type %>,         !- Component 1 Object Type
+        <%= hydronic_system_name %> CentralBoiler,           !- Component 1 Name
+        <%= hydronic_system_name %> Boiler Water Inlet Node, !- Component 1 Inlet Node Name
+        <%= hydronic_system_name %> Boiler Water Oulet Node; !- Component 1 Outlet Node Name
+    Branch,
+        <%= hydronic_system_name %> Heating Supply Inlet Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        <%= pump_type %>,      !- Component 1 Object Type
+        <%= hydronic_system_name %> HW Circ Pump,            !- Component 1 Name
+        <%= hydronic_system_name %> HW Supply Inlet Node,    !- Component 1 Inlet Node Name
+        <%= hydronic_system_name %> HW Pump Oulet Node;      !- Component 1 Outlet Node Name
+    Branch,
+        <%= hydronic_system_name %> Heating Supply Outlet Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        <%= pipe_type %>,          !- Component 1 Object Type
+        <%= hydronic_system_name %> Heating Supply Outlet,   !- Component 1 Name
+        <%= hydronic_system_name %> Heating Supply Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
+        <%= hydronic_system_name %> HW Supply Outlet Node;   !- Component 1 Outlet Node Name
+    Branch,
+        <%= hydronic_system_name %> Heating Demand Inlet Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        <%= pipe_type %>,          !- Component 1 Object Type
+        <%= hydronic_system_name %> Heating Demand Inlet Pipe,  !- Component 1 Name
+        <%= hydronic_system_name %> HW Demand Inlet Node,    !- Component 1 Inlet Node Name
+        <%= hydronic_system_name %> HW Demand Entrance Pipe Outlet Node;  !- Component 1 Outlet Node Name
+    Branch,
+        <%= hydronic_system_name %> Heating Demand Outlet Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        <%= pipe_type %>,          !- Component 1 Object Type
+        <%= hydronic_system_name %> Heating Demand Outlet Pipe,  !- Component 1 Name
+        <%= hydronic_system_name %> HW Demand Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
+        <%= hydronic_system_name %> HW Demand Outlet Node;   !- Component 1 Outlet Node Name
+    Branch,
+        <%= hydronic_system_name %> Heating Supply Side Bypass Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        <%= pipe_type %>,          !- Component 1 Object Type
+        <%= hydronic_system_name %> Heating Supply Side Bypass,  !- Component 1 Name
+        <%= hydronic_system_name %> Heating Supply Bypass Inlet Node,  !- Component 1 Inlet Node Name
+        <%= hydronic_system_name %> Heating Supply Bypass Outlet Node;  !- Component 1 Outlet Node Name
+    Branch,
+        <%= hydronic_system_name %> Heating Demand Side Bypass Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        <%= pipe_type %>,          !- Component 1 Object Type
+        <%= hydronic_system_name %> Heating Demand Side Bypass,  !- Component 1 Name
+        <%= hydronic_system_name %> Heating Demand Bypass Inlet Node,  !- Component 1 Inlet Node Name
+        <%= hydronic_system_name %> Heating Demand Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+! <%= hydronic_system_name %> sizing
+    <% if heat_type == "HW" %>
+        Sizing:Plant,
+            <%= hydronic_system_name %> Hot Water Loop,          !- Plant or Condenser Loop Name
+            Heating,                 !- Loop Type
+            <%= design_hw_temp %>,        !- Design Loop Exit Temperature {C}
+            5.55555555555556,        !- Loop Design Temperature Difference {deltaC}
+            NonCoincident,           !- Sizing Option
+            1;                       !- Zone Timesteps in Averaging Window
+    <% elsif heat_type == "ST" %>
+        Sizing:Plant,
+            <%= hydronic_system_name %> Hot Water Loop,      !- Plant or Condenser Loop Name
+            Steam,                   !- Loop Type
+            <%= design_hw_temp %>,        !- Design Loop Exit Temperature {C}
+            22.2222222222222;        !- Loop Design Temperature Difference {deltaC}
+    <% end %>
+
+! <%= hydronic_system_name %> BranchLists
+    BranchList,
+        <%= hydronic_system_name %> Heating Supply Side Branches,  !- Name
+        <%= hydronic_system_name %> Heating Supply Inlet Branch,  !- Branch 1 Name
+        <%= hydronic_system_name %> Central Boiler Branch,   !- Branch 2 Name
+        <%= hydronic_system_name %> Heating Supply Side Bypass Branch,  !- Branch 3 Name
+        <%= hydronic_system_name %> Heating Supply Outlet Branch;  !- Branch 4 Name
+    BranchList,
+        <%= hydronic_system_name %> Heating Demand Side Branches,  !- Name
+        <%= hydronic_system_name %> Heating Demand Inlet Branch,  !- Branch 1 Name
+        <% for branch_name in branch_names %>
+        <%= branch_name %>, !- Branch X Name
+        <% end %>
+        <%= hydronic_system_name %> Heating Demand Side Bypass Branch,  !- Branch 26 Name
+        <%= hydronic_system_name %> Heating Demand Outlet Branch;  !- Branch 27 Name
+
+! <%= hydronic_system_name %> Connector:splitters
+    Connector:Splitter,
+        <%= hydronic_system_name %> Heating Demand Splitter, !- Name
+        <%= hydronic_system_name %> Heating Demand Inlet Branch,  !- Inlet Branch Name
+        <% for branch_name in branch_names %>
+        <%= branch_name %>,  !- Outlet Branch 24 Name
+        <% end %>
+        <%= hydronic_system_name %> Heating Demand Side Bypass Branch;  !- Outlet Branch 25 Name
+    Connector:Splitter,
+        <%= hydronic_system_name %> Heating Supply Splitter, !- Name
+        <%= hydronic_system_name %> Heating Supply Inlet Branch,  !- Inlet Branch Name
+        <%= hydronic_system_name %> Central Boiler Branch,   !- Outlet Branch 1 Name
+        <%= hydronic_system_name %> Heating Supply Side Bypass Branch;  !- Outlet Branch 2 Name
+
+! <%= hydronic_system_name %> Connector:Mixers
+    Connector:Mixer,
+        <%= hydronic_system_name %> Heating Demand Mixer,    !- Name
+        <%= hydronic_system_name %> Heating Demand Outlet Branch,  !- Outlet Branch Name
+        <% for branch_name in branch_names %>
+        <%= branch_name %>,  !- Inlet Branch 24 Name
+        <% end %>
+        <%= hydronic_system_name %> Heating Demand Side Bypass Branch;  !- Inlet Branch 25 Name
+    Connector:Mixer,
+        <%= hydronic_system_name %> Heating Supply Mixer,    !- Name
+        <%= hydronic_system_name %> Heating Supply Outlet Branch,  !- Outlet Branch Name
+        <%= hydronic_system_name %> Central Boiler Branch,   !- Inlet Branch 1 Name
+        <%= hydronic_system_name %> Heating Supply Side Bypass Branch;  !- Inlet Branch 2 Name
+
+! <%= hydronic_system_name %> ConnectorLists
+    ConnectorList,
+        <%= hydronic_system_name %> Heating Supply Side Connectors,  !- Name
+        Connector:Splitter,      !- Connector 1 Object Type
+        <%= hydronic_system_name %> Heating Supply Splitter, !- Connector 1 Name
+        Connector:Mixer,         !- Connector 2 Object Type
+        <%= hydronic_system_name %> Heating Supply Mixer;    !- Connector 2 Name
+    ConnectorList,
+        <%= hydronic_system_name %> Heating Demand Side Connectors,  !- Name
+        Connector:Splitter,      !- Connector 1 Object Type
+        <%= hydronic_system_name %> Heating Demand Splitter, !- Connector 1 Name
+        Connector:Mixer,         !- Connector 2 Object Type
+        <%= hydronic_system_name %> Heating Demand Mixer;    !- Connector 2 Name
+
+NodeList,
+    <%= hydronic_system_name %> Hot Water Loop Setpoint Node List,  !- Name
+    <%= hydronic_system_name %> HW Supply Outlet Node;   !- Node 1 Name
+
+! <%= hydronic_system_name %> Pipe:Adiabatic
+    <%= pipe_type %>,
+        <%= hydronic_system_name %> Heating Supply Outlet,   !- Name
+        <%= hydronic_system_name %> Heating Supply Exit Pipe Inlet Node,  !- Inlet Node Name
+        <%= hydronic_system_name %> HW Supply Outlet Node;   !- Outlet Node Name
+    <%= pipe_type %>,
+        <%= hydronic_system_name %> Heating Demand Inlet Pipe,  !- Name
+        <%= hydronic_system_name %> HW Demand Inlet Node,    !- Inlet Node Name
+        <%= hydronic_system_name %> HW Demand Entrance Pipe Outlet Node;  !- Outlet Node Name
+    <%= pipe_type %>,
+        <%= hydronic_system_name %> Heating Demand Outlet Pipe,  !- Name
+        <%= hydronic_system_name %> HW Demand Exit Pipe Inlet Node,  !- Inlet Node Name
+        <%= hydronic_system_name %> HW Demand Outlet Node;   !- Outlet Node Name
+    <%= pipe_type %>,
+        <%= hydronic_system_name %> Heating Supply Side Bypass,  !- Name
+        <%= hydronic_system_name %> Heating Supply Bypass Inlet Node,  !- Inlet Node Name
+        <%= hydronic_system_name %> Heating Supply Bypass Outlet Node;  !- Outlet Node Name
+    <%= pipe_type %>,
+        <%= hydronic_system_name %> Heating Demand Side Bypass,  !- Name
+        <%= hydronic_system_name %> Heating Demand Bypass Inlet Node,  !- Inlet Node Name
+        <%= hydronic_system_name %> Heating Demand Bypass Outlet Node;  !- Outlet Node Name
+
+! <%= hydronic_system_name %> Pump
+    <% if heat_type == "HW" %>
+        Pump:VariableSpeed,
+            <%= hydronic_system_name %> HW Circ Pump,            !- Name
+            <%= hydronic_system_name %> HW Supply Inlet Node,    !- Inlet Node Name
+            <%= hydronic_system_name %> HW Pump Oulet Node,      !- Outlet Node Name
+            autosize,                !- Design Maximum Flow Rate {m3/s}
+            179352,                  !- Design Pump Head {Pa}
+            autosize,                !- Design Power Consumption {W}
+            0.9,                     !- Motor Efficiency
+            ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+            ,                        !- Coefficient 1 of the Part Load Performance Curve
+            1,                       !- Coefficient 2 of the Part Load Performance Curve
+            ,                        !- Coefficient 3 of the Part Load Performance Curve
+            ,                        !- Coefficient 4 of the Part Load Performance Curve
+            autosize,                !- Design Minimum Flow Rate {m3/s}
+            Intermittent,            !- Pump Control Type
+            ,                        !- Pump Flow Rate Schedule Name
+            ,                        !- Pump Curve Name
+            ,                        !- Impeller Diameter {m}
+            ,                        !- VFD Control Type
+            ,                        !- Pump RPM Schedule Name
+            ,                        !- Minimum Pressure Schedule {Pa}
+            ,                        !- Maximum Pressure Schedule {Pa}
+            ,                        !- Minimum RPM Schedule {rev/min}
+            ,                        !- Maximum RPM Schedule {rev/min}
+            ,                        !- Zone Name
+            ,                        !- Skin Loss Radiative Fraction
+            PowerPerFlowPerPressure, !- Design Power Sizing Method
+            348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+            1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+            ,                        !- Design Minimum Flow Rate Fraction
+            General;                 !- End-Use Subcategory
+    <% else %>
+        Pump:VariableSpeed:Condensate,
+            <%= hydronic_system_name %> HW Circ Pump,  !- Name
+            <%= hydronic_system_name %> HW Supply Inlet Node,  !- Inlet Node Name
+            <%= hydronic_system_name %> HW Pump Oulet Node,  !- Outlet Node Name
+            autosize,                !- Design Steam Volume Flow Rate {m3/s}
+            179352,                  !- Design Pump Head {Pa}
+            autosize,                !- Design Power Consumption {W}
+            0.9,                     !- Motor Efficiency
+            ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+            ,                        !- Coefficient 1 of the Part Load Performance Curve
+            1,                       !- Coefficient 2 of the Part Load Performance Curve
+            ,                        !- Coefficient 3 of the Part Load Performance Curve
+            ,                        !- Coefficient 4 of the Part Load Performance Curve
+            ,                        !- Pump Flow Rate Schedule Name
+            ,                        !- Zone Name
+            ,                        !- Skin Loss Radiative Fraction
+            PowerPerFlowPerPressure, !- Design Power Sizing Method
+            348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+            1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+            General;                 !- End-Use Subcategory
+    <% end %>
+
+! <%= hydronic_system_name %> Boiler
+    <% if heat_type == "HW" %>
+        Boiler:HotWater,
+            <%= hydronic_system_name %> CentralBoiler,           !- Name
+            NaturalGas,              !- Fuel Type
+            autosize,                !- Nominal Capacity {W}
+            0.8,       !- Nominal Thermal Efficiency
+            LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
+            <%= hydronic_system_name %> Cond_Boiler_Eff, !- Normalized Boiler Efficiency Curve Name
+            autosize,                !- Design Water Flow Rate {m3/s}
+            0,                     !- Minimum Part Load Ratio
+            1,                       !- Maximum Part Load Ratio
+            1,                       !- Optimum Part Load Ratio
+            <%= hydronic_system_name %> Boiler Water Inlet Node, !- Boiler Water Inlet Node Name
+            <%= hydronic_system_name %> Boiler Water Oulet Node, !- Boiler Water Outlet Node Name
+            99.9,                    !- Water Outlet Upper Temperature Limit {C}
+            NotModulated,!- Boiler Flow Mode
+            ,                        !- Parasitic Electric Load {W}
+            1,                       !- Sizing Factor
+            General;                 !- End-Use Subcategory
+    <% else %>
+        Boiler:Steam,
+            <%= hydronic_system_name %> CentralBoiler,           !- Name
+            NaturalGas,              !- Fuel Type
+            159999.999837523,        !- Maximum Operating Pressure {Pa}
+            0.8,                     !- Theoretical Efficiency
+            100,                     !- Design Outlet Steam Temperature {C}
+            autosize,                !- Nominal Capacity {W}
+            0.00001,                 !- Minimum Part Load Ratio
+            1,                       !- Maximum Part Load Ratio
+            0.2,                     !- Optimum Part Load Ratio
+            0.8,                     !- Coefficient 1 of Fuel Use Function of Part Load Ratio Curve
+            0.1,                     !- Coefficient 2 of Fuel Use Function of Part Load Ratio Curve
+            0.1,                     !- Coefficient 3 of Fuel Use Function of Part Load Ratio Curve
+            <%= hydronic_system_name %> Boiler Water Inlet Node, !- Water Inlet Node Name
+            <%= hydronic_system_name %> Boiler Water Oulet Node,!- Steam Outlet Node Name
+            1;                       !- Sizing Factor
+    <% end %>
+
+PlantLoop,
+    <%= hydronic_system_name %> Hot Water Loop,          !- Name
+    <%= heat_type == "HW" ? "Water" : "Steam" %>,                   !- Fluid Type
+    ,                        !- User Defined Fluid Type
+    <%= hydronic_system_name %> Hot Loop Operation,      !- Plant Equipment Operation Scheme Name
+    <%= hydronic_system_name %> HW Supply Outlet Node,   !- Loop Temperature Setpoint Node Name
+    <%= heat_type == "HW" ? "100" : "110" %>,                     !- Maximum Loop Temperature {C}
+    0,                       !- Minimum Loop Temperature {C}
+    autosize,                !- Maximum Loop Flow Rate {m3/s}
+    0,                       !- Minimum Loop Flow Rate {m3/s}
+    autocalculate,           !- Plant Loop Volume {m3}
+    <%= hydronic_system_name %> HW Supply Inlet Node,    !- Plant Side Inlet Node Name
+    <%= hydronic_system_name %> HW Supply Outlet Node,   !- Plant Side Outlet Node Name
+    <%= hydronic_system_name %> Heating Supply Side Branches,  !- Plant Side Branch List Name
+    <%= hydronic_system_name %> Heating Supply Side Connectors,  !- Plant Side Connector List Name
+    <%= hydronic_system_name %> HW Demand Inlet Node,    !- Demand Side Inlet Node Name
+    <%= hydronic_system_name %> HW Demand Outlet Node,   !- Demand Side Outlet Node Name
+    <%= hydronic_system_name %> Heating Demand Side Branches,  !- Demand Side Branch List Name
+    <%= hydronic_system_name %> Heating Demand Side Connectors,  !- Demand Side Connector List Name
+    SequentialLoad,          !- Load Distribution Scheme
+    ,                        !- Availability Manager List Name
+    SingleSetpoint,          !- Plant Loop Demand Calculation Scheme
+    None,                    !- Common Pipe Simulation
+    None,                    !- Pressure Simulation Type
+    2;                       !- Loop Circulation Time {minutes}
+
+PlantEquipmentList,
+    <%= hydronic_system_name %> Heating Plant,           !- Name
+    <%= boiler_type %>,         !- Equipment 1 Object Type
+    <%= hydronic_system_name %> CentralBoiler;           !- Equipment 1 Name
+
+PlantEquipmentOperation:HeatingLoad,
+    <%= hydronic_system_name %> Central Boiler Only,     !- Name
+    0,                       !- Load Range 1 Lower Limit {W}
+    999372450999999,         !- Load Range 1 Upper Limit {W}
+    <%= hydronic_system_name %> Heating Plant;           !- Range 1 Equipment List Name
+
+PlantEquipmentOperationSchemes,
+    <%= hydronic_system_name %> Hot Loop Operation,      !- Name
+    PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
+    <%= hydronic_system_name %> Central Boiler Only,     !- Control Scheme 1 Name
+    heating_sch_DEER;        !- Control Scheme 1 Schedule Name
+
+! <%= hydronic_system_name %> setpoint managers
+    SetpointManager:OutdoorAirReset,
+        <%= hydronic_system_name %> Hot Water Loop Setpoint Manager,  !- Name
+        Temperature,             !- Control Variable
+        <%= design_hw_temp %>,        !- Setpoint at Outdoor Low Temperature {C}
+        -17.7777777777778,       !- Outdoor Low Temperature {C}
+        <%= min_hw_temp %>,                      !- Setpoint at Outdoor High Temperature {C}
+        21.1111111111111,        !- Outdoor High Temperature {C}
+        <%= hydronic_system_name %> Hot Water Loop Setpoint Node List;  !- Setpoint Node or NodeList Name
+    SetpointManager:OutdoorAirReset,
+        <%= hydronic_system_name %> Boiler Setpoint Manager, !- Name
+        Temperature,             !- Control Variable
+        <%= design_hw_temp %>,        !- Setpoint at Outdoor Low Temperature {C}
+        -17.7777777777778,       !- Outdoor Low Temperature {C}
+        <%= min_hw_temp %>,                      !- Setpoint at Outdoor High Temperature {C}
+        21.1111111111111,        !- Outdoor High Temperature {C}
+        <%= hydronic_system_name %> Boiler Water Oulet Node; !- Setpoint Node or NodeList Name
+
+! <%= hydronic_system_name %> boiler performance curves
+    Curve:Bicubic,
+        <%= hydronic_system_name %> NonCond_Boiler_Eff,      !- Name
+        1.111720116,             !- Coefficient1 Constant
+        0.078614078,             !- Coefficient2 x
+        -.400425756,             !- Coefficient3 x**2
+        0,                       !- Coefficient4 y
+        -.000156783,             !- Coefficient5 y**2
+        0.009384599,             !- Coefficient6 x*y
+        0.234257955,             !- Coefficient7 x**3
+        0.00000132927,           !- Coefficient8 y**3
+        -.004446701,             !- Coefficient9 x**2*y
+        -.0000122498,            !- Coefficient10 x*y**2
+        0.1,                     !- Minimum Value of x
+        1,                       !- Maximum Value of x
+        20,                      !- Minimum Value of y
+        80,                      !- Maximum Value of y
+        ,                        !- Minimum Curve Output
+        ,                        !- Maximum Curve Output
+        Dimensionless,           !- Input Unit Type for X
+        Temperature,           !- Input Unit Type for Y
+        Dimensionless;           !- Output Unit Type
+    Curve:Biquadratic,
+        <%= hydronic_system_name %> Cond_Boiler_Eff,         !- Name
+        1.124970374,             !- Coefficient1 Constant
+        0.014963852,             !- Coefficient2 x
+        -.02599835,              !- Coefficient3 x**2
+        0,                       !- Coefficient4 y
+        -.00000140464,           !- Coefficient5 y**2
+        -.00153624,              !- Coefficient6 x*y
+        0.1,                     !- Minimum Value of x
+        1,                       !- Maximum Value of x
+        30,                      !- Minimum Value of y
+        85,                      !- Maximum Value of y
+        ,                        !- Minimum Curve Output
+        ,                        !- Maximum Curve Output
+        Dimensionless,           !- Input Unit Type for X
+        Temperature,           !- Input Unit Type for Y
+        Dimensionless;           !- Output Unit Type
