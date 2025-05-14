@@ -88,7 +88,7 @@ import "zonehvac/res-zone-hvac-combi.pxt", :group => "hvac_zone" do
   exclude "zone_name|system_name|secondary_zone|water_heater_name"
 end
 
-import "system/water-heater-combi.pxt", :group => "water_heating" do
+import "system/res-water-heater-combi.pxt", :group => "water_heating" do
   include "*"
   exclude "water_heater_name|water_heater_zone|water_use_zone|system_name"
   parameter "water_heater_type"
@@ -161,7 +161,7 @@ for zone in all_zones
     all_dhw[water_heater_name] ||= []
     all_dhw[water_heater_name] << system_name
 
-  insert 'system/water-heater-combi.pxt',
+  insert 'system/res-water-heater-combi.pxt',
     :water_heater_name => water_heater_name,
     :water_heater_zone => water_heater_zone,
     :water_use_zone => control_zone_name,
