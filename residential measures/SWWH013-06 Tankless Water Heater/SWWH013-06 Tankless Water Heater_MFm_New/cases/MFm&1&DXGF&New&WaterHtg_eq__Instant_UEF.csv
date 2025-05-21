@@ -1,4 +1,4 @@
-skip,case_name,:water_heater_type,:water_heater_location,:water_heater_cap,:thermal_eff,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:sch,:tank_ua
+skip,case_name,:water_heater_type,:water_heater_location,:water_heater_cap,:thermal_eff,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:sch,:tank_skin_loss
 ,RG-WaterHtg_eq-Instant_UEF-0.81 UEF-HI,gas_tankless,unconditioned,41000['BTUH'],0.84,,HI,350 ['BTUH'],NaturalGas,MFm_minute_dhw_demand_fraction.csv,
 ,RG-WaterHtg_eq-Instant_UEF-0.87 UEF-HI,gas_tankless,unconditioned,41000['BTUH'],0.92,,HI,350 ['BTUH'],NaturalGas,MFm_minute_dhw_demand_fraction.csv,
 ,RG-WaterHtg_eq-Instant_UEF-0.92 UEF-HI,gas_tankless,unconditioned,41000['BTUH'],0.96,,HI,350 ['BTUH'],NaturalGas,MFm_minute_dhw_demand_fraction.csv,
