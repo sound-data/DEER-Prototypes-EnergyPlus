@@ -10,6 +10,7 @@ parameter "op_sch", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:0
 
 parameter "fan_type", :default => "SYSTEM-MODEL" # (ON-OFF | VAV | SYSTEM-MODEL )
 parameter "fan_speed", :default => "CONSTANT"  # (CONSTANT | DUAL| VARIABLE)  Fan:SystemModel allows multi-speed => DUAL
+parameter "fan_curve", :default => "T24"  # TRC: Added existing parameter to this template (MZVAV-FC | MZVAV-VSD | T24) 
 parameter "fan_sizing_method", :default => "TotalEfficiencyAndPressure" # (only relevant when fan_type = "SYSTEM-MODEL". Options: PowerPerFlow | PowerPerFlowPerPressure | TotalEfficiencyAndPressure )
 parameter "fan_power_per_flow", :default => 0.85['W/CFM']  # (only relevant when fan_type = "SYSTEM-MODEL" and fan_sizing_method = "PowerPerFlow")
 parameter "fan_power_per_flow_pressure", :default => 1.67  # W/((m3/s)-Pa) (only relevant when fan_type = "SYSTEM-MODEL" and fan_sizing_method = "PowerPerFlowPerPressure")
@@ -550,7 +551,39 @@ Fan:SystemModel,
 
 <% elsif fan_speed == "VARIABLE" %>
   ;                       !- Number of Speeds
-
+<%
+# TRC: Added if/else conditional statement for fan curve performance for SWHC018
+# TRC: Fan curve values sourced from ANSI/ASHRAE/IES Standard 90.1-2016 Performance Rating Method Reference Manual
+%>
+  <% if fan_curve == "MZVAV-FC" # TRC: Fan Type - Multi zone VAV with forward curve fans riding the curve %>
+Curve:Quartic,
+  <%= unitary_name %> Supply Fan Curve,                      !- Name
+  0.1224 ,                       !- Coefficient1 Constant
+  0.612 ,                         !- Coefficient2 x
+  0.5983 ,                      !- Coefficient3 x**2
+  -0.3334 ,                       !- Coefficient4 x**3
+  0.0 ,                                !- Coefficient5 x**4
+  0.0 ,                                !- Minimum Value of x
+  1.0 ,                                !- Maximum Value of x
+  0.3 ,                                !- Minimum Curve Output
+  1.0 ,                                !- Maximum Curve Output
+  Dimensionless ,                      !- Input Unit Type for X
+  Dimensionless ;                      !- Output Unit Type
+<%elsif fan_curve == "MZVAV-VSD" # TRC: Fan Type - Multi zone VAV with VSD and fixed SP setpoint %>
+Curve:Quartic,
+  <%= unitary_name %> Supply Fan Curve,                      !- Name
+  0.0013 ,                       !- Coefficient1 Constant
+  0.1470 ,                         !- Coefficient2 x
+  0.9506 ,                      !- Coefficient3 x**2
+  -0.0998 ,                       !- Coefficient4 x**3
+  0.0 ,                                !- Coefficient5 x**4
+  0.0 ,                                !- Minimum Value of x
+  1.0 ,                                !- Maximum Value of x
+  0.2 ,                                !- Minimum Curve Output
+  1.0 ,                                !- Maximum Curve Output
+  Dimensionless ,                      !- Input Unit Type for X
+  Dimensionless ;                      !- Output Unit Type
+<%elsif fan_curve == "T24" %>
 Curve:Quartic,
   <%= unitary_name %> Supply Fan Curve,                      !- Name
   0.0407598940 ,                       !- Coefficient1 Constant
@@ -564,6 +597,7 @@ Curve:Quartic,
   1.0 ,                                !- Maximum Curve Output
   Dimensionless,                      !- Input Unit Type for X
   Dimensionless;                      !- Output Unit Type
+<% end %>
 <% end %>
 
 <% elsif (fan_type == "VARIABLE") %>
