@@ -81,13 +81,13 @@ import "zonehvac/res-zone-hvac-combi.pxt", :group => "hvac_zone" do
   exclude "zone_name|system_name|secondary_zone|water_heater_name"
 end
 
-import "system/water-heater-combi.pxt", :group => "water_heating" do
+import "system/res-water-heater-combi.pxt", :group => "water_heating" do
   include "*"
   exclude "water_heater_name|water_heater_zone|water_use_zone|system_name"
   parameter "water_heater_type"
 end
 
-import "system/res-hw-system-comb.pxt", :group => "hw" do
+import "system/res-hw-system-combi.pxt", :group => "hw" do
     include "*"
     exclude "hydronic_system_name|branch_names|combi"
     parameter "heat_type"
@@ -163,7 +163,7 @@ for zone in all_zones
     all_dhw[water_heater_name] ||= []
     all_dhw[water_heater_name] << system_name
 
-  insert 'system/water-heater-combi.pxt',
+  insert 'system/res-water-heater-combi.pxt',
     :water_heater_name => water_heater_name,
     :water_heater_zone => water_heater_zone,
     :water_use_zone => control_zone_name,
@@ -207,7 +207,7 @@ if (!combi and (heat_type == "HW" or heat_type == "ST"))
         #control_zones = system[2]
         #secondary_zones = system[3]
 
-        insert "system/res-hw-system-comb.pxt",
+        insert "system/res-hw-system-combi.pxt",
             :hydronic_system_name => hydronic_system_name,
             :branch_names => system_names.map! { |element| element + " Heating Coil Branch"},
             **hw
