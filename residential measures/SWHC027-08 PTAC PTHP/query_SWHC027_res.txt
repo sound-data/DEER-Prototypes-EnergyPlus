@@ -1,5 +1,3 @@
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/*, Cooling Capacity
-ComponentSizingSummary/Entire Facility/Coil:Heating:Fuel/Design Size Nominal Capacity/*, Heating Capacity
 InputVerificationandResultsSummary/Entire Facility/General/Value/Program Version and Build
 InputVerificationandResultsSummary/Entire Facility/General/Value/Weather File
 InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/Conditioned Total
@@ -33,3 +31,5 @@ AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Hea
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Water Systems
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Refrigeration
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Generators
+ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/*, Cooling Capacity
+ComponentSizingSummary/Entire Facility/Coil:Heating:DX:SingleSpeed/Design Size Gross Rated Heating Capacity/*, Heating Capacity
