@@ -7,6 +7,7 @@ parameter "system_name", :default => nil
 parameter "secondary_zone", :default => nil
 parameter "hydronic_system_name", :default => nil
 
+
 # Cooling COP
 parameter "cool_type", :default => "DX" #DX, NC
 parameter "cooling_coil_cop", :default=>3.28
@@ -61,6 +62,69 @@ cool_coil_object_type = ""
         end
     end
 %>
+
+parameter "sub_heat_type",
+  :default => "NONE", :domain => String  # ["NONE", "BASEBOARD-RESISTANCE", "BASEBOARD-WATER"]
+parameter "sub_heat_eff",
+  :default => 0.98, :domain => Numeric
+parameter "sub_heat_cap",
+  :default => Autosize
+  
+<%
+equipment_list = []
+inlet_branches = []
+exhaust_branches = []
+return_branches = []
+  
+if (sub_heat_type == "BASEBOARD-RESISTANCE")
+  sub_heat_name = "#{zone_name} Baseboard"
+  equipment_list << ["ZoneHVAC:Baseboard:Convective:Electric", sub_heat_name]
+elsif (sub_heat_type == "BASEBOARD-WATER")
+  sub_heat_name = "#{zone_name} Baseboard"
+  equipment_list << ["ZoneHVAC:Baseboard:Convective:Water", sub_heat_name]
+else
+  # Also radiant slab, or hi-temp heat, or UH, or MZ furnace
+
+
+end
+
+%>
+
+
+ <% if (sub_heat_type == "BASEBOARD-RESISTANCE") %>
+ZoneHVAC:Baseboard:Convective:Electric,
+  <%= sub_heat_name %>,    !- Name
+  <%= sub_heat_name %> Schedule,  !- Availability Schedule Name
+  HeatingDesignCapacity,   !- Heating Design Capacity Method
+  <%= sub_heat_cap %>,     !- Heating Design Capacity {W}
+  ,                        !- Heating Design Capacity Per Floor Area {W/m2}
+  ,                        !- Fraction of Autosized Heating Design Capacity
+  <%= sub_heat_eff %>;     !- Efficiency
+
+<% elsif (sub_heat_type == "BASEBOARD-WATER") %>
+ZoneHVAC:Baseboard:Convective:Water,
+  <%= sub_heat_name %>,    !- Name
+  <%= sub_heat_name %> Schedule,  !- Availability Schedule Name
+  <%= sub_heat_name %> HW Inlet Node,  !- Inlet Node Name
+  <%= sub_heat_name %> HW Outlet Node,  !- Outlet Node Name
+  HeatingDesignCapacity,   !- Heating Design Capacity Method
+  <%= sub_heat_cap %>,     !- Heating Design Capacity {W}
+  ,                        !- Heating Design Capacity Per Floor Area {W/m2}
+  ,                        !- Fraction of Autosized Heating Design Capacity
+  Autosize,                !- U-Factor Times Area Value {W/K}
+  Autosize,                !- Maximum Water Flow Rate {m3/s}
+  ;                        !- Convergence Tolerance
+
+  Branch,
+  <%= sub_heat_name %> HW Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  ZoneHVAC:Baseboard:Convective:Water,  !- Component Object Type
+  <%= sub_heat_name %>,    !- Component Name
+  <%= sub_heat_name %> HW Inlet Node,  !- Component Inlet Node Name
+  <%= sub_heat_name %> HW Outlet Node;  !- Component Outlet Node Name
+
+<% end %>
+
 !Sizing:zone objects
     Sizing:Zone,
         <%= zone_name %>,  !- Zone or ZoneList Name

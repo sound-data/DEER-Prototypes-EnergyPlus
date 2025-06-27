@@ -9,6 +9,9 @@ parameter "run_name", :default=>"Building"
 #domestic water heating
 parameter "water_heater_type", :default => "gas", :description => "currently availabily water heater types are gas, elec, gas_tankless, hpwh, 120v_hpwh"
 
+parameter "sub_heat_type",
+  :default => "NONE", :domain => String  # ["NONE", "BASEBOARD-RESISTANCE", "BASEBOARD-WATER"]
+
 #hvac type
 parameter "hvac_type", :default=>""
 
@@ -21,6 +24,7 @@ parameter "dhw_stpt_sch", :default => ""
 import "zonehvac/res-zone-hvac-combi.pxt", :group => "hvac_zone" do
   include "*"
   exclude "zone_name|system_name|secondary_zone|water_heater_name"
+  parameter "sub_heat_type"
 end
 
 import "system/res-water-heater-combi.pxt", :group => "water_heating" do
@@ -194,7 +198,8 @@ for zone in all_zones
   water_heater_name = zone[5]
   hydronic_system_name = zone[6]
 
-    #create list of zones served by HW
+  
+	#create list of zones served by HW
     if (!combi and (heat_type == "HW" or heat_type == "ST"))
         # create list of hydronic systems and corresponding zones
         all_hydronic[hydronic_system_name] ||= {system: [], primary: [], secondary: []}
