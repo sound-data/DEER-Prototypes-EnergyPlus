@@ -256,14 +256,18 @@ if (!combi and (heat_type == "HW" or heat_type == "ST"))
         #control_zones = system[2]
         #secondary_zones = system[3]
 
+		#Solaris Technical - Behzad S. Rizi - 07/17/25 - Modified branch_names to include baseboard branches in the branchlist, splitterlist, connectorlist
         insert "system/res-hw-system-combi.pxt",
             :hydronic_system_name => hydronic_system_name,
-            :branch_names => system_names.map! { |element| element + " Heating Coil Branch"},
-            **hw
+			:branch_names => system_names.flat_map { |element|
+				branches = ["#{element} Heating Coil Branch"]
+				branches << "#{element} Baseboard HW Branch" if sub_heat_type == "BASEBOARD-WATER"
+				branches
+			},
+			**hw
     end
 end
 %>
-
 
 
 !-Generator IDFEditor 1.51
