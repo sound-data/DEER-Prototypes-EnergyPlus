@@ -7,6 +7,7 @@ Features:
 * Read from instance-out.sql files using result spec format like modelkit
 * Apply DEER peak period calculation to hourly results and include those.
 * Requires python >= 3.7.1 and additional package "tqdm"
+* Note that given two queries with the same output name, the behavior is undefined.
 
 Usage:
     Prerequisite: running models, select a query file, path to DEER peak period definitions
@@ -15,11 +16,19 @@ Usage:
 
 Changelog
     * 2024-05-01 Adapted result.py for DEER Peak period calculation
+    * 2024-05-15 Filename patterns updated to match folders like runs1, runs-Asm, etc.
+    * 2025-01-07 Apply DEER Peak calculation more selectively
+    * 2025-07-24 Filename pattern matching revised for better consistency between different conventions
 
 @Author: Nicholas Fette <nfette@solaris-technical.com>
 @Date: 2024-05-01
 
 """
+
+# Select columns from hourly files to apply DEER peak calculation
+DEERPEAK_COLUMNS = ["Electricity:Facility [J](Hourly)"]
+# Do you want to append "(units)"" in the column name, if available?
+APPEND_UNITS = False
 
 ##STEP 0: Setup (import all necessary libraries)
 import re
@@ -316,6 +325,7 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str):
     """
     # Get all available hourly results with shape (N, 8760)
     ReportDataWide = get_sim_hourly(conn)
+    ReportDataWide = ReportDataWide.loc[DEERPEAK_COLUMNS]
     if ReportDataWide.shape[1] != 8760:
         # No hourly data. This can happen if simulation created the output file but failed to complete.
         # Or if the file represents a sizing run.
@@ -411,17 +421,35 @@ def get_sim_peak_and_tabular(queryfile: Path,
             # Don't separate "groups" of queries but group them all together.
             # sim_data_detail, sim_data_agg = [], []
             for resultspec, user_column_name in list_query_path_and_name:
+                # 2025-01-22 Updated Nicholas Fette
+                # Default to the column name from the result query without attempting to append unit symbol from results.
+                # This avoids errors due to mismatched column names when a file is missing one or more results.
+                # Useful for concatenating results in a wide-format table.
+                output_column_name = user_column_name
+
+                if APPEND_UNITS:
+                    # For consistency between files, do not append "(units)" in the column name for wildcard queries.
+                    if "*" not in resultspec.to_string() and sim_data_detail1 is not None:
+                        units = sim_data_detail1['Units'].iloc[0]
+                        output_column_name = f"{user_column_name} ({units})"
+
                 sim_data_detail1, sim_data_agg1 = get_sim_tabular(conn, resultspec)
                 if sim_data_detail1 is None:
-                    # No data found matching the result spec. Skip this and go to next.
+                    # No data found matching the result spec.
+                    # 2025-01-22 Updated Nicholas Fette
+                    # For consistency between files, store a None/NULL result for this column.
+                    # To-do: In sqlite output mode, pandas may not be able to guess the dtype.
+                    # As a workaround, user may manually alter the sim_data table column types, then run the script.
+                    sim_data.update({output_column_name: None})
                     continue
-                units = sim_data_detail1['Units'].iloc[0]
+                # This script does not compile detail of all rows included in wildcard queries:
                 #sim_data_detail.append(sim_data_detail1)
                 if sim_data_agg1 is not None:
-                    sim_data.update({f"{user_column_name} ({units})": sim_data_agg1})
+                    sim_data.update({output_column_name: sim_data_agg1})
             #sim_data_agg.append(sizing_agg_row)
 
         # Now get the DEER Peak values from hourly data
+        # Column name(s) for DEER Peak average values are taken directly from hourly output column name.
         deer_peak_values = get_sim_deer_peak(conn, bldgloc)
         if deer_peak_values is not None:
             sim_data.update(deer_peak_values)
@@ -479,17 +507,31 @@ def get_runs_instances(study: Path, search_pattern = '**/instance*-out.sql', exc
         #metadata['File Name'] = re.sub(*pathsub, relstr, 1)
         metadata['File Name'] = relstr
         metadata['BldgLoc'] = bldgloc
+        metadata['BldgType'] = None
+        metadata['Story'] = None
+        metadata['BldgHVAC'] = None
+        metadata['BldgVint'] = None
+        metadata['TechGroup'] = None
+        metadata['TechType'] = None
+        metadata['TechID'] = None
+        metadata['Cohort'] = None
+        metadata['Case'] = None
 
         # Try to get additional metadata, but don't fail if it doesn't match.
         patterns = [
-            r'.*/runs/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<TechGroup>\w+)__(?P<TechType>\w+)/(?P<TechID>[^/]+)/instance.*',
-            r'.*/runs/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*'
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*',
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroup>[\w\-]+)__(?P<TechType>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroupUnused>[\w\-]+)__(?P<TechTypeUnused>[\w\-]+)&(?P<TechGroup>[\w\-]+)__(?P<TechType>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
         ]
         for pattern in patterns:
             m2 = re.match(pattern, relstr)
             if m2:
-                metadata.update(m2.groupdict())
-                break
+                sim_metadata = m2.groupdict()
+                if 'TechGroupUnused' in sim_metadata:
+                    del sim_metadata['TechGroupUnused']
+                if 'TechTypeUnused' in sim_metadata:
+                    del sim_metadata['TechTypeUnused']
+                metadata.update(sim_metadata)
 
         yield (sqlfile, bldgloc, metadata)
 
@@ -559,6 +601,9 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
 def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path,
                            parallel = True,
                            chunksize = 100):
+    # 2024-05-15 Todo
+    # User testing observed that inconsistent filenames may result in inconsistent
+    # column alignment in CSV mode. Workaround is to change chunksize=None.
     gather = gather_sim_data(study, queryfile, parallel)
     with open(csvfile, 'w', newline='') as f:
         if chunksize is None:
