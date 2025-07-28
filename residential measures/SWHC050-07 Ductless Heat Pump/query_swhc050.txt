@@ -33,7 +33,11 @@ AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Wat
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Refrigeration
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Generators
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Total End Uses
-ComponentSizingSummary/Entire Facility/AirLoopHVAC:Unitary:Furnace:HeatCool/Nominal Heating Capacity/*, HeatCap
-ComponentSizingSummary/Entire Facility/AirLoopHVAC:Unitary:Furnace:HeatCool/Nominal Cooling Capacity/*, CoolCap
-ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Nominal Heating Capacity/*, HeatCap
-ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Nominal Cooling Capacity/*, CoolCap
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:Unitary:Furnace:HeatCool/Nominal Heating Capacity/*, HeatCapDXGF
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:Unitary:Furnace:HeatCool/Nominal Cooling Capacity/*, CoolCapDXGF
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Nominal Heating Capacity/*, HeatCapDXHP
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Nominal Cooling Capacity/*, CoolCapDXHP
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitaryHeatPump:AirToAir/Nominal Heating Capacity/*, HeatCapPTHP
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitaryHeatPump:AirToAir/Nominal Cooling Capacity/*, CoolCapPTHP
+ComponentSizingSummary/Entire Facility/Coil:Heating:Electric/Design Size Nominal Capacity/*, HeatCapPTAC
+ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/*, CoolCapPTAC
