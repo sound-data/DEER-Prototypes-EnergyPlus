@@ -1,3 +1,3 @@
-skip,case_name,:steam_boiler_eff
-,TE_81_Steam_baseline,0.81
-,Msr_TE_82_ECM,0.82
+skip,case_name,:boiler_eff,:setpoint_oa_low_temp,:setpoint_oa_high_temp
+,NG-SpaceHtg_eq-Boiler-Steam-82-TE,0.82,165['F'],140['F']
+,NG-SpaceHtg_eq-Boiler-Steam-81-TE,0.81,165['F'],140['F']
