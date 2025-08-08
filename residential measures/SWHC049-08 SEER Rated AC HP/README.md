@@ -58,6 +58,6 @@ DMo&0&rDXHP&Ex&dxHP_equip | Res-GasFurnace-AFUE80-ECM | DMo, SFm, MFm | Ex | SWH
 The file `query_swhc049.txt` includes queries for cooling and heating capacity for the models generated in this folder. After running simulations, the user may gather outputs using the following command:
 
 ```
-cd "residential measures/SWHC049-06 SEER Rated AC HP"
+cd "residential measures/SWHC049-08 SEER Rated AC HP"
 python result2.py -q query_swhc049.txt
 ```
