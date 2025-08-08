@@ -8,5 +8,3 @@ skip,case_name,:ductless,:use_dummy_return_plenum,:vfd_curve_name,:supplyfan_tot
 ,Msr-RE-HV-DHP-20S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,4.22,multispeed,unitary_system,3.0179
 ,Msr-RE-HV-DHP-21S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,4.31,multispeed,unitary_system,3.1058
 ,Msr-RE-HV-DHP-22S,TRUE,FALSE,VFD_Fan_Curve,0.25,0.5,4.39,multispeed,unitary_system,3.1937
-,RG-SpaceHtg_eq-GasFurnace-rDXGF-AFUE67-PoweredFan,,,,0.12,0.24,,,,,0.67
-,RG-SpaceHtg_eq-GasFurnace-rDXGF-AFUE75-PoweredFan,,,,0.12,0.24,,,,,0.75
