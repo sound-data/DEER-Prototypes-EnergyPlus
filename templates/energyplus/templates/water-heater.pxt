@@ -384,9 +384,9 @@ WaterHeater:Mixed,
     ,                        !- Ambient Temperature Schedule Name
     <%= water_heater_zone %>,  !- Ambient Temperature Zone Name
     ,                        !- Ambient Temperature Outdoor Air Node Name
-    0.680511094200001,       !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
+    0,       !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
     1,                       !- Off Cycle Loss Fraction to Zone
-    0.680511094200001,       !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
+    0,       !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
     1,                       !- On Cycle Loss Fraction to Zone
     ,                        !- Peak Use Flow Rate {m3/s}
     ,                        !- Use Flow Rate Fraction Schedule Name
