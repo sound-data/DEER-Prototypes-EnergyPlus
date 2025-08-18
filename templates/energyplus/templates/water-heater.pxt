@@ -241,8 +241,6 @@ Curve:Quadratic,
 
 
 <% if (water_heater_type !='gas_tankless') %>
-!- 2025-08-15 Zeroed out off/on cycle loss coefficients in tankless heater
-!- Proposed by Prateek Munankarmi, applied by Behzad S Rizi
 WaterHeater:Stratified,
     <%= water_heater_name %>,      !- Name
     Domestic Hot Water,      !- End-Use Subcategory
@@ -362,6 +360,8 @@ PlantEquipmentList,
 
 
 <% elsif water_heater_type =='gas_tankless' %>
+!- 2025-08-15 Zeroed out off/on cycle loss coefficients in tankless heater
+!- Proposed by Prateek Munankarmi, applied by Behzad S Rizi
 WaterHeater:Mixed,
     <%= water_heater_name %>,      !- Name
     <%= tank_size %>,                 !- Tank Volume {m3}
