@@ -360,6 +360,8 @@ PlantEquipmentList,
 
 
 <% elsif water_heater_type =='gas_tankless' %>
+!- 2025-08-15 Zeroed out off/on cycle loss coefficients in tankless heater
+!- Proposed by Prateek Munankarmi, applied by Behzad S Rizi
 WaterHeater:Mixed,
     <%= water_heater_name %>,      !- Name
     <%= tank_size %>,                 !- Tank Volume {m3}
@@ -384,9 +386,9 @@ WaterHeater:Mixed,
     ,                        !- Ambient Temperature Schedule Name
     <%= water_heater_zone %>,  !- Ambient Temperature Zone Name
     ,                        !- Ambient Temperature Outdoor Air Node Name
-    0.680511094200001,       !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
+    0,       !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
     1,                       !- Off Cycle Loss Fraction to Zone
-    0.680511094200001,       !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
+    0,       !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
     1,                       !- On Cycle Loss Fraction to Zone
     ,                        !- Peak Use Flow Rate {m3/s}
     ,                        !- Use Flow Rate Fraction Schedule Name
