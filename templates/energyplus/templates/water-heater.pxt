@@ -241,6 +241,7 @@ Curve:Quadratic,
 
 
 <% if (water_heater_type !='gas_tankless') %>
+! Solaris Technical - Behzad S. Rizi - 08/10/2025 - Zero out Off/on Cycle Loss Coefficient to Ambient Temperature {W/K}"
 WaterHeater:Stratified,
     <%= water_heater_name %>,      !- Name
     Domestic Hot Water,      !- End-Use Subcategory
