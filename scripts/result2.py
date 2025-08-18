@@ -260,8 +260,16 @@ def build_query_with_special_cases(resultspec: ResultSpec, finalize = True) -> s
     return query, agg_columns
 
 
-def get_sim_hourly(conn: Connection):
+def get_sim_hourly(conn: Connection, column_filter=None):
     """Get simulation hourly results from one EnergyPlus SQLite output file.
+
+    Inputs:
+        conn: sqlite3.Connection | str
+            Database file connection or string path to EnergyPlus SQLite output file.
+            Note that this function does not read CSV output files.
+        column_filter: None | List[str]
+            List of hourly output column names to include.
+            If None, all output columns in the file are included.
 
     Returns:
         ReportDataWide: pandas.DataFrame
@@ -286,11 +294,6 @@ def get_sim_hourly(conn: Connection):
     """
 
     ReportDataDictionary = pd.read_sql_query('select * from ReportDataDictionary', conn, index_col='ReportDataDictionaryIndex')
-    #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
-    chunks = []
-    for chunk in pd.read_sql_query('select * from ReportData', conn, chunksize=10000):
-        chunks.append(chunk)
-    ReportData = pd.concat(chunks, axis=0)
 
     # Transform ReportDataDictionary so we have a single column lookup string.
     # LookupKey looks like:
@@ -300,6 +303,24 @@ def get_sim_hourly(conn: Connection):
         lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if bool(x.KeyValue)
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
+
+    query_report_data = 'select * from ReportData'
+
+    rd_indices = []
+    if column_filter:
+        # Construct a list of ReportDataDictionaryIndex values from column_filter.
+        # Note that ReportDataDictionaryIndex values are file-specific.
+        rd_indices = ReportDataDictionary[ReportDataDictionary['LookupKey'].isin(column_filter)].index
+        placeholders = ', '.join(['?'] * len(rd_indices))
+        query_report_data += f''' where "ReportDataDictionaryIndex" in ({placeholders})'''
+
+    #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
+    chunks = []
+    for chunk in pd.read_sql_query(query_report_data, conn, chunksize=10000,
+                                   params=tuple(rd_indices) if column_filter else None):
+        chunks.append(chunk)
+    ReportData = pd.concat(chunks, axis=0)
+
     ReportData2 = ReportData.join(ReportDataDictionary, on='ReportDataDictionaryIndex')
 
     # Transform ReportData from long to wide so we can make a condensed table
@@ -310,7 +331,7 @@ def get_sim_hourly(conn: Connection):
 
     return ReportDataWide
 
-def get_sim_deer_peak(conn: Connection, bldgloc: str):
+def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COLUMNS):
     """Get simulation DEER Peak results from one EnergyPlus SQLite output file.
 
     Inputs:
@@ -324,8 +345,8 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str):
             of the hourly variable named `k` over the DEER Peak Period.
     """
     # Get all available hourly results with shape (N, 8760)
-    ReportDataWide = get_sim_hourly(conn)
-    ReportDataWide = ReportDataWide.loc[DEERPEAK_COLUMNS]
+    ReportDataWide = get_sim_hourly(conn, column_filter=column_filter)
+    #ReportDataWide = ReportDataWide.loc[DEERPEAK_COLUMNS]
     if ReportDataWide.shape[1] != 8760:
         # No hourly data. This can happen if simulation created the output file but failed to complete.
         # Or if the file represents a sizing run.
@@ -520,6 +541,7 @@ def get_runs_instances(study: Path, search_pattern = '**/instance*-out.sql', exc
         # Try to get additional metadata, but don't fail if it doesn't match.
         patterns = [
             r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*',
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroup>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
             r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroup>[\w\-]+)__(?P<TechType>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
             r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroupUnused>[\w\-]+)__(?P<TechTypeUnused>[\w\-]+)&(?P<TechGroup>[\w\-]+)__(?P<TechType>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
         ]
