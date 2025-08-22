@@ -19,9 +19,9 @@ skip,case_name,:water_heater_type,:water_heater_cap,:heat_element_cap,:thermal_e
 ,RE-WaterHtg_eq-Stor_UEF-30g-MD-0.92UEF-240V,elec,4900['W'],,0.98,0.92,33,MD,,,49['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-Stor_UEF-40g-MD-0.92UEF-240V,elec,4900['W'],,0.98,0.93,39,MD,,,45['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-Stor_UEF-50g-MD-0.92UEF-240V,elec,4900['W'],,0.98,0.93,49,MD,,,54['in'],MFm_minute_dhw_demand_fraction.csv
-,RG-WaterHtg_eq-Stor_UEF-30g-HI-0.60UEF,gas,41000['BTUH'],,0.751,0.6,33,HI,350 ['BTUH'],NaturalGas,49['in'],MFm_minute_dhw_demand_fraction.csv
-,RG-WaterHtg_eq-Stor_UEF-40g-HI-0.64UEF,gas,41000['BTUH'],,0.759,0.61,39,HI,350 ['BTUH'],NaturalGas,45['in'],MFm_minute_dhw_demand_fraction.csv
-,RG-WaterHtg_eq-Stor_UEF-50g-HI-0.63UEF,gas,41000['BTUH'],,0.764,0.61,49,HI,350 ['BTUH'],NaturalGas,54['in'],MFm_minute_dhw_demand_fraction.csv
-,RG-WaterHtg_eq-Stor_UEF-60g-HI-0.61UEF,gas,41000['BTUH'],,0.8,0.61,58,HI,350 ['BTUH'],NaturalGas,57['in'],MFm_minute_dhw_demand_fraction.csv
-,RG-WaterHtg_eq-Stor_UEF-75g-HI-0.59UEF,gas,41000['BTUH'],,0.71,0.59,75,HI,350 ['BTUH'],NaturalGas,59['in'],MFm_minute_dhw_demand_fraction.csv
-,RG-WaterHtg_eq-Instant_UEF-lt200kBtuh-HI-0.81UEF,gas_tankless,190000['BTUH'],,0.84,0.81,0,HI,50 ['W'],Electricity,,MFm_minute_dhw_demand_fraction.csv
+#,RG-WaterHtg_eq-Stor_UEF-30g-HI-0.60UEF,gas,41000['BTUH'],,0.751,0.6,33,HI,350 ['BTUH'],NaturalGas,49['in'],MFm_minute_dhw_demand_fraction.csv
+#,RG-WaterHtg_eq-Stor_UEF-40g-HI-0.64UEF,gas,41000['BTUH'],,0.759,0.61,39,HI,350 ['BTUH'],NaturalGas,45['in'],MFm_minute_dhw_demand_fraction.csv
+#,RG-WaterHtg_eq-Stor_UEF-50g-HI-0.63UEF,gas,41000['BTUH'],,0.764,0.61,49,HI,350 ['BTUH'],NaturalGas,54['in'],MFm_minute_dhw_demand_fraction.csv
+#,RG-WaterHtg_eq-Stor_UEF-60g-HI-0.61UEF,gas,41000['BTUH'],,0.8,0.61,58,HI,350 ['BTUH'],NaturalGas,57['in'],MFm_minute_dhw_demand_fraction.csv
+#,RG-WaterHtg_eq-Stor_UEF-75g-HI-0.59UEF,gas,41000['BTUH'],,0.71,0.59,75,HI,350 ['BTUH'],NaturalGas,59['in'],MFm_minute_dhw_demand_fraction.csv
+#,RG-WaterHtg_eq-Instant_UEF-lt200kBtuh-HI-0.81UEF,gas_tankless,190000['BTUH'],,0.84,0.81,0,HI,50 ['W'],Electricity,,MFm_minute_dhw_demand_fraction.csv

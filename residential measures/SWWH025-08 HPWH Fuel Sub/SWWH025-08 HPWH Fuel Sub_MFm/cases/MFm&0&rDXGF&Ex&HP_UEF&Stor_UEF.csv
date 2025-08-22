@@ -1,11 +1,14 @@
 skip,case_name,:water_heater_type,:water_heater_cap,:heat_element_cap,:thermal_eff,:uef,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:tank_height,:sch
+,RE-WaterHtg_eq-HP_UEF-40g-MDHI-3.00UEF-240V,hpwh,1230['W'],4500['W'],0.98,3,36,MD-HI,,,45['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-40g-MDHI-3.30UEF-240V,hpwh,1230['W'],4500['W'],0.98,3.45,36,MD-HI,,,45['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-40g-MDHI-3.50UEF-240V,hpwh,1230['W'],4500['W'],0.98,3.52,36,MD-HI,,,45['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-40g-MDHI-3.75UEF-240V,hpwh,1230['W'],4500['W'],0.98,3.75,36,MD-HI,,,45['in'],MFm_minute_dhw_demand_fraction.csv
+,RE-WaterHtg_eq-HP_UEF-50g-MDHI-3.00UEF-240V,hpwh,1230['W'],4500['W'],0.98,3,46,MD-HI,,,47['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-50g-MDHI-3.30UEF-240V,hpwh,1230['W'],4500['W'],0.98,3.42,46,MD-HI,,,47['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-50g-MDHI-3.50UEF-240V,hpwh,1230['W'],4500['W'],0.98,3.52,46,MD-HI,,,47['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-50g-MDHI-3.75UEF-240V,hpwh,1230['W'],4500['W'],0.98,3.75,46,MD-HI,,,47['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-65g-MDHI-2.91UEF-240V,hpwh,1230['W'],4500['W'],0.98,2.91,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.00UEF-240V,hpwh,1230['W'],4500['W'],0.98,3,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.30UEF-240V,hpwh,1230['W'],4500['W'],0.98,3.44,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.50UEF-240V,hpwh,1230['W'],4500['W'],0.98,3.54,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv
 ,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.75UEF-240V,hpwh,1230['W'],4500['W'],0.98,3.85,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv
