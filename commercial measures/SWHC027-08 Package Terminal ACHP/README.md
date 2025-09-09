@@ -39,11 +39,8 @@ python result_filtered.py
 
 Confirm output file `sizing_agg_filtered.csv` has been created.
 
-Finally, combine the cooling coil capacity figures with annual results. TO DO: fill in this step.
+Finally, combine the cooling coil capacity figures with annual results.
 
-```
-python insert_normunits.py ...
-```
 
 ## Step 4
 
