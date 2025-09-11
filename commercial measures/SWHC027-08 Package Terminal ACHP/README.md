@@ -25,8 +25,8 @@ First, generate an output file listing individual cooling coil capacities.
 
 ```
 cd C:\DEER-Prototypes-EnergyPlus
-cd "commercial measures/SWHC027-08 PTAC PTHP"
-python ../../scripts/result.py --queryfile query_SWHC027_com.txt
+cd "commercial measures/SWHC027-08 Package Terminal ACHP/SWHC027-08 Package Terminal ACHP_Ex"
+python ../../scripts/result.py . --queryfile query_SWHC027_com.txt
 ```
 
 Confirm output file `results-sizing-detail.csv` has been created.
@@ -38,6 +38,11 @@ python result_filtered.py
 ```
 
 Confirm output file `sizing_agg_filtered.csv` has been created.
+
+Repeat the above step 3 for the following folders:
+- SWHC027-08 Package Terminal ACHP_Htl_Ex
+- SWHC027-08 Package Terminal ACHP_Htl_New
+- SWHC027-08 Package Terminal ACHP_New
 
 Finally, combine the cooling coil capacity figures with annual results.
 
