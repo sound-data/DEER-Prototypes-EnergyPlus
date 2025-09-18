@@ -1,6 +1,8 @@
 import csv
 from datetime import datetime, timedelta
 
+YEAR = 2026
+
 # Function to determine temperature status based on day type and hour
 def determine_temperature_status(day_type, hour, minute):
     if day_type == "School_Wkday":
@@ -27,19 +29,21 @@ def determine_temperature_status(day_type, hour, minute):
 # Function to check if a date falls within a holiday range
 def is_holiday(date):
     holidays = {
-        "Winterbreak": (datetime(2023, 1, 1), datetime(2023, 1, 8)),
-        "Martin Luther King Day": datetime(2023, 1, 15),
-        "Presidents Day": datetime(2023, 1, 19),
-        "Spring Break": (datetime(2023, 3, 25), datetime(2023, 3, 29)),
-        "Cesar Chavez Day": datetime(2023, 4, 1),
-        "Holiday": datetime(2023, 4, 24),
-        "Memorial Day": datetime(2023, 5, 27),
-        "Independence Day": datetime(2023, 7, 4),
-        "Labor Day": datetime(2023, 9, 2),
-        "Veterans Day": datetime(2023, 11, 11),
-        "Thanksgiving": (datetime(2023, 11, 28), datetime(2023, 11, 29)),
-        "Winterbreak 2": (datetime(2023, 12, 16), datetime(2023, 12, 31)),
-        "Summer Break": (datetime(2023, 6, 10), datetime(2023, 8, 11))
+        "New Years Day": datetime(YEAR, 1, 1),
+        "MLK Day": datetime(YEAR, 1, 19),
+        "Presidents Day": datetime(YEAR, 2, 16),
+        "Memorial Day": datetime(YEAR, 5, 25),
+        "Independence Day": datetime(YEAR, 7, 4),
+        "Labor Day": datetime(YEAR, 9, 7),
+        "Columbus Day": datetime(YEAR, 10, 12),
+        "Veterans Day": datetime(YEAR, 11, 11),
+        "Thanksgiving Day": datetime(YEAR, 11, 26),
+        "Christmas Day": datetime(YEAR, 12, 25),
+        "Winter Break 1": (datetime(YEAR, 1, 1), datetime(YEAR, 1, 11)),
+        "Spring Break": (datetime(YEAR, 4, 4), datetime(YEAR, 4, 12)),
+        "Summer Break 1": (datetime(YEAR, 5, 23), datetime(YEAR, 5, 31)),
+        "Summer Break 2": (datetime(YEAR, 8, 8), datetime(YEAR, 8, 16)),
+        "Winter Break 2": (datetime(YEAR, 12, 12), datetime(YEAR, 12, 31))
     }
     for holiday, date_range in holidays.items():
         if isinstance(date_range, tuple):
