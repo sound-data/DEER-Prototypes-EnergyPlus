@@ -155,8 +155,7 @@ df_sp = pd.DataFrame(rows)
 df_sp.to_csv(SETPOINT_CSV, index=False)
 df_sp.head(12)
 
-print(f"Label CSV written: {SETPOINT_CSV}")
-
+print(f"Setpoint CSV written: {SETPOINT_CSV}")
 
 # 
 # ## 9) Notes on Using with EnergyPlus
