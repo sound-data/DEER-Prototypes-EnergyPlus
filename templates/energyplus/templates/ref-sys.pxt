@@ -17,7 +17,7 @@ parameter "condenser_type", :default=>"AirCooled" # (AirCooled | WaterCooled | E
 parameter "suction_temperature_control", :default=>"ConstantSuctionTemperature" # (ConstantSuctionTemperature | FloatSuctionTemperature)	
 parameter "cond_fan_speed_control_type", :default=>"TwoSpeed" # (TwoSpeed | Fixed | VariableSpeed)
 # Afshin Faramarzi & Behzad Rizi, 11/11/2024 - parameterize saturated condensing temperature(SCT)
-parameter "cond_sct_delta", :default=>12 # in ['degF']
+parameter "cond_sct_delta", :default=>12['deltaF'] # in ['degF']
 #Behzad Rizi - parameterize activation mode for EMS object to control the saturated condensing temperature(SCT)
 parameter "cond_floating", :default=>false, :domain => Boolean # (true | false)
 parameter "cond_min_temp", :default=>25['C']
