@@ -44,12 +44,10 @@ Repeat the above step 3 for the following folders:
 - SWHC027-08 Package Terminal ACHP_Htl_New
 - SWHC027-08 Package Terminal ACHP_New
 
-Finally, combine the cooling coil capacity figures with annual results.
-
-
 ## Step 4
 
-Use Excel workbook provided in eTRM to compute UEC and UES.
+Use Excel workbook provided in eTRM to combine the cooling coil capacity
+figures with annual results via lookup tables, then compute UEC and UES.
 
 Assumptions:
 
