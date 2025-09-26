@@ -11,6 +11,16 @@ parameter "pipe_type", :default => "Pipe:Adiabatic"
 parameter "boiler_type", :default => "Boiler:HotWater"
 parameter "pump_type", :default => "Pump:VariableSpeed"
 
+# Parameters for boiler efficiency, boiler efficiency curve, efficiency curve temperature evaluation variable added by Behzad Rizi (Solaris Technical), 2025-09-24
+# Boiler Efficiency
+parameter "boiler_eff", :default=>0.8
+
+# Boiler Efficiency Curve
+parameter "boiler_eff_curve", :default=>'Cond_Boiler_Eff'
+
+# Efficiency Curve Temperature Evaluation Variable
+parameter "curve_evaluation_variable", :default=>'LeavingBoiler'
+
 rule "st_loop_rule", :parameters => {:heat_type => "ST"} do
   default :design_hw_temp => 104.444['C']
   default :pipe_type => "Pipe:Adiabatic:Steam"
@@ -238,9 +248,9 @@ NodeList,
             <%= hydronic_system_name %> CentralBoiler,           !- Name
             NaturalGas,              !- Fuel Type
             autosize,                !- Nominal Capacity {W}
-            0.8,       !- Nominal Thermal Efficiency
-            LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
-            <%= hydronic_system_name %> Cond_Boiler_Eff, !- Normalized Boiler Efficiency Curve Name
+            <%= boiler_eff %>,       !- Nominal Thermal Efficiency
+            <%= curve_evaluation_variable %>,           !- Efficiency Curve Temperature Evaluation Variable
+            <%= boiler_eff_curve %>, !- Normalized Boiler Efficiency Curve Name
             autosize,                !- Design Water Flow Rate {m3/s}
             0,                     !- Minimum Part Load Ratio
             1,                       !- Maximum Part Load Ratio
@@ -333,41 +343,46 @@ PlantEquipmentOperationSchemes,
         <%= hydronic_system_name %> Boiler Water Oulet Node; !- Setpoint Node or NodeList Name
 
 ! <%= hydronic_system_name %> boiler performance curves
-    Curve:Bicubic,
-        <%= hydronic_system_name %> NonCond_Boiler_Eff,      !- Name
-        1.111720116,             !- Coefficient1 Constant
-        0.078614078,             !- Coefficient2 x
-        -.400425756,             !- Coefficient3 x**2
-        0,                       !- Coefficient4 y
-        -.000156783,             !- Coefficient5 y**2
-        0.009384599,             !- Coefficient6 x*y
-        0.234257955,             !- Coefficient7 x**3
-        0.00000132927,           !- Coefficient8 y**3
-        -.004446701,             !- Coefficient9 x**2*y
-        -.0000122498,            !- Coefficient10 x*y**2
-        0.1,                     !- Minimum Value of x
-        1,                       !- Maximum Value of x
-        20,                      !- Minimum Value of y
-        80,                      !- Maximum Value of y
-        ,                        !- Minimum Curve Output
-        ,                        !- Maximum Curve Output
-        Dimensionless,           !- Input Unit Type for X
-        Temperature,           !- Input Unit Type for Y
-        Dimensionless;           !- Output Unit Type
-    Curve:Biquadratic,
-        <%= hydronic_system_name %> Cond_Boiler_Eff,         !- Name
-        1.124970374,             !- Coefficient1 Constant
-        0.014963852,             !- Coefficient2 x
-        -.02599835,              !- Coefficient3 x**2
-        0,                       !- Coefficient4 y
-        -.00000140464,           !- Coefficient5 y**2
-        -.00153624,              !- Coefficient6 x*y
-        0.1,                     !- Minimum Value of x
-        1,                       !- Maximum Value of x
-        30,                      !- Minimum Value of y
-        85,                      !- Maximum Value of y
-        ,                        !- Minimum Curve Output
-        ,                        !- Maximum Curve Output
-        Dimensionless,           !- Input Unit Type for X
-        Temperature,           !- Input Unit Type for Y
-        Dimensionless;           !- Output Unit Type
+    !-   ===========  ALL OBJECTS IN CLASS: CURVE:BICUBIC ===========
+
+Curve:Bicubic,
+    NonCond_Boiler_Eff,      !- Name
+    1.111720116,             !- Coefficient1 Constant
+    0.078614078,             !- Coefficient2 x
+    -.400425756,             !- Coefficient3 x**2
+    0,                       !- Coefficient4 y
+    -.000156783,             !- Coefficient5 y**2
+    0.009384599,             !- Coefficient6 x*y
+    0.234257955,             !- Coefficient7 x**3
+    0.00000132927,           !- Coefficient8 y**3
+    -.004446701,             !- Coefficient9 x**2*y
+    -.0000122498,            !- Coefficient10 x*y**2
+    0.1,                     !- Minimum Value of x
+    1,                       !- Maximum Value of x
+    20,                      !- Minimum Value of y
+    80,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
+
+!-   ===========  ALL OBJECTS IN CLASS: CURVE:BIQUADRATIC ===========
+
+Curve:Biquadratic,
+    Cond_Boiler_Eff,         !- Name
+    1.124970374,             !- Coefficient1 Constant
+    0.014963852,             !- Coefficient2 x
+    -.02599835,              !- Coefficient3 x**2
+    0,                       !- Coefficient4 y
+    -.00000140464,           !- Coefficient5 y**2
+    -.00153624,              !- Coefficient6 x*y
+    0.1,                     !- Minimum Value of x
+    1,                       !- Maximum Value of x
+    30,                      !- Minimum Value of y
+    85,                      !- Maximum Value of y
+    ,                        !- Minimum Curve Output
+    ,                        !- Maximum Curve Output
+    Dimensionless,           !- Input Unit Type for X
+    Dimensionless,           !- Input Unit Type for Y
+    Dimensionless;           !- Output Unit Type
