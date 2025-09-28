@@ -126,7 +126,7 @@ if BT == "Secondary":
                 return "setback"
 
         return "setback"
-else: 
+else: # temperature status for EPr and ECR
     def determine_temperature_status(day_type_str: str, hour: int, minute: int) -> str:
         if day_type_str == "School_Wkday":
             if hour == 7 and minute >= 45 or hour in range(8, 11) or hour == 11 and minute <=15 or hour == 12 and minute >= 45 or hour in range(13, 15) or hour == 15 and minute <= 15:
@@ -193,8 +193,8 @@ for date in date_range:
         rows.append({
             'Date': date.strftime('%m/%d/%y'),
             'Time Stamp': timestamp.strftime('%H:%M'),
-            'Cooling Setpoint (F)': cool_sp,
-            'Heating Setpoint (F)': heat_sp,
+            'Cooling Setpoint (C)': cool_sp,
+            'Heating Setpoint (C)': heat_sp,
             'Label': label,
             'Day Type': current_day_type,
             'Holiday': hol_name
