@@ -44,7 +44,7 @@ Within an open interactive psql session:
 --\set DEERROOT 'C:/DEER-Prototypes-EnergyPlus/'
 -- These commands build folder path strings by concatenating previously defined variables. 
 \set SCRIPTS :DEERROOT 'scripts/'
-\set SCHEMAFILES :SCRIPTS 'energy savings/schema/'
+\set SCHEMAFILES :SCRIPTS 'energy savings/commercial/support_and_setup_tables/'
 \set ENERGYSAVINGSCOM :SCRIPTS 'energy savings/commercial/'
 \set STUDY 'results/'
 \set SCHEMANAME 'MC_results_database'
@@ -82,13 +82,15 @@ truncate "peakperspec";
 :command
 truncate "wts_com_bldg";
 \set file :ENERGYSAVINGSCOM 'wts_com_bldg.csv'
-\set command '\\copy "wts_com_bldg" FROM ' :'file' ' WITH (FORMAT csv, HEADER MATCH)'
+--TODO: mismatch between schema/data causes import to fail with HEADER MATCH
+--\set command '\\copy "wts_com_bldg" FROM ' :'file' ' WITH (FORMAT csv, HEADER MATCH)'
+\set command '\\copy "wts_com_bldg" FROM ' :'file' ' WITH (FORMAT csv)'
 \echo :H3:command:H0
 :command
 
 \echo :H1'[2/7] Creating placeholder tables for imported data':H0
 
-\set file :SCHEMAFILES 'create_current_msr_mat.sql' \set command '\\i ' :'file'
+\set file :SCHEMAFILES 'create_current_msr.mat.sql' \set command '\\i ' :'file'
 \echo :H3:command:H0
 :command
 \set file :SCHEMAFILES 'create_sim_annual.sql' \set command '\\i ' :'file'
