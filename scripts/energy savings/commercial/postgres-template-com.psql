@@ -90,7 +90,7 @@ truncate "wts_com_bldg";
 
 \echo :H1'[2/7] Creating placeholder tables for imported data':H0
 
-\set file :SCHEMAFILES 'create_current_msr.mat.sql' \set command '\\i ' :'file'
+\set file :SCHEMAFILES 'create_current_msr_mat.sql' \set command '\\i ' :'file'
 \echo :H3:command:H0
 :command
 \set file :SCHEMAFILES 'create_sim_annual.sql' \set command '\\i ' :'file'
