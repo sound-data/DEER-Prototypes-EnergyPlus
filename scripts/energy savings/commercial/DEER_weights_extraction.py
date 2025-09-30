@@ -36,7 +36,9 @@ df = pd.read_sql_query(query, engine)
 #filter for BldgType=Com weights
 flag_weightID = df['weightID']=='Com'
 flag_Sector = (df['Sector']=='Com')|(df['Sector']=='Ind')
-flag_Version = (df['Version']=='DEER2020')
+# 2025-09-29 Nicholas Fette (Solaris Technical)
+# Filter table by version AND bump version from DEER2020 to DEER2026
+flag_Version = (df['Version']=='DEER2026')
 
 df_bldgtype_com_wts = df[flag_weightID & flag_Sector & flag_Version]
 # %%
