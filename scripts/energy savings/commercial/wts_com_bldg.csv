@@ -1,4 +1,4 @@
-PA,BldgType,BldgVint,BldgLoc,sum_bldg
+pa,bldgtype,era,bldgloc,sum_bldg
 Any,Asm,Ex,CZ01,0.167
 Any,Asm,Ex,CZ02,1.337
 Any,Asm,Ex,CZ03,5.908

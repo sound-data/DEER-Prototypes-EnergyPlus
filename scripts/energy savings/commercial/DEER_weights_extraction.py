@@ -36,17 +36,26 @@ df = pd.read_sql_query(query, engine)
 #filter for BldgType=Com weights
 flag_weightID = df['weightID']=='Com'
 flag_Sector = (df['Sector']=='Com')|(df['Sector']=='Ind')
+flag_Version = (df['Version']=='DEER2020')
 
-df_bldgtype_com_wts = df[flag_weightID & flag_Sector]
+df_bldgtype_com_wts = df[flag_weightID & flag_Sector & flag_Version]
 # %%
 #condense table
 wts_com_bldg = df_bldgtype_com_wts[['BldgType', 'BldgVint','BldgLoc','weight']]
 wts_com_bldg = wts_com_bldg.assign(PA='Any')
 # %%
 #rearrange/rename table
-wts_com_bldg.rename(columns={'weight':'sum_bldg'}, inplace=True)
-wts_com_bldg_final = wts_com_bldg[['PA','BldgType', 'BldgVint','BldgLoc','sum_bldg']]
-wts_com_bldg_final_sorted = wts_com_bldg_final.sort_values(by=['BldgType', 'BldgVint','BldgLoc'])
+# 2025-09-29 Nicholas Fette (Solaris Technical)
+# Update renamed columns to be consistent with scripts\energy savings\commercial\support_and_setup_tables\create_wts_com_bldg.sql
+wts_com_bldg = wts_com_bldg.rename(columns={
+    'PA':'pa',
+    'BldgType':'bldgtype',
+    'BldgVint':'era',
+    'BldgLoc':'bldgloc',
+    'weight':'sum_bldg'
+    })
+wts_com_bldg_final = wts_com_bldg[['pa', 'bldgtype', 'era', 'bldgloc', 'sum_bldg']]
+wts_com_bldg_final_sorted = wts_com_bldg_final.sort_values(by=['bldgtype', 'era', 'bldgloc'])
 
 #%%
 #export wts_com_bldg

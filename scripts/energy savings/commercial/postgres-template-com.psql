@@ -82,9 +82,7 @@ truncate "peakperspec";
 :command
 truncate "wts_com_bldg";
 \set file :ENERGYSAVINGSCOM 'wts_com_bldg.csv'
---TODO: mismatch between schema/data causes import to fail with HEADER MATCH
---\set command '\\copy "wts_com_bldg" FROM ' :'file' ' WITH (FORMAT csv, HEADER MATCH)'
-\set command '\\copy "wts_com_bldg" FROM ' :'file' ' WITH (FORMAT csv)'
+\set command '\\copy "wts_com_bldg" FROM ' :'file' ' WITH (FORMAT csv, HEADER MATCH)'
 \echo :H3:command:H0
 :command
 
