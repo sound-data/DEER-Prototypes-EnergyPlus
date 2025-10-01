@@ -31,6 +31,7 @@ Within an open interactive psql session:
 */
 
 \set ON_ERROR_STOP on
+\timing on
 --\set ECHO all
 -- Formatting control codes 
 \set H0 '\033[0m'
@@ -115,13 +116,11 @@ truncate "sim_annual";
 :command
 
 \echo :H2'Import sim_hourly_wb':H0
-/*
 truncate "sim_hourly_wb";
 \set file :STUDY 'sim_hourly_wb.csv'
 \set command '\\copy "sim_hourly_wb" FROM ' :'file' ' WITH (FORMAT csv, HEADER MATCH)'
 \echo :H3:command:H0
 :command
-*/
 
 \echo :H1'[4/7] Computing peak demand from hourly data':H0
 
