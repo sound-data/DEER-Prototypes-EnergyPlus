@@ -1,10 +1,32 @@
 skip,case_name,:refsys_condenser_type,:refsys_cond_fan_speed_control_type,:refsys_cond_sct_delta,:refsys_cond_floating,:refsys_cond_min_temp
 #,defaults,,,,,
-,NE-Ref_Storage-RefControl-FltCondTemp-AirCool,AirCooled,TwoSpeed,12['deltaF'],TRUE,70['F']
-,NE-Ref_Storage-RefControl-FixCondTemp-AirCool,AirCooled,TwoSpeed,12['deltaF'],FALSE,80['F']
-,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-VSDFan,AirCooled,VariableSpeed,12['deltaF'],TRUE,70['F']
-,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-VSDFan,AirCooled,VariableSpeed,12['deltaF'],FALSE,80['F']
-,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool,EvaporativelyCooled,TwoSpeed,17['deltaF'],TRUE,70['F']
-,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool,EvaporativelyCooled,TwoSpeed,17['deltaF'],FALSE,80['F']
-,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],TRUE,70['F']
-,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],FALSE,80['F']
+#,"Fixed condenser control, 90 deg F (oldest vintages, not for measure case)",,,,,
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-90,AirCooled,TwoSpeed,12['deltaF'],FALSE,90.0['F']
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-90-VSDFan,AirCooled,VariableSpeed,12['deltaF'],FALSE,90.0['F']
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-90,EvaporativelyCooled,TwoSpeed,17['deltaF'],FALSE,90.0['F']
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-90-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],FALSE,90.0['F']
+#,"Fixed condenser control, 85 deg F (newer vintages, not for measure case)",,,,,
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-85,AirCooled,TwoSpeed,12['deltaF'],FALSE,85.0['F']
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-85-VSDFan,AirCooled,VariableSpeed,12['deltaF'],FALSE,85.0['F']
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-85,EvaporativelyCooled,TwoSpeed,17['deltaF'],FALSE,85.0['F']
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-85-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],FALSE,85.0['F']
+#,"Fixed condenser control, 80 deg F (newest vintages, not for measure case)",,,,,
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-80,AirCooled,TwoSpeed,12['deltaF'],FALSE,80.0['F']
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-80-VSDFan,AirCooled,VariableSpeed,12['deltaF'],FALSE,80.0['F']
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-80,EvaporativelyCooled,TwoSpeed,17['deltaF'],FALSE,80.0['F']
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-80-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],FALSE,80.0['F']
+#,"Floating condenser control, min 90 deg F (not for measure case)",,,,,
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-90,AirCooled,TwoSpeed,12['deltaF'],TRUE,90.0['F']
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-90-VSDFan,AirCooled,VariableSpeed,12['deltaF'],TRUE,90.0['F']
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-90,EvaporativelyCooled,TwoSpeed,17['deltaF'],TRUE,90.0['F']
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-90-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],TRUE,90.0['F']
+#,"Floating condenser control, min 80 deg F (not for measure case)",,,,,
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-80,AirCooled,TwoSpeed,12['deltaF'],TRUE,80.0['F']
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-80-VSDFan,AirCooled,VariableSpeed,12['deltaF'],TRUE,80.0['F']
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-80,EvaporativelyCooled,TwoSpeed,17['deltaF'],TRUE,80.0['F']
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-80-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],TRUE,80.0['F']
+#,"Floating condenser control, min 70 deg F (efficient case)",,,,,
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-70,AirCooled,TwoSpeed,12['deltaF'],TRUE,70.0['F']
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-70-VSDFan,AirCooled,VariableSpeed,12['deltaF'],TRUE,70.0['F']
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-70,EvaporativelyCooled,TwoSpeed,17['deltaF'],TRUE,70.0['F']
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-70-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],TRUE,70.0['F']
