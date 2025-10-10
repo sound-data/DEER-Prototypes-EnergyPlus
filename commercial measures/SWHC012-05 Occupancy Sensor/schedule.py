@@ -22,7 +22,7 @@ import pandas as pd
 # User parameters
 
 # BT options are Primary (EPr), Secondary (ESe), and Relocatable (ERC)
-BT = "Relocatable"
+BT = "Secondary"
 YEAR = 2023
 TIME_STEP_MIN = 10
 
@@ -109,18 +109,18 @@ def day_type(date: datetime) -> str:
         return "Summer_Wkday" if date.weekday() < 5 else "Wkend"
     return ""
 
-# Time-of-Day Logic determines temperature status based on day type and hour
+# Time-of-Day Logic determines temperature status based on day type and hour, with 10 min warm-up from unoccupied to setpoint and 10-min delay between setpoint and setback.
 
 if BT == "Secondary":
     def determine_temperature_status(day_type_str: str, hour: int, minute: int) -> str:
         if day_type_str == "School_Wkday":
-            if hour == 7 and minute >= 50 or hour in range(8, 9) or hour == 9 and minute <=10 or hour == 12 and minute >= 50 or hour in range(13, 14) or hour == 14 and minute <= 10:
+            if hour in range(8, 11) or hour == 11 and minute <=10 or hour in range(13, 14) or hour == 14 and minute <= 10:
                 return "active"
             else:
                 return "setback"
 
         elif day_type_str == "Summer_Wkday":
-            if hour == 8 and minute >= 50 or hour in range(9, 13) or hour == 13 and minute <= 10:
+            if hour in range(9, 13) or hour == 13 and minute <= 10:
                 return "active"
             else:
                 return "setback"
@@ -129,13 +129,13 @@ if BT == "Secondary":
 else: # temperature status for EPr and ECR
     def determine_temperature_status(day_type_str: str, hour: int, minute: int) -> str:
         if day_type_str == "School_Wkday":
-            if hour == 7 and minute >= 45 or hour in range(8, 11) or hour == 11 and minute <=15 or hour == 12 and minute >= 45 or hour in range(13, 15) or hour == 15 and minute <= 15:
+            if hour in range(8, 11) or hour == 11 and minute <=10 or hour in range(13, 15) or hour == 15 and minute <= 10:
                 return "active"
             else:
                 return "setback"
 
         elif day_type_str == "Summer_Wkday":
-            if hour == 8 and minute >= 45 or hour in range(9, 13) or hour == 13 and minute <= 15:
+            if hour in range(9, 13) or hour == 13 and minute <= 10:
                 return "active"
             else:
                 return "setback"
