@@ -1,8 +1,8 @@
-ComponentSizingSummary/Entire Facility/Coil:Heating:Electric/Design Size Nominal Capacity/*, MZ-VAV ATU Heating Coil Nominal Capacity[W]
-ComponentSizingSummary/Entire Facility/AirTerminal:SingleDuct:VAV:Reheat/Design Size Maximum Air Flow Rate/*, MZ-VAV ATU Design Size Maximum Air Flow Rate[m3/s]
-ComponentSizingSummary/Entire Facility/Coil:Heating:DX:SingleSpeed/Design Size Gross Rated Heating Capacity/*, MZ-VAV Heating Coil Nominal Capacity[W]
-ComponentSizingSummary/Entire Facility/Coil:Heating:DX:SingleSpeed/Design Size Rated Air Flow Rate/*, MZ-VAV Design Size Rated Air Flow Rate [m3/s]	
-AnnualBuildingUtilityPerformanceSummary/Entire Facility/Site and Source Energy/Total Energy/Total Site Energy
+InputVerificationandResultsSummary/Entire Facility/General/Value/Program Version and Build
+InputVerificationandResultsSummary/Entire Facility/General/Value/Weather File
+InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/Conditioned Total
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Utility Use Per Conditioned Floor Area/Electricity Intensity/HVAC
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Utility Use Per Conditioned Floor Area/Natural Gas Intensity/HVAC
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Heating
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Cooling
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Interior Lighting
@@ -33,9 +33,8 @@ AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Wat
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Refrigeration
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Generators
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Total End Uses
-AnnualBuildingUtilityPerformanceSummary/Entire Facility/Utility Use Per Conditioned Floor Area/Electricity Intensity/HVAC
-AnnualBuildingUtilityPerformanceSummary/Entire Facility/Utility Use Per Conditioned Floor Area/Natural Gas Intensity/HVAC
-
-
-
-
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Heating, Unmet Heating
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Cooling, Unmet Cooling
+ComponentSizingSummary/Entire Facility/Coil:Heating:Electric/Design Size Nominal Capacity/*, MZ-VAV ATU Heating Coil Nominal Capacity[W]
+ComponentSizingSummary/Entire Facility/AirTerminal:SingleDuct:VAV:Reheat/Design Size Maximum Air Flow Rate/*, MZ-VAV ATU Design Size Maximum Air Flow Rate[m3/s]
+ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/*, Design Size Gross Rated Total Cooling Capacity [W] 		
