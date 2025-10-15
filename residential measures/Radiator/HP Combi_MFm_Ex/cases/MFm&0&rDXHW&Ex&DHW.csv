@@ -1,8 +1,0 @@
-skip,case_name,:heat_type,:burner_eff,:combi,:dhw_stpt_sch,:water_heater_type,:tank_size,:uef,:tank_height,:loop_sept,:tank_sept,:supplyfan_total_eff,:motor_eff
-#,RG-DHW-Stor_UEF-rDXGF-30g,GF,0.81,,,,30['gal'],0.65,,,,0.12,0.24
-#,RG-DHW-Stor_UEF-rDXGF-40g,GF,0.81,,,,40['gal'],0.64,,,,0.12,0.24
-#,RG-DHW-Stor_UEF-rDXGF-50g,GF,0.81,,,,50['gal'],0.63,,,,0.12,0.24
-#,RG-DHW-Stor_UEF-rDXGF-60g,GF,0.81,,,,60['gal'],0.79,,,,0.12,0.24
-#,RG-DHW-Stor_UEF-rDXGF-75g,GF,0.81,,,,75['gal'],0.78,,,,0.12,0.24
-#,RE-DHW-HP_UEF-rDXHW-le100g,HW,,TRUE,dhw_stpt_sch,sanco2_hpwh,83['gal'],,68['in'],150['F'],110['F'],0.25,0.5
-#,RE-DHW-HP_UEF-rDXHW-gt100g,HW,,TRUE,dhw_stpt_sch,sanco2_hpwh,119['gal'],,63['in'],150['F'],110['F'],0.25,0.5
