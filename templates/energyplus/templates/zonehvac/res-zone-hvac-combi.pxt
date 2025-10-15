@@ -78,6 +78,7 @@ cool_coil_object_type = ""
   
 <%
 # Solaris Technical – Behzad S. Rizi – 07/17/25 – Added equipment list and branches for baseboard (radiator)
+# Solaris Technical – Behzad S. Rizi – 07/17/25 – The baseboard-resistance option is only partially implemented and it has not been included in the ZoneHVAC:EquipmentList.
 equipment_list = []
 inlet_branches = []
 exhaust_branches = []
@@ -94,7 +95,8 @@ else
 end
 %>
 
-!- Solaris Technical – Behzad S. Rizi – 07/17/25 – Added "Baseboard:Convective:Electric/Water" as a zone level equipment
+!- Solaris Technical – Behzad S. Rizi – 07/17/25 – Added "Baseboard:Convective:Electric/Water" as a zone level equipment.
+
  <% if (sub_heat_type == "BASEBOARD-RESISTANCE") %>
 ZoneHVAC:Baseboard:Convective:Electric,
   <%= sub_heat_name %>,    !- Name
@@ -284,6 +286,7 @@ Schedule:Compact,
     <% end %>
 
 !- Solaris Technical – Behzad S. Rizi – 07/17/25 – Applied sequencing for the zone equipments including baseboard convective
+!- Solaris Technical – Behzad S. Rizi – 07/17/25 – The "baseboard-resistance" is not fully implemented in this block of conditional logic for "sub_heat_type"
 !ZoneHVAC:EquipmentList objects
     ZoneHVAC:EquipmentList,
         <%= zone_name %> Equipment,  !- Name
