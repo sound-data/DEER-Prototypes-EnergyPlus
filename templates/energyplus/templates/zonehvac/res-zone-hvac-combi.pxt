@@ -81,7 +81,7 @@ cool_coil_object_type = ""
 # Solaris Technical – Behzad S. Rizi – 07/17/25 – The baseboard-resistance option is only partially implemented and it has not been included in the ZoneHVAC:EquipmentList.
 # Solaris Technical – Nicholas Fette & Behzad S. Rizi – 10/16/25 – The ZoneHVAC:Baseboard:Convective:Water equipment was assigned to the secondary_zone (bedrooms) in the model.
 
-equipment_list ||= []  # ensure equipment_list exists
+equipment_list ||= []
 
 # Primary zone equipment
 if sub_heat_type == "BASEBOARD-RESISTANCE"
@@ -92,7 +92,7 @@ elsif sub_heat_type == "BASEBOARD-WATER"
   equipment_list << ["ZoneHVAC:Baseboard:Convective:Water", sub_heat_name]
 end
 
-# Secondary zone equipment, if present
+# Secondary zone equipment
 if defined?(secondary_zone) && secondary_zone
   if sub_heat_type == "BASEBOARD-RESISTANCE"
     sub_heat_name_sec = "#{secondary_zone} Baseboard"
