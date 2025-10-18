@@ -147,21 +147,27 @@ ZoneHVAC:Baseboard:Convective:Water,
   ;                        !- Convergence Tolerance
 
   <% end %>
-<% end %>
+  ! Solaris Technical – Nicholas Fette & Behzad S. Rizi – 10/16/25 – The "sub_heat_name" and "sub_heat_name_sec" were connected in series.
+  ! Solaris Technical – Nicholas Fette & Behzad S. Rizi – 10/17/25 – The Branch object is terminate in both cases:
+    ! Two baseboards (primary + secondary) → includes both components in series
+    ! One baseboard only → terminates cleanly with ;
 
-! Solaris Technical – Nicholas Fette & Behzad S. Rizi – 10/16/25 – The "sub_heat_name" and "sub_heat_name_sec" were connected in series.
-Branch,
-  <%= system_name %> Baseboard HW Branch,  !- Name
-  ,                        !- Pressure Drop Curve Name
-  ZoneHVAC:Baseboard:Convective:Water,  !- Component 1 Object Type
-  <%= sub_heat_name %>,    !- Component 1 Name
-  <%= sub_heat_name %> HW Inlet Node,  !- Component 1 Inlet Node Name
-  <%= sub_heat_name %> HW Outlet Node, !- Component 1 Outlet Node Name
-<% if secondary_zone %>
-  ZoneHVAC:Baseboard:Convective:Water,  !- Component 2 Object Type
-  <%= sub_heat_name_sec %>, !- Component 2 Name
-  <%= sub_heat_name %> HW Outlet Node,  !- Component 2 Inlet Node Name
-  <%= sub_heat_name_sec %> HW Outlet Node; !- Component 2 Outlet Node Name
+  Branch,
+    <%= system_name %> Baseboard HW Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    ZoneHVAC:Baseboard:Convective:Water,  !- Component 1 Object Type
+    <%= sub_heat_name %>,    !- Component 1 Name
+    <%= sub_heat_name %> HW Inlet Node,  !- Component 1 Inlet Node Name
+    <%= sub_heat_name %> HW Outlet Node, !- Component 1 Outlet Node Name
+  <% if secondary_zone %>
+    ZoneHVAC:Baseboard:Convective:Water,  !- Component 2 Object Type
+    <%= sub_heat_name_sec %>, !- Component 2 Name
+    <%= sub_heat_name %> HW Outlet Node,  !- Component 2 Inlet Node Name
+    <%= sub_heat_name_sec %> HW Outlet Node; !- Component 2 Outlet Node Name
+  <% else %>
+  ;                                        !- End of single baseboard branch
+  <% end %>
+
 <% end %>
 
 ! Solaris Technical – Behzad S. Rizi – 10/16/25 – Assigned hvac_sch to the secondary zones.  
@@ -173,7 +179,7 @@ Branch,
     Binary Control,                !- Schedule Type Limits Name
     <%= hvac_sch %>
 
-  <%# Secondary zone schedule, if defined %>
+  <%# Secondary zone schedule %>
   <% if defined?(secondary_zone) && secondary_zone %>
     Schedule:Compact,
       <%= sub_heat_name_sec %> Schedule,  !- Name
@@ -339,7 +345,7 @@ Branch,
         SequentialLoad,          !- Load Distribution Scheme
 	<% if sub_heat_type == "BASEBOARD-WATER" %>
 		ZoneHVAC:Baseboard:Convective:Water,  !- Zone Equipment 1 Object Type
-		<%= sub_heat_name %> ,  !- Zone Equipment 1 Name
+		<%= sub_heat_name %>,    !- Zone Equipment 1 Name
 		1,                       !- Zone Equipment 1 Cooling Sequence
         1,                       !- Zone Equipment 1 Heating or No-Load Sequence
         ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
