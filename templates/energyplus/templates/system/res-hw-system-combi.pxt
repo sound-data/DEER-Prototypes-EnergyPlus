@@ -16,10 +16,10 @@ parameter "pump_type", :default => "Pump:VariableSpeed"
 parameter "boiler_eff", :default=>0.8
 
 # Boiler Efficiency Curve
-parameter "boiler_eff_curve", :default=>'Cond_Boiler_Eff'
+parameter "boiler_eff_curve", :default=>'Cond_Boiler_Eff' # Cond_Boiler_Eff | NonCond_Boiler_Eff
 
 # Efficiency Curve Temperature Evaluation Variable
-parameter "curve_evaluation_variable", :default=>'LeavingBoiler'
+parameter "curve_evaluation_variable", :default=>'LeavingBoiler' # EnteringBoiler | LeavingBoiler
 
 rule "st_loop_rule", :parameters => {:heat_type => "ST"} do
   default :design_hw_temp => 104.444['C']
