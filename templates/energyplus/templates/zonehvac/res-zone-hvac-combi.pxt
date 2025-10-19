@@ -136,7 +136,7 @@ ZoneHVAC:Baseboard:Convective:Water,
   ZoneHVAC:Baseboard:Convective:Water,
   <%= sub_heat_name_sec %>,    !- Name
   <%= sub_heat_name_sec %> Schedule,  !- Availability Schedule Name
-  <%= sub_heat_name_sec %> HW Inlet Node,  !- Inlet Node Name
+  <%= sub_heat_name %> HW Outlet Node,  !- Inlet Node Name
   <%= sub_heat_name_sec %> HW Outlet Node,  !- Outlet Node Name
   HeatingDesignCapacity,   !- Heating Design Capacity Method
   <%= sub_heat_cap %>,     !- Heating Design Capacity {W}
