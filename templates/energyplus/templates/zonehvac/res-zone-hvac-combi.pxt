@@ -176,14 +176,14 @@ ZoneHVAC:Baseboard:Convective:Water,
   <%# Primary zone schedule %>
   Schedule:Compact,
     <%= sub_heat_name %> Schedule,  !- Name
-    Binary Control,                !- Schedule Type Limits Name
+    On/Off,                         !- Schedule Type Limits Name
     <%= hvac_sch %>
 
   <%# Secondary zone schedule %>
   <% if defined?(secondary_zone) && secondary_zone %>
     Schedule:Compact,
       <%= sub_heat_name_sec %> Schedule,  !- Name
-      Binary Control,                     !- Schedule Type Limits Name
+      On/Off,                             !- Schedule Type Limits Name
       <%= hvac_sch %>
   <% end %>
 
