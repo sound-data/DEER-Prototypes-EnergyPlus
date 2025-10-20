@@ -9,6 +9,9 @@ parameter "run_name", :default=>"Building"
 #domestic water heating
 parameter "water_heater_type", :default => "gas", :description => "currently availabily water heater types are gas, elec, gas_tankless, hpwh, 120v_hpwh"
 
+parameter "sub_heat_type",
+  :default => "NONE", :domain => String  # ["NONE", "BASEBOARD-RESISTANCE", "BASEBOARD-WATER"]
+
 #hvac type
 parameter "hvac_type", :default=>""
 
@@ -21,6 +24,7 @@ parameter "dhw_stpt_sch", :default => ""
 import "zonehvac/res-zone-hvac-combi.pxt", :group => "hvac_zone" do
   include "*"
   exclude "zone_name|system_name|secondary_zone|water_heater_name"
+  parameter "sub_heat_type"
 end
 
 import "system/res-water-heater-combi.pxt", :group => "water_heating" do
@@ -194,7 +198,8 @@ for zone in all_zones
   water_heater_name = zone[5]
   hydronic_system_name = zone[6]
 
-    #create list of zones served by HW
+  
+	#create list of zones served by HW
     if (!combi and (heat_type == "HW" or heat_type == "ST"))
         # create list of hydronic systems and corresponding zones
         all_hydronic[hydronic_system_name] ||= {system: [], primary: [], secondary: []}
@@ -251,14 +256,18 @@ if (!combi and (heat_type == "HW" or heat_type == "ST"))
         #control_zones = system[2]
         #secondary_zones = system[3]
 
+		#Solaris Technical - Behzad S. Rizi - 07/17/25 - Modified branch_names to include baseboard branches in the branchlist, splitterlist, connectorlist
         insert "system/res-hw-system-combi.pxt",
             :hydronic_system_name => hydronic_system_name,
-            :branch_names => system_names.map! { |element| element + " Heating Coil Branch"},
-            **hw
+			:branch_names => system_names.flat_map { |element|
+				branches = ["#{element} Heating Coil Branch"]
+				branches << "#{element} Baseboard HW Branch" if sub_heat_type == "BASEBOARD-WATER"
+				branches
+			},
+			**hw
     end
 end
 %>
-
 
 
 !-Generator IDFEditor 1.51
@@ -304,7 +313,11 @@ climate_zone_str = zones[climate_zone - 1] %>
 Schedule:File,
     site_mains_water_temp,  !- Name
     Temperature,                !- Schedule Type Limits Name
-    ../../../../../../../../templates/hot water profile/site_mains_water_temp_CZ<%= climate_zone_str %>.csv,  !- File Name
+    <% if defined?($repository_dir) %>
+      <%= $repository_dir %>/templates/hot water profile/site_mains_water_temp_CZ<%= climate_zone_str %>.csv,  !- File Name
+    <% else %>
+      ../../../../../../../../templates/hot water profile/site_mains_water_temp_CZ<%= climate_zone_str %>.csv,  !- File Name
+    <% end %>
     1,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data

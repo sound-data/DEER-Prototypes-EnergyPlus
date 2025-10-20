@@ -7,6 +7,10 @@ parameter "system_name", :default => nil
 parameter "secondary_zone", :default => nil
 parameter "hydronic_system_name", :default => nil
 
+#Solaris Technical - Behzad S. Rizi - 07/17/25 - Added parameter "hvac_sch" for Baseboard equipment
+parameter "hvac_sch", :name => "HVAC Schedule", :description => "Operation schedule that controls availability of HVAC systems",
+  :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;", :domain => String
+
 # Cooling COP
 parameter "cool_type", :default => "DX" #DX, NC
 parameter "cooling_coil_cop", :default=>3.28
@@ -29,6 +33,14 @@ parameter "pressure_rise", :default=>125
 
 #parameter "heat_coil_object_type",:default => nil
 #parameter "cool_coil_object_type",:default => nil
+
+#Solaris Technical - Behzad S. Rizi - 07/17/25 - Added parameter "sub_heat_type" to add baseboard (radiator) as a zone equipment
+parameter "sub_heat_type",
+  :default => "NONE", :domain => String  # ["NONE", "BASEBOARD-RESISTANCE", "BASEBOARD-WATER"]
+parameter "sub_heat_eff",
+  :default => 0.98, :domain => Numeric
+parameter "sub_heat_cap",
+  :default => Autosize
 
 %>
 
@@ -61,6 +73,122 @@ cool_coil_object_type = ""
         end
     end
 %>
+
+
+  
+<%
+# Solaris Technical – Behzad S. Rizi – 07/17/25 – Added equipment list and branches for baseboard (radiator)
+# Solaris Technical – Behzad S. Rizi – 07/17/25 – The baseboard-resistance option is only partially implemented and it has not been included in the ZoneHVAC:EquipmentList.
+# Solaris Technical – Nicholas Fette & Behzad S. Rizi – 10/16/25 – The ZoneHVAC:Baseboard:Convective:Water equipment was assigned to the secondary_zone (bedrooms) in the model.
+
+equipment_list ||= []
+
+# Primary zone equipment
+if sub_heat_type == "BASEBOARD-RESISTANCE"
+  sub_heat_name = "#{zone_name} Baseboard"
+  equipment_list << ["ZoneHVAC:Baseboard:Convective:Electric", sub_heat_name]
+elsif sub_heat_type == "BASEBOARD-WATER"
+  sub_heat_name = "#{zone_name} Baseboard"
+  equipment_list << ["ZoneHVAC:Baseboard:Convective:Water", sub_heat_name]
+end
+
+# Secondary zone equipment
+if defined?(secondary_zone) && secondary_zone
+  if sub_heat_type == "BASEBOARD-RESISTANCE"
+    sub_heat_name_sec = "#{secondary_zone} Baseboard"
+    equipment_list << ["ZoneHVAC:Baseboard:Convective:Electric", sub_heat_name_sec]
+  elsif sub_heat_type == "BASEBOARD-WATER"
+    sub_heat_name_sec = "#{secondary_zone} Baseboard"
+    equipment_list << ["ZoneHVAC:Baseboard:Convective:Water", sub_heat_name_sec]
+  end
+end
+%>
+
+!- Solaris Technical – Behzad S. Rizi – 07/17/25 – Added "Baseboard:Convective:Electric/Water" as a zone level equipment.
+
+ <% if (sub_heat_type == "BASEBOARD-RESISTANCE") %>
+ZoneHVAC:Baseboard:Convective:Electric,
+  <%= sub_heat_name %>,    !- Name
+  <%= sub_heat_name %> Schedule,  !- Availability Schedule Name
+  HeatingDesignCapacity,   !- Heating Design Capacity Method
+  <%= sub_heat_cap %>,     !- Heating Design Capacity {W}
+  ,                        !- Heating Design Capacity Per Floor Area {W/m2}
+  ,                        !- Fraction of Autosized Heating Design Capacity
+  <%= sub_heat_eff %>;     !- Efficiency
+
+<% elsif (sub_heat_type == "BASEBOARD-WATER") %>
+ZoneHVAC:Baseboard:Convective:Water,
+  <%= sub_heat_name %> ,    !- Name
+  <%= sub_heat_name %> Schedule,  !- Availability Schedule Name
+  <%= sub_heat_name %> HW Inlet Node,  !- Inlet Node Name
+  <%= sub_heat_name %> HW Outlet Node,  !- Outlet Node Name
+  HeatingDesignCapacity,   !- Heating Design Capacity Method
+  <%= sub_heat_cap %>,     !- Heating Design Capacity {W}
+  ,                        !- Heating Design Capacity Per Floor Area {W/m2}
+  ,                        !- Fraction of Autosized Heating Design Capacity
+  Autosize,                !- U-Factor Times Area Value {W/K}
+  Autosize,                !- Maximum Water Flow Rate {m3/s}
+  ;                        !- Convergence Tolerance
+
+! Solaris Technical – Nicholas Fette & Behzad S. Rizi – 10/16/25 – The ZoneHVAC:Baseboard:Convective:Water equipment was assigned to the secondary_zone (bedrooms) in the units.
+
+  <% if secondary_zone %>
+  ZoneHVAC:Baseboard:Convective:Water,
+  <%= sub_heat_name_sec %>,    !- Name
+  <%= sub_heat_name_sec %> Schedule,  !- Availability Schedule Name
+  <%= sub_heat_name %> HW Outlet Node,  !- Inlet Node Name
+  <%= sub_heat_name_sec %> HW Outlet Node,  !- Outlet Node Name
+  HeatingDesignCapacity,   !- Heating Design Capacity Method
+  <%= sub_heat_cap %>,     !- Heating Design Capacity {W}
+  ,                        !- Heating Design Capacity Per Floor Area {W/m2}
+  ,                        !- Fraction of Autosized Heating Design Capacity
+  Autosize,                !- U-Factor Times Area Value {W/K}
+  Autosize,                !- Maximum Water Flow Rate {m3/s}
+  ;                        !- Convergence Tolerance
+
+  <% end %>
+  ! Solaris Technical – Nicholas Fette & Behzad S. Rizi – 10/16/25 – The "sub_heat_name" and "sub_heat_name_sec" were connected in series.
+  ! Solaris Technical – Nicholas Fette & Behzad S. Rizi – 10/17/25 – The Branch object is terminate in both cases:
+    ! Two baseboards (primary + secondary) → includes both components in series
+    ! One baseboard only → terminates cleanly with ;
+
+  Branch,
+    <%= system_name %> Baseboard HW Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    ZoneHVAC:Baseboard:Convective:Water,  !- Component 1 Object Type
+    <%= sub_heat_name %>,    !- Component 1 Name
+    <%= sub_heat_name %> HW Inlet Node,  !- Component 1 Inlet Node Name
+    <%= sub_heat_name %> HW Outlet Node, !- Component 1 Outlet Node Name
+  <% if secondary_zone %>
+    ZoneHVAC:Baseboard:Convective:Water,  !- Component 2 Object Type
+    <%= sub_heat_name_sec %>, !- Component 2 Name
+    <%= sub_heat_name %> HW Outlet Node,  !- Component 2 Inlet Node Name
+    <%= sub_heat_name_sec %> HW Outlet Node; !- Component 2 Outlet Node Name
+  <% else %>
+  ;                                        !- End of single baseboard branch
+  <% end %>
+
+<% end %>
+
+! Solaris Technical – Behzad S. Rizi – 10/16/25 – Assigned hvac_sch to the secondary zones.  
+<% if (sub_heat_type != "NONE") %>
+
+  <%# Primary zone schedule %>
+  Schedule:Compact,
+    <%= sub_heat_name %> Schedule,  !- Name
+    On/Off,                         !- Schedule Type Limits Name
+    <%= hvac_sch %>
+
+  <%# Secondary zone schedule %>
+  <% if defined?(secondary_zone) && secondary_zone %>
+    Schedule:Compact,
+      <%= sub_heat_name_sec %> Schedule,  !- Name
+      On/Off,                             !- Schedule Type Limits Name
+      <%= hvac_sch %>
+  <% end %>
+
+<% end %>
+
 !Sizing:zone objects
     Sizing:Zone,
         <%= zone_name %>,  !- Zone or ZoneList Name
@@ -207,28 +335,61 @@ cool_coil_object_type = ""
         <%= secondary_zone %> CV;  !- Air Terminal Name
     <% end %>
 
+!- Solaris Technical – Behzad S. Rizi – 07/17/25 – Applied sequencing for the zone equipments including baseboard convective
+!- Solaris Technical – Behzad S. Rizi – 07/17/25 – The "baseboard-resistance" is not fully implemented in this block of conditional logic for "sub_heat_type"
+!- Solaris Technical – Nicholas Fette & Behzad S. Rizi – 10/16/25 – Applied sequencing for the zone equipments including baseboard convective for the secondary zones.
+
 !ZoneHVAC:EquipmentList objects
     ZoneHVAC:EquipmentList,
         <%= zone_name %> Equipment,  !- Name
         SequentialLoad,          !- Load Distribution Scheme
-        ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
-        <%= zone_name %> ATU,  !- Zone Equipment 1 Name
-        1,                       !- Zone Equipment 1 Cooling Sequence
+	<% if sub_heat_type == "BASEBOARD-WATER" %>
+		ZoneHVAC:Baseboard:Convective:Water,  !- Zone Equipment 1 Object Type
+		<%= sub_heat_name %>,    !- Zone Equipment 1 Name
+		1,                       !- Zone Equipment 1 Cooling Sequence
         1,                       !- Zone Equipment 1 Heating or No-Load Sequence
         ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
-        ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+        ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+        ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 2 Object Type
+        <%= zone_name %> ATU,  !- Zone Equipment 2 Name
+        2,                       !- Zone Equipment 2 Cooling Sequence
+        2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+        ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+        ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
+	<% else %>
+		ZoneHVAC:AirDistributionUnit,            !- Zone Equipment 1 Object Type
+		<%= zone_name %> ATU,                    !- Zone Equipment 1 Name
+		1,                                       !- Zone Equipment 1 Cooling Sequence
+		1,                                       !- Zone Equipment 1 Heating or No-Load Sequence
+		,                                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+		;                                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+	<% end %>
     <% if secondary_zone %>
     ZoneHVAC:EquipmentList,
         <%= secondary_zone %> Equipment,  !- Name
         SequentialLoad,          !- Load Distribution Scheme
-        ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
-        <%= secondary_zone %> ATU,  !- Zone Equipment 1 Name
-        1,                       !- Zone Equipment 1 Cooling Sequence
+	<% if sub_heat_type == "BASEBOARD-WATER" %>
+		ZoneHVAC:Baseboard:Convective:Water,  !- Zone Equipment 1 Object Type
+		<%= sub_heat_name_sec %>,  !- Zone Equipment 1 Name
+		1,                       !- Zone Equipment 1 Cooling Sequence
         1,                       !- Zone Equipment 1 Heating or No-Load Sequence
         ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
-        ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
-    <% end %>
-
+        ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+        ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 2 Object Type
+        <%= secondary_zone %> ATU,  !- Zone Equipment 2 Name
+        2,                       !- Zone Equipment 2 Cooling Sequence
+        2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+        ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+        ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
+	<% else %>
+		ZoneHVAC:AirDistributionUnit,            !- Zone Equipment 1 Object Type
+		<%= secondary_zone %> ATU,                    !- Zone Equipment 1 Name
+		1,                                       !- Zone Equipment 1 Cooling Sequence
+		1,                                       !- Zone Equipment 1 Heating or No-Load Sequence
+		,                                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+		;                                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+	<% end %>
+	<% end %>
 !ZoneHVAC:EquipmentConnections objects
     ZoneHVAC:EquipmentConnections,
         <%= zone_name %>,  !- Zone Name
