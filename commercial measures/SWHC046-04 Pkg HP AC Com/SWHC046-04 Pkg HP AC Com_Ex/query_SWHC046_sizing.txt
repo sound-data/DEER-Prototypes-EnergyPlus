@@ -5,3 +5,4 @@ AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not
 ComponentSizingSummary/Entire Facility/Coil:Heating:Electric/Design Size Nominal Capacity/*, MZ-VAV ATU Heating Coil Nominal Capacity[W]
 ComponentSizingSummary/Entire Facility/AirTerminal:SingleDuct:VAV:Reheat/Design Size Maximum Air Flow Rate/*, MZ-VAV ATU Design Size Maximum Air Flow Rate[m3/s]
 ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/*, Design Size Gross Rated Total Cooling Capacity [W] 		
+ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:MultiSpeed/Design Size Speed 1 Gross Rated Total Cooling Capacity/*, Design Size Speed 1 Gross Rated Total Cooling Capacity [W]
