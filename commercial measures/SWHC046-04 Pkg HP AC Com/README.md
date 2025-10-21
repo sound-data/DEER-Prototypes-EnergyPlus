@@ -86,7 +86,7 @@ For commercial sector weighted averages, post-process according to instructions 
 
 ### 3.1 Run data transformation script to get current_msr_mat, sim_annual, and sim_hourly_wb
 
-First, copy the DEER_EnergyPlus_Modelkit_Measure_list workbook from this folder into "C:/DEER-Prototypes-EnergyPlus/scripts/data transformation". Then, follow the procedures for data transformation per instructions in [../../scripts](../../scripts).
+First, copy the DEER_EnergyPlus_Modelkit_Measure_list workbook from this folder into "C:/DEER-Prototypes-EnergyPlus/scripts/data transformation". Then, follow the standard procedures for data transformation per instructions in [../../scripts](../../scripts).
 
 ```
 cd "C:/DEER-Prototypes-EnergyPlus"
@@ -101,12 +101,26 @@ copy "sim_hourly_wb.csv" "commercial measures/SWHC046-04 Pkg HP AC Com"
 
 ### 3.2. Insert results from cooling capacity into sim_annual
 
+The script insert_normunits.py inserts results from sizing_agg_filtered.csv into a copy of sim_annual.csv and saves it to sim_annual_withunits.csv. The command line pattern for this script is:
+
 ```
-python "../../../scripts/insert_normunits.py" . --queryfile "query_SWHC04.txt" --detailfile results-sizing-detail.csv --aggfile results-summary.csv
+python insert_normunits.py <sizing_column> <normunit> <conversion_factor> <measure_name>
+```
+
+For this measure the options are
+- `<sizing_column>` = "DX Coil Cooling Capacity Single and Multi Speed [W]"
+- `<normunit>` = Cap-Ton
+- `<conversion_factor>` = (W thermal / 1 ton cooling) = 3516.85284
+- `<measure_name>` = "Pkg HP AC Com"
+
+First copy the sizing_agg_filtered.csv into the scripts folder. Then run the script:
+
+```
+python insert_normunits.py "DX Coil Cooling Capacity Single and Multi Speed [W]" Cap-Ton 3516.85284 "Pkg HP AC Com"
 ```
 
 At this point, you should have an updated copy of sim_annual.csv with cooling capacity in the normalizing units column.
 
 ### 3.3. Run commercial post-processing script
 
-Refer to instructions in [../../scripts](../../scripts).
+Refer to standard instructions in [../../scripts](../../scripts).
