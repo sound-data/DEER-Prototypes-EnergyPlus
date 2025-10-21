@@ -108,7 +108,7 @@ python insert_normunits.py <sizing_column> <normunit> <conversion_factor> <measu
 ```
 
 For this measure the options are
-- `<sizing_column>` = "DX Coil Cooling Capacity Single and Multi Speed [W]"
+- `<sizing_column>` = "Cooling Capacity (W)"
 - `<normunit>` = Cap-Ton
 - `<conversion_factor>` = (W thermal / 1 ton cooling) = 3516.85284
 - `<measure_name>` = "Pkg HP AC Com"
