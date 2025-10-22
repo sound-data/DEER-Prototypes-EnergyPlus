@@ -25,8 +25,7 @@ Classroom area and cooling coil names by zone from ESe model:
 |COMPUTER CLASSROOM E4 CORE SPC (G.C5)|COMPUTER CLASSROOM E4 CORE SPC (G.C5) SZ-CRAC COOLING COIL|
 
 
-To extract the necessary area and cooling coil capacity for each classroom type, each classroom area and cooling coil name was added to query_SWHC012.txt to output the area and cooling coil capacity in the simdata results. The areas and cooling coil 
-capacities were then summed respectively and used as the normalizing units for the energy savings.
+To extract the necessary area and cooling coil capacity for all classroom types, each classroom area and cooling coil name was added to query_SWHC012.txt to output the area and cooling coil capacity in the simdata results. The areas and cooling coil capacities were then summed respectively and used as the normalizing units for the energy savings calculations. Note that the following code includes area and cooling capacities from EPr, ERC, and ESe building types.
 
 Area and cooling capacity lines added to **query_SWHC012.txt**:
 ```
@@ -61,3 +60,4 @@ ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size G
 ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:MultiSpeed/Design Size Speed 1 Gross Rated Total Cooling Capacity/CLASSROOM E1 WEST PERIM (G.W1) SZ-VAV COOLING COIL
 ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:MultiSpeed/Design Size Speed 1 Gross Rated Total Cooling Capacity/COMPUTER CLASSROOM E4 CORE SPC (G.C5) SZ-CRAC COOLING COIL
 ```
+
