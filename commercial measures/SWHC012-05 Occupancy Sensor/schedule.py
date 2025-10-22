@@ -9,6 +9,7 @@
 # It also maps those labels to numeric setpoints for use in EnergyPlus "Schedule:File" (cooling & heating).
 # - Author: Behzad Salimian Rizi - Solaris Technical - 08/27/2025
 # - Author: Kelsey Yen - Solaris Technical - 9/12/2025
+# Updated the occupancy fraction by applying time hysterisis (vacancy delay): considering 10 minutes delay for switching setpoint to setback mode.
 
 # Imports
 import csv
