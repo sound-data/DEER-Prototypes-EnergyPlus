@@ -22,7 +22,9 @@ Then, repeat for subfolder `SWHC046-04 Pkg HP AC Com_Htl_Ex`.
 
 Optionally, while `modelkit rake run` is running, use how-to-track-progress.py to see a progress bar.
 
-Optionally, after model runs are complete, use "QC incomplete simulations.ipynb" to get statistics on failed simulations and a count of warning and error messages from EnergyPlus.
+Optionally, after model runs are complete, use
+[QC incomplete simulations.ipynb](https://github.com/simularis/building-energy-utils/blob/main/deer-user-scripts/QC%20incomplete%20simulations.ipynb)
+to get statistics on failed simulations and a count of warning and error messages from EnergyPlus.
 
 ### 1.2. Gather summary output files for raw usage and QC
 
@@ -67,18 +69,16 @@ cd "commercial measures/SWHC046-04 Pkg HP AC Com/SWHC046-04 Pkg HP AC Com_Ex"
 python "../../../scripts/result.py" . --queryfile "query_SWHC046_sizing.txt" --detailfile results-sizing-detail.csv --aggfile results-sizing-agg.csv
 ```
 
+Repeat for each vintage subfolder "SWHC046-04 Pkg HP AC Com_Htl_Ex".
+
 ### 2.2. Filter cooling capacity
 
-Filter and aggregate results into sizing_agg_filtered.csv
+Filter and aggregate results into sizing_agg_filtered.csv. Note that this step depends on the file coil_list.xlsx being in the same folder as the script.
 
 ```
-cd "commercial measures/SWHC046-04 Pkg HP AC Com/SWHC046-04 Pkg HP AC Com_Ex"
+cd "commercial measures/SWHC046-04 Pkg HP AC Com"
 python result_filtered.py
 ```
-
-### 2.3. Repeat for each vintage subfolder
-
-SWHC046-04 Pkg HP AC Com_Ex
 
 ## 3. Apply post-processing for commercial sector weighted average (with normalizing units from models)
 
@@ -110,17 +110,17 @@ python insert_normunits.py <sizing_column> <normunit> <conversion_factor> <measu
 For this measure the options are
 - `<sizing_column>` = "Cooling Capacity (W)"
 - `<normunit>` = Cap-Ton
-- `<conversion_factor>` = (W thermal / 1 ton cooling) = 3516.85284
+- `<conversion_factor>` = (W thermal / 1 ton cooling) = 1 / 3516.85284 = 2.84345e-4
 - `<measure_name>` = "Pkg HP AC Com"
 
 First copy the sizing_agg_filtered.csv into the scripts folder. Then run the script:
 
 ```
-python insert_normunits.py "DX Coil Cooling Capacity Single and Multi Speed [W]" Cap-Ton 3516.85284 "Pkg HP AC Com"
+python insert_normunits.py "DX Coil Cooling Capacity Single and Multi Speed [W]" Cap-Ton 2.84345e-4 "Pkg HP AC Com"
 ```
 
 At this point, you should have an updated copy of sim_annual.csv with cooling capacity in the normalizing units column.
 
 ### 3.3. Run commercial post-processing script
 
-Refer to standard instructions in [../../scripts](../../scripts).
+Refer to standard instructions in [../../scripts](../../scripts). Use the file "sim_annual_withunits.xlsx" in place of the "sim_annual.csv" file from Com.py.
