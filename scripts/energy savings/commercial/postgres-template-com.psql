@@ -41,7 +41,7 @@ Within an open interactive psql session:
 
 -- Set folder paths for this PSQL session.
 -- Folder paths may be absolute or relative to this script.
-\set DEERROOT '../../'
+\set DEERROOT '../../../'
 --\set DEERROOT 'C:/DEER-Prototypes-EnergyPlus/'
 -- These commands build folder path strings by concatenating previously defined variables. 
 \set SCRIPTS :DEERROOT 'scripts/'
