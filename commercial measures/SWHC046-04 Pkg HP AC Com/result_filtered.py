@@ -39,7 +39,7 @@ class CoilListProcessor:
         self.df_filtered = pd.merge(self.sim_sizing_data,
                                     self.coil_list_df,
                                     left_on=['RowName', self.sim_sizing_data['building type'].str.lower()],
-                                    right_on=['cooling coil name', self.coil_list_df['building type'].str.lower()])
+                                    right_on=['object name', self.coil_list_df['building type'].str.lower()])
         
         # Aggregate the filtered dataframe by adding up desired normunits based on file names
         self.sizing_agg_filtered = self.df_filtered.groupby(['File Name'])['Value'].sum()
@@ -62,7 +62,12 @@ def process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv):
 if __name__ == "__main__":
     normunit = "Cooling Capacity (W)"
     excel_file_path = 'coil_list.xlsx'
-    sizing_detail_csv = 'results-sizing-detail.csv'
-    output_csv = 'sizing_agg_filtered.csv'
 
+
+    sizing_detail_csv = 'SWHC046-04 Pkg HP AC Com_Ex/results-sizing-detail.csv'
+    output_csv = 'SWHC046-04 Pkg HP AC Com_Ex/sizing_agg_filtered.csv'
+    process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)
+
+    sizing_detail_csv = 'SWHC046-04 Pkg HP AC Com_Htl_Ex/results-sizing-detail.csv'
+    output_csv = 'SWHC046-04 Pkg HP AC Com_Htl_Ex/sizing_agg_filtered.csv'
     process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)
