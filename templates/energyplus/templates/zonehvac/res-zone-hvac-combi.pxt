@@ -26,7 +26,8 @@ parameter "motor_eff", :default=>0.24
 parameter "pressure_rise", :default=>125
 #parameter "vfd_curve_name", :default=>"" #"" for constant speed, "VFD_Fan_Curve" for variable speed does not work with Fan:OnOff
 
-
+#Sizing and unmet hours testing
+parameter "max_designday_schedules", :default=>false
 #parameter "heat_coil_object_type",:default => nil
 #parameter "cool_coil_object_type",:default => nil
 
@@ -162,21 +163,37 @@ cool_coil_object_type = ""
         OnOff;                   !- Central Cooling Capacity Control Method
 
 !ZoneControl:Thermostat objects
-    ZoneControl:Thermostat,
-        <%= zone_name %> Thermostat,  !- Name
-        <%= zone_name %>,  !- Zone or ZoneList Name
-        HVACTemplate-Always 4,   !- Control Type Schedule Name
-        ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
-        thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
-    <% if secondary_zone %>
-    ZoneControl:Thermostat,
-        <%= secondary_zone %> Thermostat,  !- Name
-        <%= secondary_zone %>,  !- Zone or ZoneList Name
-        HVACTemplate-Always 4,   !- Control Type Schedule Name
-        ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
-        thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
+    <%if cool_type != "NC" %>
+        ZoneControl:Thermostat,
+            <%= zone_name %> Thermostat,  !- Name
+            <%= zone_name %>,  !- Zone or ZoneList Name
+            HVACTemplate-Always 4,   !- Control Type Schedule Name
+            ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
+            thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
+        <% if secondary_zone %>
+        ZoneControl:Thermostat,
+            <%= secondary_zone %> Thermostat,  !- Name
+            <%= secondary_zone %>,  !- Zone or ZoneList Name
+            HVACTemplate-Sizing 4 Other 0,   !- Control Type Schedule Name
+            ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
+            thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
+        <% end %>
+    <% else %>
+        ZoneControl:Thermostat,
+            <%= zone_name %> Thermostat,  !- Name
+            <%= zone_name %>,  !- Zone or ZoneList Name
+            HVACTemplate-Always 1,   !- Control Type Schedule Name
+            ThermostatSetpoint:SingleHeating,  !- Control 1 Object Type
+            thermostat_living SP Control Heating SP Control;  !- Control 1 Name
+        <% if secondary_zone %>
+        ZoneControl:Thermostat,
+            <%= secondary_zone %> Thermostat,  !- Name
+            <%= secondary_zone %>,  !- Zone or ZoneList Name
+            HVACTemplate-Sizing 1 Other 0,   !- Control Type Schedule Name
+            ThermostatSetpoint:SingleHeating,  !- Control 1 Object Type
+            thermostat_living SP Control Heating SP Control;  !- Control 1 Name
+        <% end %>       
     <% end %>
-
 !AirTerminal:SingleDuct:ConstantVolume:NoReheat objects
     AirTerminal:SingleDuct:ConstantVolume:NoReheat,
         <%= zone_name %> CV,  !- Name

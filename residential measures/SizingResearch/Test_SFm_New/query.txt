@@ -1,0 +1,43 @@
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Site and Source Energy/Energy Per Total Building Area/Net Site Energy, Net Site EUI
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Site and Source Energy/Energy Per Total Building Area/Net Source Energy, Net Source EUI
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Site and Source Energy/Total Energy/Net Site Energy
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Site and Source Energy/Total Energy/Net Source Energy
+
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Total End Uses, Total
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Heating, Heating
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Cooling, Cooling
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Interior Lighting, Interior Lighting
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Exterior Lighting, Exterior Lighting
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Interior Equipment, Interior Equipment
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Exterior Equipment, Exterior Equipment
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Fans, Fans
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Pumps, Pumps
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Heat Rejection, Heat Rejection
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Humidification, Humidification
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Heat Recovery, Heat Recovery
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Water Systems, Water Systems
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Water Systems, Water Systems
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Water Systems, Water Systems
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Refrigeration, Refrigeration
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Generators, Generators
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Heating, Heating Elec
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Cooling, Cooling Elec
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Heating, Heating NG
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Cooling, Cooling NG
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Interior Equipment, Interior Equipment Elec
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Interior Equipment, Interior Equipment NG
+
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Heating, Unmet Heating
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Cooling, Unmet Cooling
+
+SystemSummary/Entire Facility/Time Setpoint Not Met/During Heating/Facility, Unmet Heating Whole Year
+SystemSummary/Entire Facility/Time Setpoint Not Met/During Cooling/Facility, Unmet Cooling Whole Year
+
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Building Area/Area/Net Conditioned Building Area, Conditioned Area
+
+ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/*, Cooling Capacity
+
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:Unitary:Furnace:HeatCool/Nominal Heating Capacity/*, Heating Capacity
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitaryHeatOnly/Nominal Heating Capacity/*, Heating Capacity
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitaryHeatPump:AirToAir/Nominal Heating Capacity/*, Heating Capacity
+ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitaryHeatPump:AirToAir/Supplemental Heating Coil Nominal Capacity/*, Heating Capacity

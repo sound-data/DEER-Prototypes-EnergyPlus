@@ -36,7 +36,9 @@ parameter "roofing", :default=>'REQ'
 parameter "infiltration_ACH", :default=>0.3
 
 # sizing parameter
-parameter "sizing_parameter", :default=>1.8
+parameter "sizing_parameter_heating", :default=>1.8
+parameter "sizing_parameter_cooling", :default=>1.8
+
 
 # Thermostat Setpoint
 parameter "climate_zone", :default=>1
@@ -53,7 +55,6 @@ parameter "internal_mass", :default=>100
 #hvac type
 parameter "hvac_type", :default=>""
 parameter "coil_type", :default =>""
-
 
 #fridge/freezer power level
 parameter "refgfrzr_power_level", :default=>91.0575745
@@ -96,6 +97,7 @@ end
 parameter "peak_flow", :default => 0.00062 ['m3/s']
 parameter "dhw_demand_sch", :default => "SFm_minute_dhw_demand_fraction.csv"
 parameter "dhw_use_setpt_t", :default => 110 ['F']
+
 
 #fan power
 parameter "supplyfan_total_eff", :default=>0.25
@@ -236,17 +238,17 @@ Version,
 SimulationControl,
     Yes,                     !- Do Zone Sizing Calculation
     Yes,                     !- Do System Sizing Calculation
-    No,                      !- Do Plant Sizing Calculation
-    No,                     !- Run Simulation for Sizing Periods
+    Yes,                      !- Do Plant Sizing Calculation
+    Yes,                     !- Run Simulation for Sizing Periods
     Yes,                     !- Run Simulation for Weather File Run Periods
-    ,                        !- Do HVAC Sizing Simulation for Sizing Periods
+    Yes,                        !- Do HVAC Sizing Simulation for Sizing Periods
     ;                        !- Maximum Number of HVAC Sizing Simulation Passes
 
 
 !-   ===========  ALL OBJECTS IN CLASS: BUILDING ===========
 
 Building,
-    SFm+WHFansslab+existing,  !- Name
+    SFm+2+new,  !- Name
     0,                       !- North Axis {deg}
     Suburbs,                 !- Terrain
     0.04,                    !- Loads Convergence Tolerance Value {W}
@@ -6553,26 +6555,93 @@ Schedule:Day:Hourly,
     0.5,                     !- Hour 23
     0.5;                     !- Hour 24
 
+Schedule:Day:Hourly,
+    Max CDD,      !- Name
+    fraction,                !- Schedule Type Limits Name
+    1.0,                     !- Hour 1
+    1.0,                     !- Hour 2
+    1.0,                     !- Hour 3
+    1.0,                     !- Hour 4
+    1.0,                     !- Hour 5
+    1.0,                     !- Hour 6
+    1.0,                     !- Hour 7
+    1.0,                     !- Hour 8
+    1.0,                     !- Hour 9
+    1.0,                     !- Hour 10
+    1.0,                     !- Hour 11
+    1.0,                     !- Hour 12
+    1.0,                     !- Hour 13
+    1.0,                     !- Hour 14
+    1.0,                     !- Hour 15
+    1.0,                     !- Hour 16
+    1.0,                     !- Hour 17
+    1.0,                     !- Hour 18
+    1.0,                     !- Hour 19
+    1.0,                     !- Hour 20
+    1.0,                     !- Hour 21
+    1.0,                     !- Hour 22
+    1.0,                     !- Hour 23
+    1.0;                     !- Hour 24
+
+Schedule:Day:Hourly,
+    Max HDD,  !- Name
+    fraction,                !- Schedule Type Limits Name
+    0.0,                     !- Hour 1
+    0.0,                     !- Hour 2
+    0.0,                     !- Hour 3
+    0.0,                     !- Hour 4
+    0.0,                     !- Hour 5
+    0.0,                     !- Hour 6
+    0.0,                     !- Hour 7
+    0.0,                     !- Hour 8
+    0.0,                     !- Hour 9
+    0.0,                     !- Hour 10
+    0.0,                     !- Hour 11
+    0.0,                     !- Hour 12
+    0.0,                     !- Hour 13
+    0.0,                     !- Hour 14
+    0.0,                     !- Hour 15
+    0.0,                     !- Hour 16
+    0.0,                     !- Hour 17
+    0.0,                     !- Hour 18
+    0.0,                     !- Hour 19
+    0.0,                     !- Hour 20
+    0.0,                     !- Hour 21
+    0.0,                     !- Hour 22
+    0.0,                     !- Hour 23
+    0.0;                     !- Hour 24
 
 !-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:WEEK:COMPACT ===========
 
 Schedule:Week:Compact,
     RefrigeratorWeek,        !- Name
-    For: AllDays,            !- DayType List 1
+    For: WinterDesignDay,
+    Max HDD,
+    For: AllOtherDays,            !- DayType List 1
     RefrigeratorDay;         !- Schedule:Day Name 1
 
 Schedule:Week:Compact,
     MiscPlugLoadWeek,        !- Name
-    For: AllDays,            !- DayType List 1
+    <% if max_designday_schedules %>
+    For: SummerDesignDay,
+    Max CDD,
+    <% end %>
+    For: WinterDesignDay,
+    Max HDD,
+    For: AllOtherDays,            !- DayType List 1
     MiscPlugLoadDay;         !- Schedule:Day Name 1
 
 Schedule:Week:Compact,
     CookingRangeWeek,        !- Name
-    For: AllDays,            !- DayType List 1
+    For: WinterDesignDay,
+    Max HDD,
+    For: AllOtherDays,            !- DayType List 1
     CookingRangeDay;         !- Schedule:Day Name 1
 
 Schedule:Week:Compact,
     DishwasherWeek,          !- Name
+    For: WinterDesignDay,
+    Max HDD,
     For: Weekdays,           !- DayType List 1
     DishwasherWeekday,       !- Schedule:Day Name 1
     For: CustomDay1,         !- DayType List 2
@@ -6582,6 +6651,8 @@ Schedule:Week:Compact,
 
 Schedule:Week:Compact,
     ClothesWasherWeek,       !- Name
+    For: WinterDesignDay,
+    Max HDD,
     For: Weekdays,           !- DayType List 1
     ClothesWasherWeekday,    !- Schedule:Day Name 1
     For: CustomDay1,         !- DayType List 2
@@ -6591,6 +6662,8 @@ Schedule:Week:Compact,
 
 Schedule:Week:Compact,
     ClothesDryerWeek,        !- Name
+    For: WinterDesignDay,
+    Max HDD,
     For: Weekdays,           !- DayType List 1
     ClothesDryerWeekday,     !- Schedule:Day Name 1
     For: CustomDay1,         !- DayType List 2
@@ -6637,7 +6710,13 @@ Schedule:Week:Compact,
 
 Schedule:Week:Compact,
     LightingProfileWeek_EELighting,  !- Name
-    For: AllDays,            !- DayType List 1
+    <% if max_designday_schedules %>
+    For: SummerDesignDay,
+    Max CDD,
+    <% end %>
+    For: WinterDesignDay,
+    Max HDD,
+    For: AllOtherDays,            !- DayType List 1
     LightingDay_EELighting;  !- Schedule:Day Name 1
 
 Schedule:Week:Compact,
@@ -6662,9 +6741,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S1 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S1 All,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL1 Occ-1 S1 All" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S1 All,      !- Schedule:Day Name 4
+    Max HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-1 S1 All;      !- Schedule:Day Name 5
 
@@ -6675,9 +6754,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S2 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S2 All,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL1 Occ-1 S2 All" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S2 All,      !- Schedule:Day Name 4
+    Max HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-1 S2 All;      !- Schedule:Day Name 5
 
@@ -6688,9 +6767,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S3 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S3 All,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL1 Occ-1 S3 All" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S3 All,      !- Schedule:Day Name 4
+    Max HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-1 S3 All;      !- Schedule:Day Name 5
 
@@ -6740,9 +6819,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-2 S1 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL2 Occ-2 S1 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-2 S1 HDD,      !- Schedule:Day Name 4
+    Max HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -6753,9 +6832,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-2 S2 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL2 Occ-2 S2 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-2 S2 HDD,      !- Schedule:Day Name 4
+    Max HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -6766,9 +6845,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-2 S3 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL2 Occ-2 S3 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-2 S3 HDD,      !- Schedule:Day Name 4
+    Max HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -7052,9 +7131,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-1 S1 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL2 Occ-1 S1 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-1 S1 HDD,      !- Schedule:Day Name 4
+    Max HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-1 S1 WEH;      !- Schedule:Day Name 5
 
@@ -7065,9 +7144,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-1 S2 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL2 Occ-1 S2 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-1 S2 HDD,      !- Schedule:Day Name 4
+    Max HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-1 S2 WEH;      !- Schedule:Day Name 5
 
@@ -7078,9 +7157,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-1 S3 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL2 Occ-1 S3 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-1 S3 HDD,      !- Schedule:Day Name 4
+    Max HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-1 S3 WEH;      !- Schedule:Day Name 5
 
@@ -8717,6 +8796,28 @@ Schedule:Compact,
     Until: 24:00,            !- Field 3
     4;                       !- Field 4
 
+Schedule:Compact,
+    HVACTemplate-Sizing 4 Other 0,   !- Name
+    HVACTemplate Any Number, !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: SummerDesignDay WinterDesignDay,
+    Until: 24:00,
+    4,
+    For: AllOtherDays,
+    Until: 24:00,
+    0;
+
+Schedule:Compact,
+    HVACTemplate-Sizing 1 Other 0,   !- Name
+    HVACTemplate Any Number, !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: SummerDesignDay WinterDesignDay,
+    Until: 24:00,
+    1,
+    For: AllOtherDays,
+    Until: 24:00,
+    0;
+    
 Schedule:Compact,
     HVACTemplate-Always 1,   !- Name
     HVACTemplate Any Number, !- Schedule Type Limits Name
@@ -16344,8 +16445,8 @@ Exterior:Lights,
 
 
 Sizing:Parameters,
-    <%= sizing_parameter %>,                     !- Heating Sizing Factor
-    <%= sizing_parameter %>;                     !- Cooling Sizing Factor
+    <%= sizing_parameter_heating %>,                     !- Heating Sizing Factor
+    <%= sizing_parameter_cooling %>;                     !- Cooling Sizing Factor
 
 !-   ===========  ALL OBJECTS IN CLASS: THERMOSTATSETPOINT:DUALSETPOINT ===========
 
@@ -16358,6 +16459,10 @@ ThermostatSetpoint:DualSetpoint,
     thermostat_living Dual SP Control Dual SP Control,  !- Name
     heating_sch_DEER,        !- Heating Setpoint Temperature Schedule Name
     cooling_sch_DEER;        !- Cooling Setpoint Temperature Schedule Name
+
+ThermostatSetpoint:SingleHeating,
+    thermostat_living SP Control Heating SP Control,  !- Name
+    heating_sch_DEER;        !- Setpoint Temperature Schedule Name
 
 !-   ===========  ALL OBJECTS IN CLASS: AVAILABILITYMANAGER:SCHEDULED ===========
 
