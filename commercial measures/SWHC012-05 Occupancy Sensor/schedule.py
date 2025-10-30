@@ -140,15 +140,38 @@ def generate_schedule(BT):
     Outputs:
         None
     Side effects:
-        Writes files Labels_BT.csv and Schedule_BT.csv.
+        Writes file Schedule_BT.csv.
         Labels includes categories at each timestep for QC: Date,Time Stamp,Temperature,Day of the Week,Day Type,Holiday.
         Schedules includes all labels plus data columns: Cooling Setpoint (C),Heating Setpoint (C).
     """
-    # Output files
-    LABEL_CSV = f"Labels_{BT}.csv"
+    # Output file(s)
     SETPOINT_CSV = f"Schedule_{BT}.csv"
 
     # Time-of-Day Logic determines temperature status based on day type and hour, with 10 min warm-up from unoccupied to setpoint and 10-min delay between setpoint and setback.
+
+    # TODO Re-write this function to accept a data file or list of setpoint change events (similar to EnergyPlus compact schedule), e.g.
+    # ese_occupancy_status.csv
+    # day_type, until, occ_sensor_status
+    # School_Wkday, 08:00, setback
+    # School_Wkday, 11:10, active
+    # School_Wkday, 13:00, setback
+    # School_Wkday, 14:10, active
+    # School_Wkday, 24:00, setback
+    # Summer_Wkday, 09:00, setback
+    # Summer_Wkday, 13:10, active
+    # Summer_Wkday, 24:00, setback
+    # Wkend, 24:00, setback
+    # epr_occupancy_status.csv
+    # day_type, until, occ_sensor_status
+    # School_Wkday, 08:00, setback
+    # School_Wkday, 11:10, active
+    # School_Wkday, 13:00, setback
+    # School_Wkday, 15:10, active
+    # School_Wkday, 24:00, setback
+    # Summer_Wkday, 09:00, setback
+    # Summer_Wkday, 13:10, active
+    # Summer_Wkday, 24:00, setback
+    # Wkend, 24:00, setback
 
     if BT == "Secondary":
         def determine_temperature_status(day_type_str: str, hour: int, minute: int) -> str:
@@ -164,8 +187,9 @@ def generate_schedule(BT):
                 else:
                     return "setback"
 
+            # Wkend
             return "setback"
-    else: # temperature status for EPr and ECR
+    else: # temperature status for EPr and ERC
         def determine_temperature_status(day_type_str: str, hour: int, minute: int) -> str:
             if day_type_str == "School_Wkday":
                 if hour in range(8, 11) or hour == 11 and minute <=10 or hour in range(13, 15) or hour == 15 and minute <= 10:
@@ -179,6 +203,7 @@ def generate_schedule(BT):
                 else:
                     return "setback"
 
+            # Wkend
             return "setback"
 
     # Build calendar and time grid for the year by time step minutes
@@ -190,33 +215,7 @@ def generate_schedule(BT):
     timestamp_range = [datetime.strptime("00:00", "%H:%M") + timedelta(minutes=TIME_STEP_MIN*i) for i in range(steps_per_day)]
     len(date_range), len(timestamp_range)
 
-    # Write data to CSV temp_labels_EPr_2026.csv
-    with open(LABEL_CSV, 'w', newline='') as csvfile:
-        fieldnames = ['Date', 'Time Stamp', 'Temperature', 'Day of the Week', 'Day Type', 'Holiday']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        writer.writeheader()
-
-        for date in date_range:
-            current_day_type = day_type(date)
-            hol = is_holiday(date)
-            hol_name = hol if hol else ""
-            
-            for timestamp in timestamp_range:
-                hour = timestamp.hour
-                minute = timestamp.minute
-                label = determine_temperature_status(current_day_type, hour, minute)
-                writer.writerow({
-                    'Date': date.strftime('%m/%d/%y'),
-                    'Time Stamp': timestamp.strftime('%H:%M'),
-                    'Temperature': label,
-                    'Day of the Week': date.strftime('%A'),
-                    'Day Type': current_day_type,
-                    'Holiday': hol_name,
-                })
-
-    print(f"Label CSV written: {LABEL_CSV}")
-
-    # Map Labels → Numeric Setpoints (Cooling & Heating) and Save generates `temp_setpoints_YEAR_EPr.csv` with numeric °F columns suitable for EnergyPlus `Schedule:File`.
+    # Map Labels → Numeric Setpoints (Cooling & Heating) and Save generates `Schedule_BT.csv` with numeric °C columns suitable for EnergyPlus `Schedule:File`.
     rows = []
     for date in date_range:
         current_day_type = day_type(date)
@@ -251,4 +250,3 @@ if __name__ == "__main__":
     generate_schedule(BT = "Primary")
     generate_schedule(BT = "Secondary")
     generate_schedule(BT = "Relocatable")
-
