@@ -4,6 +4,15 @@ This document describes the steps necessary to reproduce simulations and model o
 
 Prepared by Solaris Technical, Kelsey Yen - 2025-10-22
 
+## Generating temperature setback schedules
+
+Run the script included in this folder to output Schedule_Primary.csv, Schedule_Relocatable.csv, and Schedule_Secondary.csv.
+
+```
+python schedule.py
+```
+
+The schedules will be referenced by EnergyPlus models via a Schedule:File object.
 
 ## Extracting Normalizing Units for Classrooms
 
