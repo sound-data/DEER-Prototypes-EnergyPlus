@@ -7,6 +7,11 @@
 # - Time-of-day logic: minute-level windows for partial occupancy (e.g., lunch)  
 # 
 # It also maps those labels to numeric setpoints for use in EnergyPlus "Schedule:File" (cooling & heating).
+#
+# Note that schedule file is indexed by prevailing time rather than standard
+# time and must be read into EnergyPlus with the option `Adjust Schedule for Daylight Savings` = Yes
+# in order to match the daylight saving time option in the model.
+#
 # - Author: Behzad Salimian Rizi - Solaris Technical - 08/27/2025
 # - Author: Kelsey Yen - Solaris Technical - 9/12/2025
 # Updated the occupancy fraction by applying time hysterisis (vacancy delay): considering 10 minutes delay for switching setpoint to setback mode.
