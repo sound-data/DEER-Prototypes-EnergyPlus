@@ -14,6 +14,44 @@ python schedule.py
 
 The schedules will be referenced by EnergyPlus models via a Schedule:File object.
 
+## Running simulation
+
+Providing a filename via the parameter classroom_class_setpoint_temp_schedule parameter triggers the prototypes to read in a temperature setpoint schedule from file.
+The filename is specified in the hvac-zone template using a relative path to its location in the measure folder.
+Some users may get an EnergyPlus warning due to the relative path.
+In order to run the models, apply a workaround by editing the hvac-zone template to hard-code the folder where schedules are located, for example:
+
+**templates\energyplus\templates\zonehvac\hvac-zone.pxt near line 590**
+
+```
+  Schedule:File,
+	<%=zone_name %> Cooling Setpoint Schedule,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+	C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-05 Occupancy Sensor/<%= setpoint_temp_schedule %>,  !- File Name
+    3,                       !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No,                      !- Interpolate to Timestep
+    10,                      !- Minutes per Item
+    Yes;                     !- Adjust Schedule for Daylight Savings
+```
+**templates\energyplus\templates\zonehvac\hvac-zone.pxt near line 612**
+
+```
+  Schedule:File,
+	<%=zone_name %> Heating Setpoint Schedule,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+	C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-05 Occupancy Sensor/<%= setpoint_temp_schedule %>,  !- File Name
+    4,                       !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No,                      !- Interpolate to Timestep
+    10,                      !- Minutes per Item
+    Yes;                     !- Adjust Schedule for Daylight Savings
+```
+
 ## Extracting Normalizing Units for Classrooms
 
 In the development of this measure, both area and cooling capacity (from cooling coils) are used as normalizing units for the classroom zones. Only zones with "CLASSROOM" in the zone name are included. 
