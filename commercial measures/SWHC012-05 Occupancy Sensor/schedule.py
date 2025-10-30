@@ -37,7 +37,16 @@ HEAT_SETBACK = 15.56
 # Holiday and Break Calendar function returns holiday/break name if date is within a defined range
 
 # code edited from online source
-def get_holiday(year, n, weekday, month):
+def get_holiday(year, n, weekday, month) -> datetime:
+    """
+    Return the date for a holiday defined by week number and day of week.
+
+    Inputs:
+        year: year as number
+        n: the nth such day from the beginning of the month
+        weekday:  weekday = 0 for monday, 6 for sunday
+        month: month as number (1 through 12)
+    """
     # Note that weekday = 0 for monday, 6 for sunday
     daysInMonth = calendar.monthrange(year, month)[1]
     count = 0
@@ -51,6 +60,9 @@ def get_holiday(year, n, weekday, month):
             
 # code edited from online source
 def get_memday(year):
+    """
+    Returns the date of Memorial Day holiday in a given year.
+    """
     # retrieving the required month from the calendar
     month = calendar.monthcalendar(year, 5)
 
@@ -63,6 +75,7 @@ def get_memday(year):
         return datetime(year, 5, month[-2][0])
 
 def is_holiday(date: datetime) ->Optional[str]:
+    # TODO maybe use pandas builtin function for holiday dates?
     holidays = {
         "New Years Day": datetime(YEAR, 1, 1),
         "MLK Day": get_holiday(YEAR, 3, 0, 1), # third Monday in January
@@ -89,8 +102,20 @@ def is_holiday(date: datetime) ->Optional[str]:
                 return name
     return None
 
-# Day Type function labels each date as School_Wkday (Mon-Fri during school terms), Summer_Wkday (Mon-Fri during summer term), or Wkend (Sat, Sun, and holidays)
+
 def day_type(date: datetime) -> str:
+    """
+    Returns the day type label for a given date.
+
+    - School_Wkday (Mon-Fri during school terms)
+    - Summer_Wkday (Mon-Fri during summer term)
+    - Wkend (Sat, Sun, and holidays)
+    
+    School terms align with schedule changes in prototypes EPr, ESe, and ERC
+    Prototype schedules were extracted into "OccSchedule vs TempSetpointSch.xlsx" for clarity.
+    Refer to parameter defaults school_light_sch and school_occ_sch, for example.
+    """
+
     school_term_1 = (datetime(YEAR, 1, 1), datetime(YEAR, 5, 31))
     summer_term = (datetime(YEAR, 6, 1), datetime(YEAR, 8, 16))
     school_term_2 = (datetime(YEAR, 8, 17), datetime(YEAR, 12, 31))
