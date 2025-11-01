@@ -25,7 +25,12 @@ parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n 
 
 parameter "clear_water_supply_tank", :default=>""
 
-parameter "pump_min_flow_rate", :default=>0
+# 2025-10-31 Nicholas Fette. To allow user control over condenser pump control type.
+parameter "pump_control_type", :default=>"Intermittent" # (Intermittent | Continuous)
+
+# 2024-02-07 Afshin Faramarzi. To specify condenser pump minimum mass flow rate in conjunction with continuous pump control.
+# Note that modelkit caboodle does not have any unit conversions for mass flow rate.
+parameter "pump_min_flow_rate", :default=>0 # (kg/s)
 
 %>
 
@@ -121,7 +126,10 @@ SetpointManager:FollowOutdoorAirTemperature,
 !  Until: 24:00,            !- Field 3
 !  <%= design_temp %>;      !- Field 4
 
-
+<%# 2024-02-07 Afshin Faramarzi
+Setpoint manager and schedule to keep condenser pump at least 70% of rated mass flow rate.
+User to specify flow rate based on prior simulation results.
+%> 
 Schedule:Constant,
   <%= name %> Pump Min Flow Sch,  !- Name
   Any Number,             !- Schedule Type Limits Name
@@ -230,7 +238,7 @@ HeaderedPumps:VariableSpeed,
   -0.0325,                 !- Coefficient 3 of the Part Load Performance Curve
   1.0095,                  !- Coefficient 4 of the Part Load Performance Curve
   0,                       !- Minimum Flow Rate Fraction
-  Continuous;            !- Pump Control Type
+  <%= pump_control_type %>;            !- Pump Control Type
 <% else %>
 Pump:ConstantSpeed,
   <%= name %> Pump,      !- Name
@@ -241,7 +249,7 @@ Pump:ConstantSpeed,
   Autosize,                !- Rated Power Consumption {W}
   <%= pump_eff %>,  !- Motor Efficiency
   0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
-  Continuous;            !- Pump Control Type
+  <%= pump_control_type %>;            !- Pump Control Type
 <% end %>
 
 
