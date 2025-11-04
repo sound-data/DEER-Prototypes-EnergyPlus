@@ -29,7 +29,7 @@ require("modelkit/energyplus")
 # - water mains temp?
 # - daylight saving time?
 def generate_site_pxt(idd, ddy_path, site_path, study_dir, config)
-  repository_dir = File.expand_path('../..', __dir__) # Automatically determine repository root, if rakefile.rb is in ".../residential measures/HP Combi/", so go up two levels to reach ".../DEER-Prototypes-EnergyPlus-Working/"
+  repository_dir = File.expand_path('../..', __dir__) # Automatically determine repository root, if rakefile.rb is in ".../residential measures/HP Combi/", so go up two levels
   site_file = File.open(site_path, "w")
 
   # Pass directories from modelkit-config into site.pxt
