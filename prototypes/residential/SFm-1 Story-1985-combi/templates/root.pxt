@@ -260,7 +260,7 @@ climate_zone_str = zones[climate_zone - 1] %>
 Schedule:File,
     site_mains_water_temp,  !- Name
     Temperature,                !- Schedule Type Limits Name
-    ../../../../../../../../templates/hot water profile/site_mains_water_temp_CZ<%= climate_zone_str %>.csv,  !- File Name
+    <%= $repository_dir %>/templates/hot water profile/site_mains_water_temp_CZ<%= climate_zone_str %>.csv,  !- File Name
     1,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
