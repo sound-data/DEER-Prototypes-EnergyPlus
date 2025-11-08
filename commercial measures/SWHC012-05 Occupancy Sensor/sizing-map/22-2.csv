@@ -1,1300 +1,1300 @@
 Name,Parameter,Value
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Design Size Evaporative Condenser Air Flow Rate,61
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Design Size Evaporative Condenser Pump Rated Power Consumption,62
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Design Size Gross Rated Heating Capacity,17
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Design Size Gross Rated Total Cooling Capacity,3
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Design Size Resistive Defrost Heater Capacity,54
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Design Size Water Condenser Volume Flow Rate,59
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Evaporative Condenser Air Flow Rate,61
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Evaporative Condenser Pump Rated Power Consumption,62
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Gross Rated Heating Capacity,17
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Gross Rated Total Cooling Capacity,3
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Resistive Defrost Heater Capacity,54
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW,Water Condenser Volume Flow Rate,59
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Design Size Rated Evaporative Capacity,5
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Design Size Resistive Defrost Heater Capacity,38
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Rated Evaporative Capacity,5
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Resistive Defrost Heater Capacity,38
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL:HR,Design Size Rated Evaporative Capacity,5
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL:HR,Design Size Resistive Defrost Heater Capacity,45
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL:HR,Rated Evaporative Capacity,5
-AIRCONDITIONER:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL:HR,Resistive Defrost Heater Capacity,45
-AIRLOOPHVAC,Design Size Design Supply Air Flow Rate,4
-AIRLOOPHVAC,Design Supply Air Flow Rate,4
-AIRLOOPHVAC,Sum of Air Terminal Maximum Heating Flow Rates,4
-AIRLOOPHVAC,Sum of Air Terminal Minimum Heating Flow Rates,4
-AIRLOOPHVAC,Sum of Air Terminal Maximum Flow Rates,4
-AIRLOOPHVAC,Adjusted Heating Design Air Flow Rate,4
-AIRLOOPHVAC,Adjusted Cooling Design Air Flow Rate,4
-AIRLOOPHVAC,Adjusted Main Design Air Flow Rate,4
-AIRLOOPHVAC,User Heating Air Flow Ratio,4
-AIRLOOPHVAC,Calculated Heating Air Flow Ratio,4
-AIRLOOPHVAC,Central Heating Maximum System Air Flow Ratio,4
-AIRLOOPHVAC:UNITARY:FURNACE:HEATCOOL,Cooling Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARY:FURNACE:HEATCOOL,Design Size Cooling Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARY:FURNACE:HEATCOOL,Design Size Heating Supply Air Flow Rate,8
-AIRLOOPHVAC:UNITARY:FURNACE:HEATCOOL,Design Size Maximum Supply Air Temperature,6
-AIRLOOPHVAC:UNITARY:FURNACE:HEATCOOL,Design Size No Load Supply Air Flow Rate,9
-AIRLOOPHVAC:UNITARY:FURNACE:HEATCOOL,Heating Supply Air Flow Rate,8
-AIRLOOPHVAC:UNITARY:FURNACE:HEATCOOL,Maximum Supply Air Temperature,6
-AIRLOOPHVAC:UNITARY:FURNACE:HEATCOOL,No Load Supply Air Flow Rate,9
-AIRLOOPHVAC:UNITARY:FURNACE:HEATONLY,Design Size Heating Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARY:FURNACE:HEATONLY,Design Size Maximum Supply Air Temperature,6
-AIRLOOPHVAC:UNITARY:FURNACE:HEATONLY,Heating Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARY:FURNACE:HEATONLY,Maximum Supply Air Temperature,6
-AIRLOOPHVAC:UNITARYHEATCOOL,Cooling Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARYHEATCOOL,Design Size Cooling Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARYHEATCOOL,Design Size Heating Supply Air Flow Rate,8
-AIRLOOPHVAC:UNITARYHEATCOOL,Design Size Maximum Supply Air Temperature,6
-AIRLOOPHVAC:UNITARYHEATCOOL,Design Size No Load Supply Air Flow Rate,9
-AIRLOOPHVAC:UNITARYHEATCOOL,Heating Supply Air Flow Rate,8
-AIRLOOPHVAC:UNITARYHEATCOOL,Maximum Supply Air Temperature,6
-AIRLOOPHVAC:UNITARYHEATCOOL,No Load Supply Air Flow Rate,9
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Cooling Outdoor Air Flow Rate,6
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Cooling Supply Air Flow Rate,3
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Design Size Cooling Outdoor Air Flow Rate,6
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Design Size Cooling Supply Air Flow Rate,3
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Design Size Heating Outdoor Air Flow Rate,7
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Design Size Heating Supply Air Flow Rate,4
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Design Size No Load Outdoor Air Flow Rate,8
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Design Size No Load Supply Air Flow Rate,5
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Heating Outdoor Air Flow Rate,7
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,Heating Supply Air Flow Rate,4
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,No Load Outdoor Air Flow Rate,8
-AIRLOOPHVAC:UNITARYHEATCOOL:VAVCHANGEOVERBYPASS,No Load Supply Air Flow Rate,5
-AIRLOOPHVAC:UNITARYHEATONLY,Design Size Heating Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARYHEATONLY,Design Size Maximum Supply Air Temperature,6
-AIRLOOPHVAC:UNITARYHEATONLY,Heating Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARYHEATONLY,Maximum Supply Air Temperature,6
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR,Cooling Supply Air Flow Rate,5
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR,Design Size Cooling Supply Air Flow Rate,5
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR,Design Size Heating Supply Air Flow Rate,6
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR,Design Size Maximum Supply Air Temperature from Supplemental Heater,17
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR,Design Size No Load Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR,Heating Supply Air Flow Rate,6
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR,Maximum Supply Air Temperature from Supplemental Heater,17
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR,No Load Supply Air Flow Rate,7
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Cooling Speed 1 Supply Air Flow Rate,32
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Cooling Speed 2 Supply Air Flow Rate,33
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Cooling Speed 3 Supply Air Flow Rate,34
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Cooling Speed 4 Supply Air Flow Rate,35
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size Cooling Speed 1 Supply Air Flow Rate,32
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size Cooling Speed 2 Supply Air Flow Rate,33
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size Cooling Speed 3 Supply Air Flow Rate,34
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size Cooling Speed 4 Supply Air Flow Rate,35
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size Heating Speed 1 Supply Air Flow Rate,28
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size Heating Speed 2 Supply Air Flow Rate,29
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size Heating Speed 3 Supply Air Flow Rate,30
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size Heating Speed 4 Supply Air Flow Rate,31
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size Maximum Supply Air Temperature from Supplemental Heater,17
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Design Size No Load Supply Air Flow Rate,25
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Heating Speed 1 Supply Air Flow Rate,28
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Heating Speed 2 Supply Air Flow Rate,29
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Heating Speed 3 Supply Air Flow Rate,30
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Heating Speed 4 Supply Air Flow Rate,31
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,Maximum Supply Air Temperature from Supplemental Heater,17
-AIRLOOPHVAC:UNITARYHEATPUMP:AIRTOAIR:MULTISPEED,No Load Supply Air Flow Rate,25
-AIRLOOPHVAC:UNITARYHEATPUMP:WATERTOAIR,Design Size Maximum Supply Air Temperature from Supplemental Heater,21
-AIRLOOPHVAC:UNITARYHEATPUMP:WATERTOAIR,Design Size Supply Air Flow Rate,5
-AIRLOOPHVAC:UNITARYHEATPUMP:WATERTOAIR,Maximum Supply Air Temperature from Supplemental Heater,21
-AIRLOOPHVAC:UNITARYHEATPUMP:WATERTOAIR,Supply Air Flow Rate,5
-AIRLOOPHVAC:UNITARYSYSTEM,Cooling Supply Air Flow Rate,23
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Cooling Supply Air Flow Rate,23
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Heating Supply Air Flow Rate,28
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Maximum Supply Air Temperature,39
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Minimum Supply Air Temperature,18
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size No Load Supply Air Flow Rate,33
-AIRLOOPHVAC:UNITARYSYSTEM,Heating Supply Air Flow Rate,28
-AIRLOOPHVAC:UNITARYSYSTEM,Maximum Supply Air Temperature,39
-AIRLOOPHVAC:UNITARYSYSTEM,Minimum Supply Air Temperature,18
-AIRLOOPHVAC:UNITARYSYSTEM,No Load Supply Air Flow Rate,33
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Supply Air Flow Rate,nil
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Heating Supply Air Flow Rate,28
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Cooling Supply Air Flow Rate,23
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size No Load Supply Air Flow Rate,33
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Nominal Cooling Capacity,nil
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Nominal Heating Capacity,nil
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Maximum Supply Air Temperature,39
-AIRLOOPHVAC:UNITARYSYSTEM,Fraction of Supply Air Flow That Goes Through the Controlling Zone,nil
-AIRTERMINAL:DUALDUCT:CONSTANTVOLUME,Design Size Maximum Air Flow Rate,6
-AIRTERMINAL:DUALDUCT:CONSTANTVOLUME,Maximum Air Flow Rate,6
-AIRTERMINAL:DUALDUCT:VAV,Design Size Maximum Damper Air Flow Rate,6
-AIRTERMINAL:DUALDUCT:VAV,Maximum Damper Air Flow Rate,6
-AIRTERMINAL:DUALDUCT:VAV:OUTDOORAIR,Design Size Maximum Terminal Air Flow Rate,6
-AIRTERMINAL:DUALDUCT:VAV:OUTDOORAIR,Maximum Terminal Air Flow Rate,6
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:COOLEDBEAM,Beam Length,11
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:COOLEDBEAM,Design Size Beam Length,11
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:COOLEDBEAM,Design Size Maximum Total Chilled Water Volumetric Flow Rate,9
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:COOLEDBEAM,Design Size Number of Beams,10
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:COOLEDBEAM,Design Size Supply Air Volumetric Flow Rate,8
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:COOLEDBEAM,Maximum Total Chilled Water Volumetric Flow Rate,9
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:COOLEDBEAM,Number of Beams,10
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:COOLEDBEAM,Supply Air Volumetric Flow Rate,8
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEBEAM,Design Chilled Water Volume Flow Rate,12
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEBEAM,Design Hot Water Volume Flow Rate,13
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEBEAM,Design Primary Air Volume Flow Rate,11
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEBEAM,Design Size Design Chilled Water Volume Flow Rate,12
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEBEAM,Design Size Design Hot Water Volume Flow Rate,13
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEBEAM,Design Size Design Primary Air Volume Flow Rate,11
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEBEAM,Design Size Zone Total Beam Length,14
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEBEAM,Zone Total Beam Length,14
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEINDUCTION,Design Size Maximum Cold Water Flow Rate,15
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEINDUCTION,Design Size Maximum Hot Water Flow Rate,10
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEINDUCTION,Design Size Maximum Total Air Flow Rate,3
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEINDUCTION,Maximum Cold Water Flow Rate,15
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEINDUCTION,Maximum Hot Water Flow Rate,10
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:FOURPIPEINDUCTION,Maximum Total Air Flow Rate,3
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:NOREHEAT,Design Size Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:NOREHEAT,Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:REHEAT,Design Size Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:REHEAT,Design Size Maximum Hot Water or Steam Flow Rate,8
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:REHEAT,Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:CONSTANTVOLUME:REHEAT,Maximum Hot Water or Steam Flow Rate,8
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Design Size Fan On Flow Fraction,6
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Design Size Maximum Hot Water or Steam Flow Rate,15
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Design Size Maximum Primary Air Flow Rate,3
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Design Size Maximum Secondary Air Flow Rate,4
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Design Size Minimum Primary Air Flow Fraction,5
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Fan On Flow Fraction,6
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Maximum Hot Water or Steam Flow Rate,15
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Maximum Primary Air Flow Rate,3
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Maximum Secondary Air Flow Rate,4
-AIRTERMINAL:SINGLEDUCT:PARALLELPIU:REHEAT,Minimum Primary Air Flow Fraction,5
-AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Design Size Maximum Air Flow Rate,3
-AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Design Size Maximum Hot Water or Steam Flow Rate,14
-AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Design Size Maximum Primary Air Flow Rate,4
-AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Design Size Minimum Primary Air Flow Fraction,5
-AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Maximum Air Flow Rate,3
-AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Maximum Hot Water or Steam Flow Rate,14
-AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Maximum Primary Air Flow Rate,4
-AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Minimum Primary Air Flow Fraction,5
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Design Size Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Design Size Constant Minimum Air Flow Fraction,6
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Design Size Minimum Air Flow Rate,nil
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,User-Specified Constant Minimum Air Flow Fraction,6
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:REHEAT,Design Size Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:REHEAT,Design Size Maximum Hot Water or Steam Flow Rate,9
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:REHEAT,Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:REHEAT,Maximum Hot Water or Steam Flow Rate,9
-AIRTERMINAL:SINGLEDUCT:VAV:NOREHEAT,Constant Minimum Air Flow Fraction,7
-AIRTERMINAL:SINGLEDUCT:VAV:NOREHEAT,Design Size Constant Minimum Air Flow Fraction,7
-AIRTERMINAL:SINGLEDUCT:VAV:NOREHEAT,Design Size Fixed Minimum Air Flow Rate,8
-AIRTERMINAL:SINGLEDUCT:VAV:NOREHEAT,Design Size Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:NOREHEAT,Fixed Minimum Air Flow Rate,8
-AIRTERMINAL:SINGLEDUCT:VAV:NOREHEAT,Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Constant Minimum Air Flow Fraction,7
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Design Size Constant Minimum Air Flow Fraction,7
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Design Size Fixed Minimum Air Flow Rate,8
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Design Size Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Design Size Maximum Flow Fraction During Reheat,18
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Design Size Maximum Flow per Zone Floor Area During Reheat,17
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Design Size Maximum Hot Water or Steam Flow Rate,12
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Fixed Minimum Air Flow Rate,8
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Maximum Flow Fraction During Reheat,18
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Maximum Flow per Zone Floor Area During Reheat,17
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT,Maximum Hot Water or Steam Flow Rate,12
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT:VARIABLESPEEDFAN,Design Size Maximum Cooling Air Flow Rate,3
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT:VARIABLESPEEDFAN,Design Size Maximum Heating Air Flow Rate,4
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT:VARIABLESPEEDFAN,Design Size Maximum Hot Water or Steam Flow Rate,12
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT:VARIABLESPEEDFAN,Maximum Cooling Air Flow Rate,3
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT:VARIABLESPEEDFAN,Maximum Heating Air Flow Rate,4
-AIRTERMINAL:SINGLEDUCT:VAV:REHEAT:VARIABLESPEEDFAN,Maximum Hot Water or Steam Flow Rate,12
-BOILER:HOTWATER,Design Size Design Water Flow Rate,7
-BOILER:HOTWATER,Design Size Nominal Capacity,3
-BOILER:HOTWATER,Design Water Flow Rate,7
-BOILER:HOTWATER,Nominal Capacity,3
-BOILER:STEAM,Design Size Nominal Capacity,6
-BOILER:STEAM,Nominal Capacity,6
-CHILLER:ABSORPTION,Design Chilled Water Flow Rate,12
-CHILLER:ABSORPTION,Design Condenser Water Flow Rate,13
-CHILLER:ABSORPTION,Design Generator Fluid Flow Rate,25
-CHILLER:ABSORPTION,Design Size Design Chilled Water Flow Rate,12
-CHILLER:ABSORPTION,Design Size Design Condenser Water Flow Rate,13
-CHILLER:ABSORPTION,Design Size Design Generator Fluid Flow Rate,25
-CHILLER:ABSORPTION,Design Size Nominal Capacity,2
-CHILLER:ABSORPTION,Design Size Nominal Pumping Power,3
-CHILLER:ABSORPTION,Nominal Capacity,2
-CHILLER:ABSORPTION,Nominal Pumping Power,3
-CHILLER:ABSORPTION:INDIRECT,Design Chilled Water Flow Rate,14
-CHILLER:ABSORPTION:INDIRECT,Design Condenser Water Flow Rate,15
-CHILLER:ABSORPTION:INDIRECT,Design Generator Fluid Flow Rate,27
-CHILLER:ABSORPTION:INDIRECT,Design Size Design Chilled Water Flow Rate,14
-CHILLER:ABSORPTION:INDIRECT,Design Size Design Condenser Water Flow Rate,15
-CHILLER:ABSORPTION:INDIRECT,Design Size Design Generator Fluid Flow Rate,27
-CHILLER:ABSORPTION:INDIRECT,Design Size Nominal Capacity,2
-CHILLER:ABSORPTION:INDIRECT,Design Size Nominal Pumping Power,3
-CHILLER:ABSORPTION:INDIRECT,Nominal Capacity,2
-CHILLER:ABSORPTION:INDIRECT,Nominal Pumping Power,3
-CHILLER:COMBUSTIONTURBINE,Design Chilled Water Flow Rate,15
-CHILLER:COMBUSTIONTURBINE,Design Condenser Water Flow Rate,16
-CHILLER:COMBUSTIONTURBINE,Design Heat Recovery Water Flow Rate,51
-CHILLER:COMBUSTIONTURBINE,Design Size Design Chilled Water Flow Rate,15
-CHILLER:COMBUSTIONTURBINE,Design Size Design Condenser Water Flow Rate,16
-CHILLER:COMBUSTIONTURBINE,Design Size Design Heat Recovery Water Flow Rate,51
-CHILLER:COMBUSTIONTURBINE,Design Size Gas Turbine Engine Capacity,47
-CHILLER:COMBUSTIONTURBINE,Design Size Nominal Capacity,3
-CHILLER:COMBUSTIONTURBINE,Gas Turbine Engine Capacity,47
-CHILLER:COMBUSTIONTURBINE,Nominal Capacity,3
-CHILLER:CONSTANTCOP,Design Chilled Water Flow Rate,4
-CHILLER:CONSTANTCOP,Design Condenser Water Flow Rate,5
-CHILLER:CONSTANTCOP,Design Size Design Chilled Water Flow Rate,4
-CHILLER:CONSTANTCOP,Design Size Design Condenser Water Flow Rate,5
-CHILLER:CONSTANTCOP,Design Size Nominal Capacity,2
-CHILLER:CONSTANTCOP,Nominal Capacity,2
-CHILLER:ELECTRIC,Design Chilled Water Flow Rate,15
-CHILLER:ELECTRIC,Design Condenser Fluid Flow Rate,16
-CHILLER:ELECTRIC,Design Heat Recovery Water Flow Rate,28
-CHILLER:ELECTRIC,Design Size Design Chilled Water Flow Rate,15
-CHILLER:ELECTRIC,Design Size Design Condenser Fluid Flow Rate,16
-CHILLER:ELECTRIC,Design Size Design Heat Recovery Water Flow Rate,28
-CHILLER:ELECTRIC,Design Size Nominal Capacity,3
-CHILLER:ELECTRIC,Nominal Capacity,3
-CHILLER:ELECTRIC:ASHRAE205,Chilled Water Maximum Requested Flow Rate,12
-CHILLER:ELECTRIC:ASHRAE205,Condenser Maximum Requested Flow Rate,15
-CHILLER:ELECTRIC:ASHRAE205,Design Size Chilled Water Maximum Requested Flow Rate,12
-CHILLER:ELECTRIC:ASHRAE205,Design Size Condenser Maximum Requested Flow Rate,15
-CHILLER:ELECTRIC:ASHRAE205,Design Size Rated Capacity,4
-CHILLER:ELECTRIC:ASHRAE205,Rated Capacity,4
-CHILLER:ELECTRIC:EIR,Design Heat Recovery Water Flow Rate,24
-CHILLER:ELECTRIC:EIR,Design Size Design Heat Recovery Water Flow Rate,24
-CHILLER:ELECTRIC:EIR,Design Size Reference Capacity,2
-CHILLER:ELECTRIC:EIR,Design Size Reference Chilled Water Flow Rate,6
-CHILLER:ELECTRIC:EIR,Design Size Reference Condenser Fluid Flow Rate,7
-CHILLER:ELECTRIC:EIR,Reference Capacity,2
-CHILLER:ELECTRIC:EIR,Reference Chilled Water Flow Rate,6
-CHILLER:ELECTRIC:EIR,Reference Condenser Fluid Flow Rate,7
-CHILLER:ELECTRIC:REFORMULATEDEIR,Design Heat Recovery Water Flow Rate,23
-CHILLER:ELECTRIC:REFORMULATEDEIR,Design Size Design Heat Recovery Water Flow Rate,23
-CHILLER:ELECTRIC:REFORMULATEDEIR,Design Size Reference Capacity,2
-CHILLER:ELECTRIC:REFORMULATEDEIR,Design Size Reference Chilled Water Flow Rate,6
-CHILLER:ELECTRIC:REFORMULATEDEIR,Design Size Reference Condenser Water Flow Rate,7
-CHILLER:ELECTRIC:REFORMULATEDEIR,Reference Capacity,2
-CHILLER:ELECTRIC:REFORMULATEDEIR,Reference Chilled Water Flow Rate,6
-CHILLER:ELECTRIC:REFORMULATEDEIR,Reference Condenser Water Flow Rate,7
-CHILLER:ENGINEDRIVEN,Design Chilled Water Flow Rate,15
-CHILLER:ENGINEDRIVEN,Design Condenser Water Flow Rate,16
-CHILLER:ENGINEDRIVEN,Design Heat Recovery Water Flow Rate,38
-CHILLER:ENGINEDRIVEN,Design Size Design Chilled Water Flow Rate,15
-CHILLER:ENGINEDRIVEN,Design Size Design Condenser Water Flow Rate,16
-CHILLER:ENGINEDRIVEN,Design Size Design Heat Recovery Water Flow Rate,38
-CHILLER:ENGINEDRIVEN,Design Size Nominal Capacity,3
-CHILLER:ENGINEDRIVEN,Nominal Capacity,3
-CHILLERHEATER:ABSORPTION:DIRECTFIRED,Design Chilled Water Flow Rate,19
-CHILLERHEATER:ABSORPTION:DIRECTFIRED,Design Condenser Water Flow Rate,20
-CHILLERHEATER:ABSORPTION:DIRECTFIRED,Design Hot Water Flow Rate,21
-CHILLERHEATER:ABSORPTION:DIRECTFIRED,Design Size Design Chilled Water Flow Rate,19
-CHILLERHEATER:ABSORPTION:DIRECTFIRED,Design Size Design Condenser Water Flow Rate,20
-CHILLERHEATER:ABSORPTION:DIRECTFIRED,Design Size Design Hot Water Flow Rate,21
-CHILLERHEATER:ABSORPTION:DIRECTFIRED,Design Size Nominal Cooling Capacity,2
-CHILLERHEATER:ABSORPTION:DIRECTFIRED,Nominal Cooling Capacity,2
-CHILLERHEATER:ABSORPTION:DOUBLEEFFECT,Design Chilled Water Flow Rate,19
-CHILLERHEATER:ABSORPTION:DOUBLEEFFECT,Design Condenser Water Flow Rate,20
-CHILLERHEATER:ABSORPTION:DOUBLEEFFECT,Design Hot Water Flow Rate,21
-CHILLERHEATER:ABSORPTION:DOUBLEEFFECT,Design Size Design Chilled Water Flow Rate,19
-CHILLERHEATER:ABSORPTION:DOUBLEEFFECT,Design Size Design Condenser Water Flow Rate,20
-CHILLERHEATER:ABSORPTION:DOUBLEEFFECT,Design Size Design Hot Water Flow Rate,21
-CHILLERHEATER:ABSORPTION:DOUBLEEFFECT,Design Size Nominal Cooling Capacity,2
-CHILLERHEATER:ABSORPTION:DOUBLEEFFECT,Nominal Cooling Capacity,2
-CHILLERHEATERPERFORMANCE:ELECTRIC:EIR,Design Chilled Water Flow Rate,14
-CHILLERHEATERPERFORMANCE:ELECTRIC:EIR,Design Condenser Water Flow Rate,15
-CHILLERHEATERPERFORMANCE:ELECTRIC:EIR,Design Size Design Chilled Water Flow Rate,14
-CHILLERHEATERPERFORMANCE:ELECTRIC:EIR,Design Size Design Condenser Water Flow Rate,15
-CHILLERHEATERPERFORMANCE:ELECTRIC:EIR,Design Size Reference Cooling Mode Evaporator Capacity,2
-CHILLERHEATERPERFORMANCE:ELECTRIC:EIR,Reference Cooling Mode Evaporator Capacity,2
-COIL:COOLING:DX:CURVEFIT:OPERATINGMODE,Design Size Nominal Evaporative Condenser Pump Power,11
-COIL:COOLING:DX:CURVEFIT:OPERATINGMODE,Design Size Rated Condenser Air Flow Rate,4
-COIL:COOLING:DX:CURVEFIT:OPERATINGMODE,Design Size Rated Evaporator Air Flow Rate,3
-COIL:COOLING:DX:CURVEFIT:OPERATINGMODE,Design Size Rated Gross Total Cooling Capacity,2
-COIL:COOLING:DX:CURVEFIT:OPERATINGMODE,Nominal Evaporative Condenser Pump Power,11
-COIL:COOLING:DX:CURVEFIT:OPERATINGMODE,Rated Condenser Air Flow Rate,4
-COIL:COOLING:DX:CURVEFIT:OPERATINGMODE,Rated Evaporator Air Flow Rate,3
-COIL:COOLING:DX:CURVEFIT:OPERATINGMODE,Rated Gross Total Cooling Capacity,2
-COIL:COOLING:DX:CURVEFIT:SPEED,Design Size Gross Sensible Heat Ratio,5
-COIL:COOLING:DX:CURVEFIT:SPEED,Gross Sensible Heat Ratio,5
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Evaporative Condenser Air Flow Rate,37
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Gross Rated Sensible Heat Ratio,20
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Rated Sensible Heat Ratio,20
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Gross Rated Total Cooling Capacity,19
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Rated Air Flow Rate,22
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Rated Evaporative Condenser Pump Power Consumption,39,Note: mismatch due to EnergyPlus bug
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Evaporative Condenser Air Flow Rate,57
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Gross Rated Sensible Heat Ratio,40
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Rated Sensible Heat Ratio,40
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Gross Rated Total Cooling Capacity,39
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Gross Rated Cooling COP,42
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Rated Air Flow Rate,42
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Rated Evaporative Condenser Pump Power Consumption,58
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 3 Evaporative Condenser Air Flow Rate,77
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 3 Gross Rated Sensible Heat Ratio,60
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 3 Gross Rated Total Cooling Capacity,59
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 3 Rated Air Flow Rate,62
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 3 Rated Evaporative Condenser Pump Power Consumption,78
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 4 Evaporative Condenser Air Flow Rate,97
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 4 Gross Rated Sensible Heat Ratio,80
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 4 Gross Rated Total Cooling Capacity,79
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 4 Rated Air Flow Rate,82
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 4 Rated Evaporative Condenser Pump Power Consumption,98
-COIL:COOLING:DX:MULTISPEED,Speed 1 Evaporative Condenser Air Flow Rate,37
-COIL:COOLING:DX:MULTISPEED,Speed 1 Gross Rated Sensible Heat Ratio,20
-COIL:COOLING:DX:MULTISPEED,Speed 1 Gross Rated Total Cooling Capacity,19
-COIL:COOLING:DX:MULTISPEED,Speed 1 Rated Air Flow Rate,22
-COIL:COOLING:DX:MULTISPEED,Speed 1 Rated Evaporative Condenser Pump Power Consumption,38
-COIL:COOLING:DX:MULTISPEED,Speed 2 Evaporative Condenser Air Flow Rate,57
-COIL:COOLING:DX:MULTISPEED,Speed 2 Gross Rated Sensible Heat Ratio,40
-COIL:COOLING:DX:MULTISPEED,Speed 2 Gross Rated Total Cooling Capacity,39
-COIL:COOLING:DX:MULTISPEED,Speed 2 Rated Air Flow Rate,42
-COIL:COOLING:DX:MULTISPEED,Speed 2 Rated Evaporative Condenser Pump Power Consumption,58
-COIL:COOLING:DX:MULTISPEED,Speed 3 Evaporative Condenser Air Flow Rate,77
-COIL:COOLING:DX:MULTISPEED,Speed 3 Gross Rated Sensible Heat Ratio,60
-COIL:COOLING:DX:MULTISPEED,Speed 3 Gross Rated Total Cooling Capacity,59
-COIL:COOLING:DX:MULTISPEED,Speed 3 Rated Air Flow Rate,62
-COIL:COOLING:DX:MULTISPEED,Speed 3 Rated Evaporative Condenser Pump Power Consumption,78
-COIL:COOLING:DX:MULTISPEED,Speed 4 Evaporative Condenser Air Flow Rate,97
-COIL:COOLING:DX:MULTISPEED,Speed 4 Gross Rated Sensible Heat Ratio,80
-COIL:COOLING:DX:MULTISPEED,Speed 4 Gross Rated Total Cooling Capacity,79
-COIL:COOLING:DX:MULTISPEED,Speed 4 Rated Air Flow Rate,82
-COIL:COOLING:DX:MULTISPEED,Speed 4 Rated Evaporative Condenser Pump Power Consumption,98
-COIL:COOLING:DX:SINGLESPEED,Design Size Evaporative Condenser Air Flow Rate,24
-COIL:COOLING:DX:SINGLESPEED,Design Size Evaporative Condenser Pump Rated Power Consumption,25
-COIL:COOLING:DX:SINGLESPEED,Design Size Gross Rated Sensible Heat Ratio,4
-COIL:COOLING:DX:SINGLESPEED,Design Size Gross Rated Total Cooling Capacity,3
-COIL:COOLING:DX:SINGLESPEED,Design Size Rated Air Flow Rate,6
-COIL:COOLING:DX:SINGLESPEED,Evaporative Condenser Air Flow Rate,24
-COIL:COOLING:DX:SINGLESPEED,Evaporative Condenser Pump Rated Power Consumption,25
-COIL:COOLING:DX:SINGLESPEED,Gross Rated Sensible Heat Ratio,4
-COIL:COOLING:DX:SINGLESPEED,Gross Rated Total Cooling Capacity,3
-COIL:COOLING:DX:SINGLESPEED,Rated Air Flow Rate,6
-COIL:COOLING:DX:SINGLESPEED:THERMALSTORAGE,Cooling Only Mode Rated Total Evaporator Cooling Capacity,17
-COIL:COOLING:DX:SINGLESPEED:THERMALSTORAGE,Design Size Cooling Only Mode Rated Total Evaporator Cooling Capacity,17
-COIL:COOLING:DX:SINGLESPEED:THERMALSTORAGE,Design Size Evaporative Condenser Pump Rated Power Consumption,95
-COIL:COOLING:DX:SINGLESPEED:THERMALSTORAGE,Design Size Rated Evaporator Air Flow Rate,13
-COIL:COOLING:DX:SINGLESPEED:THERMALSTORAGE,Evaporative Condenser Pump Rated Power Consumption,95
-COIL:COOLING:DX:SINGLESPEED:THERMALSTORAGE,Rated Evaporator Air Flow Rate,13
-COIL:COOLING:DX:TWOSPEED,Design Size High Speed Evaporative Condenser Air Flow Rate,25
-COIL:COOLING:DX:TWOSPEED,Design Size High Speed Evaporative Condenser Pump Rated Power Consumption,26
-COIL:COOLING:DX:TWOSPEED,Design Size High Speed Gross Rated Total Cooling Capacity,3
-COIL:COOLING:DX:TWOSPEED,Design Size High Speed Rated Air Flow Rate,6
-COIL:COOLING:DX:TWOSPEED,Design Size High Speed Rated Sensible Heat Ratio,4
-COIL:COOLING:DX:TWOSPEED,Design Size Low Speed Evaporative Condenser Air Flow Rate,28
-COIL:COOLING:DX:TWOSPEED,Design Size Low Speed Evaporative Condenser Pump Rated Power Consumption,29
-COIL:COOLING:DX:TWOSPEED,Design Size Low Speed Gross Rated Sensible Heat Ratio,16
-COIL:COOLING:DX:TWOSPEED,Design Size Low Speed Gross Rated Total Cooling Capacity,15
-COIL:COOLING:DX:TWOSPEED,Design Size Low Speed Rated Air Flow Rate,18
-COIL:COOLING:DX:TWOSPEED,High Speed Evaporative Condenser Air Flow Rate,25
-COIL:COOLING:DX:TWOSPEED,High Speed Evaporative Condenser Pump Rated Power Consumption,26
-COIL:COOLING:DX:TWOSPEED,High Speed Gross Rated Total Cooling Capacity,3
-COIL:COOLING:DX:TWOSPEED,High Speed Rated Air Flow Rate,6
-COIL:COOLING:DX:TWOSPEED,High Speed Rated Sensible Heat Ratio,4
-COIL:COOLING:DX:TWOSPEED,Low Speed Evaporative Condenser Air Flow Rate,28
-COIL:COOLING:DX:TWOSPEED,Low Speed Evaporative Condenser Pump Rated Power Consumption,29
-COIL:COOLING:DX:TWOSPEED,Low Speed Gross Rated Sensible Heat Ratio,16
-COIL:COOLING:DX:TWOSPEED,Low Speed Gross Rated Total Cooling Capacity,15
-COIL:COOLING:DX:TWOSPEED,Low Speed Rated Air Flow Rate,18
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW,Design Size Gross Rated Sensible Heat Ratio,4
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW,Design Size Gross Rated Total Cooling Capacity,3
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW,Design Size Rated Air Flow Rate,5
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW,Gross Rated Sensible Heat Ratio,4
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW,Gross Rated Total Cooling Capacity,3
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW,Rated Air Flow Rate,5
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Design Size Rated Sensible Heat Ratio,6
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Design Size Rated Total Cooling Capacity,5
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Rated Sensible Heat Ratio,6
-COIL:COOLING:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Rated Total Cooling Capacity,5
-COIL:COOLING:DX:VARIABLESPEED,Design Size Evaporative Condenser Pump Rated Power Consumption,13
-COIL:COOLING:DX:VARIABLESPEED,Design Size Gross Rated Total Cooling Capacity At Selected Nominal Speed Level,6
-COIL:COOLING:DX:VARIABLESPEED,Design Size Rated Air Flow Rate At Selected Nominal Speed Level,7
-COIL:COOLING:DX:VARIABLESPEED,Evaporative Condenser Pump Rated Power Consumption,13
-COIL:COOLING:DX:VARIABLESPEED,Gross Rated Total Cooling Capacity At Selected Nominal Speed Level,6
-COIL:COOLING:DX:VARIABLESPEED,Rated Air Flow Rate At Selected Nominal Speed Level,7
-COIL:COOLING:WATER,Design Air Flow Rate,4
-COIL:COOLING:WATER,Design Inlet Air Humidity Ratio,8
-COIL:COOLING:WATER,Design Inlet Air Temperature,6
-COIL:COOLING:WATER,Design Inlet Water Temperature,5
-COIL:COOLING:WATER,Design Outlet Air Humidity Ratio,9
-COIL:COOLING:WATER,Design Outlet Air Temperature,7
-COIL:COOLING:WATER,Design Size Design Air Flow Rate,4
-COIL:COOLING:WATER,Design Size Design Inlet Air Humidity Ratio,8
-COIL:COOLING:WATER,Design Size Design Inlet Air Temperature,6
-COIL:COOLING:WATER,Design Size Design Inlet Water Temperature,5
-COIL:COOLING:WATER,Design Size Design Outlet Air Humidity Ratio,9
-COIL:COOLING:WATER,Design Size Design Outlet Air Temperature,7
-COIL:COOLING:WATER,Design Size Design Water Flow Rate,3
-COIL:COOLING:WATER,Design Water Flow Rate,3
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Coil Depth,8
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Inlet Water Temperature,25
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Size Coil Depth,8
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Size Design Inlet Water Temperature,25
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Size Fin Diameter,9
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Size Fin Surface Area,6
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Size Maximum Water Flow Rate,3
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Size Minimum Airflow Area,7
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Size Number of Tubes per Row,18
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Size Total Tube Inside Area,5
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Design Size Tube Outside Surface Area,4
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Fin Diameter,9
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Fin Surface Area,6
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Maximum Water Flow Rate,3
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Minimum Airflow Area,7
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Number of Tubes per Row,18
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Total Tube Inside Area,5
-COIL:COOLING:WATER:DETAILEDGEOMETRY,Tube Outside Surface Area,4
-COIL:COOLING:WATERTOAIRHEATPUMP:EQUATIONFIT,Design Size Gross Rated Sensible Cooling Capacity,9
-COIL:COOLING:WATERTOAIRHEATPUMP:EQUATIONFIT,Design Size Gross Rated Total Cooling Capacity,8
-COIL:COOLING:WATERTOAIRHEATPUMP:EQUATIONFIT,Design Size Rated Air Flow Rate,6
-COIL:COOLING:WATERTOAIRHEATPUMP:EQUATIONFIT,Design Size Rated Water Flow Rate,7
-COIL:COOLING:WATERTOAIRHEATPUMP:EQUATIONFIT,Gross Rated Sensible Cooling Capacity,9
-COIL:COOLING:WATERTOAIRHEATPUMP:EQUATIONFIT,Gross Rated Total Cooling Capacity,8
-COIL:COOLING:WATERTOAIRHEATPUMP:EQUATIONFIT,Rated Air Flow Rate,6
-COIL:COOLING:WATERTOAIRHEATPUMP:EQUATIONFIT,Rated Water Flow Rate,7
-COIL:COOLING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Design Size Gross Rated Total Cooling Capacity At Selected Nominal Speed Level,8
-COIL:COOLING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Design Size Rated Air Flow Rate At Selected Nominal Speed Level,9
-COIL:COOLING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Design Size Rated Water Flow Rate At Selected Nominal Speed Level,10
-COIL:COOLING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Gross Rated Total Cooling Capacity At Selected Nominal Speed Level,8
-COIL:COOLING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Rated Air Flow Rate At Selected Nominal Speed Level,9
-COIL:COOLING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Rated Water Flow Rate At Selected Nominal Speed Level,10
-COIL:HEATING:DX:MULTISPEED,Design Size Resistive Defrost Heater Capacity,14
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 1 Gross Rated Heating Capacity,19
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 1 Rated Air Flow Rate,21
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 1 Secondary Coil Air Flow Rate,68
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 2 Gross Rated Heating Capacity,31
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 2 Rated Air Flow Rate,33
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 2 Secondary Coil Air Flow Rate,73
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 3 Gross Rated Heating Capacity,43
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 3 Rated Air Flow Rate,45
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 3 Secondary Coil Air Flow Rate,78
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 4 Gross Rated Heating Capacity,55
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 4 Rated Air Flow Rate,57
-COIL:HEATING:DX:MULTISPEED,Design Size Speed 4 Secondary Coil Air Flow Rate,83
-COIL:HEATING:DX:MULTISPEED,Resistive Defrost Heater Capacity,14
-COIL:HEATING:DX:MULTISPEED,Speed 1 Gross Rated Heating Capacity,19
-COIL:HEATING:DX:MULTISPEED,Speed 1 Rated Air Flow Rate,21
-COIL:HEATING:DX:MULTISPEED,Speed 1 Secondary Coil Air Flow Rate,68
-COIL:HEATING:DX:MULTISPEED,Speed 2 Gross Rated Heating Capacity,31
-COIL:HEATING:DX:MULTISPEED,Speed 2 Rated Air Flow Rate,33
-COIL:HEATING:DX:MULTISPEED,Speed 2 Secondary Coil Air Flow Rate,73
-COIL:HEATING:DX:MULTISPEED,Speed 3 Gross Rated Heating Capacity,43
-COIL:HEATING:DX:MULTISPEED,Speed 3 Rated Air Flow Rate,45
-COIL:HEATING:DX:MULTISPEED,Speed 3 Secondary Coil Air Flow Rate,78
-COIL:HEATING:DX:MULTISPEED,Speed 4 Gross Rated Heating Capacity,55
-COIL:HEATING:DX:MULTISPEED,Speed 4 Rated Air Flow Rate,57
-COIL:HEATING:DX:MULTISPEED,Speed 4 Secondary Coil Air Flow Rate,83
-COIL:HEATING:DX:SINGLESPEED,Design Size Gross Rated Heating Capacity,3
-COIL:HEATING:DX:SINGLESPEED,Design Size Rated Air Flow Rate,5
-COIL:HEATING:DX:SINGLESPEED,Design Size Resistive Defrost Heater Capacity,24
-COIL:HEATING:DX:SINGLESPEED,Design Size Secondary Coil Air Flow Rate,28
-COIL:HEATING:DX:SINGLESPEED,Gross Rated Heating Capacity,3
-COIL:HEATING:DX:SINGLESPEED,Rated Air Flow Rate,5
-COIL:HEATING:DX:SINGLESPEED,Resistive Defrost Heater Capacity,24
-COIL:HEATING:DX:SINGLESPEED,Secondary Coil Air Flow Rate,28
-COIL:HEATING:DX:VARIABLEREFRIGERANTFLOW,Design Size Gross Rated Heating Capacity,3
-COIL:HEATING:DX:VARIABLEREFRIGERANTFLOW,Design Size Rated Air Flow Rate,4
-COIL:HEATING:DX:VARIABLEREFRIGERANTFLOW,Gross Rated Heating Capacity,3
-COIL:HEATING:DX:VARIABLEREFRIGERANTFLOW,Rated Air Flow Rate,4
-COIL:HEATING:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Design Size Rated Total Heating Capacity,5
-COIL:HEATING:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Rated Total Heating Capacity,5
-COIL:HEATING:DX:VARIABLESPEED,Design Size Rated Air Flow Rate At Selected Nominal Speed Level,7
-COIL:HEATING:DX:VARIABLESPEED,Design Size Rated Heating Capacity At Selected Nominal Speed Level,6
-COIL:HEATING:DX:VARIABLESPEED,Design Size Resistive Defrost Heater Capacity,18
-COIL:HEATING:DX:VARIABLESPEED,Rated Air Flow Rate At Selected Nominal Speed Level,7
-COIL:HEATING:DX:VARIABLESPEED,Rated Heating Capacity At Selected Nominal Speed Level,6
-COIL:HEATING:DX:VARIABLESPEED,Resistive Defrost Heater Capacity,18
-COIL:HEATING:ELECTRIC,Design Size Nominal Capacity,4
-COIL:HEATING:ELECTRIC,Nominal Capacity,4
-COIL:HEATING:ELECTRIC:MULTISTAGE,Design Size Stage 1 Nominal Capacity,8
-COIL:HEATING:ELECTRIC:MULTISTAGE,Design Size Stage 2 Nominal Capacity,10
-COIL:HEATING:ELECTRIC:MULTISTAGE,Design Size Stage 3 Nominal Capacity,12
-COIL:HEATING:ELECTRIC:MULTISTAGE,Design Size Stage 4 Nominal Capacity,14
-COIL:HEATING:ELECTRIC:MULTISTAGE,Stage 1 Nominal Capacity,8
-COIL:HEATING:ELECTRIC:MULTISTAGE,Stage 2 Nominal Capacity,10
-COIL:HEATING:ELECTRIC:MULTISTAGE,Stage 3 Nominal Capacity,12
-COIL:HEATING:ELECTRIC:MULTISTAGE,Stage 4 Nominal Capacity,14
-COIL:HEATING:FUEL,Design Size Nominal Capacity,5
-COIL:HEATING:FUEL,Nominal Capacity,5
-COIL:HEATING:GAS:MULTISTAGE,Design Size Stage 1 Nominal Capacity,10
-COIL:HEATING:GAS:MULTISTAGE,Design Size Stage 2 Nominal Capacity,13
-COIL:HEATING:GAS:MULTISTAGE,Design Size Stage 3 Nominal Capacity,16
-COIL:HEATING:GAS:MULTISTAGE,Design Size Stage 4 Nominal Capacity,19
-COIL:HEATING:GAS:MULTISTAGE,Stage 1 Nominal Capacity,10
-COIL:HEATING:GAS:MULTISTAGE,Stage 2 Nominal Capacity,13
-COIL:HEATING:GAS:MULTISTAGE,Stage 3 Nominal Capacity,16
-COIL:HEATING:GAS:MULTISTAGE,Stage 4 Nominal Capacity,19
-COIL:HEATING:STEAM,Design Size Maximum Steam Flow Rate,3
-COIL:HEATING:STEAM,Maximum Steam Flow Rate,3
-COIL:HEATING:WATER,Design Size Maximum Water Flow Rate,4
-COIL:HEATING:WATER,Design Size Rated Capacity,10
-COIL:HEATING:WATER,Design Size U-Factor Times Area Value,3
-COIL:HEATING:WATER,Maximum Water Flow Rate,4
-COIL:HEATING:WATER,Rated Capacity,10
-COIL:HEATING:WATER,U-Factor Times Area Value,3
-COIL:HEATING:WATERTOAIRHEATPUMP:EQUATIONFIT,Design Size Gross Rated Heating Capacity,8
-COIL:HEATING:WATERTOAIRHEATPUMP:EQUATIONFIT,Design Size Rated Air Flow Rate,6
-COIL:HEATING:WATERTOAIRHEATPUMP:EQUATIONFIT,Design Size Rated Water Flow Rate,7
-COIL:HEATING:WATERTOAIRHEATPUMP:EQUATIONFIT,Gross Rated Heating Capacity,8
-COIL:HEATING:WATERTOAIRHEATPUMP:EQUATIONFIT,Rated Air Flow Rate,6
-COIL:HEATING:WATERTOAIRHEATPUMP:EQUATIONFIT,Rated Water Flow Rate,7
-COIL:HEATING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Design Size Rated Air Flow Rate At Selected Nominal Speed Level,9
-COIL:HEATING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Design Size Rated Heating Capacity At Selected Nominal Speed Level,8
-COIL:HEATING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Design Size Rated Water Flow Rate At Selected Nominal Speed Level,10
-COIL:HEATING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Rated Air Flow Rate At Selected Nominal Speed Level,9
-COIL:HEATING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Rated Heating Capacity At Selected Nominal Speed Level,8
-COIL:HEATING:WATERTOAIRHEATPUMP:VARIABLESPEEDEQUATIONFIT,Rated Water Flow Rate At Selected Nominal Speed Level,10
-COILPERFORMANCE:DX:COOLING,Design Size Evaporative Condenser Air Flow Rate,19
-COILPERFORMANCE:DX:COOLING,Design Size Evaporative Condenser Pump Rated Power Consumption,20
-COILPERFORMANCE:DX:COOLING,Design Size Gross Rated Sensible Heat Ratio,3
-COILPERFORMANCE:DX:COOLING,Design Size Gross Rated Total Cooling Capacity,2
-COILPERFORMANCE:DX:COOLING,Design Size Rated Air Flow Rate,5
-COILPERFORMANCE:DX:COOLING,Evaporative Condenser Air Flow Rate,19
-COILPERFORMANCE:DX:COOLING,Evaporative Condenser Pump Rated Power Consumption,20
-COILPERFORMANCE:DX:COOLING,Gross Rated Sensible Heat Ratio,3
-COILPERFORMANCE:DX:COOLING,Gross Rated Total Cooling Capacity,2
-COILPERFORMANCE:DX:COOLING,Rated Air Flow Rate,5
-CONDENSERLOOP,Design Size Maximum Loop Flow Rate,8
-CONDENSERLOOP,Maximum Loop Flow Rate,8
-CONTROLLER:OUTDOORAIR,Design Size Maximum Outdoor Air Flow Rate,7
-CONTROLLER:OUTDOORAIR,Design Size Minimum Outdoor Air Flow Rate,6
-CONTROLLER:OUTDOORAIR,Maximum Outdoor Air Flow Rate,7
-CONTROLLER:OUTDOORAIR,Minimum Outdoor Air Flow Rate,6
-CONTROLLER:WATERCOIL,Controller Convergence Tolerance,7
-CONTROLLER:WATERCOIL,Design Size Controller Convergence Tolerance,7
-CONTROLLER:WATERCOIL,Design Size Maximum Actuated Flow,8
-CONTROLLER:WATERCOIL,Maximum Actuated Flow,8
-COOLINGTOWER:SINGLESPEED,Design Air Flow Rate,5
-COOLINGTOWER:SINGLESPEED,Design Approach Temperature,19
-COOLINGTOWER:SINGLESPEED,Design Fan Power,6
-COOLINGTOWER:SINGLESPEED,Design Range Temperature,20
-COOLINGTOWER:SINGLESPEED,Design Size Design Air Flow Rate,5
-COOLINGTOWER:SINGLESPEED,Design Size Design Approach Temperature,19
-COOLINGTOWER:SINGLESPEED,Design Size Design Fan Power,6
-COOLINGTOWER:SINGLESPEED,Design Size Design Range Temperature,20
-COOLINGTOWER:SINGLESPEED,Design Size Design U-Factor Times Area Value,7
-COOLINGTOWER:SINGLESPEED,Design Size Design Water Flow Rate,4
-COOLINGTOWER:SINGLESPEED,Design U-Factor Times Area Value,7
-COOLINGTOWER:SINGLESPEED,Design Water Flow Rate,4
-COOLINGTOWER:TWOSPEED,Design Approach Temperature,27
-COOLINGTOWER:TWOSPEED,Design Range Temperature,28
-COOLINGTOWER:TWOSPEED,Design Size Design Approach Temperature,27
-COOLINGTOWER:TWOSPEED,Design Size Design Range Temperature,28
-COOLINGTOWER:TWOSPEED,Design Size Design Water Flow Rate,4
-COOLINGTOWER:TWOSPEED,Design Size High Fan Speed Air Flow Rate,5
-COOLINGTOWER:TWOSPEED,Design Size High Fan Speed Fan Power,6
-COOLINGTOWER:TWOSPEED,Design Size High Fan Speed U-Factor Times Area Value,7
-COOLINGTOWER:TWOSPEED,Design Water Flow Rate,4
-COOLINGTOWER:TWOSPEED,High Fan Speed Air Flow Rate,5
-COOLINGTOWER:TWOSPEED,High Fan Speed Fan Power,6
-COOLINGTOWER:TWOSPEED,High Fan Speed U-Factor Times Area Value,7
-COOLINGTOWER:VARIABLESPEED,Design Air Flow Rate,10
-COOLINGTOWER:VARIABLESPEED,Design Fan Power,11
-COOLINGTOWER:VARIABLESPEED,Design Size Design Air Flow Rate,10
-COOLINGTOWER:VARIABLESPEED,Design Size Design Fan Power,11
-COOLINGTOWER:VARIABLESPEED,Design Size Design Water Flow Rate,9
-COOLINGTOWER:VARIABLESPEED,Design Water Flow Rate,9
-COOLINGTOWER:VARIABLESPEED:MERKEL,Design Air Flow Rate U-Factor Times Area Value,19
-COOLINGTOWER:VARIABLESPEED:MERKEL,Design Approach Temperature,27
-COOLINGTOWER:VARIABLESPEED:MERKEL,Design Range Temperature,28
-COOLINGTOWER:VARIABLESPEED:MERKEL,Design Size Design Air Flow Rate U-Factor Times Area Value,19
-COOLINGTOWER:VARIABLESPEED:MERKEL,Design Size Design Approach Temperature,27
-COOLINGTOWER:VARIABLESPEED:MERKEL,Design Size Design Range Temperature,28
-COOLINGTOWER:VARIABLESPEED:MERKEL,Design Size Design Water Flow Rate,9
-COOLINGTOWER:VARIABLESPEED:MERKEL,Design Size Nominal Capacity,6
-COOLINGTOWER:VARIABLESPEED:MERKEL,Design Water Flow Rate,9
-COOLINGTOWER:VARIABLESPEED:MERKEL,Nominal Capacity,6
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,Cooling Design Capacity,18
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,Cooling Supply Air Flow Rate,3
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,Design Size Cooling Design Capacity,18
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,Design Size Cooling Supply Air Flow Rate,3
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,Design Size Heating Design Capacity,22
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,Design Size Heating Supply Air Flow Rate,13
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,Design Size No Load Supply Air Flow Rate,8
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,Heating Design Capacity,22
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,Heating Supply Air Flow Rate,13
-DESIGNSPECIFICATION:ZONEHVAC:SIZING,No Load Supply Air Flow Rate,8
-DISTRICTCOOLING,Design Size Nominal Capacity,4
-DISTRICTCOOLING,Nominal Capacity,4
-DISTRICTHEATING,Design Size Nominal Capacity,4
-DISTRICTHEATING,Nominal Capacity,4
-EVAPORATIVECOOLER:DIRECT:CELDEKPAD,Design Size Direct Pad Area,3
-EVAPORATIVECOOLER:DIRECT:CELDEKPAD,Design Size Direct Pad Depth,4
-EVAPORATIVECOOLER:DIRECT:CELDEKPAD,Direct Pad Area,3
-EVAPORATIVECOOLER:DIRECT:CELDEKPAD,Direct Pad Depth,4
-EVAPORATIVECOOLER:DIRECT:RESEARCHSPECIAL,Design Size Primary Air Design Flow Rate,5
-EVAPORATIVECOOLER:DIRECT:RESEARCHSPECIAL,Design Size Recirculating Water Pump Design Power,6
-EVAPORATIVECOOLER:DIRECT:RESEARCHSPECIAL,Primary Air Design Flow Rate,5
-EVAPORATIVECOOLER:DIRECT:RESEARCHSPECIAL,Recirculating Water Pump Design Power,6
-EVAPORATIVECOOLER:INDIRECT:CELDEKPAD,Design Size Direct Pad Area,3
-EVAPORATIVECOOLER:INDIRECT:CELDEKPAD,Design Size Direct Pad Depth,4
-EVAPORATIVECOOLER:INDIRECT:CELDEKPAD,Direct Pad Area,3
-EVAPORATIVECOOLER:INDIRECT:CELDEKPAD,Direct Pad Depth,4
-EVAPORATIVECOOLER:INDIRECT:RESEARCHSPECIAL,Design Size Primary Air Design Flow Rate,17
-EVAPORATIVECOOLER:INDIRECT:RESEARCHSPECIAL,Design Size Recirculating Water Pump Design Power,7
-EVAPORATIVECOOLER:INDIRECT:RESEARCHSPECIAL,Design Size Secondary Air Design Flow Rate,10
-EVAPORATIVECOOLER:INDIRECT:RESEARCHSPECIAL,Design Size Secondary Air Fan Design Power,12
-EVAPORATIVECOOLER:INDIRECT:RESEARCHSPECIAL,Primary Air Design Flow Rate,17
-EVAPORATIVECOOLER:INDIRECT:RESEARCHSPECIAL,Recirculating Water Pump Design Power,7
-EVAPORATIVECOOLER:INDIRECT:RESEARCHSPECIAL,Secondary Air Design Flow Rate,10
-EVAPORATIVECOOLER:INDIRECT:RESEARCHSPECIAL,Secondary Air Fan Design Power,12
-EVAPORATIVEFLUIDCOOLER:SINGLESPEED,Design Air Flow Rate Fan Power,5
-EVAPORATIVEFLUIDCOOLER:SINGLESPEED,Design Air Flow Rate U-factor Times Area Value,11
-EVAPORATIVEFLUIDCOOLER:SINGLESPEED,Design Air Flow Rate,4
-EVAPORATIVEFLUIDCOOLER:SINGLESPEED,Design Size Design Air Flow Rate Fan Power,5
-EVAPORATIVEFLUIDCOOLER:SINGLESPEED,Design Size Design Air Flow Rate U-factor Times Area Value,11
-EVAPORATIVEFLUIDCOOLER:SINGLESPEED,Design Size Design Air Flow Rate,4
-EVAPORATIVEFLUIDCOOLER:SINGLESPEED,Design Size Design Water Flow Rate,12
-EVAPORATIVEFLUIDCOOLER:SINGLESPEED,Design Water Flow Rate,12
-EVAPORATIVEFLUIDCOOLER:TWOSPEED,Design Size Design Water Flow Rate,20
-EVAPORATIVEFLUIDCOOLER:TWOSPEED,Design Size High Fan Speed Air Flow Rate,4
-EVAPORATIVEFLUIDCOOLER:TWOSPEED,Design Size High Fan Speed Fan Power,5
-EVAPORATIVEFLUIDCOOLER:TWOSPEED,Design Size High Fan Speed U-factor Times Area Value,17
-EVAPORATIVEFLUIDCOOLER:TWOSPEED,Design Water Flow Rate,20
-EVAPORATIVEFLUIDCOOLER:TWOSPEED,High Fan Speed Air Flow Rate,4
-EVAPORATIVEFLUIDCOOLER:TWOSPEED,High Fan Speed Fan Power,5
-EVAPORATIVEFLUIDCOOLER:TWOSPEED,High Fan Speed U-factor Times Area Value,17
-FAN:COMPONENTMODEL,Belt Maximum Torque,14
-FAN:COMPONENTMODEL,Design Size Belt Maximum Torque,14
-FAN:COMPONENTMODEL,Design Size Maximum Flow Rate,5
-FAN:COMPONENTMODEL,Design Size Maximum Motor Output Power,18
-FAN:COMPONENTMODEL,Design Size Maximum VFD Output Power,22
-FAN:COMPONENTMODEL,Design Size Minimum Flow Rate,6
-FAN:COMPONENTMODEL,Design Size Motor Fan Pulley Ratio,13
-FAN:COMPONENTMODEL,Maximum Flow Rate,5
-FAN:COMPONENTMODEL,Maximum Motor Output Power,18
-FAN:COMPONENTMODEL,Maximum VFD Output Power,22
-FAN:COMPONENTMODEL,Minimum Flow Rate,6
-FAN:COMPONENTMODEL,Motor Fan Pulley Ratio,13
-FAN:CONSTANTVOLUME,Design Size Maximum Flow Rate,5
-FAN:CONSTANTVOLUME,Maximum Flow Rate,5
-FAN:ONOFF,Design Size Maximum Flow Rate,5
-FAN:ONOFF,Maximum Flow Rate,5
-FAN:SYSTEMMODEL,Design Electric Power Consumption,11
-FAN:SYSTEMMODEL,Design Maximum Air Flow Rate,5
-FAN:SYSTEMMODEL,Design Size Design Electric Power Consumption,11
-FAN:SYSTEMMODEL,Design Size Design Maximum Air Flow Rate,5
-FAN:VARIABLEVOLUME,Design Size Maximum Flow Rate,5
-FAN:VARIABLEVOLUME,Maximum Flow Rate,5
-FANPERFORMANCE:NIGHTVENTILATION,Design Size Maximum Flow Rate,4
-FANPERFORMANCE:NIGHTVENTILATION,Maximum Flow Rate,4
-FLUIDCOOLER:SINGLESPEED,Design Air Flow Rate Fan Power,12
-FLUIDCOOLER:SINGLESPEED,Design Air Flow Rate U-factor Times Area Value,5
-FLUIDCOOLER:SINGLESPEED,Design Air Flow Rate,11
-FLUIDCOOLER:SINGLESPEED,Design Size Design Air Flow Rate Fan Power,12
-FLUIDCOOLER:SINGLESPEED,Design Size Design Air Flow Rate U-factor Times Area Value,5
-FLUIDCOOLER:SINGLESPEED,Design Size Design Air Flow Rate,11
-FLUIDCOOLER:SINGLESPEED,Design Size Design Water Flow Rate,10
-FLUIDCOOLER:SINGLESPEED,Design Water Flow Rate,10
-FLUIDCOOLER:TWOSPEED,Design Size Design Water Flow Rate,14
-FLUIDCOOLER:TWOSPEED,Design Size High Fan Speed Air Flow Rate,15
-FLUIDCOOLER:TWOSPEED,Design Size High Fan Speed Fan Power,16
-FLUIDCOOLER:TWOSPEED,Design Size High Fan Speed U-factor Times Area Value,5
-FLUIDCOOLER:TWOSPEED,Design Water Flow Rate,14
-FLUIDCOOLER:TWOSPEED,High Fan Speed Air Flow Rate,15
-FLUIDCOOLER:TWOSPEED,High Fan Speed Fan Power,16
-FLUIDCOOLER:TWOSPEED,High Fan Speed U-factor Times Area Value,5
-HEADEREDPUMPS:CONSTANTSPEED,Design Power Consumption,8
-HEADEREDPUMPS:CONSTANTSPEED,Design Size Design Power Consumption,8
-HEADEREDPUMPS:CONSTANTSPEED,Design Size Total Design Flow Rate,4
-HEADEREDPUMPS:CONSTANTSPEED,Total Design Flow Rate,4
-HEADEREDPUMPS:VARIABLESPEED,Design Power Consumption,8
-HEADEREDPUMPS:VARIABLESPEED,Design Size Design Power Consumption,8
-HEADEREDPUMPS:VARIABLESPEED,Design Size Total Design Flow Rate,4
-HEADEREDPUMPS:VARIABLESPEED,Total Design Flow Rate,4
-HEATEXCHANGER:AIRTOAIR:FLATPLATE,Design Size Nominal Secondary Air Flow Rate,9
-HEATEXCHANGER:AIRTOAIR:FLATPLATE,Design Size Nominal Supply Air Flow Rate,6
-HEATEXCHANGER:AIRTOAIR:FLATPLATE,Nominal Secondary Air Flow Rate,9
-HEATEXCHANGER:AIRTOAIR:FLATPLATE,Nominal Supply Air Flow Rate,6
-HEATEXCHANGER:AIRTOAIR:SENSIBLEANDLATENT,Design Size Nominal Supply Air Flow Rate,3
-HEATEXCHANGER:AIRTOAIR:SENSIBLEANDLATENT,Nominal Supply Air Flow Rate,3
-HEATEXCHANGER:DESICCANT:BALANCEDFLOW:PERFORMANCEDATATYPE1,Design Size Nominal Air Face Velocity,3
-HEATEXCHANGER:DESICCANT:BALANCEDFLOW:PERFORMANCEDATATYPE1,Design Size Nominal Air Flow Rate,2
-HEATEXCHANGER:DESICCANT:BALANCEDFLOW:PERFORMANCEDATATYPE1,Nominal Air Face Velocity,3
-HEATEXCHANGER:DESICCANT:BALANCEDFLOW:PERFORMANCEDATATYPE1,Nominal Air Flow Rate,2
-HEATEXCHANGER:FLUIDTOFLUID,Design Size Heat Exchanger U-Factor Times Area Value,10
-HEATEXCHANGER:FLUIDTOFLUID,Design Size Loop Demand Side Design Flow Rate,5
-HEATEXCHANGER:FLUIDTOFLUID,Design Size Loop Supply Side Design Flow Rate,8
-HEATEXCHANGER:FLUIDTOFLUID,Heat Exchanger U-Factor Times Area Value,10
-HEATEXCHANGER:FLUIDTOFLUID,Loop Demand Side Design Flow Rate,5
-HEATEXCHANGER:FLUIDTOFLUID,Loop Supply Side Design Flow Rate,8
-HEATPUMP:PLANTLOOP:EIR:COOLING,Design Size Load Side Reference Flow Rate,8
-HEATPUMP:PLANTLOOP:EIR:COOLING,Design Size Reference Capacity,10
-HEATPUMP:PLANTLOOP:EIR:COOLING,Design Size Source Side Reference Flow Rate,9
-HEATPUMP:PLANTLOOP:EIR:COOLING,Load Side Reference Flow Rate,8
-HEATPUMP:PLANTLOOP:EIR:COOLING,Reference Capacity,10
-HEATPUMP:PLANTLOOP:EIR:COOLING,Source Side Reference Flow Rate,9
-HEATPUMP:PLANTLOOP:EIR:HEATING,Design Size Load Side Reference Flow Rate,8
-HEATPUMP:PLANTLOOP:EIR:HEATING,Design Size Reference Capacity,10
-HEATPUMP:PLANTLOOP:EIR:HEATING,Design Size Source Side Reference Flow Rate,9
-HEATPUMP:PLANTLOOP:EIR:HEATING,Load Side Reference Flow Rate,8
-HEATPUMP:PLANTLOOP:EIR:HEATING,Reference Capacity,10
-HEATPUMP:PLANTLOOP:EIR:HEATING,Source Side Reference Flow Rate,9
-HEATPUMP:WATERTOWATER:EQUATIONFIT:COOLING,Design Size Reference Cooling Capacity,8
-HEATPUMP:WATERTOWATER:EQUATIONFIT:COOLING,Design Size Reference Cooling Power Consumption,9
-HEATPUMP:WATERTOWATER:EQUATIONFIT:COOLING,Design Size Reference Load Side Flow Rate,6
-HEATPUMP:WATERTOWATER:EQUATIONFIT:COOLING,Design Size Reference Source Side Flow Rate,7
-HEATPUMP:WATERTOWATER:EQUATIONFIT:COOLING,Reference Cooling Capacity,8
-HEATPUMP:WATERTOWATER:EQUATIONFIT:COOLING,Reference Cooling Power Consumption,9
-HEATPUMP:WATERTOWATER:EQUATIONFIT:COOLING,Reference Load Side Flow Rate,6
-HEATPUMP:WATERTOWATER:EQUATIONFIT:COOLING,Reference Source Side Flow Rate,7
-HEATPUMP:WATERTOWATER:EQUATIONFIT:HEATING,Design Size Reference Heating Capacity,8
-HEATPUMP:WATERTOWATER:EQUATIONFIT:HEATING,Design Size Reference Heating Power Consumption,9
-HEATPUMP:WATERTOWATER:EQUATIONFIT:HEATING,Design Size Reference Load Side Flow Rate,6
-HEATPUMP:WATERTOWATER:EQUATIONFIT:HEATING,Design Size Reference Source Side Flow Rate,7
-HEATPUMP:WATERTOWATER:EQUATIONFIT:HEATING,Reference Heating Capacity,8
-HEATPUMP:WATERTOWATER:EQUATIONFIT:HEATING,Reference Heating Power Consumption,9
-HEATPUMP:WATERTOWATER:EQUATIONFIT:HEATING,Reference Load Side Flow Rate,6
-HEATPUMP:WATERTOWATER:EQUATIONFIT:HEATING,Reference Source Side Flow Rate,7
-HUMIDIFIER:STEAM:ELECTRIC,Design Size Rated Capacity,3
-HUMIDIFIER:STEAM:ELECTRIC,Design Size Rated Power,4
-HUMIDIFIER:STEAM:ELECTRIC,Rated Capacity,3
-HUMIDIFIER:STEAM:ELECTRIC,Rated Power,4
-HUMIDIFIER:STEAM:GAS,Design Size Rated Capacity,3
-HUMIDIFIER:STEAM:GAS,Design Size Rated Gas Use Rate,4
-HUMIDIFIER:STEAM:GAS,Rated Capacity,3
-HUMIDIFIER:STEAM:GAS,Rated Gas Use Rate,4
-HVACTEMPLATE:PLANT:BOILER,Capacity,3
-HVACTEMPLATE:PLANT:BOILER,Design Size Capacity,3
-HVACTEMPLATE:PLANT:CHILLER,Capacity,3
-HVACTEMPLATE:PLANT:CHILLER,Design Size Capacity,3
-HVACTEMPLATE:PLANT:TOWER,Design Size Free Convection Capacity,7
-HVACTEMPLATE:PLANT:TOWER,Design Size High Speed Fan Power,4
-HVACTEMPLATE:PLANT:TOWER,Design Size High Speed Nominal Capacity,3
-HVACTEMPLATE:PLANT:TOWER,Design Size Low Speed Fan Power,6
-HVACTEMPLATE:PLANT:TOWER,Design Size Low Speed Nominal Capacity,5
-HVACTEMPLATE:PLANT:TOWER,Free Convection Capacity,7
-HVACTEMPLATE:PLANT:TOWER,High Speed Fan Power,4
-HVACTEMPLATE:PLANT:TOWER,High Speed Nominal Capacity,3
-HVACTEMPLATE:PLANT:TOWER,Low Speed Fan Power,6
-HVACTEMPLATE:PLANT:TOWER,Low Speed Nominal Capacity,5
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Design Size Heating Coil Capacity,29
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Design Size Humidifier Rated Electric Power,62
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Design Size Maximum Outdoor Air Flow Rate,38
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Design Size Minimum Outdoor Air Flow Rate,39
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Design Size Supply Fan Maximum Flow Rate,3
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Heating Coil Capacity,29
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Humidifier Rated Electric Power,62
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Maximum Outdoor Air Flow Rate,38
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Minimum Outdoor Air Flow Rate,39
-HVACTEMPLATE:SYSTEM:CONSTANTVOLUME,Supply Fan Maximum Flow Rate,3
-HVACTEMPLATE:SYSTEM:DEDICATEDOUTDOORAIR,Design Size DX Cooling Coil Gross Rated Sensible Heat Ratio,20
-HVACTEMPLATE:SYSTEM:DEDICATEDOUTDOORAIR,Design Size DX Cooling Coil Gross Rated Total Capacity,19
-HVACTEMPLATE:SYSTEM:DEDICATEDOUTDOORAIR,Design Size Humidifier Rated Electric Power,43
-HVACTEMPLATE:SYSTEM:DEDICATEDOUTDOORAIR,Design Size Supply Fan Flow Rate,4
-HVACTEMPLATE:SYSTEM:DEDICATEDOUTDOORAIR,DX Cooling Coil Gross Rated Sensible Heat Ratio,20
-HVACTEMPLATE:SYSTEM:DEDICATEDOUTDOORAIR,DX Cooling Coil Gross Rated Total Capacity,19
-HVACTEMPLATE:SYSTEM:DEDICATEDOUTDOORAIR,Humidifier Rated Electric Power,43
-HVACTEMPLATE:SYSTEM:DEDICATEDOUTDOORAIR,Supply Fan Flow Rate,4
-HVACTEMPLATE:SYSTEM:DUALDUCT,Cold Duct Supply Fan Maximum Flow Rate,11
-HVACTEMPLATE:SYSTEM:DUALDUCT,Design Size Cold Duct Supply Fan Maximum Flow Rate,11
-HVACTEMPLATE:SYSTEM:DUALDUCT,Design Size Heating Coil Capacity,45
-HVACTEMPLATE:SYSTEM:DUALDUCT,Design Size Hot Duct Supply Fan Maximum Flow Rate,19
-HVACTEMPLATE:SYSTEM:DUALDUCT,Design Size Humidifier Rated Electric Power,81
-HVACTEMPLATE:SYSTEM:DUALDUCT,Design Size Main Supply Fan Maximum Flow Rate,4
-HVACTEMPLATE:SYSTEM:DUALDUCT,Design Size Maximum Outdoor Air Flow Rate,54
-HVACTEMPLATE:SYSTEM:DUALDUCT,Design Size Minimum Outdoor Air Flow Rate,55
-HVACTEMPLATE:SYSTEM:DUALDUCT,Heating Coil Capacity,45
-HVACTEMPLATE:SYSTEM:DUALDUCT,Hot Duct Supply Fan Maximum Flow Rate,19
-HVACTEMPLATE:SYSTEM:DUALDUCT,Humidifier Rated Electric Power,81
-HVACTEMPLATE:SYSTEM:DUALDUCT,Main Supply Fan Maximum Flow Rate,4
-HVACTEMPLATE:SYSTEM:DUALDUCT,Maximum Outdoor Air Flow Rate,54
-HVACTEMPLATE:SYSTEM:DUALDUCT,Minimum Outdoor Air Flow Rate,55
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Cooling Coil Gross Rated Sensible Heat Ratio,15
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Cooling Coil Gross Rated Total Capacity,14
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,15
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Design Size Cooling Coil Gross Rated Total Capacity,14
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Design Size Heating Coil Capacity,21
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Design Size Humidifier Rated Electric Power,50
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Design Size Maximum Outdoor Air Flow Rate,24
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Design Size Minimum Outdoor Air Flow Rate,25
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Design Size Supply Fan Maximum Flow Rate,3
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Design Size Supply Fan Minimum Flow Rate,4
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Heating Coil Capacity,21
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Humidifier Rated Electric Power,50
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Maximum Outdoor Air Flow Rate,24
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Minimum Outdoor Air Flow Rate,25
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Supply Fan Maximum Flow Rate,3
-HVACTEMPLATE:SYSTEM:PACKAGEDVAV,Supply Fan Minimum Flow Rate,4
-HVACTEMPLATE:SYSTEM:UNITARY,Cooling Coil Gross Rated Sensible Heat Ratio,14
-HVACTEMPLATE:SYSTEM:UNITARY,Cooling Coil Gross Rated Total Capacity,13
-HVACTEMPLATE:SYSTEM:UNITARY,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,14
-HVACTEMPLATE:SYSTEM:UNITARY,Design Size Cooling Coil Gross Rated Total Capacity,13
-HVACTEMPLATE:SYSTEM:UNITARY,Design Size Heating Coil Capacity,19
-HVACTEMPLATE:SYSTEM:UNITARY,Design Size Humidifier Rated Electric Power,44
-HVACTEMPLATE:SYSTEM:UNITARY,Design Size Maximum Outdoor Air Flow Rate,22
-HVACTEMPLATE:SYSTEM:UNITARY,Design Size Minimum Outdoor Air Flow Rate,23
-HVACTEMPLATE:SYSTEM:UNITARY,Design Size Supply Fan Maximum Flow Rate,4
-HVACTEMPLATE:SYSTEM:UNITARY,Heating Coil Capacity,19
-HVACTEMPLATE:SYSTEM:UNITARY,Humidifier Rated Electric Power,44
-HVACTEMPLATE:SYSTEM:UNITARY,Maximum Outdoor Air Flow Rate,22
-HVACTEMPLATE:SYSTEM:UNITARY,Minimum Outdoor Air Flow Rate,23
-HVACTEMPLATE:SYSTEM:UNITARY,Supply Fan Maximum Flow Rate,4
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Cooling Coil Gross Rated Sensible Heat Ratio,17
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Cooling Coil Gross Rated Total Capacity,16
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Cooling Supply Air Flow Rate,4
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,17
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size Cooling Coil Gross Rated Total Capacity,16
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size Cooling Supply Air Flow Rate,4
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size Heat Pump Heating Coil Gross Rated Capacity,22
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size Heating Supply Air Flow Rate,5
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size Humidifier Rated Electric Power,54
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size Maximum Outdoor Air Flow Rate,35
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size Minimum Outdoor Air Flow Rate,36
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size No Load Supply Air Flow Rate,6
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Design Size Supplemental Heating Coil Capacity,31
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Heat Pump Heating Coil Gross Rated Capacity,22
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Heating Supply Air Flow Rate,5
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Humidifier Rated Electric Power,54
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Maximum Outdoor Air Flow Rate,35
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Minimum Outdoor Air Flow Rate,36
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,No Load Supply Air Flow Rate,6
-HVACTEMPLATE:SYSTEM:UNITARYHEATPUMP:AIRTOAIR,Supplemental Heating Coil Capacity,31
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Cooling Supply Air Flow Rate,5
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size Cooling Supply Air Flow Rate,5
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size DX Cooling Coil Gross Rated Sensible Heat Ratio,19
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size DX Cooling Coil Gross Rated Total Capacity,18
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size Heating Coil Gross Rated Capacity,25
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size Heating Supply Air Flow Rate,6
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size Humidifier Rated Electric Power,62
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size Maximum Outdoor Air Flow Rate,40
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size Minimum Outdoor Air Flow Rate,41
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size No Load Supply Air Flow Rate,7
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Design Size Supplemental Heating or Reheat Coil Capacity,36
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,DX Cooling Coil Gross Rated Sensible Heat Ratio,19
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,DX Cooling Coil Gross Rated Total Capacity,18
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Heating Coil Gross Rated Capacity,25
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Heating Supply Air Flow Rate,6
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Humidifier Rated Electric Power,62
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Maximum Outdoor Air Flow Rate,40
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Minimum Outdoor Air Flow Rate,41
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,No Load Supply Air Flow Rate,7
-HVACTEMPLATE:SYSTEM:UNITARYSYSTEM,Supplemental Heating or Reheat Coil Capacity,36
-HVACTEMPLATE:SYSTEM:VAV,Design Size Humidifier Rated Electric Power,52
-HVACTEMPLATE:SYSTEM:VAV,Design Size Maximum Outdoor Air Flow Rate,25
-HVACTEMPLATE:SYSTEM:VAV,Design Size Minimum Outdoor Air Flow Rate,26
-HVACTEMPLATE:SYSTEM:VAV,Design Size Supply Fan Maximum Flow Rate,3
-HVACTEMPLATE:SYSTEM:VAV,Design Size Supply Fan Minimum Flow Rate,4
-HVACTEMPLATE:SYSTEM:VAV,Humidifier Rated Electric Power,52
-HVACTEMPLATE:SYSTEM:VAV,Maximum Outdoor Air Flow Rate,25
-HVACTEMPLATE:SYSTEM:VAV,Minimum Outdoor Air Flow Rate,26
-HVACTEMPLATE:SYSTEM:VAV,Supply Fan Maximum Flow Rate,3
-HVACTEMPLATE:SYSTEM:VAV,Supply Fan Minimum Flow Rate,4
-HVACTEMPLATE:SYSTEM:VRF,Design Size Evaporative Condenser Air Flow Rate,32
-HVACTEMPLATE:SYSTEM:VRF,Design Size Evaporative Condenser Pump Rated Power Consumption,33
-HVACTEMPLATE:SYSTEM:VRF,Design Size Gross Rated Heating Capacity,7
-HVACTEMPLATE:SYSTEM:VRF,Design Size Gross Rated Total Cooling Capacity,3
-HVACTEMPLATE:SYSTEM:VRF,Design Size Resistive Defrost Heater Capacity,27
-HVACTEMPLATE:SYSTEM:VRF,Design Size Water Condenser Volume Flow Rate,30
-HVACTEMPLATE:SYSTEM:VRF,Evaporative Condenser Air Flow Rate,32
-HVACTEMPLATE:SYSTEM:VRF,Evaporative Condenser Pump Rated Power Consumption,33
-HVACTEMPLATE:SYSTEM:VRF,Gross Rated Heating Capacity,7
-HVACTEMPLATE:SYSTEM:VRF,Gross Rated Total Cooling Capacity,3
-HVACTEMPLATE:SYSTEM:VRF,Resistive Defrost Heater Capacity,27
-HVACTEMPLATE:SYSTEM:VRF,Water Condenser Volume Flow Rate,30
-HVACTEMPLATE:ZONE:BASEBOARDHEAT,Baseboard Heating Capacity,6
-HVACTEMPLATE:ZONE:BASEBOARDHEAT,Design Size Baseboard Heating Capacity,6
-HVACTEMPLATE:ZONE:CONSTANTVOLUME,Baseboard Heating Capacity,20
-HVACTEMPLATE:ZONE:CONSTANTVOLUME,Design Size Baseboard Heating Capacity,20
-HVACTEMPLATE:ZONE:CONSTANTVOLUME,Design Size Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:CONSTANTVOLUME,Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:DUALDUCT,Baseboard Heating Capacity,20
-HVACTEMPLATE:ZONE:DUALDUCT,Design Size Baseboard Heating Capacity,20
-HVACTEMPLATE:ZONE:DUALDUCT,Design Size Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:DUALDUCT,Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:FANCOIL,Baseboard Heating Capacity,34
-HVACTEMPLATE:ZONE:FANCOIL,Design Size Baseboard Heating Capacity,34
-HVACTEMPLATE:ZONE:FANCOIL,Design Size Supply Air Maximum Flow Rate,3
-HVACTEMPLATE:ZONE:FANCOIL,Supply Air Maximum Flow Rate,3
-HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,Design Size Maximum Cooling Air Flow Rate,12
-HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,Design Size Maximum Heating Air Flow Rate,9
-HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,Design Size Maximum Sensible Heating Capacity,10
-HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,Design Size Maximum Total Cooling Capacity,13
-HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,Maximum Cooling Air Flow Rate,12
-HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,Maximum Heating Air Flow Rate,9
-HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,Maximum Sensible Heating Capacity,10
-HVACTEMPLATE:ZONE:IDEALLOADSAIRSYSTEM,Maximum Total Cooling Capacity,13
-HVACTEMPLATE:ZONE:PTAC,Baseboard Heating Capacity,39
-HVACTEMPLATE:ZONE:PTAC,Cooling Coil Gross Rated Sensible Heat Ratio,21
-HVACTEMPLATE:ZONE:PTAC,Cooling Coil Gross Rated Total Capacity,20
-HVACTEMPLATE:ZONE:PTAC,Cooling Supply Air Flow Rate,3
-HVACTEMPLATE:ZONE:PTAC,Design Size Baseboard Heating Capacity,39
-HVACTEMPLATE:ZONE:PTAC,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,21
-HVACTEMPLATE:ZONE:PTAC,Design Size Cooling Coil Gross Rated Total Capacity,20
-HVACTEMPLATE:ZONE:PTAC,Design Size Cooling Supply Air Flow Rate,3
-HVACTEMPLATE:ZONE:PTAC,Design Size Heating Coil Capacity,25
-HVACTEMPLATE:ZONE:PTAC,Design Size Heating Supply Air Flow Rate,4
-HVACTEMPLATE:ZONE:PTAC,Design Size No Load Supply Air Flow Rate,5
-HVACTEMPLATE:ZONE:PTAC,Heating Coil Capacity,25
-HVACTEMPLATE:ZONE:PTAC,Heating Supply Air Flow Rate,4
-HVACTEMPLATE:ZONE:PTAC,No Load Supply Air Flow Rate,5
-HVACTEMPLATE:ZONE:PTHP,Baseboard Heating Capacity,49
-HVACTEMPLATE:ZONE:PTHP,Cooling Coil Gross Rated Sensible Heat Ratio,21
-HVACTEMPLATE:ZONE:PTHP,Cooling Coil Gross Rated Total Capacity,20
-HVACTEMPLATE:ZONE:PTHP,Cooling Supply Air Flow Rate,3
-HVACTEMPLATE:ZONE:PTHP,Design Size Baseboard Heating Capacity,49
-HVACTEMPLATE:ZONE:PTHP,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,21
-HVACTEMPLATE:ZONE:PTHP,Design Size Cooling Coil Gross Rated Total Capacity,20
-HVACTEMPLATE:ZONE:PTHP,Design Size Cooling Supply Air Flow Rate,3
-HVACTEMPLATE:ZONE:PTHP,Design Size Heat Pump Heating Coil Gross Rated Capacity,25
-HVACTEMPLATE:ZONE:PTHP,Design Size Heating Supply Air Flow Rate,4
-HVACTEMPLATE:ZONE:PTHP,Design Size No Load Supply Air Flow Rate,5
-HVACTEMPLATE:ZONE:PTHP,Design Size Supplemental Heating Coil Capacity,34
-HVACTEMPLATE:ZONE:PTHP,Heat Pump Heating Coil Gross Rated Capacity,25
-HVACTEMPLATE:ZONE:PTHP,Heating Supply Air Flow Rate,4
-HVACTEMPLATE:ZONE:PTHP,No Load Supply Air Flow Rate,5
-HVACTEMPLATE:ZONE:PTHP,Supplemental Heating Coil Capacity,34
-HVACTEMPLATE:ZONE:UNITARY,Baseboard Heating Capacity,15
-HVACTEMPLATE:ZONE:UNITARY,Design Size Baseboard Heating Capacity,15
-HVACTEMPLATE:ZONE:UNITARY,Design Size Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:UNITARY,Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:VAV,Baseboard Heating Capacity,26
-HVACTEMPLATE:ZONE:VAV,Design Size Baseboard Heating Capacity,26
-HVACTEMPLATE:ZONE:VAV,Design Size Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:VAV,Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Baseboard Heating Capacity,24
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Design Size Baseboard Heating Capacity,24
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Design Size Parallel Fan On Flow Fraction,10
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Design Size Primary Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Design Size Primary Supply Air Minimum Flow Fraction,7
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Design Size Secondary Supply Air Maximum Flow Rate,8
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Parallel Fan On Flow Fraction,10
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Primary Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Primary Supply Air Minimum Flow Fraction,7
-HVACTEMPLATE:ZONE:VAV:FANPOWERED,Secondary Supply Air Maximum Flow Rate,8
-HVACTEMPLATE:ZONE:VAV:HEATANDCOOL,Baseboard Heating Capacity,21
-HVACTEMPLATE:ZONE:VAV:HEATANDCOOL,Design Size Baseboard Heating Capacity,21
-HVACTEMPLATE:ZONE:VAV:HEATANDCOOL,Design Size Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:VAV:HEATANDCOOL,Supply Air Maximum Flow Rate,4
-HVACTEMPLATE:ZONE:VRF,Baseboard Heating Capacity,44
-HVACTEMPLATE:ZONE:VRF,Cooling Coil Gross Rated Sensible Heat Ratio,29
-HVACTEMPLATE:ZONE:VRF,Cooling Coil Gross Rated Total Capacity,28
-HVACTEMPLATE:ZONE:VRF,Cooling Outdoor Air Flow Rate,11
-HVACTEMPLATE:ZONE:VRF,Cooling Supply Air Flow Rate,7
-HVACTEMPLATE:ZONE:VRF,Design Size Baseboard Heating Capacity,44
-HVACTEMPLATE:ZONE:VRF,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,29
-HVACTEMPLATE:ZONE:VRF,Design Size Cooling Coil Gross Rated Total Capacity,28
-HVACTEMPLATE:ZONE:VRF,Design Size Cooling Outdoor Air Flow Rate,11
-HVACTEMPLATE:ZONE:VRF,Design Size Cooling Supply Air Flow Rate,7
-HVACTEMPLATE:ZONE:VRF,Design Size Heat Pump Heating Coil Gross Rated Capacity,32
-HVACTEMPLATE:ZONE:VRF,Design Size Heating Outdoor Air Flow Rate,12
-HVACTEMPLATE:ZONE:VRF,Design Size Heating Supply Air Flow Rate,9
-HVACTEMPLATE:ZONE:VRF,Design Size No Cooling Supply Air Flow Rate,8
-HVACTEMPLATE:ZONE:VRF,Design Size No Heating Supply Air Flow Rate,10
-HVACTEMPLATE:ZONE:VRF,Design Size No Load Outdoor Air Flow Rate,13
-HVACTEMPLATE:ZONE:VRF,Heat Pump Heating Coil Gross Rated Capacity,32
-HVACTEMPLATE:ZONE:VRF,Heating Outdoor Air Flow Rate,12
-HVACTEMPLATE:ZONE:VRF,Heating Supply Air Flow Rate,9
-HVACTEMPLATE:ZONE:VRF,No Cooling Supply Air Flow Rate,8
-HVACTEMPLATE:ZONE:VRF,No Heating Supply Air Flow Rate,10
-HVACTEMPLATE:ZONE:VRF,No Load Outdoor Air Flow Rate,13
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Baseboard Heating Capacity,44
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Cooling Coil Gross Rated Sensible Heat Ratio,20
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Cooling Coil Gross Rated Total Capacity,19
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Cooling Supply Air Flow Rate,3
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Design Size Baseboard Heating Capacity,44
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,20
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Design Size Cooling Coil Gross Rated Total Capacity,19
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Design Size Cooling Supply Air Flow Rate,3
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Design Size Heat Pump Heating Coil Gross Rated Capacity,23
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Design Size Heating Supply Air Flow Rate,4
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Design Size No Load Supply Air Flow Rate,5
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Design Size Supplemental Heating Coil Capacity,26
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Heat Pump Heating Coil Gross Rated Capacity,23
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Heating Supply Air Flow Rate,4
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,No Load Supply Air Flow Rate,5
-HVACTEMPLATE:ZONE:WATERTOAIRHEATPUMP,Supplemental Heating Coil Capacity,26
-PLANTCOMPONENT:TEMPERATURESOURCE,Design Size Design Volume Flow Rate,4
-PLANTCOMPONENT:TEMPERATURESOURCE,Design Volume Flow Rate,4
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 1 Flow Rate,6
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 10 Flow Rate,60
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 2 Flow Rate,12
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 3 Flow Rate,18
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 4 Flow Rate,24
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 5 Flow Rate,30
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 6 Flow Rate,36
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 7 Flow Rate,42
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 8 Flow Rate,48
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Component 9 Flow Rate,54
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 1 Flow Rate,6
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 10 Flow Rate,60
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 2 Flow Rate,12
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 3 Flow Rate,18
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 4 Flow Rate,24
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 5 Flow Rate,30
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 6 Flow Rate,36
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 7 Flow Rate,42
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 8 Flow Rate,48
-PLANTEQUIPMENTOPERATION:COMPONENTSETPOINT,Design Size Component 9 Flow Rate,54
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 1 Flow Rate,10
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 10 Flow Rate,64
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 2 Flow Rate,16
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 3 Flow Rate,22
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 4 Flow Rate,28
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 5 Flow Rate,34
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 6 Flow Rate,40
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 7 Flow Rate,46
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 8 Flow Rate,52
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Component 9 Flow Rate,58
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 1 Flow Rate,10
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 10 Flow Rate,64
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 2 Flow Rate,16
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 3 Flow Rate,22
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 4 Flow Rate,28
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 5 Flow Rate,34
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 6 Flow Rate,40
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 7 Flow Rate,46
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 8 Flow Rate,52
-PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 9 Flow Rate,58
-PLANTLOOP,Design Size Maximum Loop Flow Rate,8
-PLANTLOOP,Maximum Loop Flow Rate,8
-PLANTLOOP,Plant Loop Volume,10
-PUMP:CONSTANTSPEED,Design Flow Rate,4
-PUMP:CONSTANTSPEED,Design Power Consumption,6
-PUMP:CONSTANTSPEED,Design Size Design Flow Rate,4
-PUMP:CONSTANTSPEED,Design Size Design Power Consumption,6
-PUMP:VARIABLESPEED,Design Maximum Flow Rate,4
-PUMP:VARIABLESPEED,Design Minimum Flow Rate,13
-PUMP:VARIABLESPEED,Design Power Consumption,6
-PUMP:VARIABLESPEED,Design Size Design Maximum Flow Rate,4
-PUMP:VARIABLESPEED,Design Size Design Minimum Flow Rate,13
-PUMP:VARIABLESPEED,Design Size Design Power Consumption,6
-PUMP:VARIABLESPEED:CONDENSATE,Design Power Consumption,6
-PUMP:VARIABLESPEED:CONDENSATE,Design Size Design Power Consumption,6
-PUMP:VARIABLESPEED:CONDENSATE,Design Size Design Steam Volume Flow Rate,4
-PUMP:VARIABLESPEED:CONDENSATE,Design Steam Volume Flow Rate,4
-SIZING:SYSTEM,Central Heating Maximum System Air Flow Ratio,4
-SIZING:SYSTEM,Cooling Design Capacity,30
-SIZING:SYSTEM,Design Outdoor Air Flow Rate,3
-SIZING:SYSTEM,Design Size Central Heating Maximum System Air Flow Ratio,4
-SIZING:SYSTEM,Design Size Cooling Design Capacity,30
-SIZING:SYSTEM,Design Size Design Outdoor Air Flow Rate,3
-SIZING:SYSTEM,Design Size Heating Design Capacity,34
-SIZING:SYSTEM,Design Size Occupant Diversity,38
-SIZING:SYSTEM,Heating Design Capacity,34
-SIZING:SYSTEM,Occupant Diversity,38
-SIZING:ZONE,Dedicated Outdoor Air High Setpoint Temperature for Design,27
-SIZING:ZONE,Dedicated Outdoor Air Low Setpoint Temperature for Design,26
-SIZING:ZONE,Design Size Dedicated Outdoor Air High Setpoint Temperature for Design,27
-SIZING:ZONE,Design Size Dedicated Outdoor Air Low Setpoint Temperature for Design,26
-SOLARCOLLECTOR:FLATPLATE:PHOTOVOLTAICTHERMAL,Design Flow Rate,10
-SOLARCOLLECTOR:FLATPLATE:PHOTOVOLTAICTHERMAL,Design Size Design Flow Rate,10
-THERMALSTORAGE:CHILLEDWATER:MIXED,Design Size Source Side Design Flow Rate,21
-THERMALSTORAGE:CHILLEDWATER:MIXED,Design Size Use Side Design Flow Rate,16
-THERMALSTORAGE:CHILLEDWATER:MIXED,Source Side Design Flow Rate,21
-THERMALSTORAGE:CHILLEDWATER:MIXED,Use Side Design Flow Rate,16
-THERMALSTORAGE:CHILLEDWATER:STRATIFIED,Design Size Source Side Design Flow Rate,29
-THERMALSTORAGE:CHILLEDWATER:STRATIFIED,Design Size Use Side Design Flow Rate,22
-THERMALSTORAGE:CHILLEDWATER:STRATIFIED,Source Side Design Flow Rate,29
-THERMALSTORAGE:CHILLEDWATER:STRATIFIED,Use Side Design Flow Rate,22
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 1 Supply Air Flow Ratio,7
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 10 Supply Air Flow Ratio,25
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 2 Supply Air Flow Ratio,9
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 3 Supply Air Flow Ratio,11
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 4 Supply Air Flow Ratio,13
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 5 Supply Air Flow Ratio,15
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 6 Supply Air Flow Ratio,17
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 7 Supply Air Flow Ratio,19
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 8 Supply Air Flow Ratio,21
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Cooling Speed 9 Supply Air Flow Ratio,23
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 1 Supply Air Flow Ratio,7
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 10 Supply Air Flow Ratio,25
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 2 Supply Air Flow Ratio,9
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 3 Supply Air Flow Ratio,11
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 4 Supply Air Flow Ratio,13
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 5 Supply Air Flow Ratio,15
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 6 Supply Air Flow Ratio,17
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 7 Supply Air Flow Ratio,19
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 8 Supply Air Flow Ratio,21
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Cooling Speed 9 Supply Air Flow Ratio,23
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 1 Supply Air Flow Ratio,6
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 10 Supply Air Flow Ratio,24
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 2 Supply Air Flow Ratio,8
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 3 Supply Air Flow Ratio,10
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 4 Supply Air Flow Ratio,12
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 5 Supply Air Flow Ratio,14
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 6 Supply Air Flow Ratio,16
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 7 Supply Air Flow Ratio,18
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 8 Supply Air Flow Ratio,20
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Design Size Heating Speed 9 Supply Air Flow Ratio,22
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 1 Supply Air Flow Ratio,6
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 10 Supply Air Flow Ratio,24
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 2 Supply Air Flow Ratio,8
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 3 Supply Air Flow Ratio,10
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 4 Supply Air Flow Ratio,12
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 5 Supply Air Flow Ratio,14
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 6 Supply Air Flow Ratio,16
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 7 Supply Air Flow Ratio,18
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 8 Supply Air Flow Ratio,20
-UNITARYSYSTEMPERFORMANCE:MULTISPEED,Heating Speed 9 Supply Air Flow Ratio,22
-WATERHEATER:MIXED,Design Size Heater Maximum Capacity,7
-WATERHEATER:MIXED,Design Size Source Side Design Flow Rate,38
-WATERHEATER:MIXED,Design Size Tank Volume,2
-WATERHEATER:MIXED,Design Size Use Side Design Flow Rate,37
-WATERHEATER:MIXED,Heater Maximum Capacity,7
-WATERHEATER:MIXED,Maximum Heater Capacity,7
-WATERHEATER:MIXED,Source Side Design Flow Rate,38
-WATERHEATER:MIXED,Tank Volume,2
-WATERHEATER:MIXED,Use Side Design Flow Rate,37
-WATERHEATER:STRATIFIED,Design Size Heater 1 Capacity,11
-WATERHEATER:STRATIFIED,Design Size Source Side Design Flow Rate,50
-WATERHEATER:STRATIFIED,Design Size Tank Height,4
-WATERHEATER:STRATIFIED,Design Size Tank Volume,3
-WATERHEATER:STRATIFIED,Design Size Use Side Design Flow Rate,49
-WATERHEATER:STRATIFIED,Heater 1 Capacity,11
-WATERHEATER:STRATIFIED,Source Side Design Flow Rate,50
-WATERHEATER:STRATIFIED,Tank Height,4
-WATERHEATER:STRATIFIED,Tank Volume,3
-WATERHEATER:STRATIFIED,Use Side Design Flow Rate,49
-ZONEHVAC:BASEBOARD:CONVECTIVE:ELECTRIC,Design Size Heating Design Capacity,4
-ZONEHVAC:BASEBOARD:CONVECTIVE:ELECTRIC,Heating Design Capacity,4
-ZONEHVAC:BASEBOARD:CONVECTIVE:WATER,Design Size Heating Design Capacity,6
-ZONEHVAC:BASEBOARD:CONVECTIVE:WATER,Design Size Maximum Water Flow Rate,10
-ZONEHVAC:BASEBOARD:CONVECTIVE:WATER,Design Size U-Factor Times Area Value,9
-ZONEHVAC:BASEBOARD:CONVECTIVE:WATER,Heating Design Capacity,6
-ZONEHVAC:BASEBOARD:CONVECTIVE:WATER,Maximum Water Flow Rate,10
-ZONEHVAC:BASEBOARD:CONVECTIVE:WATER,U-Factor Times Area Value,9
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:ELECTRIC,Design Size Heating Design Capacity,4
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:ELECTRIC,Heating Design Capacity,4
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:STEAM,Design Size Heating Design Capacity,6
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:STEAM,Design Size Maximum Steam Flow Rate,8
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:STEAM,Heating Design Capacity,6
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:STEAM,Maximum Steam Flow Rate,8
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,Design Size Heating Design Capacity,8
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,Design Size Maximum Water Flow Rate,9
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,Heating Design Capacity,8
-ZONEHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,Maximum Water Flow Rate,9
-ZONEHVAC:COOLINGPANEL:RADIANTCONVECTIVE:WATER,Cooling Design Capacity,9
-ZONEHVAC:COOLINGPANEL:RADIANTCONVECTIVE:WATER,Design Size Cooling Design Capacity,9
-ZONEHVAC:COOLINGPANEL:RADIANTCONVECTIVE:WATER,Design Size Maximum Chilled Water Flow Rate,12
-ZONEHVAC:COOLINGPANEL:RADIANTCONVECTIVE:WATER,Maximum Chilled Water Flow Rate,12
-ZONEHVAC:ENERGYRECOVERYVENTILATOR,Design Size Exhaust Air Flow Rate,5
-ZONEHVAC:ENERGYRECOVERYVENTILATOR,Design Size Supply Air Flow Rate,4
-ZONEHVAC:ENERGYRECOVERYVENTILATOR,Exhaust Air Flow Rate,5
-ZONEHVAC:ENERGYRECOVERYVENTILATOR,Supply Air Flow Rate,4
-ZONEHVAC:EVAPORATIVECOOLERUNIT,Design Size Design Supply Air Flow Rate,9
-ZONEHVAC:EVAPORATIVECOOLERUNIT,Design Supply Air Flow Rate,9
-ZONEHVAC:EXHAUSTCONTROL,Design Exhaust Flow Rate,6
-ZONEHVAC:EXHAUSTCONTROL,Design Size Design Exhaust Flow Rate,6
-ZONEHVAC:FOURPIPEFANCOIL,Design Size Maximum Cold Water Flow Rate,17
-ZONEHVAC:FOURPIPEFANCOIL,Design Size Maximum Hot Water Flow Rate,22
-ZONEHVAC:FOURPIPEFANCOIL,Design Size Maximum Outdoor Air Flow Rate,7
-ZONEHVAC:FOURPIPEFANCOIL,Design Size Maximum Supply Air Flow Rate,4
-ZONEHVAC:FOURPIPEFANCOIL,Design Size Maximum Supply Air Temperature in Heating Mode,29
-ZONEHVAC:FOURPIPEFANCOIL,Design Size Minimum Supply Air Temperature in Cooling Mode,28
-ZONEHVAC:FOURPIPEFANCOIL,Maximum Cold Water Flow Rate,17
-ZONEHVAC:FOURPIPEFANCOIL,Maximum Hot Water Flow Rate,22
-ZONEHVAC:FOURPIPEFANCOIL,Maximum Outdoor Air Flow Rate,7
-ZONEHVAC:FOURPIPEFANCOIL,Maximum Supply Air Flow Rate,4
-ZONEHVAC:FOURPIPEFANCOIL,Maximum Supply Air Temperature in Heating Mode,29
-ZONEHVAC:FOURPIPEFANCOIL,Minimum Supply Air Temperature in Cooling Mode,28
-ZONEHVAC:HIGHTEMPERATURERADIANT,Design Size Heating Design Capacity,5
-ZONEHVAC:HIGHTEMPERATURERADIANT,Heating Design Capacity,5
-ZONEHVAC:IDEALLOADSAIRSYSTEM,Design Size Maximum Cooling Air Flow Rate,14
-ZONEHVAC:IDEALLOADSAIRSYSTEM,Design Size Maximum Heating Air Flow Rate,11
-ZONEHVAC:IDEALLOADSAIRSYSTEM,Design Size Maximum Sensible Heating Capacity,12
-ZONEHVAC:IDEALLOADSAIRSYSTEM,Design Size Maximum Total Cooling Capacity,15
-ZONEHVAC:IDEALLOADSAIRSYSTEM,Maximum Cooling Air Flow Rate,14
-ZONEHVAC:IDEALLOADSAIRSYSTEM,Maximum Heating Air Flow Rate,11
-ZONEHVAC:IDEALLOADSAIRSYSTEM,Maximum Sensible Heating Capacity,12
-ZONEHVAC:IDEALLOADSAIRSYSTEM,Maximum Total Cooling Capacity,15
-ZONEHVAC:LOWTEMPERATURERADIANT:CONSTANTFLOW,Design Size Hydronic Tubing Length,6
-ZONEHVAC:LOWTEMPERATURERADIANT:CONSTANTFLOW,Design Size Rated Flow Rate,7
-ZONEHVAC:LOWTEMPERATURERADIANT:CONSTANTFLOW,Hydronic Tubing Length,6
-ZONEHVAC:LOWTEMPERATURERADIANT:CONSTANTFLOW,Rated Flow Rate,7
-ZONEHVAC:LOWTEMPERATURERADIANT:ELECTRIC,Design Size Heating Design Capacity,6
-ZONEHVAC:LOWTEMPERATURERADIANT:ELECTRIC,Heating Design Capacity,6
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Cooling Design Capacity,11
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Cooling Design Capacity,11
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Heating Design Capacity,7
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Hydronic Tubing Length,6
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Maximum Cold Water Flow,12
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Maximum Hot Water Flow,8
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Heating Design Capacity,7
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Hydronic Tubing Length,6
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Maximum Cold Water Flow,12
-ZONEHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Maximum Hot Water Flow,8
-ZONEHVAC:OUTDOORAIRUNIT,Design Size Exhaust Air Flow Rate,9
-ZONEHVAC:OUTDOORAIRUNIT,Design Size Outdoor Air Flow Rate,4
-ZONEHVAC:OUTDOORAIRUNIT,Exhaust Air Flow Rate,9
-ZONEHVAC:OUTDOORAIRUNIT,Outdoor Air Flow Rate,4
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Cooling Outdoor Air Flow Rate,10
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Cooling Supply Air Flow Rate,7
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Cooling Outdoor Air Flow Rate,10
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Cooling Supply Air Flow Rate,7
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Heating Outdoor Air Flow Rate,11
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Heating Supply Air Flow Rate,8
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Maximum Supply Air Temperature in Heating Mode,25
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Minimum Supply Air Temperature in Cooling Mode,24
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size No Load Outdoor Air Flow Rate,12
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size No Load Supply Air Flow Rate,9
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Heating Outdoor Air Flow Rate,11
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Heating Supply Air Flow Rate,8
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Maximum Supply Air Temperature in Heating Mode,25
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,Minimum Supply Air Temperature in Cooling Mode,24
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,No Load Outdoor Air Flow Rate,12
-ZONEHVAC:PACKAGEDTERMINALAIRCONDITIONER,No Load Supply Air Flow Rate,9
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Cooling Outdoor Air Flow Rate,10
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Cooling Supply Air Flow Rate,7
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Design Size Cooling Outdoor Air Flow Rate,10
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Design Size Cooling Supply Air Flow Rate,7
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Design Size Heating Outdoor Air Flow Rate,11
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Design Size Heating Supply Air Flow Rate,8
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Design Size Maximum Supply Air Temperature from Supplemental Heater,23
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Design Size Maximum Supply Air Temperature in Heating Mode,31
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Design Size Minimum Supply Air Temperature in Cooling Mode,30
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Design Size No Load Outdoor Air Flow Rate,12
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Design Size No Load Supply Air Flow Rate,9
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Heating Outdoor Air Flow Rate,11
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Heating Supply Air Flow Rate,8
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Maximum Supply Air Temperature from Supplemental Heater,23
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Maximum Supply Air Temperature in Heating Mode,31
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,Minimum Supply Air Temperature in Cooling Mode,30
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,No Load Outdoor Air Flow Rate,12
-ZONEHVAC:PACKAGEDTERMINALHEATPUMP,No Load Supply Air Flow Rate,9
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Cooling Outdoor Air Flow Rate,9
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Cooling Supply Air Flow Rate,5
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Design Size Cooling Outdoor Air Flow Rate,9
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Design Size Cooling Supply Air Flow Rate,5
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Design Size Heating Outdoor Air Flow Rate,10
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Design Size Heating Supply Air Flow Rate,7
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Design Size Maximum Supply Air Temperature from Supplemental Heater,29
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Design Size No Cooling Supply Air Flow Rate,6
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Design Size No Heating Supply Air Flow Rate,8
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Design Size No Load Outdoor Air Flow Rate,11
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Heating Outdoor Air Flow Rate,10
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Heating Supply Air Flow Rate,7
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,Maximum Supply Air Temperature from Supplemental Heater,29
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,No Cooling Supply Air Flow Rate,6
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,No Heating Supply Air Flow Rate,8
-ZONEHVAC:TERMINALUNIT:VARIABLEREFRIGERANTFLOW,No Load Outdoor Air Flow Rate,11
-ZONEHVAC:UNITHEATER,Design Size Maximum Hot Water or Steam Flow Rate,12
-ZONEHVAC:UNITHEATER,Design Size Maximum Supply Air Flow Rate,7
-ZONEHVAC:UNITHEATER,Maximum Hot Water or Steam Flow Rate,12
-ZONEHVAC:UNITHEATER,Maximum Supply Air Flow Rate,7
-ZONEHVAC:UNITVENTILATOR,Design Size Maximum Outdoor Air Flow Rate,7
-ZONEHVAC:UNITVENTILATOR,Design Size Maximum Supply Air Flow Rate,3
-ZONEHVAC:UNITVENTILATOR,Design Size Minimum Outdoor Air Flow Rate,5
-ZONEHVAC:UNITVENTILATOR,Maximum Outdoor Air Flow Rate,7
-ZONEHVAC:UNITVENTILATOR,Maximum Supply Air Flow Rate,3
-ZONEHVAC:UNITVENTILATOR,Minimum Outdoor Air Flow Rate,5
-ZONEHVAC:VENTILATEDSLAB,Design Size Maximum Air Flow Rate,5
-ZONEHVAC:VENTILATEDSLAB,Design Size Maximum Outdoor Air Flow Rate,9
-ZONEHVAC:VENTILATEDSLAB,Design Size Minimum Outdoor Air Flow Rate,7
-ZONEHVAC:VENTILATEDSLAB,Maximum Air Flow Rate,5
-ZONEHVAC:VENTILATEDSLAB,Maximum Outdoor Air Flow Rate,9
-ZONEHVAC:VENTILATEDSLAB,Minimum Outdoor Air Flow Rate,7
-ZONEHVAC:WATERTOAIRHEATPUMP,Cooling Outdoor Air Flow Rate,10
-ZONEHVAC:WATERTOAIRHEATPUMP,Cooling Supply Air Flow Rate,7
-ZONEHVAC:WATERTOAIRHEATPUMP,Design Size Cooling Outdoor Air Flow Rate,10
-ZONEHVAC:WATERTOAIRHEATPUMP,Design Size Cooling Supply Air Flow Rate,7
-ZONEHVAC:WATERTOAIRHEATPUMP,Design Size Heating Outdoor Air Flow Rate,11
-ZONEHVAC:WATERTOAIRHEATPUMP,Design Size Heating Supply Air Flow Rate,8
-ZONEHVAC:WATERTOAIRHEATPUMP,Design Size Maximum Supply Air Temperature from Supplemental Heater,25
-ZONEHVAC:WATERTOAIRHEATPUMP,Design Size No Load Outdoor Air Flow Rate,12
-ZONEHVAC:WATERTOAIRHEATPUMP,Design Size No Load Supply Air Flow Rate,9
-ZONEHVAC:WATERTOAIRHEATPUMP,Heating Outdoor Air Flow Rate,11
-ZONEHVAC:WATERTOAIRHEATPUMP,Heating Supply Air Flow Rate,8
-ZONEHVAC:WATERTOAIRHEATPUMP,Maximum Supply Air Temperature from Supplemental Heater,25
-ZONEHVAC:WATERTOAIRHEATPUMP,No Load Outdoor Air Flow Rate,12
-ZONEHVAC:WATERTOAIRHEATPUMP,No Load Supply Air Flow Rate,9
-ZONEHVAC:WINDOWAIRCONDITIONER,Design Size Maximum Outdoor Air Flow Rate,4
-ZONEHVAC:WINDOWAIRCONDITIONER,Design Size Maximum Supply Air Flow Rate,3
-ZONEHVAC:WINDOWAIRCONDITIONER,Maximum Outdoor Air Flow Rate,4
-ZONEHVAC:WINDOWAIRCONDITIONER,Maximum Supply Air Flow Rate,3
+AirConditioner:VariableRefrigerantFlow,Design Size Evaporative Condenser Air Flow Rate,61
+AirConditioner:VariableRefrigerantFlow,Design Size Evaporative Condenser Pump Rated Power Consumption,62
+AirConditioner:VariableRefrigerantFlow,Design Size Gross Rated Heating Capacity,17
+AirConditioner:VariableRefrigerantFlow,Design Size Gross Rated Total Cooling Capacity,3
+AirConditioner:VariableRefrigerantFlow,Design Size Resistive Defrost Heater Capacity,54
+AirConditioner:VariableRefrigerantFlow,Design Size Water Condenser Volume Flow Rate,59
+AirConditioner:VariableRefrigerantFlow,Evaporative Condenser Air Flow Rate,61
+AirConditioner:VariableRefrigerantFlow,Evaporative Condenser Pump Rated Power Consumption,62
+AirConditioner:VariableRefrigerantFlow,Gross Rated Heating Capacity,17
+AirConditioner:VariableRefrigerantFlow,Gross Rated Total Cooling Capacity,3
+AirConditioner:VariableRefrigerantFlow,Resistive Defrost Heater Capacity,54
+AirConditioner:VariableRefrigerantFlow,Water Condenser Volume Flow Rate,59
+AirConditioner:VariableRefrigerantFlow:FluidTemperatureControl,Design Size Rated Evaporative Capacity,5
+AirConditioner:VariableRefrigerantFlow:FluidTemperatureControl,Design Size Resistive Defrost Heater Capacity,38
+AirConditioner:VariableRefrigerantFlow:FluidTemperatureControl,Rated Evaporative Capacity,5
+AirConditioner:VariableRefrigerantFlow:FluidTemperatureControl,Resistive Defrost Heater Capacity,38
+AirConditioner:VariableRefrigerantFlow:FluidTemperatureControl:HR,Design Size Rated Evaporative Capacity,5
+AirConditioner:VariableRefrigerantFlow:FluidTemperatureControl:HR,Design Size Resistive Defrost Heater Capacity,45
+AirConditioner:VariableRefrigerantFlow:FluidTemperatureControl:HR,Rated Evaporative Capacity,5
+AirConditioner:VariableRefrigerantFlow:FluidTemperatureControl:HR,Resistive Defrost Heater Capacity,45
+AirLoopHVAC,Design Size Design Supply Air Flow Rate,4
+AirLoopHVAC,Design Supply Air Flow Rate,4
+AirLoopHVAC,Sum of Air Terminal Maximum Heating Flow Rates,4
+AirLoopHVAC,Sum of Air Terminal Minimum Heating Flow Rates,4
+AirLoopHVAC,Sum of Air Terminal Maximum Flow Rates,4
+AirLoopHVAC,Adjusted Heating Design Air Flow Rate,4
+AirLoopHVAC,Adjusted Cooling Design Air Flow Rate,4
+AirLoopHVAC,Adjusted Main Design Air Flow Rate,4
+AirLoopHVAC,User Heating Air Flow Ratio,4
+AirLoopHVAC,Calculated Heating Air Flow Ratio,4
+AirLoopHVAC,Central Heating Maximum System Air Flow Ratio,4
+AirLoopHVAC:Unitary:Furnace:HeatCool,Cooling Supply Air Flow Rate,7
+AirLoopHVAC:Unitary:Furnace:HeatCool,Design Size Cooling Supply Air Flow Rate,7
+AirLoopHVAC:Unitary:Furnace:HeatCool,Design Size Heating Supply Air Flow Rate,8
+AirLoopHVAC:Unitary:Furnace:HeatCool,Design Size Maximum Supply Air Temperature,6
+AirLoopHVAC:Unitary:Furnace:HeatCool,Design Size No Load Supply Air Flow Rate,9
+AirLoopHVAC:Unitary:Furnace:HeatCool,Heating Supply Air Flow Rate,8
+AirLoopHVAC:Unitary:Furnace:HeatCool,Maximum Supply Air Temperature,6
+AirLoopHVAC:Unitary:Furnace:HeatCool,No Load Supply Air Flow Rate,9
+AirLoopHVAC:UNITARY:FURNACE:HEATONLY,Design Size Heating Supply Air Flow Rate,7
+AirLoopHVAC:UNITARY:FURNACE:HEATONLY,Design Size Maximum Supply Air Temperature,6
+AirLoopHVAC:UNITARY:FURNACE:HEATONLY,Heating Supply Air Flow Rate,7
+AirLoopHVAC:UNITARY:FURNACE:HEATONLY,Maximum Supply Air Temperature,6
+AirLoopHVAC:UnitaryHeatCool,Cooling Supply Air Flow Rate,7
+AirLoopHVAC:UnitaryHeatCool,Design Size Cooling Supply Air Flow Rate,7
+AirLoopHVAC:UnitaryHeatCool,Design Size Heating Supply Air Flow Rate,8
+AirLoopHVAC:UnitaryHeatCool,Design Size Maximum Supply Air Temperature,6
+AirLoopHVAC:UnitaryHeatCool,Design Size No Load Supply Air Flow Rate,9
+AirLoopHVAC:UnitaryHeatCool,Heating Supply Air Flow Rate,8
+AirLoopHVAC:UnitaryHeatCool,Maximum Supply Air Temperature,6
+AirLoopHVAC:UnitaryHeatCool,No Load Supply Air Flow Rate,9
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Cooling Outdoor Air Flow Rate,6
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Cooling Supply Air Flow Rate,3
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Design Size Cooling Outdoor Air Flow Rate,6
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Design Size Cooling Supply Air Flow Rate,3
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Design Size Heating Outdoor Air Flow Rate,7
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Design Size Heating Supply Air Flow Rate,4
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Design Size No Load Outdoor Air Flow Rate,8
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Design Size No Load Supply Air Flow Rate,5
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Heating Outdoor Air Flow Rate,7
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,Heating Supply Air Flow Rate,4
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,No Load Outdoor Air Flow Rate,8
+AirLoopHVAC:UnitaryHeatCool:VAVChangeoverBypass,No Load Supply Air Flow Rate,5
+AirLoopHVAC:UnitaryHeatOnly,Design Size Heating Supply Air Flow Rate,7
+AirLoopHVAC:UnitaryHeatOnly,Design Size Maximum Supply Air Temperature,6
+AirLoopHVAC:UnitaryHeatOnly,Heating Supply Air Flow Rate,7
+AirLoopHVAC:UnitaryHeatOnly,Maximum Supply Air Temperature,6
+AirLoopHVAC:UnitaryHeatPump:AirToAir,Cooling Supply Air Flow Rate,5
+AirLoopHVAC:UnitaryHeatPump:AirToAir,Design Size Cooling Supply Air Flow Rate,5
+AirLoopHVAC:UnitaryHeatPump:AirToAir,Design Size Heating Supply Air Flow Rate,6
+AirLoopHVAC:UnitaryHeatPump:AirToAir,Design Size Maximum Supply Air Temperature from Supplemental Heater,17
+AirLoopHVAC:UnitaryHeatPump:AirToAir,Design Size No Load Supply Air Flow Rate,7
+AirLoopHVAC:UnitaryHeatPump:AirToAir,Heating Supply Air Flow Rate,6
+AirLoopHVAC:UnitaryHeatPump:AirToAir,Maximum Supply Air Temperature from Supplemental Heater,17
+AirLoopHVAC:UnitaryHeatPump:AirToAir,No Load Supply Air Flow Rate,7
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Cooling Speed 1 Supply Air Flow Rate,32
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Cooling Speed 2 Supply Air Flow Rate,33
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Cooling Speed 3 Supply Air Flow Rate,34
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Cooling Speed 4 Supply Air Flow Rate,35
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size Cooling Speed 1 Supply Air Flow Rate,32
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size Cooling Speed 2 Supply Air Flow Rate,33
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size Cooling Speed 3 Supply Air Flow Rate,34
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size Cooling Speed 4 Supply Air Flow Rate,35
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size Heating Speed 1 Supply Air Flow Rate,28
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size Heating Speed 2 Supply Air Flow Rate,29
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size Heating Speed 3 Supply Air Flow Rate,30
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size Heating Speed 4 Supply Air Flow Rate,31
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size Maximum Supply Air Temperature from Supplemental Heater,17
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Design Size No Load Supply Air Flow Rate,25
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Heating Speed 1 Supply Air Flow Rate,28
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Heating Speed 2 Supply Air Flow Rate,29
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Heating Speed 3 Supply Air Flow Rate,30
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Heating Speed 4 Supply Air Flow Rate,31
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,Maximum Supply Air Temperature from Supplemental Heater,17
+AirLoopHVAC:UnitaryHeatPump:AirToAir:MultiSpeed,No Load Supply Air Flow Rate,25
+AirLoopHVAC:UnitaryHeatPump:WaterToAir,Design Size Maximum Supply Air Temperature from Supplemental Heater,21
+AirLoopHVAC:UnitaryHeatPump:WaterToAir,Design Size Supply Air Flow Rate,5
+AirLoopHVAC:UnitaryHeatPump:WaterToAir,Maximum Supply Air Temperature from Supplemental Heater,21
+AirLoopHVAC:UnitaryHeatPump:WaterToAir,Supply Air Flow Rate,5
+AirLoopHVAC:UnitarySystem,Cooling Supply Air Flow Rate,23
+AirLoopHVAC:UnitarySystem,Design Size Cooling Supply Air Flow Rate,23
+AirLoopHVAC:UnitarySystem,Design Size Heating Supply Air Flow Rate,28
+AirLoopHVAC:UnitarySystem,Design Size Maximum Supply Air Temperature,39
+AirLoopHVAC:UnitarySystem,Design Size Minimum Supply Air Temperature,18
+AirLoopHVAC:UnitarySystem,Design Size No Load Supply Air Flow Rate,33
+AirLoopHVAC:UnitarySystem,Heating Supply Air Flow Rate,28
+AirLoopHVAC:UnitarySystem,Maximum Supply Air Temperature,39
+AirLoopHVAC:UnitarySystem,Minimum Supply Air Temperature,18
+AirLoopHVAC:UnitarySystem,No Load Supply Air Flow Rate,33
+AirLoopHVAC:UnitarySystem,Design Size Supply Air Flow Rate,nil
+AirLoopHVAC:UnitarySystem,Design Size Heating Supply Air Flow Rate,28
+AirLoopHVAC:UnitarySystem,Design Size Cooling Supply Air Flow Rate,23
+AirLoopHVAC:UnitarySystem,Design Size No Load Supply Air Flow Rate,33
+AirLoopHVAC:UnitarySystem,Design Size Nominal Cooling Capacity,nil
+AirLoopHVAC:UnitarySystem,Design Size Nominal Heating Capacity,nil
+AirLoopHVAC:UnitarySystem,Design Size Maximum Supply Air Temperature,39
+AirLoopHVAC:UnitarySystem,Fraction of Supply Air Flow That Goes Through the Controlling Zone,nil
+AirTerminal:DualDuct:ConstantVolume,Design Size Maximum Air Flow Rate,6
+AirTerminal:DualDuct:ConstantVolume,Maximum Air Flow Rate,6
+AIRTERMINAL:DUALDuct:VAV,Design Size Maximum Damper Air Flow Rate,6
+AIRTERMINAL:DUALDuct:VAV,Maximum Damper Air Flow Rate,6
+AIRTERMINAL:DUALDuct:VAV:OUTDoorAIR,Design Size Maximum Terminal Air Flow Rate,6
+AIRTERMINAL:DUALDuct:VAV:OUTDoorAIR,Maximum Terminal Air Flow Rate,6
+AirTerminal:SingleDuct:ConstantVolume:CooledBeam,Beam Length,11
+AirTerminal:SingleDuct:ConstantVolume:CooledBeam,Design Size Beam Length,11
+AirTerminal:SingleDuct:ConstantVolume:CooledBeam,Design Size Maximum Total Chilled Water Volumetric Flow Rate,9
+AirTerminal:SingleDuct:ConstantVolume:CooledBeam,Design Size Number of Beams,10
+AirTerminal:SingleDuct:ConstantVolume:CooledBeam,Design Size Supply Air Volumetric Flow Rate,8
+AirTerminal:SingleDuct:ConstantVolume:CooledBeam,Maximum Total Chilled Water Volumetric Flow Rate,9
+AirTerminal:SingleDuct:ConstantVolume:CooledBeam,Number of Beams,10
+AirTerminal:SingleDuct:ConstantVolume:CooledBeam,Supply Air Volumetric Flow Rate,8
+AirTerminal:SingleDuct:ConstantVolume:FourPipeBeam,Design Chilled Water Volume Flow Rate,12
+AirTerminal:SingleDuct:ConstantVolume:FourPipeBeam,Design Hot Water Volume Flow Rate,13
+AirTerminal:SingleDuct:ConstantVolume:FourPipeBeam,Design Primary Air Volume Flow Rate,11
+AirTerminal:SingleDuct:ConstantVolume:FourPipeBeam,Design Size Design Chilled Water Volume Flow Rate,12
+AirTerminal:SingleDuct:ConstantVolume:FourPipeBeam,Design Size Design Hot Water Volume Flow Rate,13
+AirTerminal:SingleDuct:ConstantVolume:FourPipeBeam,Design Size Design Primary Air Volume Flow Rate,11
+AirTerminal:SingleDuct:ConstantVolume:FourPipeBeam,Design Size Zone Total Beam Length,14
+AirTerminal:SingleDuct:ConstantVolume:FourPipeBeam,Zone Total Beam Length,14
+AIRTERMINAL:SINGLEDuct:CONSTANTVOLUME:FOURPIPEINDuctION,Design Size Maximum Cold Water Flow Rate,15
+AIRTERMINAL:SINGLEDuct:CONSTANTVOLUME:FOURPIPEINDuctION,Design Size Maximum Hot Water Flow Rate,10
+AIRTERMINAL:SINGLEDuct:CONSTANTVOLUME:FOURPIPEINDuctION,Design Size Maximum Total Air Flow Rate,3
+AIRTERMINAL:SINGLEDuct:CONSTANTVOLUME:FOURPIPEINDuctION,Maximum Cold Water Flow Rate,15
+AIRTERMINAL:SINGLEDuct:CONSTANTVOLUME:FOURPIPEINDuctION,Maximum Hot Water Flow Rate,10
+AIRTERMINAL:SINGLEDuct:CONSTANTVOLUME:FOURPIPEINDuctION,Maximum Total Air Flow Rate,3
+AirTerminal:SingleDuct:ConstantVolume:NoReheat,Design Size Maximum Air Flow Rate,5
+AirTerminal:SingleDuct:ConstantVolume:NoReheat,Maximum Air Flow Rate,5
+AirTerminal:SingleDuct:ConstantVolume:Reheat,Design Size Maximum Air Flow Rate,5
+AirTerminal:SingleDuct:ConstantVolume:Reheat,Design Size Maximum Hot Water or Steam Flow Rate,8
+AirTerminal:SingleDuct:ConstantVolume:Reheat,Maximum Air Flow Rate,5
+AirTerminal:SingleDuct:ConstantVolume:Reheat,Maximum Hot Water or Steam Flow Rate,8
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Design Size Fan On Flow Fraction,6
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Design Size Maximum Hot Water or Steam Flow Rate,15
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Design Size Maximum Primary Air Flow Rate,3
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Design Size Maximum Secondary Air Flow Rate,4
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Design Size Minimum Primary Air Flow Fraction,5
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Fan On Flow Fraction,6
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Maximum Hot Water or Steam Flow Rate,15
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Maximum Primary Air Flow Rate,3
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Maximum Secondary Air Flow Rate,4
+AirTerminal:SingleDuct:ParallelPIU:Reheat,Minimum Primary Air Flow Fraction,5
+AirTerminal:SingleDuct:SeriesPIU:Reheat,Design Size Maximum Air Flow Rate,3
+AirTerminal:SingleDuct:SeriesPIU:Reheat,Design Size Maximum Hot Water or Steam Flow Rate,14
+AirTerminal:SingleDuct:SeriesPIU:Reheat,Design Size Maximum Primary Air Flow Rate,4
+AirTerminal:SingleDuct:SeriesPIU:Reheat,Design Size Minimum Primary Air Flow Fraction,5
+AirTerminal:SingleDuct:SeriesPIU:Reheat,Maximum Air Flow Rate,3
+AirTerminal:SingleDuct:SeriesPIU:Reheat,Maximum Hot Water or Steam Flow Rate,14
+AirTerminal:SingleDuct:SeriesPIU:Reheat,Maximum Primary Air Flow Rate,4
+AirTerminal:SingleDuct:SeriesPIU:Reheat,Minimum Primary Air Flow Fraction,5
+AIRTERMINAL:SINGLEDuct:VAV:HEATANDCOOL:NOREHEAT,Design Size Maximum Air Flow Rate,5
+AIRTERMINAL:SINGLEDuct:VAV:HEATANDCOOL:NOREHEAT,Maximum Air Flow Rate,5
+AIRTERMINAL:SINGLEDuct:VAV:HEATANDCOOL:NOREHEAT,Design Size Constant Minimum Air Flow Fraction,6
+AIRTERMINAL:SINGLEDuct:VAV:HEATANDCOOL:NOREHEAT,Design Size Minimum Air Flow Rate,nil
+AIRTERMINAL:SINGLEDuct:VAV:HEATANDCOOL:NOREHEAT,User-Specified Constant Minimum Air Flow Fraction,6
+AirTerminal:SingleDuct:VAV:HeatAndCool:Reheat,Design Size Maximum Air Flow Rate,5
+AirTerminal:SingleDuct:VAV:HeatAndCool:Reheat,Design Size Maximum Hot Water or Steam Flow Rate,9
+AirTerminal:SingleDuct:VAV:HeatAndCool:Reheat,Maximum Air Flow Rate,5
+AirTerminal:SingleDuct:VAV:HeatAndCool:Reheat,Maximum Hot Water or Steam Flow Rate,9
+AIRTERMINAL:SINGLEDuct:VAV:NOREHEAT,Constant Minimum Air Flow Fraction,7
+AIRTERMINAL:SINGLEDuct:VAV:NOREHEAT,Design Size Constant Minimum Air Flow Fraction,7
+AIRTERMINAL:SINGLEDuct:VAV:NOREHEAT,Design Size Fixed Minimum Air Flow Rate,8
+AIRTERMINAL:SINGLEDuct:VAV:NOREHEAT,Design Size Maximum Air Flow Rate,5
+AIRTERMINAL:SINGLEDuct:VAV:NOREHEAT,Fixed Minimum Air Flow Rate,8
+AIRTERMINAL:SINGLEDuct:VAV:NOREHEAT,Maximum Air Flow Rate,5
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Constant Minimum Air Flow Fraction,7
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Design Size Constant Minimum Air Flow Fraction,7
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Design Size Fixed Minimum Air Flow Rate,8
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Design Size Maximum Air Flow Rate,5
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Design Size Maximum Flow Fraction During Reheat,18
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Design Size Maximum Flow per Zone Floor Area During Reheat,17
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Design Size Maximum Hot Water or Steam Flow Rate,12
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Fixed Minimum Air Flow Rate,8
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Maximum Air Flow Rate,5
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Maximum Flow Fraction During Reheat,18
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Maximum Flow per Zone Floor Area During Reheat,17
+AIRTERMINAL:SINGLEDuct:VAV:REHEAT,Maximum Hot Water or Steam Flow Rate,12
+AirTerminal:SingleDuct:VAV:Reheat:VariableSpeedFan,Design Size Maximum Cooling Air Flow Rate,3
+AirTerminal:SingleDuct:VAV:Reheat:VariableSpeedFan,Design Size Maximum Heating Air Flow Rate,4
+AirTerminal:SingleDuct:VAV:Reheat:VariableSpeedFan,Design Size Maximum Hot Water or Steam Flow Rate,12
+AirTerminal:SingleDuct:VAV:Reheat:VariableSpeedFan,Maximum Cooling Air Flow Rate,3
+AirTerminal:SingleDuct:VAV:Reheat:VariableSpeedFan,Maximum Heating Air Flow Rate,4
+AirTerminal:SingleDuct:VAV:Reheat:VariableSpeedFan,Maximum Hot Water or Steam Flow Rate,12
+Boiler:HotWater,Design Size Design Water Flow Rate,7
+Boiler:HotWater,Design Size Nominal Capacity,3
+Boiler:HotWater,Design Water Flow Rate,7
+Boiler:HotWater,Nominal Capacity,3
+Boiler:Steam,Design Size Nominal Capacity,6
+Boiler:Steam,Nominal Capacity,6
+Chiller:Absorption,Design Chilled Water Flow Rate,12
+Chiller:Absorption,Design Condenser Water Flow Rate,13
+Chiller:Absorption,Design Generator Fluid Flow Rate,25
+Chiller:Absorption,Design Size Design Chilled Water Flow Rate,12
+Chiller:Absorption,Design Size Design Condenser Water Flow Rate,13
+Chiller:Absorption,Design Size Design Generator Fluid Flow Rate,25
+Chiller:Absorption,Design Size Nominal Capacity,2
+Chiller:Absorption,Design Size Nominal Pumping Power,3
+Chiller:Absorption,Nominal Capacity,2
+Chiller:Absorption,Nominal Pumping Power,3
+Chiller:Absorption:Indirect,Design Chilled Water Flow Rate,14
+Chiller:Absorption:Indirect,Design Condenser Water Flow Rate,15
+Chiller:Absorption:Indirect,Design Generator Fluid Flow Rate,27
+Chiller:Absorption:Indirect,Design Size Design Chilled Water Flow Rate,14
+Chiller:Absorption:Indirect,Design Size Design Condenser Water Flow Rate,15
+Chiller:Absorption:Indirect,Design Size Design Generator Fluid Flow Rate,27
+Chiller:Absorption:Indirect,Design Size Nominal Capacity,2
+Chiller:Absorption:Indirect,Design Size Nominal Pumping Power,3
+Chiller:Absorption:Indirect,Nominal Capacity,2
+Chiller:Absorption:Indirect,Nominal Pumping Power,3
+Chiller:CombustionTurbine,Design Chilled Water Flow Rate,15
+Chiller:CombustionTurbine,Design Condenser Water Flow Rate,16
+Chiller:CombustionTurbine,Design Heat Recovery Water Flow Rate,51
+Chiller:CombustionTurbine,Design Size Design Chilled Water Flow Rate,15
+Chiller:CombustionTurbine,Design Size Design Condenser Water Flow Rate,16
+Chiller:CombustionTurbine,Design Size Design Heat Recovery Water Flow Rate,51
+Chiller:CombustionTurbine,Design Size Gas Turbine Engine Capacity,47
+Chiller:CombustionTurbine,Design Size Nominal Capacity,3
+Chiller:CombustionTurbine,Gas Turbine Engine Capacity,47
+Chiller:CombustionTurbine,Nominal Capacity,3
+Chiller:ConstantCOP,Design Chilled Water Flow Rate,4
+Chiller:ConstantCOP,Design Condenser Water Flow Rate,5
+Chiller:ConstantCOP,Design Size Design Chilled Water Flow Rate,4
+Chiller:ConstantCOP,Design Size Design Condenser Water Flow Rate,5
+Chiller:ConstantCOP,Design Size Nominal Capacity,2
+Chiller:ConstantCOP,Nominal Capacity,2
+Chiller:Electric,Design Chilled Water Flow Rate,15
+Chiller:Electric,Design Condenser Fluid Flow Rate,16
+Chiller:Electric,Design Heat Recovery Water Flow Rate,28
+Chiller:Electric,Design Size Design Chilled Water Flow Rate,15
+Chiller:Electric,Design Size Design Condenser Fluid Flow Rate,16
+Chiller:Electric,Design Size Design Heat Recovery Water Flow Rate,28
+Chiller:Electric,Design Size Nominal Capacity,3
+Chiller:Electric,Nominal Capacity,3
+Chiller:Electric:ASHRAE205,Chilled Water Maximum Requested Flow Rate,12
+Chiller:Electric:ASHRAE205,Condenser Maximum Requested Flow Rate,15
+Chiller:Electric:ASHRAE205,Design Size Chilled Water Maximum Requested Flow Rate,12
+Chiller:Electric:ASHRAE205,Design Size Condenser Maximum Requested Flow Rate,15
+Chiller:Electric:ASHRAE205,Design Size Rated Capacity,4
+Chiller:Electric:ASHRAE205,Rated Capacity,4
+Chiller:Electric:EIR,Design Heat Recovery Water Flow Rate,24
+Chiller:Electric:EIR,Design Size Design Heat Recovery Water Flow Rate,24
+Chiller:Electric:EIR,Design Size Reference Capacity,2
+Chiller:Electric:EIR,Design Size Reference Chilled Water Flow Rate,6
+Chiller:Electric:EIR,Design Size Reference Condenser Fluid Flow Rate,7
+Chiller:Electric:EIR,Reference Capacity,2
+Chiller:Electric:EIR,Reference Chilled Water Flow Rate,6
+Chiller:Electric:EIR,Reference Condenser Fluid Flow Rate,7
+Chiller:Electric:ReformulatedEIR,Design Heat Recovery Water Flow Rate,23
+Chiller:Electric:ReformulatedEIR,Design Size Design Heat Recovery Water Flow Rate,23
+Chiller:Electric:ReformulatedEIR,Design Size Reference Capacity,2
+Chiller:Electric:ReformulatedEIR,Design Size Reference Chilled Water Flow Rate,6
+Chiller:Electric:ReformulatedEIR,Design Size Reference Condenser Water Flow Rate,7
+Chiller:Electric:ReformulatedEIR,Reference Capacity,2
+Chiller:Electric:ReformulatedEIR,Reference Chilled Water Flow Rate,6
+Chiller:Electric:ReformulatedEIR,Reference Condenser Water Flow Rate,7
+Chiller:EngineDriven,Design Chilled Water Flow Rate,15
+Chiller:EngineDriven,Design Condenser Water Flow Rate,16
+Chiller:EngineDriven,Design Heat Recovery Water Flow Rate,38
+Chiller:EngineDriven,Design Size Design Chilled Water Flow Rate,15
+Chiller:EngineDriven,Design Size Design Condenser Water Flow Rate,16
+Chiller:EngineDriven,Design Size Design Heat Recovery Water Flow Rate,38
+Chiller:EngineDriven,Design Size Nominal Capacity,3
+Chiller:EngineDriven,Nominal Capacity,3
+ChillerHeater:Absorption:DirectFired,Design Chilled Water Flow Rate,19
+ChillerHeater:Absorption:DirectFired,Design Condenser Water Flow Rate,20
+ChillerHeater:Absorption:DirectFired,Design Hot Water Flow Rate,21
+ChillerHeater:Absorption:DirectFired,Design Size Design Chilled Water Flow Rate,19
+ChillerHeater:Absorption:DirectFired,Design Size Design Condenser Water Flow Rate,20
+ChillerHeater:Absorption:DirectFired,Design Size Design Hot Water Flow Rate,21
+ChillerHeater:Absorption:DirectFired,Design Size Nominal Cooling Capacity,2
+ChillerHeater:Absorption:DirectFired,Nominal Cooling Capacity,2
+ChillerHeater:Absorption:DoubleEffect,Design Chilled Water Flow Rate,19
+ChillerHeater:Absorption:DoubleEffect,Design Condenser Water Flow Rate,20
+ChillerHeater:Absorption:DoubleEffect,Design Hot Water Flow Rate,21
+ChillerHeater:Absorption:DoubleEffect,Design Size Design Chilled Water Flow Rate,19
+ChillerHeater:Absorption:DoubleEffect,Design Size Design Condenser Water Flow Rate,20
+ChillerHeater:Absorption:DoubleEffect,Design Size Design Hot Water Flow Rate,21
+ChillerHeater:Absorption:DoubleEffect,Design Size Nominal Cooling Capacity,2
+ChillerHeater:Absorption:DoubleEffect,Nominal Cooling Capacity,2
+ChillerHeaterPerformance:Electric:EIR,Design Chilled Water Flow Rate,14
+ChillerHeaterPerformance:Electric:EIR,Design Condenser Water Flow Rate,15
+ChillerHeaterPerformance:Electric:EIR,Design Size Design Chilled Water Flow Rate,14
+ChillerHeaterPerformance:Electric:EIR,Design Size Design Condenser Water Flow Rate,15
+ChillerHeaterPerformance:Electric:EIR,Design Size Reference Cooling Mode Evaporator Capacity,2
+ChillerHeaterPerformance:Electric:EIR,Reference Cooling Mode Evaporator Capacity,2
+Coil:Cooling:DX:CurveFit:OperatingMode,Design Size Nominal Evaporative Condenser Pump Power,11
+Coil:Cooling:DX:CurveFit:OperatingMode,Design Size Rated Condenser Air Flow Rate,4
+Coil:Cooling:DX:CurveFit:OperatingMode,Design Size Rated Evaporator Air Flow Rate,3
+Coil:Cooling:DX:CurveFit:OperatingMode,Design Size Rated Gross Total Cooling Capacity,2
+Coil:Cooling:DX:CurveFit:OperatingMode,Nominal Evaporative Condenser Pump Power,11
+Coil:Cooling:DX:CurveFit:OperatingMode,Rated Condenser Air Flow Rate,4
+Coil:Cooling:DX:CurveFit:OperatingMode,Rated Evaporator Air Flow Rate,3
+Coil:Cooling:DX:CurveFit:OperatingMode,Rated Gross Total Cooling Capacity,2
+Coil:Cooling:DX:CURVEFIT:SPEED,Design Size Gross Sensible Heat Ratio,5
+Coil:Cooling:DX:CURVEFIT:SPEED,Gross Sensible Heat Ratio,5
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 1 Evaporative Condenser Air Flow Rate,37
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 1 Gross Rated Sensible Heat Ratio,20
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 1 Rated Sensible Heat Ratio,20
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 1 Gross Rated Total Cooling Capacity,19
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 1 Rated Air Flow Rate,22
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 1 Rated Evaporative Condenser Pump Power Consumption,39,Note: mismatch due to EnergyPlus bug
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 2 Evaporative Condenser Air Flow Rate,57
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 2 Gross Rated Sensible Heat Ratio,40
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 2 Rated Sensible Heat Ratio,40
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 2 Gross Rated Total Cooling Capacity,39
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 2 Gross Rated Cooling COP,42
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 2 Rated Air Flow Rate,42
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 2 Rated Evaporative Condenser Pump Power Consumption,58
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 3 Evaporative Condenser Air Flow Rate,77
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 3 Gross Rated Sensible Heat Ratio,60
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 3 Gross Rated Total Cooling Capacity,59
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 3 Rated Air Flow Rate,62
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 3 Rated Evaporative Condenser Pump Power Consumption,78
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 4 Evaporative Condenser Air Flow Rate,97
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 4 Gross Rated Sensible Heat Ratio,80
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 4 Gross Rated Total Cooling Capacity,79
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 4 Rated Air Flow Rate,82
+Coil:Cooling:DX:MultiSpeed,Design Size Speed 4 Rated Evaporative Condenser Pump Power Consumption,98
+Coil:Cooling:DX:MultiSpeed,Speed 1 Evaporative Condenser Air Flow Rate,37
+Coil:Cooling:DX:MultiSpeed,Speed 1 Gross Rated Sensible Heat Ratio,20
+Coil:Cooling:DX:MultiSpeed,Speed 1 Gross Rated Total Cooling Capacity,19
+Coil:Cooling:DX:MultiSpeed,Speed 1 Rated Air Flow Rate,22
+Coil:Cooling:DX:MultiSpeed,Speed 1 Rated Evaporative Condenser Pump Power Consumption,38
+Coil:Cooling:DX:MultiSpeed,Speed 2 Evaporative Condenser Air Flow Rate,57
+Coil:Cooling:DX:MultiSpeed,Speed 2 Gross Rated Sensible Heat Ratio,40
+Coil:Cooling:DX:MultiSpeed,Speed 2 Gross Rated Total Cooling Capacity,39
+Coil:Cooling:DX:MultiSpeed,Speed 2 Rated Air Flow Rate,42
+Coil:Cooling:DX:MultiSpeed,Speed 2 Rated Evaporative Condenser Pump Power Consumption,58
+Coil:Cooling:DX:MultiSpeed,Speed 3 Evaporative Condenser Air Flow Rate,77
+Coil:Cooling:DX:MultiSpeed,Speed 3 Gross Rated Sensible Heat Ratio,60
+Coil:Cooling:DX:MultiSpeed,Speed 3 Gross Rated Total Cooling Capacity,59
+Coil:Cooling:DX:MultiSpeed,Speed 3 Rated Air Flow Rate,62
+Coil:Cooling:DX:MultiSpeed,Speed 3 Rated Evaporative Condenser Pump Power Consumption,78
+Coil:Cooling:DX:MultiSpeed,Speed 4 Evaporative Condenser Air Flow Rate,97
+Coil:Cooling:DX:MultiSpeed,Speed 4 Gross Rated Sensible Heat Ratio,80
+Coil:Cooling:DX:MultiSpeed,Speed 4 Gross Rated Total Cooling Capacity,79
+Coil:Cooling:DX:MultiSpeed,Speed 4 Rated Air Flow Rate,82
+Coil:Cooling:DX:MultiSpeed,Speed 4 Rated Evaporative Condenser Pump Power Consumption,98
+Coil:Cooling:DX:SingleSpeed,Design Size Evaporative Condenser Air Flow Rate,24
+Coil:Cooling:DX:SingleSpeed,Design Size Evaporative Condenser Pump Rated Power Consumption,25
+Coil:Cooling:DX:SingleSpeed,Design Size Gross Rated Sensible Heat Ratio,4
+Coil:Cooling:DX:SingleSpeed,Design Size Gross Rated Total Cooling Capacity,3
+Coil:Cooling:DX:SingleSpeed,Design Size Rated Air Flow Rate,6
+Coil:Cooling:DX:SingleSpeed,Evaporative Condenser Air Flow Rate,24
+Coil:Cooling:DX:SingleSpeed,Evaporative Condenser Pump Rated Power Consumption,25
+Coil:Cooling:DX:SingleSpeed,Gross Rated Sensible Heat Ratio,4
+Coil:Cooling:DX:SingleSpeed,Gross Rated Total Cooling Capacity,3
+Coil:Cooling:DX:SingleSpeed,Rated Air Flow Rate,6
+Coil:Cooling:DX:SingleSpeed:THERMALSTORAGE,Cooling Only Mode Rated Total Evaporator Cooling Capacity,17
+Coil:Cooling:DX:SingleSpeed:THERMALSTORAGE,Design Size Cooling Only Mode Rated Total Evaporator Cooling Capacity,17
+Coil:Cooling:DX:SingleSpeed:THERMALSTORAGE,Design Size Evaporative Condenser Pump Rated Power Consumption,95
+Coil:Cooling:DX:SingleSpeed:THERMALSTORAGE,Design Size Rated Evaporator Air Flow Rate,13
+Coil:Cooling:DX:SingleSpeed:THERMALSTORAGE,Evaporative Condenser Pump Rated Power Consumption,95
+Coil:Cooling:DX:SingleSpeed:THERMALSTORAGE,Rated Evaporator Air Flow Rate,13
+Coil:Cooling:DX:TwoSpeed,Design Size High Speed Evaporative Condenser Air Flow Rate,25
+Coil:Cooling:DX:TwoSpeed,Design Size High Speed Evaporative Condenser Pump Rated Power Consumption,26
+Coil:Cooling:DX:TwoSpeed,Design Size High Speed Gross Rated Total Cooling Capacity,3
+Coil:Cooling:DX:TwoSpeed,Design Size High Speed Rated Air Flow Rate,6
+Coil:Cooling:DX:TwoSpeed,Design Size High Speed Rated Sensible Heat Ratio,4
+Coil:Cooling:DX:TwoSpeed,Design Size Low Speed Evaporative Condenser Air Flow Rate,28
+Coil:Cooling:DX:TwoSpeed,Design Size Low Speed Evaporative Condenser Pump Rated Power Consumption,29
+Coil:Cooling:DX:TwoSpeed,Design Size Low Speed Gross Rated Sensible Heat Ratio,16
+Coil:Cooling:DX:TwoSpeed,Design Size Low Speed Gross Rated Total Cooling Capacity,15
+Coil:Cooling:DX:TwoSpeed,Design Size Low Speed Rated Air Flow Rate,18
+Coil:Cooling:DX:TwoSpeed,High Speed Evaporative Condenser Air Flow Rate,25
+Coil:Cooling:DX:TwoSpeed,High Speed Evaporative Condenser Pump Rated Power Consumption,26
+Coil:Cooling:DX:TwoSpeed,High Speed Gross Rated Total Cooling Capacity,3
+Coil:Cooling:DX:TwoSpeed,High Speed Rated Air Flow Rate,6
+Coil:Cooling:DX:TwoSpeed,High Speed Rated Sensible Heat Ratio,4
+Coil:Cooling:DX:TwoSpeed,Low Speed Evaporative Condenser Air Flow Rate,28
+Coil:Cooling:DX:TwoSpeed,Low Speed Evaporative Condenser Pump Rated Power Consumption,29
+Coil:Cooling:DX:TwoSpeed,Low Speed Gross Rated Sensible Heat Ratio,16
+Coil:Cooling:DX:TwoSpeed,Low Speed Gross Rated Total Cooling Capacity,15
+Coil:Cooling:DX:TwoSpeed,Low Speed Rated Air Flow Rate,18
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW,Design Size Gross Rated Sensible Heat Ratio,4
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW,Design Size Gross Rated Total Cooling Capacity,3
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW,Design Size Rated Air Flow Rate,5
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW,Gross Rated Sensible Heat Ratio,4
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW,Gross Rated Total Cooling Capacity,3
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW,Rated Air Flow Rate,5
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Design Size Rated Sensible Heat Ratio,6
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Design Size Rated Total Cooling Capacity,5
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Rated Sensible Heat Ratio,6
+Coil:Cooling:DX:VARIABLEREFRIGERANTFLOW:FLUIDTEMPERATURECONTROL,Rated Total Cooling Capacity,5
+Coil:Cooling:DX:VARIABLESPEED,Design Size Evaporative Condenser Pump Rated Power Consumption,13
+Coil:Cooling:DX:VARIABLESPEED,Design Size Gross Rated Total Cooling Capacity At Selected Nominal Speed Level,6
+Coil:Cooling:DX:VARIABLESPEED,Design Size Rated Air Flow Rate At Selected Nominal Speed Level,7
+Coil:Cooling:DX:VARIABLESPEED,Evaporative Condenser Pump Rated Power Consumption,13
+Coil:Cooling:DX:VARIABLESPEED,Gross Rated Total Cooling Capacity At Selected Nominal Speed Level,6
+Coil:Cooling:DX:VARIABLESPEED,Rated Air Flow Rate At Selected Nominal Speed Level,7
+Coil:Cooling:Water,Design Air Flow Rate,4
+Coil:Cooling:Water,Design Inlet Air Humidity Ratio,8
+Coil:Cooling:Water,Design Inlet Air Temperature,6
+Coil:Cooling:Water,Design Inlet Water Temperature,5
+Coil:Cooling:Water,Design Outlet Air Humidity Ratio,9
+Coil:Cooling:Water,Design Outlet Air Temperature,7
+Coil:Cooling:Water,Design Size Design Air Flow Rate,4
+Coil:Cooling:Water,Design Size Design Inlet Air Humidity Ratio,8
+Coil:Cooling:Water,Design Size Design Inlet Air Temperature,6
+Coil:Cooling:Water,Design Size Design Inlet Water Temperature,5
+Coil:Cooling:Water,Design Size Design Outlet Air Humidity Ratio,9
+Coil:Cooling:Water,Design Size Design Outlet Air Temperature,7
+Coil:Cooling:Water,Design Size Design Water Flow Rate,3
+Coil:Cooling:Water,Design Water Flow Rate,3
+Coil:Cooling:Water:DetailedGeometry,Coil Depth,8
+Coil:Cooling:Water:DetailedGeometry,Design Inlet Water Temperature,25
+Coil:Cooling:Water:DetailedGeometry,Design Size Coil Depth,8
+Coil:Cooling:Water:DetailedGeometry,Design Size Design Inlet Water Temperature,25
+Coil:Cooling:Water:DetailedGeometry,Design Size Fin Diameter,9
+Coil:Cooling:Water:DetailedGeometry,Design Size Fin Surface Area,6
+Coil:Cooling:Water:DetailedGeometry,Design Size Maximum Water Flow Rate,3
+Coil:Cooling:Water:DetailedGeometry,Design Size Minimum Airflow Area,7
+Coil:Cooling:Water:DetailedGeometry,Design Size Number of Tubes per Row,18
+Coil:Cooling:Water:DetailedGeometry,Design Size Total Tube Inside Area,5
+Coil:Cooling:Water:DetailedGeometry,Design Size Tube Outside Surface Area,4
+Coil:Cooling:Water:DetailedGeometry,Fin Diameter,9
+Coil:Cooling:Water:DetailedGeometry,Fin Surface Area,6
+Coil:Cooling:Water:DetailedGeometry,Maximum Water Flow Rate,3
+Coil:Cooling:Water:DetailedGeometry,Minimum Airflow Area,7
+Coil:Cooling:Water:DetailedGeometry,Number of Tubes per Row,18
+Coil:Cooling:Water:DetailedGeometry,Total Tube Inside Area,5
+Coil:Cooling:Water:DetailedGeometry,Tube Outside Surface Area,4
+Coil:Cooling:WaterTOAIRHEATPUMP:EQUATIONFIT,Design Size Gross Rated Sensible Cooling Capacity,9
+Coil:Cooling:WaterTOAIRHEATPUMP:EQUATIONFIT,Design Size Gross Rated Total Cooling Capacity,8
+Coil:Cooling:WaterTOAIRHEATPUMP:EQUATIONFIT,Design Size Rated Air Flow Rate,6
+Coil:Cooling:WaterTOAIRHEATPUMP:EQUATIONFIT,Design Size Rated Water Flow Rate,7
+Coil:Cooling:WaterTOAIRHEATPUMP:EQUATIONFIT,Gross Rated Sensible Cooling Capacity,9
+Coil:Cooling:WaterTOAIRHEATPUMP:EQUATIONFIT,Gross Rated Total Cooling Capacity,8
+Coil:Cooling:WaterTOAIRHEATPUMP:EQUATIONFIT,Rated Air Flow Rate,6
+Coil:Cooling:WaterTOAIRHEATPUMP:EQUATIONFIT,Rated Water Flow Rate,7
+Coil:Cooling:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Design Size Gross Rated Total Cooling Capacity At Selected Nominal Speed Level,8
+Coil:Cooling:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Design Size Rated Air Flow Rate At Selected Nominal Speed Level,9
+Coil:Cooling:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Design Size Rated Water Flow Rate At Selected Nominal Speed Level,10
+Coil:Cooling:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Gross Rated Total Cooling Capacity At Selected Nominal Speed Level,8
+Coil:Cooling:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Rated Air Flow Rate At Selected Nominal Speed Level,9
+Coil:Cooling:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Rated Water Flow Rate At Selected Nominal Speed Level,10
+Coil:Heating:DX:MultiSpeed,Design Size Resistive Defrost Heater Capacity,14
+Coil:Heating:DX:MultiSpeed,Design Size Speed 1 Gross Rated Heating Capacity,19
+Coil:Heating:DX:MultiSpeed,Design Size Speed 1 Rated Air Flow Rate,21
+Coil:Heating:DX:MultiSpeed,Design Size Speed 1 Secondary Coil Air Flow Rate,68
+Coil:Heating:DX:MultiSpeed,Design Size Speed 2 Gross Rated Heating Capacity,31
+Coil:Heating:DX:MultiSpeed,Design Size Speed 2 Rated Air Flow Rate,33
+Coil:Heating:DX:MultiSpeed,Design Size Speed 2 Secondary Coil Air Flow Rate,73
+Coil:Heating:DX:MultiSpeed,Design Size Speed 3 Gross Rated Heating Capacity,43
+Coil:Heating:DX:MultiSpeed,Design Size Speed 3 Rated Air Flow Rate,45
+Coil:Heating:DX:MultiSpeed,Design Size Speed 3 Secondary Coil Air Flow Rate,78
+Coil:Heating:DX:MultiSpeed,Design Size Speed 4 Gross Rated Heating Capacity,55
+Coil:Heating:DX:MultiSpeed,Design Size Speed 4 Rated Air Flow Rate,57
+Coil:Heating:DX:MultiSpeed,Design Size Speed 4 Secondary Coil Air Flow Rate,83
+Coil:Heating:DX:MultiSpeed,Resistive Defrost Heater Capacity,14
+Coil:Heating:DX:MultiSpeed,Speed 1 Gross Rated Heating Capacity,19
+Coil:Heating:DX:MultiSpeed,Speed 1 Rated Air Flow Rate,21
+Coil:Heating:DX:MultiSpeed,Speed 1 Secondary Coil Air Flow Rate,68
+Coil:Heating:DX:MultiSpeed,Speed 2 Gross Rated Heating Capacity,31
+Coil:Heating:DX:MultiSpeed,Speed 2 Rated Air Flow Rate,33
+Coil:Heating:DX:MultiSpeed,Speed 2 Secondary Coil Air Flow Rate,73
+Coil:Heating:DX:MultiSpeed,Speed 3 Gross Rated Heating Capacity,43
+Coil:Heating:DX:MultiSpeed,Speed 3 Rated Air Flow Rate,45
+Coil:Heating:DX:MultiSpeed,Speed 3 Secondary Coil Air Flow Rate,78
+Coil:Heating:DX:MultiSpeed,Speed 4 Gross Rated Heating Capacity,55
+Coil:Heating:DX:MultiSpeed,Speed 4 Rated Air Flow Rate,57
+Coil:Heating:DX:MultiSpeed,Speed 4 Secondary Coil Air Flow Rate,83
+Coil:Heating:DX:SingleSpeed,Design Size Gross Rated Heating Capacity,3
+Coil:Heating:DX:SingleSpeed,Design Size Rated Air Flow Rate,5
+Coil:Heating:DX:SingleSpeed,Design Size Resistive Defrost Heater Capacity,24
+Coil:Heating:DX:SingleSpeed,Design Size Secondary Coil Air Flow Rate,28
+Coil:Heating:DX:SingleSpeed,Gross Rated Heating Capacity,3
+Coil:Heating:DX:SingleSpeed,Rated Air Flow Rate,5
+Coil:Heating:DX:SingleSpeed,Resistive Defrost Heater Capacity,24
+Coil:Heating:DX:SingleSpeed,Secondary Coil Air Flow Rate,28
+Coil:Heating:DX:VariableRefrigerantFlow,Design Size Gross Rated Heating Capacity,3
+Coil:Heating:DX:VariableRefrigerantFlow,Design Size Rated Air Flow Rate,4
+Coil:Heating:DX:VariableRefrigerantFlow,Gross Rated Heating Capacity,3
+Coil:Heating:DX:VariableRefrigerantFlow,Rated Air Flow Rate,4
+Coil:Heating:DX:VariableRefrigerantFlow:FluidTemperatureControl,Design Size Rated Total Heating Capacity,5
+Coil:Heating:DX:VariableRefrigerantFlow:FluidTemperatureControl,Rated Total Heating Capacity,5
+Coil:Heating:DX:VariableSpeed,Design Size Rated Air Flow Rate At Selected Nominal Speed Level,7
+Coil:Heating:DX:VariableSpeed,Design Size Rated Heating Capacity At Selected Nominal Speed Level,6
+Coil:Heating:DX:VariableSpeed,Design Size Resistive Defrost Heater Capacity,18
+Coil:Heating:DX:VariableSpeed,Rated Air Flow Rate At Selected Nominal Speed Level,7
+Coil:Heating:DX:VariableSpeed,Rated Heating Capacity At Selected Nominal Speed Level,6
+Coil:Heating:DX:VariableSpeed,Resistive Defrost Heater Capacity,18
+Coil:Heating:Electric,Design Size Nominal Capacity,4
+Coil:Heating:Electric,Nominal Capacity,4
+Coil:Heating:Electric:MultiStage,Design Size Stage 1 Nominal Capacity,8
+Coil:Heating:Electric:MultiStage,Design Size Stage 2 Nominal Capacity,10
+Coil:Heating:Electric:MultiStage,Design Size Stage 3 Nominal Capacity,12
+Coil:Heating:Electric:MultiStage,Design Size Stage 4 Nominal Capacity,14
+Coil:Heating:Electric:MultiStage,Stage 1 Nominal Capacity,8
+Coil:Heating:Electric:MultiStage,Stage 2 Nominal Capacity,10
+Coil:Heating:Electric:MultiStage,Stage 3 Nominal Capacity,12
+Coil:Heating:Electric:MultiStage,Stage 4 Nominal Capacity,14
+Coil:Heating:Fuel,Design Size Nominal Capacity,5
+Coil:Heating:Fuel,Nominal Capacity,5
+Coil:Heating:Gas:MultiStage,Design Size Stage 1 Nominal Capacity,10
+Coil:Heating:Gas:MultiStage,Design Size Stage 2 Nominal Capacity,13
+Coil:Heating:Gas:MultiStage,Design Size Stage 3 Nominal Capacity,16
+Coil:Heating:Gas:MultiStage,Design Size Stage 4 Nominal Capacity,19
+Coil:Heating:Gas:MultiStage,Stage 1 Nominal Capacity,10
+Coil:Heating:Gas:MultiStage,Stage 2 Nominal Capacity,13
+Coil:Heating:Gas:MultiStage,Stage 3 Nominal Capacity,16
+Coil:Heating:Gas:MultiStage,Stage 4 Nominal Capacity,19
+Coil:Heating:Steam,Design Size Maximum Steam Flow Rate,3
+Coil:Heating:Steam,Maximum Steam Flow Rate,3
+Coil:Heating:Water,Design Size Maximum Water Flow Rate,4
+Coil:Heating:Water,Design Size Rated Capacity,10
+Coil:Heating:Water,Design Size U-Factor Times Area Value,3
+Coil:Heating:Water,Maximum Water Flow Rate,4
+Coil:Heating:Water,Rated Capacity,10
+Coil:Heating:Water,U-Factor Times Area Value,3
+Coil:Heating:WaterToAirHeatPump:EquationFit,Design Size Gross Rated Heating Capacity,8
+Coil:Heating:WaterToAirHeatPump:EquationFit,Design Size Rated Air Flow Rate,6
+Coil:Heating:WaterToAirHeatPump:EquationFit,Design Size Rated Water Flow Rate,7
+Coil:Heating:WaterToAirHeatPump:EquationFit,Gross Rated Heating Capacity,8
+Coil:Heating:WaterToAirHeatPump:EquationFit,Rated Air Flow Rate,6
+Coil:Heating:WaterToAirHeatPump:EquationFit,Rated Water Flow Rate,7
+Coil:Heating:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Design Size Rated Air Flow Rate At Selected Nominal Speed Level,9
+Coil:Heating:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Design Size Rated Heating Capacity At Selected Nominal Speed Level,8
+Coil:Heating:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Design Size Rated Water Flow Rate At Selected Nominal Speed Level,10
+Coil:Heating:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Rated Air Flow Rate At Selected Nominal Speed Level,9
+Coil:Heating:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Rated Heating Capacity At Selected Nominal Speed Level,8
+Coil:Heating:WaterTOAIRHEATPump:VariableSpeedEQUATIONFIT,Rated Water Flow Rate At Selected Nominal Speed Level,10
+CoilPerformance:DX:Cooling,Design Size Evaporative Condenser Air Flow Rate,19
+CoilPerformance:DX:Cooling,Design Size Evaporative Condenser Pump Rated Power Consumption,20
+CoilPerformance:DX:Cooling,Design Size Gross Rated Sensible Heat Ratio,3
+CoilPerformance:DX:Cooling,Design Size Gross Rated Total Cooling Capacity,2
+CoilPerformance:DX:Cooling,Design Size Rated Air Flow Rate,5
+CoilPerformance:DX:Cooling,Evaporative Condenser Air Flow Rate,19
+CoilPerformance:DX:Cooling,Evaporative Condenser Pump Rated Power Consumption,20
+CoilPerformance:DX:Cooling,Gross Rated Sensible Heat Ratio,3
+CoilPerformance:DX:Cooling,Gross Rated Total Cooling Capacity,2
+CoilPerformance:DX:Cooling,Rated Air Flow Rate,5
+CondenserLoop,Design Size Maximum Loop Flow Rate,8
+CondenserLoop,Maximum Loop Flow Rate,8
+Controller:OutdoorAir,Design Size Maximum Outdoor Air Flow Rate,7
+Controller:OutdoorAir,Design Size Minimum Outdoor Air Flow Rate,6
+Controller:OutdoorAir,Maximum Outdoor Air Flow Rate,7
+Controller:OutdoorAir,Minimum Outdoor Air Flow Rate,6
+Controller:WaterCoil,Controller Convergence Tolerance,7
+Controller:WaterCoil,Design Size Controller Convergence Tolerance,7
+Controller:WaterCoil,Design Size Maximum Actuated Flow,8
+Controller:WaterCoil,Maximum Actuated Flow,8
+CoolingTower:SingleSpeed,Design Air Flow Rate,5
+CoolingTower:SingleSpeed,Design Approach Temperature,19
+CoolingTower:SingleSpeed,Design Fan Power,6
+CoolingTower:SingleSpeed,Design Range Temperature,20
+CoolingTower:SingleSpeed,Design Size Design Air Flow Rate,5
+CoolingTower:SingleSpeed,Design Size Design Approach Temperature,19
+CoolingTower:SingleSpeed,Design Size Design Fan Power,6
+CoolingTower:SingleSpeed,Design Size Design Range Temperature,20
+CoolingTower:SingleSpeed,Design Size Design U-Factor Times Area Value,7
+CoolingTower:SingleSpeed,Design Size Design Water Flow Rate,4
+CoolingTower:SingleSpeed,Design U-Factor Times Area Value,7
+CoolingTower:SingleSpeed,Design Water Flow Rate,4
+CoolingTower:TwoSpeed,Design Approach Temperature,27
+CoolingTower:TwoSpeed,Design Range Temperature,28
+CoolingTower:TwoSpeed,Design Size Design Approach Temperature,27
+CoolingTower:TwoSpeed,Design Size Design Range Temperature,28
+CoolingTower:TwoSpeed,Design Size Design Water Flow Rate,4
+CoolingTower:TwoSpeed,Design Size High Fan Speed Air Flow Rate,5
+CoolingTower:TwoSpeed,Design Size High Fan Speed Fan Power,6
+CoolingTower:TwoSpeed,Design Size High Fan Speed U-Factor Times Area Value,7
+CoolingTower:TwoSpeed,Design Water Flow Rate,4
+CoolingTower:TwoSpeed,High Fan Speed Air Flow Rate,5
+CoolingTower:TwoSpeed,High Fan Speed Fan Power,6
+CoolingTower:TwoSpeed,High Fan Speed U-Factor Times Area Value,7
+CoolingTower:VariableSpeed,Design Air Flow Rate,10
+CoolingTower:VariableSpeed,Design Fan Power,11
+CoolingTower:VariableSpeed,Design Size Design Air Flow Rate,10
+CoolingTower:VariableSpeed,Design Size Design Fan Power,11
+CoolingTower:VariableSpeed,Design Size Design Water Flow Rate,9
+CoolingTower:VariableSpeed,Design Water Flow Rate,9
+CoolingTower:VariableSpeed:MERKEL,Design Air Flow Rate U-Factor Times Area Value,19
+CoolingTower:VariableSpeed:MERKEL,Design Approach Temperature,27
+CoolingTower:VariableSpeed:MERKEL,Design Range Temperature,28
+CoolingTower:VariableSpeed:MERKEL,Design Size Design Air Flow Rate U-Factor Times Area Value,19
+CoolingTower:VariableSpeed:MERKEL,Design Size Design Approach Temperature,27
+CoolingTower:VariableSpeed:MERKEL,Design Size Design Range Temperature,28
+CoolingTower:VariableSpeed:MERKEL,Design Size Design Water Flow Rate,9
+CoolingTower:VariableSpeed:MERKEL,Design Size Nominal Capacity,6
+CoolingTower:VariableSpeed:MERKEL,Design Water Flow Rate,9
+CoolingTower:VariableSpeed:MERKEL,Nominal Capacity,6
+DesignSpecification:ZoneHVAC:Sizing,Cooling Design Capacity,18
+DesignSpecification:ZoneHVAC:Sizing,Cooling Supply Air Flow Rate,3
+DesignSpecification:ZoneHVAC:Sizing,Design Size Cooling Design Capacity,18
+DesignSpecification:ZoneHVAC:Sizing,Design Size Cooling Supply Air Flow Rate,3
+DesignSpecification:ZoneHVAC:Sizing,Design Size Heating Design Capacity,22
+DesignSpecification:ZoneHVAC:Sizing,Design Size Heating Supply Air Flow Rate,13
+DesignSpecification:ZoneHVAC:Sizing,Design Size No Load Supply Air Flow Rate,8
+DesignSpecification:ZoneHVAC:Sizing,Heating Design Capacity,22
+DesignSpecification:ZoneHVAC:Sizing,Heating Supply Air Flow Rate,13
+DesignSpecification:ZoneHVAC:Sizing,No Load Supply Air Flow Rate,8
+DistrictCooling,Design Size Nominal Capacity,4
+DistrictCooling,Nominal Capacity,4
+DistrictHeating,Design Size Nominal Capacity,4
+DistrictHeating,Nominal Capacity,4
+EvaporativeCooler:Direct:CelDekPad,Design Size Direct Pad Area,3
+EvaporativeCooler:Direct:CelDekPad,Design Size Direct Pad Depth,4
+EvaporativeCooler:Direct:CelDekPad,Direct Pad Area,3
+EvaporativeCooler:Direct:CelDekPad,Direct Pad Depth,4
+EvaporativeCooler:Direct:ResearchSpecial,Design Size Primary Air Design Flow Rate,5
+EvaporativeCooler:Direct:ResearchSpecial,Design Size Recirculating Water Pump Design Power,6
+EvaporativeCooler:Direct:ResearchSpecial,Primary Air Design Flow Rate,5
+EvaporativeCooler:Direct:ResearchSpecial,Recirculating Water Pump Design Power,6
+EvaporativeCooler:Indirect:CelDekPad,Design Size Direct Pad Area,3
+EvaporativeCooler:Indirect:CelDekPad,Design Size Direct Pad Depth,4
+EvaporativeCooler:Indirect:CelDekPad,Direct Pad Area,3
+EvaporativeCooler:Indirect:CelDekPad,Direct Pad Depth,4
+EvaporativeCooler:Indirect:ResearchSpecial,Design Size Primary Air Design Flow Rate,17
+EvaporativeCooler:Indirect:ResearchSpecial,Design Size Recirculating Water Pump Design Power,7
+EvaporativeCooler:Indirect:ResearchSpecial,Design Size Secondary Air Design Flow Rate,10
+EvaporativeCooler:Indirect:ResearchSpecial,Design Size Secondary Air Fan Design Power,12
+EvaporativeCooler:Indirect:ResearchSpecial,Primary Air Design Flow Rate,17
+EvaporativeCooler:Indirect:ResearchSpecial,Recirculating Water Pump Design Power,7
+EvaporativeCooler:Indirect:ResearchSpecial,Secondary Air Design Flow Rate,10
+EvaporativeCooler:Indirect:ResearchSpecial,Secondary Air Fan Design Power,12
+EVAPORATIVEFluidCooler:SingleSpeed,Design Air Flow Rate Fan Power,5
+EVAPORATIVEFluidCooler:SingleSpeed,Design Air Flow Rate U-factor Times Area Value,11
+EVAPORATIVEFluidCooler:SingleSpeed,Design Air Flow Rate,4
+EVAPORATIVEFluidCooler:SingleSpeed,Design Size Design Air Flow Rate Fan Power,5
+EVAPORATIVEFluidCooler:SingleSpeed,Design Size Design Air Flow Rate U-factor Times Area Value,11
+EVAPORATIVEFluidCooler:SingleSpeed,Design Size Design Air Flow Rate,4
+EVAPORATIVEFluidCooler:SingleSpeed,Design Size Design Water Flow Rate,12
+EVAPORATIVEFluidCooler:SingleSpeed,Design Water Flow Rate,12
+EvaporativeFluidCooler:TwoSpeed,Design Size Design Water Flow Rate,20
+EvaporativeFluidCooler:TwoSpeed,Design Size High Fan Speed Air Flow Rate,4
+EvaporativeFluidCooler:TwoSpeed,Design Size High Fan Speed Fan Power,5
+EvaporativeFluidCooler:TwoSpeed,Design Size High Fan Speed U-factor Times Area Value,17
+EvaporativeFluidCooler:TwoSpeed,Design Water Flow Rate,20
+EvaporativeFluidCooler:TwoSpeed,High Fan Speed Air Flow Rate,4
+EvaporativeFluidCooler:TwoSpeed,High Fan Speed Fan Power,5
+EvaporativeFluidCooler:TwoSpeed,High Fan Speed U-factor Times Area Value,17
+Fan:ComponentModel,Belt Maximum Torque,14
+Fan:ComponentModel,Design Size Belt Maximum Torque,14
+Fan:ComponentModel,Design Size Maximum Flow Rate,5
+Fan:ComponentModel,Design Size Maximum Motor Output Power,18
+Fan:ComponentModel,Design Size Maximum VFD Output Power,22
+Fan:ComponentModel,Design Size Minimum Flow Rate,6
+Fan:ComponentModel,Design Size Motor Fan Pulley Ratio,13
+Fan:ComponentModel,Maximum Flow Rate,5
+Fan:ComponentModel,Maximum Motor Output Power,18
+Fan:ComponentModel,Maximum VFD Output Power,22
+Fan:ComponentModel,Minimum Flow Rate,6
+Fan:ComponentModel,Motor Fan Pulley Ratio,13
+Fan:ConstantVolume,Design Size Maximum Flow Rate,5
+Fan:ConstantVolume,Maximum Flow Rate,5
+Fan:OnOff,Design Size Maximum Flow Rate,5
+Fan:OnOff,Maximum Flow Rate,5
+Fan:SystemModel,Design Electric Power Consumption,11
+Fan:SystemModel,Design Maximum Air Flow Rate,5
+Fan:SystemModel,Design Size Design Electric Power Consumption,11
+Fan:SystemModel,Design Size Design Maximum Air Flow Rate,5
+Fan:VariableVolume,Design Size Maximum Flow Rate,5
+Fan:VariableVolume,Maximum Flow Rate,5
+FanPerformance:NightVentilation,Design Size Maximum Flow Rate,4
+FanPerformance:NightVentilation,Maximum Flow Rate,4
+FluidCooler:SingleSpeed,Design Air Flow Rate Fan Power,12
+FluidCooler:SingleSpeed,Design Air Flow Rate U-factor Times Area Value,5
+FluidCooler:SingleSpeed,Design Air Flow Rate,11
+FluidCooler:SingleSpeed,Design Size Design Air Flow Rate Fan Power,12
+FluidCooler:SingleSpeed,Design Size Design Air Flow Rate U-factor Times Area Value,5
+FluidCooler:SingleSpeed,Design Size Design Air Flow Rate,11
+FluidCooler:SingleSpeed,Design Size Design Water Flow Rate,10
+FluidCooler:SingleSpeed,Design Water Flow Rate,10
+FluidCooler:TwoSpeed,Design Size Design Water Flow Rate,14
+FluidCooler:TwoSpeed,Design Size High Fan Speed Air Flow Rate,15
+FluidCooler:TwoSpeed,Design Size High Fan Speed Fan Power,16
+FluidCooler:TwoSpeed,Design Size High Fan Speed U-factor Times Area Value,5
+FluidCooler:TwoSpeed,Design Water Flow Rate,14
+FluidCooler:TwoSpeed,High Fan Speed Air Flow Rate,15
+FluidCooler:TwoSpeed,High Fan Speed Fan Power,16
+FluidCooler:TwoSpeed,High Fan Speed U-factor Times Area Value,5
+HeaderedPumps:ConstantSpeed,Design Power Consumption,8
+HeaderedPumps:ConstantSpeed,Design Size Design Power Consumption,8
+HeaderedPumps:ConstantSpeed,Design Size Total Design Flow Rate,4
+HeaderedPumps:ConstantSpeed,Total Design Flow Rate,4
+HeaderedPumps:VariableSpeed,Design Power Consumption,8
+HeaderedPumps:VariableSpeed,Design Size Design Power Consumption,8
+HeaderedPumps:VariableSpeed,Design Size Total Design Flow Rate,4
+HeaderedPumps:VariableSpeed,Total Design Flow Rate,4
+HeatExchanger:AirToAir:FlatPlate,Design Size Nominal Secondary Air Flow Rate,9
+HeatExchanger:AirToAir:FlatPlate,Design Size Nominal Supply Air Flow Rate,6
+HeatExchanger:AirToAir:FlatPlate,Nominal Secondary Air Flow Rate,9
+HeatExchanger:AirToAir:FlatPlate,Nominal Supply Air Flow Rate,6
+HeatExchanger:AirToAir:SensibleAndLatent,Design Size Nominal Supply Air Flow Rate,3
+HeatExchanger:AirToAir:SensibleAndLatent,Nominal Supply Air Flow Rate,3
+HeatExchanger:Desiccant:BalancedFlow:PERFORMANCEDATATYPE1,Design Size Nominal Air Face Velocity,3
+HeatExchanger:Desiccant:BalancedFlow:PERFORMANCEDATATYPE1,Design Size Nominal Air Flow Rate,2
+HeatExchanger:Desiccant:BalancedFlow:PERFORMANCEDATATYPE1,Nominal Air Face Velocity,3
+HeatExchanger:Desiccant:BalancedFlow:PERFORMANCEDATATYPE1,Nominal Air Flow Rate,2
+HeatExchanger:FluidToFluid,Design Size Heat Exchanger U-Factor Times Area Value,10
+HeatExchanger:FluidToFluid,Design Size Loop Demand Side Design Flow Rate,5
+HeatExchanger:FluidToFluid,Design Size Loop Supply Side Design Flow Rate,8
+HeatExchanger:FluidToFluid,Heat Exchanger U-Factor Times Area Value,10
+HeatExchanger:FluidToFluid,Loop Demand Side Design Flow Rate,5
+HeatExchanger:FluidToFluid,Loop Supply Side Design Flow Rate,8
+HeatPump:PlantLoop:EIR:Cooling,Design Size Load Side Reference Flow Rate,8
+HeatPump:PlantLoop:EIR:Cooling,Design Size Reference Capacity,10
+HeatPump:PlantLoop:EIR:Cooling,Design Size Source Side Reference Flow Rate,9
+HeatPump:PlantLoop:EIR:Cooling,Load Side Reference Flow Rate,8
+HeatPump:PlantLoop:EIR:Cooling,Reference Capacity,10
+HeatPump:PlantLoop:EIR:Cooling,Source Side Reference Flow Rate,9
+HeatPump:PlantLoop:EIR:Heating,Design Size Load Side Reference Flow Rate,8
+HeatPump:PlantLoop:EIR:Heating,Design Size Reference Capacity,10
+HeatPump:PlantLoop:EIR:Heating,Design Size Source Side Reference Flow Rate,9
+HeatPump:PlantLoop:EIR:Heating,Load Side Reference Flow Rate,8
+HeatPump:PlantLoop:EIR:Heating,Reference Capacity,10
+HeatPump:PlantLoop:EIR:Heating,Source Side Reference Flow Rate,9
+HeatPump:WaterToWater:EquationFit:Cooling,Design Size Reference Cooling Capacity,8
+HeatPump:WaterToWater:EquationFit:Cooling,Design Size Reference Cooling Power Consumption,9
+HeatPump:WaterToWater:EquationFit:Cooling,Design Size Reference Load Side Flow Rate,6
+HeatPump:WaterToWater:EquationFit:Cooling,Design Size Reference Source Side Flow Rate,7
+HeatPump:WaterToWater:EquationFit:Cooling,Reference Cooling Capacity,8
+HeatPump:WaterToWater:EquationFit:Cooling,Reference Cooling Power Consumption,9
+HeatPump:WaterToWater:EquationFit:Cooling,Reference Load Side Flow Rate,6
+HeatPump:WaterToWater:EquationFit:Cooling,Reference Source Side Flow Rate,7
+HeatPump:WaterToWater:EquationFit:Heating,Design Size Reference Heating Capacity,8
+HeatPump:WaterToWater:EquationFit:Heating,Design Size Reference Heating Power Consumption,9
+HeatPump:WaterToWater:EquationFit:Heating,Design Size Reference Load Side Flow Rate,6
+HeatPump:WaterToWater:EquationFit:Heating,Design Size Reference Source Side Flow Rate,7
+HeatPump:WaterToWater:EquationFit:Heating,Reference Heating Capacity,8
+HeatPump:WaterToWater:EquationFit:Heating,Reference Heating Power Consumption,9
+HeatPump:WaterToWater:EquationFit:Heating,Reference Load Side Flow Rate,6
+HeatPump:WaterToWater:EquationFit:Heating,Reference Source Side Flow Rate,7
+Humidifier:Steam:Electric,Design Size Rated Capacity,3
+Humidifier:Steam:Electric,Design Size Rated Power,4
+Humidifier:Steam:Electric,Rated Capacity,3
+Humidifier:Steam:Electric,Rated Power,4
+Humidifier:Steam:Gas,Design Size Rated Capacity,3
+Humidifier:Steam:Gas,Design Size Rated Gas Use Rate,4
+Humidifier:Steam:Gas,Rated Capacity,3
+Humidifier:Steam:Gas,Rated Gas Use Rate,4
+HVACTemplate:Plant:Boiler,Capacity,3
+HVACTemplate:Plant:Boiler,Design Size Capacity,3
+HVACTemplate:Plant:Chiller,Capacity,3
+HVACTemplate:Plant:Chiller,Design Size Capacity,3
+HVACTemplate:Plant:Tower,Design Size Free Convection Capacity,7
+HVACTemplate:Plant:Tower,Design Size High Speed Fan Power,4
+HVACTemplate:Plant:Tower,Design Size High Speed Nominal Capacity,3
+HVACTemplate:Plant:Tower,Design Size Low Speed Fan Power,6
+HVACTemplate:Plant:Tower,Design Size Low Speed Nominal Capacity,5
+HVACTemplate:Plant:Tower,Free Convection Capacity,7
+HVACTemplate:Plant:Tower,High Speed Fan Power,4
+HVACTemplate:Plant:Tower,High Speed Nominal Capacity,3
+HVACTemplate:Plant:Tower,Low Speed Fan Power,6
+HVACTemplate:Plant:Tower,Low Speed Nominal Capacity,5
+HVACTemplate:System:ConstantVolume,Design Size Heating Coil Capacity,29
+HVACTemplate:System:ConstantVolume,Design Size Humidifier Rated Electric Power,62
+HVACTemplate:System:ConstantVolume,Design Size Maximum Outdoor Air Flow Rate,38
+HVACTemplate:System:ConstantVolume,Design Size Minimum Outdoor Air Flow Rate,39
+HVACTemplate:System:ConstantVolume,Design Size Supply Fan Maximum Flow Rate,3
+HVACTemplate:System:ConstantVolume,Heating Coil Capacity,29
+HVACTemplate:System:ConstantVolume,Humidifier Rated Electric Power,62
+HVACTemplate:System:ConstantVolume,Maximum Outdoor Air Flow Rate,38
+HVACTemplate:System:ConstantVolume,Minimum Outdoor Air Flow Rate,39
+HVACTemplate:System:ConstantVolume,Supply Fan Maximum Flow Rate,3
+HVACTemplate:System:DedicatedOutdoorAir,Design Size DX Cooling Coil Gross Rated Sensible Heat Ratio,20
+HVACTemplate:System:DedicatedOutdoorAir,Design Size DX Cooling Coil Gross Rated Total Capacity,19
+HVACTemplate:System:DedicatedOutdoorAir,Design Size Humidifier Rated Electric Power,43
+HVACTemplate:System:DedicatedOutdoorAir,Design Size Supply Fan Flow Rate,4
+HVACTemplate:System:DedicatedOutdoorAir,DX Cooling Coil Gross Rated Sensible Heat Ratio,20
+HVACTemplate:System:DedicatedOutdoorAir,DX Cooling Coil Gross Rated Total Capacity,19
+HVACTemplate:System:DedicatedOutdoorAir,Humidifier Rated Electric Power,43
+HVACTemplate:System:DedicatedOutdoorAir,Supply Fan Flow Rate,4
+HVACTemplate:System:DualDuct,Cold Duct Supply Fan Maximum Flow Rate,11
+HVACTemplate:System:DualDuct,Design Size Cold Duct Supply Fan Maximum Flow Rate,11
+HVACTemplate:System:DualDuct,Design Size Heating Coil Capacity,45
+HVACTemplate:System:DualDuct,Design Size Hot Duct Supply Fan Maximum Flow Rate,19
+HVACTemplate:System:DualDuct,Design Size Humidifier Rated Electric Power,81
+HVACTemplate:System:DualDuct,Design Size Main Supply Fan Maximum Flow Rate,4
+HVACTemplate:System:DualDuct,Design Size Maximum Outdoor Air Flow Rate,54
+HVACTemplate:System:DualDuct,Design Size Minimum Outdoor Air Flow Rate,55
+HVACTemplate:System:DualDuct,Heating Coil Capacity,45
+HVACTemplate:System:DualDuct,Hot Duct Supply Fan Maximum Flow Rate,19
+HVACTemplate:System:DualDuct,Humidifier Rated Electric Power,81
+HVACTemplate:System:DualDuct,Main Supply Fan Maximum Flow Rate,4
+HVACTemplate:System:DualDuct,Maximum Outdoor Air Flow Rate,54
+HVACTemplate:System:DualDuct,Minimum Outdoor Air Flow Rate,55
+HVACTemplate:System:PackagedVAV,Cooling Coil Gross Rated Sensible Heat Ratio,15
+HVACTemplate:System:PackagedVAV,Cooling Coil Gross Rated Total Capacity,14
+HVACTemplate:System:PackagedVAV,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,15
+HVACTemplate:System:PackagedVAV,Design Size Cooling Coil Gross Rated Total Capacity,14
+HVACTemplate:System:PackagedVAV,Design Size Heating Coil Capacity,21
+HVACTemplate:System:PackagedVAV,Design Size Humidifier Rated Electric Power,50
+HVACTemplate:System:PackagedVAV,Design Size Maximum Outdoor Air Flow Rate,24
+HVACTemplate:System:PackagedVAV,Design Size Minimum Outdoor Air Flow Rate,25
+HVACTemplate:System:PackagedVAV,Design Size Supply Fan Maximum Flow Rate,3
+HVACTemplate:System:PackagedVAV,Design Size Supply Fan Minimum Flow Rate,4
+HVACTemplate:System:PackagedVAV,Heating Coil Capacity,21
+HVACTemplate:System:PackagedVAV,Humidifier Rated Electric Power,50
+HVACTemplate:System:PackagedVAV,Maximum Outdoor Air Flow Rate,24
+HVACTemplate:System:PackagedVAV,Minimum Outdoor Air Flow Rate,25
+HVACTemplate:System:PackagedVAV,Supply Fan Maximum Flow Rate,3
+HVACTemplate:System:PackagedVAV,Supply Fan Minimum Flow Rate,4
+HVACTemplate:System:Unitary,Cooling Coil Gross Rated Sensible Heat Ratio,14
+HVACTemplate:System:Unitary,Cooling Coil Gross Rated Total Capacity,13
+HVACTemplate:System:Unitary,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,14
+HVACTemplate:System:Unitary,Design Size Cooling Coil Gross Rated Total Capacity,13
+HVACTemplate:System:Unitary,Design Size Heating Coil Capacity,19
+HVACTemplate:System:Unitary,Design Size Humidifier Rated Electric Power,44
+HVACTemplate:System:Unitary,Design Size Maximum Outdoor Air Flow Rate,22
+HVACTemplate:System:Unitary,Design Size Minimum Outdoor Air Flow Rate,23
+HVACTemplate:System:Unitary,Design Size Supply Fan Maximum Flow Rate,4
+HVACTemplate:System:Unitary,Heating Coil Capacity,19
+HVACTemplate:System:Unitary,Humidifier Rated Electric Power,44
+HVACTemplate:System:Unitary,Maximum Outdoor Air Flow Rate,22
+HVACTemplate:System:Unitary,Minimum Outdoor Air Flow Rate,23
+HVACTemplate:System:Unitary,Supply Fan Maximum Flow Rate,4
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Cooling Coil Gross Rated Sensible Heat Ratio,17
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Cooling Coil Gross Rated Total Capacity,16
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Cooling Supply Air Flow Rate,4
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,17
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size Cooling Coil Gross Rated Total Capacity,16
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size Cooling Supply Air Flow Rate,4
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size Heat Pump Heating Coil Gross Rated Capacity,22
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size Heating Supply Air Flow Rate,5
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size Humidifier Rated Electric Power,54
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size Maximum Outdoor Air Flow Rate,35
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size Minimum Outdoor Air Flow Rate,36
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size No Load Supply Air Flow Rate,6
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Design Size Supplemental Heating Coil Capacity,31
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Heat Pump Heating Coil Gross Rated Capacity,22
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Heating Supply Air Flow Rate,5
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Humidifier Rated Electric Power,54
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Maximum Outdoor Air Flow Rate,35
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Minimum Outdoor Air Flow Rate,36
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,No Load Supply Air Flow Rate,6
+HVACTemplate:System:UnitaryHEATPUMP:AIRTOAIR,Supplemental Heating Coil Capacity,31
+HVACTemplate:System:UnitarySystem,Cooling Supply Air Flow Rate,5
+HVACTemplate:System:UnitarySystem,Design Size Cooling Supply Air Flow Rate,5
+HVACTemplate:System:UnitarySystem,Design Size DX Cooling Coil Gross Rated Sensible Heat Ratio,19
+HVACTemplate:System:UnitarySystem,Design Size DX Cooling Coil Gross Rated Total Capacity,18
+HVACTemplate:System:UnitarySystem,Design Size Heating Coil Gross Rated Capacity,25
+HVACTemplate:System:UnitarySystem,Design Size Heating Supply Air Flow Rate,6
+HVACTemplate:System:UnitarySystem,Design Size Humidifier Rated Electric Power,62
+HVACTemplate:System:UnitarySystem,Design Size Maximum Outdoor Air Flow Rate,40
+HVACTemplate:System:UnitarySystem,Design Size Minimum Outdoor Air Flow Rate,41
+HVACTemplate:System:UnitarySystem,Design Size No Load Supply Air Flow Rate,7
+HVACTemplate:System:UnitarySystem,Design Size Supplemental Heating or Reheat Coil Capacity,36
+HVACTemplate:System:UnitarySystem,DX Cooling Coil Gross Rated Sensible Heat Ratio,19
+HVACTemplate:System:UnitarySystem,DX Cooling Coil Gross Rated Total Capacity,18
+HVACTemplate:System:UnitarySystem,Heating Coil Gross Rated Capacity,25
+HVACTemplate:System:UnitarySystem,Heating Supply Air Flow Rate,6
+HVACTemplate:System:UnitarySystem,Humidifier Rated Electric Power,62
+HVACTemplate:System:UnitarySystem,Maximum Outdoor Air Flow Rate,40
+HVACTemplate:System:UnitarySystem,Minimum Outdoor Air Flow Rate,41
+HVACTemplate:System:UnitarySystem,No Load Supply Air Flow Rate,7
+HVACTemplate:System:UnitarySystem,Supplemental Heating or Reheat Coil Capacity,36
+HVACTemplate:System:VAV,Design Size Humidifier Rated Electric Power,52
+HVACTemplate:System:VAV,Design Size Maximum Outdoor Air Flow Rate,25
+HVACTemplate:System:VAV,Design Size Minimum Outdoor Air Flow Rate,26
+HVACTemplate:System:VAV,Design Size Supply Fan Maximum Flow Rate,3
+HVACTemplate:System:VAV,Design Size Supply Fan Minimum Flow Rate,4
+HVACTemplate:System:VAV,Humidifier Rated Electric Power,52
+HVACTemplate:System:VAV,Maximum Outdoor Air Flow Rate,25
+HVACTemplate:System:VAV,Minimum Outdoor Air Flow Rate,26
+HVACTemplate:System:VAV,Supply Fan Maximum Flow Rate,3
+HVACTemplate:System:VAV,Supply Fan Minimum Flow Rate,4
+HVACTemplate:System:VRF,Design Size Evaporative Condenser Air Flow Rate,32
+HVACTemplate:System:VRF,Design Size Evaporative Condenser Pump Rated Power Consumption,33
+HVACTemplate:System:VRF,Design Size Gross Rated Heating Capacity,7
+HVACTemplate:System:VRF,Design Size Gross Rated Total Cooling Capacity,3
+HVACTemplate:System:VRF,Design Size Resistive Defrost Heater Capacity,27
+HVACTemplate:System:VRF,Design Size Water Condenser Volume Flow Rate,30
+HVACTemplate:System:VRF,Evaporative Condenser Air Flow Rate,32
+HVACTemplate:System:VRF,Evaporative Condenser Pump Rated Power Consumption,33
+HVACTemplate:System:VRF,Gross Rated Heating Capacity,7
+HVACTemplate:System:VRF,Gross Rated Total Cooling Capacity,3
+HVACTemplate:System:VRF,Resistive Defrost Heater Capacity,27
+HVACTemplate:System:VRF,Water Condenser Volume Flow Rate,30
+HVACTemplate:Zone:BaseboardHeat,Baseboard Heating Capacity,6
+HVACTemplate:Zone:BaseboardHeat,Design Size Baseboard Heating Capacity,6
+HVACTEMPLATE:Zone:CONSTANTVOLUME,Baseboard Heating Capacity,20
+HVACTEMPLATE:Zone:CONSTANTVOLUME,Design Size Baseboard Heating Capacity,20
+HVACTEMPLATE:Zone:CONSTANTVOLUME,Design Size Supply Air Maximum Flow Rate,4
+HVACTEMPLATE:Zone:CONSTANTVOLUME,Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:DualDuct,Baseboard Heating Capacity,20
+HVACTemplate:Zone:DualDuct,Design Size Baseboard Heating Capacity,20
+HVACTemplate:Zone:DualDuct,Design Size Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:DualDuct,Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:FanCoil,Baseboard Heating Capacity,34
+HVACTemplate:Zone:FanCoil,Design Size Baseboard Heating Capacity,34
+HVACTemplate:Zone:FanCoil,Design Size Supply Air Maximum Flow Rate,3
+HVACTemplate:Zone:FanCoil,Supply Air Maximum Flow Rate,3
+HVACTEMPLATE:Zone:IDEALLOADSAIRSYSTEM,Design Size Maximum Cooling Air Flow Rate,12
+HVACTEMPLATE:Zone:IDEALLOADSAIRSYSTEM,Design Size Maximum Heating Air Flow Rate,9
+HVACTEMPLATE:Zone:IDEALLOADSAIRSYSTEM,Design Size Maximum Sensible Heating Capacity,10
+HVACTEMPLATE:Zone:IDEALLOADSAIRSYSTEM,Design Size Maximum Total Cooling Capacity,13
+HVACTEMPLATE:Zone:IDEALLOADSAIRSYSTEM,Maximum Cooling Air Flow Rate,12
+HVACTEMPLATE:Zone:IDEALLOADSAIRSYSTEM,Maximum Heating Air Flow Rate,9
+HVACTEMPLATE:Zone:IDEALLOADSAIRSYSTEM,Maximum Sensible Heating Capacity,10
+HVACTEMPLATE:Zone:IDEALLOADSAIRSYSTEM,Maximum Total Cooling Capacity,13
+HVACTEMPLATE:Zone:PTAC,Baseboard Heating Capacity,39
+HVACTEMPLATE:Zone:PTAC,Cooling Coil Gross Rated Sensible Heat Ratio,21
+HVACTEMPLATE:Zone:PTAC,Cooling Coil Gross Rated Total Capacity,20
+HVACTEMPLATE:Zone:PTAC,Cooling Supply Air Flow Rate,3
+HVACTEMPLATE:Zone:PTAC,Design Size Baseboard Heating Capacity,39
+HVACTEMPLATE:Zone:PTAC,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,21
+HVACTEMPLATE:Zone:PTAC,Design Size Cooling Coil Gross Rated Total Capacity,20
+HVACTEMPLATE:Zone:PTAC,Design Size Cooling Supply Air Flow Rate,3
+HVACTEMPLATE:Zone:PTAC,Design Size Heating Coil Capacity,25
+HVACTEMPLATE:Zone:PTAC,Design Size Heating Supply Air Flow Rate,4
+HVACTEMPLATE:Zone:PTAC,Design Size No Load Supply Air Flow Rate,5
+HVACTEMPLATE:Zone:PTAC,Heating Coil Capacity,25
+HVACTEMPLATE:Zone:PTAC,Heating Supply Air Flow Rate,4
+HVACTEMPLATE:Zone:PTAC,No Load Supply Air Flow Rate,5
+HVACTemplate:Zone:PTHP,Baseboard Heating Capacity,49
+HVACTemplate:Zone:PTHP,Cooling Coil Gross Rated Sensible Heat Ratio,21
+HVACTemplate:Zone:PTHP,Cooling Coil Gross Rated Total Capacity,20
+HVACTemplate:Zone:PTHP,Cooling Supply Air Flow Rate,3
+HVACTemplate:Zone:PTHP,Design Size Baseboard Heating Capacity,49
+HVACTemplate:Zone:PTHP,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,21
+HVACTemplate:Zone:PTHP,Design Size Cooling Coil Gross Rated Total Capacity,20
+HVACTemplate:Zone:PTHP,Design Size Cooling Supply Air Flow Rate,3
+HVACTemplate:Zone:PTHP,Design Size Heat Pump Heating Coil Gross Rated Capacity,25
+HVACTemplate:Zone:PTHP,Design Size Heating Supply Air Flow Rate,4
+HVACTemplate:Zone:PTHP,Design Size No Load Supply Air Flow Rate,5
+HVACTemplate:Zone:PTHP,Design Size Supplemental Heating Coil Capacity,34
+HVACTemplate:Zone:PTHP,Heat Pump Heating Coil Gross Rated Capacity,25
+HVACTemplate:Zone:PTHP,Heating Supply Air Flow Rate,4
+HVACTemplate:Zone:PTHP,No Load Supply Air Flow Rate,5
+HVACTemplate:Zone:PTHP,Supplemental Heating Coil Capacity,34
+HVACTemplate:Zone:Unitary,Baseboard Heating Capacity,15
+HVACTemplate:Zone:Unitary,Design Size Baseboard Heating Capacity,15
+HVACTemplate:Zone:Unitary,Design Size Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:Unitary,Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:VAV,Baseboard Heating Capacity,26
+HVACTemplate:Zone:VAV,Design Size Baseboard Heating Capacity,26
+HVACTemplate:Zone:VAV,Design Size Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:VAV,Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:VAV:FanPowered,Baseboard Heating Capacity,24
+HVACTemplate:Zone:VAV:FanPowered,Design Size Baseboard Heating Capacity,24
+HVACTemplate:Zone:VAV:FanPowered,Design Size Parallel Fan On Flow Fraction,10
+HVACTemplate:Zone:VAV:FanPowered,Design Size Primary Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:VAV:FanPowered,Design Size Primary Supply Air Minimum Flow Fraction,7
+HVACTemplate:Zone:VAV:FanPowered,Design Size Secondary Supply Air Maximum Flow Rate,8
+HVACTemplate:Zone:VAV:FanPowered,Parallel Fan On Flow Fraction,10
+HVACTemplate:Zone:VAV:FanPowered,Primary Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:VAV:FanPowered,Primary Supply Air Minimum Flow Fraction,7
+HVACTemplate:Zone:VAV:FanPowered,Secondary Supply Air Maximum Flow Rate,8
+HVACTemplate:Zone:VAV:HeatAndCool,Baseboard Heating Capacity,21
+HVACTemplate:Zone:VAV:HeatAndCool,Design Size Baseboard Heating Capacity,21
+HVACTemplate:Zone:VAV:HeatAndCool,Design Size Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:VAV:HeatAndCool,Supply Air Maximum Flow Rate,4
+HVACTemplate:Zone:VRF,Baseboard Heating Capacity,44
+HVACTemplate:Zone:VRF,Cooling Coil Gross Rated Sensible Heat Ratio,29
+HVACTemplate:Zone:VRF,Cooling Coil Gross Rated Total Capacity,28
+HVACTemplate:Zone:VRF,Cooling Outdoor Air Flow Rate,11
+HVACTemplate:Zone:VRF,Cooling Supply Air Flow Rate,7
+HVACTemplate:Zone:VRF,Design Size Baseboard Heating Capacity,44
+HVACTemplate:Zone:VRF,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,29
+HVACTemplate:Zone:VRF,Design Size Cooling Coil Gross Rated Total Capacity,28
+HVACTemplate:Zone:VRF,Design Size Cooling Outdoor Air Flow Rate,11
+HVACTemplate:Zone:VRF,Design Size Cooling Supply Air Flow Rate,7
+HVACTemplate:Zone:VRF,Design Size Heat Pump Heating Coil Gross Rated Capacity,32
+HVACTemplate:Zone:VRF,Design Size Heating Outdoor Air Flow Rate,12
+HVACTemplate:Zone:VRF,Design Size Heating Supply Air Flow Rate,9
+HVACTemplate:Zone:VRF,Design Size No Cooling Supply Air Flow Rate,8
+HVACTemplate:Zone:VRF,Design Size No Heating Supply Air Flow Rate,10
+HVACTemplate:Zone:VRF,Design Size No Load Outdoor Air Flow Rate,13
+HVACTemplate:Zone:VRF,Heat Pump Heating Coil Gross Rated Capacity,32
+HVACTemplate:Zone:VRF,Heating Outdoor Air Flow Rate,12
+HVACTemplate:Zone:VRF,Heating Supply Air Flow Rate,9
+HVACTemplate:Zone:VRF,No Cooling Supply Air Flow Rate,8
+HVACTemplate:Zone:VRF,No Heating Supply Air Flow Rate,10
+HVACTemplate:Zone:VRF,No Load Outdoor Air Flow Rate,13
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Baseboard Heating Capacity,44
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Cooling Coil Gross Rated Sensible Heat Ratio,20
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Cooling Coil Gross Rated Total Capacity,19
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Cooling Supply Air Flow Rate,3
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Design Size Baseboard Heating Capacity,44
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Design Size Cooling Coil Gross Rated Sensible Heat Ratio,20
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Design Size Cooling Coil Gross Rated Total Capacity,19
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Design Size Cooling Supply Air Flow Rate,3
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Design Size Heat Pump Heating Coil Gross Rated Capacity,23
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Design Size Heating Supply Air Flow Rate,4
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Design Size No Load Supply Air Flow Rate,5
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Design Size Supplemental Heating Coil Capacity,26
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Heat Pump Heating Coil Gross Rated Capacity,23
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Heating Supply Air Flow Rate,4
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,No Load Supply Air Flow Rate,5
+HVACTEMPLATE:Zone:WATERTOAIRHEATPUMP,Supplemental Heating Coil Capacity,26
+PlantComponent:TemperatureSource,Design Size Design Volume Flow Rate,4
+PlantComponent:TemperatureSource,Design Volume Flow Rate,4
+PlantEquipmentOperation:ComponentSetpoint,Component 1 Flow Rate,6
+PlantEquipmentOperation:ComponentSetpoint,Component 10 Flow Rate,60
+PlantEquipmentOperation:ComponentSetpoint,Component 2 Flow Rate,12
+PlantEquipmentOperation:ComponentSetpoint,Component 3 Flow Rate,18
+PlantEquipmentOperation:ComponentSetpoint,Component 4 Flow Rate,24
+PlantEquipmentOperation:ComponentSetpoint,Component 5 Flow Rate,30
+PlantEquipmentOperation:ComponentSetpoint,Component 6 Flow Rate,36
+PlantEquipmentOperation:ComponentSetpoint,Component 7 Flow Rate,42
+PlantEquipmentOperation:ComponentSetpoint,Component 8 Flow Rate,48
+PlantEquipmentOperation:ComponentSetpoint,Component 9 Flow Rate,54
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 1 Flow Rate,6
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 10 Flow Rate,60
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 2 Flow Rate,12
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 3 Flow Rate,18
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 4 Flow Rate,24
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 5 Flow Rate,30
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 6 Flow Rate,36
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 7 Flow Rate,42
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 8 Flow Rate,48
+PlantEquipmentOperation:ComponentSetpoint,Design Size Component 9 Flow Rate,54
+PlantEquipmentOperation:ThermalEnergyStorage,Component 1 Flow Rate,10
+PlantEquipmentOperation:ThermalEnergyStorage,Component 10 Flow Rate,64
+PlantEquipmentOperation:ThermalEnergyStorage,Component 2 Flow Rate,16
+PlantEquipmentOperation:ThermalEnergyStorage,Component 3 Flow Rate,22
+PlantEquipmentOperation:ThermalEnergyStorage,Component 4 Flow Rate,28
+PlantEquipmentOperation:ThermalEnergyStorage,Component 5 Flow Rate,34
+PlantEquipmentOperation:ThermalEnergyStorage,Component 6 Flow Rate,40
+PlantEquipmentOperation:ThermalEnergyStorage,Component 7 Flow Rate,46
+PlantEquipmentOperation:ThermalEnergyStorage,Component 8 Flow Rate,52
+PlantEquipmentOperation:ThermalEnergyStorage,Component 9 Flow Rate,58
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 1 Flow Rate,10
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 10 Flow Rate,64
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 2 Flow Rate,16
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 3 Flow Rate,22
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 4 Flow Rate,28
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 5 Flow Rate,34
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 6 Flow Rate,40
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 7 Flow Rate,46
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 8 Flow Rate,52
+PlantEquipmentOperation:ThermalEnergyStorage,Design Size Component 9 Flow Rate,58
+PlantLoop,Design Size Maximum Loop Flow Rate,8
+PlantLoop,Maximum Loop Flow Rate,8
+PlantLoop,Plant Loop Volume,10
+Pump:ConstantSpeed,Design Flow Rate,4
+Pump:ConstantSpeed,Design Power Consumption,6
+Pump:ConstantSpeed,Design Size Design Flow Rate,4
+Pump:ConstantSpeed,Design Size Design Power Consumption,6
+Pump:VariableSpeed,Design Maximum Flow Rate,4
+Pump:VariableSpeed,Design Minimum Flow Rate,13
+Pump:VariableSpeed,Design Power Consumption,6
+Pump:VariableSpeed,Design Size Design Maximum Flow Rate,4
+Pump:VariableSpeed,Design Size Design Minimum Flow Rate,13
+Pump:VariableSpeed,Design Size Design Power Consumption,6
+Pump:VariableSpeed:CONDENSATE,Design Power Consumption,6
+Pump:VariableSpeed:CONDENSATE,Design Size Design Power Consumption,6
+Pump:VariableSpeed:CONDENSATE,Design Size Design Steam Volume Flow Rate,4
+Pump:VariableSpeed:CONDENSATE,Design Steam Volume Flow Rate,4
+Sizing:System,Central Heating Maximum System Air Flow Ratio,4
+Sizing:System,Cooling Design Capacity,30
+Sizing:System,Design Outdoor Air Flow Rate,3
+Sizing:System,Design Size Central Heating Maximum System Air Flow Ratio,4
+Sizing:System,Design Size Cooling Design Capacity,30
+Sizing:System,Design Size Design Outdoor Air Flow Rate,3
+Sizing:System,Design Size Heating Design Capacity,34
+Sizing:System,Design Size Occupant Diversity,38
+Sizing:System,Heating Design Capacity,34
+Sizing:System,Occupant Diversity,38
+Sizing:Zone,Dedicated Outdoor Air High Setpoint Temperature for Design,27
+Sizing:Zone,Dedicated Outdoor Air Low Setpoint Temperature for Design,26
+Sizing:Zone,Design Size Dedicated Outdoor Air High Setpoint Temperature for Design,27
+Sizing:Zone,Design Size Dedicated Outdoor Air Low Setpoint Temperature for Design,26
+SolarCollector:FlatPlate:PhotovoltaicThermal,Design Flow Rate,10
+SolarCollector:FlatPlate:PhotovoltaicThermal,Design Size Design Flow Rate,10
+ThermalStorage:ChilledWater:Mixed,Design Size Source Side Design Flow Rate,21
+ThermalStorage:ChilledWater:Mixed,Design Size Use Side Design Flow Rate,16
+ThermalStorage:ChilledWater:Mixed,Source Side Design Flow Rate,21
+ThermalStorage:ChilledWater:Mixed,Use Side Design Flow Rate,16
+ThermalStorage:ChilledWater:Stratified,Design Size Source Side Design Flow Rate,29
+ThermalStorage:ChilledWater:Stratified,Design Size Use Side Design Flow Rate,22
+ThermalStorage:ChilledWater:Stratified,Source Side Design Flow Rate,29
+ThermalStorage:ChilledWater:Stratified,Use Side Design Flow Rate,22
+UnitarySystemPerformance:Multispeed,Cooling Speed 1 Supply Air Flow Ratio,7
+UnitarySystemPerformance:Multispeed,Cooling Speed 10 Supply Air Flow Ratio,25
+UnitarySystemPerformance:Multispeed,Cooling Speed 2 Supply Air Flow Ratio,9
+UnitarySystemPerformance:Multispeed,Cooling Speed 3 Supply Air Flow Ratio,11
+UnitarySystemPerformance:Multispeed,Cooling Speed 4 Supply Air Flow Ratio,13
+UnitarySystemPerformance:Multispeed,Cooling Speed 5 Supply Air Flow Ratio,15
+UnitarySystemPerformance:Multispeed,Cooling Speed 6 Supply Air Flow Ratio,17
+UnitarySystemPerformance:Multispeed,Cooling Speed 7 Supply Air Flow Ratio,19
+UnitarySystemPerformance:Multispeed,Cooling Speed 8 Supply Air Flow Ratio,21
+UnitarySystemPerformance:Multispeed,Cooling Speed 9 Supply Air Flow Ratio,23
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 1 Supply Air Flow Ratio,7
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 10 Supply Air Flow Ratio,25
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 2 Supply Air Flow Ratio,9
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 3 Supply Air Flow Ratio,11
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 4 Supply Air Flow Ratio,13
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 5 Supply Air Flow Ratio,15
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 6 Supply Air Flow Ratio,17
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 7 Supply Air Flow Ratio,19
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 8 Supply Air Flow Ratio,21
+UnitarySystemPerformance:Multispeed,Design Size Cooling Speed 9 Supply Air Flow Ratio,23
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 1 Supply Air Flow Ratio,6
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 10 Supply Air Flow Ratio,24
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 2 Supply Air Flow Ratio,8
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 3 Supply Air Flow Ratio,10
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 4 Supply Air Flow Ratio,12
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 5 Supply Air Flow Ratio,14
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 6 Supply Air Flow Ratio,16
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 7 Supply Air Flow Ratio,18
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 8 Supply Air Flow Ratio,20
+UnitarySystemPerformance:Multispeed,Design Size Heating Speed 9 Supply Air Flow Ratio,22
+UnitarySystemPerformance:Multispeed,Heating Speed 1 Supply Air Flow Ratio,6
+UnitarySystemPerformance:Multispeed,Heating Speed 10 Supply Air Flow Ratio,24
+UnitarySystemPerformance:Multispeed,Heating Speed 2 Supply Air Flow Ratio,8
+UnitarySystemPerformance:Multispeed,Heating Speed 3 Supply Air Flow Ratio,10
+UnitarySystemPerformance:Multispeed,Heating Speed 4 Supply Air Flow Ratio,12
+UnitarySystemPerformance:Multispeed,Heating Speed 5 Supply Air Flow Ratio,14
+UnitarySystemPerformance:Multispeed,Heating Speed 6 Supply Air Flow Ratio,16
+UnitarySystemPerformance:Multispeed,Heating Speed 7 Supply Air Flow Ratio,18
+UnitarySystemPerformance:Multispeed,Heating Speed 8 Supply Air Flow Ratio,20
+UnitarySystemPerformance:Multispeed,Heating Speed 9 Supply Air Flow Ratio,22
+WaterHeater:Mixed,Design Size Heater Maximum Capacity,7
+WaterHeater:Mixed,Design Size Source Side Design Flow Rate,38
+WaterHeater:Mixed,Design Size Tank Volume,2
+WaterHeater:Mixed,Design Size Use Side Design Flow Rate,37
+WaterHeater:Mixed,Heater Maximum Capacity,7
+WaterHeater:Mixed,Maximum Heater Capacity,7
+WaterHeater:Mixed,Source Side Design Flow Rate,38
+WaterHeater:Mixed,Tank Volume,2
+WaterHeater:Mixed,Use Side Design Flow Rate,37
+WaterHeater:Stratified,Design Size Heater 1 Capacity,11
+WaterHeater:Stratified,Design Size Source Side Design Flow Rate,50
+WaterHeater:Stratified,Design Size Tank Height,4
+WaterHeater:Stratified,Design Size Tank Volume,3
+WaterHeater:Stratified,Design Size Use Side Design Flow Rate,49
+WaterHeater:Stratified,Heater 1 Capacity,11
+WaterHeater:Stratified,Source Side Design Flow Rate,50
+WaterHeater:Stratified,Tank Height,4
+WaterHeater:Stratified,Tank Volume,3
+WaterHeater:Stratified,Use Side Design Flow Rate,49
+ZoneHVAC:Baseboard:Convective:Electric,Design Size Heating Design Capacity,4
+ZoneHVAC:Baseboard:Convective:Electric,Heating Design Capacity,4
+ZoneHVAC:Baseboard:Convective:Water,Design Size Heating Design Capacity,6
+ZoneHVAC:Baseboard:Convective:Water,Design Size Maximum Water Flow Rate,10
+ZoneHVAC:Baseboard:Convective:Water,Design Size U-Factor Times Area Value,9
+ZoneHVAC:Baseboard:Convective:Water,Heating Design Capacity,6
+ZoneHVAC:Baseboard:Convective:Water,Maximum Water Flow Rate,10
+ZoneHVAC:Baseboard:Convective:Water,U-Factor Times Area Value,9
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:ELECTRIC,Design Size Heating Design Capacity,4
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:ELECTRIC,Heating Design Capacity,4
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:STEAM,Design Size Heating Design Capacity,6
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:STEAM,Design Size Maximum Steam Flow Rate,8
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:STEAM,Heating Design Capacity,6
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:STEAM,Maximum Steam Flow Rate,8
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,Design Size Heating Design Capacity,8
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,Design Size Maximum Water Flow Rate,9
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,Heating Design Capacity,8
+ZoneHVAC:BASEBOARD:RADIANTCONVECTIVE:WATER,Maximum Water Flow Rate,9
+ZoneHVAC:COOLINGPANEL:RADIANTCONVECTIVE:WATER,Cooling Design Capacity,9
+ZoneHVAC:COOLINGPANEL:RADIANTCONVECTIVE:WATER,Design Size Cooling Design Capacity,9
+ZoneHVAC:COOLINGPANEL:RADIANTCONVECTIVE:WATER,Design Size Maximum Chilled Water Flow Rate,12
+ZoneHVAC:COOLINGPANEL:RADIANTCONVECTIVE:WATER,Maximum Chilled Water Flow Rate,12
+ZoneHVAC:EnergyRecoveryVentilator,Design Size Exhaust Air Flow Rate,5
+ZoneHVAC:EnergyRecoveryVentilator,Design Size Supply Air Flow Rate,4
+ZoneHVAC:EnergyRecoveryVentilator,Exhaust Air Flow Rate,5
+ZoneHVAC:EnergyRecoveryVentilator,Supply Air Flow Rate,4
+ZoneHVAC:EvaporativeCoolerUnit,Design Size Design Supply Air Flow Rate,9
+ZoneHVAC:EvaporativeCoolerUnit,Design Supply Air Flow Rate,9
+ZoneHVAC:EXHAUSTCONTROL,Design Exhaust Flow Rate,6
+ZoneHVAC:EXHAUSTCONTROL,Design Size Design Exhaust Flow Rate,6
+ZoneHVAC:FourPipeFanCoil,Design Size Maximum Cold Water Flow Rate,17
+ZoneHVAC:FourPipeFanCoil,Design Size Maximum Hot Water Flow Rate,22
+ZoneHVAC:FourPipeFanCoil,Design Size Maximum Outdoor Air Flow Rate,7
+ZoneHVAC:FourPipeFanCoil,Design Size Maximum Supply Air Flow Rate,4
+ZoneHVAC:FourPipeFanCoil,Design Size Maximum Supply Air Temperature in Heating Mode,29
+ZoneHVAC:FourPipeFanCoil,Design Size Minimum Supply Air Temperature in Cooling Mode,28
+ZoneHVAC:FourPipeFanCoil,Maximum Cold Water Flow Rate,17
+ZoneHVAC:FourPipeFanCoil,Maximum Hot Water Flow Rate,22
+ZoneHVAC:FourPipeFanCoil,Maximum Outdoor Air Flow Rate,7
+ZoneHVAC:FourPipeFanCoil,Maximum Supply Air Flow Rate,4
+ZoneHVAC:FourPipeFanCoil,Maximum Supply Air Temperature in Heating Mode,29
+ZoneHVAC:FourPipeFanCoil,Minimum Supply Air Temperature in Cooling Mode,28
+ZoneHVAC:HighTemperatureRadiant,Design Size Heating Design Capacity,5
+ZoneHVAC:HighTemperatureRadiant,Heating Design Capacity,5
+ZoneHVAC:IdealLoadsAirSystem,Design Size Maximum Cooling Air Flow Rate,14
+ZoneHVAC:IdealLoadsAirSystem,Design Size Maximum Heating Air Flow Rate,11
+ZoneHVAC:IdealLoadsAirSystem,Design Size Maximum Sensible Heating Capacity,12
+ZoneHVAC:IdealLoadsAirSystem,Design Size Maximum Total Cooling Capacity,15
+ZoneHVAC:IdealLoadsAirSystem,Maximum Cooling Air Flow Rate,14
+ZoneHVAC:IdealLoadsAirSystem,Maximum Heating Air Flow Rate,11
+ZoneHVAC:IdealLoadsAirSystem,Maximum Sensible Heating Capacity,12
+ZoneHVAC:IdealLoadsAirSystem,Maximum Total Cooling Capacity,15
+ZoneHVAC:LOWTEMPERATURERADIANT:CONSTANTFLOW,Design Size Hydronic Tubing Length,6
+ZoneHVAC:LOWTEMPERATURERADIANT:CONSTANTFLOW,Design Size Rated Flow Rate,7
+ZoneHVAC:LOWTEMPERATURERADIANT:CONSTANTFLOW,Hydronic Tubing Length,6
+ZoneHVAC:LOWTEMPERATURERADIANT:CONSTANTFLOW,Rated Flow Rate,7
+ZoneHVAC:LowTemperatureRadiant:Electric,Design Size Heating Design Capacity,6
+ZoneHVAC:LowTemperatureRadiant:Electric,Heating Design Capacity,6
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Cooling Design Capacity,11
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Cooling Design Capacity,11
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Heating Design Capacity,7
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Hydronic Tubing Length,6
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Maximum Cold Water Flow,12
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Design Size Maximum Hot Water Flow,8
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Heating Design Capacity,7
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Hydronic Tubing Length,6
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Maximum Cold Water Flow,12
+ZoneHVAC:LOWTEMPERATURERADIANT:VARIABLEFLOW,Maximum Hot Water Flow,8
+ZoneHVAC:OutdoorAirUnit,Design Size Exhaust Air Flow Rate,9
+ZoneHVAC:OutdoorAirUnit,Design Size Outdoor Air Flow Rate,4
+ZoneHVAC:OutdoorAirUnit,Exhaust Air Flow Rate,9
+ZoneHVAC:OutdoorAirUnit,Outdoor Air Flow Rate,4
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Cooling Outdoor Air Flow Rate,10
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Cooling Supply Air Flow Rate,7
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Cooling Outdoor Air Flow Rate,10
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Cooling Supply Air Flow Rate,7
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Heating Outdoor Air Flow Rate,11
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Heating Supply Air Flow Rate,8
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Maximum Supply Air Temperature in Heating Mode,25
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size Minimum Supply Air Temperature in Cooling Mode,24
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size No Load Outdoor Air Flow Rate,12
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Design Size No Load Supply Air Flow Rate,9
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Heating Outdoor Air Flow Rate,11
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Heating Supply Air Flow Rate,8
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Maximum Supply Air Temperature in Heating Mode,25
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,Minimum Supply Air Temperature in Cooling Mode,24
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,No Load Outdoor Air Flow Rate,12
+ZoneHVAC:PACKAGEDTERMINALAIRCONDITIONER,No Load Supply Air Flow Rate,9
+ZoneHVAC:PackagedTerminalHeatPump,Cooling Outdoor Air Flow Rate,10
+ZoneHVAC:PackagedTerminalHeatPump,Cooling Supply Air Flow Rate,7
+ZoneHVAC:PackagedTerminalHeatPump,Design Size Cooling Outdoor Air Flow Rate,10
+ZoneHVAC:PackagedTerminalHeatPump,Design Size Cooling Supply Air Flow Rate,7
+ZoneHVAC:PackagedTerminalHeatPump,Design Size Heating Outdoor Air Flow Rate,11
+ZoneHVAC:PackagedTerminalHeatPump,Design Size Heating Supply Air Flow Rate,8
+ZoneHVAC:PackagedTerminalHeatPump,Design Size Maximum Supply Air Temperature from Supplemental Heater,23
+ZoneHVAC:PackagedTerminalHeatPump,Design Size Maximum Supply Air Temperature in Heating Mode,31
+ZoneHVAC:PackagedTerminalHeatPump,Design Size Minimum Supply Air Temperature in Cooling Mode,30
+ZoneHVAC:PackagedTerminalHeatPump,Design Size No Load Outdoor Air Flow Rate,12
+ZoneHVAC:PackagedTerminalHeatPump,Design Size No Load Supply Air Flow Rate,9
+ZoneHVAC:PackagedTerminalHeatPump,Heating Outdoor Air Flow Rate,11
+ZoneHVAC:PackagedTerminalHeatPump,Heating Supply Air Flow Rate,8
+ZoneHVAC:PackagedTerminalHeatPump,Maximum Supply Air Temperature from Supplemental Heater,23
+ZoneHVAC:PackagedTerminalHeatPump,Maximum Supply Air Temperature in Heating Mode,31
+ZoneHVAC:PackagedTerminalHeatPump,Minimum Supply Air Temperature in Cooling Mode,30
+ZoneHVAC:PackagedTerminalHeatPump,No Load Outdoor Air Flow Rate,12
+ZoneHVAC:PackagedTerminalHeatPump,No Load Supply Air Flow Rate,9
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Cooling Outdoor Air Flow Rate,9
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Cooling Supply Air Flow Rate,5
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Design Size Cooling Outdoor Air Flow Rate,9
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Design Size Cooling Supply Air Flow Rate,5
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Design Size Heating Outdoor Air Flow Rate,10
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Design Size Heating Supply Air Flow Rate,7
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Design Size Maximum Supply Air Temperature from Supplemental Heater,29
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Design Size No Cooling Supply Air Flow Rate,6
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Design Size No Heating Supply Air Flow Rate,8
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Design Size No Load Outdoor Air Flow Rate,11
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Heating Outdoor Air Flow Rate,10
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Heating Supply Air Flow Rate,7
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,Maximum Supply Air Temperature from Supplemental Heater,29
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,No Cooling Supply Air Flow Rate,6
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,No Heating Supply Air Flow Rate,8
+ZoneHVAC:TerminalUnit:VariableRefrigerantFlow,No Load Outdoor Air Flow Rate,11
+ZoneHVAC:UnitHeater,Design Size Maximum Hot Water or Steam Flow Rate,12
+ZoneHVAC:UnitHeater,Design Size Maximum Supply Air Flow Rate,7
+ZoneHVAC:UnitHeater,Maximum Hot Water or Steam Flow Rate,12
+ZoneHVAC:UnitHeater,Maximum Supply Air Flow Rate,7
+ZoneHVAC:UnitVentilator,Design Size Maximum Outdoor Air Flow Rate,7
+ZoneHVAC:UnitVentilator,Design Size Maximum Supply Air Flow Rate,3
+ZoneHVAC:UnitVentilator,Design Size Minimum Outdoor Air Flow Rate,5
+ZoneHVAC:UnitVentilator,Maximum Outdoor Air Flow Rate,7
+ZoneHVAC:UnitVentilator,Maximum Supply Air Flow Rate,3
+ZoneHVAC:UnitVentilator,Minimum Outdoor Air Flow Rate,5
+ZoneHVAC:VentilatedSlab,Design Size Maximum Air Flow Rate,5
+ZoneHVAC:VentilatedSlab,Design Size Maximum Outdoor Air Flow Rate,9
+ZoneHVAC:VentilatedSlab,Design Size Minimum Outdoor Air Flow Rate,7
+ZoneHVAC:VentilatedSlab,Maximum Air Flow Rate,5
+ZoneHVAC:VentilatedSlab,Maximum Outdoor Air Flow Rate,9
+ZoneHVAC:VentilatedSlab,Minimum Outdoor Air Flow Rate,7
+ZoneHVAC:WaterToAirHeatPump,Cooling Outdoor Air Flow Rate,10
+ZoneHVAC:WaterToAirHeatPump,Cooling Supply Air Flow Rate,7
+ZoneHVAC:WaterToAirHeatPump,Design Size Cooling Outdoor Air Flow Rate,10
+ZoneHVAC:WaterToAirHeatPump,Design Size Cooling Supply Air Flow Rate,7
+ZoneHVAC:WaterToAirHeatPump,Design Size Heating Outdoor Air Flow Rate,11
+ZoneHVAC:WaterToAirHeatPump,Design Size Heating Supply Air Flow Rate,8
+ZoneHVAC:WaterToAirHeatPump,Design Size Maximum Supply Air Temperature from Supplemental Heater,25
+ZoneHVAC:WaterToAirHeatPump,Design Size No Load Outdoor Air Flow Rate,12
+ZoneHVAC:WaterToAirHeatPump,Design Size No Load Supply Air Flow Rate,9
+ZoneHVAC:WaterToAirHeatPump,Heating Outdoor Air Flow Rate,11
+ZoneHVAC:WaterToAirHeatPump,Heating Supply Air Flow Rate,8
+ZoneHVAC:WaterToAirHeatPump,Maximum Supply Air Temperature from Supplemental Heater,25
+ZoneHVAC:WaterToAirHeatPump,No Load Outdoor Air Flow Rate,12
+ZoneHVAC:WaterToAirHeatPump,No Load Supply Air Flow Rate,9
+ZoneHVAC:WindowAIRCONDITIONER,Design Size Maximum Outdoor Air Flow Rate,4
+ZoneHVAC:WindowAIRCONDITIONER,Design Size Maximum Supply Air Flow Rate,3
+ZoneHVAC:WindowAIRCONDITIONER,Maximum Outdoor Air Flow Rate,4
+ZoneHVAC:WindowAIRCONDITIONER,Maximum Supply Air Flow Rate,3
