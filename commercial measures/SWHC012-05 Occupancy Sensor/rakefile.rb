@@ -696,18 +696,14 @@ if (not rake_task_name =~ /^(clean|none)$/)
               raise "More than one SimulationControl object found"
             end
             sc = sc_objs[0]
-            # Zone
-            #sc.fields[1] = "No"
-            # System
-            #sc.fields[2] = "No"
-            # Plant
+            sc.fields[1] = "No"
+            sc.fields[2] = "No"
             sc.fields[3] = "No"
             # Remove Sizing:Zone and Sizing:System objects
             sizing_zones = output_file.find_objects_by_class_name("Sizing:Zone")
             sizing_systems = output_file.find_objects_by_class_name("Sizing:System")
             sizing_plants = output_file.find_objects_by_class_name("Sizing:Plant")
-            #(sizing_zones + sizing_systems + sizing_plants).each {|x| output_file.delete_object(x)}
-            (sizing_plants).each {|x| output_file.delete_object(x)}
+            (sizing_zones + sizing_systems + sizing_plants).each {|x| output_file.delete_object(x)}
 
             output_file.write(hardsize_idf_path)
           end
