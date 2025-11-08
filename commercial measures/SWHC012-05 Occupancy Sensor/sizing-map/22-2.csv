@@ -108,14 +108,14 @@ AIRLOOPHVAC:UNITARYSYSTEM,Heating Supply Air Flow Rate,28
 AIRLOOPHVAC:UNITARYSYSTEM,Maximum Supply Air Temperature,39
 AIRLOOPHVAC:UNITARYSYSTEM,Minimum Supply Air Temperature,18
 AIRLOOPHVAC:UNITARYSYSTEM,No Load Supply Air Flow Rate,33
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Supply Air Flow Rate,5
+AIRLOOPHVAC:UNITARYSYSTEM,Design Size Supply Air Flow Rate,nil
 AIRLOOPHVAC:UNITARYSYSTEM,Design Size Heating Supply Air Flow Rate,28
 AIRLOOPHVAC:UNITARYSYSTEM,Design Size Cooling Supply Air Flow Rate,23
 AIRLOOPHVAC:UNITARYSYSTEM,Design Size No Load Supply Air Flow Rate,33
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Nominal Cooling Capacity,23
-AIRLOOPHVAC:UNITARYSYSTEM,Design Size Nominal Heating Capacity,28
+AIRLOOPHVAC:UNITARYSYSTEM,Design Size Nominal Cooling Capacity,nil
+AIRLOOPHVAC:UNITARYSYSTEM,Design Size Nominal Heating Capacity,nil
 AIRLOOPHVAC:UNITARYSYSTEM,Design Size Maximum Supply Air Temperature,39
-AIRLOOPHVAC:UNITARYSYSTEM,Fraction of Supply Air Flow That Goes Through the Controlling Zone,5
+AIRLOOPHVAC:UNITARYSYSTEM,Fraction of Supply Air Flow That Goes Through the Controlling Zone,nil
 AIRTERMINAL:DUALDUCT:CONSTANTVOLUME,Design Size Maximum Air Flow Rate,6
 AIRTERMINAL:DUALDUCT:CONSTANTVOLUME,Maximum Air Flow Rate,6
 AIRTERMINAL:DUALDUCT:VAV,Design Size Maximum Damper Air Flow Rate,6
@@ -170,9 +170,9 @@ AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Maximum Primary Air Flow Rate,4
 AIRTERMINAL:SINGLEDUCT:SERIESPIU:REHEAT,Minimum Primary Air Flow Fraction,5
 AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Design Size Maximum Air Flow Rate,5
 AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Maximum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Design Size Constant Minimum Air Flow Fraction,5
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Design Size Minimum Air Flow Rate,5
-AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,User-Specified Constant Minimum Air Flow Fraction,5
+AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Design Size Constant Minimum Air Flow Fraction,6
+AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,Design Size Minimum Air Flow Rate,nil
+AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:NOREHEAT,User-Specified Constant Minimum Air Flow Fraction,6
 AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:REHEAT,Design Size Maximum Air Flow Rate,5
 AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:REHEAT,Design Size Maximum Hot Water or Steam Flow Rate,9
 AIRTERMINAL:SINGLEDUCT:VAV:HEATANDCOOL:REHEAT,Maximum Air Flow Rate,5
@@ -317,11 +317,11 @@ COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Evaporative Condenser Air Flow Ra
 COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Gross Rated Sensible Heat Ratio,20
 COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Gross Rated Total Cooling Capacity,19
 COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Rated Air Flow Rate,22
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Rated Evaporative Condenser Pump Power Consumption,38
+COIL:COOLING:DX:MULTISPEED,Design Size Speed 1 Rated Evaporative Condenser Pump Power Consumption,39,Note: mismatch due to EnergyPlus bug
 COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Evaporative Condenser Air Flow Rate,57
 COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Gross Rated Sensible Heat Ratio,40
 COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Gross Rated Total Cooling Capacity,39
-COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Gross Rated Cooling COP,39
+COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Gross Rated Cooling COP,41
 COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Rated Air Flow Rate,42
 COIL:COOLING:DX:MULTISPEED,Design Size Speed 2 Rated Evaporative Condenser Pump Power Consumption,58
 COIL:COOLING:DX:MULTISPEED,Design Size Speed 3 Evaporative Condenser Air Flow Rate,77
@@ -1042,7 +1042,7 @@ PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 8 Flow Rate,5
 PLANTEQUIPMENTOPERATION:THERMALENERGYSTORAGE,Design Size Component 9 Flow Rate,58
 PLANTLOOP,Design Size Maximum Loop Flow Rate,8
 PLANTLOOP,Maximum Loop Flow Rate,8
-PLANTLOOP,Plant Loop Volume,8
+PLANTLOOP,Plant Loop Volume,10
 PUMP:CONSTANTSPEED,Design Flow Rate,4
 PUMP:CONSTANTSPEED,Design Power Consumption,6
 PUMP:CONSTANTSPEED,Design Size Design Flow Rate,4
