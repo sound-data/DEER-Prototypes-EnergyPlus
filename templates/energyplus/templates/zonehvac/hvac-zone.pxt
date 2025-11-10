@@ -590,7 +590,7 @@ Schedule:Compact,
   Schedule:File,
 	<%=zone_name %> Cooling Setpoint Schedule,  !- Name
     Temperature,             !- Schedule Type Limits Name
-	../../../../../../<%= setpoint_temp_schedule %>,  !- File Name
+	<%= $study_dir %>/../<%= setpoint_temp_schedule %>,  !- File Name
     3,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -612,7 +612,7 @@ Schedule:Compact,
   Schedule:File,
 	<%=zone_name %> Heating Setpoint Schedule,  !- Name
     Temperature,             !- Schedule Type Limits Name
-	../../../../../../<%= setpoint_temp_schedule %>,  !- File Name
+	<%= $study_dir %>/../<%= setpoint_temp_schedule %>,  !- File Name
     4,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data

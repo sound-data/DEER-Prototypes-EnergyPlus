@@ -28,8 +28,23 @@ require("modelkit/energyplus")
 # - which design days
 # - water mains temp?
 # - daylight saving time?
-def generate_site_pxt(idd, ddy_path, site_path)
+def generate_site_pxt(idd, ddy_path, site_path, study_dir, config)
+  repository_dir = File.expand_path('../..', __dir__) # Automatically determine repository root, if rakefile.rb is in ".../residential measures/HP Combi/", so go up two levels
   site_file = File.open(site_path, "w")
+
+  # Pass directories from modelkit-config into site.pxt
+  site_file.puts(<<-HEREDOC)
+<%
+# Directory paths
+$study_dir = '#{study_dir}'
+$prototypes_dir = '#{config[:prototypes_dir][0]}'
+$templates_dir = '#{config[:templates_dir][0]}'
+$weather_dir = '#{config[:weather_dir][0]}'
+$codes_dir = '#{config[:codes_dir][0]}'
+$repository_dir = '#{repository_dir}'
+%>
+
+  HEREDOC
 
   if (File.exists?(ddy_path))
     input_file = OpenStudio::InputFile.open(idd, ddy_path)
@@ -380,7 +395,7 @@ if (not rake_task_name =~ /^(clean|none)$/)
       idd = open_data_dictionary
       pathname = Pathname.new(site_path).relative_path_from(runs_pathname)
       puts "Generating: #{pathname}\n"
-      generate_site_pxt(idd, ddy_path, site_path)
+      generate_site_pxt(idd, ddy_path, site_path, study_dir, config)
     end
 
     if (variables1.key?(:codes_file))  # NOTE: codes_file is an optional column
