@@ -662,8 +662,8 @@ if (not rake_task_name =~ /^(clean|none)$/)
             # C:\Program Files (x86)\Modelkit Caboodle\lib\rubygems\gems\modelkit-energyplus-0.3.0\resources\sizing-map
             # Sizing map 22-2 included in SWHC012-05 is generated from EnergyPlus IDD and not manually vetted. Use at your own risk.
             # Select a sizing map
-            SIZING_MAP_VERSION = "9-2"
-            #SIZING_MAP_VERSION = "22-2"
+            #SIZING_MAP_VERSION = "9-2"
+            SIZING_MAP_VERSION = "22-2"
             # This will be fixed to only generate JSON and not modify the input file.
             _, count, output_file = Modelkit::EnergyPlus.size(
               sql, input_file, {json: size_json_path, version: SIZING_MAP_VERSION})
