@@ -647,7 +647,7 @@ end
 # Behzad Rizi, 05/03/2024 - added new parameters "suction_temperature_control" and "cond_fan_speed_control_type"
 # Behzad Rizi, 11/11/2024 - added new parameters "cond_sct_delta" and "cond_floating"
 import "ref-sys.pxt", :group => "refsys", :prefix => "refsys_" do
-  include "cond_fan_power|cond_subcool|working_fluid|condenser_type|suction_temperature_control|cond_fan_speed_control_type|cond_sct_delta|cond_floating|cond_min_temp"
+  include "cond_fan_power|cond_subcool|working_fluid|condenser_type|suction_temperature_control|cond_fan_speed_control_type|cond_sct_delta|cond_floating|cond_min_temp|cond_hr_mt_air|cond_hr_lt_air"
 end
 
 import "ref-comp.pxt", :group => "refcomp", :prefix => "refcomp_" do

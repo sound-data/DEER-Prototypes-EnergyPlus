@@ -17,10 +17,13 @@ parameter "condenser_type", :default=>"AirCooled" # (AirCooled | WaterCooled | E
 parameter "suction_temperature_control", :default=>"ConstantSuctionTemperature" # (ConstantSuctionTemperature | FloatSuctionTemperature)	
 parameter "cond_fan_speed_control_type", :default=>"TwoSpeed" # (TwoSpeed | Fixed | VariableSpeed)
 # Afshin Faramarzi & Behzad Rizi, 11/11/2024 - parameterize saturated condensing temperature(SCT)
-parameter "cond_sct_delta", :default=>12 # in ['degF']
+parameter "cond_sct_delta", :default=>12['deltaF'] # in ['degF']
 #Behzad Rizi - parameterize activation mode for EMS object to control the saturated condensing temperature(SCT)
 parameter "cond_floating", :default=>false, :domain => Boolean # (true | false)
 parameter "cond_min_temp", :default=>25['C']
+# Nicholas Fette and Janik Somaiya, 2025-10-25 - parameterize air-cooled condenser heat rejection rate
+parameter "cond_hr_mt_air", :default=>3150.0, :description=>"Condenser heat rejection coefficient for medium-temperature, air-cooled condenser" # in ['W/K']
+parameter "cond_hr_lt_air", :default=>2090.0, :description=>"Condenser heat rejection coefficient for low-temperature, air-cooled condenser" # in ['W/K']
 %>
 
 <%
@@ -117,14 +120,14 @@ Refrigeration:Condenser:AirCooled,
   Curve:Linear,
     <%= ref_system_name %> Condenser HR curve,  !- Name
     0.0,                     !- Coefficient1 Constant
-    3150.,                   !- Coefficient2 x
+    <%= cond_hr_mt_air %>,                   !- Coefficient2 x
     11.0,                    !- Minimum Value of x
     22.2;                    !- Maximum Value of x
 <% elsif (cond_curves_source == "LowTemp") %>
   Curve:Linear,
     <%= ref_system_name %> Condenser HR curve, !- Name
     0.0,                     !- Coefficient1 Constant
-    2090.,                   !- Coefficient2 x
+    <%= cond_hr_lt_air %>,                   !- Coefficient2 x
     11.0,                    !- Minimum Value of x
     22.2;                    !- Maximum Value of x
 <% end %>
