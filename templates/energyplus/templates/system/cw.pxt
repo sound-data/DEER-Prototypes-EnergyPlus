@@ -3,6 +3,10 @@ parameter "name"
 parameter "branch_names"
 
 parameter "tower_type", :default=>"VARIABLESPEED"  # (VARIABLESPEED | SINGLESPEED)
+
+#Solaris Technical - Behzad S. Rizi - 11/11/2025 - Added pump_type parameter to enable the speed control strategy for condenser water pump
+parameter "pump_type", :default=>nil  # (CONSTANTSPEED | VARIABLESPEED)
+
 parameter "num_towers", :default=>1
 parameter "design_temp", :default=>85['F']  # Condenser water system supply temperature
 parameter "design_delta", :default=>10['deltaF']  # Condenser water system design temperature difference
@@ -32,6 +36,11 @@ parameter "pump_control_type", :default=>"Intermittent" # (Intermittent | Contin
 # Note that modelkit caboodle does not have any unit conversions for mass flow rate.
 parameter "pump_min_flow_rate", :default=>0 # (kg/s)
 
+%>
+
+<%# Solaris Technical - Behzad S. Rizi - 11/11/2025 - Default assignment: if pump_type not provided, set to "VARIABLESPEED" for multi-tower systems and "CONSTANTSPEED" otherwise (legacy behavior) %>
+<%
+  pump_type ||= (num_towers > 1 ? "VARIABLESPEED" : "CONSTANTSPEED")
 %>
 
 Sizing:Plant,
@@ -207,11 +216,17 @@ BranchList,
   <%= name %> Supply Equipment Bypass Branch,  !- Branch Name
   <%= name %> Supply Outlet Branch;  !- Branch Name
 
-
+! ---------------------------------------------------------------------------
+! Solaris-Technical - Behzad S. Rizi - 11/11/2025 - New parameter added to control condenser water pump speed independently of tower type
+! Condenser Water Pump Configuration
+! Controlled independently of cooling tower type.
+! This supports modeling of “VFD on condenser water pump” measures without
+! modifying cooling tower fan control or tower configuration.
+! ---------------------------------------------------------------------------
 Branch,
   <%= name %> Supply Inlet Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
-<% if tower_type == "VARIABLESPEED" %>
+<% if pump_type == "VARIABLESPEED" %>
   HeaderedPumps:VariableSpeed,  !- Component 1 Object Type
 <% else %>
   Pump:ConstantSpeed,      !- Component 1 Object Type
@@ -221,7 +236,7 @@ Branch,
   <%= name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
 
 
-<% if tower_type == "VARIABLESPEED" %>
+<% if pump_type == "VARIABLESPEED" %>
 HeaderedPumps:VariableSpeed,
   <%= name %> Pump,      !- Name
   <%= name %> Supply Inlet Node,  !- Inlet Node Name
