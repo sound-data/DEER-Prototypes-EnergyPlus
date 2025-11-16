@@ -1,8 +1,10 @@
 #InputVerificationandResultsSummary/Entire Facility/General/Value/Program Version and Build, something1
 #InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/*, something2
+# Autosized models tend to have Design Size outputs
 ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Nominal Cooling Capacity/*, Cooling Capacity
-ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Nominal Heating Capacity/*, Heating Capacity
-ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Supply Air Flow Rate/*, Air Flow Rate
+#ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Nominal Heating Capacity/*, Heating Capacity
+#ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Supply Air Flow Rate/*, Air Flow Rate
+# Hard-sized models tend to have Used-Specified outputs
 ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/User-Specified Nominal Cooling Capacity/*, Cooling Capacity
-ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/User-Specified Nominal Heating Capacity/*, Heating Capacity
-ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/User-Specified Supply Air Flow Rate/*, Air Flow Rate
+#ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/User-Specified Nominal Heating Capacity/*, Heating Capacity
+#ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/User-Specified Supply Air Flow Rate/*, Air Flow Rate
