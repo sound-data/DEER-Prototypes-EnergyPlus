@@ -7,6 +7,7 @@ Features:
 * Read from instance-out.sql files using result spec format like modelkit
 * Apply DEER peak period calculation to hourly results and include those.
 * Requires python >= 3.7.1 and additional package "tqdm"
+* Note that given two queries with the same output name, the behavior is undefined.
 
 Usage:
     Prerequisite: running models, select a query file, path to DEER peak period definitions
@@ -16,6 +17,8 @@ Usage:
 Changelog
     * 2024-05-01 Adapted result.py for DEER Peak period calculation
     * 2024-05-15 Filename patterns updated to match folders like runs1, runs-Asm, etc.
+    * 2025-01-07 Apply DEER Peak calculation more selectively
+    * 2025-07-24 Filename pattern matching revised for better consistency between different conventions
 
 @Author: Nicholas Fette <nfette@solaris-technical.com>
 @Date: 2024-05-01
@@ -257,8 +260,16 @@ def build_query_with_special_cases(resultspec: ResultSpec, finalize = True) -> s
     return query, agg_columns
 
 
-def get_sim_hourly(conn: Connection):
+def get_sim_hourly(conn: Connection, column_filter=None):
     """Get simulation hourly results from one EnergyPlus SQLite output file.
+
+    Inputs:
+        conn: sqlite3.Connection | str
+            Database file connection or string path to EnergyPlus SQLite output file.
+            Note that this function does not read CSV output files.
+        column_filter: None | List[str]
+            List of hourly output column names to include.
+            If None, all output columns in the file are included.
 
     Returns:
         ReportDataWide: pandas.DataFrame
@@ -283,11 +294,6 @@ def get_sim_hourly(conn: Connection):
     """
 
     ReportDataDictionary = pd.read_sql_query('select * from ReportDataDictionary', conn, index_col='ReportDataDictionaryIndex')
-    #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
-    chunks = []
-    for chunk in pd.read_sql_query('select * from ReportData', conn, chunksize=10000):
-        chunks.append(chunk)
-    ReportData = pd.concat(chunks, axis=0)
 
     # Transform ReportDataDictionary so we have a single column lookup string.
     # LookupKey looks like:
@@ -297,6 +303,24 @@ def get_sim_hourly(conn: Connection):
         lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if bool(x.KeyValue)
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
+
+    query_report_data = 'select * from ReportData'
+
+    rd_indices = []
+    if column_filter:
+        # Construct a list of ReportDataDictionaryIndex values from column_filter.
+        # Note that ReportDataDictionaryIndex values are file-specific.
+        rd_indices = ReportDataDictionary[ReportDataDictionary['LookupKey'].isin(column_filter)].index
+        placeholders = ', '.join(['?'] * len(rd_indices))
+        query_report_data += f''' where "ReportDataDictionaryIndex" in ({placeholders})'''
+
+    #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
+    chunks = []
+    for chunk in pd.read_sql_query(query_report_data, conn, chunksize=10000,
+                                   params=tuple(rd_indices) if column_filter else None):
+        chunks.append(chunk)
+    ReportData = pd.concat(chunks, axis=0)
+
     ReportData2 = ReportData.join(ReportDataDictionary, on='ReportDataDictionaryIndex')
 
     # Transform ReportData from long to wide so we can make a condensed table
@@ -307,7 +331,7 @@ def get_sim_hourly(conn: Connection):
 
     return ReportDataWide
 
-def get_sim_deer_peak(conn: Connection, bldgloc: str):
+def get_sim_deer_peak(conn: Connection, bldgloc: str, column_filter=DEERPEAK_COLUMNS):
     """Get simulation DEER Peak results from one EnergyPlus SQLite output file.
 
     Inputs:
@@ -321,8 +345,8 @@ def get_sim_deer_peak(conn: Connection, bldgloc: str):
             of the hourly variable named `k` over the DEER Peak Period.
     """
     # Get all available hourly results with shape (N, 8760)
-    ReportDataWide = get_sim_hourly(conn)
-    ReportDataWide = ReportDataWide.loc[DEERPEAK_COLUMNS]
+    ReportDataWide = get_sim_hourly(conn, column_filter=column_filter)
+    #ReportDataWide = ReportDataWide.loc[DEERPEAK_COLUMNS]
     if ReportDataWide.shape[1] != 8760:
         # No hourly data. This can happen if simulation created the output file but failed to complete.
         # Or if the file represents a sizing run.
@@ -423,7 +447,7 @@ def get_sim_peak_and_tabular(queryfile: Path,
                 # This avoids errors due to mismatched column names when a file is missing one or more results.
                 # Useful for concatenating results in a wide-format table.
                 output_column_name = user_column_name
-                
+
                 if APPEND_UNITS:
                     # For consistency between files, do not append "(units)" in the column name for wildcard queries.
                     if "*" not in resultspec.to_string() and sim_data_detail1 is not None:
@@ -453,6 +477,47 @@ def get_sim_peak_and_tabular(queryfile: Path,
 
     return sim_data
 
+def get_sim_tabular_long(
+        queryfile: Path,
+        sqlfile: Path,
+        ):
+    r"""
+    Read selected data entries from SQL outputs.
+    Result set specifications are parsed from query.txt, e.g. (resultspec, name).
+    Output columns will have units appended to name, like "name (Units)".
+
+    Inputs:
+        queryfile: Path
+            The filename of a modelkit-style query.txt file.
+        sqlfile: Path
+            The filename of an EnergyPlus output file (SQLite format).
+
+    Returns:
+        sim_data_detail: DataFrame.
+            Subset of TabularDataWithStrings rows matching result set query.
+    """
+    with connect(sqlfile) as conn:
+        # Start with the query data results
+        listlist_query_path_and_name = parse_query_file(queryfile)
+        tabular_data_list = []
+ 
+        # Don't separate "groups" of queries but group them all together.
+        for list_query_path_and_name in listlist_query_path_and_name:
+            for resultspec, user_column_name in list_query_path_and_name:
+
+                if not isinstance(resultspec, ResultSpec):
+                    resultspec = makeResultSpec(resultspec)
+
+                query, agg_columns = build_query_with_special_cases(resultspec)
+
+                sim_data_detail1 = pd.read_sql_query(query, conn,  params=asdict(resultspec))
+                
+                tabular_data_list.append(sim_data_detail1)
+    
+    tabular_data = pd.concat(tabular_data_list)
+
+    return tabular_data
+
 def get_runs_instances(study: Path, search_pattern = '**/instance*-out.sql', exclude = 'instance-size-out.sql'):
     r"""Returns a list of all of SQLite output files in a modelkit study folder.
 
@@ -478,6 +543,26 @@ def get_runs_instances(study: Path, search_pattern = '**/instance*-out.sql', exc
         Default metadata fields:
             'File Name'
                 File path relative to study folder, with forward slashes.
+            'BldgLoc'
+                CEC Climate Zone (CZ01, CZ02, ..., CZ16)
+            'BldgType'
+                Prototype name code (Asm, ... SUn)
+            'Story'
+                Number of stories (1 or 2 for single family, 0 for all other building types)
+            'BldgHVAC'
+                HVAC type code found in cohort name (rDXGF, ...)
+            'BldgVint'
+                Vintage code found in cohort name (Ex, New)
+            'TechGroup'
+                Technology group found in cohort name (SpaceHtg_eq, ...)
+            'TechType'
+                Technology type found in cohort name (GasFurnace, ...)
+            'TechID'
+                Name for a set of input parameters , a.k.a. case_name (Msr-Res-GasFurnace-AFUE95-ECM)
+            'Cohort'
+                The entire cohort name (SFm&1&rDXGF&Ex&SpaceHtg_eq__GasFurnace)
+            'Case'
+                The case name
     """
     if not isinstance(study, Path):
         study = Path(study)
@@ -504,17 +589,32 @@ def get_runs_instances(study: Path, search_pattern = '**/instance*-out.sql', exc
         #metadata['File Name'] = re.sub(*pathsub, relstr, 1)
         metadata['File Name'] = relstr
         metadata['BldgLoc'] = bldgloc
+        metadata['BldgType'] = None
+        metadata['Story'] = None
+        metadata['BldgHVAC'] = None
+        metadata['BldgVint'] = None
+        metadata['TechGroup'] = None
+        metadata['TechType'] = None
+        metadata['TechID'] = None
+        metadata['Cohort'] = None
+        metadata['Case'] = None
 
         # Try to get additional metadata, but don't fail if it doesn't match.
         patterns = [
-            r'.*/runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<TechGroup>\w+)__(?P<TechType>\w+)/(?P<TechID>[^/]+)/instance.*',
-            r'.*/runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*'
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*',
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroup>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroup>[\w\-]+)__(?P<TechType>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
+            r'(.*/)?runs[^/]*/(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>[\w\-]+)&(?P<TechGroupUnused>[\w\-]+)__(?P<TechTypeUnused>[\w\-]+)&(?P<TechGroup>[\w\-]+)__(?P<TechType>[\w\-]+)/(?P<TechID>[^/]+)/instance.*',
         ]
         for pattern in patterns:
             m2 = re.match(pattern, relstr)
             if m2:
-                metadata.update(m2.groupdict())
-                break
+                sim_metadata = m2.groupdict()
+                if 'TechGroupUnused' in sim_metadata:
+                    del sim_metadata['TechGroupUnused']
+                if 'TechTypeUnused' in sim_metadata:
+                    del sim_metadata['TechTypeUnused']
+                metadata.update(sim_metadata)
 
         yield (sqlfile, bldgloc, metadata)
 
@@ -581,6 +681,70 @@ def gather_sim_data(study: Path, queryfile: Path, parallel=False):
                     yield sim_data
                     time.sleep(0.001)
 
+def gather_sim_data_long(study: Path, queryfile: Path, parallel=False):
+    r"""Returns a generator yielding simulation data from each simulation in long table format.
+
+    Read selected data entries from SQL outputs as well as DEER Peak period averages of hourly variables.
+    Result set specifications are parsed from query.txt, e.g. (resultspec, name).
+    Output columns will have units appended to name, like "name (Units)".
+
+    Assumes that files are placed within a "runs" subfolder under the given study.
+
+    study: e.g., "C:\Users\User1\DEER-Prototypes-EnergyPlus\Analysis\SFm_Furnace_1975"
+
+    Returns:
+        Generator yielding dictionary objects.
+
+    Example:
+        >>> for sim_data in gather_sim_data(sqlfile, queryfile):
+        >>>    pass
+        >>> sim_data
+        {
+            "File Name": "mymeasure_vintage/CZ01/cohort/case/instance-out.sql",
+            "Net Site EUI (kWh/m2)": 90.97,
+            "Electricity:Facility [J](Hourly)": 3738615573
+        }
+    """
+    print(f"Reading from {study}")
+    # Make sure queryfile does not give an error before starting main loop.
+    _ = parse_query_file(queryfile)
+
+    if not parallel:
+        for sqlfile, bldgloc, metadata in tqdm.tqdm(list(get_runs_instances(study))):
+            # Start the load operations and mark each future with its input arguments.
+            tabular_data = get_sim_tabular_long(queryfile, sqlfile)
+            yield (sqlfile, bldgloc, metadata, tabular_data)
+    else:
+        list_sqlfile = list(get_runs_instances(study))
+        # Use a concurrent.futures.Executor to achieve some parallelism.
+        # This should speed up the process if there are a large number of files.
+        # In initial testing, ThreadPoolExecutor was 0.5x the speed of a single-threaded loop.
+        # However, ProcessPoolExecutor was 3-4x the speed of a single-threaded loop.
+        #with concurrent.futures.ThreadPoolExecutor() as executor:
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            #print("Created a thread pool with ",executor._max_workers)
+            future_lookup = dict() # Remember each file when requested.
+            # Queue each operation to read simulation data, returning a future.
+            for (sqlfile, bldgloc, metadata) in list_sqlfile:
+                # Start the load operations and mark each future with its input arguments.
+                future = executor.submit(get_sim_tabular_long, queryfile, sqlfile)
+                future_lookup[future] = (sqlfile, bldgloc, metadata)
+
+            # Wait for futures to complete and show a progress bar.
+            import time
+            for i,future in zip(
+                tqdm.trange(len(list_sqlfile), desc=study.name), # progress bar
+                concurrent.futures.as_completed(future_lookup)  # waiting for results from parallel threads
+            ):
+                (sqlfile, bldgloc, metadata) = future_lookup[future]
+                try:
+                    tabular_data = future.result()
+                except Exception as exc:
+                    print(f'Reading {sqlfile} generated an exception: {exc}')
+                else:
+                    yield (sqlfile, bldgloc, metadata, tabular_data)
+                    time.sleep(0.001)
+
 def gather_sim_data_to_csv(study: Path, queryfile: Path, csvfile: Path,
                            parallel = True,
                            chunksize = 100):
@@ -615,6 +779,34 @@ def gather_sim_data_to_sqlite(study: Path, queryfile: Path, sqlfile: Path,
                 df_sim_data = pd.DataFrame.from_records(records)
                 df_sim_data.to_sql('sim_data', conn, index=False, if_exists='append')
 
+def gather_sim_data_to_sqlite_long(study: Path, queryfile: Path, sqlfile: Path,
+                              parallel = True):
+
+    conn = connect(sqlfile)
+    try:
+        with conn:
+            conn.execute('DROP TABLE IF EXISTS "sim_metadata";')
+            conn.execute('DROP TABLE IF EXISTS "sim_tabular";')
+        gather = gather_sim_data_long(study, queryfile, parallel)
+        for (sqlfile, bldgloc, metadata, tabular_data) in gather:
+            # DEBUG
+            #print(sqlfile)
+            #print(tabular_data)
+            #print(metadata)
+
+            tabular_data.insert(0, "filename", metadata['File Name'])
+            #print(tabular_data.dtypes)
+            df_metadata = pd.DataFrame.from_dict([metadata])
+
+            if tabular_data.empty:
+                continue
+            with conn:
+                df_metadata.to_sql('sim_metadata', conn, index=False, if_exists='append')
+                tabular_data.to_sql('sim_tabular', conn, index=False, if_exists='append')
+
+    finally:
+        conn.close()
+
 def build_cli_parser(parser: argparse.ArgumentParser,
                      study_kwargs = {},
                      queryfile_kwargs = {},
@@ -631,6 +823,7 @@ def build_cli_parser(parser: argparse.ArgumentParser,
     #                    **outputfile_kwargs)
     parser.add_argument('-P', '--parallel', action='store_false', help='Disable parallel mode.')
     parser.add_argument('-s', '--sqlite', action='store_true', help='Write output in SQLite format.')
+    parser.add_argument('-t', '--tabular', action='store_true', help='If writing to SQLite, store data in tabular (long) format.')
 
 def cli_main():
     """Starts the script on command line."""
@@ -638,7 +831,10 @@ def cli_main():
     build_cli_parser(parser)
     pargs = parser.parse_args()
     if pargs.sqlite:
-        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+        if pargs.tabular:
+            gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+        else:
+            gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
     else:
         gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
 
@@ -655,7 +851,10 @@ def gooey_main():
           )
     pargs = parser.parse_args()
     if pargs.sqlite:
-        gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+        if pargs.tabular:
+            gather_sim_data_to_sqlite_long(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
+        else:
+            gather_sim_data_to_sqlite(pargs.study, pargs.queryfile, 'simdata.sqlite', pargs.parallel)
     else:
         gather_sim_data_to_csv(pargs.study, pargs.queryfile, 'simdata.csv', pargs.parallel)
 
