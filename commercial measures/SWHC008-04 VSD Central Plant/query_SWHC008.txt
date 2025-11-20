@@ -3,6 +3,7 @@ ComponentSizingSummary/Entire Facility/Pump:ConstantSpeed/Design Power Consumpti
 ComponentSizingSummary/Entire Facility/Pump:VariableSpeed/Design Power Consumption/CHW PUMP, CHW Pump Power (Variable)
 ComponentSizingSummary/Entire Facility/HeaderedPumps:VariableSpeed/Design Power Consumption/CW PUMP, CW Pump Power (Variable)
 ComponentSizingSummary/Entire Facility/Pump:ConstantSpeed/Design Flow Rate/CW PUMP, CW Design Flow Rate (constant) (m3/s)
+ComponentSizingSummary/Entire Facility/HeaderedPumps:VariableSpeed/Design Flow Rate/CW PUMP, CW Design Flow Rate (Variable)(m3/s)
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Heating
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Cooling
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Interior Lighting
