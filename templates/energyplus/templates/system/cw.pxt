@@ -24,6 +24,9 @@ parameter "wetbulb_design", :default=>25.6['C']
 parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
 parameter "clear_water_supply_tank", :default=>""
+
+parameter "pump_min_flow_rate", :default=>0
+
 %>
 
 Sizing:Plant,
@@ -49,7 +52,7 @@ CondenserLoop,
   80.0,                    !- Maximum Loop Temperature {C}
   5.0,                     !- Minimum Loop Temperature {C}
   Autosize,                !- Maximum Loop Flow Rate {m3/s}
-  0.0,                     !- Minimum Loop Flow Rate {m3/s}
+  0,                       !- Minimum Loop Flow Rate {m3/s}
   Autosize,                !- Condenser Loop Volume {m3}
   <%= name %> Supply Inlet Node,  !- Condenser Side Inlet Node Name
   <%= name %> Supply Outlet Node,  !- Condenser Side Outlet Node Name
@@ -117,6 +120,19 @@ SetpointManager:FollowOutdoorAirTemperature,
 !  For: AllDays,            !- Field 2
 !  Until: 24:00,            !- Field 3
 !  <%= design_temp %>;      !- Field 4
+
+
+Schedule:Constant,
+  <%= name %> Pump Min Flow Sch,  !- Name
+  Any Number,             !- Schedule Type Limits Name
+  <%= pump_min_flow_rate %>;  !- Hourly Value
+    
+SetpointManager:Scheduled,
+  <%= name %> Pump Setpoint Manager,  !- Name
+  MinimumMassFlowRate,             !- Control Variable
+  <%= name %> Pump Min Flow Sch,  !- Schedule Name
+  <%= name %> Supply Inlet Node;  !- Setpoint Node or NodeList Name
+
 
 CondenserEquipmentOperationSchemes,
   <%= name %> Operation Schemes,  !- Name
@@ -187,7 +203,7 @@ BranchList,
 Branch,
   <%= name %> Supply Inlet Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
-<% if num_towers > 1 %>
+<% if tower_type == "VARIABLESPEED" %>
   HeaderedPumps:VariableSpeed,  !- Component 1 Object Type
 <% else %>
   Pump:ConstantSpeed,      !- Component 1 Object Type
@@ -196,7 +212,8 @@ Branch,
   <%= name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
 
-<% if num_towers > 1 %>
+
+<% if tower_type == "VARIABLESPEED" %>
 HeaderedPumps:VariableSpeed,
   <%= name %> Pump,      !- Name
   <%= name %> Supply Inlet Node,  !- Inlet Node Name
@@ -213,7 +230,7 @@ HeaderedPumps:VariableSpeed,
   -0.0325,                 !- Coefficient 3 of the Part Load Performance Curve
   1.0095,                  !- Coefficient 4 of the Part Load Performance Curve
   0,                       !- Minimum Flow Rate Fraction
-  Intermittent;            !- Pump Control Type
+  Continuous;            !- Pump Control Type
 <% else %>
 Pump:ConstantSpeed,
   <%= name %> Pump,      !- Name
@@ -224,7 +241,7 @@ Pump:ConstantSpeed,
   Autosize,                !- Rated Power Consumption {W}
   <%= pump_eff %>,  !- Motor Efficiency
   0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
-  Intermittent;            !- Pump Control Type
+  Continuous;            !- Pump Control Type
 <% end %>
 
 
@@ -615,3 +632,4 @@ Connector:Mixer,
   <%= branch_name %> HR Demand Branch,  !- Inlet Branch Name
 <% end %>
   <%= name %> Demand Bypass Branch;  !- Inlet Branch Name
+	
