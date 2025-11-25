@@ -1,52 +1,52 @@
-skip,case_name,:water_heater_type,:water_heater_cap,:heat_element_cap,:thermal_eff,:uef,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:tank_height
-,Stor_UEF-Gas-030gal-0.60UEF,gas,41000['BTUH'],,0.751,,33,HI,350 ['BTUH'],NaturalGas,49['in']
-,Stor_UEF-Gas-040gal-0.64UEF,gas,41000['BTUH'],,0.759,,39,HI,350 ['BTUH'],NaturalGas,45['in']
-,Stor_UEF-Gas-050gal-0.63UEF,gas,41000['BTUH'],,0.764,,49,HI,350 ['BTUH'],NaturalGas,54['in']
-,Stor_UEF-Gas-060gal-0.61UEF,gas,41000['BTUH'],,0.8,,58,HI,350 ['BTUH'],NaturalGas,57['in']
-,Stor_UEF-Gas-075gal-0.59UEF,gas,41000['BTUH'],,0.71,,75,HI,350 ['BTUH'],NaturalGas,59['in']
-,Stor_UEF-Elec-030gal-0.92UEF,elec,4900['W'],,0.98,,33,MD,,,49['in']
-,Stor_UEF-Elec-040gal-0.92UEF,elec,4900['W'],,0.98,,39,MD,,,45['in']
-,Stor_UEF-Elec-050gal-0.92UEF,elec,4900['W'],,0.98,,49,MD,,,54['in']
-,Inst_UEF-Gas_lt200kBtuh-HI-0.81UEF,gas_tankless,190000['BTUH'],,0.84,,,,50 ['W'],Electricity,
-,Stor_UEF-ElecHP-065gal-2.91UEF,hpwh,1230['W'],4500['W'],,2.91,66,MD-HI,,,50['in']
-,Stor_UEF-ElecHP-080gal-3.00UEF,hpwh,1230['W'],4500['W'],,3,82,MD-HI,,,55['in']
-,Stor_UEF-120vHP-040gal-2.75UEF,120v_hpwh,1230['W'],900['W'],,2.75,36,MD,,,45['in']
-,Stor_UEF-120vHP-040gal-2.91UEF,120v_hpwh,1230['W'],900['W'],,2.91,36,MD,,,45['in']
-,Stor_UEF-120vHP-040gal-3.00UEF,120v_hpwh,1230['W'],900['W'],,3,36,MD,,,45['in']
-,Stor_UEF-120vHP-040gal-3.30UEF,120v_hpwh,1230['W'],900['W'],,3.3,36,MD,,,45['in']
-,Stor_UEF-120vHP-040gal-3.50UEF,120v_hpwh,1230['W'],900['W'],,3.5,36,MD,,,45['in']
-,Stor_UEF-120vHP-050gal-2.75UEF,120v_hpwh,1230['W'],900['W'],,2.75,46,MD,,,47['in']
-,Stor_UEF-120vHP-050gal-2.91UEF,120v_hpwh,1230['W'],900['W'],,2.91,46,MD,,,47['in']
-,Stor_UEF-120vHP-050gal-3.00UEF,120v_hpwh,1230['W'],900['W'],,3,46,MD,,,47['in']
-,Stor_UEF-120vHP-050gal-3.30UEF,120v_hpwh,1230['W'],900['W'],,3.3,46,MD,,,47['in']
-,Stor_UEF-120vHP-050gal-3.50UEF,120v_hpwh,1230['W'],900['W'],,3.5,46,MD,,,47['in']
-,Stor_UEF-120vHP-065gal-2.75UEF,120v_hpwh,1230['W'],900['W'],,2.75,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-065gal-2.91UEF,120v_hpwh,1230['W'],900['W'],,2.91,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-065gal-3.00UEF,120v_hpwh,1230['W'],900['W'],,3,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-065gal-3.30UEF,120v_hpwh,1230['W'],900['W'],,3.3,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-065gal-3.50UEF,120v_hpwh,1230['W'],900['W'],,3.5,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-080gal-2.75UEF,120v_hpwh,1230['W'],900['W'],,2.75,82,HI,,,55['in']
-,Stor_UEF-120vHP-080gal-2.91UEF,120v_hpwh,1230['W'],900['W'],,2.91,82,HI,,,55['in']
-,Stor_UEF-120vHP-080gal-3.00UEF,120v_hpwh,1230['W'],900['W'],,3,82,HI,,,55['in']
-,Stor_UEF-120vHP-080gal-3.30UEF,120v_hpwh,1230['W'],900['W'],,3.3,82,HI,,,55['in']
-,Stor_UEF-120vHP-080gal-3.50UEF,120v_hpwh,1230['W'],900['W'],,3.5,82,HI,,,55['in']
-,Stor_UEF-120vHP-040gal-2.75UEF_no-ER,120v_hpwh,1230['W'],,,2.75,36,MD,,,45['in']
-,Stor_UEF-120vHP-040gal-2.91UEF_no-ER,120v_hpwh,1230['W'],,,2.91,36,MD,,,45['in']
-,Stor_UEF-120vHP-040gal-3.00UEF_no-ER,120v_hpwh,1230['W'],,,3,36,MD,,,45['in']
-,Stor_UEF-120vHP-040gal-3.30UEF_no-ER,120v_hpwh,1230['W'],,,3.3,36,MD,,,45['in']
-,Stor_UEF-120vHP-040gal-3.50UEF_no-ER,120v_hpwh,1230['W'],,,3.5,36,MD,,,45['in']
-,Stor_UEF-120vHP-050gal-2.75UEF_no-ER,120v_hpwh,1230['W'],,,2.75,50,MD,,,47['in']
-,Stor_UEF-120vHP-050gal-2.91UEF_no-ER,120v_hpwh,1230['W'],,,2.91,50,MD,,,47['in']
-,Stor_UEF-120vHP-050gal-3.00UEF_no-ER,120v_hpwh,1230['W'],,,3,50,MD,,,47['in']
-,Stor_UEF-120vHP-050gal-3.30UEF_no-ER,120v_hpwh,1230['W'],,,3.3,50,MD,,,47['in']
-,Stor_UEF-120vHP-050gal-3.50UEF_no-ER,120v_hpwh,1230['W'],,,3.5,50,MD,,,47['in']
-,Stor_UEF-120vHP-065gal-2.75UEF_no-ER,120v_hpwh,1230['W'],,,2.75,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-065gal-2.91UEF_no-ER,120v_hpwh,1230['W'],,,2.91,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-065gal-3.00UEF_no-ER,120v_hpwh,1230['W'],,,3,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-065gal-3.30UEF_no-ER,120v_hpwh,1230['W'],,,3.3,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-065gal-3.50UEF_no-ER,120v_hpwh,1230['W'],,,3.5,66,MD-HI,,,50['in']
-,Stor_UEF-120vHP-080gal-2.75UEF_no-ER,120v_hpwh,1230['W'],,,2.75,82,HI,,,55['in']
-,Stor_UEF-120vHP-080gal-2.91UEF_no-ER,120v_hpwh,1230['W'],,,2.91,82,HI,,,55['in']
-,Stor_UEF-120vHP-080gal-3.00UEF_no-ER,120v_hpwh,1230['W'],,,3,82,HI,,,55['in']
-,Stor_UEF-120vHP-080gal-3.30UEF_no-ER,120v_hpwh,1230['W'],,,3.3,82,HI,,,55['in']
-,Stor_UEF-120vHP-080gal-3.50UEF_no-ER,120v_hpwh,1230['W'],,,3.5,82,HI,,,55['in']
+skip,case_name,:water_heater_type,:water_heater_cap,:heat_element_cap,:thermal_eff,:uef,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:tank_height,:sch,:tank_skin_loss
+,RG-WaterHtg_eq-Stor_UEF-30g-HI-0.61UEF,gas,33000['BTUH'],,0.761,0.605,33,HI,350 ['BTUH'],NaturalGas,49['in'],SFm_minute_dhw_demand_fraction.csv,2.12
+,RG-WaterHtg_eq-Stor_UEF-40g-HI-0.64UEF,gas,40000['BTUH'],,0.776,0.644,39,HI,350 ['BTUH'],NaturalGas,45['in'],SFm_minute_dhw_demand_fraction.csv,2.22
+,RG-WaterHtg_eq-Stor_UEF-50g-HI-0.67UEF,gas,45000['BTUH'],,0.792,0.672,49,HI,350 ['BTUH'],NaturalGas,54['in'],SFm_minute_dhw_demand_fraction.csv,2.34
+#,RG-WaterHtg_eq-Stor_UEF-60g-HI-0.67UEF,gas,78000['BTUH'],,0.819,0.671,58,HI,350 ['BTUH'],NaturalGas,57['in'],SFm_minute_dhw_demand_fraction.csv,2.67
+#,RG-WaterHtg_eq-Stor_UEF-75g-HI-0.66UEF,gas,78000['BTUH'],,0.777,0.659,75,HI,350 ['BTUH'],NaturalGas,59['in'],SFm_minute_dhw_demand_fraction.csv,1.69
+,RE-WaterHtg_eq-Stor_UEF-30g-MD-0.92UEF-240V,elec,4900['W'],,,0.92,33,MD,,,49['in'],SFm_minute_dhw_demand_fraction.csv,0.55
+,RE-WaterHtg_eq-Stor_UEF-40g-MD-0.92UEF-240V,elec,4900['W'],,,0.93,39,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,0.44
+,RE-WaterHtg_eq-Stor_UEF-50g-MD-0.92UEF-240V,elec,4900['W'],,,0.93,49,MD,,,54['in'],SFm_minute_dhw_demand_fraction.csv,0.36
+,RG-WaterHtg_eq-Instant_UEF-lt200kBtuh-HI-0.91UEF,gas_tankless,179000['BTUH'],,0.929,0.906,,,50 ['W'],Electricity,,SFm_minute_dhw_demand_fraction.csv,
+#,RE-WaterHtg_eq-HP_UEF-65g-MDHI-2.91UEF-240V,hpwh,1230['W'],4500['W'],,2.91,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+#,RE-WaterHtg_eq-HP_UEF-80g-MDHI-3.00UEF-240V,hpwh,1230['W'],4500['W'],,3,82,MD-HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-40g-MD-2.75UEF-120V,120v_hpwh,1230['W'],900['W'],,2.75,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+#,RE-WaterHtg_eq-HP_UEF-40g-MD-2.91UEF-120V,120v_hpwh,1230['W'],900['W'],,2.91,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-40g-MD-3.00UEF-120V,120v_hpwh,1230['W'],900['W'],,3,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-40g-MD-3.30UEF-120V,120v_hpwh,1230['W'],900['W'],,3.3,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-40g-MD-3.50UEF-120V,120v_hpwh,1230['W'],900['W'],,3.5,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-50g-MD-2.75UEF-120V,120v_hpwh,1230['W'],900['W'],,2.75,46,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+#,RE-WaterHtg_eq-HP_UEF-50g-MD-2.91UEF-120V,120v_hpwh,1230['W'],900['W'],,2.91,46,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-50g-MD-3.00UEF-120V,120v_hpwh,1230['W'],900['W'],,3,46,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-50g-MD-3.30UEF-120V,120v_hpwh,1230['W'],900['W'],,3.3,46,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-50g-MD-3.50UEF-120V,120v_hpwh,1230['W'],900['W'],,3.5,46,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-2.75UEF-120V,120v_hpwh,1230['W'],900['W'],,2.75,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+#,RE-WaterHtg_eq-HP_UEF-65g-MDHI-2.91UEF-120V,120v_hpwh,1230['W'],900['W'],,2.91,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.00UEF-120V,120v_hpwh,1230['W'],900['W'],,3,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.30UEF-120V,120v_hpwh,1230['W'],900['W'],,3.3,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.50UEF-120V,120v_hpwh,1230['W'],900['W'],,3.5,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-80g-HI-2.75UEF-120V,120v_hpwh,1230['W'],900['W'],,2.75,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+#,RE-WaterHtg_eq-HP_UEF-80g-HI-2.91UEF-120V,120v_hpwh,1230['W'],900['W'],,2.91,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-80g-HI-3.00UEF-120V,120v_hpwh,1230['W'],900['W'],,3,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-80g-HI-3.30UEF-120V,120v_hpwh,1230['W'],900['W'],,3.3,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-80g-HI-3.50UEF-120V,120v_hpwh,1230['W'],900['W'],,3.5,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-40g-MD-2.75UEF-120V_no-ER,120v_hpwh,1230['W'],,,2.75,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+#,RE-WaterHtg_eq-HP_UEF-40g-MD-2.91UEF-120V_no-ER,120v_hpwh,1230['W'],,,2.91,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-40g-MD-3.00UEF-120V_no-ER,120v_hpwh,1230['W'],,,3,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-40g-MD-3.30UEF-120V_no-ER,120v_hpwh,1230['W'],,,3.3,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-40g-MD-3.50UEF-120V_no-ER,120v_hpwh,1230['W'],,,3.5,36,MD,,,45['in'],SFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-50g-MD-2.75UEF-120V_no-ER,120v_hpwh,1230['W'],,,2.75,50,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+#,RE-WaterHtg_eq-HP_UEF-50g-MD-2.91UEF-120V_no-ER,120v_hpwh,1230['W'],,,2.91,50,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-50g-MD-3.00UEF-120V_no-ER,120v_hpwh,1230['W'],,,3,50,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-50g-MD-3.30UEF-120V_no-ER,120v_hpwh,1230['W'],,,3.3,50,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-50g-MD-3.50UEF-120V_no-ER,120v_hpwh,1230['W'],,,3.5,50,MD,,,47['in'],SFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-2.75UEF-120V_no-ER,120v_hpwh,1230['W'],,,2.75,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+#,RE-WaterHtg_eq-HP_UEF-65g-MDHI-2.91UEF-120V_no-ER,120v_hpwh,1230['W'],,,2.91,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.00UEF-120V_no-ER,120v_hpwh,1230['W'],,,3,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.30UEF-120V_no-ER,120v_hpwh,1230['W'],,,3.3,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.50UEF-120V_no-ER,120v_hpwh,1230['W'],,,3.5,66,MD-HI,,,50['in'],SFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-80g-HI-2.75UEF-120V_no-ER,120v_hpwh,1230['W'],,,2.75,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+#,RE-WaterHtg_eq-HP_UEF-80g-HI-2.91UEF-120V_no-ER,120v_hpwh,1230['W'],,,2.91,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-80g-HI-3.00UEF-120V_no-ER,120v_hpwh,1230['W'],,,3,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-80g-HI-3.30UEF-120V_no-ER,120v_hpwh,1230['W'],,,3.3,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-80g-HI-3.50UEF-120V_no-ER,120v_hpwh,1230['W'],,,3.5,82,HI,,,55['in'],SFm_minute_dhw_demand_fraction.csv,0.83
