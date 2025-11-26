@@ -109,14 +109,14 @@ python insert_normunits.py <sizing_column> <normunit> <conversion_factor> <measu
 
 For this measure the options are
 - `<sizing_column>` = "Cooling Capacity (W)"
-- `<normunit>` = Cap-Ton
+- `<normunit>` = Cap-Tons
 - `<conversion_factor>` = (W thermal / 1 ton cooling) = 1 / 3516.85284 = 2.84345e-4
 - `<measure_name>` = "Pkg HP AC Com"
 
 First copy the sizing_agg_filtered.csv into the scripts folder. Then run the script:
 
 ```
-python insert_normunits.py "DX Coil Cooling Capacity Single and Multi Speed [W]" Cap-Ton 2.84345e-4 "Pkg HP AC Com"
+python insert_normunits.py "Cooling Capacity (W)" Cap-Tons 2.84345e-4 "Pkg HP AC Com"
 ```
 
 At this point, you should have an updated copy of sim_annual.csv with cooling capacity in the normalizing units column.
