@@ -1,8 +1,9 @@
-skip,case_name,:boiler_eff,:boiler_eff_curve,:curve_evaluation_variable
-,AFUE_84_Non-Condensing_baseline,0.84,NonCond_Boiler_Eff,LeavingBoiler
-,AFUE_83_Non-Condensing_baseline,0.83,NonCond_Boiler_Eff,LeavingBoiler
-#,AFUE_85_Non-Condensing_baseline,0.85,NonCond_Boiler_Eff,LeavingBoiler
-,Msr_AFUE_93_ Condensing_ECM,0.93,Cond_Boiler_Eff,EnteringBoiler
-,Msr_AFUE_94_ Condensing_ECM,0.94,Cond_Boiler_Eff,EnteringBoiler
-,Msr_AFUE_85_Non-Condensing_ECM,0.85,NonCond_Boiler_Eff,LeavingBoiler
-,Msr_AFUE_85.3_Non-Condensing_ECM,0.853,NonCond_Boiler_Eff,LeavingBoiler
+skip,case_name,:boiler_eff,:boiler_eff_curve,:curve_evaluation_variable,:setpoint_oa_low_temp,:setpoint_oa_high_temp
+,NG-SpaceHtg_eq-Boiler-Non-Cond-83-TE,0.83,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F']
+,NG-SpaceHtg_eq-Boiler-Non-Cond-84-TE,0.84,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F']
+,NG-SpaceHtg_eq-Boiler-Cond-93-TE,0.93,Cond_Boiler_Eff,EnteringBoiler,165['F'],140['F']
+,NG-SpaceHtg_eq-Boiler-Cond-94-TE-OAT,0.94,Cond_Boiler_Eff,EnteringBoiler,140['F'],115['F']
+,NG-SpaceHtg_eq-Boiler-Cond-93-TE-OAT,0.93,Cond_Boiler_Eff,EnteringBoiler,140['F'],115['F']
+,NG-SpaceHtg_eq-Boiler-Non-Cond-85-TE,0.85,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F']
+,NG-SpaceHtg_eq-Boiler-Non-Cond-85.3-TE,0.853,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F']
+,NG-SpaceHtg_eq-Boiler-Cond-94-TE,0.94,Cond_Boiler_Eff,EnteringBoiler,165['F'],140['F']
