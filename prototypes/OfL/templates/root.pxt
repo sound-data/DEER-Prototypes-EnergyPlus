@@ -125,16 +125,16 @@ group "space_loads" do # hardcode building-level defaults
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "warehouse_schs", :prefix => "warehouse_" do
-    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1,\nFor: Weekdays Weekends,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 24:00,0;"
-    parameter "light_sch", :default => "Through: 12/31,\nFor: Weekdays Weekends,\nUntil: 07:00,0.05,\nUntil: 08:00,0.25,\nUntil: 09:00,0.45,\nUntil: 21:00,0.55,\nUntil: 22:00,0.3,\nUntil: 24:00,0.05,\nFor: AllOtherDays,\nUntil: 24:00,0;"
-    parameter "equip_sch", :default => "Through: 12/31,\nFor: Weekdays Weekends,\nUntil: 07:00,0.05,\nUntil: 08:00,0.4,\nUntil: 09:00,0.7,\nUntil: 21:00,0.9,\nUntil: 22:00,0.3,\nUntil: 24:00,0.05,\nFor: AllOtherDays,\nUntil: 24:00,0;"
-    parameter "occ_sch", :default => "Through: 12/31,\nFor: Weekdays Weekends,\nUntil: 07:00,0,\nUntil: 08:00,0.15,\nUntil: 09:00,0.7,\nUntil: 12:00,0.9,\nUntil: 13:00,0.5,\nUntil: 21:00,0.85,\nUntil: 22:00,0.2,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 24:00,0;"
-    parameter "gas_sch", :default => "Through: 12/31,\nFor: Weekdays Weekends,\nUntil: 07:00,0,\nUntil: 10:00,0.5,\nUntil: 18:00,0.9,\nUntil: 22:00,0.75,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 24:00,0;"
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay Weekdays Weekends,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 24:00,0;"
+    parameter "light_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays Weekends,\nUntil: 07:00,0.05,\nUntil: 08:00,0.25,\nUntil: 09:00,0.45,\nUntil: 21:00,0.55,\nUntil: 22:00,0.3,\nUntil: 24:00,0.05,\nFor: AllOtherDays,\nUntil: 24:00,0;"
+    parameter "equip_sch", :default => "Through: 12/31,\nFor:SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays Weekends,\nUntil: 07:00,0.05,\nUntil: 08:00,0.4,\nUntil: 09:00,0.7,\nUntil: 21:00,0.9,\nUntil: 22:00,0.3,\nUntil: 24:00,0.05,\nFor: AllOtherDays,\nUntil: 24:00,0;"
+    parameter "occ_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays Weekends,\nUntil: 07:00,0,\nUntil: 08:00,0.15,\nUntil: 09:00,0.7,\nUntil: 12:00,0.9,\nUntil: 13:00,0.5,\nUntil: 21:00,0.85,\nUntil: 22:00,0.2,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 24:00,0;"
+    parameter "gas_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays Weekends,\nUntil: 07:00,0,\nUntil: 10:00,0.5,\nUntil: 18:00,0.9,\nUntil: 22:00,0.75,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 24:00,0;"
     parameter "dhw_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays Weekends,\nUntil: 04:00,0.02,\nUntil: 05:00,0.05,\nUntil: 07:00,0.07,\nUntil: 08:00,0.1,\nUntil: 09:00,0.3,\nUntil: 11:00,0.36,\nUntil: 12:00,0.46,\nUntil: 13:00,0.57,\nUntil: 14:00,0.43,\nUntil: 15:00,0.57,\nUntil: 16:00,0.43,\nUntil: 17:00,0.38,\nUntil: 18:00,0.4,\nUntil: 19:00,0.3,\nUntil: 20:00,0.4,\nUntil: 21:00,0.3,\nUntil: 22:00,0.18,\nUntil: 24:00,0.03,\nFor: AllOtherDays,\nUntil: 24:00,0;"
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "office_schs", :prefix => "office_" do
-    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1.0,\nFor: Weekdays,\nUntil: 05:00,0.0,\nUntil: 24:00,1.0,\nFor: Saturday,\nUntil: 05:00,0.0,\nUntil: 19:00,1.0,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 24:00,0.0;"
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay Weekdays,\nUntil: 05:00,0.0,\nUntil: 24:00,1.0,\nFor: Saturday,\nUntil: 05:00,0.0,\nUntil: 19:00,1.0,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 24:00,0.0;"
     parameter "light_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1.0,\nFor: WinterDesignDay,\nUntil: 24:00,0.0,\nFor: Weekdays,\nUntil: 05:00,0.05,\nUntil: 07:00,0.10,\nUntil: 08:00,0.30,\nUntil: 17:00,0.65,\nUntil: 18:00,0.35,\nUntil: 20:00,0.30,\nUntil: 22:00,0.20,\nUntil: 23:00,0.10,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 06:00,0.05,\nUntil: 08:00,0.10,\nUntil: 12:00,0.30,\nUntil: 17:00,0.15,\nUntil: 24:00,0.05,\nFor: AllOtherDays,\nUntil: 24:00,0.05;"
     parameter "equip_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1.0,\nFor: WinterDesignDay,\nUntil: 24:00,0.0,\nFor: Weekdays,\nUntil: 05:00,0.05,\nUntil: 07:00,0.10,\nUntil: 08:00,0.30,\nUntil: 17:00,0.90,\nUntil: 18:00,0.50,\nUntil: 20:00,0.30,\nUntil: 22:00,0.20,\nUntil: 23:00,0.10,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 06:00,0.05,\nUntil: 08:00,0.10,\nUntil: 12:00,0.30,\nUntil: 17:00,0.15,\nUntil: 24:00,0.05,\nFor: AllOtherDays,\nUntil: 24:00,0.05;"
     parameter "occ_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1.0,\nFor: WinterDesignDay,\nUntil: 24:00,0.0,\nFor: Weekdays,\nUntil: 06:00,0.0,\nUntil: 07:00,0.10,\nUntil: 08:00,0.20,\nUntil: 12:00,0.95,\nUntil: 13:00,0.50,\nUntil: 17:00,0.95,\nUntil: 18:00,0.30,\nUntil: 22:00,0.10,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 06:00,0.0,\nUntil: 08:00,0.10,\nUntil: 12:00,0.30,\nUntil: 17:00,0.10,\nUntil: 19:00,0.05,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 06:00,0.0,\nUntil: 18:00,0.05,\nUntil: 24:00,0.0;"
@@ -161,6 +161,7 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "lobby", :prefix => "lobby_" do
+    parameter "zn_cool_size_factor", :default => 1.7
     parameter "oa_area", :default => 0.5['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
@@ -168,6 +169,7 @@ group "space_hvac" do
 
   import "zonehvac/hvac-zone.pxt", :group => "mech", :prefix => "mech_" do
     parameter "oa_area", :default => 0.15['CFM/ft2']
+    parameter "zn_cool_size_factor", :default => 1.6
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
@@ -180,6 +182,7 @@ group "space_hvac" do
 
   import "zonehvac/hvac-zone.pxt", :group => "office_large", :prefix => "office_large_" do
     parameter "oa_area", :default => 0.15['CFM/ft2']
+    parameter "zn_cool_size_factor", :default => 1.55
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
@@ -191,11 +194,11 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "warehouse_hvac_schs", :prefix => "warehouse_" do
-    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1,\nFor: Weekdays Weekends,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 24:00,0;"
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay Weekdays Weekends,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 24:00,0;"
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "office_hvac_schs", :prefix => "office_" do
-    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1.0,\nFor: Weekdays,\nUntil: 05:00,0.0,\nUntil: 24:00,1.0,\nFor: Saturday,\nUntil: 05:00,0.0,\nUntil: 19:00,1.0,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 24:00,0.0;"
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay Weekdays,\nUntil: 05:00,0.0,\nUntil: 24:00,1.0,\nFor: Saturday,\nUntil: 05:00,0.0,\nUntil: 19:00,1.0,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 24:00,0.0;"
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "plenum_hvac_schs", :prefix => "plenum_" do
