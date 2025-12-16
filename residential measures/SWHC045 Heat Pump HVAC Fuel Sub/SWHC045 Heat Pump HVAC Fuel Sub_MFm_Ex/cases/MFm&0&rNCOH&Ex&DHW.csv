@@ -4,3 +4,4 @@ skip,case_name,:heat_type,:combi,:boiler_eff,:boiler_eff_curve,:curve_evaluation
 ,RG-NCOH_equip-Boiler-AFUE82-FC,HW,,0.82,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F'],,,,,,,,,,,,,,,,,,
 ,RG-NCOH_equip-Boiler-AFUE84-FC,HW,,0.84,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F'],,,,,,,,,,,,,,,,,,
 ,RG-NCGF_equip-GasFurnace-AFUE78,GF,,,,,,,,,,0.12,0.24,0.8,,,,,,,,,,,,
+,RG-NCGF_equip-GasFurnace-AFUE80,GF,,,,,,,,,,0.12,0.24,0.82,,,,,,,,,,,,
