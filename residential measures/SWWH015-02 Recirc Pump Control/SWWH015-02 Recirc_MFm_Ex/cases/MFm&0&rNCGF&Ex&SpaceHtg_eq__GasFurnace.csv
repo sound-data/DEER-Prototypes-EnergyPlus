@@ -1,0 +1,3 @@
+skip,case_name,:recirc_schedule
+,RG-WaterHtg_eq-FlowCtrl-Full-RecircLoop-Std,DH Load Profile Constant Flow Frac Schedule
+,RG-WaterHtg_eq-FlowCtrl-Full-RecircLoop-Msr,DH Load Profile Varying Flow Frac Schedule
