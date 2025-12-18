@@ -37,8 +37,8 @@ NULL::FLOAT4 as "APreEUtherm",
 NULL::FLOAT4 as "AStdEUkWh",
 NULL::FLOAT4 as "AStdEUkW",
 NULL::FLOAT4 as "AStdEUtherm",
-"ElecImpactProfileID",
-"GasImpactProfileID",
+NULL as "ElecImpactProfileID",
+NULL as "GasImpactProfileID",
 20::INT2 as "Flag",
 ''::VARCHAR as "SourceDesc",
 --new fields added 6/20/2022
@@ -57,8 +57,10 @@ NULL::FLOAT4 as "AStdEUtherm",
 
 
 FROM
-meas_impacts_vint_wtd
-LEFT JOIN "ImpactProfiles" on "ImpactProfiles"."EnergyImpactID" = meas_impacts_vint_wtd."EnergyImpactID";
+meas_impacts_vint_wtd;
+
+--only use when ElecImpactProfileID / GasImpactProfileID needs to be populated
+--LEFT JOIN "ImpactProfiles" on "ImpactProfiles"."EnergyImpactID" = meas_impacts_vint_wtd."EnergyImpactID";
 
 ALTER TABLE "meas_impacts_2024_com"
 ALTER COLUMN "EnergyImpactID" SET NOT NULL,

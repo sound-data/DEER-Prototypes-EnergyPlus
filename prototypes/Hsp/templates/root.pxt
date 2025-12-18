@@ -176,6 +176,7 @@ end
 
 group "space_hvac" do
   import "zonehvac/hvac-zone.pxt", :group => "building" do # hardcode building-level defaults
+    include "disable_ems"
     parameter "oa_person", :default => 0['CFM']
     parameter "sat_min_dt", :default => 20.0['deltaF']
   end
@@ -324,6 +325,18 @@ group "hvac_system", :prefix => "main_" do
   parameter "hum_type", :default => "NONE"
   parameter "hum_cap", :default => nil
   parameter "return_plenum", :default => false
+  #TRC - SWHC041-05 updates measure: Adding the following variables to parameterize the multi-speed operation air flow ratio and associated supply fan power for UnitarySystems
+  parameter "single_mode_operation", :default => "No"
+  parameter "low_heating_supply_air_ratio", :default => 0.75
+  parameter "low_cooling_supply_air_ratio", :default => 0.75
+  parameter "ventilation_supply_air_ratio", :default => 0.40
+  parameter "constant_fan_speed_power_frac", :default => 1.0
+  parameter "fan_speed_1_flow_frac", :default => 0.72
+  parameter "fan_speed_1_power_frac", :default => 0.418596373
+  parameter "fan_speed_2_flow_frac", :default => 0.72
+  parameter "fan_speed_2_power_frac", :default => 0.418596373
+  parameter "fan_speed_3_flow_frac", :default => 1
+  parameter "fan_speed_3_power_frac", :default => 1
 end
 
 group "alt_hvac_zone", :prefix => "alt_" do
@@ -693,7 +706,7 @@ for zone in all_zones
     :sys_name => "#{this_hvac_type}-#{sys_name}",
     :clear_water_storage_tank => condensate_collection,
     :clear_water_supply_tank => clear_water_supply_tank,
-    **( this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
+    **( space_hvac.building | this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
 
   branch_name = "#{zone_name} #{this_hvac_type}"
 
@@ -751,10 +764,10 @@ end
 
 vrfc_branches.each_key do |sys_name|
   insert "system/vrfc.pxt", **vrf,
-    :name => "#{hvac_type}-#{sys_name}",
+    :name => "#{this_hvac_type}-#{sys_name}",
     :branches => vrfc_branches[sys_name],
-    :op_sch => hvac_sch,
-    **local(:cool_coil_cop, :heat_coil_cop)
+    :cool_coil_cop => this_hvac[:cool_coil_cop],
+    :heat_coil_cop => this_hvac[:heat_coil_cop]
 end
 
 systems_table.each_key do |system_name|
@@ -792,7 +805,7 @@ for zone in irregular_zones
     :zone_name => zone_name,
     :zone_area => zone_area,
     :sys_name => sys_name,
-    **(zone_hvac_group)
+    **(space_hvac.building | zone_hvac_group)
 
   branch_name = "#{zone_name} SZ-#{zone_ahu_type}"
   ahu_branches[sys_name] ||= []
