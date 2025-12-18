@@ -218,10 +218,11 @@ for case in cohort_cases:
     print(f'processing all annual data that are grouped in {case}')
     cohort_dict = parse_measure_name(case)
     sim_annual_i = annual_raw_parsing(annual_df[annual_df['File Name'].str.contains(case)].copy(), cohort_dict)
+    sim_annual_i['Measure Group Name'] = case #add in "meaasure group name" for looking up tech type / tech groups later
     sim_annual_proto = pd.concat([sim_annual_proto, sim_annual_i])
     print('ok.')
 sim_annual_proto = end_use_rearrange(sim_annual_proto)
-sim_annual_v1 = sim_annual_proto[['TechID', 'BldgLoc', 'BldgType', 'BldgHVAC', 'BldgVint', 'kwh_tot', 'kwh_ltg', 'kwh_task',
+sim_annual_v1 = sim_annual_proto[['TechID', 'Measure Group Name', 'BldgLoc', 'BldgType', 'BldgHVAC', 'BldgVint', 'kwh_tot', 'kwh_ltg', 'kwh_task',
     'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
     'kwh_venthtg', 'kwh_ventclg',
     'kwh_refg', 'kwh_hpsup', 'kwh_shw', 'kwh_ext', 'thm_tot', 'thm_equip',
@@ -342,6 +343,68 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr07',     'hr08',     'hr09',     'hr10',     'hr11',     'hr12',
         'hr13',     'hr14',     'hr15',     'hr16',     'hr17',     'hr18',
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
+#%%
+# 10/15/2025 Hourly consumption output reformatting request
+
+# use the hourly data before long2wide pivot transform
+converted_long_df = pd.DataFrame()
+
+for i in range(0,len(fyr_hrly.columns)):
+    
+    #isolate single column
+    hrly_df = pd.DataFrame(fyr_hrly.iloc[:,i])
+    
+    #create separate metadata columns
+    col_names = hrly_df.columns[0].split('/')
+    
+    #create new key column for merge
+    hrly_df['hr in 8760'] = (hrly_df.index) + 1
+    
+    #merge based on "hr in 8760" column, the 8760 map
+    hrly_mapped = pd.merge(hrly_df, annual_map, on='hr in 8760')
+
+    cohort = parse_measure_name(col_names[1])
+
+    #rename / rearrange columns
+    hrly_mapped.rename(columns={hrly_mapped.columns[0]: 'Total_Elec_Consumption'}, inplace=True)
+    hrly_mapped['BldgLoc'] = col_names[0]
+    hrly_mapped['BldgType'] = cohort['BldgType']
+    hrly_mapped['BldgHVAC'] = cohort['BldgHVAC']
+    hrly_mapped['BldgVint'] = cohort['BldgVint']
+    hrly_mapped['TechGroup'] = cohort['Measure']
+    hrly_mapped['Measure Group Name'] =col_names[1] #use this to look up tech group tech type
+    hrly_mapped['TechID'] = col_names[2]
+    hrly_mapped['file'] = col_names[3]
+
+    converted_long_df = pd.concat([converted_long_df, hrly_mapped])
+
+    # #transform data format
+    # hrly_wide = long2wide_pivot(hrly_mapped, hrly_mapped.columns[0])
+    
+    # #add meta data col
+    # hrly_wide['BldgLoc'] = col_names[0]
+    # hrly_wide['BldgType'] = col_names[1]
+    # hrly_wide['TechID'] = col_names[2]
+    # hrly_wide['file'] = col_names[3]
+    
+    # #append to master df
+    # #converted_df = converted_df.append(hrly_wide) #deprecated method
+    # converted_df = pd.concat([converted_df, hrly_wide])
+    print(f"col {i} long format loaded.")
+
+#%%
+#Setup a lookup using Measure Group name, to lookup for TechGroup_ee, TechType_ee
+TechGroup_lookup_map = df_measure.set_index('Measure Group Name')['TechGroup_ee'].to_dict()
+TechType_lookup_map = df_measure.set_index('Measure Group Name')['TechType_ee'].to_dict()
+
+#add corresponding TechGroup and TechType
+converted_long_df['TechGroup'] = converted_long_df['Measure Group Name'].map(TechGroup_lookup_map)
+converted_long_df['TechType'] = converted_long_df['Measure Group Name'].map(TechType_lookup_map)
+#%%
+
+#convert from J to kWh
+converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Consumption']/3600000
+
 # %%
 ##STEP 3: Normalizing Units
 bldgtype = 'DMo'
@@ -357,6 +420,67 @@ elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation
 else:
     pass
 # %%
+##Long format data norm unit field updates
+
+#num unit will be per dwelling, so use roof area / num of dwellings (2 for SFM, DMo, 24 for MFm)
+converted_long_df['Normunit'] = df_measure['Normunit'].unique()[0]
+converted_long_df['Numunits'] = numunits/2
+
+#%%
+#need to divide each 8760 by its annual and its corresponding numunit
+#10/23/2025 maybe hold after they figure out smoothing/view multiple 8760s
+#1. grouby to find sum of each table via unique ID
+#2. merge as a new col in long df
+#3, divide
+
+#%%
+#convert to UEC by applying numunits
+converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
+
+#%%
+df_long = converted_long_df.sort_values(['BldgLoc', 'TechID', 'hr in 8760'])
+
+#%% 
+#create groupby ids for each 8760 set
+df_long['set_id'] = (df_long['hr in 8760'].eq(1)
+                .groupby([df_long['BldgLoc'], df_long['TechID']])
+                .cumsum())
+#calculate annual UEC
+df_long['annual_sum'] = (df_long
+    .groupby(['BldgLoc', 'TechID', 'set_id'])['UEC']
+    .transform('sum'))
+
+#%%
+#Calculate unitzed 8760 values based on annual sum of 8760
+df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
+#%%
+#rearrange / true-up columns
+
+df_long['Sector'] = 'Res' #this is DMo script, so Sector = Res
+df_long['Type'] = 'Whole Building'
+df_long['Status'] = ''
+df_long['Start Date'] = '1/1/2028'
+df_long['End Date'] = ''
+df_long['Source Year'] = 2015
+
+df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
+
+
+df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit', 'Numunits',
+         'Type','Status','Start Date', 'End Date', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'Hour of Year','UEC','UECproportion']]
+
+
+#%%
+#test export
+
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+
+df_long_final.to_csv('long_ls_test.csv', index=False)
+
+
+#%%
 ##Annual Data final field fixes
 #note normunit = building area (conditioned)
 sim_annual_v1['SizingID'] = 'None'
