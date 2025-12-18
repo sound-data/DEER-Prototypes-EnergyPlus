@@ -6,5 +6,5 @@ capacity. However, the maximum capacity available from compressors can be
 determined by inspecting the capacity performance curves, and hourly outputs
 are available for cooling demand and cooling delivered to evaporators.
 
-- Compressor capacity available: See [Gro compressor list.xlsx](Gro compressor list.xlsx).
+- Compressor capacity available: See [Gro_compressor_list.xlsx](Gro_compressor_list.xlsx).
 - Cooling demand / capacity utilized: not analyzed.
