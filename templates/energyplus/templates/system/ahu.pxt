@@ -31,6 +31,7 @@ parameter "oa_frac_sch", :name => "Outdoor Air Schedule", :description => "Outdo
 parameter "oa_frac_max_sch", :name => "Outdoor Air Schedule", :description => "Outdoor air schedule controls when ventilation air is supplied",
   :default => "NONE"
 
+parameter "zone_max_oa_frac", :default => 1
 parameter "oa_min_flow", :default => Autosize  # Minimum design outdoor air flow rate {m3/s}
 parameter "oa_max_flow", :default => Autosize  # Maximum design outdoor air flow rate {m3/s}
 # or should be:?  oa_flow_min, oa_flow_max
@@ -410,7 +411,7 @@ Sizing:System,
 <% if ahu_type == "DOAS" %>
   ;                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
 <% else %>
-  1.0,                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
+  <%= zone_max_oa_frac %>, !- Zone Maximum Outdoor Air Fraction {dimensionless}
   CoolingDesignCapacity,   !- Cooling Design Capacity Method
   Autosize,                !- Cooling Design Capacity {W}
   ,                        !- Cooling Design Capacity Per Floor Area {W/m2}
