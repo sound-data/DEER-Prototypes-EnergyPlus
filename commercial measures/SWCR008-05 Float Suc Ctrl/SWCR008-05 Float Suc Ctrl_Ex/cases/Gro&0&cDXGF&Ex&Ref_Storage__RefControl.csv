@@ -1,6 +1,6 @@
 skip,case_name,:refsys_condenser_type,:refsys_suction_temperature_control
 #,defaults,,
-,NE-Ref_Storage-RefControl-FltSucTemp-AirCool ,AirCooled,FloatSuctionTemperature
-,NE-Ref_Storage-RefControl-FixSucTemp-AirCool ,AirCooled,ConstantSuctionTemperature
-,NE-Ref_Storage-RefControl-FltSucTemp-EvapCool ,EvaporativelyCooled,FloatSuctionTemperature
-,NE-Ref_Storage-RefControl-FixSucTemp-EvapCool ,EvaporativelyCooled,ConstantSuctionTemperature
+,NE-Ref_Storage-RefControl-FltSucTemp-AirCool,AirCooled,FloatSuctionTemperature
+,NE-Ref_Storage-RefControl-FixSucTemp-AirCool,AirCooled,ConstantSuctionTemperature
+,NE-Ref_Storage-RefControl-FltSucTemp-EvapCool,EvaporativelyCooled,FloatSuctionTemperature
+,NE-Ref_Storage-RefControl-FixSucTemp-EvapCool,EvaporativelyCooled,ConstantSuctionTemperature
