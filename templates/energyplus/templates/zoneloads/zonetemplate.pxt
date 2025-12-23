@@ -82,11 +82,22 @@ parameter "int_mass_ratio", :name => "Internal Mass Area Ratio", :description =>
 
 parameter "graywater_storage_tank", :default=> "" # variable creates tank to store graywater from sinks, showers, laundry, dishwashing
 parameter "graywater_supply_tank", :default=> "" # variable creates tank to supply graywater for toilet flushing
+
+parameter "door_zone", :default=>" "
+parameter "infil_mod", :default=>0
+
 %>
 <%
 # Calculate infiltration rate from leakage rate by adjusting to normal building pressurization at 5 Pa.
 infil_area_adj = infil_area * (5.0 / 75.0)**0.65
 %>
+
+<%
+if zone_name != door_zone 
+  infil_mod = 0
+end
+%>
+
 <%
 # Calculate dhw_flow from dhw_flow_area
 if dhw_flow_area > 0 && dhw_flow == 0
@@ -114,6 +125,20 @@ ZoneInfiltration:DesignFlowRate,
   <%= zone_name %> Infiltration,  !- Name
   <%= zone_name %>,  !- Zone Name
   <%= zone_name %> Infiltration Schedule,  !- Schedule Name
+    <%= infiltration_method %>,  !- Design Flow Rate Calculation Method
+  ,                        !- Design Flow Rate {m3/s}
+  ,                        !- Flow per Zone Floor Area {m3/s-m2}
+  <%= infil_area_adj + infil_mod %>,  !- Flow per Exterior Surface Area {m3/s-m2}
+  ,                        !- Air Changes per Hour
+  <%= infil_constant_coef %>,                        !- Constant Term Coefficient
+  ,                        !- Temperature Term Coefficient
+  <%= infil_velocity_coef %>,                        !- Velocity Term Coefficient
+  ;                        !- Velocity Squared Term Coefficient
+<% if infil_mod != 0 %>
+ZoneInfiltration:DesignFlowRate,
+  <%= zone_name %> Infiltration Design Day,  !- Name
+  <%= zone_name %>,  !- Zone Name
+  <%= zone_name %> Infiltration Design Day Schedule,  !- Schedule Name
   <%= infiltration_method %>,  !- Design Flow Rate Calculation Method
   ,                        !- Design Flow Rate {m3/s}
   ,                        !- Flow per Zone Floor Area {m3/s-m2}
@@ -123,12 +148,26 @@ ZoneInfiltration:DesignFlowRate,
   ,                        !- Temperature Term Coefficient
   <%= infil_velocity_coef %>,                        !- Velocity Term Coefficient
   ;                        !- Velocity Squared Term Coefficient
-
+<% end %>
 <% elsif (infil_area_adj > 0.0 && infiltration_method == 'Flow/ExteriorWallArea') %>
 ZoneInfiltration:DesignFlowRate,
   <%= zone_name %> Infiltration,  !- Name
   <%= zone_name %>,  !- Zone Name
   <%= zone_name %> Infiltration Schedule,  !- Schedule Name
+    <%= infiltration_method %>,  !- Design Flow Rate Calculation Method
+  ,                        !- Design Flow Rate {m3/s}
+  ,                        !- Flow per Zone Floor Area {m3/s-m2}
+  <%= infil_area_adj + infil_mod %>,   !- Flow per Exterior Surface Area {m3/s-m2}
+  ,                        !- Air Changes per Hour
+  <%= infil_constant_coef %>,                        !- Constant Term Coefficient
+  ,                        !- Temperature Term Coefficient
+  <%= infil_velocity_coef %>,                        !- Velocity Term Coefficient
+  ;                        !- Velocity Squared Term Coefficient
+<% if infil_mod != 0 %>
+ZoneInfiltration:DesignFlowRate,
+  <%= zone_name %> Infiltration Design Day,  !- Name
+  <%= zone_name %>,  !- Zone Name
+  <%= zone_name %> Infiltration Design Day Schedule,  !- Schedule Name
   <%= infiltration_method %>,  !- Design Flow Rate Calculation Method
   ,                        !- Design Flow Rate {m3/s}
   ,                        !- Flow per Zone Floor Area {m3/s-m2}
@@ -138,15 +177,38 @@ ZoneInfiltration:DesignFlowRate,
   ,                        !- Temperature Term Coefficient
   <%= infil_velocity_coef %>,                        !- Velocity Term Coefficient
   ;                        !- Velocity Squared Term Coefficient
+<% end %>
 <% else %>
     <% infil_ach = 0 %>
 <% end %>
 <% if (infil_ach > 0.0 or infil_area_adj > 0.0) && (infiltration_method != "NONE") %>
+<% if infil_mod == 0 %>
 Schedule:Compact,
   <%= zone_name %> Infiltration Schedule,  !- Name
   Any Number,           !- Schedule Type Limits Name
   <%= infil_sch %>
-
+<% else %>
+Schedule:Compact,
+  <%= zone_name %> Infiltration Schedule,  !- Name
+  Any Number,           !- Schedule Type Limits Name
+  Through: 12/31,
+  For: WinterDesignDay SummerDesignDay,
+  Until: 24:00,
+  0,
+  For: AllOtherDays,
+  Until: 24:00,
+  1;
+Schedule:Compact,
+  <%= zone_name %> Infiltration Design Day Schedule,  !- Name
+  Any Number,           !- Schedule Type Limits Name
+  Through: 12/31,
+  For: WinterDesignDay SummerDesignDay,
+  Until: 24:00,
+  1,
+  For: AllOtherDays,
+  Until: 24:00,
+  0;
+<% end %>
 <% end %>
 
 <% if (light_area > 0.0) %>
