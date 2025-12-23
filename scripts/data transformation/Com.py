@@ -468,6 +468,56 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr13',     'hr14',     'hr15',     'hr16',     'hr17',     'hr18',
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
 
+#%%
+#12/22/2025 CEDARS Hourly consumption output reformatting request
+# use the hourly data before long2wide pivot transform
+converted_long_df = pd.DataFrame()
+
+for i in range(0,len(fyr_hrly.columns)):
+    
+    #isolate single column
+    hrly_df = pd.DataFrame(fyr_hrly.iloc[:,i])
+    
+    #create separate metadata columns
+    col_names = hrly_df.columns[0].split('/')
+    
+    #create new key column for merge
+    hrly_df['hr in 8760'] = (hrly_df.index) + 1
+    
+    #merge based on "hr in 8760" column, the 8760 map
+    hrly_mapped = pd.merge(hrly_df, annual_map, on='hr in 8760')
+
+    cohort = parse_measure_name(col_names[1])
+
+    #rename / rearrange columns
+    hrly_mapped.rename(columns={hrly_mapped.columns[0]: 'Total_Elec_Consumption'}, inplace=True)
+    hrly_mapped['BldgLoc'] = col_names[0]
+    hrly_mapped['BldgType'] = cohort['BldgType']
+    hrly_mapped['BldgHVAC'] = cohort['BldgHVAC']
+    hrly_mapped['BldgVint'] = cohort['BldgVint']
+    hrly_mapped['TechGroup'] = cohort['Measure']
+    hrly_mapped['Measure Group Name'] =col_names[1] #use this to look up tech group tech type
+    hrly_mapped['TechID'] = col_names[2]
+    hrly_mapped['file'] = col_names[3]
+
+    converted_long_df = pd.concat([converted_long_df, hrly_mapped])
+
+    print(f"col {i} long format loaded.")
+
+
+#%%
+#Setup a lookup using Measure Group name, to lookup for TechGroup_ee, TechType_ee
+TechGroup_lookup_map = df_measure.set_index('Measure Group Name')['TechGroup_ee'].to_dict()
+TechType_lookup_map = df_measure.set_index('Measure Group Name')['TechType_ee'].to_dict()
+
+#add corresponding TechGroup and TechType
+converted_long_df['TechGroup'] = converted_long_df['Measure Group Name'].map(TechGroup_lookup_map)
+converted_long_df['TechType'] = converted_long_df['Measure Group Name'].map(TechType_lookup_map)
+
+#%%
+#convert from J to kWh
+converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Consumption']/3600000
+
 # %%
 ##STEP 3: Normalizing Units
 bldgtype = 'Com'
@@ -476,7 +526,87 @@ print(os.path.abspath(os.curdir))
 # %%
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
 # %%
-normunit = df_measure['Normunit'].unique()[0]
+#measure specific normalizing units table
+df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+#%%
+#finalize normalizing unit and number of units baesd on measure
+
+if len(df_numunits) == 1:
+    normunit = df_numunits['Normunit'].unique()[0]
+    numunits = df_numunits['Value'].unique()[0]
+    print('only 1 normalizing unit value across all data')
+elif len(df_numunits) > 1:
+    #mostly applies to Com (or any measure with multiple building types)
+    normunit = df_numunits['Normunit'].unique()[0]
+    numunit_lookup = df_numunits.set_index('BldgType')['Value'].to_dict()
+    print(f'building-type dependent numunits for this normalizing unit : {normunit}')
+else:
+    normunit = 'Each' #If normalizing unit isn't anything else, put default as each
+    numunits = 1
+    print('no other eligible normunits, using default Each')
+
+
+
+#%%
+##Long format data norm unit field updates
+#note the bldgtype specific numunit lookup
+
+converted_long_df['Normunit'] = normunit
+converted_long_df['Numunits'] = converted_long_df['BldgType'].map(numunit_lookup)
+
+#%%
+#Long format final field updates
+#need to divide each 8760 by its annual and its corresponding numunit
+#1. grouby to find sum of each table via unique ID
+#2. merge as a new col in long df
+#3, divide and clean up final columns
+
+#convert to UEC by applying numunits
+converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
+
+#sort
+df_long = converted_long_df.sort_values(['BldgType','BldgLoc', 'TechID', 'hr in 8760'])
+
+#%% 
+#create groupby ids for each 8760 set
+df_long['set_id'] = (df_long['hr in 8760'].eq(1)
+                .groupby([df_long['BldgLoc'], df_long['TechID']])
+                .cumsum())
+#calculate annual UEC
+df_long['annual_sum'] = (df_long
+    .groupby(['BldgLoc', 'TechID', 'set_id'])['UEC']
+    .transform('sum'))
+
+#%%
+#Calculate unitzed 8760 values based on annual sum of 8760
+df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
+#%%
+#rearrange / true-up columns
+
+df_long['Sector'] = 'Com' #this is Com script, so Sector = Com
+df_long['Type'] = 'Whole Building'
+df_long['Status'] = ''
+df_long['Start Date'] = '1/1/2028'
+df_long['End Date'] = ''
+df_long['Source Year'] = 2015
+
+df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
+
+#final table fields round-up
+#note: UEC and Numunits omitted from draft long table in the final table
+df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
+         'Type','Status','Start Date', 'End Date', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'Hour of Year','UECproportion']] 
+
+
+#%%
+#export CEDARS long 8760 csv
+
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+
+df_long_final.to_csv('CEDARS_long_ls_Com.csv', index=False)
+
 #%%
 ##Annual Data final field fixes
 
@@ -493,12 +623,12 @@ sim_annual_v1['Normunit'] = normunit
 #also add normunit (also the area) for the example measure
 #code may need to be tweaked if normalizing unit is different for a specific measure
 
-unit_lookup = df_normunits[['BldgType', 'Normunit', 'Value']]
+unit_lookup = df_numunits[['BldgType','Normunit','Value']]
 if normunit == 'Each':
     unit_table = unit_lookup[unit_lookup['Normunit']=='Each'][['Normunit','Value']]
-    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on='Normunit')
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
 else:
-    sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on='Normunit')
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on=['BldgType','Normunit'])
 sim_annual_v2['numunits'] = sim_annual_v2['Value']
 
 #%%

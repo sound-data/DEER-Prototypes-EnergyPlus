@@ -344,7 +344,7 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr13',     'hr14',     'hr15',     'hr16',     'hr17',     'hr18',
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
 #%%
-# 10/15/2025 Hourly consumption output reformatting request
+# 10/15/2025 CEDARS Hourly consumption output reformatting request
 
 # use the hourly data before long2wide pivot transform
 converted_long_df = pd.DataFrame()
@@ -435,12 +435,10 @@ converted_long_df['Numunits'] = numunits/2
 
 #%%
 #need to divide each 8760 by its annual and its corresponding numunit
-#10/23/2025 maybe hold after they figure out smoothing/view multiple 8760s
 #1. grouby to find sum of each table via unique ID
 #2. merge as a new col in long df
-#3, divide
+#3, divide and clean up final columns
 
-#%%
 #convert to UEC by applying numunits
 converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
 
@@ -481,12 +479,12 @@ df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','N
 
 
 #%%
-#test export
+#export CEDARS long 8760 csv
 
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-df_long_final.to_csv('long_ls_test.csv', index=False)
+df_long_final.to_csv('CEDARS_long_ls_DMo.csv', index=False)
 
 
 #%%
