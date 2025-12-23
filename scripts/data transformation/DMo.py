@@ -413,17 +413,24 @@ print(os.path.abspath(os.curdir))
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
 numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['Value', 'Msr']]
 
-if len(numunits_vals) == 1:
-    numunits = list(numunits_vals['Value'])[0]
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
-    numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
+#%%
+#measure specific normalizing units table
+df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+
+if len(df_numunits) == 1:
+    normunit = df_numunits['Normunit'].unique()[0]
+    numunits = df_numunits['Value'].unique()[0]
+elif len(df_numunits) > 1:
+    pass #come back to this with Com (multiple building types)
 else:
-    pass
+    normunit = 'Each' #If normalizing unit isn't anything else, put default as each
+    numunits = 1
+
 # %%
 ##Long format data norm unit field updates
 
 #num unit will be per dwelling, so use roof area / num of dwellings (2 for SFM, DMo, 24 for MFm)
-converted_long_df['Normunit'] = df_measure['Normunit'].unique()[0]
+converted_long_df['Normunit'] = normunit
 converted_long_df['Numunits'] = numunits/2
 
 #%%
@@ -465,10 +472,12 @@ df_long['Source Year'] = 2015
 
 df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 
-
-df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit', 'Numunits',
+#final table fields round-up
+#note: UEC and Numunits omitted from draft long table in the final table
+df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
          'Type','Status','Start Date', 'End Date', 'Source Year', 'TechGroup', 'TechType','TechID',
-         'Hour of Year','UEC','UECproportion']]
+         'Hour of Year','UECproportion']] 
+
 
 
 #%%
