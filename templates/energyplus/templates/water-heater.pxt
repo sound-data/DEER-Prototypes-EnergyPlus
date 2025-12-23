@@ -469,6 +469,22 @@ Branch,
     <%= water_heater_name %> DHW water use,     !- Component 1 Name
     <%= water_heater_name %> Water Sink Inlet Node,  !- Component 1 Inlet Node Name
     <%= water_heater_name %> Water Sink Outlet Node;  !- Component 1 Outlet Node Name
+	
+Branch,
+    <%= water_heater_name %> DH Load Profile Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    LoadProfile:Plant,       !- Component 1 Object Type
+    DH Load Profile,         !- Component 1 Name
+    DH Demand Load Profile Inlet Node,  !- Component 1 Inlet Node Name
+    DH Demand Load Profile Outlet Node,  !- Component 1 Outlet Node Name
+	Pump:VariableSpeed,      !- Component 2 Object Type
+    DH Load Profile Pump,    !- Component 2 Name
+    DH Demand Load Profile Outlet Node,  !- Component 2 Inlet Node Name
+    DH Load Profile Pump Oulet Node,  !- Component 2 Outlet Node Name
+    Pipe:Indoor,             !- Component 3 Object Type
+    DH LoadProfile Non-Adiabatic Outlet Pipe_unit1,  !- Component 3 Name
+    DH Load Profile Pump Oulet Node,  !- Component 3 Inlet Node Name
+    DH LoadProfile Non-Adiabatic Outlet Node;  !- Component 3 Outlet Node Name
 
 Branch,
     <%= water_heater_name %> Mains Makeup Branch,  !- Name
@@ -488,12 +504,14 @@ BranchList,
     <%= water_heater_name %> DHW Demand Branches,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Branch 1 Name
     <%= water_heater_name %> Water Use Branch,  !- Branch 2 Name
-    <%= water_heater_name %> Mains Makeup Branch;  !- Branch 3 Name
+	<%= water_heater_name %> DH Load Profile Branch,  !- Branch 3 Name
+    <%= water_heater_name %> Mains Makeup Branch;  !- Branch 4 Name
 
 Connector:Splitter,
     <%= water_heater_name %> DHW Demand Splitter,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Inlet Branch Name
     <%= water_heater_name %> Water Use Branch;  !- Outlet Branch 1 Name
+    <%= water_heater_name %> DH Load Profile Branch;  !- Outlet Branch 2 Name	
 
 Connector:Splitter,
     <%= water_heater_name %> DHW Supply Splitter,  !- Name
@@ -504,6 +522,7 @@ Connector:Mixer,
     <%= water_heater_name %> DHW Demand Mixer,  !- Name
     <%= water_heater_name %> Mains Makeup Branch,  !- Outlet Branch Name
     <%= water_heater_name %> Water Use Branch;  !- Inlet Branch 1 Name
+    <%= water_heater_name %> DH Load Profile Branch;  !- Inlet Branch 2 Name	
 
 Connector:Mixer,
     <%= water_heater_name %> DHW Supply Mixer,  !- Name
@@ -538,6 +557,18 @@ Pipe:Adiabatic,
     <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Node,  !- Inlet Node Name
     <%= water_heater_name %> DHW Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+	
+Pipe:Indoor,
+    DH LoadProfile Non-Adiabatic Outlet Pipe_unit1,  !- Name
+    Insulated Pipe,          !- Construction Name
+    DH Load Profile Pump Oulet Node,  !- Fluid Inlet Node Name
+    DH LoadProfile Non-Adiabatic Outlet Node,  !- Fluid Outlet Node Name
+    Schedule,                !- Environment Type
+    ,                        !- Ambient Temperature Zone Name
+    Ambient Varying Zone Temperature ,  !- Ambient Temperature Schedule Name
+    Ambient Air Velocity,    !- Ambient Air Velocity Schedule Name
+    0.0254,                  !- Pipe Inside Diameter {m}
+    60.9600000000001;        !- Pipe Length {m}
 
 Pump:VariableSpeed,
     <%= water_heater_name %> mains Pressure,    !- Name
@@ -554,6 +585,38 @@ Pump:VariableSpeed,
     0,                       !- Coefficient 4 of the Part Load Performance Curve
     0,                       !- Design Minimum Flow Rate {m3/s}
     Intermittent;            !- Pump Control Type
+	
+Pump:VariableSpeed,
+    DH Load Profile Pump,    !- Name
+    DH Demand Load Profile Outlet Node,  !- Inlet Node Name
+    DH Load Profile Pump Oulet Node,  !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    21521.4467194739,        !- Design Pump Head {Pa}
+    autosize,                !- Design Power Consumption {W}
+    0.9,                     !- Motor Efficiency
+    ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+    ,                        !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    ,                        !- Coefficient 3 of the Part Load Performance Curve
+    ,                        !- Coefficient 4 of the Part Load Performance Curve
+    0,                       !- Design Minimum Flow Rate {m3/s}
+    Intermittent,            !- Pump Control Type
+    ,                        !- Pump Flow Rate Schedule Name
+    ,                        !- Pump Curve Name
+    ,                        !- Impeller Diameter {m}
+    ,                        !- VFD Control Type
+    ,                        !- Pump RPM Schedule Name
+    ,                        !- Minimum Pressure Schedule {Pa}
+    ,                        !- Maximum Pressure Schedule {Pa}
+    ,                        !- Minimum RPM Schedule {rev/min}
+    ,                        !- Maximum RPM Schedule {rev/min}
+    ,                        !- Zone Name
+    ,                        !- Skin Loss Radiative Fraction
+    PowerPerFlowPerPressure, !- Design Power Sizing Method
+    348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+    1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+    ,                        !- Design Minimum Flow Rate Fraction
+    General;                 !- End-Use Subcategory
 
 PlantLoop,
     <%= water_heater_name %> DHW Loop,          !- Name
@@ -575,6 +638,14 @@ PlantLoop,
     <%= water_heater_name %> DHW Demand Branches,  !- Demand Side Branch List Name
     <%= water_heater_name %> DHW Demand Connectors,  !- Demand Side Connector List Name
     Optimal;                 !- Load Distribution Scheme
+	
+LoadProfile:Plant,
+    DH Load Profile,         !- Name
+    DH Demand Load Profile Inlet Node,  !- Inlet Node Name
+    DH Demand Load Profile Outlet Node,  !- Outlet Node Name
+    DH Load Profile Load Schedule,  !- Load Schedule Name
+    0.0030283296,            !- Peak Flow Rate {m3/s}
+    <%= recirc_schedule %>;  !- Flow Rate Fraction Schedule Name
 
 PlantEquipmentOperation:HeatingLoad,
     <%= water_heater_name %> DHW Control Scheme,!- Name
@@ -601,3 +672,18 @@ Sizing:Plant,
     Heating,                 !- Loop Type
     <%= loop_sept %>,        !- Design Loop Exit Temperature {C}
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
+	
+Output:Variable,
+    DH Demand Load Profile Inlet Node,  !- Key Value
+    System Node Temperature ,!- Variable Name
+    Hourly;                  !- Reporting Frequency
+	
+Output:Variable,
+    DH Load Profile Pump,    !- Key Value
+    Pump Mass Flow Rate ,    !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    DH Load Profile Pump,    !- Key Value
+    Pump Electricity Energy ,!- Variable Name
+    Hourly;                  !- Reporting Frequency

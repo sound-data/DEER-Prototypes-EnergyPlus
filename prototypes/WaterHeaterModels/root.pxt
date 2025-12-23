@@ -1,8 +1,14 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+# recirc schedule parameter
+parameter "recirc_schedule", :default=>'DH Load Profile Constant Flow Frac Schedule'
+%>
+
 <%#INTERFACE
 import "water-heater.pxt", :group=> "water_heater" do
     include "*"
 end
-
 %>
 
 <%
@@ -1502,6 +1508,244 @@ Schedule:Year,
 !-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:COMPACT ===========
 
 Schedule:Compact,
+    always_off DH,           !- Name
+    On/Off,                  !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    0;                       !- Field 4
+
+Schedule:Compact,
+    DH dhw_setpt,            !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until 24:00,             !- Field 3
+    57;                      !- Field 4
+
+Schedule:Compact,
+    DH Boiler Temp Setpoint, !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until 24:00,             !- Field 3
+    57;                      !- Field 4
+
+Schedule:Compact,
+    DH Fractional Sch-Water Fixture,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 1:00,             !- Field 3
+    0.011,                   !- Field 4
+    Until: 2:00,             !- Field 5
+    0.006,                   !- Field 6
+    Until: 3:00,             !- Field 7
+    0.004,                   !- Field 8
+    Until: 4:00,             !- Field 9
+    0.005,                   !- Field 10
+    Until: 5:00,             !- Field 11
+    0.008,                   !- Field 12
+    Until: 6:00,             !- Field 13
+    0.022,                   !- Field 14
+    Until: 7:00,             !- Field 15
+    0.05,                    !- Field 16
+    Until: 8:00,             !- Field 17
+    0.064,                   !- Field 18
+    Until: 9:00,             !- Field 19
+    0.07,                    !- Field 20
+    Until: 10:00,            !- Field 21
+    0.066,                   !- Field 22
+    Until: 11:00,            !- Field 23
+    0.058,                   !- Field 24
+    Until: 12:00,            !- Field 25
+    0.05,                    !- Field 26
+    Until: 13:00,            !- Field 27
+    0.045,                   !- Field 28
+    Until: 14:00,            !- Field 29
+    0.04,                    !- Field 30
+    Until: 15:00,            !- Field 31
+    0.037,                   !- Field 32
+    Until: 16:00,            !- Field 33
+    0.035,                   !- Field 34
+    Until: 17:00,            !- Field 35
+    0.04,                    !- Field 36
+    Until: 18:00,            !- Field 37
+    0.049,                   !- Field 38
+    Until: 19:00,            !- Field 39
+    0.059,                   !- Field 40
+    Until: 20:00,            !- Field 41
+    0.061,                   !- Field 42
+    Until: 21:00,            !- Field 43
+    0.056,                   !- Field 44
+    Until: 22:00,            !- Field 45
+    0.048,                   !- Field 46
+    Until: 23:00,            !- Field 47
+    0.036,                   !- Field 48
+    Until: 24:00,            !- Field 49
+    0.023;                   !- Field 50
+
+Schedule:Compact,
+    DH Load Profile Varying Flow Frac Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 1:00,             !- Field 3
+    0.00472,                 !- Field 4
+    Until: 2:00,             !- Field 5
+    0.00547,                 !- Field 6
+    Until: 3:00,             !- Field 7
+    0.00602,                 !- Field 8
+    Until: 4:00,             !- Field 9
+    0.00591,                 !- Field 10
+    Until: 5:00,             !- Field 11
+    0.00547,                 !- Field 12
+    Until: 6:00,             !- Field 13
+    0.00465,                 !- Field 14
+    Until: 7:00,             !- Field 15
+    0.00412,                 !- Field 16
+    Until: 8:00,             !- Field 17
+    0.00363,                 !- Field 18
+    Until: 9:00,             !- Field 19
+    0.00311,                 !- Field 20
+    Until: 10:00,            !- Field 21
+    0.00301,                 !- Field 22
+    Until: 11:00,            !- Field 23
+    0.00283,                 !- Field 24
+    Until: 12:00,            !- Field 25
+    0.00269,                 !- Field 26
+    Until: 13:00,            !- Field 27
+    0.00256,                 !- Field 28
+    Until: 14:00,            !- Field 29
+    0.00251,                 !- Field 30
+    Until: 15:00,            !- Field 31
+    0.00231,                 !- Field 32
+    Until: 16:00,            !- Field 33
+    0.00229,                 !- Field 34
+    Until: 17:00,            !- Field 35
+    0.00236,                 !- Field 36
+    Until: 18:00,            !- Field 37
+    0.00246,                 !- Field 38
+    Until: 19:00,            !- Field 39
+    0.00256,                 !- Field 40
+    Until: 20:00,            !- Field 41
+    0.00276,                 !- Field 42
+    Until: 21:00,            !- Field 43
+    0.00314,                 !- Field 44
+    Until: 22:00,            !- Field 45
+    0.00353,                 !- Field 46
+    Until: 23:00,            !- Field 47
+    0.00377,                 !- Field 48
+    Until: 24:00,            !- Field 49
+    0.00412;                 !- Field 50
+
+Schedule:Compact,
+    DH Load Profile Load Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    0;                       !- Field 4
+
+Schedule:Compact,
+    Ambient Air Velocity,    !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    470;                     !- Field 4
+
+Schedule:Compact,
+    Ambient Varying Zone Temperature ,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 1:00,             !- Field 3
+    16.8,                    !- Field 4
+    Until: 2:00,             !- Field 5
+    16.2,                    !- Field 6
+    Until: 3:00,             !- Field 7
+    15.7,                    !- Field 8
+    Until: 4:00,             !- Field 9
+    15.1,                    !- Field 10
+    Until: 5:00,             !- Field 11
+    14.6,                    !- Field 12
+    Until: 6:00,             !- Field 13
+    14,                      !- Field 14
+    Until: 7:00,             !- Field 15
+    15.1,                    !- Field 16
+    Until: 8:00,             !- Field 17
+    18.4,                    !- Field 18
+    Until: 9:00,             !- Field 19
+    22.3,                    !- Field 20
+    Until: 10:00,            !- Field 21
+    23.1,                    !- Field 22
+    Until: 11:00,            !- Field 23
+    24.6,                    !- Field 24
+    Until: 12:00,            !- Field 25
+    25.8,                    !- Field 26
+    Until: 13:00,            !- Field 27
+    26.9,                    !- Field 28
+    Until: 14:00,            !- Field 29
+    27.4,                    !- Field 30
+    Until: 15:00,            !- Field 31
+    28.9,                    !- Field 32
+    Until: 16:00,            !- Field 33
+    29.1,                    !- Field 34
+    Until: 17:00,            !- Field 35
+    28.5,                    !- Field 36
+    Until: 18:00,            !- Field 37
+    27.6,                    !- Field 38
+    Until: 19:00,            !- Field 39
+    26.5,                    !- Field 40
+    Until: 20:00,            !- Field 41
+    25.1,                    !- Field 42
+    Until: 21:00,            !- Field 43
+    22.3,                    !- Field 44
+    Until: 22:00,            !- Field 45
+    19.6,                    !- Field 46
+    Until: 23:00,            !- Field 47
+    18.4,                    !- Field 48
+    Until: 24:00,            !- Field 49
+    17.3;                    !- Field 50
+
+Schedule:Compact,
+    Ambient Temperature Constant,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    41;                      !- Field 4
+
+Schedule:Compact,
+    DH Load Profile Constant Flow Frac Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    0.044;                   !- Field 4
+
+Schedule:Constant,
+    DHSupplySetpoint,        !- Name
+    Temperature,             !- Schedule Type Limits Name
+    57;                      !- Hourly Value
+
+Schedule:Constant,
+    DH Supply Inlet Node Setpoint,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+    40;                      !- Hourly Value
+
+Schedule:Constant,
+    DH Bypass Mass Flow Setpoint,  !- Name
+    any number,              !- Schedule Type Limits Name
+    0.002;                   !- Hourly Value
+
+Schedule:Constant,
+    DH Bath Out Mass Flow Setpoint,  !- Name
+    any number,              !- Schedule Type Limits Name
+    0;                       !- Hourly Value
+
+Schedule:Compact,
     heating_sch_DEER,        !- Name
     Temperature,             !- Schedule Type Limits Name
     Through:4/21,            !- Field 1
@@ -2095,7 +2339,7 @@ Schedule:Constant,
 Schedule:Constant,
     SSBWaterTempSchedule,    !- Name
     Temperature,             !- Schedule Type Limits Name
-    40.5555555555556;        !- Hourly Value
+    57;        !- Hourly Value
 
 Schedule:Constant,
     DHWSupplySetpoint,       !- Name
@@ -2298,8 +2542,8 @@ Material,
 Material,
     CopperPipe,              !- Name
     MediumRough,             !- Roughness
-    1.90500386169072E-02,    !- Thickness {m}
-    401,                     !- Conductivity {W/m-K}
+    0.1016000,               !- Thickness {m}
+    1.310000,                !- Conductivity {W/m-K}
     2243.000,                !- Density {kg/m3}
     837.0000,                !- Specific Heat {J/kg-K}
     0.9000000,               !- Thermal Absorptance
@@ -2517,10 +2761,32 @@ Material,
 Material,
     Pipe Insulation,         !- Name
     VeryRough,               !- Roughness
-    0.0127032520325203,      !- Thickness {m}
-    0.03317175,              !- Conductivity {W/m-K}
+    0.029999999944,          !- Thickness {m}
+    0.039999999942,          !- Conductivity {W/m-K}
     91.0,                    !- Density {kg/m3}
     836.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.5,                     !- Solar Absorptance
+    0.5;                     !- Visible Absorptance
+
+Material,
+    PipeInsulation,          !- Name
+    MediumRough,             !- Roughness
+    0.1016000,               !- Thickness {m}
+    1.310000,                !- Conductivity {W/m-K}
+    2243.000,                !- Density {kg/m3}
+    837.0000,                !- Specific Heat {J/kg-K}
+    0.9000000,               !- Thermal Absorptance
+    0.6500000,               !- Solar Absorptance
+    0.6500000;               !- Visible Absorptance
+
+Material,
+    Pipe Steel,              !- Name
+    Smooth,                  !- Roughness
+    3.00E-03,                !- Thickness {m}
+    45.31,                   !- Conductivity {W/m-K}
+    7833.0,                  !- Density {kg/m3}
+    500.0,                   !- Specific Heat {J/kg-K}
     0.9,                     !- Thermal Absorptance
     0.5,                     !- Solar Absorptance
     0.5;                     !- Visible Absorptance
@@ -2858,7 +3124,11 @@ Construction,
     floor_insulation_layer,  !- Outside Layer
     Conc HW 140lb 4in (HF-C5),  !- Layer 2
     Carpet_n_pad;            !- Layer 3
-
+	
+Construction,
+    Insulated Pipe,          !- Name
+    Pipe Insulation,         !- Outside Layer
+    Pipe Steel;              !- Layer 2
 
 !-   ===========  ALL OBJECTS IN CLASS: GLOBALGEOMETRYRULES ===========
 
@@ -5689,7 +5959,6 @@ Sizing:Plant,
     Heating,                 !- Loop Type
     48.8888888888889,        !- Design Loop Exit Temperature {C}
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
-
 
 !-   ===========  ALL OBJECTS IN CLASS: ZONECONTROL:THERMOSTAT ===========
 
