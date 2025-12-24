@@ -25,6 +25,9 @@ parameter "parasitic_fuel", :default=> "NaturalGas" #Electricity
 
 parameter "water_heater_zone", :default=> "EL7 North Perim Zn (G.N4)" # default at unconditioned zone
 parameter "water_use_zone", :default=> "EL7 South Perim Zn (G.S1)" #default at main conditioned zone
+
+# recirc schedule parameter
+parameter "recirc_schedule", :default=>'DH Load Profile Constant Flow Frac Schedule'
 %>
 
 <%
@@ -73,7 +76,7 @@ end
 Schedule:File,
     <%= water_heater_name %>_demand_frac_sch,  !- Name
     fraction,                !- Schedule Type Limits Name
-    ../../../../../hot water profile/<%= sch %>,  !- File Name
+    C:/DEER Models/SWWH015/residential measures/SWWH015-02 Recirc Pump Control/SWWH015-02 Recirc_MFm_Ex/hot water profile/<%= sch %>,  !- File Name
     1,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -471,7 +474,7 @@ Branch,
     <%= water_heater_name %> Water Sink Outlet Node;  !- Component 1 Outlet Node Name
 	
 Branch,
-    <%= water_heater_name %> DH Load Profile Branch,  !- Name
+    DH Load Profile Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
     LoadProfile:Plant,       !- Component 1 Object Type
     DH Load Profile,         !- Component 1 Name
@@ -504,14 +507,14 @@ BranchList,
     <%= water_heater_name %> DHW Demand Branches,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Branch 1 Name
     <%= water_heater_name %> Water Use Branch,  !- Branch 2 Name
-	<%= water_heater_name %> DH Load Profile Branch,  !- Branch 3 Name
+	DH Load Profile Branch,  !- Branch 3 Name
     <%= water_heater_name %> Mains Makeup Branch;  !- Branch 4 Name
 
 Connector:Splitter,
     <%= water_heater_name %> DHW Demand Splitter,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Inlet Branch Name
-    <%= water_heater_name %> Water Use Branch;  !- Outlet Branch 1 Name
-    <%= water_heater_name %> DH Load Profile Branch;  !- Outlet Branch 2 Name	
+    <%= water_heater_name %> Water Use Branch,  !- Outlet Branch 1 Name
+    DH Load Profile Branch;  !- Outlet Branch 2 Name	
 
 Connector:Splitter,
     <%= water_heater_name %> DHW Supply Splitter,  !- Name
@@ -521,8 +524,8 @@ Connector:Splitter,
 Connector:Mixer,
     <%= water_heater_name %> DHW Demand Mixer,  !- Name
     <%= water_heater_name %> Mains Makeup Branch,  !- Outlet Branch Name
-    <%= water_heater_name %> Water Use Branch;  !- Inlet Branch 1 Name
-    <%= water_heater_name %> DH Load Profile Branch;  !- Inlet Branch 2 Name	
+    <%= water_heater_name %> Water Use Branch,  !- Inlet Branch 1 Name
+    DH Load Profile Branch;  !- Inlet Branch 2 Name	
 
 Connector:Mixer,
     <%= water_heater_name %> DHW Supply Mixer,  !- Name
