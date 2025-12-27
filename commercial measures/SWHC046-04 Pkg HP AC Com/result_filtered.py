@@ -39,30 +39,50 @@ class CoilListProcessor:
         self.df_filtered = pd.merge(self.sim_sizing_data,
                                     self.coil_list_df,
                                     left_on=['RowName', self.sim_sizing_data['building type'].str.lower()],
-                                    right_on=['cooling coil name', self.coil_list_df['building type'].str.lower()])
+                                    right_on=['object name', self.coil_list_df['building type'].str.lower()])
         
         # Aggregate the filtered dataframe by adding up desired normunits based on file names
-        self.sizing_agg_filtered = self.df_filtered.groupby(['File Name'])['Value'].sum()
-        self.sizing_agg_filtered.name = self.normunit
+        # Outputs a pandas.Series indexed by filename
+        series_agg_values = self.df_filtered.groupby(['File Name'])['Value'].sum()
+        series_agg_values.name = self.normunit
+        # Drop the index to a regular column named 'File Name'
+        # Outputs a pandas.DataFrame
+        df1 = series_agg_values.reset_index()
+
+        # Get additional metadata from filename based on DEER prototypes conventions
+        # Outputs a pandas.DataFrame
+        pattern = r'(?P<BldgLoc>CZ\d\d)/(?P<BldgType>\w+)&(?P<Story>\w+)&(?P<BldgHVAC>\w+)&(?P<BldgVint>\w+)&(?P<TechGroup>\w+)__(?P<TechType>\w+)/(?P<TechID>[^/]+)/instance.*'
+        #pattern = r'(?P<BldgLoc>CZ\d\d)/(?P<Cohort>[^/]+)/(?P<Case>[^/]+)/instance.*'
+        df2 = df1['File Name'].str.extract(pattern)
+        df2.set_index(df1.index)
+        self.sizing_agg_filtered = pd.concat([df1, df2],axis=1)
         
     def save_processed_data(self, output_csv):
         # Save the aggregated data to a CSV file
-        self.sizing_agg_filtered.to_csv(output_csv, index=True)
+        self.sizing_agg_filtered.to_csv(output_csv, index=False)
 
 
 def process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv):
     # Initialize and process data using CoilListProcessor class
     processor = CoilListProcessor(normunit, excel_file_path, sizing_detail_csv)
+    print(f"Reading from '{excel_file_path}' and '{sizing_detail_csv}' ...")
     processor.read_data()
+    print(f"Filtering objects and calculating aggregated sum ...")
     processor.process_data()
+    print(f"Writing '{output_csv}' ...")
     processor.save_processed_data(output_csv)
-    print("script ran successfully")
+    print("Done.")
 
 # Example usage:
 if __name__ == "__main__":
     normunit = "Cooling Capacity (W)"
     excel_file_path = 'coil_list.xlsx'
-    sizing_detail_csv = 'results-sizing-detail.csv'
-    output_csv = 'sizing_agg_filtered.csv'
 
+
+    sizing_detail_csv = 'SWHC046-04 Pkg HP AC Com_Ex/results-sizing-detail.csv'
+    output_csv = 'SWHC046-04 Pkg HP AC Com_Ex/sizing_agg_filtered.csv'
+    process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)
+
+    sizing_detail_csv = 'SWHC046-04 Pkg HP AC Com_Htl_Ex/results-sizing-detail.csv'
+    output_csv = 'SWHC046-04 Pkg HP AC Com_Htl_Ex/sizing_agg_filtered.csv'
     process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)
