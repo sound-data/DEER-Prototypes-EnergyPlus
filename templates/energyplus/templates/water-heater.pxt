@@ -640,7 +640,11 @@ PlantLoop,
     <%= water_heater_name %> Mains Makeup Node, !- Demand Side Outlet Node Name
     <%= water_heater_name %> DHW Demand Branches,  !- Demand Side Branch List Name
     <%= water_heater_name %> DHW Demand Connectors,  !- Demand Side Connector List Name
-    Optimal;                 !- Load Distribution Scheme
+	Optimal,                 !- Load Distribution Scheme
+    ,                        !- Availability Manager List Name
+    SingleSetpoint,          !- Plant Loop Demand Calculation Scheme
+    CommonPipe,              !- Common Pipe Simulation
+    None;                    !- Pressure Simulation Type
 	
 LoadProfile:Plant,
     DH Load Profile,         !- Name
