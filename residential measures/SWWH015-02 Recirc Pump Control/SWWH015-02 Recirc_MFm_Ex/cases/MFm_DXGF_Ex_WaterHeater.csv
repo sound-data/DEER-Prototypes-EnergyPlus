@@ -1,2 +1,0 @@
-skip,case_name,:water_heater_type,:water_heater_location,:water_heater_cap,:heat_element_cap,:thermal_eff,:uef,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:sch,:recirc_schedule
-,gas_tank,gas,unconditioned,41000['BTUH'],,0.79,,50,HI,350 ['BTUH'],NaturalGas,MFm_minute_dhw_demand_fraction.csv,DH Load Profile Constant Flow Frac Schedule
