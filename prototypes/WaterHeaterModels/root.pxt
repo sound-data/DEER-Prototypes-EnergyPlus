@@ -1525,114 +1525,6 @@ Schedule:Compact,
     57;                      !- Field 4
 
 Schedule:Compact,
-    DH Fractional Sch-Water Fixture,  !- Name
-    any number,              !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until: 1:00,             !- Field 3
-    0.011,                   !- Field 4
-    Until: 2:00,             !- Field 5
-    0.006,                   !- Field 6
-    Until: 3:00,             !- Field 7
-    0.004,                   !- Field 8
-    Until: 4:00,             !- Field 9
-    0.005,                   !- Field 10
-    Until: 5:00,             !- Field 11
-    0.008,                   !- Field 12
-    Until: 6:00,             !- Field 13
-    0.022,                   !- Field 14
-    Until: 7:00,             !- Field 15
-    0.05,                    !- Field 16
-    Until: 8:00,             !- Field 17
-    0.064,                   !- Field 18
-    Until: 9:00,             !- Field 19
-    0.07,                    !- Field 20
-    Until: 10:00,            !- Field 21
-    0.066,                   !- Field 22
-    Until: 11:00,            !- Field 23
-    0.058,                   !- Field 24
-    Until: 12:00,            !- Field 25
-    0.05,                    !- Field 26
-    Until: 13:00,            !- Field 27
-    0.045,                   !- Field 28
-    Until: 14:00,            !- Field 29
-    0.04,                    !- Field 30
-    Until: 15:00,            !- Field 31
-    0.037,                   !- Field 32
-    Until: 16:00,            !- Field 33
-    0.035,                   !- Field 34
-    Until: 17:00,            !- Field 35
-    0.04,                    !- Field 36
-    Until: 18:00,            !- Field 37
-    0.049,                   !- Field 38
-    Until: 19:00,            !- Field 39
-    0.059,                   !- Field 40
-    Until: 20:00,            !- Field 41
-    0.061,                   !- Field 42
-    Until: 21:00,            !- Field 43
-    0.056,                   !- Field 44
-    Until: 22:00,            !- Field 45
-    0.048,                   !- Field 46
-    Until: 23:00,            !- Field 47
-    0.036,                   !- Field 48
-    Until: 24:00,            !- Field 49
-    0.023;                   !- Field 50
-
-Schedule:Compact,
-    DH Load Profile Varying Flow Frac Schedule,  !- Name
-    any number,              !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until: 1:00,             !- Field 3
-    0.00472,                 !- Field 4
-    Until: 2:00,             !- Field 5
-    0.00547,                 !- Field 6
-    Until: 3:00,             !- Field 7
-    0.00602,                 !- Field 8
-    Until: 4:00,             !- Field 9
-    0.00591,                 !- Field 10
-    Until: 5:00,             !- Field 11
-    0.00547,                 !- Field 12
-    Until: 6:00,             !- Field 13
-    0.00465,                 !- Field 14
-    Until: 7:00,             !- Field 15
-    0.00412,                 !- Field 16
-    Until: 8:00,             !- Field 17
-    0.00363,                 !- Field 18
-    Until: 9:00,             !- Field 19
-    0.00311,                 !- Field 20
-    Until: 10:00,            !- Field 21
-    0.00301,                 !- Field 22
-    Until: 11:00,            !- Field 23
-    0.00283,                 !- Field 24
-    Until: 12:00,            !- Field 25
-    0.00269,                 !- Field 26
-    Until: 13:00,            !- Field 27
-    0.00256,                 !- Field 28
-    Until: 14:00,            !- Field 29
-    0.00251,                 !- Field 30
-    Until: 15:00,            !- Field 31
-    0.00231,                 !- Field 32
-    Until: 16:00,            !- Field 33
-    0.00229,                 !- Field 34
-    Until: 17:00,            !- Field 35
-    0.00236,                 !- Field 36
-    Until: 18:00,            !- Field 37
-    0.00246,                 !- Field 38
-    Until: 19:00,            !- Field 39
-    0.00256,                 !- Field 40
-    Until: 20:00,            !- Field 41
-    0.00276,                 !- Field 42
-    Until: 21:00,            !- Field 43
-    0.00314,                 !- Field 44
-    Until: 22:00,            !- Field 45
-    0.00353,                 !- Field 46
-    Until: 23:00,            !- Field 47
-    0.00377,                 !- Field 48
-    Until: 24:00,            !- Field 49
-    0.00412;                 !- Field 50
-
-Schedule:Compact,
     DH Load Profile Load Schedule,  !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
@@ -1709,14 +1601,6 @@ Schedule:Compact,
     For: AllDays,            !- Field 2
     Until: 24:00,            !- Field 3
     41;                      !- Field 4
-
-Schedule:Compact,
-    DH Load Profile Constant Flow Frac Schedule,  !- Name
-    any number,              !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    0.044;                   !- Field 4
 
 Schedule:Constant,
     DHSupplySetpoint,        !- Name
@@ -2535,8 +2419,8 @@ Material,
 Material,
     CopperPipe,              !- Name
     MediumRough,             !- Roughness
-    0.1016000,               !- Thickness {m}
-    1.310000,                !- Conductivity {W/m-K}
+    0.001016000,               !- Thickness {m}
+    401,                !- Conductivity {W/m-K}
     2243.000,                !- Density {kg/m3}
     837.0000,                !- Specific Heat {J/kg-K}
     0.9000000,               !- Thermal Absorptance
