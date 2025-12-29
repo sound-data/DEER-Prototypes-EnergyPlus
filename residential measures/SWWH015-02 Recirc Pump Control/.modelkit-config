@@ -1,7 +1,7 @@
 
 # Paths are expanded relative to this modelkit-config file.
 
-prototypes-dir = '../../prototypes/residential'
+prototypes-dir = '../../prototypes'
 templates-dir = '../../templates/energyplus/templates'
 weather-dir = '../../weather'
 codes-dir = '../../codes'
