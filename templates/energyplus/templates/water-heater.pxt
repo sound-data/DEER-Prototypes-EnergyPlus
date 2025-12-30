@@ -39,6 +39,7 @@ parameter "recirc_outlet_pipe_length", :default=> 60.96
 
 # Peak flow rate parameter for the recirculation loop
 parameter "recirc_peak_flow", :default=> 0.0030283296
+%>
 
 <%
 #UEF to COP conversion for heat pump
@@ -86,7 +87,7 @@ end
 Schedule:File,
     <%= water_heater_name %>_demand_frac_sch,  !- Name
     fraction,                !- Schedule Type Limits Name
-    C:/DEER Models/SWWH015/residential measures/SWWH015-02 Recirc Pump Control/SWWH015-02 Recirc_MFm_Ex/hot water profile/<%= sch %>,  !- File Name
+    C:/DEER_Commercial/EnergyPlus/SWWH015_updated/residential measures/SWWH015-02 Recirc Pump Control/SWWH015-02 Recirc_MFm_Ex/hot water profile/<%= sch %>,  !- File Name
     1,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -95,18 +96,19 @@ Schedule:File,
     1,                       !- Minutes per Item
     Yes;                     !- Adjust Schedule for Daylight Savings
 
-! Solaris - Behzad S. Rizi & Jenna Moon - Added if statement to assign demand fraction schedule from schedule:file for the recirculation loop
+! Solaris - Behzad S. Rizi & Jenna Moon - Added if statement to assign demand fraction schedule from CSV schedule for the recirculation loop
+! This schedule is used to scale the "recirculation peak flow" in the "LoadProfile:Plant"
 <% if recirc_schedule.include?('csv') %>
   Schedule:File,
 	DH Load Profile Varying Flow Frac Schedule,  !- Name
     fraction,             !- Schedule Type Limits Name
-	../../../../<%= recirc_schedule %>,  !- File Name
+	C:/DEER_Commercial/EnergyPlus/SWWH015_updated/residential measures/SWWH015-02 Recirc Pump Control/SWWH015-02 Recirc_MFm_Ex/hot water profile/<%= recirc_schedule %>,  !- File Name
     2,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
     Comma,                   !- Column Separator
     No,                      !- Interpolate to Timestep
-    60,                      !- Minutes per Item
+    1,                      !- Minutes per Item
     Yes;                     !- Adjust Schedule for Daylight Savings
 <% else %>
   Schedule:Compact,
@@ -118,19 +120,6 @@ Schedule:File,
     0.044;                   !- Field 4
 
 <% end %>
-
-
-Schedule:File,
-    <%= water_heater_name %>_demand_frac_sch,  !- Name
-    fraction,                !- Schedule Type Limits Name
-    C:/DEER Models/SWWH015/residential measures/SWWH015-02 Recirc Pump Control/SWWH015-02 Recirc_MFm_Ex/hot water profile/<%= sch %>,  !- File Name
-    1,                       !- Column Number
-    1,                       !- Rows to Skip at Top
-    8760,                    !- Number of Hours of Data
-    Comma,                   !- Column Separator
-    No,                      !- Interpolate to Timestep
-    1,                       !- Minutes per Item
-    Yes;                     !- Adjust Schedule for Daylight Savings
 
 ! DHW loop setpoint
 Schedule:Compact,
@@ -406,6 +395,7 @@ PlantEquipmentList,
 
 
 <% elsif water_heater_type =='gas_tankless' %>
+! Solaris - 2025-12-30 - Updated to use splitter and mixer nodes rather than “use inlet node / use outlet node”, that avoids the splitter integrity problem.
 WaterHeater:Mixed,
     <%= water_heater_name %>,      !- Name
     <%= tank_size %>,                 !- Tank Volume {m3}
@@ -437,8 +427,8 @@ WaterHeater:Mixed,
     ,                        !- Peak Use Flow Rate {m3/s}
     ,                        !- Use Flow Rate Fraction Schedule Name
     ,                        !- Cold Water Supply Temperature Schedule Name
-    <%= water_heater_name %> use inlet node,  !- Use Side Inlet Node Name
-    <%= water_heater_name %> use outlet node,  !- Use Side Outlet Node Name
+    <%= water_heater_name %> DHW Supply Splitter Outlet Node,  !- Use Side Inlet Node Name
+    <%= water_heater_name %> DHW Supply Mixer Inlet Node,  !- Use Side Outlet Node Name
     1,                       !- Use Side Effectiveness
     ,                        !- Source Side Inlet Node Name
     ,                        !- Source Side Outlet Node Name
@@ -452,8 +442,8 @@ Branch,
     ,                        !- Pressure Drop Curve Name
     WaterHeater:Mixed,       !- Component 1 Object Type
     <%= water_heater_name %>,      !- Component 1 Name
-    <%= water_heater_name %> use inlet node,  !- Component 1 Inlet Node Name
-    <%= water_heater_name %> use outlet node;  !- Component 1 Outlet Node Name
+    <%= water_heater_name %> DHW Supply Splitter Outlet Node,  !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Supply Mixer Inlet Node;  !- Component 1 Outlet Node Name
 
 PlantEquipmentList,
     <%= water_heater_name %> Plant Equipment,  !- Name
@@ -473,6 +463,7 @@ WaterUse:Equipment,
     ,                        !- Cold Water Supply Temperature Schedule Name
     <%= water_use_zone %>;  !- Zone Name
 
+! Solaris - 2025-12-30 - The "Water Sink Inlet Node" and "Water Sink Outlet Node" are where DHW leaves and returns in the demand side branch.
 WaterUse:Connections,
     <%= water_heater_name %> DHW water use,     !- Name
     <%= water_heater_name %> Water Sink Inlet Node,  !- Inlet Node Name
@@ -487,49 +478,54 @@ WaterUse:Connections,
     <%= water_heater_name %> hot water use equip;     !- Water Use Equipment 1 Name
 
 ! DWH loop settings
-
+! Solaris - 2025-12-30 - The “mains Inlet Branch” brings water into the supply side.
 Branch,
     <%= water_heater_name %> mains Inlet Branch,!- Name
     ,                        !- Pressure Drop Curve Name
-    Pump:VariableSpeed,      !- Component 1 Object Type
-    <%= water_heater_name %> mains Pressure,    !- Component 1 Name
+    Pipe:Adiabatic,      !- Component 1 Object Type
+    <%= water_heater_name %> mains Inlet Pipe,    !- Component 1 Name
     <%= water_heater_name %> Mains Inlet Node,  !- Component 1 Inlet Node Name
-    <%= water_heater_name %> Mains Pressure Outlet Node;  !- Component 1 Outlet Node Name
+    <%= water_heater_name %> DHW Supply Splitter Inlet Node;  !- Component 1 Outlet Node Name
 
+! Solaris - 2025-12-30 - The "DHW Supply Outlet Branch" sends water out after mixing.
 Branch,
     <%= water_heater_name %> DHW Supply Outlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
     Pipe:Adiabatic,          !- Component 1 Object Type
     <%= water_heater_name %> DHW Supply Outlet Pipe,  !- Component 1 Name
-    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Supply Mixer Outlet Node,  !- Component 1 Inlet Node Name
     <%= water_heater_name %> DHW Supply Outlet Node;  !- Component 1 Outlet Node Name
 
+! Solaris - 2025-12-30 - Demand side is where water is “used” and optionally recirculated.
+! "DHW Demand inlet branch" brings water into the demand splitter.
 Branch,
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
     Pipe:Adiabatic,          !- Component 1 Object Type
     <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Component 1 Name
     <%= water_heater_name %> DHW Demand Inlet Node,  !- Component 1 Inlet Node Name
-    <%= water_heater_name %> DHW Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Inlet Node;  !- Component 1 Outlet Node Name
 
+! Solaris - 2025-12-30 - Water use branch contains the pump and the actual fixtures, modeled by WaterUse:Connections.
 Branch,
     <%= water_heater_name %> Water Use Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
     Pump:VariableSpeed,    !- Component 1 Object Type
     <%= water_heater_name %> mains Pressure,     !- Component 1 Name
-    <%= water_heater_name %> Water Sink Inlet Node,  !- Component 1 Inlet Node Name
-	<%= water_heater_name %> Mains Pressure Outlet Node,  !- Component 1 Outlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Outlet Node WaterUse,  !- Component 1 Inlet Node Name
+	<%= water_heater_name %> Water Sink Inlet Node,  !- Component 1 Outlet Node Name
     WaterUse:Connections,    !- Component 2 Object Type
     <%= water_heater_name %> DHW water use,     !- Component 2 Name
-    <%= water_heater_name %> Mains Pressure Outlet Node,  !- Component 2 Inlet Node Name
-    <%= water_heater_name %> Water Sink Outlet Node;  !- Component 2 Outlet Node Name																					 
-	
+    <%= water_heater_name %> Water Sink Inlet Node,  !- Component 2 Inlet Node Name
+    <%= water_heater_name %> Water Sink Outlet Node;  !- Component 2 Outlet Node Name								 
+
+! Solaris - 2025-12-30 - DH load profile branch represents the recirculation flow request and its pumping and piping.	
 Branch,
     DH Load Profile Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
     LoadProfile:Plant,       !- Component 1 Object Type
     DHW Recirculation Flow Control,         !- Component 1 Name
-    DH Demand Load Profile Inlet Node,  !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Outlet Node Load,  !- Component 1 Inlet Node Name
     DH Demand Load Profile Outlet Node,  !- Component 1 Outlet Node Name
 	Pump:VariableSpeed,      !- Component 2 Object Type
     DHW Recirculation Pump,    !- Component 2 Name
@@ -540,6 +536,8 @@ Branch,
     DHW Recirculation Pump Oulet Node,  !- Component 3 Inlet Node Name
     DH LoadProfile Non-Adiabatic Outlet Node;  !- Component 3 Outlet Node Name
 
+! Solaris - 2025-12-30 - "Mains Makeup Branch" is the branch that represents adding makeup water and returning it as the demand outlet of the loop. 
+! It typically sits on the demand mixer outlet side.
 Branch,
     <%= water_heater_name %> Mains Makeup Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -599,7 +597,7 @@ ConnectorList,
 
 Pipe:Adiabatic,
     <%= water_heater_name %> DHW Supply Outlet Pipe,  !- Name
-    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+    <%= water_heater_name %> DHW Supply Mixer Outlet Node,  !- Inlet Node Name
     <%= water_heater_name %> DHW Supply Outlet Node;  !- Outlet Node Name
 
 Pipe:Adiabatic,
@@ -610,11 +608,12 @@ Pipe:Adiabatic,
 Pipe:Adiabatic,
     <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Node,  !- Inlet Node Name
-    <%= water_heater_name %> DHW Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Inlet Node;  !- Outlet Node Name
 Pipe:Adiabatic,
     <%= water_heater_name %> mains Inlet Pipe,  !- Name
     <%= water_heater_name %> Mains Inlet Node,  !- Inlet Node Name
-    <%= water_heater_name %> Mains Pressure Outlet Node;  !- Outlet Node Name			   
+    <%= water_heater_name %> DHW Supply Splitter Inlet Node;  !- Outlet Node Name
+
 Pipe:Indoor,
     DHW Recirculation Outlet Pipe,  !- Name
     Insulated Pipe,          !- Construction Name
@@ -624,13 +623,13 @@ Pipe:Indoor,
     ,                        !- Ambient Temperature Zone Name
     Ambient Varying Zone Temperature ,  !- Ambient Temperature Schedule Name
     Ambient Air Velocity,    !- Ambient Air Velocity Schedule Name
-    <%= :recirc_pipe_id %>,                  !- Pipe Inside Diameter {m}
-    <%= :recirc_outlet_pipe_length %>;        !- Pipe Length {m}
+    <%= recirc_pipe_id %>,                  !- Pipe Inside Diameter {m}
+    <%= recirc_outlet_pipe_length %>;        !- Pipe Length {m}
 
 Pump:VariableSpeed,
     <%= water_heater_name %> mains Pressure,    !- Name
-    <%= water_heater_name %> Water Sink Inlet Node,  !- Inlet Node Name
-    <%= water_heater_name %> Mains Pressure Outlet Node,  !- Outlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Outlet Node WaterUse,  !- Inlet Node Name
+    <%= water_heater_name %> Water Sink Inlet Node,  !- Outlet Node Name
     autosize,                !- Design Maximum Flow Rate {m3/s}
     1,                       !- Design Pump Head {Pa}
     0,                       !- Design Power Consumption {W}
@@ -694,8 +693,11 @@ PlantLoop,
     <%= water_heater_name %> Mains Makeup Node, !- Demand Side Outlet Node Name
     <%= water_heater_name %> DHW Demand Branches,  !- Demand Side Branch List Name
     <%= water_heater_name %> DHW Demand Connectors,  !- Demand Side Connector List Name
-    Optimal;                 !- Load Distribution Scheme
-
+    Optimal,                 !- Load Distribution Scheme
+    ,                        !- Availability Manager List Name
+    SingleSetpoint,          !- Plant Loop Demand Calculation Scheme
+    None,                    !- Common Pipe Simulation
+    None;                    !- Pressure Simulation Type
 
 
 
@@ -703,11 +705,15 @@ PlantLoop,
 ! Solaris - 2025-12-29 - This object has been added to request the flow rate in the recirculation branch.
 LoadProfile:Plant,
     DHW Recirculation Flow Control,         !- Name
-    DH Demand Load Profile Inlet Node,  !- Inlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Outlet Node Load,  !- Inlet Node Name
     DH Demand Load Profile Outlet Node,  !- Outlet Node Name
     DH Load Profile Load Schedule,  !- Load Schedule Name
     <%= recirc_peak_flow %>,            !- Peak Flow Rate {m3/s}
-    <%= recirc_schedule %>;  !- Flow Rate Fraction Schedule Name
+<% if recirc_schedule.include?('csv') %>
+	DH Load Profile Varying Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
+<% else %>
+    DH Load Profile Constant Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
+<% end %>
 
 PlantEquipmentOperation:HeatingLoad,
     <%= water_heater_name %> DHW Control Scheme,!- Name
