@@ -1525,7 +1525,7 @@ Schedule:Compact,
     57;                      !- Field 4
 
 Schedule:Compact,
-    DH Load Profile Load Schedule,  !- Name
+    DHW Recirculation Load Schedule,  !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
