@@ -2,6 +2,7 @@
 import "water-heater.pxt", :group=> "water_heater" do
     include "*"
 end
+
 %>
 
 <%
@@ -3001,7 +3002,7 @@ Construction,
     floor_insulation_layer,  !- Outside Layer
     Conc HW 140lb 4in (HF-C5),  !- Layer 2
     Carpet_n_pad;            !- Layer 3
-	
+
 Construction,
     Insulated Pipe,          !- Name
     Pipe Insulation,         !- Outside Layer
@@ -5836,6 +5837,7 @@ Sizing:Plant,
     Heating,                 !- Loop Type
     48.8888888888889,        !- Design Loop Exit Temperature {C}
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
+
 
 !-   ===========  ALL OBJECTS IN CLASS: ZONECONTROL:THERMOSTAT ===========
 
