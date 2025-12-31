@@ -4,5 +4,5 @@ skip,case_name,:main_cool_coil_type,:chw_pump_type,:chw_chiller_condenser,:cw_nu
 ,NE-Chiller-CHWPumpCtrl-Full-Msr,WATER,VARIABLE,WATERCOOLED,1,Intermittent,SINGLESPEED,WC Centrifugal Default 90.1-2004,29.44,,
 ,,,,,,,,,,,
 ,,,,,,,,,,,
-#,"Column  ""L"" is used for the minimum flowrate fraction approach. In this way, we should assign 0.7 to this parameter for ""NE-Chiller-CWPumpCtrl-Full-Msr""",,,,,,,,,,
-#,"Column ""K"" is included as a placeholder and is intentionally left blank. For the EMS approach, the pump minimum flow rate is controlled through the code file and is pre-calculated.",,,,,,,,,,
+#,"Column  ""L"" (:cw_min_flowrate_fraction) is used for the minimum flowrate fraction approach. In this way, we should assign 0.7 to this parameter for ""NE-Chiller-CWPumpCtrl-Full-Msr""",,,,,,,,,,
+#,"Column ""K"" (:cw_pump_min_flow_rate) is included as a placeholder and is intentionally left blank. For the EMS approach, the pump minimum flow rate is controlled through the code file and is pre-calculated.",,,,,,,,,,
