@@ -28,7 +28,7 @@ parameter "water_use_zone", :default=> "EL7 South Perim Zn (G.S1)" #default at m
 
 # Solaris - 2025-12-29 - Added parameter "recirc_schedule" to assign flow fraction schedule to load profile in the recirculation loop
 # recirc schedule parameter
-parameter "recirc_schedule", :default=>'DH Load Profile Constant Flow Frac Schedule'
+parameter "recirc_schedule", :default=>'DHW Recirculation Constant Flow Frac Schedule'
 
 # Solaris - 2025-12-29 - Added parameter "recirc_pipe_id", "recirc_outlet_pipe_length" and "recirc_peak_flow" for the recirculation loop
 # Pipe inside diameter parameter for the recirculation loop
@@ -39,6 +39,11 @@ parameter "recirc_outlet_pipe_length", :default=> 60.96
 
 # Peak flow rate parameter for the recirculation loop
 parameter "recirc_peak_flow", :default=> 0.0030283296
+
+# Solaris - 2025-12-31 - Added parameter "temp_schedule" to assign temperature setpoint schedule
+parameter "temp_schedule", :default=>'DHW Constant Temp Setpt'
+
+parameter "output_recirc_variables", :default=>'False'
 %>
 
 <%
@@ -87,7 +92,7 @@ end
 Schedule:File,
     <%= water_heater_name %>_demand_frac_sch,  !- Name
     fraction,                !- Schedule Type Limits Name
-    C:/DEER_Commercial/EnergyPlus/SWWH015_updated/residential measures/SWWH015-02 Recirc Pump Control/SWWH015-02 Recirc_MFm_Ex/hot water profile/<%= sch %>,  !- File Name
+    C:/DEER Models/SWWH015/residential measures/SWWH015-04 Recirc Pump Control/SWWH015-04 Recirc_MFm_Ex/hot water profile/<%= sch %>,  !- File Name
     1,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -100,9 +105,9 @@ Schedule:File,
 ! This schedule is used to scale the "recirculation peak flow" in the "LoadProfile:Plant"
 <% if recirc_schedule.include?('csv') %>
   Schedule:File,
-	DH Load Profile Varying Flow Frac Schedule,  !- Name
+	DHW Recirculation Varying Flow Frac Schedule,  !- Name
     fraction,             !- Schedule Type Limits Name
-	C:/DEER_Commercial/EnergyPlus/SWWH015_updated/residential measures/SWWH015-02 Recirc Pump Control/SWWH015-02 Recirc_MFm_Ex/hot water profile/<%= recirc_schedule %>,  !- File Name
+	C:/DEER Models/SWWH015/residential measures/SWWH015-04 Recirc Pump Control/SWWH015-04 Recirc_MFm_Ex/hot water profile/<%= recirc_schedule %>,  !- File Name
     2,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -112,7 +117,7 @@ Schedule:File,
     Yes;                     !- Adjust Schedule for Daylight Savings
 <% else %>
   Schedule:Compact,
-    DH Load Profile Constant Flow Frac Schedule,  !- Name
+    DHW Recirculation Constant Flow Frac Schedule,  !- Name
     any number,              !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
@@ -121,7 +126,20 @@ Schedule:File,
 
 <% end %>
 
-! DHW loop setpoint
+! Solaris - Jenna Moon - Added if statement to assign temperature setpoint schedule from CSV schedule
+<% if temp_schedule.include?('csv') %>
+  Schedule:File,
+	<%= water_heater_name %>_dhw_setpt,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+	C:/DEER Models/SWWH015/residential measures/SWWH016-06 HW Temperature Ctrl/SWWH016-06 HW Temp Ctrl_MFm_Ex/hot water profile/<%= temp_schedule %>,  !- File Name
+    2,                       !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No,                      !- Interpolate to Timestep
+    1,                       !- Minutes per Item
+    Yes;                     !- Adjust Schedule for Daylight Savings
+<% else %>
 Schedule:Compact,
     <%= water_heater_name %>_dhw_setpt,               !- Name
     Temperature,             !- Schedule Type Limits Name
@@ -129,6 +147,7 @@ Schedule:Compact,
     For: AllDays,            !- Field 2
     Until 24:00,             !- Field 3
     <%= loop_sept %>;        !- Field 4
+<% end %>
 
 <%if water_heater_type.include?('hpwh') %>
 Schedule:Constant,
@@ -519,22 +538,22 @@ Branch,
     <%= water_heater_name %> Water Sink Inlet Node,  !- Component 2 Inlet Node Name
     <%= water_heater_name %> Water Sink Outlet Node;  !- Component 2 Outlet Node Name								 
 
-! Solaris - 2025-12-30 - DH load profile branch represents the recirculation flow request and its pumping and piping.	
+! Solaris - 2025-12-30 - DHW Recirculation branch represents the recirculation flow request and its pumping and piping.	
 Branch,
-    DH Load Profile Branch,  !- Name
+    DHW Recirculation Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
     LoadProfile:Plant,       !- Component 1 Object Type
     DHW Recirculation Flow Control,         !- Component 1 Name
     <%= water_heater_name %> DHW Demand Splitter Outlet Node Load,  !- Component 1 Inlet Node Name
-    DH Demand Load Profile Outlet Node,  !- Component 1 Outlet Node Name
+    DHW Demand Recirculation Outlet Node,  !- Component 1 Outlet Node Name
 	Pump:VariableSpeed,      !- Component 2 Object Type
     DHW Recirculation Pump,    !- Component 2 Name
-    DH Demand Load Profile Outlet Node,  !- Component 2 Inlet Node Name
+    DHW Demand Recirculation Outlet Node,  !- Component 2 Inlet Node Name
     DHW Recirculation Pump Oulet Node,  !- Component 2 Outlet Node Name
     Pipe:Indoor,             !- Component 3 Object Type
     DHW Recirculation Outlet Pipe,  !- Component 3 Name
     DHW Recirculation Pump Oulet Node,  !- Component 3 Inlet Node Name
-    DH LoadProfile Non-Adiabatic Outlet Node;  !- Component 3 Outlet Node Name
+    DHW Recirculation Non-Adiabatic Outlet Node;  !- Component 3 Outlet Node Name
 
 ! Solaris - 2025-12-30 - "Mains Makeup Branch" is the branch that represents adding makeup water and returning it as the demand outlet of the loop. 
 ! It typically sits on the demand mixer outlet side.
@@ -556,14 +575,14 @@ BranchList,
     <%= water_heater_name %> DHW Demand Branches,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Branch 1 Name
     <%= water_heater_name %> Water Use Branch,  !- Branch 2 Name
-	DH Load Profile Branch,  !- Branch 3 Name
+	DHW Recirculation Branch,  !- Branch 3 Name
     <%= water_heater_name %> Mains Makeup Branch;  !- Branch 4 Name
 
 Connector:Splitter,
     <%= water_heater_name %> DHW Demand Splitter,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Inlet Branch Name
     <%= water_heater_name %> Water Use Branch,  !- Outlet Branch 1 Name
-    DH Load Profile Branch;  !- Outlet Branch 2 Name	
+    DHW Recirculation Branch;  !- Outlet Branch 2 Name	
 
 Connector:Splitter,
     <%= water_heater_name %> DHW Supply Splitter,  !- Name
@@ -574,7 +593,7 @@ Connector:Mixer,
     <%= water_heater_name %> DHW Demand Mixer,  !- Name
     <%= water_heater_name %> Mains Makeup Branch,  !- Outlet Branch Name
     <%= water_heater_name %> Water Use Branch,  !- Inlet Branch 1 Name
-    DH Load Profile Branch;  !- Inlet Branch 2 Name	
+    DHW Recirculation Branch;  !- Inlet Branch 2 Name	
 
 Connector:Mixer,
     <%= water_heater_name %> DHW Supply Mixer,  !- Name
@@ -618,7 +637,7 @@ Pipe:Indoor,
     DHW Recirculation Outlet Pipe,  !- Name
     Insulated Pipe,          !- Construction Name
     DHW Recirculation Pump Oulet Node,  !- Fluid Inlet Node Name
-    DH LoadProfile Non-Adiabatic Outlet Node,  !- Fluid Outlet Node Name
+    DHW Recirculation Non-Adiabatic Outlet Node,  !- Fluid Outlet Node Name
     Schedule,                !- Environment Type
     ,                        !- Ambient Temperature Zone Name
     Ambient Varying Zone Temperature ,  !- Ambient Temperature Schedule Name
@@ -644,7 +663,7 @@ Pump:VariableSpeed,
 	
 Pump:VariableSpeed,
     DHW Recirculation Pump,    !- Name
-    DH Demand Load Profile Outlet Node,  !- Inlet Node Name
+    DHW Demand Recirculation Outlet Node,  !- Inlet Node Name
     DHW Recirculation Pump Oulet Node,  !- Outlet Node Name
     autosize,                !- Design Maximum Flow Rate {m3/s}
     21521.4467194739,        !- Design Pump Head {Pa}
@@ -706,13 +725,13 @@ PlantLoop,
 LoadProfile:Plant,
     DHW Recirculation Flow Control,         !- Name
     <%= water_heater_name %> DHW Demand Splitter Outlet Node Load,  !- Inlet Node Name
-    DH Demand Load Profile Outlet Node,  !- Outlet Node Name
-    DH Load Profile Load Schedule,  !- Load Schedule Name
+    DHW Demand Recirculation Outlet Node,  !- Outlet Node Name
+    DHW Recirculation Load Schedule,  !- Load Schedule Name
     <%= recirc_peak_flow %>,            !- Peak Flow Rate {m3/s}
 <% if recirc_schedule.include?('csv') %>
-	DH Load Profile Varying Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
+	DHW Recirculation Varying Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
 <% else %>
-    DH Load Profile Constant Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
+    DHW Recirculation Constant Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
 <% end %>
 
 PlantEquipmentOperation:HeatingLoad,
@@ -740,9 +759,10 @@ Sizing:Plant,
     Heating,                 !- Loop Type
     <%= loop_sept %>,        !- Design Loop Exit Temperature {C}
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
-	
+
+<% if (output_recirc_variables == "True") %>	
 Output:Variable,
-    DH Demand Load Profile Inlet Node,  !- Key Value
+    DHW Demand Recirculation Inlet Node,  !- Key Value
     System Node Temperature ,!- Variable Name
     Hourly;                  !- Reporting Frequency
 	
@@ -755,3 +775,4 @@ Output:Variable,
     DHW Recirculation Pump,    !- Key Value
     Pump Electricity Energy ,!- Variable Name
     Hourly;                  !- Reporting Frequency
+<% end %>
