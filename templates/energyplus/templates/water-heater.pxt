@@ -113,7 +113,7 @@ Schedule:File,
     8760,                    !- Number of Hours of Data
     Comma,                   !- Column Separator
     No,                      !- Interpolate to Timestep
-    1,                      !- Minutes per Item
+    60,                      !- Minutes per Item
     Yes;                     !- Adjust Schedule for Daylight Savings
 <% else %>
   Schedule:Compact,
@@ -126,7 +126,8 @@ Schedule:File,
 
 <% end %>
 
-! Solaris - Jenna Moon - Added if statement to assign temperature setpoint schedule from CSV schedule
+! DHW loop setpoint
+! Solaris - Jenna Moon - Added if statement to assign temperature setpoint for water heater outlet temperature setpoint schedule from CSV schedule
 <% if temp_schedule.include?('csv') %>
   Schedule:File,
 	<%= water_heater_name %>_dhw_setpt,  !- Name
@@ -137,10 +138,10 @@ Schedule:File,
     8760,                    !- Number of Hours of Data
     Comma,                   !- Column Separator
     No,                      !- Interpolate to Timestep
-    1,                       !- Minutes per Item
+    60,                       !- Minutes per Item
     Yes;                     !- Adjust Schedule for Daylight Savings
 <% else %>
-Schedule:Compact,
+  Schedule:Compact,
     <%= water_heater_name %>_dhw_setpt,               !- Name
     Temperature,             !- Schedule Type Limits Name
     Through: 12/31,          !- Field 1
