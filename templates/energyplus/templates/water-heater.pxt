@@ -528,7 +528,11 @@ Branch,
 Branch,
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
+<% if (recirc_flow_mode == "False") %>
     Pipe:Adiabatic,          !- Component 1 Object Type
+<% else %>
+    Pipe:Indoor,             !- Component 1 Object Type
+<% end %>
     <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Component 1 Name
     <%= water_heater_name %> DHW Demand Inlet Node,  !- Component 1 Inlet Node Name
     <%= water_heater_name %> DHW Demand Splitter Inlet Node;  !- Component 1 Outlet Node Name
