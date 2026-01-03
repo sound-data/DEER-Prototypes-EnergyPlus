@@ -32,16 +32,23 @@ parameter "recirc_schedule", :default=>'DHW Recirculation Constant Flow Frac Sch
 
 # Solaris - 2025-12-29 - Added parameter "recirc_pipe_id", "recirc_outlet_pipe_length" and "recirc_peak_flow" for the recirculation loop
 # Pipe inside diameter parameter for the recirculation loop
-parameter "recirc_pipe_id", :default=> 0.0254
+parameter "recirc_pipe_id", :default=> 0.0254['m']
 
-# Pipe length parameter for the recirculation loop
-parameter "recirc_outlet_pipe_length", :default=> 60.96
+# Pipe length parameter for the recirculation loop 
+# A length of 30.48 meters corresponds to 100 ft. There are two indoor pipes (Pipe:Indoor) in the model, and both are assumed to have the same length.
+parameter "recirc_outlet_pipe_length", :default=> 30.48
 
 # Peak flow rate parameter for the recirculation loop
-parameter "recirc_peak_flow", :default=> 0.0030283296
+parameter "recirc_peak_flow", :default=> 0.0030283296 # (m3/s)
 
 # Solaris - 2025-12-31 - Added parameter "temp_schedule" to assign temperature setpoint schedule
 parameter "temp_schedule", :default=>'DHW Constant Temp Setpt'
+
+# Solaris - 2025-12-31 - Parametrized "recirc_fraction_constant_mode" to assign the recirculation flow rate schedule for constant flow mode.
+parameter "recirc_fraction_constant_mode", :default=> 0.044
+
+# Solaris - 2026-01-02 - Parametrized "recirc_flow_mode" to enable generating a model with the original Pipe:Adiabatic on the demand side upstream from the branch splitter.
+parameter "recirc_flow_mode", :default=>'False'
 
 parameter "output_recirc_variables", :default=>'False'
 %>
@@ -122,7 +129,7 @@ Schedule:File,
     Through: 12/31,          !- Field 1
     For: AllDays,            !- Field 2
     Until: 24:00,            !- Field 3
-    0.044;                   !- Field 4
+    <%= recirc_fraction_constant_mode %>;                   !- Field 4
 
 <% end %>
 
@@ -625,10 +632,25 @@ Pipe:Adiabatic,
     <%= water_heater_name %> Mains Makeup Pipe Inlet Node,  !- Inlet Node Name
     <%= water_heater_name %> Mains Makeup Node; !- Outlet Node Name
 
-Pipe:Adiabatic,
+<% if (recirc_flow_mode == "False") %>
+ Pipe:Adiabatic,
     <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Node,  !- Inlet Node Name
     <%= water_heater_name %> DHW Demand Splitter Inlet Node;  !- Outlet Node Name
+<% else %>
+ Pipe:Indoor,
+    <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Name
+    Insulated Pipe,          !- Construction Name
+    <%= water_heater_name %> DHW Demand Inlet Node,  !- Fluid Inlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Inlet Node,  !- Fluid Outlet Node Name
+    Schedule,                !- Environment Type
+    ,                        !- Ambient Temperature Zone Name
+    Ambient Varying Zone Temperature ,  !- Ambient Temperature Schedule Name
+    Ambient Air Velocity,    !- Ambient Air Velocity Schedule Name
+    <%= recirc_pipe_id %>,                  !- Pipe Inside Diameter {m}
+    <%= recirc_outlet_pipe_length %>;        !- Pipe Length {m}
+<% end %>
+
 Pipe:Adiabatic,
     <%= water_heater_name %> mains Inlet Pipe,  !- Name
     <%= water_heater_name %> Mains Inlet Node,  !- Inlet Node Name
