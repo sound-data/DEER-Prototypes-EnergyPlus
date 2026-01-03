@@ -791,15 +791,51 @@ Sizing:Plant,
 Output:Variable,
     DHW Demand Recirculation Inlet Node,  !- Key Value
     System Node Temperature ,!- Variable Name
-    Hourly;                  !- Reporting Frequency
-	
+    Timestep;                  !- Reporting Frequency
+
 Output:Variable,
     DHW Recirculation Pump,    !- Key Value
     Pump Mass Flow Rate ,    !- Variable Name
-    Hourly;                  !- Reporting Frequency
+    Timestep;                  !- Reporting Frequency
 
 Output:Variable,
     DHW Recirculation Pump,    !- Key Value
     Pump Electricity Energy ,!- Variable Name
-    Hourly;                  !- Reporting Frequency
+    Timestep;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Use Side Inlet Temperature ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Use Side Mass Flow Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Plant Load Profile Mass Flow Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Pump Mass Flow Rate ,    !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Water Heater Use Side Outlet Temperature ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    System Node Mass Flow Rate ,  !- Variable Name
+    Timestep;                !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    System Node Temperature ,!- Variable Name
+    Timestep;                !- Reporting Frequency
+
 <% end %>
