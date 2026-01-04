@@ -2,7 +2,8 @@
 
 This document describes the steps necessary to reproduce simulations and model outputs for this measure.
 
-Prepared by Solaris Technical, Kelsey Yen - 2025-10-22
+Prepared by Kelsey Yen and Nicholas Fette (Solaris Technical). 
+Created 2025-10-22, revised 2026-01-03.
 
 ## Generating temperature setback schedules
 
@@ -18,8 +19,7 @@ The schedules will be referenced by EnergyPlus models via a Schedule:File object
 
 Providing a filename via the parameter classroom_class_setpoint_temp_schedule parameter triggers the prototypes to read in a temperature setpoint schedule from file.
 The filename is specified in the hvac-zone template using a relative path to its location in the measure folder.
-Some users may get an EnergyPlus warning due to the relative path.
-In order to run the models, apply a workaround by editing the hvac-zone template to hard-code the folder where schedules are located, for example:
+If EnergyPlus issues a warning due to the relative path, a user apply a workaround by editing the hvac-zone template to hard-code the folder where schedules are located, for example:
 
 **templates\energyplus\templates\zonehvac\hvac-zone.pxt near line 590**
 
@@ -54,56 +54,66 @@ In order to run the models, apply a workaround by editing the hvac-zone template
 
 ## Extracting Normalizing Units for Classrooms
 
-In the development of this measure, both area and cooling capacity (from cooling coils) are used as normalizing units for the classroom zones. Only zones with "CLASSROOM" in the zone name are included. 
+Developers applied the measure to only those zones representing
+classrooms, taken to mean where zone_type prefix is `classroom_class`.
+Developers considered area (from zones), cooling capacity (from cooling coils),
+and cooling capacity (from AirLoopHVAC systems) as candidates for normalizing units,
+ultimately choosing cooling capacity from AirLoopHVAC systems.
 
-Classroom area and cooling coil names by zone from ESe model:
+The total cooling capacity of classroom zones in a given building simulation is
+calculated using a multi-step process to tabulate cooling capacity for
+each system in the model and then filter relevant systems and aggregate
+the capacity of matching systems.
 
-|Area Name|Cooling Coil Name|
-|-|-|
-|CLASSROOM E1 WEST PERIM (G.W1)|CLASSROOM E1 WEST PERIM (G.W1) SZ-VAV COOLING COIL|
-|CLASSROOM E2 NORTH PERIM (G.N3)|CLASSROOM E2 NORTH PERIM (G.N3) SZ-CAV COOLING COIL|
-|CLASSROOM E2 SOUTH PERIM (G.S2)|CLASSROOM E2 SOUTH PERIM (G.S2) SZ-CAV COOLING COIL|
-|CLASSROOM E2 WEST PERIM (G.W1)|CLASSROOM E2 WEST PERIM (G.W1) SZ-CAV COOLING COIL|
-|CLASSROOM E4 CORE (G.C6)|CLASSROOM E4 CORE (G.C6) SZ-CAV COOLING COIL|
-|CLASSROOM E4 EAST PERIM (G.E2)|CLASSROOM E4 EAST PERIM (G.E2) SZ-CAV COOLING COIL|
-|CLASSROOM E4 NORTH PERIM (G.N3)|CLASSROOM E4 NORTH PERIM (G.N3) SZ-CAV COOLING COIL|
-|CLASSROOM E4 SOUTH PERIM (G.S1)|CLASSROOM E4 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL|
-|CLASSROOM E4 WEST PERIM (G.W4)|CLASSROOM E4 WEST PERIM (G.W4) SZ-CAV COOLING COIL|	
-|COMPUTER CLASSROOM E4 CORE SPC (G.C5)|COMPUTER CLASSROOM E4 CORE SPC (G.C5) SZ-CRAC COOLING COIL|
+### To reproduce the computations, a user should enter these command line statements:
 
+1. Change directory into the first vintage subfolder and run the data extraction script:
 
-To extract the necessary area and cooling coil capacity for all classroom types, each classroom area and cooling coil name was added to query_SWHC012.txt. The query file is then used with result2.py to output the simdata results. The areas and cooling coil capacities are then summed respectively and used as the normalizing units for the energy savings calculations along with the rest of the simdata outputs. Note that the following code includes area and cooling capacities from EPr, ERC, and ESe building types, but does not show the other lines in the query file.
-
-Area and cooling capacity lines added to **query_SWHC012.txt**:
 ```
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM G.E1
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM G.NNE2
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM G.SSE3
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM G.W4
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM E1 WEST PERIM (G.W1)
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM E2 NORTH PERIM (G.N3)
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM E2 SOUTH PERIM (G.S2)
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM E2 WEST PERIM (G.W1)
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM E4 CORE (G.C6)	
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM E4 EAST PERIM (G.E2)	
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM E4 NORTH PERIM (G.N3)
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM E4 SOUTH PERIM (G.S1)
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM E4 WEST PERIM (G.W4)	
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/COMPUTER CLASSROOM E4 CORE SPC (G.C5)
-InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/CLASSROOM EL1 SPC (G.1)
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM G.E1 SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM G.NNE2 SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM G.SSE3 SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM G.W4 SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM E2 NORTH PERIM (G.N3) SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM E2 SOUTH PERIM (G.S2) SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM E2 WEST PERIM (G.W1) SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM E4 CORE (G.C6) SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM E4 EAST PERIM (G.E2) SZ-CAV COOLING COIL	
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM E4 NORTH PERIM (G.N3) SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM E4 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM E4 WEST PERIM (G.W4) SZ-CAV COOLING COIL	
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:MultiSpeed/Design Size Speed 1 Gross Rated Total Cooling Capacity/CLASSROOM E1 WEST PERIM (G.W1) SZ-VAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:MultiSpeed/Design Size Speed 1 Gross Rated Total Cooling Capacity/COMPUTER CLASSROOM E4 CORE SPC (G.C5) SZ-CRAC COOLING COIL
+cd "C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-05 Occupancy Sensor/SWHC012-05 Occupancy Sensor_Ex"
+python result2.py -s -t -q ../query_SWHC012_normalizing.txt
 ```
+
+At this point, the user should have a new SQLite file `simdata.sqlite` saved by the
+script with tables sim_metadata and sim_tabular, which contains cooling capacity figures for each building instance and system.
+
+2. Continue with the command to reformat sizing data:
+
+```
+cat ../extract_sizing_data_sqlite.sql | sqlite3 simdata.sqlite -csv -header > results-sizing-detail.csv
+```
+
+At this point, the user should have a new file `results-sizing-detail.csv` with
+similar information in plain text / CSV format. If sqlite3 is not installed,
+download a portable executable or execute the query statement using a database preview application.
+
+3. Repeat above steps for each vintage subfolder (Ex, New).
+
+4. Then, continue with commands:
+
+```
+cd "C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-05 Occupancy Sensor"
+python result_filtered.py
+```
+
+The result_filtered script cross-references the result_sizing_detail.csv and coil_list.xlsx in order to filter relevant zones or systems.
+At this point, the user should have a new files "sizing_agg_filtered.csv" in each vintage subfolder.
+
+5. Combine the sizing_agg_filtered files into one CSV file and archive the result among energy model outputs.
+
+The combined sizing_agg_filtered.csv contains the normalizing unit lookup table, which
+can be used for example by pasting into an energy savings calculation workbook.
+
+### Developer Notes
+1. The classroom system names were manually identified by inspection of
+prototype root files and tabulated in the file `coil_list.xlsx` (sheet "Main coils").
+2. Cooling capacity was obtained in bulk using the tabular report fields listed
+in query_SWHC012_normalizing.txt. Based on trial and error, measure developers
+determined that outputs from AirLoopHVAC:UnitarySystem were preferred over
+outputs from individual cooling coils due to ambiguous labeling of total
+cooling capacity in multispeed coils; and that with linked-sizing active, the query
+strings vary slightly between base case and measure case models.
+3. For a convenience, the distinct query file used to collate model usage (`query_SWHC012.txt`)
+may include query strings to gather area or cooling capacity of some classroom zones. 
+These are useful during model testing as a sanity check but are ultimately unused
+in calculating normalizing units, UEC, and UES.
