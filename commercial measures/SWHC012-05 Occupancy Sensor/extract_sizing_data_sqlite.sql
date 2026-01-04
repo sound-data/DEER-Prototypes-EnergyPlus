@@ -2,7 +2,7 @@
 -- Extract sizing data table compatible with output from result.py
 SELECT
 t."TabularDataIndex",
-CAST(t."Value" as REAL),
+CAST(t."Value" as REAL) as "Value",
 t."ReportName",
 t."ReportForString",
 t."TableName",
