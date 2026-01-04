@@ -55,7 +55,7 @@ If EnergyPlus issues a warning due to the relative path, a user apply a workarou
 ## Extracting Normalizing Units for Classrooms
 
 Developers applied the measure to only those zones representing
-classrooms, taken to mean where zone_type prefix is `classroom_class`. In the
+classrooms, taken to mean where zone_type prefix is `classroom_class`.
 Developers considered area (from zones), cooling capacity (from cooling coils),
 and cooling capacity (from AirLoopHVAC systems) as candidates for normalizing units,
 ultimately choosing cooling capacity from AirLoopHVAC systems.
@@ -65,37 +65,46 @@ calculated using a multi-step process to tabulate cooling capacity for
 each system in the model and then filter relevant systems and aggregate
 the capacity of matching systems.
 
-To reproduce the computations, users should enter these command line statements:
+### To reproduce the computations, a user should enter these command line statements:
+
+1. Change directory into the first vintage subfolder and run the data extraction script:
 
 ```
 cd "C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-05 Occupancy Sensor/SWHC012-05 Occupancy Sensor_Ex"
-result2.py -s -t -q ../query_SWHC012_normalizing.txt
+python result2.py -s -t -q ../query_SWHC012_normalizing.txt
 ```
 
 At this point, the user should have a new SQLite file `simdata.sqlite` saved by the
-script with tables sim_metadata and sim_tabular. Continue with commands:
+script with tables sim_metadata and sim_tabular, which contains cooling capacity figures for each building instance and system.
+
+2. Continue with the command to reformat sizing data:
 
 ```
 cat ../extract_sizing_data_sqlite.sql | sqlite3 simdata.sqlite -csv -header > results-sizing-detail.csv
 ```
 
 At this point, the user should have a new file `results-sizing-detail.csv` with
-similar information in plain text / CSV format.
+similar information in plain text / CSV format. If sqlite3 is not installed,
+download a portable executable or execute the query statement using a database preview application.
 
-Repeat above steps for each vintage subfolder (Ex, New). Then, continue with commands:
+3. Repeat above steps for each vintage subfolder (Ex, New).
+
+4. Then, continue with commands:
 
 ```
 cd "C:/DEER-Prototypes-EnergyPlus/commercial measures/SWHC012-05 Occupancy Sensor"
 python result_filtered.py
 ```
 
+The result_filtered script cross-references the result_sizing_detail.csv and coil_list.xlsx in order to filter relevant zones or systems.
 At this point, the user should have a new files "sizing_agg_filtered.csv" in each vintage subfolder.
 
-Combine the sizing_agg_filtered files into one CSV file and archive the result among energy model outputs.
+5. Combine the sizing_agg_filtered files into one CSV file and archive the result among energy model outputs.
+
 The combined sizing_agg_filtered.csv contains the normalizing unit lookup table, which
 can be used for example by pasting into an energy savings calculation workbook.
 
-Notes
+### Developer Notes
 1. The classroom system names were manually identified by inspection of
 prototype root files and tabulated in the file `coil_list.xlsx` (sheet "Main coils").
 2. Cooling capacity was obtained in bulk using the tabular report fields listed
@@ -104,8 +113,7 @@ determined that outputs from AirLoopHVAC:UnitarySystem were preferred over
 outputs from individual cooling coils due to ambiguous labeling of total
 cooling capacity in multispeed coils; and that with linked-sizing active, the query
 strings vary slightly between base case and measure case models.
-
-For a convenience, the distinct query file used to collate model usage (`query_SWHC012.txt`)
+3. For a convenience, the distinct query file used to collate model usage (`query_SWHC012.txt`)
 may include query strings to gather area or cooling capacity of some classroom zones. 
 These are useful during model testing as a sanity check but are ultimately unused
 in calculating normalizing units, UEC, and UES.
