@@ -14,7 +14,7 @@ parameter "water_heater_type", :name => "Water Heater Type", :description => "cu
 
 parameter "water_heater_location", :default =>"unconditioned" # unconditioned | conditioned
 parameter "tank_size", :default => 50 ['gal']
-parameter "water_heater_cap", :name => "water heater capacity", :default=> 41000 ['BTUH']
+parameter "water_heater_cap", :name => "water heater capacity", :default=> Autosize
 parameter "heat_element_cap", :name => "heating element capacity for hpwh each", :default=> 0 ['W']
 parameter "uef", :default => 3.52
 parameter "thermal_eff", :description => "efficiency for non heat pump water heater",:default => 0.79
@@ -39,18 +39,18 @@ parameter "recirc_pipe_id", :default=> 0.0254['m']
 parameter "recirc_outlet_pipe_length", :default=> 30.48
 
 # Peak flow rate parameter for the recirculation loop
-parameter "recirc_peak_flow", :default=> 0.0030283296 # (m3/s)
+parameter "recirc_peak_flow", :default=> 0.001314 # (m3/s)
 
 # Solaris - 2025-12-31 - Added parameter "temp_schedule" to assign temperature setpoint schedule
 parameter "temp_schedule", :default=>'DHW Constant Temp Setpt'
 
 # Solaris - 2025-12-31 - Parametrized "recirc_fraction_constant_mode" to assign the recirculation flow rate schedule for constant flow mode.
-parameter "recirc_fraction_constant_mode", :default=> 0.044
+parameter "recirc_fraction_constant_mode", :default=> 1.0
 
 # Solaris - 2026-01-02 - Parametrized "recirc_flow_mode" to enable generating a model with the original Pipe:Adiabatic on the demand side upstream from the branch splitter.
-parameter "recirc_flow_mode", :default=>'False' # (True | False)
+parameter "recirc_flow_mode", :default=> false, :domain => Boolean
 
-parameter "output_recirc_variables", :default=>'False' # (True | False)
+parameter "output_recirc_variables", :default=> false, :domain => Boolean
 %>
 
 <%
@@ -528,11 +528,11 @@ Branch,
 Branch,
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
-<% if (recirc_flow_mode == 'True') %>
+	<% if (recirc_flow_mode) %>
     Pipe:Indoor,          !- Component 1 Object Type
-<% else %>
+	<% else %>
     Pipe:Adiabatic,             !- Component 1 Object Type
-<% end %>
+	<% end %>
     <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Component 1 Name
     <%= water_heater_name %> DHW Demand Inlet Node,  !- Component 1 Inlet Node Name
     <%= water_heater_name %> DHW Demand Splitter Inlet Node;  !- Component 1 Outlet Node Name
@@ -636,7 +636,7 @@ Pipe:Adiabatic,
     <%= water_heater_name %> Mains Makeup Pipe Inlet Node,  !- Inlet Node Name
     <%= water_heater_name %> Mains Makeup Node; !- Outlet Node Name
 
-<% if (recirc_flow_mode == 'True') %>
+<% if (recirc_flow_mode) %>
  Pipe:Indoor,
     <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Name
     Insulated Pipe,          !- Construction Name
@@ -787,7 +787,7 @@ Sizing:Plant,
     <%= loop_sept %>,        !- Design Loop Exit Temperature {C}
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
 
-<% if (output_recirc_variables == 'True') %>	
+<% if (output_recirc_variables) %>
 Output:Variable,
     DHW Demand Recirculation Inlet Node,  !- Key Value
     System Node Temperature ,!- Variable Name
