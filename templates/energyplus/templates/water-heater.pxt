@@ -14,7 +14,7 @@ parameter "water_heater_type", :name => "Water Heater Type", :description => "cu
 
 parameter "water_heater_location", :default =>"unconditioned" # unconditioned | conditioned
 parameter "tank_size", :default => 50 ['gal']
-parameter "water_heater_cap", :name => "water heater capacity", :default=> Autosize
+parameter "water_heater_cap", :name => "water heater capacity", :default=> 41000 ['BTUH']
 parameter "heat_element_cap", :name => "heating element capacity for hpwh each", :default=> 0 ['W']
 parameter "uef", :default => 3.52
 parameter "thermal_eff", :description => "efficiency for non heat pump water heater",:default => 0.79
@@ -39,7 +39,7 @@ parameter "recirc_pipe_id", :default=> 0.0254['m']
 parameter "recirc_outlet_pipe_length", :default=> 30.48
 
 # Peak flow rate parameter for the recirculation loop
-parameter "recirc_peak_flow", :default=> 0.001314 # (m3/s)
+parameter "recirc_peak_flow", :default=> 0.001314 ['m3/s']
 
 # Solaris - 2025-12-31 - Added parameter "temp_schedule" to assign temperature setpoint schedule
 parameter "temp_schedule", :default=>'DHW Constant Temp Setpt'
@@ -51,6 +51,11 @@ parameter "recirc_fraction_constant_mode", :default=> 1.0
 parameter "recirc_flow_mode", :default=> false, :domain => Boolean
 
 parameter "output_recirc_variables", :default=> false, :domain => Boolean
+
+# Solaris - 2026-01-07 - Added parameters for waterheater:sizing object 
+parameter "num_unit", :default=> 1.0
+parameter "cap_per_unit", :default=> 50.0 ['gal']
+parameter "recover_cap_per_unit", :default=> 0.378541 #['m3/hr']
 %>
 
 <%
@@ -62,11 +67,6 @@ daily_volume = case draw_pattern
                when 'VS' then 10
                else 69.5
                end
-
-tank_size = case water_heater_type
-            when 'gas_tankless' then 1 ['gal']
-            else tank_size['gal']
-            end
 
 tank_height = case tank_size
               when 50 then 53 ['in']
@@ -301,6 +301,22 @@ Curve:Quadratic,
 
 <% end %>
 
+!- Solaris - 2026-1-7 - Added WaterHeater:Sizing object (required when autosizing) needed for designing tank volume and/or heater capacity for either the Mixed or Stratified water heaters
+WaterHeater:Sizing,
+    <%= water_heater_name %>,!- WaterHeater Name
+    PerUnit,                 !- Design Mode
+    0,                       !- Time Storage Can Meet Peak Draw {hr}
+    0,                       !- Time for Tank Recovery {hr}
+    ,                        !- Nominal Tank Volume for Autosizing Plant Connections {m3}
+    1,                       !- Number of Bedrooms
+    1,                       !- Number of Bathrooms
+    ,                        !- Storage Capacity per Person {m3/person}
+    ,                        !- Recovery Capacity per Person {m3/hr-person}
+    ,                        !- Storage Capacity per Floor Area {m3/m2}
+    ,                        !- Recovery Capacity per Floor Area {m3/hr-m2}
+    <%= num_unit %>,                       !- Number of Units
+    <%= cap_per_unit %>,                        !- Storage Capacity per Unit {m3}
+    <%= recover_cap_per_unit %>;                        !- Recovery Capacity PerUnit {m3/hr}
 
 <% if (water_heater_type !='gas_tankless') %>
 WaterHeater:Stratified,
@@ -423,9 +439,10 @@ PlantEquipmentList,
 
 <% elsif water_heater_type =='gas_tankless' %>
 ! Solaris - 2025-12-30 - Updated to use splitter and mixer nodes rather than “use inlet node / use outlet node”, that avoids the splitter integrity problem.
+! For WaterHeater:Mixed user should assign very small number to tank size
 WaterHeater:Mixed,
     <%= water_heater_name %>,      !- Name
-    <%= tank_size %>,                 !- Tank Volume {m3}
+	<%= tank_size %>,				!- Tank Volume {m3}
     <%= water_heater_name %>_dhw_setpt,               !- Setpoint Temperature Schedule Name
     2,                       !- Deadband Temperature Difference {deltaC}
     82.2,                    !- Maximum Temperature Limit {C}
@@ -791,51 +808,51 @@ Sizing:Plant,
 Output:Variable,
     DHW Demand Recirculation Inlet Node,  !- Key Value
     System Node Temperature ,!- Variable Name
-    Timestep;                  !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     DHW Recirculation Pump,    !- Key Value
     Pump Mass Flow Rate ,    !- Variable Name
-    Timestep;                  !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     DHW Recirculation Pump,    !- Key Value
     Pump Electricity Energy ,!- Variable Name
-    Timestep;                  !- Reporting Frequency
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Water Heater Use Side Inlet Temperature ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Water Heater Use Side Mass Flow Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Plant Load Profile Mass Flow Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Pump Mass Flow Rate ,    !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Water Heater Use Side Outlet Temperature ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     System Node Mass Flow Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     System Node Temperature ,!- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 <% end %>
