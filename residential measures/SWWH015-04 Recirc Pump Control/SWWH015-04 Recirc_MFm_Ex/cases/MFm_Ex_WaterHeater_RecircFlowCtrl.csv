@@ -1,4 +1,4 @@
-skip,case_name,:water_heater_type,:water_heater_location,:water_heater_cap,:heat_element_cap,:thermal_eff,:uef,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:recirc_pipe_id,:recirc_outlet_pipe_length,:recirc_peak_flow,:sch,:recirc_schedule,:output_recirc_variables,:recirc_fraction_constant_mode,:recirc_flow_mode
-#,defaults,,,,,,,,,,,,,,,,,,
-,FlowCtrl-Full-RecircLoop-Std,gas_tankless,unconditioned,41000['BTUH'],,,,,HI,350 ['BTUH'],NaturalGas,,,,MFm_minute_dhw_demand_fraction.csv,,TRUE,1,TRUE
-#,FlowCtrl-Full-RecircLoop-Msr,gas_tankless,unconditioned,41000['BTUH'],,,,,HI,350 ['BTUH'],NaturalGas,,,,MFm_minute_dhw_demand_fraction.csv,DHW Recirculation Varying Flow Frac Schedule.csv,TRUE,1,TRUE
+skip,case_name,:water_heater_type,:water_heater_location,:water_heater_cap,:heat_element_cap,:thermal_eff,:uef,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:recirc_pipe_id,:recirc_outlet_pipe_length,:recirc_peak_flow,:sch,:recirc_schedule,:output_recirc_variables,:recirc_fraction_constant_mode,:recirc_flow_mode,:num_unit,:cap_per_unit,recover_cap_per_unit
+#,defaults,,,,,,,,,,,,,,,,,,,,,
+,FlowCtrl-Full-RecircLoop-Std,gas_tankless,unconditioned,Autosize,,,,Autosize,HI,350 ['BTUH'],NaturalGas,,,,MFm_minute_dhw_demand_fraction.csv,,TRUE,1,TRUE,12,50 ['gal'],0.378541
+#,FlowCtrl-Full-RecircLoop-Msr,gas_tankless,unconditioned,41000['BTUH'],,,,,HI,350 ['BTUH'],NaturalGas,,,,MFm_minute_dhw_demand_fraction.csv,DHW Recirculation Varying Flow Frac Schedule.csv,TRUE,1,TRUE,,,
