@@ -3,6 +3,10 @@ parameter "name"
 parameter "branch_names"
 
 parameter "tower_type", :default=>"VARIABLESPEED"  # (VARIABLESPEED | SINGLESPEED)
+
+#Solaris Technical - Behzad S. Rizi - 11/11/2025 - Added pump_type parameter to enable the speed control strategy for condenser water pump
+parameter "pump_type", :default=>nil  # (CONSTANTSPEED | VARIABLESPEED)
+
 parameter "num_towers", :default=>1
 parameter "design_temp", :default=>85['F']  # Condenser water system supply temperature
 parameter "design_delta", :default=>10['deltaF']  # Condenser water system design temperature difference
@@ -24,6 +28,20 @@ parameter "wetbulb_design", :default=>25.6['C']
 parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
 parameter "clear_water_supply_tank", :default=>""
+
+# 2025-10-31 Nicholas Fette. To allow user control over condenser pump control type.
+parameter "pump_control_type", :default=>"Intermittent" # (Intermittent | Continuous)
+
+# 2024-02-07 Afshin Faramarzi. To specify condenser pump minimum mass flow rate in conjunction with continuous pump control.
+# Note that modelkit caboodle does not have any unit conversions for mass flow rate.
+parameter "pump_min_flow_rate", :default=>0 # (kg/s)
+parameter "min_flowrate_fraction", :default=>0
+
+%>
+
+<%# Solaris Technical - Behzad S. Rizi - 11/11/2025 - Default assignment: if pump_type not provided, set to "VARIABLESPEED" for multi-tower systems and "CONSTANTSPEED" otherwise (legacy behavior) %>
+<%
+  pump_type ||= (num_towers > 1 ? "VARIABLESPEED" : "CONSTANTSPEED")
 %>
 
 Sizing:Plant,
@@ -49,7 +67,7 @@ CondenserLoop,
   80.0,                    !- Maximum Loop Temperature {C}
   5.0,                     !- Minimum Loop Temperature {C}
   Autosize,                !- Maximum Loop Flow Rate {m3/s}
-  0.0,                     !- Minimum Loop Flow Rate {m3/s}
+  0,                       !- Minimum Loop Flow Rate {m3/s}
   Autosize,                !- Condenser Loop Volume {m3}
   <%= name %> Supply Inlet Node,  !- Condenser Side Inlet Node Name
   <%= name %> Supply Outlet Node,  !- Condenser Side Outlet Node Name
@@ -118,6 +136,96 @@ SetpointManager:FollowOutdoorAirTemperature,
 !  Until: 24:00,            !- Field 3
 !  <%= design_temp %>;      !- Field 4
 
+<%# 2024-02-07 Afshin Faramarzi
+Setpoint manager and schedule to keep condenser pump at least 70% of rated mass flow rate.
+User to specify flow rate based on prior simulation results.
+%> 
+
+
+!------------------------------------------------------------------------------
+! 2025-12-02, Solaris Technical, Behzad S. Rizi
+! Condenser Water Loop Minimum Flow Control (EMS + Setpoint Manager)
+!
+! Purpose:
+!   EnergyPlus does not automatically enforce a system-level minimum flow rate
+!   for condenser water loops when variable-speed pumps are used. Many chiller
+!   and cooling tower manufacturers require a minimum condenser water flow
+!   (typically 60–80% of design flow) to maintain stable heat rejection and
+!   to avoid equipment operating outside of allowable limits.
+!
+!   For CPUC measure compliance, a minimum flow of 70% of the autosized design
+!   condenser water loop flow is required whenever cooling load exists.
+!
+! Method:
+!   1. A Schedule:Constant object is created to store the minimum flow rate.
+!   2. A SetpointManager:Scheduled applies this schedule to the condenser loop
+!      supply outlet node using the "MinimumMassFlowRate" control variable.
+!      This is the only legal mechanism in EnergyPlus to enforce minimum loop flow.
+!   3. EMS Sensors read actual loop mass flow and loop ΔT.
+!   4. An EMS Program updates the schedule dynamically:
+!        - when cooling load exists (ΔT > 0.2C), set schedule to 70% design flow
+!        - when no load exists, set schedule to 0 (allowing pump turnoff)
+!
+! Notes:
+!   - EMS cannot control bypass branches or piping; EnergyPlus does not expose
+!     actuators for Branch or Pipe objects. Therefore, minimum flow can only be
+!     enforced at the plant loop level via the Setpoint Manager.
+!   - This control method does not modify prototype topology and is compatible
+!     with all other measure packages.
+!
+! Result:
+!   Ensures condenser water loop flow does not fall below 70% of design flow
+!   during operation, consistent with real-world equipment requirements and
+!   CPUC savings methodology.
+!------------------------------------------------------------------------------
+
+
+Schedule:Constant,
+  <%= name %> Pump Min Flow Sch,   !- Name
+  Any Number,                      !- Schedule Type Limits Name
+  0.0;                             !- Initial Value
+
+SetpointManager:Scheduled,
+  <%= name %> Pump Setpoint Manager,    !- Name
+  MinimumMassFlowRate,                  !- Control Variable
+  <%= name %> Pump Min Flow Sch,        !- Schedule Name
+  <%= name %> Supply Outlet Node;       !- Setpoint Node (SYSTEM FLOW CONTROL)
+
+EnergyManagementSystem:Sensor,
+  CondenserLoopFlow,
+  <%= name %> Supply Outlet Node,
+  System Node Mass Flow Rate;
+
+EnergyManagementSystem:Sensor,
+  CondenserLoopTempIn,
+  <%= name %> Supply Inlet Node,
+  System Node Temperature;
+
+EnergyManagementSystem:Sensor,
+  CondenserLoopTempOut,
+  <%= name %> Supply Outlet Node,
+  System Node Temperature;
+  
+EnergyManagementSystem:Actuator,
+  PumpMinFlowActuator,               !- Name
+  <%= name %> Pump Min Flow Sch,     !- Actuated Component Unique Name
+  Schedule:Constant,                 !- Actuated Component Type
+  Schedule Value;                    !- Actuated Component Control Type
+
+EnergyManagementSystem:Program,
+  CondenserPumpMinFlowControl,
+  SET dT = CondenserLoopTempIn - CondenserLoopTempOut,
+  IF (CondenserLoopFlow > 0.0001) && (dT > 0.2),
+    SET PumpMinFlowActuator = <%= pump_min_flow_rate %>,
+  ELSE,
+    SET PumpMinFlowActuator = 0.0,
+  ENDIF;
+
+EnergyManagementSystem:ProgramCallingManager,
+  CondenserPumpMinFlowCallingMgr,
+  InsideHVACSystemIterationLoop,
+  CondenserPumpMinFlowControl; 
+
 CondenserEquipmentOperationSchemes,
   <%= name %> Operation Schemes,  !- Name
 <% if (heat_addition) %>
@@ -183,11 +291,17 @@ BranchList,
   <%= name %> Supply Equipment Bypass Branch,  !- Branch Name
   <%= name %> Supply Outlet Branch;  !- Branch Name
 
-
+! ---------------------------------------------------------------------------
+! Solaris-Technical - Behzad S. Rizi - 11/11/2025 - New parameter added to control condenser water pump speed independently of tower type
+! Condenser Water Pump Configuration
+! Controlled independently of cooling tower type.
+! This supports modeling of “VFD on condenser water pump” measures without
+! modifying cooling tower fan control or tower configuration.
+! ---------------------------------------------------------------------------
 Branch,
   <%= name %> Supply Inlet Branch,  !- Name
   ,                        !- Pressure Drop Curve Name
-<% if num_towers > 1 %>
+<% if pump_type == "VARIABLESPEED" %>
   HeaderedPumps:VariableSpeed,  !- Component 1 Object Type
 <% else %>
   Pump:ConstantSpeed,      !- Component 1 Object Type
@@ -196,7 +310,8 @@ Branch,
   <%= name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
 
-<% if num_towers > 1 %>
+
+<% if pump_type == "VARIABLESPEED" %>
 HeaderedPumps:VariableSpeed,
   <%= name %> Pump,      !- Name
   <%= name %> Supply Inlet Node,  !- Inlet Node Name
@@ -212,8 +327,8 @@ HeaderedPumps:VariableSpeed,
   0.0216,                  !- Coefficient 2 of the Part Load Performance Curve
   -0.0325,                 !- Coefficient 3 of the Part Load Performance Curve
   1.0095,                  !- Coefficient 4 of the Part Load Performance Curve
-  0,                       !- Minimum Flow Rate Fraction
-  Intermittent;            !- Pump Control Type
+  <%= min_flowrate_fraction %>,                       !- Minimum Flow Rate Fraction
+  <%= pump_control_type %>;            !- Pump Control Type
 <% else %>
 Pump:ConstantSpeed,
   <%= name %> Pump,      !- Name
@@ -224,7 +339,7 @@ Pump:ConstantSpeed,
   Autosize,                !- Rated Power Consumption {W}
   <%= pump_eff %>,  !- Motor Efficiency
   0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
-  Intermittent;            !- Pump Control Type
+  <%= pump_control_type %>;            !- Pump Control Type
 <% end %>
 
 
@@ -615,3 +730,4 @@ Connector:Mixer,
   <%= branch_name %> HR Demand Branch,  !- Inlet Branch Name
 <% end %>
   <%= name %> Demand Bypass Branch;  !- Inlet Branch Name
+	

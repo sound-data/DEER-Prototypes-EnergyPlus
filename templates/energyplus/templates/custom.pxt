@@ -55,3 +55,14 @@ Output:Meter,Gas:Facility,hourly; !- [J]
 
 !Output:Variable,<%= regex %> Node,System Node Standard Density Volume Flow Rate,hourly; !- HVAC Average [kg/s]
 !Output:Variable,<%= regex %> Node,System Node Temperature,hourly; !- HVAC Average [C]
+
+! Solaris Technical 2024. Output variables for testing and debugging SWHC008 VSD Central Plant.
+!Output:Variable,
+!    *,                       !- Key Value
+!    Pump Mass Flow Rate,     !- Variable Name
+!    Hourly;                  !- Reporting Frequency
+
+!Output:Variable,
+!    *,                       !- Key Value
+!    Cooling Tower Mass Flow Rate,  !- Variable Name
+!    Hourly;                  !- Reporting Frequency
