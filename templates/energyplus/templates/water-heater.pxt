@@ -53,9 +53,9 @@ parameter "recirc_flow_mode", :default=> false, :domain => Boolean
 parameter "output_recirc_variables", :default=> false, :domain => Boolean
 
 # Solaris - 2026-01-07 - Added parameters for waterheater:sizing object 
-parameter "num_unit", :default=> 1.0
-parameter "cap_per_unit", :default=> 50.0 ['gal']
-parameter "recover_cap_per_unit", :default=> 0.378541 #['m3/hr']
+parameter "num_dwelling_unit", :default=> 1.0
+parameter "tank_size_per_dwelling_unit", :default=> 50.0 ['gal']
+parameter "recover_cap_per_dwelling_unit", :default=> 0.378541 #['m3/hr']
 %>
 
 <%
@@ -301,7 +301,7 @@ Curve:Quadratic,
 
 <% end %>
 
-!- Solaris - 2026-1-7 - Added WaterHeater:Sizing object (required when autosizing) needed for designing tank volume and/or heater capacity for either the Mixed or Stratified water heaters
+!- Solaris - 2026-1-7 - Added WaterHeater:Sizing object (required when autosizing) needed for designing tank volume and/or heater capacity for either the mixed or stratified water heaters
 WaterHeater:Sizing,
     <%= water_heater_name %>,!- WaterHeater Name
     PerUnit,                 !- Design Mode
@@ -314,9 +314,9 @@ WaterHeater:Sizing,
     ,                        !- Recovery Capacity per Person {m3/hr-person}
     ,                        !- Storage Capacity per Floor Area {m3/m2}
     ,                        !- Recovery Capacity per Floor Area {m3/hr-m2}
-    <%= num_unit %>,                       !- Number of Units
-    <%= cap_per_unit %>,                        !- Storage Capacity per Unit {m3}
-    <%= recover_cap_per_unit %>;                        !- Recovery Capacity PerUnit {m3/hr}
+    <%= num_dwelling_unit %>,                       !- Number of Units
+    <%= tank_size_per_dwelling_unit %>,                        !- Storage Capacity per Unit {m3}
+    <%= recover_cap_per_dwelling_unit %>;                        !- Recovery Capacity PerUnit {m3/hr}
 
 <% if (water_heater_type !='gas_tankless') %>
 WaterHeater:Stratified,
@@ -439,7 +439,7 @@ PlantEquipmentList,
 
 <% elsif water_heater_type =='gas_tankless' %>
 ! Solaris - 2025-12-30 - Updated to use splitter and mixer nodes rather than “use inlet node / use outlet node”, that avoids the splitter integrity problem.
-! For WaterHeater:Mixed user should assign very small number to tank size
+! For WaterHeater:Mixed user should assign very small number to tank size (e.g. 1.0 gallon)
 WaterHeater:Mixed,
     <%= water_heater_name %>,      !- Name
 	<%= tank_size %>,				!- Tank Volume {m3}
