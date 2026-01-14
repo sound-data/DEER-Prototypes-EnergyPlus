@@ -8,7 +8,7 @@ parameter "control_zone_name", :default => ""
 
 # 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
 parameter "op_sch", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
-parameter "operation_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+parameter "operation_schedule", :default => true, :type => "Enumeration", :valuelist => "true,false"
 parameter "fan_mode_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
 parameter "outdoor_air_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
