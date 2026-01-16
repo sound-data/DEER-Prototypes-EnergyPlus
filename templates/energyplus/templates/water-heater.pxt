@@ -39,7 +39,7 @@ parameter "recirc_pipe_id", :default=> 0.0254['m']
 parameter "recirc_outlet_pipe_length", :default=> 30.48
 
 # Peak flow rate parameter for the recirculation loop
-parameter "recirc_peak_flow", :default=> 0.001314 ['m3/s']
+parameter "recirc_peak_flow", :default=>  0.000022  ['m3/s']
 
 # Solaris - 2025-12-31 - Added parameter "temp_schedule" to assign temperature setpoint schedule
 parameter "temp_schedule", :default=>'DHW Constant Temp Setpt'
