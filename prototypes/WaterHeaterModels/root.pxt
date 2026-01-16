@@ -7571,12 +7571,12 @@ Output:Variable,
 Output:Variable,
     *,                       !- Key Value
     Water Heater Use Side Inlet Temperature ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
     Water Heater Use Side Mass Flow Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Hourly;                !- Reporting Frequency
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:METER ===========
 
