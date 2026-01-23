@@ -26,7 +26,7 @@ import "foundation.pxt", :group => "foundation" do
 end
 
 import "constructions.pxt", :group => "constructions" do
-  include "*"
+
   exclude "window_shade*|radiant*"
   exclude "foundation_type|parapet_length|floor_length|wall_area"
   parameter "roof_base_type", :default => "Insulation Entirely Above Deck"
@@ -52,6 +52,7 @@ end
 
 group "space_loads" do # hardcode building-level defaults
   import "zoneloads/zonetemplate.pxt", :group => "building" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "lights_fraction_radiant", :default => 0.58
     parameter "lights_fraction_visible", :default => 0
     parameter "infil_area", :default => 0.26046511627907['CFM/ft2']
@@ -65,6 +66,7 @@ group "space_loads" do # hardcode building-level defaults
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "corridor", :prefix => "corridor_" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "light_area", :default => 0.6['W/ft2']
     parameter "equip_area", :default => 0['W/ft2']
     parameter "occ_area", :default => 0.005['1/ft2']
@@ -77,6 +79,7 @@ group "space_loads" do # hardcode building-level defaults
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "guestroom", :prefix => "guestroom_" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "light_area", :default => 0.5['W/ft2']
     parameter "equip_area", :default => 0.5['W/ft2']
     parameter "occ_area", :default => 0.0025['1/ft2']
@@ -86,9 +89,10 @@ group "space_loads" do # hardcode building-level defaults
     parameter "dhw_flow_area", :default => 0.000373333333333333['GPM/ft2']
     parameter "dhw_water_heater_fuel", :default => "Gas"
     parameter "equip_2_area", :default => 0['W/ft2']
-  end
+  end                                
 
   import "zoneloads/zonetemplate.pxt", :group => "laundry", :prefix => "laundry_" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "light_area", :default => 0.45['W/ft2']
     parameter "equip_area", :default => 3['W/ft2']
     parameter "occ_area", :default => 0.005['1/ft2']
@@ -101,6 +105,7 @@ group "space_loads" do # hardcode building-level defaults
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "office_large", :prefix => "office_large_" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "light_area", :default => 0.65['W/ft2']
     parameter "equip_area", :default => 1.5['W/ft2']
     parameter "occ_area", :default => 0.005['1/ft2']
@@ -212,6 +217,7 @@ import "system/dhw.pxt", :group => "dhw_gas", :prefix => "dhw_gas_" do
   parameter "parasitic_on", :default => 0.0['W']
   parameter "cycle_loss_coef", :default => 1.62817
   parameter "wh_config", :default => "CENTRAL"
+  parameter "building_prototype", :default => "Mtl"
 end
 
 parameter "hvac_config", :default => "BUILDING"  # ["BUILDING", "FLOOR", "SECTION", "CLUSTER"]
