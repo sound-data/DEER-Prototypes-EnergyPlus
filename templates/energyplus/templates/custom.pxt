@@ -17,9 +17,20 @@ Make your own local copy to override this and add user-defined objects/templates
 %>
 
 Output:Variable,*,Site Outdoor Air Drybulb Temperature,hourly; !- Zone Average [C]
+Output:Variable,*,Fan Electricity Rate,hourly; !- HVAC Average [W]
+Output:Variable,*,Fan Runtime Fraction,hourly; !- HVAC Average []
+Output:Variable,*,Heating Coil Heating Rate,hourly; !- HVAC Average [W]
+Output:Variable,*,Heating Coil NaturalGas Energy,hourly; !- HVAC Average [J]
+Output:Variable,*,Heating Coil Electricity Energy,hourly; !- HVAC Average [J]
+Output:Variable,*,Cooling Coil Total Cooling Rate,hourly; !- HVAC Average [W]
+Output:Variable,*,Cooling Coil Electricity Energy,hourly; !- HVAC Average [J]
+Output:Variable,*,Unitary System Fan Part Load Ratio,hourly; !- HVAC Average []
+Output:Variable,*,Unitary System Compressor Part Load Ratio,hourly; !- HVAC Average []
+Output:Variable,*,Air System Outdoor Air Flow Fraction,hourly; ! HVAC Average []
 
 Output:Meter,Electricity:Facility,hourly; !- [J]
 Output:Meter,Gas:Facility,hourly; !- [J]
+
 
 ! Zone
 !Output:Variable,Perimeter_ZN_1,Zone Mean Air Temperature,hourly; !- Zone Average [C]
@@ -37,9 +48,11 @@ Output:Meter,Gas:Facility,hourly; !- [J]
 !Output:Variable,Perimeter_ZN_1.*,Zone Ideal Loads Outdoor Air Total Heating Rate,hourly; !- HVAC Average [W]
 
 ! HVAC Systems
-<% regex = "(Perimeter_ZN_1 ZN|Perimeter_ZN_1 SZ|Perimeter_ZN_1 MZ|MZ).*" %>
+<% regex = ".*(SZ-CAV|SZ-VAV|SZ-CRAV).*OPERATION.*" %>
 
-!Output:Variable,<%= regex %> Schedule,Schedule Value,hourly; !- Zone Average []
+Output:Variable,<%= regex %> Schedule,Schedule Value,hourly; !- Zone Average []
+
+
 
 !Output:Variable,<%= regex %> Fan,Fan Electric Power,hourly; !- HVAC Average [W]
 !Output:Variable,<%= regex %> Fan,Fan Runtime Fraction,hourly; !- HVAC Average []
