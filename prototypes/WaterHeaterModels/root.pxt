@@ -1,5 +1,4 @@
 <%#INTERFACE
-parameter "output_hourly_vars", :default => nil
 import "water-heater.pxt", :group=> "water_heater" do
     include "*"
 end
@@ -2083,8 +2082,25 @@ Schedule:Compact,
 
 !-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:CONSTANT ===========
 
+Schedule:Constant,
+    DWWaterTempSchedule,     !- Name
+    Temperature,             !- Schedule Type Limits Name
+    48.8888888888889;        !- Hourly Value
 
+Schedule:Constant,
+    CWWaterTempSchedule,     !- Name
+    Temperature,             !- Schedule Type Limits Name
+    48.8888888888889;        !- Hourly Value
 
+Schedule:Constant,
+    SSBWaterTempSchedule,    !- Name
+    Temperature,             !- Schedule Type Limits Name
+    40.5555555555556;        !- Hourly Value
+
+Schedule:Constant,
+    DHWSupplySetpoint,       !- Name
+    Temperature,             !- Schedule Type Limits Name
+    57.22;                   !- Hourly Value
 
 !-   ===========  ALL OBJECTS IN CLASS: MATERIAL ===========
 
@@ -5668,7 +5684,11 @@ Sizing:System,
 
 !-   ===========  ALL OBJECTS IN CLASS: SIZING:PLANT ===========
 
-
+Sizing:Plant,
+    DHW Loop_unit3,          !- Plant or Condenser Loop Name
+    Heating,                 !- Loop Type
+    48.8888888888889,        !- Design Loop Exit Temperature {C}
+    5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
 
 
 !-   ===========  ALL OBJECTS IN CLASS: ZONECONTROL:THERMOSTAT ===========
@@ -7376,56 +7396,40 @@ OutputControl:ReportingTolerances,
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLE ===========
 
-<% if output_hourly_vars %>
 Output:Variable,
     *,                       !- Key Value
-    Cooling Coil Total Cooling Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Electricity Energy ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Zone Outdoor Air Drybulb Temperature,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Zone Mean Air Temperature,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Zone Thermostat Cooling Setpoint Temperature,  !- Variable Name
+    Unitary System Fan Part Load Ratio,  !- Variable Name
     Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
-    Water Use Equipment Total Volume ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Zone Ventilation Air Change Rate,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
-    Water Use Equipment Mixed Water Temperature ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Heating Coil NaturalGas Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
-    Water Heater Tank Temperature ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Cooling Coil Total Cooling Energy,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
-    Water Heater Source Side Outlet Temperature ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Unitary System Compressor Part Load Ratio,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
-    Water Heater Use Side Outlet Temperature ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
+    Site Outdoor Air Drybulb Temperature,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
+
+Output:Variable,
+    *,                       !- Key Value
+    Zone Mean Air Temperature,  !- Variable Name
+    Hourly;                  !- Reporting Frequency
 
 Output:Variable,
     *,                       !- Key Value
@@ -7437,106 +7441,6 @@ Output:Variable,
     Water Heater Use Side Mass Flow Rate ,  !- Variable Name
     Timestep;                !- Reporting Frequency
 
-Output:Variable,
-    *,                       !- Key Value
-    Water Use Equipment Target Water Temperature ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Use Equipment Hot Water Mass Flow Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Use Equipment Hot Water Temperature ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Use Equipment Hot Water Volume Flow Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Use Equipment Heating Rate,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Cooling Coil Total Water Heating Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Cooling Coil Water Heating Electricity Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 1 ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 2,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 3,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 4,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 5,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 6,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 7,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 8,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 9,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Temperature Node 10,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Unmet Demand Heat Transfer Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Heater 1 Heating Rate,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-
-Output:Variable,
-    *,                       !- Key Value
-    Water Heater Heater 2 Heating Rate ,  !- Variable Name
-    Timestep;                !- Reporting Frequency
-<% end %>
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:METER ===========
 
 Output:Meter,
