@@ -8,8 +8,8 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
-
+#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_workingSP55.xlsx', sheet_name='Measure_list', skiprows=4)
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
@@ -24,7 +24,8 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWXX111-00 Example_SEER_AC'
+#used SWSV010-04 Econ Control as testing measure (PR #62)
+measure_name = 'SWSV010-04 Econ Control'
 
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
@@ -543,17 +544,22 @@ elif len(df_numunits) > 1:
 else:
     normunit = 'Each' #If normalizing unit isn't anything else, put default as each
     numunits = 1
-    print('no other eligible normunits, using default Each')
+    print('no other available normunits, using default Each')
 
 
 
 #%%
 ##Long format data norm unit field updates
 #note the bldgtype specific numunit lookup
-
-converted_long_df['Normunit'] = normunit
-converted_long_df['Numunits'] = converted_long_df['BldgType'].map(numunit_lookup)
-
+#Added ways to deal with if no normalizing unit is available for CEDARS loadshape format
+try:
+    converted_long_df['Normunit'] = normunit
+    converted_long_df['Numunits'] = converted_long_df['BldgType'].map(numunit_lookup)
+except:
+    #no appropriate numunit / normalizing units found
+    converted_long_df['Normunit'] = 'Each'
+    converted_long_df['Numunits'] = 1
+    print('no available normunits, using default Each for long table')
 #%%
 #Long format final field updates
 #need to divide each 8760 by its annual and its corresponding numunit
@@ -605,7 +611,7 @@ df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','N
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-df_long_final.to_csv('CEDARS_long_ls_Com.csv', index=False)
+df_long_final.to_csv('CEDARS_long_ls_Com_all_bldgtypes_test.csv', index=False)
 
 #%%
 ##Annual Data final field fixes
