@@ -2,7 +2,7 @@
 --Residential Step 1: Weight annual consumption based on number of stories (no more thermostat weights)
 --need to add union statement when dealing with MFm / DMo data
 
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 
 DROP TABLE IF EXISTS sim_annual_twtd_2022;
 CREATE TABLE sim_annual_twtd_2022 AS
