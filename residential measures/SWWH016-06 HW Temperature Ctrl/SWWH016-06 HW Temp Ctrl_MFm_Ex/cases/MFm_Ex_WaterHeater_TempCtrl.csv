@@ -1,4 +1,4 @@
 skip,case_name,:water_heater_type,:water_heater_location,:water_heater_cap,:heat_element_cap,:thermal_eff,:uef,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:recirc_pipe_id,:recirc_outlet_pipe_length,:recirc_peak_flow,:sch,:temp_schedule,:recirc_schedule,:output_recirc_variables,:recirc_flow_mode,:tank_size_per_dwelling_unit
 #,defaults,,,,,,,,,,,,,,,,,,,
-,TempCtrll-Full-RecircLoop-Std,gas_tankless,unconditioned,Autosize,,,,Autosize,HI,350 ['BTUH'],NaturalGas,,,2.19E-05,MFm_minute_dhw_demand_fraction.csv,,,TRUE,TRUE,50 ['gal']
-,TempCtrl-Full-RecircLoop-Msr,gas_tankless,unconditioned,Autosize,,,,Autosize,HI,350 ['BTUH'],NaturalGas,,,2.19E-05,MFm_minute_dhw_demand_fraction.csv,DHW Varying Temp Setpt.csv,,TRUE,TRUE,50 ['gal']
+,RG-WaterHtg_eq-TempCtrl-Full-RecircLoop-Std,gas_tankless,unconditioned,Autosize,,,,Autosize,HI,350 ['BTUH'],NaturalGas,,,2.19E-05,MFm_minute_dhw_demand_fraction.csv,,,TRUE,TRUE,50 ['gal']
+,RG-WaterHtg_eq-TempCtrl-Full-RecircLoop-Msr,gas_tankless,unconditioned,Autosize,,,,Autosize,HI,350 ['BTUH'],NaturalGas,,,2.19E-05,MFm_minute_dhw_demand_fraction.csv,DHW Varying Temp Setpt.csv,,TRUE,TRUE,50 ['gal']
