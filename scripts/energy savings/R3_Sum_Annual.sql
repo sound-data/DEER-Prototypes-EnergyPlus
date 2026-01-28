@@ -1,5 +1,5 @@
 --finish weighting annual results with numbldgs
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS sim_annual_wtd;
 CREATE TABLE sim_annual_wtd AS 
 
