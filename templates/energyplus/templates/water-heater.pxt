@@ -56,6 +56,9 @@ parameter "output_recirc_variables", :default=> false, :domain => Boolean
 parameter "num_dwelling_unit", :default=> 1.0
 parameter "tank_size_per_dwelling_unit", :default=> 50.0 ['gal']
 parameter "recover_cap_per_dwelling_unit", :default=> 0.378541 #['m3/hr']
+
+# Solaris - Behzad S. Rizi - Added parameter for the climate zone to call the demand fraction schedule CSV file for each climate zone automatically.
+parameter "climate_zone", :default=>1
 %>
 
 <%
@@ -110,11 +113,15 @@ Schedule:File,
 
 ! Solaris - Behzad S. Rizi & Jenna Moon - Added if statement to assign demand fraction schedule from CSV schedule for the recirculation loop
 ! This schedule is used to scale the "recirculation peak flow" in the "LoadProfile:Plant"
+! Solaris - Behzad S. Rizi - Defined zone list to call the demand fraction schedule CSV file for each climate zone automatically.
+<% zones = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16"]
+climate_zone_str = zones[climate_zone - 1] %>
+
 <% if recirc_schedule.include?('csv') %>
   Schedule:File,
 	DHW Recirculation Varying Flow Frac Schedule,  !- Name
     fraction,             !- Schedule Type Limits Name
-	C:/DEER Models/SWWH015/residential measures/SWWH015-04 Recirc Pump Control/SWWH015-04 Recirc_MFm_Ex/hot water profile/<%= recirc_schedule %>,  !- File Name
+	C:/DEER_Commercial/EnergyPlus/SWWH015-updated/residential measures/SWWH015-04 Recirc Pump Control/SWWH015-04 Recirc_MFm_Ex/hot water profile/DHW Recirculation Varying Flow Frac Schedule_CZ<%= climate_zone_str %>.csv,  !- File Name
     2,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
