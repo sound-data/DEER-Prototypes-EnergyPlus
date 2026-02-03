@@ -102,7 +102,7 @@ end
 Schedule:File,
     <%= water_heater_name %>_demand_frac_sch,  !- Name
     fraction,                !- Schedule Type Limits Name
-    C:/DEER Models/SWWH015/residential measures/SWWH015-04 Recirc Pump Control/SWWH015-04 Recirc_MFm_Ex/hot water profile/<%= sch %>,  !- File Name
+    ../../../../../hot water profile/<%= sch %>,  !- File Name
     1,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -146,7 +146,7 @@ climate_zone_str = zones[climate_zone - 1] %>
   Schedule:File,
 	<%= water_heater_name %>_dhw_setpt,  !- Name
     Temperature,             !- Schedule Type Limits Name
-	C:/DEER Models/SWWH015/residential measures/SWWH016-06 HW Temperature Ctrl/SWWH016-06 HW Temp Ctrl_MFm_Ex/hot water profile/<%= temp_schedule %>,  !- File Name
+	../../../../../hot water profile/<%= temp_schedule %>,  !- File Name
     2,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
