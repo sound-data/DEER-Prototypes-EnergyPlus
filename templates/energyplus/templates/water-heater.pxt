@@ -119,7 +119,7 @@ climate_zone_str = zones[climate_zone - 1] %>
 
 <% if recirc_schedule.include?('csv') %>
   Schedule:File,
-	DHW Recirculation Varying Flow Frac Schedule,  !- Name
+    DHW Recirculation Varying Flow Frac Schedule,  !- Name
     fraction,             !- Schedule Type Limits Name
 	../../../../../hot water profile/DHW Recirculation Varying Flow Frac Schedule_CZ<%= climate_zone_str %>.csv,  !- File Name
     2,                       !- Column Number
@@ -144,7 +144,7 @@ climate_zone_str = zones[climate_zone - 1] %>
 ! Solaris - Jenna Moon - Added if statement to assign temperature setpoint for water heater outlet temperature setpoint schedule from CSV schedule
 <% if temp_schedule.include?('csv') %>
   Schedule:File,
-	<%= water_heater_name %>_dhw_setpt,  !- Name
+    <%= water_heater_name %>_dhw_setpt,  !- Name
     Temperature,             !- Schedule Type Limits Name
 	../../../../../hot water profile/<%= temp_schedule %>,  !- File Name
     2,                       !- Column Number
@@ -449,7 +449,7 @@ PlantEquipmentList,
 ! For WaterHeater:Mixed user should assign very small number to tank size (e.g. 1.0 gallon)
 WaterHeater:Mixed,
     <%= water_heater_name %>,      !- Name
-	<%= tank_size %>,				!- Tank Volume {m3}
+    <%= tank_size %>,                 !- Tank Volume {m3}
     <%= water_heater_name %>_dhw_setpt,               !- Setpoint Temperature Schedule Name
     2,                       !- Deadband Temperature Difference {deltaC}
     82.2,                    !- Maximum Temperature Limit {C}
@@ -529,6 +529,7 @@ WaterUse:Connections,
     <%= water_heater_name %> hot water use equip;     !- Water Use Equipment 1 Name
 
 ! DWH loop settings
+
 ! Solaris - 2025-12-30 - The “mains Inlet Branch” brings water into the supply side.
 Branch,
     <%= water_heater_name %> mains Inlet Branch,!- Name
@@ -552,11 +553,11 @@ Branch,
 Branch,
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
-	<% if (recirc_flow_mode) %>
+  <% if (recirc_flow_mode) %>
     Pipe:Indoor,          !- Component 1 Object Type
-	<% else %>
+  <% else %>
     Pipe:Adiabatic,             !- Component 1 Object Type
-	<% end %>
+  <% end %>
     <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Component 1 Name
     <%= water_heater_name %> DHW Demand Inlet Node,  !- Component 1 Inlet Node Name
     <%= water_heater_name %> DHW Demand Splitter Inlet Node;  !- Component 1 Outlet Node Name
@@ -568,13 +569,13 @@ Branch,
     Pump:VariableSpeed,    !- Component 1 Object Type
     <%= water_heater_name %> mains Pressure,     !- Component 1 Name
     <%= water_heater_name %> DHW Demand Splitter Outlet Node WaterUse,  !- Component 1 Inlet Node Name
-	<%= water_heater_name %> Water Sink Inlet Node,  !- Component 1 Outlet Node Name
+    <%= water_heater_name %> Water Sink Inlet Node,  !- Component 1 Outlet Node Name
     WaterUse:Connections,    !- Component 2 Object Type
     <%= water_heater_name %> DHW water use,     !- Component 2 Name
     <%= water_heater_name %> Water Sink Inlet Node,  !- Component 2 Inlet Node Name
-    <%= water_heater_name %> Water Sink Outlet Node;  !- Component 2 Outlet Node Name								 
+    <%= water_heater_name %> Water Sink Outlet Node;  !- Component 2 Outlet Node Name
 
-! Solaris - 2025-12-30 - DHW Recirculation branch represents the recirculation flow request and its pumping and piping.	
+! Solaris - 2025-12-30 - DHW Recirculation branch represents the recirculation flow request and its pumping and piping.
 Branch,
     DHW Recirculation Branch,  !- Name
     ,                        !- Pressure Drop Curve Name
@@ -582,7 +583,7 @@ Branch,
     DHW Recirculation Flow Control,         !- Component 1 Name
     <%= water_heater_name %> DHW Demand Splitter Outlet Node Load,  !- Component 1 Inlet Node Name
     DHW Demand Recirculation Outlet Node,  !- Component 1 Outlet Node Name
-	Pump:VariableSpeed,      !- Component 2 Object Type
+    Pump:VariableSpeed,      !- Component 2 Object Type
     DHW Recirculation Pump,    !- Component 2 Name
     DHW Demand Recirculation Outlet Node,  !- Component 2 Inlet Node Name
     DHW Recirculation Pump Oulet Node,  !- Component 2 Outlet Node Name
@@ -611,14 +612,14 @@ BranchList,
     <%= water_heater_name %> DHW Demand Branches,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Branch 1 Name
     <%= water_heater_name %> Water Use Branch,  !- Branch 2 Name
-	DHW Recirculation Branch,  !- Branch 3 Name
+    DHW Recirculation Branch,  !- Branch 3 Name
     <%= water_heater_name %> Mains Makeup Branch;  !- Branch 4 Name
 
 Connector:Splitter,
     <%= water_heater_name %> DHW Demand Splitter,  !- Name
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Inlet Branch Name
     <%= water_heater_name %> Water Use Branch,  !- Outlet Branch 1 Name
-    DHW Recirculation Branch;  !- Outlet Branch 2 Name	
+    DHW Recirculation Branch;  !- Outlet Branch 2 Name
 
 Connector:Splitter,
     <%= water_heater_name %> DHW Supply Splitter,  !- Name
@@ -629,7 +630,7 @@ Connector:Mixer,
     <%= water_heater_name %> DHW Demand Mixer,  !- Name
     <%= water_heater_name %> Mains Makeup Branch,  !- Outlet Branch Name
     <%= water_heater_name %> Water Use Branch,  !- Inlet Branch 1 Name
-    DHW Recirculation Branch;  !- Inlet Branch 2 Name	
+    DHW Recirculation Branch;  !- Inlet Branch 2 Name
 
 Connector:Mixer,
     <%= water_heater_name %> DHW Supply Mixer,  !- Name
@@ -711,7 +712,7 @@ Pump:VariableSpeed,
     0,                       !- Coefficient 4 of the Part Load Performance Curve
     0,                       !- Design Minimum Flow Rate {m3/s}
     Intermittent;            !- Pump Control Type
-	
+
 Pump:VariableSpeed,
     DHW Recirculation Pump,    !- Name
     DHW Demand Recirculation Outlet Node,  !- Inlet Node Name
@@ -780,7 +781,7 @@ LoadProfile:Plant,
     DHW Recirculation Load Schedule,  !- Load Schedule Name
     <%= recirc_peak_flow %>,            !- Peak Flow Rate {m3/s}
 <% if recirc_schedule.include?('csv') %>
-	DHW Recirculation Varying Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
+    DHW Recirculation Varying Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
 <% else %>
     DHW Recirculation Constant Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
 <% end %>
