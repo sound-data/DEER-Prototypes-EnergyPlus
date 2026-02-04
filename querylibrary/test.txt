@@ -1,0 +1,3 @@
+# AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Time Setpoint Not Met During Occupied Heating/Facility
+# AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Time Setpoint Not Met During Occupied Cooling/Facility
+ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/*/Design Size Gross Rated Total Cooling Capacity

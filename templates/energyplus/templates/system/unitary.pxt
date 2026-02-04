@@ -6,29 +6,19 @@ parameter "unitary_name"
 parameter "doas", :default => false
 parameter "control_zone_name", :default => ""
 
+# 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
 parameter "op_sch", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+parameter "operation_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+parameter "fan_mode_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+parameter "outdoor_air_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 parameter "fan_type", :default => "SYSTEM-MODEL" # (ON-OFF | VAV | SYSTEM-MODEL )
 parameter "fan_speed", :default => "CONSTANT"  # (CONSTANT | DUAL| VARIABLE)  Fan:SystemModel allows multi-speed => DUAL
-parameter "fan_curve", :default => "T24"  # TRC: Added existing parameter to this template (MZVAV-FC | MZVAV-VSD | T24) 
 parameter "fan_sizing_method", :default => "TotalEfficiencyAndPressure" # (only relevant when fan_type = "SYSTEM-MODEL". Options: PowerPerFlow | PowerPerFlowPerPressure | TotalEfficiencyAndPressure )
 parameter "fan_power_per_flow", :default => 0.85['W/CFM']  # (only relevant when fan_type = "SYSTEM-MODEL" and fan_sizing_method = "PowerPerFlow")
 parameter "fan_power_per_flow_pressure", :default => 1.67  # W/((m3/s)-Pa) (only relevant when fan_type = "SYSTEM-MODEL" and fan_sizing_method = "PowerPerFlowPerPressure")
 parameter "fan_low_speed_flow_frac", :default => 0.66 # (only relevant when fan_type = "SYSTEM-MODEL" and fan_speed = "DUAL")
 parameter "fan_low_speed_power_frac", :default => 0.4 # (only relevant when fan_type = "SYSTEM-MODEL" and fan_speed = "DUAL")
-
-#TRC - "SWHC023-05" measure: Adding the following variables to parameterize the multi-speed operation air flow ratio and associated supply fan power for UnitarySystems
-parameter "low_heating_supply_air_ratio", :default => 0.75
-parameter "low_cooling_supply_air_ratio", :default => 0.75
-parameter "ventilation_supply_air_ratio", :default => 0.4
-parameter "constant_fan_speed_power_frac", :default => 1
-parameter "fan_speed_1_flow_frac", :default => 0.4
-parameter "fan_speed_1_power_frac", :default => 0.124709051
-parameter "fan_speed_2_flow_frac", :default => 0.75
-parameter "fan_speed_2_power_frac", :default => 0.463912917
-parameter "fan_speed_3_flow_frac", :default => 1
-parameter "fan_speed_3_power_frac", :default => 1
-parameter "single_mode_operation", :default => "No"
 
 parameter "fan_config", :default => "DRAW-THROUGH"  # (DRAW-THROUGH | BLOW-THROUGH)
 parameter "fan_mode", :default => "CYCLING"  # (CYCLING | CONTINUOUS | SCHEDULE)  # If fan_mode is SCHEDULE, fan_mode_sch cannot be empty.
@@ -218,7 +208,6 @@ parameter "sat_temp_max", :default => Autosize
 
 parameter "clear_water_storage_tank", :default => ""  # Name of tank for collecting cooling coil condensate
 
-parameter "disable_ems", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 %>
 
@@ -248,8 +237,8 @@ if (dx_comp_speed == "CONSTANT")
 elsif (dx_comp_speed == "TWO-SPEED")
   dx_comp_speed_num = 2
   cool_coil_cd = 0
-  cool_coil_cop_1 = cool_coil_cop * 1.0148883375
-  cool_coil_cop_2 = cool_coil_cop 
+  cool_coil_cop_1 = cool_coil_cop
+  cool_coil_cop_2 = cool_coil_cop * 1.0148883375
   if heat_coil_type.include?("DX")
     heat_coil_cd = 0
     heat_coil_cop_1 = heat_coil_cop * 1.0148883375
@@ -258,11 +247,11 @@ elsif (dx_comp_speed == "TWO-SPEED")
 elsif (dx_comp_speed == "DUAL")
   dx_comp_speed_num = 2
   cool_coil_cd = 0.11
-  cool_coil_cop_1 = cool_coil_cop / 0.9
+  cool_coil_cop_1 = cool_coil_cop * 0.9
   cool_coil_cop_2 = cool_coil_cop
   if heat_coil_type.include?("DX")
     heat_coil_cd = 0.11
-    heat_coil_cop_1 = heat_coil_cop / 0.9
+    heat_coil_cop_1 = heat_coil_cop * 0.9
     heat_coil_cop_2 = heat_coil_cop
   end
 elsif (dx_comp_speed == "DUAL-EQUAL")
@@ -272,21 +261,21 @@ elsif (dx_comp_speed == "DUAL-EQUAL")
   cool_coil_cop_2 = cool_coil_cop
   if heat_coil_type.include?("DX")
     heat_coil_cd = 0.11
-    heat_coil_cop_1 = heat_coil_cop / 0.9
+    heat_coil_cop_1 = heat_coil_cop * 0.9
     heat_coil_cop_2 = heat_coil_cop
   end
 elsif (dx_comp_speed == "VARIABLE")
   dx_comp_speed_num = 4
   cool_coil_cd = 0.25
-  cool_coil_cop_1 = cool_coil_cop / 0.7
-  cool_coil_cop_2 = cool_coil_cop / 0.75
-  cool_coil_cop_3 = cool_coil_cop / 0.9
+  cool_coil_cop_1 = cool_coil_cop * 0.7
+  cool_coil_cop_2 = cool_coil_cop * 0.75
+  cool_coil_cop_3 = cool_coil_cop * 0.9
   cool_coil_cop_4 = cool_coil_cop
   if heat_coil_type.include?("DX")
     heat_coil_cd = 0.24
-    heat_coil_cop_1 = heat_coil_cop / 0.7
-    heat_coil_cop_2 = heat_coil_cop / 0.75
-    heat_coil_cop_3 = heat_coil_cop / 0.9
+    heat_coil_cop_1 = heat_coil_cop * 0.7
+    heat_coil_cop_2 = heat_coil_cop * 0.75
+    heat_coil_cop_3 = heat_coil_cop * 0.9
     heat_coil_cop_4 = heat_coil_cop
   end
 end
@@ -352,11 +341,6 @@ AirLoopHVAC:UnitarySystem,
 <% elsif (heat_coil_type == "NONE") %>
   ,                        !- Heating Coil Object Type
   ,                        !- Heating Coil Name
-  ,                        !- DX Heating Coil Sizing Ratio
-
-<% elsif (heat_coil_type == "MULTI-STAGE-GAS") %>
-  Coil:Heating:Gas:MultiStage,       !- Heating Coil Object Type
-  <%= unitary_name %> Heating Coil,  !- Heating Coil Name
   ,                        !- DX Heating Coil Sizing Ratio
 <% end %>
 <% if (cool_coil_type == "DX-AIR") %>
@@ -449,16 +433,25 @@ AirLoopHVAC:UnitarySystem,
   ;                        !- Design Specification Multispeed Heat Pump Object Name
 <% end %>
 
+! 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
 Schedule:Compact,
   <%= unitary_name %> Schedule,  !- Name
   Binary Control,          !- Schedule Type Limits Name
+  <% if (operation_schedule) %>
   <%= op_sch %>
+  <% else %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
+  <% end %>
 
 
 Schedule:Compact,
   <%= unitary_name %> Fan Mode Schedule,  !- Name
   Fan Mode Control,        !- Schedule Type Limits Name
-  <%= fan_mode_sch %>
+  <% if (fan_mode_schedule) %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
+  <% else %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 0;
+  <% end %>
 
 
 <% if (fan_type == "ON-OFF") %>
@@ -531,59 +524,16 @@ Fan:SystemModel,
 <% if fan_speed == "CONSTANT" %>
   1,                       !- Number of Speeds
   1,                       !- Speed 1 Flow Fraction
-  <%= constant_fan_speed_power_frac %>;                       !- Speed 1 Electric Power Fraction
+  1;                       !- Speed 1 Electric Power Fraction
 <% elsif fan_speed == "DUAL" %>
   2,                       !- Number of Speeds
   <%= fan_low_speed_flow_frac %>,                    !- Speed Flow Fraction
   <%= fan_low_speed_power_frac %>,                     !- Electric Power Fraction
   1,                       !- Speed Flow Fraction
   1;                       !- Electric Power Fraction
-
-<% elsif fan_speed == "THREE-SPEED" %>
-  3,                       !- Number of Speeds
-  <%= fan_speed_1_flow_frac %>,                    !- Speed Flow Fraction
-  <%= fan_speed_1_power_frac %>,                     !- Electric Power Fraction
-  <%= fan_speed_2_flow_frac %>,                       !- Speed Flow Fraction
-  <%= fan_speed_2_power_frac %>,                     !- Electric Power Fraction
-  <%= fan_speed_3_flow_frac %>,                           !- Speed Flow Fraction  
-  <%= fan_speed_3_power_frac %>;                       !- Electric Power Fraction
-
-
 <% elsif fan_speed == "VARIABLE" %>
   ;                       !- Number of Speeds
-<%
-# TRC: Added if/else conditional statement for fan curve performance for SWHC018
-# TRC: Fan curve values sourced from ANSI/ASHRAE/IES Standard 90.1-2016 Performance Rating Method Reference Manual
-%>
-  <% if fan_curve == "MZVAV-FC" # TRC: Fan Type - Multi zone VAV with forward curve fans riding the curve %>
-Curve:Quartic,
-  <%= unitary_name %> Supply Fan Curve,                      !- Name
-  0.1224 ,                       !- Coefficient1 Constant
-  0.612 ,                         !- Coefficient2 x
-  0.5983 ,                      !- Coefficient3 x**2
-  -0.3334 ,                       !- Coefficient4 x**3
-  0.0 ,                                !- Coefficient5 x**4
-  0.0 ,                                !- Minimum Value of x
-  1.0 ,                                !- Maximum Value of x
-  0.3 ,                                !- Minimum Curve Output
-  1.0 ,                                !- Maximum Curve Output
-  Dimensionless ,                      !- Input Unit Type for X
-  Dimensionless ;                      !- Output Unit Type
-<%elsif fan_curve == "MZVAV-VSD" # TRC: Fan Type - Multi zone VAV with VSD and fixed SP setpoint %>
-Curve:Quartic,
-  <%= unitary_name %> Supply Fan Curve,                      !- Name
-  0.0013 ,                       !- Coefficient1 Constant
-  0.1470 ,                         !- Coefficient2 x
-  0.9506 ,                      !- Coefficient3 x**2
-  -0.0998 ,                       !- Coefficient4 x**3
-  0.0 ,                                !- Coefficient5 x**4
-  0.0 ,                                !- Minimum Value of x
-  1.0 ,                                !- Maximum Value of x
-  0.2 ,                                !- Minimum Curve Output
-  1.0 ,                                !- Maximum Curve Output
-  Dimensionless ,                      !- Input Unit Type for X
-  Dimensionless ;                      !- Output Unit Type
-<%elsif fan_curve == "T24" %>
+
 Curve:Quartic,
   <%= unitary_name %> Supply Fan Curve,                      !- Name
   0.0407598940 ,                       !- Coefficient1 Constant
@@ -597,7 +547,6 @@ Curve:Quartic,
   1.0 ,                                !- Maximum Curve Output
   Dimensionless,                      !- Input Unit Type for X
   Dimensionless;                      !- Output Unit Type
-<% end %>
 <% end %>
 
 <% elsif (fan_type == "VARIABLE") %>
@@ -885,7 +834,7 @@ Coil:Cooling:DX:MultiSpeed,
   ,                        !- Basin Heater Operating Schedule Name
   Electricity,             !- Fuel Type
   <%= dx_comp_speed_num %>,  !- Number of Speeds
-  Autosize,    !- Speed 1 Gross Rated Total Cooling Capacity {W}
+  <%= cool_coil_cap %>,    !- Speed 1 Gross Rated Total Cooling Capacity {W}
   Autosize,                !- Speed 1 Gross Rated Sensible Heat Ratio
   <%= cool_coil_cop_1 %>,  !- Speed 1 Gross Rated Cooling COP
   <%= fan_flow %>,         !- Speed 1 Rated Air Flow Rate {m^3/s}
@@ -911,11 +860,7 @@ Coil:Cooling:DX:MultiSpeed,
   Autosize,                !- Speed 1 Evaporative Condenser Air Flow Rate {m^3/s}
   ,                        !- Speed 1 Rated Evaporative Condenser Pump Power Consumption {W}
 <% end %>
-<% if (dx_comp_speed_num == 2) %>
-  <%= cool_coil_cap %>,                !- Speed 2 Gross Rated Total Cooling Capacity {W}
-<% else %>
   Autosize,                !- Speed 2 Gross Rated Total Cooling Capacity {W}
-<% end %>
   Autosize,                !- Speed 2 Gross Rated Sensible Heat Ratio
   <%= cool_coil_cop_2 %>,  !- Speed 2 Gross Rated Cooling COP
   Autosize,                !- Speed 2 Rated Air Flow Rate {m^3/s}
@@ -971,7 +916,7 @@ Coil:Cooling:DX:MultiSpeed,
   ;                        !- Speed 3 Rated Evaporative Condenser Pump Power Consumption {W}
 <% else %>
   ,                        !- Speed 3 Rated Evaporative Condenser Pump Power Consumption {W}
-  <%= cool_coil_cap %>,                !- Speed 4 Gross Rated Total Cooling Capacity {W}
+  Autosize,                !- Speed 4 Gross Rated Total Cooling Capacity {W}
   Autosize,                !- Speed 4 Gross Rated Sensible Heat Ratio
   <%= cool_coil_cop_4 %>,  !- Speed 4 Gross Rated Cooling COP
   Autosize,                !- Speed 4 Rated Air Flow Rate {m^3/s}
@@ -1874,52 +1819,6 @@ Coil:Heating:Fuel,
 <% end %>
 <% end %>
 
-<% elsif (heat_coil_type == "MULTI-STAGE-GAS") %>
-Coil:Heating:Gas:MultiStage,
-  <%= unitary_name %> Heating Coil,  !- Name
-  ,                        !- Availability Schedule Name
-<% if (fan_config == "DRAW-THROUGH" and cool_coil_type == "NONE") %>
-  <%= unitary_name %> Unitary Inlet Node,  !- Air Inlet Node Name
-<% elsif (fan_config == "BLOW-THROUGH" and cool_coil_type == "NONE") %>
-  <%= unitary_name %> Supply Fan Outlet Node,  !- Air Inlet Node Name
-<% else %>
-  <%= unitary_name %> Cooling Coil Outlet Node,  !- Air Inlet Node Name
-<% end %>
-<% if (fan_config == "BLOW-THROUGH" and aux_heat_coil_type == "NONE") %>
-<%#
-  See below: 'and not doas' is probably not the right thing to key off of.
-  At least for DOAS, it must _NOT_ have a setpoint node specified in this field.
-  Probably 'Temperature Setpoint Node Name' can be removed in all cases.
-    for control_type=Load, no setpoint
-    for control_type=Setpoint and used in AirLoop, no setpoint
-%>
-<% if false  #(control_type == "Setpoint" and not doas) %>
-  <%= unitary_name %> Unitary Outlet Node,  !- Air Outlet Node Name
-! TEMPORARY: probably breaks ZN-* types
-!  <%= unitary_name %> Unitary Outlet Node,  !- Temperature Setpoint Node Name
-<% else %>
-  <%= unitary_name %> Unitary Outlet Node,  !- Air Outlet Node Name
-<% end %>
-<% else %>
-<% if false  #(control_type == "Setpoint" and not doas) %>
-  <%= unitary_name %> Heating Coil Outlet Node,  !- Air Outlet Node Name
-! TEMPORARY: probably breaks ZN-* types
-!  <%= unitary_name %> Heating Coil Outlet Node,  !- Temperature Setpoint Node Name
-<% else %>
-  <%= unitary_name %> Heating Coil Outlet Node,  !- Air Outlet Node Name
-<% end %>
-<% end %>
-    ,                        !- Temperature Setpoint Node Name
-    ,                        !- Part Load Fraction Correlation Curve Name
-    ,                        !- Parasitic Gas Load {W}
-    2,                       !- Number of Stages
-    0.8,                     !- Stage 1 Gas Burner Efficiency {W/W}
-    autosize,                !- Stage 1 Nominal Capacity {W}
-    ,                        !- Stage 1 Parasitic Electric Load {W}
-    0.8,                     !- Stage 2 Gas Burner Efficiency {W/W}
-    autosize;                !- Stage 2 Nominal Capacity {W}
-
-
 <% elsif (heat_coil_type == "RESISTANCE") %>
 Coil:Heating:Electric,
   <%= unitary_name %> Heating Coil,  !- Name
@@ -2105,7 +2004,7 @@ Coil:Heating:DX:MultiSpeed,
   Electricity,             !- Fuel Type
   ,                        !- Region number for Calculating HSPF
   <%= dx_comp_speed_num %>,  !- Number of Speeds
-  Autosize,    !- Rated Total Heating Capacity {W}
+  <%= heat_coil_cap %>,    !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_1 %>,  !- Rated COP
   <%= fan_flow %>,         !- Rated Air Flow Rate {m^3/s}
   ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
@@ -2117,11 +2016,7 @@ Coil:Heating:DX:MultiSpeed,
   <%= unitary_name %> HP_Heat-PLF-fPLR1,  !- Part Load Fraction Correlation Curve Name
   0.2,                     !- Rated Waste Heat Fraction of Power Input
   <%= unitary_name %> HP_Heat-Waste,  !- Waste Heat Function of Temperature Curve Name
-<% if (dx_comp_speed_num == 2) %>
-  <%= heat_coil_cap %>,
-<% else %>
   Autosize,                !- Rated Total Heating Capacity {W}
-<% end %>
   <%= heat_coil_cop_2 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
   ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
@@ -2151,7 +2046,7 @@ Coil:Heating:DX:MultiSpeed,
   <%= unitary_name %> HP_Heat-Waste;  !- Waste Heat Function of Temperature Curve Name
 <% else %>
   <%= unitary_name %> HP_Heat-Waste,  !- Waste Heat Function of Temperature Curve Name
-  <%= heat_coil_cap %>,                !- Rated Total Heating Capacity {W}
+  Autosize,                !- Rated Total Heating Capacity {W}
   <%= heat_coil_cop_4 %>,  !- Rated COP
   Autosize,                !- Rated Air Flow Rate {m^3/s}
   ,                        !- 2017 Rated Evaporator Fan Power Per Volume Flow Rate {W/(m/s)}
@@ -2894,10 +2789,10 @@ UnitarySystemPerformance:Multispeed,
   <%= unitary_name %> Multispeed Performance,  !- Name
   2,                       !- Number of Speeds for Heating
   2,                       !- Number of Speeds for Cooling
-  <%= single_mode_operation %>,                      !- Single Mode Operation
-  <%= ventilation_supply_air_ratio %>,                        !- No Load Supply Air Flow Rate Ratio
-  <%= low_heating_supply_air_ratio %>,                    !- Heating Speed 1 Supply Air Flow Ratio
-  <%= low_cooling_supply_air_ratio %>,                    !- Cooling Speed 1 Supply Air Flow Ratio
+  No,                      !- Single Mode Operation
+  ,                        !- No Load Supply Air Flow Rate Ratio
+  1,                    !- Heating Speed 1 Supply Air Flow Ratio
+  1,                    !- Cooling Speed 1 Supply Air Flow Ratio
   1,                     !- Heating Speed 2 Supply Air Flow Ratio
   1;                     !- Cooling Speed 2 Supply Air Flow Ratio
   <% else %>
@@ -2970,12 +2865,6 @@ cool_flow_min_frac = 0.67
 end
 %>
 
-!- Value of disable_ems = <%= disable_ems %>
-<%
-# Solaris Technical 2024-05-07
-# Because this airflow EMS logic interferes with Modelkit's linked-sizing feature, create a parameter to disable it.
-if (!disable_ems)
-%>
 EnergyManagementSystem:Actuator,
     <%= unitary_name_ems %>_MINFLOW,  !- Name
     <%= unitary_name %> UNITARY,  !- Actuated Component Unique Name
@@ -3027,5 +2916,5 @@ EnergyManagementSystem:InternalVariable,
     <%= unitary_name_ems %>_HMFLOW,  !- Name
     <%= unitary_name %>,  !- Internal Data Index Key Name
     Intermediate Air System Heating Volume Flow Rate;  !- Internal Data Type
-<% end %>
+
 <% end %>
