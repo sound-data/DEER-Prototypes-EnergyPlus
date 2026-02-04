@@ -31,7 +31,6 @@ parameter "oa_frac_sch", :name => "Outdoor Air Schedule", :description => "Outdo
 parameter "oa_frac_max_sch", :name => "Outdoor Air Schedule", :description => "Outdoor air schedule controls when ventilation air is supplied",
   :default => "NONE"
 
-parameter "zone_max_oa_frac", :default => 1
 parameter "oa_min_flow", :default => Autosize  # Minimum design outdoor air flow rate {m3/s}
 parameter "oa_max_flow", :default => Autosize  # Maximum design outdoor air flow rate {m3/s}
 # or should be:?  oa_flow_min, oa_flow_max
@@ -411,7 +410,7 @@ Sizing:System,
 <% if ahu_type == "DOAS" %>
   ;                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
 <% else %>
-  <%= zone_max_oa_frac %>, !- Zone Maximum Outdoor Air Fraction {dimensionless}
+  1.0,                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
   CoolingDesignCapacity,   !- Cooling Design Capacity Method
   Autosize,                !- Cooling Design Capacity {W}
   ,                        !- Cooling Design Capacity Per Floor Area {W/m2}
@@ -532,7 +531,12 @@ Schedule:Constant,
 Schedule:Compact,
   <%= ahu_name %> Operation Schedule,  !- Name
   Binary Control,          !- Schedule Type Limits Name
+  <% if (operation_schedule) %>
   <%= op_sch %>
+  <% else %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
+  <% end %>
+
 
 
 BranchList,
@@ -1062,7 +1066,11 @@ Controller:OutdoorAir,
 Schedule:Compact,
   <%= ahu_name %> Outdoor Air Schedule,  !- Name
   Unit Interval,           !- Schedule Type Limits Name
-  <%= oa_sch %>
+  <% if (outdoor_air_schedule) %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
+  <% else %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 0;
+  <% end %>
 
 
 <% if oa_frac_sch != "NONE" %>
