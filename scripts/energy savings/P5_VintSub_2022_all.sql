@@ -1,4 +1,4 @@
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS meas_impacts_wtd_2022;
 CREATE TABLE meas_impacts_wtd_2022 AS 
 
