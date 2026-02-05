@@ -453,7 +453,8 @@ PlantEquipmentList,
 
 
 <% elsif water_heater_type =='gas_tankless' %>
-! Solaris - 2025-12-30 - Updated to use splitter and mixer nodes rather than “use inlet node / use outlet node”, that avoids the splitter integrity problem.
+! Solaris - 2025-12-30 - Updated to use splitter and mixer nodes rather than "use inlet node / use outlet node".
+!   Bypassing the splitter and mixer nodes causes splitter integrity problem when there are multiple branches.
 ! For WaterHeater:Mixed user should assign very small number to tank size (e.g. 1.0 gallon)
 WaterHeater:Mixed,
     <%= water_heater_name %>,      !- Name
@@ -539,7 +540,7 @@ WaterUse:Connections,
 ! DWH loop settings
 ! DHW loop branches
 
-! Solaris - 2025-12-30 - The “mains Inlet Branch” brings water into the supply side.
+! Solaris - 2025-12-30 - The "mains Inlet Branch" brings water into the supply side.
 Branch,
     <%= water_heater_name %> mains Inlet Branch,!- Name
     ,                        !- Pressure Drop Curve Name
@@ -557,7 +558,7 @@ Branch,
     <%= water_heater_name %> DHW Supply Mixer Outlet Node,  !- Component 1 Inlet Node Name
     <%= water_heater_name %> DHW Supply Outlet Node;  !- Component 1 Outlet Node Name
 
-! Solaris - 2025-12-30 - Demand side is where water is “used” and optionally recirculated.
+! Solaris - 2025-12-30 - Demand side is where water is used and optionally recirculated.
 ! "DHW Demand inlet branch" brings water into the demand splitter.
 Branch,
     <%= water_heater_name %> DHW Demand Inlet Branch,  !- Name
