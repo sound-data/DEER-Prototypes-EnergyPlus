@@ -541,6 +541,7 @@ WaterUse:Connections,
 ! DHW loop branches
 
 ! Solaris - 2025-12-30 - The "mains Inlet Branch" brings water into the supply side.
+! Solaris Technical, 2025-12-30. Moved water mains pressure pump to water use branch on demand side.
 Branch,
     <%= water_heater_name %> mains Inlet Branch,!- Name
     ,                        !- Pressure Drop Curve Name
