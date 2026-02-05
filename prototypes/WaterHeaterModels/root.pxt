@@ -1501,29 +1501,7 @@ Schedule:Year,
 
 !-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:COMPACT ===========
 
-Schedule:Compact,
-    always_off DH,           !- Name
-    On/Off,                  !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    0;                       !- Field 4
-
-Schedule:Compact,
-    DH dhw_setpt,            !- Name
-    Temperature,             !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until 24:00,             !- Field 3
-    57;                      !- Field 4
-
-Schedule:Compact,
-    DH Boiler Temp Setpoint, !- Name
-    Temperature,             !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until 24:00,             !- Field 3
-    57;                      !- Field 4
+! Solaris Technical, 2025-12-22 - added some schedules for DHW recirculation and pipe heat loss defaults
 
 Schedule:Compact,
     DHW Recirculation Load Schedule,  !- Name
@@ -1594,34 +1572,6 @@ Schedule:Compact,
     18.4,                    !- Field 48
     Until: 24:00,            !- Field 49
     17.3;                    !- Field 50
-
-Schedule:Compact,
-    Ambient Temperature Constant,  !- Name
-    Temperature,             !- Schedule Type Limits Name
-    Through: 12/31,          !- Field 1
-    For: AllDays,            !- Field 2
-    Until: 24:00,            !- Field 3
-    41;                      !- Field 4
-
-Schedule:Constant,
-    DHSupplySetpoint,        !- Name
-    Temperature,             !- Schedule Type Limits Name
-    57;                      !- Hourly Value
-
-Schedule:Constant,
-    DH Supply Inlet Node Setpoint,  !- Name
-    Temperature,             !- Schedule Type Limits Name
-    40;                      !- Hourly Value
-
-Schedule:Constant,
-    DH Bypass Mass Flow Setpoint,  !- Name
-    any number,              !- Schedule Type Limits Name
-    0.002;                   !- Hourly Value
-
-Schedule:Constant,
-    DH Bath Out Mass Flow Setpoint,  !- Name
-    any number,              !- Schedule Type Limits Name
-    0;                       !- Hourly Value
 
 Schedule:Compact,
     heating_sch_DEER,        !- Name
