@@ -71,6 +71,13 @@ daily_volume = case draw_pattern
                else 69.5
                end
 
+# Solaris Technical, 2026-01-07. Commented out these lines to force the template
+# to pass through the user specified value for tank_size parameter when gas_tankless.
+# tank_size = case water_heater_type
+#             when 'gas_tankless' then 1 ['gal']
+#             else tank_size['gal']
+#             end
+
 tank_height = case tank_size
               when 50 then 53 ['in']
               when 80 then 63 ['in']
@@ -308,7 +315,8 @@ Curve:Quadratic,
 
 <% end %>
 
-!- Solaris - 2026-1-7 - Added WaterHeater:Sizing object (required when autosizing) needed for designing tank volume and/or heater capacity for either the mixed or stratified water heaters
+! Solaris - 2026-01-07 - Added WaterHeater:Sizing object (required when autosizing)
+! needed for designing tank volume and/or heater capacity for either the mixed or stratified water heaters
 WaterHeater:Sizing,
     <%= water_heater_name %>,!- WaterHeater Name
     PerUnit,                 !- Design Mode
@@ -529,6 +537,7 @@ WaterUse:Connections,
     <%= water_heater_name %> hot water use equip;     !- Water Use Equipment 1 Name
 
 ! DWH loop settings
+! DHW loop branches
 
 ! Solaris - 2025-12-30 - The “mains Inlet Branch” brings water into the supply side.
 Branch,
@@ -662,6 +671,7 @@ Pipe:Adiabatic,
     <%= water_heater_name %> Mains Makeup Node; !- Outlet Node Name
 
 <% if (recirc_flow_mode) %>
+! Solaris Technical, 2025-12-22. Added inlet (common) and outlet (recirculation only) pipes to model pipe heat loss.
  Pipe:Indoor,
     <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Name
     Insulated Pipe,          !- Construction Name
@@ -685,6 +695,7 @@ Pipe:Adiabatic,
     <%= water_heater_name %> Mains Inlet Node,  !- Inlet Node Name
     <%= water_heater_name %> DHW Supply Splitter Inlet Node;  !- Outlet Node Name
 
+! Solaris Technical, 2025-12-22. Added inlet (common) and outlet (recirculation only) pipes to model pipe heat loss.
 Pipe:Indoor,
     DHW Recirculation Outlet Pipe,  !- Name
     Insulated Pipe,          !- Construction Name
@@ -697,6 +708,7 @@ Pipe:Indoor,
     <%= recirc_pipe_id %>,                  !- Pipe Inside Diameter {m}
     <%= recirc_outlet_pipe_length %>;        !- Pipe Length {m}
 
+! Solaris Technical, 2025-12-30. Moved water mains pressure pump to water use branch on demand side.
 Pump:VariableSpeed,
     <%= water_heater_name %> mains Pressure,    !- Name
     <%= water_heater_name %> DHW Demand Splitter Outlet Node WaterUse,  !- Inlet Node Name
@@ -713,6 +725,7 @@ Pump:VariableSpeed,
     0,                       !- Design Minimum Flow Rate {m3/s}
     Intermittent;            !- Pump Control Type
 
+! Solaris Technical, 2025-12-22. Added recirculation pump and associated branch.
 Pump:VariableSpeed,
     DHW Recirculation Pump,    !- Name
     DHW Demand Recirculation Outlet Node,  !- Inlet Node Name
@@ -745,6 +758,8 @@ Pump:VariableSpeed,
     ,                        !- Design Minimum Flow Rate Fraction
     General;                 !- End-Use Subcategory
 
+! Solaris Technical, 2025-12-29. Added rows to clarify defaults for optional input fields
+! after Load Distribution Scheme.
 PlantLoop,
     <%= water_heater_name %> DHW Loop,          !- Name
     Water,                   !- Fluid Type
@@ -813,6 +828,8 @@ Sizing:Plant,
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
 
 <% if (output_recirc_variables) %>
+! Solaris - 2026-01-07 Enable time series outputs for SWWH015 and SWWH016 setup and QC
+
 Output:Variable,
     DHW Demand Recirculation Inlet Node,  !- Key Value
     System Node Temperature ,!- Variable Name
