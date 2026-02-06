@@ -79,10 +79,10 @@ if __name__ == "__main__":
     excel_file_path = 'coil_list.xlsx'
 
 
-    sizing_detail_csv = 'SWHC046-04 Pkg HP AC Com_Ex/results-sizing-detail.csv'
-    output_csv = 'SWHC046-04 Pkg HP AC Com_Ex/sizing_agg_filtered.csv'
+    sizing_detail_csv = 'SWHC046-06 Pkg HP AC Com_Ex/results-sizing-detail.csv'
+    output_csv = 'SWHC046-06 Pkg HP AC Com_Ex/sizing_agg_filtered.csv'
     process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)
 
-    sizing_detail_csv = 'SWHC046-04 Pkg HP AC Com_Htl_Ex/results-sizing-detail.csv'
-    output_csv = 'SWHC046-04 Pkg HP AC Com_Htl_Ex/sizing_agg_filtered.csv'
+    sizing_detail_csv = 'SWHC046-06 Pkg HP AC Com_Htl_Ex/results-sizing-detail.csv'
+    output_csv = 'SWHC046-06 Pkg HP AC Com_Htl_Ex/sizing_agg_filtered.csv'
     process_coil_list(normunit, excel_file_path, sizing_detail_csv, output_csv)
