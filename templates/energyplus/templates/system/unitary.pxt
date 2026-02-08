@@ -8,8 +8,11 @@ parameter "control_zone_name", :default => ""
 
 # 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
 parameter "op_sch", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+# John Jacobs, 2025-03-28 - Rename parameter fan_op_fault (false = use op_sch) to operation_schedule (true = use op_sch) for SWHC062
 parameter "operation_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+# John Jacobs, 2025-03-28 - Create parameter fan_mode_schedule for SWHC062
 parameter "fan_mode_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+# John Jacobs, 2025-03-28 - Replace oa_sch with new parameter outdoor_air_schedule for SWHC062
 parameter "outdoor_air_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
 
 parameter "fan_type", :default => "SYSTEM-MODEL" # (ON-OFF | VAV | SYSTEM-MODEL )
@@ -434,6 +437,7 @@ AirLoopHVAC:UnitarySystem,
 <% end %>
 
 ! 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
+<% # John Jacobs, 2025-03-28 - Rename parameter fan_op_fault (false = use op_sch) to operation_schedule (true = use op_sch) for SWHC062 %>
 Schedule:Compact,
   <%= unitary_name %> Schedule,  !- Name
   Binary Control,          !- Schedule Type Limits Name
@@ -443,7 +447,7 @@ Schedule:Compact,
   Through: 12/31,  For: AllDays,  Until: 24:00, 1;
   <% end %>
 
-
+<% # John Jacobs, 2025-03-28 - Replace parameter fan_mode_sch (schedule passed from ahu.pxt) with fan_mode_schedule (boolean, on/off) for SWHC062 %>
 Schedule:Compact,
   <%= unitary_name %> Fan Mode Schedule,  !- Name
   Fan Mode Control,        !- Schedule Type Limits Name

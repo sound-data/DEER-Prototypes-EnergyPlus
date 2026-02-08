@@ -528,6 +528,7 @@ Schedule:Constant,
   Any Number,              !- Schedule Type Limits Name
   1;                       !- Hourly Value
 
+<%# John Jacobs, 2025-03-28 - Apply parameter operation_schedule (true = use op_sch, false = always on) for SWHC062 %>
 Schedule:Compact,
   <%= ahu_name %> Operation Schedule,  !- Name
   Binary Control,          !- Schedule Type Limits Name
@@ -1063,6 +1064,7 @@ Controller:OutdoorAir,
   BypassWhenWithinEconomizerLimits;  !- Heat Recovery Bypass Control Type
 <%# only show BypassWhenWithinEconomizerLimits when there is heat recovery %>
 
+<%# John Jacobs, 2025-03-28 - Replace oa_sch (schedule string, default always on) with outdoor_air_schedule (true = always on) for SWHC062 %>
 Schedule:Compact,
   <%= ahu_name %> Outdoor Air Schedule,  !- Name
   Unit Interval,           !- Schedule Type Limits Name
