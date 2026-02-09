@@ -1,0 +1,7 @@
+skip,case_name,:main_hvac_type,:main_atu_reheat_coil_type,:main_atu_reheat_control,:main_fan_rise,:main_cool_coil_type,:main_heat_coil_type,:main_dx_type,:main_sat_reset_type,:main_sat_temp_max,:main_design_peak_load,:main_oa_econ_type,:main_cool_coil_cop,:main_dx_comp_speed,:main_fan_speed,:main_fan_motor_eff,:main_heat_coil_eff,:main_cool_coil_cop2,:main_cool_coil_cop3,:main_cool_coil_cop4
+,NE-dxAC-PkgAC-65to134-New-EER-11.0,SZ-CAV,NONE,nil,3.877['in H2O'],DX-AIR,COMBUSTION,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.8,CONSTANT,CONSTANT,0.9,0.8,,,
+,NE-dxAC-PkgAC-65to134-New-EER-12.0,SZ-CAV,NONE,nil,3.877['in H2O'],DX-AIR,COMBUSTION,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,5.19,CONSTANT,CONSTANT,0.9,0.8,,,
+,NE-dxAC-PkgAC-65to134-New-EER-13.0,SZ-CAV,NONE,nil,3.877['in H2O'],DX-AIR,COMBUSTION,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,5.62,CONSTANT,CONSTANT,0.9,0.8,,,
+,NE-dxAC-PkgAC-135to240-New-EER-10.8,SZ-CAV,NONE,nil,3.877['in H2O'],DX-AIR,COMBUSTION,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.81,CONSTANT,CONSTANT,0.9,0.8,,,
+,NE-dxAC-PkgAC-135to240-New-EER-12.0,SZ-CAV,NONE,nil,3.877['in H2O'],DX-AIR,COMBUSTION,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,5.29,CONSTANT,CONSTANT,0.9,0.8,,,
+,NE-dxAC-PkgAC-135to240-New-EER-12.5,SZ-CAV,NONE,nil,3.877['in H2O'],DX-AIR,COMBUSTION,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,5.51,CONSTANT,CONSTANT,0.9,0.8,,,
