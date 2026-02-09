@@ -193,28 +193,36 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "classroom_shop", :prefix => "classroom_shop_" do
-    include "fan_op_fault"
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0.5['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "classroom_class", :prefix => "classroom_class_" do
-    include "fan_op_fault"
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.38['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "dining_fast", :prefix => "dining_fast_" do
-    include "fan_op_fault"
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.5['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "kitchen", :prefix => "kitchen_" do
-    include "fan_op_fault"
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0.7['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
@@ -227,14 +235,18 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "computer", :prefix => "computer_" do
-    include "fan_op_fault"
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "office_large", :prefix => "office_large_" do
-    include "fan_op_fault"
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE

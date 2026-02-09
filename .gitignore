@@ -1,6 +1,6 @@
 # Created results #
 ###################
-runs/
+runs*/
 results-summary.csv
 modelkit_cmd_output.txt
 results-profile-elec.csv
@@ -20,3 +20,9 @@ sim_hourly_wb.csv
 stderr
 scripts/data transformation/sfm_annual.csv
 scripts/data transformation/sfm_hourly_wb.csv
+DEER-Prototypes-EnergyPlus-SWHC009.code-workspace
+simdata.csv
+simdata*
+commercial measures/.DS_Store
+commercial measures/.DS_Store
+results-summary*.csv
