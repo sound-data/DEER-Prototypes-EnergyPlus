@@ -36,5 +36,5 @@ After the simulation is done, please make sure simulation is finished successful
 
 
 ### Creating CEDARS long formatted loadshapes:
-1. Run the above processes (either Residential or Commercial applies) from **data transformation directory** with the new update.
-2. Note new outputs "CEDARS_long_ls_XXXX" from the scripts, these will be the new CEDARS long formatted loadshapes containing the hourly consumption data
+1. Run the aforementioned scripts (SFm.py, MFm.py, DMo.py, or Com.py applies) from **data transformation directory** with the new update.
+2. Note new outputs "CEDARS_long_ls_XXXX" in the section commented "export CEDARS long 8760 csv" from the scripts,  these will be the new CEDARS long formatted loadshapes containing the hourly consumption data. The user should rename this output name to represent the corresponding measure(s) being processed.
