@@ -1,0 +1,9 @@
+skip,case_name,:heat_type,:combi,:boiler_eff,:boiler_eff_curve,:curve_evaluation_variable,:design_hw_temp,:min_hw_temp,:sub_heat_type,:cooling_coil_cop,:heating_coil_cop,:supplyfan_total_eff,:motor_eff,:burner_eff,:ductless,:use_dummy_return_plenum,:vfd_curve_name,:coil_type,:hvac_type,:dhw_stpt_sch,:water_heater_type,:tank_size,:uef,:tank_height,:loop_sept,:tank_sept
+,RE-dxGF_eq-GasFurnace-AFUE67-NoFanPower-11.0-EER,GF,,,,,,,,3.72,,1,1,0.67,,,,,,,,,,,,
+,RE-dxHP_equip-spltSEER-15.2-SEER2-7.8-HSPF2,DX,,,,,,,,4.13,4.05,0.25,0.5,,TRUE,FALSE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-spltSEER-16.0-SEER2-8.1-HSPF2,DX,,,,,,,,4.24,4.11,0.25,0.5,,TRUE,FALSE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-spltSEER-16.9-SEER2-8.3-HSPF2,DX,,,,,,,,4.35,4.14,0.25,0.5,,TRUE,FALSE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-spltSEER-17.8-SEER2-8.5-HSPF2,DX,,,,,,,,4.44,4.17,0.25,0.5,,TRUE,FALSE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-spltSEER-18.7-SEER2-8.7-HSPF2,DX,,,,,,,,4.53,4.2,0.25,0.5,,TRUE,FALSE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-spltSEER-19.6-SEER2-8.9-HSPF2,DX,,,,,,,,4.6,4.22,0.25,0.5,,TRUE,FALSE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-spltSEER-20.5-SEER2-9.1-HSPF2,DX,,,,,,,,4.65,4.24,0.25,0.5,,TRUE,FALSE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,

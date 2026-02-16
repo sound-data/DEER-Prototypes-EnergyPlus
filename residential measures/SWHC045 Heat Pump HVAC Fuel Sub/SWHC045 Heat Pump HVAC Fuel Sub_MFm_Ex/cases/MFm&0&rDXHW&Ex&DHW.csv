@@ -1,0 +1,13 @@
+skip,case_name,:heat_type,:combi,:boiler_eff,:boiler_eff_curve,:curve_evaluation_variable,:design_hw_temp,:min_hw_temp,:sub_heat_type,:cooling_coil_cop,:heating_coil_cop,:supplyfan_total_eff,:motor_eff,:burner_eff,:ductless,:use_dummy_return_plenum,:vfd_curve_name,:coil_type,:hvac_type,:dhw_stpt_sch,:water_heater_type,:tank_size,:uef,:tank_height,:loop_sept,:tank_sept
+,RE-dxHW_equip-Boiler-AFUE82-Radiator-12.4-SEER2,HW,,0.82,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F'],BASEBOARD-WATER,3.65,,,,,,,,,,,,,,,,
+,RE-dxHW_equip-Boiler-AFUE84-Radiator-14.3-SEER2,HW,,0.84,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F'],BASEBOARD-WATER,3.99,,,,,,,,,,,,,,,,
+,RE-dxHW_equip-Boiler-AFUE82-FC-12.4-SEER2,HW,,0.82,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F'],,3.65,,,,,,,,,,,,,,,,
+,RE-dxHW_equip-Boiler-AFUE84-FC-14.3-SEER2,HW,,0.84,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F'],,3.99,,,,,,,,,,,,,,,,
+,RE-dxGF_eq-GasFurnace-AFUE80-14.3-SEER2,GF,,,,,,,,3.99,,0.12,0.24,0.82,,,,,,,,,,,,
+,RE-dxGF_eq-GasFurnace-AFUE78-12.4-SEER2,GF,,,,,,,,3.65,,0.12,0.24,0.8,,,,,,,,,,,,
+,RE-dxHP_equip-pkgSEER-15.2-SEER2-7.7-HSPF2,DX,,,,,,,,4.11,4.05,0.25,0.5,,FALSE,TRUE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-pkgSEER-16.0-SEER2-8.0-HSPF2,DX,,,,,,,,4.22,4.11,0.25,0.5,,FALSE,TRUE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-pkgSEER-16.9-SEER2-8.1-HSPF2,DX,,,,,,,,4.33,4.13,0.25,0.5,,FALSE,TRUE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-pkgSEER-17.8-SEER2-8.1-HSPF2,DX,,,,,,,,4.43,4.13,0.25,0.5,,FALSE,TRUE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-pkgSEER-18.7-SEER2-8.5-HSPF2,DX,,,,,,,,4.51,4.19,0.25,0.5,,FALSE,TRUE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
+,RE-dxHP_equip-pkgSEER-19.6-SEER2-8.9-HSPF2,DX,,,,,,,,4.58,4.24,0.25,0.5,,FALSE,TRUE,VFD_Fan_Curve,multispeed,unitary_system,,,,,,,
