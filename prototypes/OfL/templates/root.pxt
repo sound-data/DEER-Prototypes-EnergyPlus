@@ -377,6 +377,11 @@ import "system/hw.pxt", :group => "hw", :prefix => "hw_" do
   parameter "pump_head", :default => 60.0['ft H2O']
   parameter "pump_eff", :default => 0.9
   parameter "pump_control", :default => "INTERMITTENT"
+  parameter "heating_source", :default=>"BOILER"
+  parameter "fluid_type", :default=>"WATER"  # (WATER | STEAM )
+  parameter "max_loop_temp", :default=>100  # (100 | 120 )
+  parameter "min_loop_temp", :default=>10  # (10 | 10 )
+  parameter "min_loop_temp", :default=>10  # (10 | 10 )
 end
 
 import "system/chw.pxt", :group => "chw", :prefix => "chw_" do
@@ -644,6 +649,7 @@ for zone in all_zones
     ahu_branches[sys_name] ||= []
     ahu_branches[sys_name] << branch_name
     hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "WATER")
+    hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "STEAM")
 
     if (this_hvac[:atu_type] == "CAV-CHB")
       chw_branches << branch_name
@@ -653,6 +659,8 @@ for zone in all_zones
     end
 
     if (this_hvac[:heat_coil_type] == "WATER")
+      hw_branches |= ["#{this_hvac_type}-#{sys_name}"]
+    elsif (this_hvac[:heat_coil_type] == "STEAM")
       hw_branches |= ["#{this_hvac_type}-#{sys_name}"]
     elsif (this_hvac[:heat_coil_type] == "DX-WATER")
       wshp_branches  |= ["#{this_hvac_type}-#{sys_name} HR Branch"]
