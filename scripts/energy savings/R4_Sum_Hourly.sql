@@ -1,5 +1,5 @@
 --finish weighting hourly results with numbldgs
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS sim_hourly_wb_wtd;
 CREATE TABLE sim_hourly_wb_wtd AS 
 SELECT
