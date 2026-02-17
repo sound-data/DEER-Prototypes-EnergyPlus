@@ -88,6 +88,12 @@ parameter "boiler_eff_curve", :default=>'Cond_Boiler_Eff'
 # Efficiency Curve Temperature Evaluation Variable
 parameter "curve_evaluation_variable", :default=>'LeavingBoiler'
 
+# Parameters for Setpoint at Outdoor Low/High Temperature added by Behzad Rizi (Solaris Technical), 2025-08-06
+# Setpoint at Outdoor Low Temperature
+parameter "setpoint_oa_low_temp", :default=>165
+
+# Setpoint at Outdoor High Temperature
+parameter "setpoint_oa_high_temp", :default=>140																											  														  
 #Duct Loss
 parameter "total_leakage_ratio", :default=>0.12  #total leakage ratio
 parameter "number_of_stories", :default=>1  #no. of stories, default one story
@@ -55221,9 +55227,9 @@ SetpointManager:OutdoorAirReset,
 SetpointManager:OutdoorAirReset,
     Boiler Setpoint Manager, !- Name
     Temperature,             !- Control Variable
-    73.88888888888888,        !- Setpoint at Outdoor Low Temperature {C}
+    <%= setpoint_oa_low_temp %>,        !- Setpoint at Outdoor Low Temperature {C}
     -17.7777777777778,       !- Outdoor Low Temperature {C}
-    60,                      !- Setpoint at Outdoor High Temperature {C}
+    <%= setpoint_oa_high_temp %>,                      !- Setpoint at Outdoor High Temperature {C}
     21.1111111111111,        !- Outdoor High Temperature {C}
     Boiler Water Oulet Node; !- Setpoint Node or NodeList Name
 
