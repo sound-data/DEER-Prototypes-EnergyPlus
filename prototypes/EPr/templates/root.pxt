@@ -164,6 +164,8 @@ group "space_hvac" do
     parameter "oa_area", :default => 0.38['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
+	#Solaris - Behzad S. Rizi - Added new parameter "setpoint_temp_schedule" for classroom zones
+	parameter "setpoint_temp_schedule", :default => ""
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "dining_fast", :prefix => "dining_fast_" do
