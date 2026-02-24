@@ -31,8 +31,40 @@ parameter "chiller_generator_type", :default=>"HOTWATER"  # For absorption chill
 # NOTE: If DIRECTFIRED is selected, the heating_source must be set to "ABSORPTIONCHILLER" for hotwater.imf.
 
 parameter "num_chillers", :default=>1
-parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004 )
+
+# Behzad S. Rizi, Solaris Technical - 2024-06-12 (for SWHC005)
+# Proposed Water cooled chiller performance curve options for SWHC005 testing:
+# Added "Model 9 WC Chiller" (ReformEIRChiller type, EIR_fPLR curve type = Lift, curves provided by email Energy Solutions)
+# Added "Model 7 WC Chiller" (ReformEIRChiller type, EIR_fPLR curve type = Lift, curves provided by email Energy Solutions)
+
+# Behzad S. Rizi, Solaris Technical - 2024-08-09 (for SWHC005)
+# Proposed two water cooled chiller models for SWHC005 testing as a base case:
+# Added "WC Cent Carrier 19XR 1234kW/5.39COP/VSD" (ElectricEIRChiller type)
+# Added "WC Trane RTHB 1051kW/5.05COP/Valve" (ElectricEIRChiller type)
+
+# Behzad S. Rizi, Solaris Technical - 2024-08-22 (for SWHC005)
+# Proposed two water cooled chiller models for SWHC005 testing as a base case:
+# Added "ReformEIRChiller WC Cent Carrier 19XR 1234kW/5.39COP/VSD" (ReformEIRChiller type)
+# Added "ReformEIRChiller Screw WC Trane RTHB 1051kW/5.05COP/Valve" (ReformEIRChiller type)
+
+# Nicholas Fette, Solaris Technical - 2024-08-23 (for SWHC005)
+# Corrected coefficients in Model 9 WC Chiller and Model 7 WC Chiller PLR curves
+
+# Nicholas Fette, Solaris Technical - 2024-08-30 (for SWHC005)
+# Revised chiller model for the base case screw type
+# Added "ReformEIRChiller Screw WC Carrier 23XL 1062kW/5.50COP/Valve" (ReformEIRChiller type)
+# Removed "ReformEIRChiller Screw WC Trane RTHB 1051kW/5.05COP/Valve" (ReformEIRChiller type)
+
+parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004)
+
+# Behzad S. Rizi, Solaris Technical, 2024-06-12 (for SWHC005)
+# Added more chiller nominal COP for water-cooled chiller reformulated EIR (4.8 | 5.0 | 5.4 | 5.6 | 6.0 | 6.1 | 6.4 | 6.5)
 parameter "chiller_cop", :default=>2.87  # Chiller nominal COP
+
+# Behzad S. Rizi, Solaris Technical, 2024-08-09 & 2024-08-22
+# Added new parameter for switching water cooled chiller object type between standard "EIR" and new "Reformulated" chiller
+parameter "wc_option", :default=>"Reformulated"  # (EIR | Reformulated)
+
 parameter "chiller_sizing", :default=>1.0  # Chiller sizing factor (formerly to counteract oversizing problem; as of 7.2 chiller seems to undersize)
 parameter "chiller_condenser", :default=>"AIRCOOLED"  # Chiller condenser type (AIRCOOLED | WATERCOOLED | EVAPCOOLED)
 parameter "chiller_heatpump_hr", :default=>false  # Chiller heat pump heat recovery
@@ -61,6 +93,16 @@ parameter "hi_outdoor_temp", :default=>80['F']  # Outside air high temperature f
 
 parameter "chw_temp_ref", :default=>6.67['C'] # Reference Leaving Chilled Water Temperature
 parameter "cw_temp_ref", :default=>34.4444['C'] # Reference Leaving Condenser Water Temperature
+
+# Behzad S. Rizi, Solaris Technical, 2024-06-17, for SWHC005
+# Nicholas Fette, Solaris Technical, 2025-05-01 Revised from chiller_plr_type logic to chiller_eir_fplr_type value
+# Created parameter to enable Lift type EIR_fPLR curves from EnergySolutions (e.g. "Model 9 WC Chiller")
+# (Chiller:Electric:ReformulatedEIR input field "Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type")
+parameter "chiller_eir_fplr_type", :default=>"LeavingCondenserWaterTemperature"  # (LeavingCondenserWaterTemperature | Lift)
+
+# Behzad S. Rizi, Solaris Technical, 2025-09-10, for SWHC005
+parameter "min_plr", :default=>0.1
+parameter "min_ulr", :default=>0.1
 
 parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
 
@@ -310,7 +352,11 @@ PlantEquipmentList,
 <% if (cooling_source == "CHILLER") %>
   <% if (chiller_type == "ELECTRIC") %>
     <% if (chiller_condenser == "WATERCOOLED") %>
+      <% if (wc_option == "EIR") %>
+  Chiller:Electric:EIR,    !- Equipment 1 Object Type
+      <% else %>
   Chiller:Electric:ReformulatedEIR,  !- Equipment 1 Object Type
+      <% end %>
     <% else %>
   Chiller:Electric:EIR,    !- Equipment 1 Object Type
     <% end %>
@@ -330,7 +376,11 @@ PlantEquipmentList,
   <% for i in (1..num_chillers-1) %>
   <%= name %> Chiller <%= i %>,        !- Equipment 1 Name
   <% if (chiller_condenser == "WATERCOOLED") %>
+    <% if (wc_option == "EIR") %>
+  Chiller:Electric:EIR,    !- Equipment 2 Object Type
+    <% else %>
   Chiller:Electric:ReformulatedEIR,  !- Equipment 2 Object Type
+    <% end %>
   <% else %>
   Chiller:Electric:EIR,    !- Equipment 2 Object Type
   <% end %>
@@ -502,7 +552,11 @@ Branch,
 <% if (cooling_source == "CHILLER") %>
   <% if (chiller_type == "ELECTRIC") %>
     <% if (chiller_condenser == "WATERCOOLED") %>
+      <% if (wc_option == "EIR") %>
+  Chiller:Electric:EIR,    !- Component 1 Object Type
+      <% else %>
   Chiller:Electric:ReformulatedEIR,  !- Component 1 Object Type
+      <% end %>
     <% else %>
   Chiller:Electric:EIR,    !- Component 1 Object Type
     <% end %>
@@ -524,7 +578,47 @@ Branch,
 
 <% if (cooling_source == "CHILLER") %>
 <% if (chiller_type == "ELECTRIC") %>
+
 <% if (chiller_condenser == "WATERCOOLED") %>
+  <% if (wc_option == "EIR") %>
+Chiller:Electric:EIR,
+  <%= name %> Chiller <%= i %>,  !- Name
+  Autosize,                !- Reference Capacity {W}
+  <%= chiller_cop %>,  !- Reference COP {}
+  <%= chw_temp_ref %>,                    !- Reference Leaving Chilled Water Temperature {C}
+  <%= cw_temp_ref %>,                    !- Reference Leaving Condenser Water Temperature {C}
+  <%= design_flow %>,  !- Reference Chilled Water Flow Rate {m3/s}
+  Autosize,                !- Reference Condenser Fluid Flow Rate {m3/s}
+  <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
+  <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
+  <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
+  0.15,                    !- Minimum Part Load Ratio {}
+  1.0,                     !- Maximum Part Load Ratio {}
+  0.8,                     !- Optimum Part Load Ratio {}
+  0.15,                    !- Minimum Unloading Ratio {}
+  <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Chilled Water Outlet Node Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Condenser Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node,                        !- Condenser Outlet Node Name
+  WaterCooled,     !- Condenser Type
+  ,                        !- Condenser Fan Power Ratio {W/W}
+  1.0,                     !- Fraction of Compressor Electric Consumption Rejected by Condenser {}
+  2.0,                     !- Leaving Chilled Water Lower Temperature Limit {C}
+  <%= chiller_flow_mode %>,  !- Chiller Flow Mode
+  0.0,                     !- Design Heat Recovery Water Flow Rate {m3/s}
+  ,                        !- Heat Recovery Inlet Node Name
+  ,                        !- Heat Recovery Outlet Node Name
+  <%= chiller_sizing %>;  !- Sizing Factor
+
+Branch,
+  <%= name %> <%= i %> HR Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Chiller:Electric:EIR,    !- Component 1 Object Type
+  <%= name %> Chiller <%= i %>,   !- Component 1 Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
+
+  <% else # wc_option not "EIR" %>
 Chiller:Electric:ReformulatedEIR,
   <%= name %> Chiller <%= i %>,  !- Name
   Autosize,                !- Reference Capacity {W}
@@ -535,12 +629,14 @@ Chiller:Electric:ReformulatedEIR,
   Autosize,                !- Reference Condenser Water Flow Rate {m3/s}
   <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
   <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
-  LeavingCondenserWaterTemperature,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
+
+<%# Behzad S. Rizi, Solaris Technical - 2024-06-17 - Option to change EIR_fPLR type from LeavingCondenserWaterTemperature to Lift %>
+  <%= chiller_eir_fplr_type %>,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
   <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
-  0.1,                    !- Minimum Part Load Ratio {}
+  <%= min_plr %>,          !- Minimum Part Load Ratio {}
   1.0,                     !- Maximum Part Load Ratio {}
   1.0,                     !- Optimum Part Load Ratio {}
-  0.1,                    !- Minimum Unloading Ratio {}
+  <%= min_ulr %>,          !- Minimum Unloading Ratio {}
   <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
   <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Chilled Water Outlet Node Name
   <%= name %> Chiller <%= i %> Water Inlet Node,  !- Condenser Inlet Node Name
@@ -560,8 +656,10 @@ Branch,
   <%= name %> Chiller <%= i %>,   !- Component 1 Name
   <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
   <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
+  <% end # water cooled chiller object type (wc_option) %>
 
-<% else %>
+<% else # chiller_condenser not WATERCOOLED %>
+<%# If chiller condenser is aircooled %>
 Chiller:Electric:EIR,
   <%= name %> Chiller <%= i %>,  !- Name
   Autosize,                !- Reference Capacity {W}
@@ -594,7 +692,6 @@ Chiller:Electric:EIR,
   ,                        !- Heat Recovery Inlet Node Name
   ,                        !- Heat Recovery Outlet Node Name
   <%= chiller_sizing %>;  !- Sizing Factor
-
 
 OutdoorAir:Node,
   <%= name %> Chiller <%= i %> Condenser Inlet Node;    !- Name
@@ -1913,6 +2010,321 @@ Curve:Bicubic,
   36.52,                   !- Maximum Value of x
   0.19,                    !- Minimum Value of y
   1.03;                    !- Maximum Value of y
+  
+<%
+# Behzad S. Rizi, Solaris Technical 2024-08-09, for SWHC005
+# Added water-cooled centrifugal chiller performance curves for use as a base case
+# >>> ElectricEIRChiller Carrier 19XR 1234kW/5.39COP/VSD
+%>
+<% elsif (chiller_model == "WC Cent Carrier 19XR 1234kW/5.39COP/VSD") %>
+
+Curve:Biquadratic,
+    <%= name %> Chiller Cap Curve,  !- Name
+    5.905815E-01,            !- Coefficient1 Constant
+    1.190927E-01,            !- Coefficient2 x
+    -6.727309E-03,           !- Coefficient3 x**2
+    -9.580836E-03,           !- Coefficient4 y
+    -3.034704E-04,           !- Coefficient5 y**2
+    1.540686E-03,            !- Coefficient6 x*y
+    7.22,                    !- Minimum Value of x
+    12.78,                   !- Maximum Value of x
+    12.78,                   !- Minimum Value of y
+    26.67;                   !- Maximum Value of y
+	
+Curve:Biquadratic,
+    <%= name %> Chiller EIR Curve,  !- Name
+    3.771659E-01,            !- Coefficient1 Constant
+    1.144965E-01,            !- Coefficient2 x
+    -8.186893E-03,           !- Coefficient3 x**2
+    -3.372584E-03,           !- Coefficient4 y
+    1.689440E-04,            !- Coefficient5 y**2
+    1.008523E-03,            !- Coefficient6 x*y
+    7.22,                    !- Minimum Value of x
+    12.78,                   !- Maximum Value of x
+    12.78,                   !- Minimum Value of y
+    26.67;                   !- Maximum Value of y
+	
+ Curve:Quadratic,
+    <%= name %> Chiller PLR Curve,  !- Name
+    1.495681E-01,            !- Coefficient1 Constant
+    -1.449639E-01,           !- Coefficient2 x
+    9.941070E-01,            !- Coefficient3 x**2
+    0.19,                    !- Minimum Value of x
+    1.02;                    !- Maximum Value of x 
+
+<%
+# Behzad S. Rizi, Solaris Technical, 2024-08-22, for SWHC005
+# Added water-cooled centrifugal chiller performance curves for use in the base case of SWHC005
+# >>> ReformEIRChiller Carrier 19XR 1234kW/5.39COP/VSD
+%>
+<% elsif (chiller_model == "ReformEIRChiller WC Cent Carrier 19XR 1234kW/5.39COP/VSD") %>
+
+  Curve:Biquadratic,
+    <%= name %> Chiller Cap Curve,  !- Name
+    6.134255E-01,            !- Coefficient1 Constant
+    1.092476E-01,            !- Coefficient2 x
+    -7.352739E-03,           !- Coefficient3 x**2
+    -2.589985E-03,           !- Coefficient4 y
+    -3.793512E-04,           !- Coefficient5 y**2
+    1.839978E-03,            !- Coefficient6 x*y
+    7.22,                    !- Minimum Value of x
+    12.78,                   !- Maximum Value of x
+    22.24,                   !- Minimum Value of y
+    36.28;                   !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Temperature Curve
+! x = Leaving Chilled Water Temperature and y = Leaving Condenser Water Temperature
+
+  Curve:Biquadratic,
+    <%= name %> Chiller EIR Curve,  !- Name
+    4.746375E-01,            !- Coefficient1 Constant
+    9.120326E-02,            !- Coefficient2 x
+    -7.295060E-03,           !- Coefficient3 x**2
+    -5.662273E-03,           !- Coefficient4 y
+    1.928027E-04,            !- Coefficient5 y**2
+    8.244779E-04,            !- Coefficient6 x*y
+    7.22,                    !- Minimum Value of x
+    12.78,                   !- Maximum Value of x
+    22.24,                   !- Minimum Value of y
+    36.28;                   !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Part Load Ratio Curve
+! x = Leaving Condenser Water Temperature and y = Part Load Ratio (load/capacity)
+
+  Curve:Bicubic,
+    <%= name %> Chiller PLR Curve,  !- Name
+    1.207212E-01,            !- Coefficient1 Constant
+    -9.914826E-03,           !- Coefficient2 x
+    1.854918E-05,            !- Coefficient3 x**2
+    9.880331E-01,            !- Coefficient4 y
+    -8.955866E-01,           !- Coefficient5 y**2
+    8.894574E-03,            !- Coefficient6 x*y
+    0.000000E+00,            !- Coefficient7 x**3
+    8.005552E-01,            !- Coefficient8 y**3
+    0.000000E+00,            !- Coefficient9 x**2*y
+    0.000000E+00,            !- Coefficient10 x*y**2
+    14.38,                   !- Minimum Value of x
+    34.99,                   !- Maximum Value of x
+    0.19,                    !- Minimum Value of y
+    1.02;                    !- Maximum Value of y
+
+<%
+# Behzad S. Rizi, Solaris Technical - 2024-08-09, for SWHC005
+# Added water-cooled screw chiller performance curves option as the basecase
+# >>> ElectricEIRChiller Trane RTHB 1051kW/5.05COP/Valve
+%>
+<% elsif (chiller_model == "Screw WC Trane RTHB 1051kW/5.05COP/Valve") %>
+
+Curve:Biquadratic,
+    <%= name %> Chiller Cap Curve,  !- Name
+    9.482157E-01,            !- Coefficient1 Constant
+    3.306737E-02,            !- Coefficient2 x
+    -6.450072E-05,           !- Coefficient3 x**2
+    -3.756522E-03,           !- Coefficient4 y
+    -6.501672E-05,           !- Coefficient5 y**2
+    2.517986E-15,            !- Coefficient6 x*y
+    4.44,                    !- Minimum Value of x
+    8.89,                    !- Maximum Value of x
+    23.89,                   !- Minimum Value of y
+    35.00;                   !- Maximum Value of y
+
+Curve:Biquadratic,
+    <%= name %> Chiller EIR Curve,  !- Name
+    4.904181E-01,            !- Coefficient1 Constant
+    -5.530317E-03,           !- Coefficient2 x
+    1.209907E-03,            !- Coefficient3 x**2
+    9.122333E-03,            !- Coefficient4 y
+    5.923591E-04,            !- Coefficient5 y**2
+    -1.469958E-03,           !- Coefficient6 x*y
+    4.44,                    !- Minimum Value of x
+    8.89,                    !- Maximum Value of x
+    23.89,                   !- Minimum Value of y
+    35.00;                   !- Maximum Value of y
+	
+Curve:Quadratic,
+    <%= name %> Chiller PLR Curve,  !- Name
+    2.590465E-01,            !- Coefficient1 Constant
+    2.148987E-01,            !- Coefficient2 x
+    5.265039E-01,            !- Coefficient3 x**2
+    0.20,                    !- Minimum Value of x
+    1.01;                    !- Maximum Value of x
+
+<%
+# Behzad S. Rizi, Solaris Technical, - 2024-08-22, for SWHC005
+# Added water-cooled screw chiller performance curves as the basecase
+# >>> ReformEIRChiller Screw WC Carrier 23XL 1062kW/5.50COP/Valve
+%>
+<% elsif (chiller_model == "ReformEIRChiller Screw WC Carrier 23XL 1062kW/5.50COP/Valve") %>
+
+Curve:Biquadratic,
+    <%= name %> Chiller Cap Curve,  !- Name
+    1.054485E+00,            !- Coefficient1 Constant
+    1.015650E-02,            !- Coefficient2 x
+    -4.899041E-03,           !- Coefficient3 x**2
+    -3.792726E-03,           !- Coefficient4 y
+    -3.699876E-04,           !- Coefficient5 y**2
+    2.891276E-03,            !- Coefficient6 x*y
+    6.67,                    !- Minimum Value of x
+    10.00,                   !- Maximum Value of x
+    26.44,                   !- Minimum Value of y
+    35.10;                   !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Temperature Curve
+! x = Leaving Chilled Water Temperature and y = Leaving Condenser Water Temperature
+
+  Curve:Biquadratic,
+    <%= name %> Chiller EIR Curve,  !- Name
+    1.369592E-01,            !- Coefficient1 Constant
+    -5.681693E-03,           !- Coefficient2 x
+    2.795150E-04,            !- Coefficient3 x**2
+    2.407603E-02,            !- Coefficient4 y
+    2.142516E-04,            !- Coefficient5 y**2
+    -8.850727E-04,           !- Coefficient6 x*y
+    6.67,                    !- Minimum Value of x
+    10.00,                   !- Maximum Value of x
+    26.44,                   !- Minimum Value of y
+    35.10;                   !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Part Load Ratio Curve
+! x = Leaving Condenser Water Temperature and y = Part Load Ratio (load/capacity)
+
+  Curve:Bicubic,
+    <%= name %> Chiller PLR Curve,  !- Name
+    1.385765E+00,            !- Coefficient1 Constant
+    -3.549685E-02,           !- Coefficient2 x
+    -4.110930E-06,           !- Coefficient3 x**2
+    -7.678018E-01,           !- Coefficient4 y
+    7.228808E-01,            !- Coefficient5 y**2
+    3.573245E-02,            !- Coefficient6 x*y
+    0.000000E+00,            !- Coefficient7 x**3
+    -3.442173E-01,           !- Coefficient8 y**3
+    0.000000E+00,            !- Coefficient9 x**2*y
+    0.000000E+00,            !- Coefficient10 x*y**2
+    30.60,                   !- Minimum Value of x
+    34.70,                   !- Maximum Value of x
+    0.20,                    !- Minimum Value of y
+    1.01;                    !- Maximum Value of y
+
+<%
+# Behzad S. Rizi, Solaris Technical, 2025-09-10, for SWHC005
+# Added water-cooled centrifugal chiller performance curves for use in the base case of SWHC005
+# >>> ReformEIRChiller Carrier 19XR 1157kW/5.62COP/VSD
+%>
+<% elsif (chiller_model == "ReformEIRChiller Carrier 19XR 1157kW/5.62COP/VSD") %>
+
+  Curve:Biquadratic,
+    <%= name %> Chiller Cap Curve,  !- Name
+    1.095494E+00,            !- Coefficient1 Constant
+    -5.546137E-03,           !- Coefficient2 x
+    -5.186584E-04,           !- Coefficient3 x**2
+    1.420446E-03,            !- Coefficient4 y
+    -2.801603E-04,           !- Coefficient5 y**2
+    1.007864E-03,            !- Coefficient6 x*y
+    5.56,                    !- Minimum Value of x
+    10.00,                   !- Maximum Value of x
+    21.97,                   !- Minimum Value of y
+    34.50;                   !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Temperature Curve
+! x = Leaving Chilled Water Temperature and y = Leaving Condenser Water Temperature
+
+  Curve:Biquadratic,
+    <%= name %> Chiller EIR Curve,  !- Name
+    1.221566E+00,            !- Coefficient1 Constant
+    -2.771462E-02,           !- Coefficient2 x
+    1.220059E-03,            !- Coefficient3 x**2
+    -2.228215E-02,           !- Coefficient4 y
+    7.578438E-04,            !- Coefficient5 y**2
+    -8.532836E-04,           !- Coefficient6 x*y
+    5.56,                    !- Minimum Value of x
+    10.00,                   !- Maximum Value of x
+    21.97,                   !- Minimum Value of y
+    34.50;                   !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Part Load Ratio Curve
+! x = Leaving Condenser Water Temperature and y = Part Load Ratio (load/capacity)
+
+  Curve:Bicubic,
+    <%= name %> Chiller PLR Curve,  !- Name
+    2.260949E-01,            !- Coefficient1 Constant
+    -1.619690E-02,           !- Coefficient2 x
+    2.953765E-06,            !- Coefficient3 x**2
+    4.956395E-01,            !- Coefficient4 y
+    1.180777E-01,            !- Coefficient5 y**2
+    1.582337E-02,            !- Coefficient6 x*y
+    0.000000E+00,            !- Coefficient7 x**3
+    1.675772E-01,            !- Coefficient8 y**3
+    0.000000E+00,            !- Coefficient9 x**2*y
+    0.000000E+00,            !- Coefficient10 x*y**2
+    13.12,                   !- Minimum Value of x
+    35.0,                   !- Maximum Value of x
+    0.19,                    !- Minimum Value of y
+    1.01;                    !- Maximum Value of y
+	
+	
+<%
+# Behzad S. Rizi, Solaris Technical, 2025-09-10, for SWHC005
+# Added water-cooled centrifugal chiller performance curves for use in the base case of SWHC005
+# >>> ReformEIRChiller Trane CVHF 2317kW/6.33COP/VSD
+%>
+<% elsif (chiller_model == "ReformEIRChiller Trane CVHF 2317kW/6.33COP/VSD") %>
+
+  Curve:Biquadratic,
+    <%= name %> Chiller Cap Curve,  !- Name
+    6.632457E-01,            !- Coefficient1 Constant
+    4.608638E-03,            !- Coefficient2 x
+    -1.100111E-03,           !- Coefficient3 x**2
+    1.651605E-02,            !- Coefficient4 y
+    -4.753748E-04,           !- Coefficient5 y**2
+    1.648311E-03,            !- Coefficient6 x*y
+    4.44,                    !- Minimum Value of x
+    8.89,                    !- Maximum Value of x
+    17.67,                   !- Minimum Value of y
+    35.67;                   !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Temperature Curve
+! x = Leaving Chilled Water Temperature and y = Leaving Condenser Water Temperature
+
+  Curve:Biquadratic,
+    <%= name %> Chiller EIR Curve,  !- Name
+    2.905409E-01,            !- Coefficient1 Constant
+    -2.093028E-02,           !- Coefficient2 x
+    9.792522E-04,            !- Coefficient3 x**2
+    1.493146E-02,            !- Coefficient4 y
+    3.511684E-04,            !- Coefficient5 y**2
+    -8.356167E-04,           !- Coefficient6 x*y
+    4.44,                    !- Minimum Value of x
+    8.89,                    !- Maximum Value of x
+    17.67,                   !- Minimum Value of y
+    35.67;                   !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Part Load Ratio Curve
+! x = Leaving Condenser Water Temperature and y = Part Load Ratio (load/capacity)
+
+  Curve:Bicubic,
+    <%= name %> Chiller PLR Curve,  !- Name
+    -4.540034E-01,           !- Coefficient1 Constant
+    3.433262E-02,            !- Coefficient2 x
+    4.845589E-05,            !- Coefficient3 x**2
+    9.799190E-01,            !- Coefficient4 y
+    2.028044E-01,            !- Coefficient5 y**2
+    -3.705958E-02,           !- Coefficient6 x*y
+    0.000000E+00,            !- Coefficient7 x**3
+    3.066979E-01,            !- Coefficient8 y**3
+    0.000000E+00,            !- Coefficient9 x**2*y
+    0.000000E+00,            !- Coefficient10 x*y**2
+    17.11,                   !- Minimum Value of x
+    31.11,                   !- Maximum Value of x
+    0.10,                    !- Minimum Value of y
+    1.04;                    !- Maximum Value of y
 
 <% elsif (chiller_model == "WC PD 2010 B") %>
 
@@ -2003,6 +2415,134 @@ Curve:Bicubic,
   36.52,                   !- Maximum Value of x
   0.19,                    !- Minimum Value of y
   1.03;                    !- Maximum Value of y
+
+<%
+# Behzad S. Rizi, Solaris Technical - 2024-06-12, for SWHC005
+# Added water-cooled chiller performance curves(Chiller:Electric:ReformulatedEIR)
+# Performance curves provided by Energy Solutions
+%>
+<% elsif (chiller_model == "Model 7 WC Chiller") %>
+! "Model 7" performance curves for 12% Path B PLE improvement
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.989616849,             !- Coefficient1 Constant
+  0.029621942,              !- Coefficient2 x
+  0.000137363,            !- Coefficient3 x**2
+  -0.007781822,             !- Coefficient4 y
+  0.000103918,            !- Coefficient5 y**2
+  -0.00020792,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.544578782,             !- Coefficient1 Constant
+  -0.011128038,            !- Coefficient2 x
+  0.00061257,             !- Coefficient3 x**2
+  0.000848405,            !- Coefficient4 y
+  0.0005857,             !- Coefficient5 y**2
+  -0.000966413,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+	  	  
+Curve:ChillerPartLoadWithLift,
+  <%= name %> Chiller PLR Curve,    !- Name
+  0.162615058,             !- Coefficient1 C1
+  -0.843913483,            !- Coefficient2 C2 
+  0.283449427,             !- Coefficient3 C3 
+  -0.078715236,             !- Coefficient4 C4 
+  0.394265877,            !- Coefficient5 C5 
+  1.100071665,             !- Coefficient6 C6
+  0.000000E+00,            !- Coefficient7 C7
+  0.000000E+00,             !- Coefficient8 C8
+  0.000000E+00,            !- Coefficient9 C9
+  0.000000E+00,            !- Coefficient10 C10
+  0.000000E+00,            !- Coefficient11 C11
+  0.000000E+00,            !- Coefficient12 C12
+  0.36,                  !- Minimum Value of x
+  1.08,                  !- Maximum Value of x
+  0.1,                     !- Minimum Value of y
+  1,                       !- Maximum Value of y
+  -0.035,                  !- Minimum Value of z
+  0.3144,                  !- Maximum Value of z
+  ,                        !- Minimum Curve Output
+  ,                        !- Maximum Curve Output
+  Dimensionless,           !- Input Unit Type for x
+  Dimensionless,           !- Input Unit Type for y
+  Dimensionless,           !- Input Unit Type for z
+  Dimensionless;           !- Output Unit Type
+
+<%
+# Behzad S. Rizi, Solaris Technical, - 2024-06-12, for SWHC005
+# Added water-cooled chiller performance curves(Chiller:Electric:ReformulatedEIR)
+# Performance curves provided by Energy Solutions
+%>
+<% elsif (chiller_model == "Model 9 WC Chiller") %>
+! Model 9 performance curves for 17% Path B PLE improvement
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  1.833870,             !- Coefficient1 Constant
+  -0.018299,              !- Coefficient2 x
+  0.004437,            !- Coefficient3 x**2
+  -0.054290,             !- Coefficient4 y
+  0.000876,            !- Coefficient5 y**2
+  -0.000356,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  1.097221,             !- Coefficient1 Constant
+  -0.013698,            !- Coefficient2 x
+  0.001890,             !- Coefficient3 x**2
+  -0.031726,            !- Coefficient4 y
+  0.001072,             !- Coefficient5 y**2
+  -0.001329,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+	  
+Curve:ChillerPartLoadWithLift,
+  <%= name %> Chiller PLR Curve,    !- Name
+  0.087760714,             !- Coefficient1 C1
+  -0.214192565,            !- Coefficient2 C2 
+  0.277130448,             !- Coefficient3 C3 
+  -0.111975778,             !- Coefficient4 C4 
+  0.31630787,            !- Coefficient5 C5 
+  0.629734788,             !- Coefficient6 C6 
+  0.000000E+00,            !- Coefficient7 C7
+  0.000000E+00,             !- Coefficient8 C8
+  0.000000E+00,            !- Coefficient9 C9
+  0.000000E+00,            !- Coefficient10 C10
+  0.000000E+00,            !- Coefficient11 C11
+  0.000000E+00,            !- Coefficient12 C12
+  0.35,                  !- Minimum Value of x
+  1.08,                  !- Maximum Value of x
+  0.1,                     !- Minimum Value of y
+  1,                       !- Maximum Value of y
+  -0.035,                  !- Minimum Value of z
+  0.3144,                  !- Maximum Value of z
+  ,                        !- Minimum Curve Output
+  ,                        !- Maximum Curve Output
+  Dimensionless,           !- Input Unit Type for x
+  Dimensionless,           !- Input Unit Type for y
+  Dimensionless,           !- Input Unit Type for z
+  Dimensionless;           !- Output Unit Type
 
 <% elsif (chiller_model == "WC PD 2010 A Large") %>
 
