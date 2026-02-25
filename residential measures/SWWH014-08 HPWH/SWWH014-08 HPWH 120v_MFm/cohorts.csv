@@ -1,4 +1,2 @@
 skip,cohort,root,:sch
-#,SFm,WaterHeaterModels/root.pxt,SFm_minute_dhw_demand_fraction.csv
 ,MFm&0&rDXGF&Ex&HP_UEF,WaterHeaterModels/root.pxt,MFm_minute_dhw_demand_fraction.csv
-#,DMo,WaterHeaterModels/root.pxt,DMo_minute_dhw_demand_fraction.csv
