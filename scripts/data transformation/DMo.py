@@ -8,7 +8,7 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'SEER Rated AC/HP'
+measure_name = 'Efficient Doors'
 
 # %%
 #DMo only script
@@ -32,7 +32,7 @@ print(os.path.abspath(os.curdir))
 
 #12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res
-path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
+path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_DMo'
 
 # %%
 #extract only the 5th portion of the measure group name for expected_att
@@ -218,10 +218,11 @@ for case in cohort_cases:
     print(f'processing all annual data that are grouped in {case}')
     cohort_dict = parse_measure_name(case)
     sim_annual_i = annual_raw_parsing(annual_df[annual_df['File Name'].str.contains(case)].copy(), cohort_dict)
+    sim_annual_i['Measure Group Name'] = case #add in "meaasure group name" for looking up tech type / tech groups later
     sim_annual_proto = pd.concat([sim_annual_proto, sim_annual_i])
     print('ok.')
 sim_annual_proto = end_use_rearrange(sim_annual_proto)
-sim_annual_v1 = sim_annual_proto[['TechID', 'BldgLoc', 'BldgType', 'BldgHVAC', 'BldgVint', 'kwh_tot', 'kwh_ltg', 'kwh_task',
+sim_annual_v1 = sim_annual_proto[['TechID', 'Measure Group Name', 'BldgLoc', 'BldgType', 'BldgHVAC', 'BldgVint', 'kwh_tot', 'kwh_ltg', 'kwh_task',
     'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
     'kwh_venthtg', 'kwh_ventclg',
     'kwh_refg', 'kwh_hpsup', 'kwh_shw', 'kwh_ext', 'thm_tot', 'thm_equip',
@@ -342,6 +343,68 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr07',     'hr08',     'hr09',     'hr10',     'hr11',     'hr12',
         'hr13',     'hr14',     'hr15',     'hr16',     'hr17',     'hr18',
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
+#%%
+# 10/15/2025 CEDARS Hourly consumption output reformatting request
+
+# use the hourly data before long2wide pivot transform
+converted_long_df = pd.DataFrame()
+
+for i in range(0,len(fyr_hrly.columns)):
+    
+    #isolate single column
+    hrly_df = pd.DataFrame(fyr_hrly.iloc[:,i])
+    
+    #create separate metadata columns
+    col_names = hrly_df.columns[0].split('/')
+    
+    #create new key column for merge
+    hrly_df['hr in 8760'] = (hrly_df.index) + 1
+    
+    #merge based on "hr in 8760" column, the 8760 map
+    hrly_mapped = pd.merge(hrly_df, annual_map, on='hr in 8760')
+
+    cohort = parse_measure_name(col_names[1])
+
+    #rename / rearrange columns
+    hrly_mapped.rename(columns={hrly_mapped.columns[0]: 'Total_Elec_Consumption'}, inplace=True)
+    hrly_mapped['BldgLoc'] = col_names[0]
+    hrly_mapped['BldgType'] = cohort['BldgType']
+    hrly_mapped['BldgHVAC'] = cohort['BldgHVAC']
+    hrly_mapped['BldgVint'] = cohort['BldgVint']
+    hrly_mapped['TechGroup'] = cohort['Measure']
+    hrly_mapped['Measure Group Name'] =col_names[1] #use this to look up tech group tech type
+    hrly_mapped['TechID'] = col_names[2]
+    hrly_mapped['file'] = col_names[3]
+
+    converted_long_df = pd.concat([converted_long_df, hrly_mapped])
+
+    # #transform data format
+    # hrly_wide = long2wide_pivot(hrly_mapped, hrly_mapped.columns[0])
+    
+    # #add meta data col
+    # hrly_wide['BldgLoc'] = col_names[0]
+    # hrly_wide['BldgType'] = col_names[1]
+    # hrly_wide['TechID'] = col_names[2]
+    # hrly_wide['file'] = col_names[3]
+    
+    # #append to master df
+    # #converted_df = converted_df.append(hrly_wide) #deprecated method
+    # converted_df = pd.concat([converted_df, hrly_wide])
+    print(f"col {i} long format loaded.")
+
+#%%
+#Setup a lookup using Measure Group name, to lookup for TechGroup_ee, TechType_ee
+TechGroup_lookup_map = df_measure.set_index('Measure Group Name')['TechGroup_ee'].to_dict()
+TechType_lookup_map = df_measure.set_index('Measure Group Name')['TechType_ee'].to_dict()
+
+#add corresponding TechGroup and TechType
+converted_long_df['TechGroup'] = converted_long_df['Measure Group Name'].map(TechGroup_lookup_map)
+converted_long_df['TechType'] = converted_long_df['Measure Group Name'].map(TechType_lookup_map)
+#%%
+
+#convert from J to kWh
+converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Consumption']/3600000
+
 # %%
 ##STEP 3: Normalizing Units
 bldgtype = 'DMo'
@@ -349,20 +412,100 @@ os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
 numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['Value', 'Msr']]
+normunit = df_measure['Normunit'].unique()[0]
 
+#%%
+#measure specific normalizing units table
+# df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+
+# if len(df_numunits) == 1:
+#     normunit = df_numunits['Normunit'].unique()[0]
+#     numunits = df_numunits['Value'].unique()[0]
+# elif len(df_numunits) > 1:
+#     pass #come back to this with Com (multiple building types)
+
+#%%
 if len(numunits_vals) == 1:
     numunits = list(numunits_vals['Value'])[0]
+    print(f'normunit is {normunit}, numunit is {numunits}.')
 elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
     numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
+    print(f'normunit is {normunit}, numunits is varied by CZ')
+elif normunit == 'Each':
+    numunits = 1 #added numunits for measures with normunit "each" 
+    print('normunit is Each. Setting numunits to 1.')
 else:
-    pass
+    normunit = 'Each' #If normalizing unit isn't anything else, put default as each
+    numunits = 1
+
 # %%
+##Long format data norm unit field updates
+
+#num unit will be per dwelling, so use roof area / num of dwellings (2 for SFM, DMo, 24 for MFm)
+converted_long_df['Normunit'] = normunit
+converted_long_df['Numunits'] = numunits/2
+
+#%%
+#need to divide each 8760 by its annual and its corresponding numunit
+#1. grouby to find sum of each table via unique ID
+#2. merge as a new col in long df
+#3, divide and clean up final columns
+
+#convert to UEC by applying numunits
+converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
+
+#%%
+df_long = converted_long_df.sort_values(['BldgLoc', 'TechID', 'hr in 8760'])
+
+#%% 
+#create groupby ids for each 8760 set
+df_long['set_id'] = (df_long['hr in 8760'].eq(1)
+                .groupby([df_long['BldgLoc'], df_long['TechID']])
+                .cumsum())
+#calculate annual UEC
+df_long['annual_sum'] = (df_long
+    .groupby(['BldgLoc', 'TechID', 'set_id'])['UEC']
+    .transform('sum'))
+
+#%%
+#Calculate unitzed 8760 values based on annual sum of 8760
+df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
+#%%
+#rearrange / true-up columns
+
+df_long['Sector'] = 'Res' #this is DMo script, so Sector = Res
+df_long['Type'] = 'Whole Building'
+df_long['Status'] = ''
+df_long['Start Date'] = '1/1/2028'
+df_long['End Date'] = ''
+df_long['Source Year'] = 2015
+
+df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
+
+#final table fields round-up
+#note: UEC and Numunits omitted from draft long table in the final table
+df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
+         'Type','Status','Start Date', 'End Date', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'Hour of Year','UECproportion']] 
+
+
+
+#%%
+#export CEDARS long 8760 csv
+
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+
+df_long_final.to_csv('CEDARS_long_ls_DMo.csv', index=False)
+
+
+#%%
 ##Annual Data final field fixes
 #note normunit = building area (conditioned)
 sim_annual_v1['SizingID'] = 'None'
 sim_annual_v1['tstat'] = 0
 #now Norm unit is read from measure master table
-sim_annual_v1['normunit'] = df_measure['Normunit'].unique()[0]
+sim_annual_v1['normunit'] = normunit
 #make this automatic as well
 sim_annual_v1['measarea'] = 2484 #from DMo model outputs htmls
 
@@ -477,9 +620,9 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
@@ -490,9 +633,9 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
