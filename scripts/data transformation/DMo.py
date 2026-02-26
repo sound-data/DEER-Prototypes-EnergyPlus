@@ -8,7 +8,7 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'SEER Rated AC/HP'
+measure_name = 'Efficient Doors'
 
 # %%
 #DMo only script
@@ -32,7 +32,7 @@ print(os.path.abspath(os.curdir))
 
 #12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res
-path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
+path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_DMo'
 
 # %%
 #extract only the 5th portion of the measure group name for expected_att
@@ -412,16 +412,28 @@ os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
 numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['Value', 'Msr']]
+normunit = df_measure['Normunit'].unique()[0]
 
 #%%
 #measure specific normalizing units table
-df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+# df_numunits = df_normunits[df_normunits['Msr']==measure_name]
 
-if len(df_numunits) == 1:
-    normunit = df_numunits['Normunit'].unique()[0]
-    numunits = df_numunits['Value'].unique()[0]
-elif len(df_numunits) > 1:
-    pass #come back to this with Com (multiple building types)
+# if len(df_numunits) == 1:
+#     normunit = df_numunits['Normunit'].unique()[0]
+#     numunits = df_numunits['Value'].unique()[0]
+# elif len(df_numunits) > 1:
+#     pass #come back to this with Com (multiple building types)
+
+#%%
+if len(numunits_vals) == 1:
+    numunits = list(numunits_vals['Value'])[0]
+    print(f'normunit is {normunit}, numunit is {numunits}.')
+elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+    numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
+    print(f'normunit is {normunit}, numunits is varied by CZ')
+elif normunit == 'Each':
+    numunits = 1 #added numunits for measures with normunit "each" 
+    print('normunit is Each. Setting numunits to 1.')
 else:
     normunit = 'Each' #If normalizing unit isn't anything else, put default as each
     numunits = 1
@@ -493,7 +505,7 @@ df_long_final.to_csv('CEDARS_long_ls_DMo.csv', index=False)
 sim_annual_v1['SizingID'] = 'None'
 sim_annual_v1['tstat'] = 0
 #now Norm unit is read from measure master table
-sim_annual_v1['normunit'] = df_measure['Normunit'].unique()[0]
+sim_annual_v1['normunit'] = normunit
 #make this automatic as well
 sim_annual_v1['measarea'] = 2484 #from DMo model outputs htmls
 
@@ -608,9 +620,9 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
@@ -621,9 +633,9 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
