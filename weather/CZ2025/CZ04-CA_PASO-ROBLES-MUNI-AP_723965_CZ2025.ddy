@@ -1,0 +1,3354 @@
+ ! The following Location and Design Day data are produced as possible from the indicated data source.
+ ! Wind Speeds follow the indicated design conditions rather than traditional values (6.7 m/s heating, 3.35 m/s cooling)
+ ! No special attempts at re-creating or determining missing data parts (e.g. Wind speed or direction)
+ ! are done.  Therefore, you should look at the data and fill in any incorrect values as you desire.
+ 
+ ! SizingPeriod:DesignDay and other objects are formatted to meet criteria of EnergyPlus V7.1 and later
+ 
+ ! Some users have indicated that they would like the actual day of week from the weather file to be
+ ! used as the start day of week for a RunPeriod even though this is relatively meaningless for
+ ! TMY data files as future months will not use their start days of week (simulations need to show
+ ! continuity in day of week presentation).
+ 
+ ! In an effort to accomodate, the following initial month days are included:
+ ! Note JAN 1, 2011 is a Saturday
+ ! Note FEB 1, 2008 is a Friday
+ ! Note MAR 1, 2000 is a Wednesday
+ ! Note APR 1, 2018 is a Sunday
+ ! Note MAY 1, 2017 is a Monday
+ ! Note JUN 1, 2016 is a Wednesday
+ ! Note JUL 1, 2007 is a Sunday
+ ! Note AUG 1, 2005 is a Monday
+ ! Note SEP 1, 2016 is a Thursday
+ ! Note OCT 1, 2012 is a Monday
+ ! Note NOV 1, 2005 is a Tuesday
+ ! Note DEC 1, 2004 is a Wednesday
+ 
+ ! Since the RunPeriod object changes in V9.0, the following are RunPeriod objects in comments:
+ ! Version before EnergyPlus release V9.0
+ !RunPeriod,
+ !Weather Data,    !- Name
+ !  1,             !- Begin Month
+ !  1,             !- Begin Day of Month
+ !  12,            !- End Month
+ !  31,            !- End Day of Month
+ !Saturday,      !- Day of Week for Start Day
+ !  No,            !- Use Weather File Holidays and Special Days
+ !  No,            !- Use Weather File Daylight Saving Period
+ ! Yes,            !- Apply Weekend Holiday Rule
+ ! Yes,            !- Use Weather File Rain Indicators
+ ! Yes;            !- Use Weather File Snow Indicators
+ 
+ ! Version EnergyPlus release V9.0+
+ !RunPeriod,
+ !Weather Data,    !- Name
+ !  1,             !- Begin Month
+ !  1,             !- Begin Day of Month
+ !   ,             !- Begin Year
+ !  12,            !- End Month
+ !  31,            !- End Day of Month
+ !   ,             !- End Year
+ !Saturday,      !- Day of Week for Start Day
+ !  No,            !- Use Weather File Holidays and Special Days
+ !  No,            !- Use Weather File Daylight Saving Period
+ ! Yes,            !- Apply Weekend Holiday Rule
+ ! Yes,            !- Use Weather File Rain Indicators
+ ! Yes,            !- Use Weather File Snow Indicators
+ ! ;               !- Treat Weather as Actual
+ 
+ Site:Location,
+  Paso.Robles.Muni.AP_CA_USA Design_Conditions,     !- Location Name
+      35.67,     !- Latitude {N+ S-}
+    -120.63,     !- Longitude {W- E+}
+      -8.00,     !- Time Zone Relative to GMT {GMT+/-}
+     246.90;     !- Elevation {m}
+  
+ ! The following Sizing Period objects for Extreme and Typical conditions are calculated
+ ! from the extreme (if any) and typical conditions on the weather source data.
+ ! The actual weeks that will be used will exist on the weather file.
+  
+ SizingPeriod:WeatherFileConditionType,
+   Summer Extreme,
+   SummerExtreme,
+   SummerDesignDay,
+   Yes,                !- Use Weather File Daylight Saving Period
+   Yes;                !- Use Weather File Rain and Snow Indicators
+ SizingPeriod:WeatherFileConditionType,
+   Summer Typical,
+   SummerTypical,
+   Monday,
+   Yes,                !- Use Weather File Daylight Saving Period
+   Yes;                !- Use Weather File Rain and Snow Indicators
+ SizingPeriod:WeatherFileConditionType,
+   Winter Extreme,
+   WinterExtreme,
+   WinterDesignDay,
+   Yes,                !- Use Weather File Daylight Saving Period
+   Yes;                !- Use Weather File Rain and Snow Indicators
+ SizingPeriod:WeatherFileConditionType,
+   Winter Typical,
+   WinterTypical,
+   Monday,
+   Yes,                !- Use Weather File Daylight Saving Period
+   Yes;                !- Use Weather File Rain and Snow Indicators
+ SizingPeriod:WeatherFileConditionType,
+   Autumn Typical,
+   AutumnTypical,
+   Monday,
+   Yes,                !- Use Weather File Daylight Saving Period
+   Yes;                !- Use Weather File Rain and Snow Indicators
+ SizingPeriod:WeatherFileConditionType,
+   Spring Typical,
+   SpringTypical,
+   Monday,
+   Yes,                !- Use Weather File Daylight Saving Period
+   Yes;                !- Use Weather File Rain and Snow Indicators
+ 
+
+
+ ! Site:Precipitation. RoofIrrigation and Schedule:File objects for rainfall
+ ! Data is built from rainfall data on the source data
+  Site:Precipitation,  
+    ScheduleAndDesignLevel,  !- Precipitation Model Type
+    0.272,  !- Design Level for Total Annual Precipitation
+    Rainfall Data from EPW file,    !- Precipitation Rates Schedule Name
+    0.272;  !- Average Total Annual Precipitation
+ 
+  RoofIrrigation,  
+    Schedule,  !- Irridation Model Type
+    Rainfall Data from EPW file,    !- Precipitation Rates Schedule Name
+    ;  !- Irrigation Maximum Saturation Threshold (default used)
+ 
+  Schedule:File, 
+    Rainfall Data from EPW file,  !- Name
+    ,                       !- Schedule Type Limits Name
+    USA_CA_CZ04_Paso.Robles.Muni.AP.723965_CTZ2025.rain,    !- File Name
+    1,                       !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760;    !- Number of Hours of Data
+ 
+ !  WMO=723965 Time Zone= GMT-8.00 Code=NAP: (GMT-08:00 North America / Pacific)
+ !  Data Source="2025 ASHRAE Handbook -- Fundamentals - Chapter 14 Climatic Design Information"
+
+ RunPeriodControl:DaylightSavingTime,
+   2nd Sunday in March,    !- StartDate
+   1st Sunday in November;    !- EndDate
+ 
+ ! ======================= Annual Design Conditions SizingPeriod:DesignDay ======================
+ ! The following annual design conditions are reproduced from the climate data shown above.
+ ! Heating - 99%, 99.6%; Cooling - .4%, 1%, 2% for several humidity, etc conditions
+ !
+ ! Paso.Robles.Muni.AP_CA_USA Extreme Annual Wind Speeds, 1%=9.3m/s, 2.5%=8.4m/s, 5%=7.6m/s
+ ! Paso.Robles.Muni.AP_CA_USA Extreme Annual Temperatures, Max Drybulb=42.9C Min Drybulb=-5.3C
+ ! Paso.Robles.Muni.AP_CA_USA Extreme Annual Temperatures, Max Wetbulb=23.0C Min Wetbulb=-6.2C
+  
+ ! Paso.Robles.Muni.AP_CA_USA ASHRAE Climate Zone=3B
+  
+ ! Paso.Robles.Muni.AP_CA_USA Annual Heating Design Conditions Wind Speed=0.7m/s Wind Dir=80
+ ! Coldest Month=DEC
+ ! Paso.Robles.Muni.AP_CA_USA Annual Heating 99.6%, MaxDB=-2.6C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Htg 99.6% Condns DB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  WinterDesignDay,!- Day Type
+       -2.6,      !- Maximum Dry-Bulb Temperature {C}
+        0.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       -2.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        0.7,      !- Wind Speed {m/s} design conditions vs. traditional 6.71 m/s (15 mph)
+         80,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+  ASHRAEClearSky, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+           ,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+           ,      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+       0.00;      !- Clearness {0.0 to 1.1}
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Heating 99%, MaxDB=-1.3C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Htg 99% Condns DB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  WinterDesignDay,!- Day Type
+       -1.3,      !- Maximum Dry-Bulb Temperature {C}
+        0.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       -1.3,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        0.7,      !- Wind Speed {m/s} design conditions vs. traditional 6.71 m/s (15 mph)
+         80,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+  ASHRAEClearSky, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+           ,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+           ,      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+       0.00;      !- Clearness {0.0 to 1.1}
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Humidification 99.6% Design Conditions DP=>MCDB, DP=-9.0C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Hum_n 99.6% Condns DP=>MCDB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  WinterDesignDay,!- Day Type
+       11.4,      !- Maximum Dry-Bulb Temperature {C}
+        0.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Dewpoint,     !- Humidity Condition Type
+       -9.0,      !- Dewpoint at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        0.7,      !- Wind Speed {m/s} design conditions vs. traditional 6.71 m/s (15 mph)
+         80,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+  ASHRAEClearSky, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+           ,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+           ,      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+       0.00;      !- Clearness {0.0 to 1.1}
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Humidification 99% Design Conditions DP=>MCDB, DP=-6.9C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Hum_n 99% Condns DP=>MCDB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  WinterDesignDay,!- Day Type
+        9.4,      !- Maximum Dry-Bulb Temperature {C}
+        0.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Dewpoint,     !- Humidity Condition Type
+       -6.9,      !- Dewpoint at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        0.7,      !- Wind Speed {m/s} design conditions vs. traditional 6.71 m/s (15 mph)
+         80,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+  ASHRAEClearSky, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+           ,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+           ,      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+       0.00;      !- Clearness {0.0 to 1.1}
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Heating Wind 99.6% Design Conditions WS=>MCDB, WS=9.5m/s
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Htg Wind 99.6% Condns WS=>MCDB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  WinterDesignDay,!- Day Type
+       12.1,      !- Maximum Dry-Bulb Temperature {C}
+        0.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        9.5,      !- Wind Speed {m/s} design conditions vs. traditional 6.71 m/s (15 mph)
+         80,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+  ASHRAEClearSky, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+           ,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+           ,      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+       0.00;      !- Clearness {0.0 to 1.1}
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Heating Wind 99% Design Conditions WS=>MCDB, WS=8.4m/s
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Htg Wind 99% Condns WS=>MCDB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  WinterDesignDay,!- Day Type
+       12.1,      !- Maximum Dry-Bulb Temperature {C}
+        0.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        8.4,      !- Wind Speed {m/s} design conditions vs. traditional 6.71 m/s (15 mph)
+         80,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+  ASHRAEClearSky, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+           ,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+           ,      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+       0.00;      !- Clearness {0.0 to 1.1}
+ 
+ ! Paso.Robles.Muni.AP Annual Cooling Design Conditions Wind Speed=3.9m/s Wind Dir=210
+ ! Hottest Month=JUL
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (DB=>MWB) .4%, MaxDB=39.2C MWB=19.1C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg .4% Condns DB=>MWB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       39.2,      !- Maximum Dry-Bulb Temperature {C}
+       24.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (DB=>MWB) 1%, MaxDB=37.3C MWB=18.6C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg 1% Condns DB=>MWB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       37.3,      !- Maximum Dry-Bulb Temperature {C}
+       24.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (DB=>MWB) 2%, MaxDB=35.4C MWB=18.0C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg 2% Condns DB=>MWB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       35.4,      !- Maximum Dry-Bulb Temperature {C}
+       24.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.0,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (WB=>MDB) .4%, MDB=35.4C WB=20.6C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg .4% Condns WB=>MDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       35.4,      !- Maximum Dry-Bulb Temperature {C}
+       22.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       20.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.3,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (WB=>MDB) 1%, MDB=34.4C WB=19.7C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg 1% Condns WB=>MDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       34.4,      !- Maximum Dry-Bulb Temperature {C}
+       22.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.7,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.3,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (WB=>MDB) 2%, MDB=33.0C WB=18.9C
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg 2% Condns WB=>MDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       33.0,      !- Maximum Dry-Bulb Temperature {C}
+       22.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.3,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (DP=>MDB) .4%, MDB=22.4C DP=15.3C HR=0.0112
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg .4% Condns DP=>MDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       22.4,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Dewpoint,     !- Humidity Condition Type
+       15.3,      !- Dewpoint at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (DP=>MDB) 1%, MDB=21.5C DP=14.2C HR=0.0104
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg 1% Condns DP=>MDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       21.5,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Dewpoint,     !- Humidity Condition Type
+       14.2,      !- Dewpoint at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (DP=>MDB) 2%, MDB=20.9C DP=13.5C HR=0.0099
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg 2% Condns DP=>MDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       20.9,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Dewpoint,     !- Humidity Condition Type
+       13.5,      !- Dewpoint at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (Enthalpy=>MDB) .4%, MDB=35.3C Enthalpy=60000.0J/kg
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg .4% Condns Enth=>MDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       35.3,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+   Enthalpy,      !- Humidity Condition Type
+           ,      !- Wetbulb or Dewpoint at Maximum Dry-Bulb
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+    60000.0,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (Enthalpy=>MDB) 1%, MDB=34.4C Enthalpy=56800.0J/kg
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg 1% Condns Enth=>MDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       34.4,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+   Enthalpy,      !- Humidity Condition Type
+           ,      !- Wetbulb or Dewpoint at Maximum Dry-Bulb
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+    56800.0,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA Annual Cooling (Enthalpy=>MDB) 2%, MDB=33.3C Enthalpy=54200.0J/kg
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP Ann Clg 2% Condns Enth=>MDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       33.3,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+   Enthalpy,      !- Humidity Condition Type
+           ,      !- Wetbulb or Dewpoint at Maximum Dry-Bulb
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+    54200.0,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! ======================= Monthly Design Conditions SizingPeriod:DesignDay ======================
+ ! The following monthly design conditions are reproduced from the climate data shown above.
+ ! Each 12 months are shown for: 
+ !      .4% Drybulb, 2% Drybulb, 5% Drybulb, 10% DryBulb (with coincident Wetbulb)
+ !      .4% Wetbulb, 2% Wetbulb, 5% Wetbulb, 10% Wetbulb (with coincident DryBulb)
+ !
+ ! Paso.Robles.Muni.AP_CA_USA January (DB=>MCWB) .4%, MaxDB=23.7C MWB=11.5C taub=0.295 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP January .4% Condns DB=>MCWB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       23.7,      !- Maximum Dry-Bulb Temperature {C}
+       13.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       11.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.0,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.295,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA February (DB=>MCWB) .4%, MaxDB=25.2C MWB=14.0C taub=0.305 taud=2.512
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP February .4% Condns DB=>MCWB,     !- Name
+          2,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       25.2,      !- Maximum Dry-Bulb Temperature {C}
+       14.1,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.0,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.3,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.305,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.512;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA March (DB=>MCWB) .4%, MaxDB=28.9C MWB=15.4C taub=0.333 taud=2.431
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP March .4% Condns DB=>MCWB,     !- Name
+          3,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       28.9,      !- Maximum Dry-Bulb Temperature {C}
+       14.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.6,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.333,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.431;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA April (DB=>MCWB) .4%, MaxDB=33.5C MWB=16.4C taub=0.355 taud=2.367
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP April .4% Condns DB=>MCWB,     !- Name
+          4,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       33.5,      !- Maximum Dry-Bulb Temperature {C}
+       17.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       16.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.355,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.367;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA May (DB=>MCWB) .4%, MaxDB=37.3C MWB=18.5C taub=0.362 taud=2.365
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP May .4% Condns DB=>MCWB,     !- Name
+          5,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       37.3,      !- Maximum Dry-Bulb Temperature {C}
+       18.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.8,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.362,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.365;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA June (DB=>MCWB) .4%, MaxDB=40.2C MWB=19.4C taub=0.346 taud=2.416
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP June .4% Condns DB=>MCWB,     !- Name
+          6,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       40.2,      !- Maximum Dry-Bulb Temperature {C}
+       20.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.346,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.416;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA July (DB=>MCWB) .4%, MaxDB=41.7C MWB=20.2C taub=0.345 taud=2.418
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP July .4% Condns DB=>MCWB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       41.7,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       20.2,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.5,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA August (DB=>MCWB) .4%, MaxDB=40.7C MWB=19.5C taub=0.338 taud=2.408
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP August .4% Condns DB=>MCWB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       40.7,      !- Maximum Dry-Bulb Temperature {C}
+       21.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.338,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.408;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA September (DB=>MCWB) .4%, MaxDB=40.6C MWB=19.5C taub=0.332 taud=2.430
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP September .4% Condns DB=>MCWB,     !- Name
+          9,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       40.6,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.7,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.332,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.430;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA October (DB=>MCWB) .4%, MaxDB=35.9C MWB=17.4C taub=0.316 taud=2.496
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP October .4% Condns DB=>MCWB,     !- Name
+         10,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       35.9,      !- Maximum Dry-Bulb Temperature {C}
+       19.1,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.316,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.496;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA November (DB=>MCWB) .4%, MaxDB=28.9C MWB=14.1C taub=0.296 taud=2.538
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP November .4% Condns DB=>MCWB,     !- Name
+         11,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       28.9,      !- Maximum Dry-Bulb Temperature {C}
+       16.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.296,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.538;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA December (DB=>MCWB) .4%, MaxDB=22.2C MWB=10.5C taub=0.291 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP December .4% Condns DB=>MCWB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       22.2,      !- Maximum Dry-Bulb Temperature {C}
+       13.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       10.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.291,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA January (DB=>MCWB) 2%, MaxDB=20.2C MWB=11.5C taub=0.295 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP January 2% Condns DB=>MCWB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       20.2,      !- Maximum Dry-Bulb Temperature {C}
+       13.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       11.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.0,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.295,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA February (DB=>MCWB) 2%, MaxDB=22.3C MWB=12.9C taub=0.305 taud=2.512
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP February 2% Condns DB=>MCWB,     !- Name
+          2,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       22.3,      !- Maximum Dry-Bulb Temperature {C}
+       14.1,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.3,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.305,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.512;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA March (DB=>MCWB) 2%, MaxDB=25.5C MWB=14.5C taub=0.333 taud=2.431
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP March 2% Condns DB=>MCWB,     !- Name
+          3,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       25.5,      !- Maximum Dry-Bulb Temperature {C}
+       14.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.6,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.333,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.431;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA April (DB=>MCWB) 2%, MaxDB=29.8C MWB=15.4C taub=0.355 taud=2.367
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP April 2% Condns DB=>MCWB,     !- Name
+          4,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       29.8,      !- Maximum Dry-Bulb Temperature {C}
+       17.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.355,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.367;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA May (DB=>MCWB) 2%, MaxDB=33.9C MWB=17.1C taub=0.362 taud=2.365
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP May 2% Condns DB=>MCWB,     !- Name
+          5,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       33.9,      !- Maximum Dry-Bulb Temperature {C}
+       18.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.8,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.362,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.365;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA June (DB=>MCWB) 2%, MaxDB=37.3C MWB=18.5C taub=0.346 taud=2.416
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP June 2% Condns DB=>MCWB,     !- Name
+          6,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       37.3,      !- Maximum Dry-Bulb Temperature {C}
+       20.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.346,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.416;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA July (DB=>MCWB) 2%, MaxDB=38.9C MWB=19.2C taub=0.345 taud=2.418
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP July 2% Condns DB=>MCWB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       38.9,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.2,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.5,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA August (DB=>MCWB) 2%, MaxDB=38.3C MWB=18.7C taub=0.338 taud=2.408
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP August 2% Condns DB=>MCWB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       38.3,      !- Maximum Dry-Bulb Temperature {C}
+       21.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.7,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.338,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.408;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA September (DB=>MCWB) 2%, MaxDB=37.7C MWB=18.4C taub=0.332 taud=2.430
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP September 2% Condns DB=>MCWB,     !- Name
+          9,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       37.7,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.7,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.332,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.430;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA October (DB=>MCWB) 2%, MaxDB=32.8C MWB=16.4C taub=0.316 taud=2.496
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP October 2% Condns DB=>MCWB,     !- Name
+         10,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       32.8,      !- Maximum Dry-Bulb Temperature {C}
+       19.1,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       16.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.316,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.496;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA November (DB=>MCWB) 2%, MaxDB=25.8C MWB=13.7C taub=0.296 taud=2.538
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP November 2% Condns DB=>MCWB,     !- Name
+         11,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       25.8,      !- Maximum Dry-Bulb Temperature {C}
+       16.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       13.7,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.296,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.538;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA December (DB=>MCWB) 2%, MaxDB=19.2C MWB=10.8C taub=0.291 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP December 2% Condns DB=>MCWB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       19.2,      !- Maximum Dry-Bulb Temperature {C}
+       13.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       10.8,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.291,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA January (DB=>MCWB) 5%, MaxDB=17.7C MWB=11.1C taub=0.295 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP January 5% Condns DB=>MCWB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       17.7,      !- Maximum Dry-Bulb Temperature {C}
+       18.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       11.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.7,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.0,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.295,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA February (DB=>MCWB) 5%, MaxDB=19.5C MWB=11.7C taub=0.305 taud=2.512
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP February 5% Condns DB=>MCWB,     !- Name
+          2,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       19.5,      !- Maximum Dry-Bulb Temperature {C}
+       19.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       11.7,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       11.1,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.3,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.305,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.512;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA March (DB=>MCWB) 5%, MaxDB=22.8C MWB=13.4C taub=0.333 taud=2.431
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP March 5% Condns DB=>MCWB,     !- Name
+          3,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       22.8,      !- Maximum Dry-Bulb Temperature {C}
+       20.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       13.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.6,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.333,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.431;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA April (DB=>MCWB) 5%, MaxDB=26.6C MWB=14.7C taub=0.355 taud=2.367
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP April 5% Condns DB=>MCWB,     !- Name
+          4,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       26.6,      !- Maximum Dry-Bulb Temperature {C}
+       22.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.7,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.3,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.355,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.367;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA May (DB=>MCWB) 5%, MaxDB=30.9C MWB=15.9C taub=0.362 taud=2.365
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP May 5% Condns DB=>MCWB,     !- Name
+          5,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       30.9,      !- Maximum Dry-Bulb Temperature {C}
+       24.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        9.8,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.8,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.362,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.365;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA June (DB=>MCWB) 5%, MaxDB=34.8C MWB=17.8C taub=0.346 taud=2.416
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP June 5% Condns DB=>MCWB,     !- Name
+          6,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       34.8,      !- Maximum Dry-Bulb Temperature {C}
+       24.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.8,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        9.2,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.346,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.416;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA July (DB=>MCWB) 5%, MaxDB=36.5C MWB=18.6C taub=0.345 taud=2.418
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP July 5% Condns DB=>MCWB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       36.5,      !- Maximum Dry-Bulb Temperature {C}
+       24.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.5,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA August (DB=>MCWB) 5%, MaxDB=36.3C MWB=18.4C taub=0.338 taud=2.408
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP August 5% Condns DB=>MCWB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       36.3,      !- Maximum Dry-Bulb Temperature {C}
+       24.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.338,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.408;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA September (DB=>MCWB) 5%, MaxDB=35.0C MWB=17.6C taub=0.332 taud=2.430
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP September 5% Condns DB=>MCWB,     !- Name
+          9,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       35.0,      !- Maximum Dry-Bulb Temperature {C}
+       25.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        9.6,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.7,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.332,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.430;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA October (DB=>MCWB) 5%, MaxDB=30.0C MWB=15.3C taub=0.316 taud=2.496
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP October 5% Condns DB=>MCWB,     !- Name
+         10,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       30.0,      !- Maximum Dry-Bulb Temperature {C}
+       24.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.3,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.316,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.496;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA November (DB=>MCWB) 5%, MaxDB=22.6C MWB=12.8C taub=0.296 taud=2.538
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP November 5% Condns DB=>MCWB,     !- Name
+         11,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       22.6,      !- Maximum Dry-Bulb Temperature {C}
+       21.5,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.8,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.8,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.296,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.538;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA December (DB=>MCWB) 5%, MaxDB=17.1C MWB=10.9C taub=0.291 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP December 5% Condns DB=>MCWB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       17.1,      !- Maximum Dry-Bulb Temperature {C}
+       17.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       10.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.291,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA January (DB=>MCWB) 10%, MaxDB=15.5C MWB=10.7C taub=0.295 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP January 10% Condns DB=>MCWB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       15.5,      !- Maximum Dry-Bulb Temperature {C}
+       18.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       10.7,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.7,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.0,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.295,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA February (DB=>MCWB) 10%, MaxDB=16.9C MWB=11.1C taub=0.305 taud=2.512
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP February 10% Condns DB=>MCWB,     !- Name
+          2,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       16.9,      !- Maximum Dry-Bulb Temperature {C}
+       19.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       11.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       11.1,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.3,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.305,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.512;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA March (DB=>MCWB) 10%, MaxDB=20.1C MWB=12.5C taub=0.333 taud=2.431
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP March 10% Condns DB=>MCWB,     !- Name
+          3,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       20.1,      !- Maximum Dry-Bulb Temperature {C}
+       20.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.6,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.333,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.431;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA April (DB=>MCWB) 10%, MaxDB=23.6C MWB=13.5C taub=0.355 taud=2.367
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP April 10% Condns DB=>MCWB,     !- Name
+          4,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       23.6,      !- Maximum Dry-Bulb Temperature {C}
+       22.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       13.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.3,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.355,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.367;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA May (DB=>MCWB) 10%, MaxDB=27.9C MWB=15.2C taub=0.362 taud=2.365
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP May 10% Condns DB=>MCWB,     !- Name
+          5,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       27.9,      !- Maximum Dry-Bulb Temperature {C}
+       24.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.2,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        9.8,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.8,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.362,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.365;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA June (DB=>MCWB) 10%, MaxDB=32.2C MWB=17.1C taub=0.346 taud=2.416
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP June 10% Condns DB=>MCWB,     !- Name
+          6,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       32.2,      !- Maximum Dry-Bulb Temperature {C}
+       24.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        9.2,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.346,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.416;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA July (DB=>MCWB) 10%, MaxDB=34.1C MWB=17.9C taub=0.345 taud=2.418
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP July 10% Condns DB=>MCWB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       34.1,      !- Maximum Dry-Bulb Temperature {C}
+       24.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.5,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA August (DB=>MCWB) 10%, MaxDB=33.8C MWB=17.9C taub=0.338 taud=2.408
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP August 10% Condns DB=>MCWB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       33.8,      !- Maximum Dry-Bulb Temperature {C}
+       24.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        8.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.338,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.408;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA September (DB=>MCWB) 10%, MaxDB=32.2C MWB=17.2C taub=0.332 taud=2.430
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP September 10% Condns DB=>MCWB,     !- Name
+          9,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       32.2,      !- Maximum Dry-Bulb Temperature {C}
+       25.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.2,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+        9.6,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.7,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.332,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.430;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA October (DB=>MCWB) 10%, MaxDB=27.1C MWB=14.7C taub=0.316 taud=2.496
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP October 10% Condns DB=>MCWB,     !- Name
+         10,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       27.1,      !- Maximum Dry-Bulb Temperature {C}
+       24.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.7,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.316,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.496;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA November (DB=>MCWB) 10%, MaxDB=19.8C MWB=12.0C taub=0.296 taud=2.538
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP November 10% Condns DB=>MCWB,     !- Name
+         11,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       19.8,      !- Maximum Dry-Bulb Temperature {C}
+       21.5,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.0,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.8,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.296,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.538;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA December (DB=>MCWB) 10%, MaxDB=15.0C MWB=10.5C taub=0.291 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP December 10% Condns DB=>MCWB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       15.0,      !- Maximum Dry-Bulb Temperature {C}
+       17.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       10.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.291,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA January (WB=>MCDB) .4%, DB=18.4C WB=14.8C taub=0.295 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP January .4% Condns WB=>MCDB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       18.4,      !- Maximum Dry-Bulb Temperature {C}
+       13.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.8,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.0,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.295,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA February (WB=>MCDB) .4%, DB=21.0C WB=15.6C taub=0.305 taud=2.512
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP February .4% Condns WB=>MCDB,     !- Name
+          2,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       21.0,      !- Maximum Dry-Bulb Temperature {C}
+       14.1,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.3,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.305,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.512;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA March (WB=>MCDB) .4%, DB=25.4C WB=17.3C taub=0.333 taud=2.431
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP March .4% Condns WB=>MCDB,     !- Name
+          3,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       25.4,      !- Maximum Dry-Bulb Temperature {C}
+       14.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.3,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.6,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.333,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.431;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA April (WB=>MCDB) .4%, DB=28.9C WB=18.3C taub=0.355 taud=2.367
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP April .4% Condns WB=>MCDB,     !- Name
+          4,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       28.9,      !- Maximum Dry-Bulb Temperature {C}
+       17.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.3,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.355,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.367;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA May (WB=>MCDB) .4%, DB=34.7C WB=19.6C taub=0.362 taud=2.365
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP May .4% Condns WB=>MCDB,     !- Name
+          5,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       34.7,      !- Maximum Dry-Bulb Temperature {C}
+       18.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.8,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.362,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.365;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA June (WB=>MCDB) .4%, DB=37.3C WB=21.4C taub=0.346 taud=2.416
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP June .4% Condns WB=>MCDB,     !- Name
+          6,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       37.3,      !- Maximum Dry-Bulb Temperature {C}
+       20.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       21.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.346,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.416;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA July (WB=>MCDB) .4%, DB=38.3C WB=21.8C taub=0.345 taud=2.418
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP July .4% Condns WB=>MCDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       38.3,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       21.8,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.5,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA August (WB=>MCDB) .4%, DB=36.0C WB=21.6C taub=0.338 taud=2.408
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP August .4% Condns WB=>MCDB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       36.0,      !- Maximum Dry-Bulb Temperature {C}
+       21.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       21.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.338,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.408;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA September (WB=>MCDB) .4%, DB=36.0C WB=21.2C taub=0.332 taud=2.430
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP September .4% Condns WB=>MCDB,     !- Name
+          9,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       36.0,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       21.2,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.7,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.332,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.430;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA October (WB=>MCDB) .4%, DB=29.9C WB=19.0C taub=0.316 taud=2.496
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP October .4% Condns WB=>MCDB,     !- Name
+         10,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       29.9,      !- Maximum Dry-Bulb Temperature {C}
+       19.1,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.0,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.316,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.496;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA November (WB=>MCDB) .4%, DB=23.8C WB=16.3C taub=0.296 taud=2.538
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP November .4% Condns WB=>MCDB,     !- Name
+         11,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       23.8,      !- Maximum Dry-Bulb Temperature {C}
+       16.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       16.3,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.296,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.538;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA December (WB=>MCDB) .4%, DB=17.8C WB=15.1C taub=0.291 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP December .4% Condns WB=>MCDB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       17.8,      !- Maximum Dry-Bulb Temperature {C}
+       13.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.291,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA January (WB=>MCDB) 2%, MaxDB=17.0C MWB=13.5C taub=0.295 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP January 2% Condns WB=>MCDB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       17.0,      !- Maximum Dry-Bulb Temperature {C}
+       13.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       13.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.0,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.295,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA February (WB=>MCDB) 2%, MaxDB=19.1C MWB=14.1C taub=0.305 taud=2.512
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP February 2% Condns WB=>MCDB,     !- Name
+          2,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       19.1,      !- Maximum Dry-Bulb Temperature {C}
+       14.1,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.3,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.305,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.512;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA March (WB=>MCDB) 2%, MaxDB=23.4C MWB=15.4C taub=0.333 taud=2.431
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP March 2% Condns WB=>MCDB,     !- Name
+          3,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       23.4,      !- Maximum Dry-Bulb Temperature {C}
+       14.8,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.6,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.333,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.431;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA April (WB=>MCDB) 2%, MaxDB=27.2C MWB=16.4C taub=0.355 taud=2.367
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP April 2% Condns WB=>MCDB,     !- Name
+          4,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       27.2,      !- Maximum Dry-Bulb Temperature {C}
+       17.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       16.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.355,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.367;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA May (WB=>MCDB) 2%, MaxDB=31.7C MWB=18.1C taub=0.362 taud=2.365
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP May 2% Condns WB=>MCDB,     !- Name
+          5,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       31.7,      !- Maximum Dry-Bulb Temperature {C}
+       18.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.8,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.362,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.365;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA June (WB=>MCDB) 2%, MaxDB=34.5C MWB=19.9C taub=0.346 taud=2.416
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP June 2% Condns WB=>MCDB,     !- Name
+          6,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       34.5,      !- Maximum Dry-Bulb Temperature {C}
+       20.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.346,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.416;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA July (WB=>MCDB) 2%, MaxDB=35.5C MWB=20.4C taub=0.345 taud=2.418
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP July 2% Condns WB=>MCDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       35.5,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       20.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.5,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA August (WB=>MCDB) 2%, MaxDB=35.0C MWB=20.1C taub=0.338 taud=2.408
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP August 2% Condns WB=>MCDB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       35.0,      !- Maximum Dry-Bulb Temperature {C}
+       21.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       20.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.338,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.408;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA September (WB=>MCDB) 2%, MaxDB=33.7C MWB=19.6C taub=0.332 taud=2.430
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP September 2% Condns WB=>MCDB,     !- Name
+          9,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       33.7,      !- Maximum Dry-Bulb Temperature {C}
+       20.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.7,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.332,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.430;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA October (WB=>MCDB) 2%, MaxDB=29.5C MWB=17.6C taub=0.316 taud=2.496
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP October 2% Condns WB=>MCDB,     !- Name
+         10,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       29.5,      !- Maximum Dry-Bulb Temperature {C}
+       19.1,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.316,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.496;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA November (WB=>MCDB) 2%, MaxDB=22.1C MWB=15.1C taub=0.296 taud=2.538
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP November 2% Condns WB=>MCDB,     !- Name
+         11,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       22.1,      !- Maximum Dry-Bulb Temperature {C}
+       16.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.296,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.538;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA December (WB=>MCDB) 2%, MaxDB=15.9C MWB=13.6C taub=0.291 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP December 2% Condns WB=>MCDB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       15.9,      !- Maximum Dry-Bulb Temperature {C}
+       13.6,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       13.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+           ,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.291,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA January (WB=>MCDB) 5%, MaxDB=15.7C MWB=12.4C taub=0.295 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP January 5% Condns WB=>MCDB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       15.7,      !- Maximum Dry-Bulb Temperature {C}
+       13.2,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       13.2,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.0,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.295,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA February (WB=>MCDB) 5%, MaxDB=17.8C MWB=12.9C taub=0.305 taud=2.512
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP February 5% Condns WB=>MCDB,     !- Name
+          2,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       17.8,      !- Maximum Dry-Bulb Temperature {C}
+       15.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       15.7,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.3,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.305,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.512;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA March (WB=>MCDB) 5%, MaxDB=21.1C MWB=14.2C taub=0.333 taud=2.431
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP March 5% Condns WB=>MCDB,     !- Name
+          3,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       21.1,      !- Maximum Dry-Bulb Temperature {C}
+       17.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.2,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       17.7,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.6,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.333,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.431;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA April (WB=>MCDB) 5%, MaxDB=25.2C MWB=15.2C taub=0.355 taud=2.367
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP April 5% Condns WB=>MCDB,     !- Name
+          4,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       25.2,      !- Maximum Dry-Bulb Temperature {C}
+       20.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.2,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       20.3,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.355,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.367;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA May (WB=>MCDB) 5%, MaxDB=29.0C MWB=16.8C taub=0.362 taud=2.365
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP May 5% Condns WB=>MCDB,     !- Name
+          5,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       29.0,      !- Maximum Dry-Bulb Temperature {C}
+       22.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       16.8,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.0,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.8,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.362,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.365;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA June (WB=>MCDB) 5%, MaxDB=32.6C MWB=18.7C taub=0.346 taud=2.416
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP June 5% Condns WB=>MCDB,     !- Name
+          6,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       32.6,      !- Maximum Dry-Bulb Temperature {C}
+       22.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.7,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.4,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.346,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.416;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA July (WB=>MCDB) 5%, MaxDB=34.3C MWB=19.4C taub=0.345 taud=2.418
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP July 5% Condns WB=>MCDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       34.3,      !- Maximum Dry-Bulb Temperature {C}
+       22.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.4,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.3,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.5,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA August (WB=>MCDB) 5%, MaxDB=33.7C MWB=19.2C taub=0.338 taud=2.408
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP August 5% Condns WB=>MCDB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       33.7,      !- Maximum Dry-Bulb Temperature {C}
+       22.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       19.2,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.4,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.338,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.408;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA September (WB=>MCDB) 5%, MaxDB=32.7C MWB=18.5C taub=0.332 taud=2.430
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP September 5% Condns WB=>MCDB,     !- Name
+          9,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       32.7,      !- Maximum Dry-Bulb Temperature {C}
+       22.5,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.7,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.332,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.430;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA October (WB=>MCDB) 5%, MaxDB=26.9C MWB=16.5C taub=0.316 taud=2.496
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP October 5% Condns WB=>MCDB,     !- Name
+         10,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       26.9,      !- Maximum Dry-Bulb Temperature {C}
+       20.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       16.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       20.7,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.316,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.496;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA November (WB=>MCDB) 5%, MaxDB=20.1C MWB=14.1C taub=0.296 taud=2.538
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP November 5% Condns WB=>MCDB,     !- Name
+         11,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       20.1,      !- Maximum Dry-Bulb Temperature {C}
+       17.2,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       17.2,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.296,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.538;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA December (WB=>MCDB) 5%, MaxDB=14.7C MWB=12.5C taub=0.291 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP December 5% Condns WB=>MCDB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       14.7,      !- Maximum Dry-Bulb Temperature {C}
+       10.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.9,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.291,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA January (WB=>MCDB) 10%, MaxDB=14.6C MWB=11.3C taub=0.295 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP January 10% Condns WB=>MCDB,     !- Name
+          1,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       14.6,      !- Maximum Dry-Bulb Temperature {C}
+       13.2,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       11.3,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       13.2,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.0,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.295,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA February (WB=>MCDB) 10%, MaxDB=16.0C MWB=11.7C taub=0.305 taud=2.512
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP February 10% Condns WB=>MCDB,     !- Name
+          2,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       16.0,      !- Maximum Dry-Bulb Temperature {C}
+       15.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       11.7,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       15.7,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.3,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.305,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.512;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA March (WB=>MCDB) 10%, MaxDB=18.6C MWB=12.9C taub=0.333 taud=2.431
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP March 10% Condns WB=>MCDB,     !- Name
+          3,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       18.6,      !- Maximum Dry-Bulb Temperature {C}
+       17.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       12.9,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       17.7,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.6,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.333,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.431;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA April (WB=>MCDB) 10%, MaxDB=22.6C MWB=14.0C taub=0.355 taud=2.367
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP April 10% Condns WB=>MCDB,     !- Name
+          4,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       22.6,      !- Maximum Dry-Bulb Temperature {C}
+       20.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       14.0,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       20.3,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.355,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.367;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA May (WB=>MCDB) 10%, MaxDB=26.6C MWB=15.6C taub=0.362 taud=2.365
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP May 10% Condns WB=>MCDB,     !- Name
+          5,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       26.6,      !- Maximum Dry-Bulb Temperature {C}
+       22.0,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.0,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.8,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.362,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.365;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA June (WB=>MCDB) 10%, MaxDB=30.4C MWB=17.5C taub=0.346 taud=2.416
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP June 10% Condns WB=>MCDB,     !- Name
+          6,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       30.4,      !- Maximum Dry-Bulb Temperature {C}
+       22.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.4,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.346,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.416;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA July (WB=>MCDB) 10%, MaxDB=32.6C MWB=18.5C taub=0.345 taud=2.418
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP July 10% Condns WB=>MCDB,     !- Name
+          7,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       32.6,      !- Maximum Dry-Bulb Temperature {C}
+       22.3,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.3,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.5,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.345,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.418;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA August (WB=>MCDB) 10%, MaxDB=32.1C MWB=18.3C taub=0.338 taud=2.408
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP August 10% Condns WB=>MCDB,     !- Name
+          8,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       32.1,      !- Maximum Dry-Bulb Temperature {C}
+       22.4,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       18.3,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.4,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        3.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.338,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.408;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA September (WB=>MCDB) 10%, MaxDB=30.9C MWB=17.6C taub=0.332 taud=2.430
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP September 10% Condns WB=>MCDB,     !- Name
+          9,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       30.9,      !- Maximum Dry-Bulb Temperature {C}
+       22.5,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       17.6,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       22.5,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.7,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.332,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.430;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA October (WB=>MCDB) 10%, MaxDB=24.8C MWB=15.5C taub=0.316 taud=2.496
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP October 10% Condns WB=>MCDB,     !- Name
+         10,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       24.8,      !- Maximum Dry-Bulb Temperature {C}
+       20.7,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       15.5,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       20.7,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        2.2,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.316,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.496;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA November (WB=>MCDB) 10%, MaxDB=18.5C MWB=13.0C taub=0.296 taud=2.538
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP November 10% Condns WB=>MCDB,     !- Name
+         11,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       18.5,      !- Maximum Dry-Bulb Temperature {C}
+       17.2,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       13.0,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       17.2,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.296,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.538;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
+ ! Paso.Robles.Muni.AP_CA_USA December (WB=>MCDB) 10%, MaxDB=13.7C MWB=11.1C taub=0.291 taud=2.557
+ SizingPeriod:DesignDay,
+  Paso.Robles.Muni.AP December 10% Condns WB=>MCDB,     !- Name
+         12,      !- Month
+         21,      !- Day of Month
+  SummerDesignDay,!- Day Type
+       13.7,      !- Maximum Dry-Bulb Temperature {C}
+       10.9,      !- Daily Dry-Bulb Temperature Range {C}
+ DefaultMultipliers, !- Dry-Bulb Temperature Range Modifier Type
+           ,      !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+    Wetbulb,      !- Humidity Condition Type
+       11.1,      !- Wetbulb at Maximum Dry-Bulb {C}
+           ,      !- Humidity Indicating Day Schedule Name
+           ,      !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+           ,      !- Enthalpy at Maximum Dry-Bulb {J/kg}
+       10.9,      !- Daily Wet-Bulb Temperature Range {deltaC}
+     98394.,      !- Barometric Pressure {Pa}
+        1.9,      !- Wind Speed {m/s} design conditions vs. traditional 3.35 m/s (7mph)
+        210,      !- Wind Direction {Degrees; N=0, S=180}
+         No,      !- Rain {Yes/No}
+         No,      !- Snow on ground {Yes/No}
+         No,      !- Daylight Savings Time Indicator
+   ASHRAETau2017, !- Solar Model Indicator
+           ,      !- Beam Solar Day Schedule Name
+           ,      !- Diffuse Solar Day Schedule Name
+      0.291,      !- ASHRAE Clear Sky Optical Depth for Beam Irradiance (taub)
+      2.557;      !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud)
+ 
