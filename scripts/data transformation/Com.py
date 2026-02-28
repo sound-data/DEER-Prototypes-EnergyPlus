@@ -88,7 +88,8 @@ expected_att = {
                                     'RtL',
                                     'RtS',
                                     'SCn',
-                                    'SUn'],
+                                    'SUn',
+                                    'WRf'],
     'Story': ['0','1','2'], # NA for Not Applicable
     'BldgHVAC': ['rDXGF','rDXHP','rNCEH','rNCGF'] + ['cWLHP',
                                                     'cSVVG',
@@ -366,10 +367,12 @@ for folder in folder_list:
             #loop path of each file, read corresponding file
             full_path = hrly_subpath + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
             df = pd.read_csv(full_path, low_memory=False)
-            
-            #extract the last column (the total elec hrly profile)
+            #remove traling spaces on col headers
+            df.columns = df.columns.str.rstrip()
+        
+            #8/1/2024 update: extract the electricy column only
             #if for enduse hourly, then extract the relevant end use column
-            extracted_df = pd.DataFrame(df.iloc[:,-1])
+            extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
             
             #create the column name based on the permutations
             col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
@@ -473,6 +476,8 @@ print(os.path.abspath(os.curdir))
 # %%
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
 # %%
+normunit = df_measure['Normunit'].unique()[0]
+#%%
 ##Annual Data final field fixes
 
 #normunit = buildng area(conditioned) for default / example measure
@@ -481,22 +486,33 @@ sim_annual_v1['SizingID'] = 'None'
 sim_annual_v1['tstat'] = 0
 #now Norm unit is read from measure master table
 #this may need to be modified based on the measure
-sim_annual_v1['normunit'] = df_normunits['Normunit'].unique()[0]
+sim_annual_v1['Normunit'] = normunit
 
 #%%
 #add area based on building type
 #also add normunit (also the area) for the example measure
 #code may need to be tweaked if normalizing unit is different for a specific measure
 
-area_lookup = df_normunits[['BldgType', 'Value']]
-sim_annual_v2 = pd.merge(sim_annual_v1, area_lookup, on='BldgType')
+unit_lookup = df_normunits[['BldgType', 'Normunit', 'Value']]
+if normunit == 'Each':
+    unit_table = unit_lookup[unit_lookup['Normunit']=='Each'][['Normunit','Value']]
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on='Normunit')
+else:
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on='Normunit')
 sim_annual_v2['numunits'] = sim_annual_v2['Value']
-sim_annual_v2['measarea'] = sim_annual_v2['Value']
+
+#%%
+#do area separately after normunit merge
+area_lookup = df_normunits[df_normunits['Normunit']=='Area-ft2-BA'][['BldgType','total_area_m2']]
+
+sim_annual_v3 = pd.merge(sim_annual_v2, area_lookup, on='BldgType')
+sim_annual_v3['measarea'] = sim_annual_v3['total_area_m2']
 
 # %%
-sim_annual_v2['lastmod']=dt.datetime.now()
+sim_annual_v3['lastmod']=dt.datetime.now()
+sim_annual_v3 = sim_annual_v3.rename(columns={'Normunit':'normunit'})
 #rearrange columns
-sim_annual_f = sim_annual_v2[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
+sim_annual_f = sim_annual_v3[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
        'normunit', 'numunits', 'measarea', 'kwh_tot', 'kwh_ltg', 'kwh_task',
        'kwh_equip', 'kwh_htg', 'kwh_clg', 'kwh_twr', 'kwh_aux', 'kwh_vent',
        'kwh_venthtg', 'kwh_ventclg', 'kwh_refg', 'kwh_hpsup', 'kwh_shw',
@@ -607,11 +623,14 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if any(isinstance(i, str) for i in list(StdTechIDs['StdTechID'].unique())) == False:
+    # when there is no std tech ID - only pre baseline used in merge
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif any(isinstance(i, str) for i in list(PreTechIDs['PreTechID'].unique())) == False:
+    # when there is no pre tech ID - only std baseline used in merge
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
+    # when both std tech and pre tech ID present - use both
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
     df_measure_set_full = pd.merge(df_measure_baseline_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 
@@ -620,11 +639,14 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if any(isinstance(i, str) for i in list(StdTechIDs['StdTechID'].unique())) == False:
+    # when there is no std tech ID - only pre baseline used in merge
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif any(isinstance(i, str) for i in list(PreTechIDs['PreTechID'].unique())) == False:
+    # when there is no pre tech ID - only std baseline used in merge
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
+    # when both std tech and pre tech ID present - use both
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
 
 # %%

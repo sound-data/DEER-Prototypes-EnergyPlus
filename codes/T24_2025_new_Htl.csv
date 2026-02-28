@@ -1,6 +1,6 @@
-﻿title: 2019 California Efficiency Standards,,,,,
-# PRESCRIPTIVE ENVELOPE CRITERIA FOR NONRESIDENTIAL BUILDINGS (INCLUDING RELOCATABLE PUBLIC SCHOOL BUILDINGS WHERE MANUFACTURER CERTIFIES USE ONLY IN SPECIFIC CLIMATE ZONE; NOT INCLUDING HIGH-RISE RESIDENTIAL BUILDINGS AND GUEST ROOMS OF HOTEL/MOTEL BUILDINGS),,,,,
-# For opaque envelope: see Table 140.3-B,,,,,
+title: 2025 California Efficiency Standards,,,,,
+# PRESCRIPTIVE ENVELOPE CRITERIA FOR  GUEST ROOMS OF HOTEL/MOTEL BUILDINGS,,,,,
+# For opaque envelope: see Table 140.3-C,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 1,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
 Roofs | Metal Buildings,0,0,0.041,,NR Thermal Emittance and Aged Solar Reflectance
@@ -12,8 +12,8 @@ Walls Above Grade | Mass Heavy,0,0,0.16,,
 Walls Above Grade | Wood Framed and Other,0,0,0.059,,
 Floors | Mass,0,0,0.045,,
 Floors | Other,0,0,0.034,,
-Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
-Slab-On-Grade Floors | Heated Slabs,0,0,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Appendix JA4-55 Table 4.4.7; Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,0,0,0.2,16,"Table 110.8-A; R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
 Opaque Doors | Non-Swinging,0,0,0.5,,
 Opaque Doors | Swinging,0,0,0.7,,
 ,,,,,
@@ -68,7 +68,7 @@ Opaque Doors | Swinging,0,0,0.7,,
 table:   Opaque Envelope Requirements | Climate Zone 5,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
 Roofs | Metal Buildings,0,0,0.041,,"Steep-sloped: 0.75 Thermal Emittance, and 0.2 Aged Solar Reflectance. Low-sloped: NR."
-Roofs | Wood Framed and Other,0,0,0.028,,"Steep-sloped: 0.75 Thermal Emittance, and 0.2 Aged Solar Reflectance. Low-sloped: NR."
+Roofs | Wood Framed and Other,0,0,0.034,,"Steep-sloped: 0.75 Thermal Emittance, and 0.2 Aged Solar Reflectance. Low-sloped: NR."
 Walls Above Grade | Metal Building,0,0,0.061,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,0,0.069,,
 Walls Above Grade | Mass Light,0,0,0.17,,
@@ -254,7 +254,7 @@ Floors | Mass,0,0,0.037,,
 Floors | Other,0,0,0.034,,
 Slab-On-Grade Floors | Unheated Slabs,0,0,0.73,,Maximum is an F-Factor.
 Slab-On-Grade Floors | Heated Slabs,0,10,0.2,16,"R-10 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
-Opaque Doors | Non-Swinging,0,0,1.45,,
+Opaque Doors | Non-Swinging,0,0,0.5,,
 Opaque Doors | Swinging,0,0,0.7,,
 ,,,,,
 table: Fenestration Requirements | Climate Zone 1,max,max,min,,
@@ -433,6 +433,7 @@ Glazed Doors,0.45,0.23,0.17,,
 "Skylights | Plastic, curb mounted",0.88,NR,0.64,5% maximum of roof area.,
 Skylights | Tubular Daylighting Devices (TDDs),0.88,NR,0.64,5% maximum of roof area.,
 ,,,,,
+#see Table 140.4-G,,,,,
 table:   Economizer Setpoints,,,,,
 Climate Zone,Fixed Drybulb,Differential Dry-bulb,,,
 1,75,0,,,
