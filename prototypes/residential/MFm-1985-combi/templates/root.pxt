@@ -77,6 +77,7 @@ parameter "infiltration_ACH", :default=>0.35
 # sizing parameter
 parameter "sizing_parameter_heating", :default=>1.8
 parameter "sizing_parameter_cooling", :default=>1.8
+parameter "max_designday_schedules", :default=>true #if true, use 100% schedule for CDD for general misc load, occupancy and lighting schedules. Otherwise, use weekday schedule.
 
 # Thermostat Setpoint
 parameter "heating_sch_DEER_mrn", :default=>15.56
