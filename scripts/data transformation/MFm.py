@@ -8,7 +8,7 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'SEER Rated AC/HP'
+measure_name = 'Efficient Doors'
 
 # %%
 #MFm only script
@@ -30,7 +30,7 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_MFm_Ex'
+path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_MFm_Ex'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -410,6 +410,7 @@ numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].
 #%%
 #measure specific normalizing units table
 df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+normunit = df_measure['Normunit'].unique()[0]
 #%%
 #create numunits object based on what normunit it uses. 
 #numunits can be a single value, or a dictionary
@@ -422,6 +423,7 @@ elif len(df_numunits) > 1:
     print(f'CZ-dependent numunits for this normalizing unit {normunit}')
 elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
     numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
+    print(f'normunit is {normunit}, numunits is {numunits}.')
 elif measure_name == 'PTAC / PTHP':
     #create aligned lists for numunit dictionary
     cz = list(numunits_vals['CZ'])
@@ -429,8 +431,13 @@ elif measure_name == 'PTAC / PTHP':
     nvals = list(numunits_vals['Value'])
     #create dictionary of {(cz,vintage):numunits}
     numunits = {(cz[i],vint[i]):nvals[i] for i in range(len(cz))}
+    print(f'normunit is {normunit}, numunits is varied by CZ.')
+elif normunit == 'Each':
+    numunits = 1 #added numunits for measures with normunit "each"
+    print('normunit is Each. Setting numunits to 1.')
 else:
-    pass
+    normunit = 'Each' #If normalizing unit isn't anything else, put default as each
+    numunits = 1
 
 
 #%%
@@ -618,9 +625,9 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
@@ -631,9 +638,9 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
@@ -775,3 +782,5 @@ current_msr_mat.to_csv('current_msr_mat.csv', index=False)
 sim_annual_final.to_csv('sim_annual.csv', index=False)
 sim_hourly_final.to_csv('sim_hourly_wb.csv', index=False)
 
+
+# %%
