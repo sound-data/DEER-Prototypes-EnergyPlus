@@ -855,10 +855,15 @@ def gather_sim_data_to_sqlite_long(study: Path, queryfile: Path, sqlfile: Path,
         conn.close()
 
 # Added by kyen on 1-14-26 for long table csv option
-def gather_sim_data_to_csv_long(study: Path, queryfile: Path, csvfile: Path,
-                           parallel = True,
-                           chunksize = 100):
-    conn = connect('simdata.sqlite')
+def gather_sim_data_to_csv_long(
+        sqlfile : Path = 'simdata.sqlite',
+        csvfile : Path = 'simdata.csv'):
+    """Save a CSV report (simdata.csv) in long table format for use in other calculations.
+    
+    Requires that data are already stored in long table format in a database file (simdata.sqlite)."""
+
+    pass
+    conn = connect(sqlfile)
     cursor = conn.cursor()
     # Execute a query to get the data
     cursor.execute("SELECT * FROM sim_tabular")
@@ -867,7 +872,7 @@ def gather_sim_data_to_csv_long(study: Path, queryfile: Path, csvfile: Path,
     # Convert to DataFrame
     df = pd.DataFrame(rows, columns=[column[0] for column in cursor.description])
     # Write dataframe to CSV
-    df.to_csv('simdata.csv', index=False)
+    df.to_csv(csvfile, index=False)
     
     # #Scratch work for pargs
     # gather = gather_sim_data_to_sqlite(study, queryfile, parallel)
