@@ -20,6 +20,7 @@ Changelog
     * 2025-01-07 Apply DEER Peak calculation more selectively
     * 2025-07-24 Filename pattern matching revised for better consistency between different conventions
     * 2026-01-19 Column names updated to improve consistency across models
+    * 2026-03-03 Added options for DEER Peak demand: E-5152 (original behavior) and E-5350
 
 @Author: Nicholas Fette <nfette@solaris-technical.com>
 @Date: 2024-05-01
@@ -30,6 +31,9 @@ Changelog
 DEERPEAK_COLUMNS = ["Electricity:Facility [J](Hourly)"]
 # Do you want to append "(units)"" in the column name, if available?
 APPEND_UNITS = False
+# Which definition of peak period dates to use?
+PEAK_VERSION = 'E5152' # 'E5152', 'E5350'
+
 
 ##STEP 0: Setup (import all necessary libraries)
 import re
@@ -57,8 +61,10 @@ import numpy as np
 import pandas as pd
 import tqdm
 
-def get_deer_peak_day(bldgloc: str):
+def get_deer_peak_day_E5152(bldgloc: str):
     """Return a for DEER peak period start day lookups.
+    Dates are from Resolution E-5152 (DEER2023) Attachment A, Table A-3-2.
+    The dates were derived using CZ2022 weather data.
 
     Input:
         BldgLoc: str
@@ -88,9 +94,42 @@ def get_deer_peak_day(bldgloc: str):
     ])
     return peakperspec[bldgloc]
 
+def get_deer_peak_day_E5350(bldgloc: str):
+    """Return a for DEER peak period start day lookups.
+    Dates are from Resolution E-5350 (DEER2026) Attachment A, Table A-1-5.
+    The dates were derived using CZ2022 weather data.
+
+    Input:
+        BldgLoc: str
+            CEC climate zone, e.g. CZ01 through CZ16.
+
+    Returns:
+        PkDay: int
+            1-based day number index for first day of the 3-day DEER peak period.
+    """
+    peakperspec = dict([
+        ("CZ01",238),
+        ("CZ02",238),
+        ("CZ03",238),
+        ("CZ04",238),
+        ("CZ05",259),
+        ("CZ06",180),
+        ("CZ07",245),
+        ("CZ08",245),
+        ("CZ09",245),
+        ("CZ10",180),
+        ("CZ11",224),
+        ("CZ12",180),
+        ("CZ13",180),
+        ("CZ14",180),
+        ("CZ15",180),
+        ("CZ16",224),
+    ])
+    return peakperspec[bldgloc]
+
 @cache
 def get_deer_peak_multipliers(BldgLoc: str,
-                          days=3, start_hr=16, end_hr=21, dst=True):
+                          days=3, start_hr=16, end_hr=21, dst=True, version=PEAK_VERSION):
     """Return a masking array useful to calculate an average over DEER Peak Period.
 
     Note that for compatibility, simulation data must be an 8760-length array
@@ -118,7 +157,12 @@ def get_deer_peak_multipliers(BldgLoc: str,
         dpm = deer_peak_multipliers('CZ11')
         dpload = sum(load_data * dpm)
     """
-    peak_day = get_deer_peak_day(BldgLoc)
+    if version == 'E5152':
+        peak_day = get_deer_peak_day_E5152(BldgLoc)
+    elif version == 'E5350':
+        peak_day = get_deer_peak_day_E5350(BldgLoc)
+    else:
+        raise ValueError(f'Unrecognized peak date version: {version}')
     # In case start_hr and end_hr are given in daylight saving time (DST), shift back to standard time.
     # time_dst = time_standard + 1
     start_hr -= 1 * dst
