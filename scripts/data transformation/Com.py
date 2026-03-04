@@ -6,10 +6,14 @@ import os
 import sys
 import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
+
+import helper_functions
+from importlib import reload
+reload(helper_functions)
 # %%
 #Read master workbook for measure / tech list
-#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_workingSP55.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_fanbelts.xlsx', sheet_name='Measure_list', skiprows=4)
+
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
@@ -24,8 +28,7 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-#used SWSV010-04 Econ Control as testing measure (PR #62)
-measure_name = 'SWSV010-04 Econ Control'
+measure_name = 'SWHC024-05 Fan Belt'
 
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
@@ -39,7 +42,9 @@ print(os.path.abspath(os.curdir))
 
 #12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res
-filepath = f'commercial measures/{measure_name}'
+#filepath = f'commercial measures/{measure_name}'
+filepath = f'commercial measures/SWHC024-06 Fan Belt' #only changed this for testing
+
 
 # %%
 #function to list all sub-directories in a directory
@@ -367,6 +372,11 @@ for folder in folder_list:
             
             #loop path of each file, read corresponding file
             full_path = hrly_subpath + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
+            
+            #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation
+            idf_path = hrly_subpath + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance.idf"
+            runperiod_start_day = helper_functions.get_runperiod_start_day(idf_path)
+
             df = pd.read_csv(full_path, low_memory=False)
             #remove traling spaces on col headers
             df.columns = df.columns.str.rstrip()
@@ -376,7 +386,7 @@ for folder in folder_list:
             extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
             
             #create the column name based on the permutations
-            col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
+            col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv" + "/"+runperiod_start_day
             
             #change column name
             extracted_df = extracted_df.set_axis([col_name],axis=1)
@@ -391,8 +401,6 @@ for folder in folder_list:
         print(f"hourly data for '{subpath}' processed.")
     else:
         print(f"no data found.")
-
-
 
 
 # %%
@@ -470,7 +478,20 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
 
 #%%
-#12/22/2025 CEDARS Hourly consumption output reformatting request
+#3/3/2026 update: move normalizing unit conversion to here for better organization
+##STEP 3: Normalizing Units
+bldgtype = 'Com'
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+
+df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+normunit = df_measure['Normunit'].unique()[0]
+
+
+
+
+#%%
+#12/22/2025 CEDARS Hourly consumption output reformatting
 # use the hourly data before long2wide pivot transform
 converted_long_df = pd.DataFrame()
 
@@ -500,6 +521,8 @@ for i in range(0,len(fyr_hrly.columns)):
     hrly_mapped['Measure Group Name'] =col_names[1] #use this to look up tech group tech type
     hrly_mapped['TechID'] = col_names[2]
     hrly_mapped['file'] = col_names[3]
+    #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation, and add as a column in the hourly mapped df
+    hrly_mapped['RunPeriod Start Day'] = col_names[4]
 
     converted_long_df = pd.concat([converted_long_df, hrly_mapped])
 
@@ -519,26 +542,18 @@ converted_long_df['TechType'] = converted_long_df['Measure Group Name'].map(Tech
 #convert from J to kWh
 converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Consumption']/3600000
 
+
 # %%
-##STEP 3: Normalizing Units
-bldgtype = 'Com'
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-# %%
-df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-# %%
+#modify this part for CEDARS
 #measure specific normalizing units table
-df_numunits = df_normunits[df_normunits['Msr']==measure_name]
-#%%
-#finalize normalizing unit and number of units baesd on measure
+df_numunits = df_normunits[df_normunits['Normunit']==normunit]
+#finalize normalizing unit and num based on measure
 
 if len(df_numunits) == 1:
-    normunit = df_numunits['Normunit'].unique()[0]
     numunits = df_numunits['Value'].unique()[0]
     print('only 1 normalizing unit value across all data')
 elif len(df_numunits) > 1:
     #mostly applies to Com (or any measure with multiple building types)
-    normunit = df_numunits['Normunit'].unique()[0]
     numunit_lookup = df_numunits.set_index('BldgType')['Value'].to_dict()
     print(f'building-type dependent numunits for this normalizing unit : {normunit}')
 else:
@@ -555,6 +570,7 @@ else:
 try:
     converted_long_df['Normunit'] = normunit
     converted_long_df['Numunits'] = converted_long_df['BldgType'].map(numunit_lookup)
+    print(f'using normalizing unit {normunit}')
 except:
     #no appropriate numunit / normalizing units found
     converted_long_df['Normunit'] = 'Each'
@@ -588,12 +604,12 @@ df_long['annual_sum'] = (df_long
 df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
 #%%
 #rearrange / true-up columns
+#source year source: model inputs templates with the yearly starting weekday
+
+
 
 df_long['Sector'] = 'Com' #this is Com script, so Sector = Com
 df_long['Type'] = 'Whole Building'
-df_long['Status'] = ''
-df_long['Start Date'] = '1/1/2028'
-df_long['End Date'] = ''
 df_long['Source Year'] = 2015
 
 df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
@@ -601,7 +617,7 @@ df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 #final table fields round-up
 #note: UEC and Numunits omitted from draft long table in the final table
 df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
-         'Type','Status','Start Date', 'End Date', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
          'Hour of Year','UECproportion']] 
 
 
@@ -614,7 +630,8 @@ print(os.path.abspath(os.curdir))
 df_long_final.to_csv('CEDARS_long_ls_Com_all_bldgtypes_test.csv', index=False)
 
 #%%
-##Annual Data final field fixes
+## Here is resumes the normal post-processing of DEER outputs
+# Annual Data final field fixes
 
 #normunit = buildng area(conditioned) for default / example measure
 
@@ -628,10 +645,14 @@ sim_annual_v1['Normunit'] = normunit
 #add area based on building type
 #also add normunit (also the area) for the example measure
 #code may need to be tweaked if normalizing unit is different for a specific measure
+#3/2/26 QC check - if Cap-Tons, this code + supporting tables does not address the case. Solaris produced some scripts to extract Cap-Ton, but did not get every building type.
 
-unit_lookup = df_numunits[['BldgType','Normunit','Value']]
+unit_lookup = df_normunits[['BldgType','Normunit','Value']]
 if normunit == 'Each':
-    unit_table = unit_lookup[unit_lookup['Normunit']=='Each'][['Normunit','Value']]
+    unit_table = unit_lookup[unit_lookup['Normunit']=='Each'][['BldgType','Normunit','Value']]
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
+elif normunit == 'Cap-Tons':
+    unit_table = unit_lookup[unit_lookup['Normunit']=='Cap-Tons'][['BldgType','Normunit','Value']]
     sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
 else:
     sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on=['BldgType','Normunit'])
