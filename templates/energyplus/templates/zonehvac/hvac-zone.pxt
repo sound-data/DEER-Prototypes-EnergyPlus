@@ -4,6 +4,15 @@ require "modelkit/energyplus"
 parameter "zone_name"
 parameter "sys_name"
 
+# 05/24/24 - Afshin Faramarzi - added fault case for SWHC009 (supply fan control)
+# John Jacobs, 2025-03-28 - Rename parameter fan_op_fault (false = use op_sch) to operation_schedule (true = use op_sch) for SWHC062
+parameter "operation_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+# John Jacobs, 2025-03-28 - Create parameter fan_mode_schedule for SWHC062
+parameter "fan_mode_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+# John Jacobs, 2025-03-28 - Replace oa_sch with new parameter outdoor_air_schedule for SWHC062
+parameter "outdoor_air_schedule", :default => false, :type => "Enumeration", :valuelist => "true,false"
+
+
 parameter "hvac_type",
   :default => "CUSTOM", :domain => String  # ["ZN-PTAC", "ZN-PTHP", "ZN-WINAC", "SZ-CAV", "MZ-CAV", "MZ-VAV", "MZ-VRF", "IDEAL", "CUSTOM", "SZ-MAU", "UH"]   there's more
 parameter "hvac_sch", :name => "HVAC Schedule", :description => "Operation schedule that controls availability of HVAC systems",
@@ -521,10 +530,15 @@ DesignSpecification:OutdoorAir,
   ,                        !- Outdoor Air Flow Air Changes per Hour
   ;  !<%= zone_name %> OA Schedule;  !- Outdoor Air Schedule Name
 
+<%# John Jacobs, 2025-03-28 - Replace oa_sch with new parameter outdoor_air_schedule for SWHC062 %>
 Schedule:Compact,
   <%= zone_name %> OA Schedule,  !- Name
   Binary Control,          !- Schedule Type Limits Name
-  <%= oa_sch %>
+  <% if (outdoor_air_schedule) %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 1;
+  <% else %>
+  Through: 12/31,  For: AllDays,  Until: 24:00, 0;
+  <% end %>
 
 
 <% end %>
@@ -881,7 +895,9 @@ unitary_parameters = [
   :aux_heat_coil_cap,
   :aux_heat_coil_eff,
   :aux_heat_coil_fuel,
-
+  :operation_schedule,
+  :fan_mode_schedule,
+  :outdoor_air_schedule,
   :disable_ems
 ]
 

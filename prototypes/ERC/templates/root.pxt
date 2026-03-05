@@ -116,6 +116,9 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "classroom_class", :prefix => "classroom_class_" do
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.38['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE

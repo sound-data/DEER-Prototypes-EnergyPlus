@@ -1,0 +1,71 @@
+# SWHC062 model description
+
+Applies a fan fault corrective measure to the follow building types and zones:
+
+- Asm/office_large
+- Asm/auditorium
+- ECC/classroom_shop
+- ECC/classroom_class
+- ECC/dining_fast
+- ECC/kitchen
+- ECC/computer
+- ECC/office_large
+- EPr/classroom_class
+- EPr/dining_fast
+- EPr/gym
+- EPr/kitchen
+- ERC/classroom_class
+- ESe/classroom_class
+- ESe/gym
+- ESe/kitchen
+- ESe/computer
+- ESe/dining_fast
+- EUn/classroom_class
+- EUn/dining_fast
+- EUn/industrial_low
+- EUn/kitchen
+- EUn/computer
+- EUn/office_large
+- EUn/guestroom
+- Gro/grocery
+- Gro/industrial_high
+- Gro/office_large
+- Htl/dining_fine
+- Htl/kitchen
+- Htl/laundry
+- Htl/lobby
+- Htl/office_large
+- Htl/guestroom
+- MBT/computer
+- MBT/conference
+- MBT/dining_fast
+- MBT/kitchen
+- MBT/lab
+- MBT/office_large
+- MLI/storage_warehouse
+- MLI/industrial_low
+- OfL/lobby
+- OfL/mech
+- OfL/office_open
+- OfL/office_large
+- OfS/office_large
+- RFF/dining_fast
+- RFF/kitchen
+- RFF/lobby
+- RFF/restroom
+- RSD/dining_fast
+- RSD/kitchen
+- RSD/lobby
+- RSD/restroom
+- Rt3/retail_sales
+- RtL/auto
+- RtL/kitchen
+- RtL/office_large
+- RtL/retail_sales
+- RtL/storage_warehouse
+- RtS/retail_sales
+- RtS/storage_warehouse
+- SCn/storage_warehouse
+
+Disclaimer: this list does not imply measure eligibility. Refer to eTRM for eligibility and list of building types simulated.
+

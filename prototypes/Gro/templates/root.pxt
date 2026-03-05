@@ -131,18 +131,27 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "grocery", :prefix => "grocery_" do
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.25['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "industrial_high", :prefix => "industrial_high_" do
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "office_large", :prefix => "office_large_" do
+    include "operation_schedule"
+    include "fan_mode_schedule"
+    include "outdoor_air_schedule"
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
