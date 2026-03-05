@@ -6,6 +6,10 @@ import os
 import sys
 import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
+#%%
+import helper_functions
+from importlib import reload
+reload(helper_functions)
 # %%
 #Read master workbook for measure / tech list
 df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
@@ -250,13 +254,17 @@ for i in range(0,num_runs):
     #loop path of each file, read corresponding file
     full_path = hrly_path + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
     df = pd.read_csv(full_path, low_memory=False)
+
+    #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation
+    idf_path = hrly_path + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance.idf"
+    runperiod_start_day = helper_functions.get_runperiod_start_day(idf_path)
     
     #extract the last column (the total elec hrly profile)
     #if for enduse hourly, then extract the relevant end use column
     extracted_df = pd.DataFrame(df.iloc[:,-1])
     
     #create the column name based on the permutations
-    col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
+    col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv" + "/"+runperiod_start_day
     
     #change column name
     extracted_df = extracted_df.set_axis([col_name],axis=1)
@@ -341,6 +349,21 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr13',     'hr14',     'hr15',     'hr16',     'hr17',     'hr18',
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
 #%%
+#3/4/2026 update: move normalizing unit conversion to here for better organization
+##STEP 3: Normalizing Units
+bldgtype = 'MFm'
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['BldgLoc','Value', 'Msr','BldgVint']]
+#measure specific normalizing units table
+df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+normunit = df_measure['Normunit'].unique()[0]
+
+
+#%%
+################################################################################################
+################################################################################################
 # 12/23/2025 CEDARS hourly consumption output reformatting
 
 # use the hourly data before long2wide pivot transform
@@ -372,6 +395,8 @@ for i in range(0,len(fyr_hrly.columns)):
     hrly_mapped['Measure Group Name'] =col_names[1] #use this to look up tech group tech type
     hrly_mapped['TechID'] = col_names[2]
     hrly_mapped['file'] = col_names[3]
+    #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation, and add as a column in the hourly mapped df
+    hrly_mapped['RunPeriod Start Day'] = col_names[4]
 
     converted_long_df = pd.concat([converted_long_df, hrly_mapped])
 
@@ -400,17 +425,7 @@ converted_long_df['TechType'] = converted_long_df['Measure Group Name'].map(Tech
 #%%
 #convert from J to kWh
 converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Consumption']/3600000
-# %%
-##STEP 3: Normalizing Units
-bldgtype = 'MFm'
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['BldgLoc','Value', 'Msr','BldgVint']]
-#%%
-#measure specific normalizing units table
-df_numunits = df_normunits[df_normunits['Msr']==measure_name]
-normunit = df_measure['Normunit'].unique()[0]
+
 #%%
 #create numunits object based on what normunit it uses. 
 #numunits can be a single value, or a dictionary
@@ -445,7 +460,10 @@ else:
 
 #add num unit will be per dwelling, so use numunit / num of dwellings (2 for SFM, DMo, 24 for MFm)
 converted_long_df['Normunit'] = normunit
-converted_long_df['Numunits'] = converted_long_df['BldgLoc'].map(numunits)/24
+if type(numunits) == dict:
+    converted_long_df['Numunits'] = converted_long_df['BldgLoc'].map(numunits)/24
+else:
+    converted_long_df['Numunits'] = numunits/24
 
 #%%
 #Long format final field updates
@@ -458,16 +476,16 @@ converted_long_df['Numunits'] = converted_long_df['BldgLoc'].map(numunits)/24
 converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
 
 #sort
-df_long = converted_long_df.sort_values(['BldgType','BldgLoc', 'TechID', 'hr in 8760'])
+df_long = converted_long_df.sort_values(['BldgLoc', 'BldgHVAC', 'TechID', 'hr in 8760'])
 
 #%% 
 #create groupby ids for each 8760 set
 df_long['set_id'] = (df_long['hr in 8760'].eq(1)
-                .groupby([df_long['BldgLoc'], df_long['TechID']])
+                .groupby([df_long['BldgLoc'], df_long['BldgHVAC'], df_long['TechID']])
                 .cumsum())
 #calculate annual UEC
 df_long['annual_sum'] = (df_long
-    .groupby(['BldgLoc', 'TechID', 'set_id'])['UEC']
+    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['UEC']
     .transform('sum'))
 
 #%%
@@ -475,21 +493,28 @@ df_long['annual_sum'] = (df_long
 df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
 #%%
 #rearrange / true-up columns
+#source year mapping:
+StartDayToSourceYear = {
+    "Monday": 2018, #Basis year for 2024 electric ACCs
+    "Tuesday": 2013, #2013 or 2019 could be used
+    "Wednesday": 2020, #Basis for 2022/2021 electric ACCs
+    "Thursday": 2009, #Per CEC's Nonres/MFm ACM Reference Manual
+    "Friday": 2010, #2016 is Friday but a leap year, so this should be either 2010 or 2021
+    "Saturday": 2011, #Next Saturday option is 2022 because it is skipped between 2016 and 2017 because 2016 is a leap year
+    "Sunday": 2017 #2012 is a leap year, suggest using 2017
+}
 
 df_long['Sector'] = 'Res' #this is MFm script, so Sector = Res
 df_long['Type'] = 'Whole Building'
-df_long['Status'] = ''
-df_long['Start Date'] = '1/1/2028'
-df_long['End Date'] = ''
-df_long['Source Year'] = 2015
+df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
 
 df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 
 #final table fields round-up
-#note: UEC and Numunits omitted from draft long table in the final table
+#note: Numunits omitted from draft long table in the final table, kept UEC for plotting
 df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
-         'Type','Status','Start Date', 'End Date', 'Source Year', 'TechGroup', 'TechType','TechID',
-         'Hour of Year','UECproportion']] 
+         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'Hour of Year','UEC','UECproportion']] 
 #%%
 #export CEDARS long 8760 csv
 
@@ -497,6 +522,12 @@ os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
 df_long_final.to_csv('CEDARS_long_ls_MFm.csv', index=False)
+
+#3/4/2026 Dan P. on CEDARS - need to provide as zip format
+
+print('CEDARS long 8760 csv exported.')
+################################################################################################
+################################################################################################
 # %%
 ##Annual Data final field fixes
 #note normunit = building area (conditioned)

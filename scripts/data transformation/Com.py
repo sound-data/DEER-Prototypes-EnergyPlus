@@ -491,8 +491,11 @@ normunit = df_measure['Normunit'].unique()[0]
 
 
 #%%
+################################################################################################
+################################################################################################
 #12/22/2025 CEDARS Hourly consumption output reformatting
 # use the hourly data before long2wide pivot transform
+print('reformatting hourly data for CEDARS loadshape format..')
 converted_long_df = pd.DataFrame()
 
 for i in range(0,len(fyr_hrly.columns)):
@@ -604,13 +607,20 @@ df_long['annual_sum'] = (df_long
 df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
 #%%
 #rearrange / true-up columns
-#source year source: model inputs templates with the yearly starting weekday
-
-
+#source year mapping:
+StartDayToSourceYear = {
+    "Monday": 2018, #Basis year for 2024 electric ACCs
+    "Tuesday": 2013, #2013 or 2019 could be used
+    "Wednesday": 2020, #Basis for 2022/2021 electric ACCs
+    "Thursday": 2009, #Per CEC's Nonres/MFm ACM Reference Manual
+    "Friday": 2010, #2016 is Friday but a leap year, so this should be either 2010 or 2021
+    "Saturday": 2011, #Next Saturday option is 2022 because it is skipped between 2016 and 2017 because 2016 is a leap year
+    "Sunday": 2017 #2012 is a leap year, suggest using 2017
+}
 
 df_long['Sector'] = 'Com' #this is Com script, so Sector = Com
 df_long['Type'] = 'Whole Building'
-df_long['Source Year'] = 2015
+df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
 
 df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 
@@ -618,7 +628,7 @@ df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 #note: UEC and Numunits omitted from draft long table in the final table
 df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
          'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
-         'Hour of Year','UECproportion']] 
+         'Hour of Year','UEC','UECproportion']] 
 
 
 #%%
@@ -627,10 +637,18 @@ df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','N
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-df_long_final.to_csv('CEDARS_long_ls_Com_all_bldgtypes_test.csv', index=False)
+df_long_final.to_csv('CEDARS_long_ls_Com.csv', index=False)
 
+#3/4/2026 Dan P. on CEDARS - need to provide as zip format
+#slice Com table into bldgtype piece-wise and zip them all up
+
+print('CEDARS long 8760 csv exported.')
+################################################################################################
+################################################################################################
 #%%
-## Here is resumes the normal post-processing of DEER outputs
+##############################################
+##############################################
+## Here resumes the normal post-processing of DEER outputs
 # Annual Data final field fixes
 
 #normunit = buildng area(conditioned) for default / example measure

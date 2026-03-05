@@ -1,9 +1,18 @@
+#helper functions used for CEDARS long format extraction
 
 #Used to get "Start Day of the week" from the RunPeriod object in the IDF file, 
 # which is needed for determining the correct starting date of the simulation 
 # and thus the correct hourly distribution of consumption across the year.
-
 def get_runperiod_start_day(idf_path):
+    '''Extracts the "Day of Week for Start Day" from the RunPeriod object in the IDF file.
+    
+    Args:
+        idf_path (str): Path to the IDF file.
+    
+    Returns:
+        str: The day of the week for the start day (e.g., "Monday"), or None if not found.
+    
+    '''
     with open(idf_path, "r") as f:
         text = f.read()
 
@@ -31,6 +40,4 @@ def get_runperiod_start_day(idf_path):
             # fields[6] = End Day of Month
             # fields[7] = End Year
             # fields[8] = Day of Week for Start Day  <-- target
-            return fields[8] if len(fields) > 8 else None
-
-    return None
+    return fields[8]
