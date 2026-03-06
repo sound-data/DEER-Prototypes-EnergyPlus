@@ -521,10 +521,21 @@ df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','N
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-df_long_final.to_csv('CEDARS_long_ls_MFm.csv', index=False)
-
+#df_long_final.to_csv('CEDARS_long_ls_MFm.csv', index=False) #enable if just need csv export
 #3/4/2026 Dan P. on CEDARS - need to provide as zip format
+import zipfile
 
+zip_filename = 'CEDARS_long_ls_MFm.zip'
+csv_filename = 'CEDARS_long_ls_MFm.csv'
+
+print('writing CEDARS long 8760 csv into zip format..')
+#create the zip and write the csv into it
+with zipfile.ZipFile(zip_filename, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
+    #Open a file inside the zip and write CSV to it
+    with zipf.open(csv_filename, 'w') as f:
+        df_long_final.to_csv(f, index=False)
+
+print(f'Zip file {zip_filename} created with {csv_filename} inside.')
 print('CEDARS long 8760 csv exported.')
 ################################################################################################
 ################################################################################################

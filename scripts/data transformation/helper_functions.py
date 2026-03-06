@@ -24,13 +24,15 @@ def get_runperiod_start_day(idf_path):
             clean.append(line)
     text = " ".join(clean)
 
-    # Split into objects
-    objects = text.split(";")
+    # Split into objects and look for RunPeriod
+    for obj in text.split(";"):
+        obj = obj.strip()
+        if not obj:
+            continue
 
-    for obj in objects:
-        if obj.strip().lower().startswith("runperiod"):
+        head = obj.split(",", 1)[0].strip().lower()
+        if head == "runperiod":
             fields = [f.strip() for f in obj.split(",")]
-
             # fields[0] = "RunPeriod"
             # fields[1] = Name
             # fields[2] = Begin Month
@@ -40,4 +42,11 @@ def get_runperiod_start_day(idf_path):
             # fields[6] = End Day of Month
             # fields[7] = End Year
             # fields[8] = Day of Week for Start Day  <-- target
-    return fields[8]
+
+            return fields[8].strip() if len(fields) > 8 and fields[8] else None
+            # If the field is missing or empty, return None
+
+    return None
+
+
+            

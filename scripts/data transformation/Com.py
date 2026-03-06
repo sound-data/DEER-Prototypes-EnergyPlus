@@ -637,10 +637,24 @@ df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','N
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-df_long_final.to_csv('CEDARS_long_ls_Com.csv', index=False)
-
+#df_long_final.to_csv('CEDARS_long_ls_Com.csv', index=False) #enable if just need csv export
 #3/4/2026 Dan P. on CEDARS - need to provide as zip format
-#slice Com table into bldgtype piece-wise and zip them all up
+#%%
+import zipfile 
+
+zip_filename = 'CEDARS_long_ls_Com.zip'
+csv_filename_prefix = 'CEDARS_long_ls_Com_'
+
+with zipfile.ZipFile(zip_filename, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
+    #Open a file inside the zip and write CSV to it
+    #Loop through each building type and write a separate CSV for each, put into the same zip file
+    for bldgtype in df_long_final['BldgType'].unique():
+        print(f'writing {bldgtype} csv to zip...')
+
+        csv_filename = f'{csv_filename_prefix}{bldgtype}.csv'
+        with zipf.open(csv_filename, 'w') as f:
+            df_long_final[df_long_final['BldgType'] == bldgtype].to_csv(f, index=False)
+        print(f'{bldgtype} csv written to zip.')
 
 print('CEDARS long 8760 csv exported.')
 ################################################################################################
