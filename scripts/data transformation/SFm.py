@@ -685,8 +685,8 @@ print(os.path.abspath(os.curdir))
 #3/4/2026 Dan P. on CEDARS - need to provide as zip format
 import zipfile
 
-zip_filename = 'CEDARS_long_ls_SFm.zip'
-csv_filename = 'CEDARS_long_ls_SFm.csv'
+zip_filename = 'CEDARS_LoadShape_SFm.zip'
+csv_filename = 'CEDARS_LoadShape_SFm.csv'
 
 print('writing CEDARS long 8760 csv into zip format..')
 #create the zip and write the csv into it

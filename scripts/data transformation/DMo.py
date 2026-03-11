@@ -34,7 +34,6 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-#12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res
 path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_DMo'
 
@@ -520,8 +519,8 @@ print(os.path.abspath(os.curdir))
 #3/4/2026 Dan P. on CEDARS - need to provide as zip format
 import zipfile
 
-zip_filename = 'CEDARS_long_ls_DMo.zip'
-csv_filename = 'CEDARS_long_ls_DMo.csv'
+zip_filename = 'CEDARS_LoadShape_DMo.zip'
+csv_filename = 'CEDARS_LoadShape_DMo.csv'
 
 print('writing CEDARS long 8760 csv into zip format..')
 #create the zip and write the csv into it

@@ -642,8 +642,8 @@ print(os.path.abspath(os.curdir))
 #%%
 import zipfile 
 
-zip_filename = 'CEDARS_long_ls_Com.zip'
-csv_filename_prefix = 'CEDARS_long_ls_Com_'
+zip_filename = 'CEDARS_LoadShape_Com.zip'
+csv_filename_prefix = 'CEDARS_LoadShape_Com_'
 
 with zipfile.ZipFile(zip_filename, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
     #Open a file inside the zip and write CSV to it
