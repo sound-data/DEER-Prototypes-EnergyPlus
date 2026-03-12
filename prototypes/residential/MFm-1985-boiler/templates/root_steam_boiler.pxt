@@ -54998,15 +54998,15 @@ Controller:OutdoorAir,
 !- Inputs based on EnergyPlus defaults and boiler library.
 
 !-   ===========  ALL OBJECTS IN CLASS: SETPOINTMANAGER:OUTDOORAIRRESET ===========
-
-SetpointManager:OutdoorAirReset,
-    Boiler Setpoint Manager, !- Name
-    Temperature,             !- Control Variable
-    73.88888888888888,        !- Setpoint at Outdoor Low Temperature {C}
-    -17.7777777777778,       !- Outdoor Low Temperature {C}
-    60,                      !- Setpoint at Outdoor High Temperature {C}
-    21.1111111111111,        !- Outdoor High Temperature {C}
-    Steam Loop Setpoint Node List; !- Setpoint Node or NodeList Name
+! Solaris Technical - Behzad Rizi - 2026-03-12 - Commented out the "SetpointManager:OutdoorAirReset" object for the steam boiler
+!SetpointManager:OutdoorAirReset,
+!    Boiler Setpoint Manager, !- Name
+!    Temperature,             !- Control Variable
+!    73.88888888888888,        !- Setpoint at Outdoor Low Temperature {C}
+!    -17.7777777777778,       !- Outdoor Low Temperature {C}
+!    60,                      !- Setpoint at Outdoor High Temperature {C}
+!    21.1111111111111,        !- Outdoor High Temperature {C}
+!    Steam Loop Setpoint Node List; !- Setpoint Node or NodeList Name
 
 
 !-   ===========  ALL OBJECTS IN CLASS: CURVE:BICUBIC ===========
