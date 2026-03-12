@@ -10,9 +10,9 @@ parameter "design_flow", :default=>Autosize
 parameter "design_temp", :default=>180['F']
 parameter "design_delta", :default=>50['deltaF']
 
-parameter "supply_temp_at_lo", :default=>180['F']
+parameter "supply_temp_at_lo", :default=>130['F']
 parameter "lo_outdoor_temp", :default=>20['F']
-parameter "supply_temp_at_hi", :default=>150['F']
+parameter "supply_temp_at_hi", :default=>105['F']
 parameter "hi_outdoor_temp", :default=>50['F']
 
 
