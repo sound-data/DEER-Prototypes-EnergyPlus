@@ -83,6 +83,7 @@ parameter "supply_temp_at_lo", :default=>130['F']
 parameter "lo_outdoor_temp", :default=>20['F']
 parameter "supply_temp_at_hi", :default=>105['F']
 parameter "hi_outdoor_temp", :default=>50['F']
+
 #Duct Loss
 parameter "total_leakage_ratio", :default=>0.15  #total leakage ratio
 parameter "number_of_stories", :default=>1  #no. of stories, default one story
