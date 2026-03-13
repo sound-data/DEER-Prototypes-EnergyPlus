@@ -11,9 +11,9 @@ import helper_functions
 from importlib import reload
 reload(helper_functions)
 # %%
-#Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
-
+#Read master workbook for measure / tech list (note example commented line for specific measures)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
@@ -23,9 +23,9 @@ measures = list(df_master['Measure (general name)'].unique())
 #Shows list of measure names 
 print(measures)
 #%%
-#Define measure name here
-measure_name = 'Efficient Doors'
-
+#Define measure name here (note example commented line for specific measures)
+measure_name = 'SEER Rated AC/HP'
+#measure_name = 'Efficient Doors'
 # %%
 #SFm only script
 ####Define path
@@ -35,8 +35,10 @@ os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
 #input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path_new and leave other blank.
-path_1975 = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_SFm_1975'
-path_1985 = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_SFm_1985'
+path_1975 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1975'
+path_1985 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1985'
+# path_1975 = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_SFm_1975'
+# path_1985 = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_SFm_1985'
 path_new = ''
 
 paths = [path_1975, path_1985]

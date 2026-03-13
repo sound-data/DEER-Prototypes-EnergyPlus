@@ -11,9 +11,9 @@ import helper_functions
 from importlib import reload
 reload(helper_functions)
 # %%
-#Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
-
+#Read master workbook for measure / tech list (note example commented line for specific measures)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
@@ -23,18 +23,18 @@ measures = list(df_master['Measure (general name)'].unique())
 #Shows list of measure names 
 print(measures)
 #%%
-#Define measure name here
-measure_name = 'Efficient Doors'
-
+#Define measure name here (note example commented line for specific measures)
+measure_name = 'SEER Rated AC/HP'
+#measure_name = 'Efficient Doors'
 # %%
-#MFm only script
-####Define path
+#MFm only script 
+####Define path (note example commented line for specific measures)
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
-
-path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_MFm_Ex'
+path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
+#path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_MFm_Ex'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum

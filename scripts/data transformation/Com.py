@@ -11,9 +11,9 @@ import helper_functions
 from importlib import reload
 reload(helper_functions)
 # %%
-#Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_fanbelts.xlsx', sheet_name='Measure_list', skiprows=4)
-
+#Read master workbook for measure / tech list (note example commented line for specific measures)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_fanbelts.xlsx', sheet_name='Measure_list', skiprows=4)
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
@@ -26,10 +26,10 @@ measures = list(df_com['Modelkit Folder Primary Name'].unique())
 #Shows list of commercial measure names (with workpaper ID) 
 print(measures)
 #%%
-#Define measure name here (name of the measure folder itself
+#Define measure name here (name of the measure folder itself) 
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWHC024-05 Fan Belt'
-
+measure_name = 'SWXX111-00 Example_SEER_AC'
+#measure_name = 'SWHC024-05 Fan Belt'
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
 # %%
@@ -42,8 +42,8 @@ print(os.path.abspath(os.curdir))
 
 #12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res
-#filepath = f'commercial measures/{measure_name}'
-filepath = f'commercial measures/SWHC024-06 Fan Belt' #only changed this for testing
+filepath = f'commercial measures/{measure_name}'
+#filepath = f'commercial measures/SWHC024-06 Fan Belt' #only changed this for testing
 
 
 # %%
