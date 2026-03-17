@@ -32,7 +32,7 @@ DEERPEAK_COLUMNS = ["Electricity:Facility [J](Hourly)"]
 # Do you want to append "(units)"" in the column name, if available?
 APPEND_UNITS = False
 # Which definition of peak period dates to use?
-PEAK_VERSION = 'E5152' # 'E5152', 'E5350'
+PEAK_VERSION = 'E5152' # 'E5152', 'E5350', 'CZ2025'
 
 
 ##STEP 0: Setup (import all necessary libraries)
@@ -127,6 +127,40 @@ def get_deer_peak_day_E5350(bldgloc: str):
     ])
     return peakperspec[bldgloc]
 
+def get_deer_peak_day_CZ2025(bldgloc: str):
+    """Return a for DEER peak period start day lookups.
+    Dates are from CPUC assessment posted to CEDARS on 2026-03-10.
+    See https://cedars.cpuc.ca.gov/deer-resources/tools/energy-plus/resource/29/history/
+    The dates were derived using CZ2025 weather data.
+
+    Input:
+        BldgLoc: str
+            CEC climate zone, e.g. CZ01 through CZ16.
+
+    Returns:
+        PkDay: int
+            1-based day number index for first day of the 3-day DEER peak period.
+    """
+    peakperspec = dict([
+        ("CZ01",266),
+        ("CZ02",203),
+        ("CZ03",266),
+        ("CZ04",217),
+        ("CZ05",266),
+        ("CZ06",266),
+        ("CZ07",271),
+        ("CZ08",168),
+        ("CZ09",168),
+        ("CZ10",168),
+        ("CZ11",187),
+        ("CZ12",217),
+        ("CZ13",187),
+        ("CZ14",187),
+        ("CZ15",238),
+        ("CZ16",187),
+    ])
+    return peakperspec[bldgloc]
+
 @cache
 def get_deer_peak_multipliers(BldgLoc: str,
                           days=3, start_hr=16, end_hr=21, dst=True, version=PEAK_VERSION):
@@ -161,6 +195,8 @@ def get_deer_peak_multipliers(BldgLoc: str,
         peak_day = get_deer_peak_day_E5152(BldgLoc)
     elif version == 'E5350':
         peak_day = get_deer_peak_day_E5350(BldgLoc)
+    elif version == 'CZ2025':
+        peak_day = get_deer_peak_day_CZ2025(BldgLoc)
     else:
         raise ValueError(f'Unrecognized peak date version: {version}')
     # In case start_hr and end_hr are given in daylight saving time (DST), shift back to standard time.
