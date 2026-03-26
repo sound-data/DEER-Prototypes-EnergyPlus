@@ -19,7 +19,7 @@ Make your own local copy to override this and add user-defined objects/templates
 Output:Variable,*,Site Outdoor Air Drybulb Temperature,hourly; !- Zone Average [C]
 
 Output:Meter,Electricity:Facility,hourly; !- [J]
-Output:Meter,Gas:Facility,hourly; !- [J]
+Output:Meter,NaturalGas:Facility,hourly; !- [J]
 
 ! Zone
 !Output:Variable,Perimeter_ZN_1,Zone Mean Air Temperature,hourly; !- Zone Average [C]
