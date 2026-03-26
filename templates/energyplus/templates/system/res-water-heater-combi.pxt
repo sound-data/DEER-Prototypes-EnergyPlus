@@ -1,0 +1,1017 @@
+<%#INITIALIZE
+
+#This template adds residential domestic water heating systems including combined heating and DHW, developed by TRC for SWWH037-01
+
+parameter "water_heater_name", :default => nil
+parameter "loop_sept", :default => 135 ['F']
+parameter "tank_sept", :default => 130 ['F'] #for hpwh only, cause tank temperature need to be lower than loop temperature by definition
+
+parameter "dhw_demand_sch", :name => "Hot Water Demand Schedule", :description => "Hot Water Demand Fraction Schedule, import .csv file",
+  :default => "SFm_minute_dhw_demand_fraction.csv", :domain => String
+
+parameter "peak_flow", :name => "peak flow rate water use equipment", :description => "peak flow rate of total hot water demand",
+  :default => 0.00044 ['m3/s'], :domain => Quantity #peak flow for SFm adjusted for use temperature
+
+parameter "dhw_use_setpt_t", :name => "peak flow rate water use equipment", :description => "temperature of DHW at peak_flow",
+  :default => 135 ['F'], :domain => Quantity #TRC: HW use temperature
+
+parameter "water_heater_type", :name => "Water Heater Type", :description => "currently availabily water heater types are gas, elec, gas_tankless, hpwh, 120v_hpwh, sanco2_hpwh (case sensitive)",
+  :default => "gas", :domain => String
+
+#parameter "water_heater_location", :default =>"unconditioned" # unconditioned | conditioned | exterior # configured for zone only
+parameter "evaporator_location", :default =>"unconditioned" # unconditioned | conditioned | exterior
+parameter "tank_size", :default => 50 ['gal']
+parameter "water_heater_cap", :name => "water heater capacity", :default=> 41000 ['BTUH']
+parameter "heat_element_cap", :name => "heating element capacity for hpwh each", :default=> 0 ['W']
+parameter "uef", :default => 3.52
+parameter "wh_cop", :default => nil
+parameter "t_cond_in_rated", :default => 80 ['F']
+parameter "thermal_eff", :description => "efficiency for non heat pump water heater",:default => 0.79
+parameter "draw_pattern", :default => "HI"
+parameter "tank_element_control_logic", :default => "Simultaneous" #TRC: For HPWHs, options are Simultaneous or MutuallyExclusive use of electric resistance and HP
+parameter "tank_height", :default => nil #TRC allows default tank height to be overridden
+
+parameter "parasitic_power", :default=> 0 ['BTUH'] #gas water heater 350btuh, gas tankless 50W
+parameter "parasitic_fuel", :default=> "NaturalGas" #Electricity
+
+parameter "combi", :default => false #combined space heating and DHW
+parameter "dhw_stpt_sch", :default => ""
+parameter "climate_zone_num", :default => false
+parameter "climate_zone_str", :default => ""
+
+parameter "water_heater_zone", :default=> "EL7 North Perim Zn (G.N4)" # default at unconditioned zone
+parameter "water_use_zone", :default=> "EL7 South Perim Zn (G.S1)" #default at main conditioned zone
+parameter "system_name", :default => nil #secondary zone with space heating coil for combi systems
+parameter "condenser_type", :default => "wrapped" #wrapped|pumped (pumped condenser has a bug in E+ causing unbalanced energy transfer in water heater, not fixed until v24, use wrapped)
+
+rule "combi_rule", :parameters => {:combi => true} do
+  force :condenser_type => "wrapped" #use wrapped only due to E+ bug
+  force :evaporator_location => "exterior"
+end
+
+rule "gas_wh_rule", :parameters => {:water_heater_type => "gas"} do
+  default :water_heater_cap => 41000['BTUH']
+  default :heat_element_cap => 0
+  default :thermal_eff => 0.8
+  default :uef => 3.52
+  default :tank_size => 58   ['gal']
+  default :draw_pattern => "HI"
+  default :parasitic_power => 350 ['BTUH']
+  default :parasitic_fuel => "NaturalGas"
+  default :tank_height => 57['in']
+end
+
+rule "elec_wh_rule", :parameters => {:water_heater_type => "elec"} do
+  default :water_heater_cap => 4900['W']
+  default :heat_element_cap => 0
+  default :thermal_eff => 0.98
+  default :uef => 3.52
+  default :tank_size => 49 ['gal']
+  default :draw_pattern => "MD"
+  default :parasitic_power => 0
+  default :parasitic_fuel => "Electricity"
+  default :tank_height => 54['in']
+end
+
+rule "gas_tankless_wh_rule", :parameters => {:water_heater_type => "gas_tankless"} do
+  default :water_heater_cap => 190000['BTUH']
+  default :heat_element_cap => 0
+  default :thermal_eff => 0.84
+  default :uef => 3.52
+  default :tank_size => 50 ['gal']
+  default :draw_pattern => "HI"
+  default :parasitic_power => 50 ['W']
+  default :parasitic_fuel => "Electricity"
+  default :tank_height => nil
+end
+
+rule "pluginhpwh_rule", :parameters => {:water_heater_type => "120v_hpwh"} do
+  default :water_heater_cap => 1230['W']
+  default :heat_element_cap => 900['W']
+  default :thermal_eff => 1
+  default :uef => 2.91
+  default :tank_size => 66 ['gal']
+  default :draw_pattern => "MD-HI"
+  default :parasitic_power => 0 ['W']
+  default :parasitic_fuel => "Electricity"
+  default :tank_height => 50['in']
+end
+
+rule "hpwh_rule", :parameters => {:water_heater_type => "hpwh"} do
+  default :water_heater_cap => 1230['W']
+  default :heat_element_cap => 4500['W']
+  default :thermal_eff => 1
+  default :uef => 2.91
+  default :tank_size => 66 ['gal']
+  default :draw_pattern => "MD-HI"
+  default :parasitic_power => 0 ['W']
+  default :parasitic_fuel => "Electricity"
+  default :tank_height => 50['in']
+end
+
+rule "sanco2_hpwh_rule", :parameters => {:water_heater_type => "sanco2_hpwh"} do
+  default :water_heater_cap => 3728['W']
+  default :heat_element_cap => 4500['W']
+  default :thermal_eff => 1
+  default :wh_cop => 4.63
+  default :tank_size => 120 ['gal']
+  default :draw_pattern => "MD-HI"
+  default :parasitic_power => 3 ['W']
+  default :parasitic_fuel => "Electricity"
+  default :tank_height => 63['in']
+end
+
+%>
+
+<%
+if climate_zone_num
+    zones = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16"]
+    climate_zone_str = zones[climate_zone_num - 1]
+end
+
+if water_heater_name == nil
+    water_heater_name = water_use_zone + " WH"
+end
+
+#UEF to COP conversion for heat pump
+daily_volume = case draw_pattern
+               when 'HI' then 84
+               when 'MD' then 55
+               when 'LO' then 38
+               when 'VS' then 10
+               else 69.5
+               end
+
+tank_size = case water_heater_type
+            when 'gas_tankless' then 1 ['gal']
+            else tank_size
+            end
+
+if tank_height == nil
+    tank_height = case tank_size
+              when 50 then 53 ['in']
+              when 80 then 63 ['in']
+              else 53 ['in']
+              end
+end
+
+
+heater1_height = case water_heater_type
+                 when 'gas' then 0.4* tank_height
+                 when 'elec' then 0.4* tank_height
+                 when 'sanco2_hpwh' then 0.4*tank_height
+                 else 0.7* tank_height
+                 end
+
+if water_heater_type.include?('hpwh')
+    if water_heater_type == 'sanco2_hpwh'
+        sensor_height = 0.5* tank_height
+        heater2_height = 0.05* tank_height
+    else
+        sensor_height = 0.7* tank_height
+        heater2_height = 0.1* tank_height
+    end
+else
+    condenser_type = nil
+end
+
+if wh_cop
+    cop = wh_cop
+else
+    cop = (uef-0.1513-0.0043*daily_volume)*(2.6-0.0133*(loop_sept*1.8+32))/0.8407
+end
+%>
+
+<%# Schedules %>
+    Schedule:File,
+        <%= water_heater_name %>_demand_frac_sch,  !- Name
+        fraction,                !- Schedule Type Limits Name
+        <% if defined?($repository_dir) %>
+          <%= $repository_dir %>/templates/hot water profile/<%= dhw_demand_sch %>,  !- File Name
+        <% else %>
+          ../../../../../../../../templates/hot water profile/<%= dhw_demand_sch %>,  !- File Name
+        <% end %>
+        1,                       !- Column Number
+        1,                       !- Rows to Skip at Top
+        8760,                    !- Number of Hours of Data
+        Comma,                   !- Column Separator
+        No,                      !- Interpolate to Timestep
+        1;                       !- Minutes per Item
+
+    Schedule:Compact,
+        <%= water_heater_name %>_Tank_sept,               !- Name
+        Temperature,             !- Schedule Type Limits Name
+        Through: 12/31,          !- Field 1
+        For: AllDays,            !- Field 2
+        Until 24:00,             !- Field 3
+        <%= tank_sept %>;        !- Field 4
+
+    ! DHW WaterUse:Equipment use temperature
+    Schedule:Constant,
+        <%= water_heater_name %> dhw_use_setpt,    !- Name
+        Temperature,             !- Schedule Type Limits Name
+        <%= dhw_use_setpt_t %>;                   !- Hourly Value (corresponds to schedule and peak flow rate)
+    ! DHW loop setpoint
+    <% if !dhw_stpt_sch.empty? %>
+        Schedule:File,
+            <%= water_heater_name %>_Loop_setpt,  !- Name
+            Temperature,                !- Schedule Type Limits Name
+            <% if defined?($repository_dir) %>
+              <%= $repository_dir %>/templates/hot water profile/<%= dhw_stpt_sch %>_CZ<%= climate_zone_str %>.csv,  !- File Name
+            <% else %>
+              ../../../../../../../../templates/hot water profile/<%= dhw_stpt_sch %>_CZ<%= climate_zone_str %>.csv,  !- File Name
+            <% end %>
+            1,                       !- Column Number
+            1,                       !- Rows to Skip at Top
+            8760,                    !- Number of Hours of Data
+            Comma,                   !- Column Separator
+            No,                      !- Interpolate to Timestep
+            60;                       !- Minutes per Item
+    <% else %>
+        Schedule:Constant,
+            <%= water_heater_name %>_Loop_setpt,    !- Name
+            Temperature,             !- Schedule Type Limits Name
+            <%= loop_sept %>;                   !- Hourly Value
+    <% end %>
+
+<%if water_heater_type.include?('hpwh') %>
+    <% if evaporator_location== "unconditioned" %>
+        ZoneHVAC:EquipmentList,
+            <%= water_heater_zone %> Equipment,  !- Name
+            SequentialLoad,          !- Load Distribution Scheme
+            WaterHeater:HeatPump:WrappedCondenser,  !- Zone Equipment 1 Object Type
+            <%= water_heater_name %>_HPWH,              !- Zone Equipment 1 Name
+            1,                       !- Zone Equipment 1 Cooling Sequence
+            1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+            ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+            ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+        ZoneHVAC:EquipmentConnections,
+            <%= water_heater_zone %>,  !- Zone Name
+            <%= water_heater_zone %> Equipment,  !- Zone Conditioning Equipment List Name
+            <%= water_heater_name %> zone inlet node,    !- Zone Air Inlet Node or NodeList Name
+            <%= water_heater_name %> zone Exhaust Node,       !- Zone Air Exhaust Node or NodeList Name
+            <%= water_heater_zone %> Zone Air Node;  !- Zone Air Node Name
+    <% end %>
+
+    Fan:OnOff,
+        <%= water_heater_name %> fan,                !- Name
+        always_avail,            !- Availability Schedule Name
+        0.7,                     !- Fan Total Efficiency
+        100,                     !- Pressure Rise {Pa}
+        autosize,                !- Maximum Flow Rate {m3/s}
+        0.8,                     !- Motor Efficiency
+        0.9,                     !- Motor In Airstream Fraction
+        <%= water_heater_name %> fan inlet node,     !- Air Inlet Node Name
+        <% if evaporator_location == "unconditioned" %>
+        <%= water_heater_name %> zone inlet node,    !- Air Outlet Node Name
+        <% else %>
+        <%= water_heater_name %> fan outlet node,    !- Air Outlet Node Name
+        <% end %>
+        ,                        !- Fan Power Ratio Function of Speed Ratio Curve Name
+        ,                        !- Fan Efficiency Ratio Function of Speed Ratio Curve Name
+        Domestic Hot Water;      !- End-Use Subcategory
+
+    <%# NodeList OA %>
+        <% if evaporator_location == "exterior" %>
+            OutdoorAir:NodeList,
+                <%= water_heater_name %> fan inlet node,
+                <%= water_heater_name %> fan outlet node;
+        <% end %>
+
+    <%# HPWH heating coils %>
+        <% if condenser_type == 'wrapped' %>
+            Coil:WaterHeating:AirToWaterHeatPump:Wrapped,
+                <%= water_heater_name %> Coil,           !- Name
+                <%= water_heater_cap %>,                    !- Rated Heating Capacity {W}
+                <%= cop %>,                    !- Rated COP {W/W}
+                0.981,                   !- Rated Sensible Heat Ratio
+                19.7,                    !- Rated Evaporator Inlet Air Dry-Bulb Temperature {C}
+                13.5,                    !- Rated Evaporator Inlet Air Wet-Bulb Temperature {C}
+                <%= t_cond_in_rated %>,                   !- Rated Condenser Water Temperature {C} (corresponds to UEF -> COP equation)
+                autocalculate,           !- Rated Evaporator Air Flow Rate {m3/s}
+                Yes,                     !- Evaporator Fan Power Included in Rated COP
+                <% if evaporator_location == "exterior" %>
+                    <%= water_heater_name %> fan inlet node,!fan outlet node,   !- Evaporator Air Inlet Node Name
+                    <%= water_heater_name %> fan outlet node,!exhaust air node, !- Evaporator Air Outlet Node Name
+                <% else %>
+                    <%= water_heater_name %> zone Exhaust Node,       !- Evaporator Air Inlet Node Name
+                    <%= water_heater_name %> fan inlet node,     !- Evaporator Air Outlet Node Name
+                <% end %>
+                ,                        !- Crankcase Heater Capacity {W}
+                10,                      !- Maximum Ambient Temperature for Crankcase Heater Operation {C}
+                <%= combi ? "DryBulbTemperature" : "WetBulbTemperature" %>,      !- Evaporator Air Temperature Type for Curve Objects
+                <%= water_heater_name %>-Htg-Cap-fT_new,     !- Heating Capacity Function of Temperature Curve Name
+                ,                        !- Heating Capacity Function of Air Flow Fraction Curve Name
+                <%= water_heater_name %>-Htg-COP-fT_new,     !- Heating COP Function of Temperature Curve Name
+                ,                        !- Heating COP Function of Air Flow Fraction Curve Name
+                <%= water_heater_name %>-COP-fPLR;           !- Part Load Fraction Correlation Curve Name
+            WaterHeater:HeatPump:WrappedCondenser,
+                <%= water_heater_name %>_HPWH,              !- Name
+                always_avail,            !- Availability Schedule Name
+                <%= water_heater_name %>_Loop_setpt,               !- Compressor Setpoint Temperature Schedule Name
+                2,                       !- Dead Band Temperature Difference {deltaC}
+                <%= heater2_height %>,   !- Condenser Bottom Location {m}
+                <%= heater1_height %>,   !- Condenser Top Location {m}
+                autocalculate,           !- Evaporator Air Flow Rate {m3/s}
+                <%= evaporator_location == "exterior" ? "OutdoorAirOnly" : "ZoneAirOnly" %>,             !- Inlet Air Configuration
+                <%= evaporator_location == "exterior" ? "" : water_heater_name + " zone Exhaust Node" %>,       !- Air Inlet Node Name
+                <%= evaporator_location == "exterior" ? "" : water_heater_name + " zone inlet Node" %>,    !- Air Outlet Node Name
+                <%= evaporator_location == "exterior" ? water_heater_name + " fan inlet node" : "" %>,                        !- Outdoor Air Node Name
+                <%= evaporator_location == "exterior" ? water_heater_name + " fan outlet node" : "" %>,                        !- Exhaust Air Node Name
+                ,                        !- Inlet Air Temperature Schedule Name
+                ,                        !- Inlet Air Humidity Schedule Name
+                <%= evaporator_location == "exterior" ? "" : water_heater_zone %>,  !- Inlet Air Zone Name
+                WaterHeater:Stratified,  !- Tank Object Type
+                <%= water_heater_name %>,       !- Tank Name
+                <%= water_heater_name %> use inlet node,  !- Tank Use Side Inlet Node Name
+                <%= water_heater_name %> use outlet node,  !- Tank Use Side Outlet Node Name
+                Coil:WaterHeating:AirToWaterHeatPump:Wrapped,  !- DX Coil Object Type
+                <%= water_heater_name %> Coil,           !- DX Coil Name
+                -10,                    !- Minimum Inlet Air Temperature for Compressor Operation {C}
+                48.88888888889,          !- Maximum Inlet Air Temperature for Compressor Operation {C}
+                <%= evaporator_location == "exterior" ? 'Outdoors' : 'Zone' %>,                    !- Compressor Location
+                ,                        !- Compressor Ambient Temperature Schedule Name
+                Fan:OnOff,               !- Fan Object Type
+                <%= water_heater_name %> fan,                !- Fan Name
+                DrawThrough,             !- Fan Placement
+                ,                        !- On Cycle Parasitic Electric Load {W}
+                ,                        !- Off Cycle Parasitic Electric Load {W}
+                Outdoors,                !- Parasitic Heat Rejection Location
+                ,                        !- Inlet Air Mixer Node Name
+                ,                        !- Outlet Air Splitter Node Name
+                ,                        !- Inlet Air Mixer Schedule Name
+                <%= tank_element_control_logic %>,       !- Tank Element Control Logic
+                <%= sensor_height %>,                   !- Control Sensor 1 Height In Stratified Tank {m}
+                1;                       !- Control Sensor 1 Weight {dimensionless}
+        <% elsif condenser_type == "pumped" %>
+            Coil:WaterHeating:AirToWaterHeatPump:Pumped,
+                <%= water_heater_name %> Coil,              !- Name
+                <%= water_heater_cap %>,                  !- Rated Heating Capacity {W}
+                <%= cop %>,                     !- Rated COP {W/W}
+                0.736,                  !- Rated Sensible Heat Ratio
+                29.44,                   !- Rated Evaporator Inlet Air Dry-Bulb Temperature {C}
+                22.22,                   !- Rated Evaporator Inlet Air Wet-Bulb Temperature {C}
+                <%= t_cond_in_rated %>,                   !- Rated Condenser Inlet Water Temperature {C}
+                autocalculate,           !- Rated Evaporator Air Flow Rate {m3/s}
+                autocalculate,           !- Rated Condenser Water Flow Rate {m3/s}
+                Yes,                      !- Evaporator Fan Power Included in Rated COP
+                No,                      !- Condenser Pump Power Included in Rated COP
+                No,                      !- Condenser Pump Heat Included in Rated Heating Capacity and Rated COP
+                50,                   !- Condenser Water Pump Power {W}
+                0.1,                     !- Fraction of Condenser Pump Heat to Water
+                <%= water_heater_name %> fan outlet node,   !- Evaporator Air Inlet Node Name
+                <%= water_heater_name %> exhaust air node, !- Evaporator Air Outlet Node Name
+                <%= water_heater_name %> water heater inlet,      !- Condenser Water Inlet Node Name
+                <%= water_heater_name %> water heater outlet,     !- Condenser Water Outlet Node Name
+                ,                   !- Crankcase Heater Capacity {W}
+                5.0,                     !- Maximum Ambient Temperature for Crankcase Heater Operation {C}
+                <%= combi ? "DryBulbTemperature" : "WetBulbTemperature" %>,      !- Evaporator Air Temperature Type for Curve Objects
+                <%= water_heater_name %>-Htg-Cap-fT_new,!<%= water_heater_name %> HPWHHeatingCapFTemp,     !- Heating Capacity Function of Temperature Curve Name
+                ,                        !- Heating Capacity Function of Air Flow Fraction Curve Name
+                ,                        !- Heating Capacity Function of Water Flow Fraction Curve Name
+                <%= water_heater_name %>-Htg-COP-fT_new,!<%= water_heater_name %> HPWHHeatingCOPFTemp,     !- Heating COP Function of Temperature Curve Name
+                ,                        !- Heating COP Function of Air Flow Fraction Curve Name
+                ,                        !- Heating COP Function of Water Flow Fraction Curve Name
+                <%= water_heater_name %>-COP-fPLR;             !- Part Load Fraction Correlation Curve Name
+            WaterHeater:HeatPump:PumpedCondenser,
+                <%= water_heater_name %>_HPWH,!- Name
+                always_avail,            !- Availability Schedule Name
+                <%= water_heater_name %>_Loop_setpt,        !- Compressor Setpoint Temperature Schedule Name
+                2.0,                     !- Dead Band Temperature Difference {deltaC}
+                <%= water_heater_name %> water heater inlet,   !- Condenser Water Inlet Node Name
+                <%= water_heater_name %> water heater outlet,  !- Condenser Water Outlet Node Name
+                autocalculate,              !- Condenser Water Flow Rate {m3/s}
+                autocalculate,                 !- Evaporator Air Flow Rate {m3/s}
+                OutdoorAirOnly,          !- Inlet Air Configuration
+                ,                        !- Air Inlet Node Name
+                ,                        !- Air Outlet Node Name
+                <%= water_heater_name %> fan inlet node,     !- Outdoor Air Node Name
+                <%= water_heater_name %> exhaust air node,    !- Exhaust Air Node Name
+                ,                        !- Inlet Air Temperature Schedule Name
+                ,                        !- Inlet Air Humidity Schedule Name
+                ,                        !- Inlet Air Zone Name
+                WaterHeater:Stratified,  !- Tank Object Type
+                <%= water_heater_name %>,           !- Tank Name
+                <%= water_heater_name %> use inlet node,     !- Tank Use Side Inlet Node Name
+                <%= water_heater_name %> use outlet node,    !- Tank Use Side Outlet Node Name
+                Coil:WaterHeating:AirToWaterHeatPump:Pumped,  !- DX Coil Object Type
+                <%= water_heater_name %> Coil,         !- DX Coil Name
+                4.44,                    !- Minimum Inlet Air Temperature for Compressor Operation {C}
+                48.888,                        !- Maximum Inlet Air Temperature for Compressor Operation {C}
+                Outdoors,                !- Compressor Location
+                ,                        !- Compressor Ambient Temperature Schedule Name
+                Fan:OnOff,               !- Fan Object Type
+                <%= water_heater_name %> fan,            !- Fan Name
+                BlowThrough,             !- Fan Placement
+                ,                        !- On Cycle Parasitic Electric Load {W}
+                ,                        !- Off Cycle Parasitic Electric Load {W}
+                ,                        !- Parasitic Heat Rejection Location
+                ,                        !- Inlet Air Mixer Node Name
+                ,                        !- Outlet Air Splitter Node Name
+                ,                        !- Inlet Air Mixer Schedule Name
+                <%= tank_element_control_logic %>,                        !- Tank Element Control Logic
+                <%= sensor_height %>;                !- Control Sensor 1 Height In Stratified Tank {m}
+        <% end %>
+
+    <%# HPWH curves includes curves for 120v plug-in HPWH developed by AWHI/NBI and implemented in ResStock %>
+        <% if water_heater_type.include?('120v') %>
+            Curve:Biquadratic,
+                <%= water_heater_name %>-Htg-Cap-fT_new,     !- Name
+                0.636,                   !- Coefficient1 Constant
+                0.0227,                 !- Coefficient2 x
+                0.000406,              !- Coefficient3 x**2
+                -0.000437,                !- Coefficient4 y
+                0,              !- Coefficient5 y**2
+                0,              !- Coefficient6 x*y
+                0,                       !- Minimum Value of x
+                100,                     !- Maximum Value of x
+                0,                       !- Minimum Value of y
+                100,                     !- Maximum Value of y
+                0;                       !- Minimum Curve Output
+            Curve:Biquadratic,
+                <%= water_heater_name %>-Htg-COP-fT_new,     !- Name
+                1.17977858818095,                   !- Coefficient1 Constant
+                0.0301183438423715,                 !- Coefficient2 x
+                0.000206318341610479,              !- Coefficient3 x**2
+                -0.019352993529396,                 !- Coefficient4 y
+                0.00013405980085366,             !- Coefficient5 y**2
+                -0.0003025958862054,              !- Coefficient6 x*y
+                0,                       !- Minimum Value of x
+                100,                     !- Maximum Value of x
+                0,                       !- Minimum Value of y
+                100;                     !- Maximum Value of y
+            Curve:Quadratic,
+                <%= water_heater_name %>-COP-fPLR,           !- Name
+                1,                       !- Coefficient1 Constant
+                0,                       !- Coefficient2 x
+                0,                       !- Coefficient3 x**2
+                0,                       !- Minimum Value of x
+                1;                       !- Maximum Value of x
+        <% else %>
+            <% if condenser_type == "pumped" %>
+                !  Heating Capacity as a Function of Temperature Curve (Air Wet-bulb T, Condenser Water Inlet T)
+                !  Colmac HPA 2000 Air Source Heat Pump Water Heater
+                !  Rating point: 29.4 C (85 F) Entering Air Dry-bulb Temperature
+                !                22.2 C (72 F) Entering Air Wet-bulb Temperature
+                !                56.7 C (132.2 F) Entering Condenser Water Temperature
+                !  Capacity = 17028.6 W (58117 BTUH) water heating capacity
+                !  COP      = 3.37 W/W (12.21 BTUH/W) water heating efficiency
+                !
+                Curve:Biquadratic,
+                    <%= water_heater_name %>-Htg-Cap-fT_new,     !- Name
+                    0.369827,                !- Coefficient1 Constant
+                    0.043341,                !- Coefficient2 x
+                    -0.00023,                !- Coefficient3 x**2
+                    0.000466,                !- Coefficient4 y
+                    0.000026,                !- Coefficient5 y**2
+                    -0.00027,                !- Coefficient6 x*y
+                    0.0,                     !- Minimum Value of x
+                    40.0,                    !- Maximum Value of x
+                    20.0,                    !- Minimum Value of y
+                    90.0,                    !- Maximum Value of y
+                    ,                        !- Minimum Curve Output
+                    ,                        !- Maximum Curve Output
+                    Temperature,             !- Input Unit Type for X
+                    Temperature,             !- Input Unit Type for Y
+                    Dimensionless;           !- Output Unit Type
+                Curve:Biquadratic,
+                    <%= water_heater_name %>-Htg-COP-fT_new,     !- Name
+                    1.19713,                 !- Coefficient1 Constant
+                    0.077849,                !- Coefficient2 x
+                    -0.0000016,              !- Coefficient3 x**2
+                    -0.02675,                !- Coefficient4 y
+                    0.000296,                !- Coefficient5 y**2
+                    -0.00112,                !- Coefficient6 x*y
+                    0.0,                     !- Minimum Value of x
+                    40.0,                    !- Maximum Value of x
+                    20.0,                    !- Minimum Value of y
+                    90.0,                    !- Maximum Value of y
+                    ,                        !- Minimum Curve Output
+                    ,                        !- Maximum Curve Output
+                    Temperature,             !- Input Unit Type for X
+                    Temperature,             !- Input Unit Type for Y
+                    Dimensionless;           !- Output Unit Type
+                Curve:Quadratic,
+                    <%= water_heater_name %>-COP-fPLR,             !- Name
+                    0.75,                    !- Coefficient1 Constant
+                    0.25,                    !- Coefficient2 x
+                    0.0,                     !- Coefficient3 x**2
+                    0.0,                     !- Minimum Value of x
+                    1.0;                     !- Maximum Value of x
+            <% elsif water_heater_type == "sanco2_hpwh" %>
+                <%# Curves for SANCO2 combi system. Developed by TRC from date provided by Harvest Thermal - field data from 100+ units in CA and SANCO2 specifications.%>
+                Table:Lookup,
+                    <%= water_heater_name %>-Htg-Cap-fT_new, !- Name
+                    <%= water_heater_name %>_HPWHHeatingFTemp_IndependentVariableList, !- Independent Variable List Name
+                    None, !- Normalization Method
+                    , !- Normalization Divisor
+                    0, !- Minimum Output
+                    2, !- Maximum Output
+                    Dimensionless, !- Output Unit Type
+                    , !- External File Name
+                    , !- External File Column Number
+                    , !- External File Starting Row Number
+                    0.613,0.613,0.603,0.584,0.553,0.924,0.9,0.859,0.805,0.738,1.17,1.129,1.065,0.979,0.871,1.22,1.173,1.104,1.012,0.899,1.081,1.055,1.006,0.933,0.836,1.095,1.055,0.991,0.903,0.792;
+                Table:Lookup,
+                    <%= water_heater_name %>-Htg-COP-fT_new, !- Name
+                    <%= water_heater_name %>_HPWHHeatingFTemp_IndependentVariableList, !- Independent Variable List Name
+                    None, !- Normalization Method
+                    , !- Normalization Divisor
+                    0, !- Minimum Output
+                    2, !- Maximum Output
+                    Dimensionless, !- Output Unit Type
+                    , !- External File Name
+                    , !- External File Column Number
+                    , !- External File Starting Row Number
+                    0.313,0.307,0.296,0.282,0.263,0.472,0.45,0.422,0.389,0.351,0.596,0.564,0.523,0.472,0.412,0.767,0.72,0.663,0.594,0.516,0.853,0.813,0.757,0.686,0.602,1.665,1.531,1.376,1.203,1.013;
+                Table:IndependentVariableList,
+                    <%= water_heater_name %>_HPWHHeatingFTemp_IndependentVariableList, !- Name
+                    <%= water_heater_name %>_HPWHHeatingFTemp_Toadb, !- Independent Variable 1 Name
+                    <%= water_heater_name %>_HPWHHeatingFTemp_Twdb; !- Independent Variable 2 Name
+                Table:IndependentVariable,
+                    <%= water_heater_name %>_HPWHHeatingFTemp_Toadb, !- Name
+                    Linear, !- Interpolation Method
+                    Linear, !- Extrapolation Method
+                    -30, !- Minimum Value
+                    50, !- Maximum Value
+                    , !- Normalization Reference Value
+                    Temperature, !- Unit Type
+                    , !- External File Name
+                    , !- External File Column Number
+                    , !- External File Starting Row Number
+                    -23.333,
+                    -17.778,
+                    -15,
+                    1.667,
+                    4.444,
+                    43.333; !- Value 6
+                Table:IndependentVariable,
+                    <%= water_heater_name %>_HPWHHeatingFTemp_Twdb, !- Name
+                    Linear, !- Interpolation Method
+                    Linear, !- Extrapolation Method
+                    5, !- Minimum Value
+                    45, !- Maximum Value
+                    , !- Normalization Reference Value
+                    Temperature, !- Unit Type
+                    , !- External File Name
+                    , !- External File Column Number
+                    , !- External File Starting Row Number
+                    15.556,
+                    21.111,
+                    26.667,
+                    32.222,
+                    37.778; !- Value 5
+                Curve:Quadratic, <%# copied from Colmac HPA 2000 Air Source Heat Pump Water Heater curves %>
+                    <%= water_heater_name %>-COP-fPLR,             !- Name
+                    0.75,                    !- Coefficient1 Constant
+                    0.25,                    !- Coefficient2 x
+                    0.0,                     !- Coefficient3 x**2
+                    0.0,                     !- Minimum Value of x
+                    1.0;                     !- Maximum Value of x
+            <% else %>
+                Curve:Biquadratic,
+                    <%= water_heater_name %>-Htg-Cap-fT_new,     !- Name
+                    0.505,                   !- Coefficient1 Constant
+                    0.05116,                 !- Coefficient2 x
+                    -0.0002026,              !- Coefficient3 x**2
+                    0.005444,                !- Coefficient4 y
+                    -0.0001154,              !- Coefficient5 y**2
+                    -0.0002472,              !- Coefficient6 x*y
+                    0,                       !- Minimum Value of x
+                    100,                     !- Maximum Value of x
+                    0,                       !- Minimum Value of y
+                    100,                     !- Maximum Value of y
+                    0;                       !- Minimum Curve Output
+                Curve:Biquadratic,
+                    <%= water_heater_name %>-Htg-COP-fT_new,     !- Name
+                    1.192,                   !- Coefficient1 Constant
+                    0.04247,                 !- Coefficient2 x
+                    -0.0003795,              !- Coefficient3 x**2
+                    -0.0111,                 !- Coefficient4 y
+                    -0.00000094,             !- Coefficient5 y**2
+                    -0.0002657,              !- Coefficient6 x*y
+                    0,                       !- Minimum Value of x
+                    100,                     !- Maximum Value of x
+                    0,                       !- Minimum Value of y
+                    100;                     !- Maximum Value of y
+                Curve:Quadratic,
+                    <%= water_heater_name %>-COP-fPLR,           !- Name
+                    1,                       !- Coefficient1 Constant
+                    0,                       !- Coefficient2 x
+                    0,                       !- Coefficient3 x**2
+                    0,                       !- Minimum Value of x
+                    1;                       !- Maximum Value of x
+            <% end %>
+        <% end %>
+<% end %>
+
+
+<% if (water_heater_type !='gas_tankless') %>
+    WaterHeater:Stratified,
+        <%= water_heater_name %>,      !- Name
+        Domestic Hot Water,      !- End-Use Subcategory
+        <%= tank_size %>,               !- Tank Volume {m3}
+        <%= tank_height %>,                    !- Tank Height {m}
+        VerticalCylinder,        !- Tank Shape
+        1.916,                   !- Tank Perimeter {m}
+        82.2222,                 !- Maximum Temperature Limit {C}
+        MasterSlave,             !- Heater Priority Control
+        <% if water_heater_type.include?('hpwh')%>
+        <%= water_heater_name %>_Tank_sept,    !- Heater 1 Setpoint Temperature Schedule Name
+        11.11,                   !- Heater 1 Deadband Temperature Difference {deltaC}
+        <%= heat_element_cap %>, !- Heater 1 Capacity {W}
+        <% else %>
+        <%= water_heater_name %>_Loop_setpt,               !- Heater 1 Setpoint Temperature Schedule Name
+        2,                       !- Heater 1 Deadband Temperature Difference {deltaC}
+        <%= water_heater_cap %>,              !- Heater 1 Capacity {W}
+        <% end %>
+        <%=heater1_height %>,                   !- Heater 1 Height {m}
+        <% if water_heater_type.include?('hpwh')%>
+        <%= water_heater_name %>_Tank_sept,               !- Heater 2 Setpoint Temperature Schedule Name
+        16.67,                       !- Heater 2 Deadband Temperature Difference {deltaC}
+        0,                       !- Heater 2 Capacity {W}
+        <% else %>
+        <%= water_heater_name %>_Loop_setpt,               !- Heater 2 Setpoint Temperature Schedule Name
+        2,                       !- Heater 2 Deadband Temperature Difference {deltaC}
+        <%= heat_element_cap %>, !- Heater 2 Capacity {W}
+        <% end %>
+        <%=heater2_height %>,                !- Heater 2 Height {m}
+        <% if (water_heater_type =='gas') %>
+        NaturalGas,              !- Heater Fuel Type
+        <% else %>
+        Electricity,             !- Heater Fuel Type
+        <% end %>
+        <%= thermal_eff %>,      !- Heater Thermal Efficiency
+        <%= parasitic_power %>,              !- Off Cycle Parasitic Fuel Consumption Rate {W}
+        <%= parasitic_fuel %>,              !- Off Cycle Parasitic Fuel Type
+        0.67,                    !- Off Cycle Parasitic Heat Fraction to Tank
+        ,                        !- Off Cycle Parasitic Height {m}
+        <%= parasitic_power %>,              !- On Cycle Parasitic Fuel Consumption Rate {W}
+        <%= parasitic_fuel %>,              !- On Cycle Parasitic Fuel Type
+        0.67,                    !- On Cycle Parasitic Heat Fraction to Tank
+        ,                        !- On Cycle Parasitic Height {m}
+        Zone,                    !- Ambient Temperature Indicator
+        ,                        !- Ambient Temperature Schedule Name
+        <%= water_heater_zone %>,  !- Ambient Temperature Zone Name
+        ,                        !- Ambient Temperature Outdoor Air Node Name
+        <% if (water_heater_type =='gas') %>
+        1.7034789,               !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+        <% elsif (water_heater_type =='elec') %>
+        0.28391315,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+        <% elsif water_heater_type.include?('hpwh') %>
+        0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+        <% else %>
+        0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+        <% end %>
+        1,                       !- Skin Loss Fraction to Zone
+        0,                       !- Off Cycle Flue Loss Coefficient to Ambient Temperature {W/K}
+        1,                       !- Off Cycle Flue Loss Fraction to Zone
+        ,                        !- Peak Use Flow Rate {m3/s}
+        ,                        !- Use Flow Rate Fraction Schedule Name
+        ,                        !- Cold Water Supply Temperature Schedule Name
+        <%= water_heater_name %> use inlet node,  !- Use Side Inlet Node Name
+        <%= water_heater_name %> use outlet node,  !- Use Side Outlet Node Name
+        1,                       !- Use Side Effectiveness
+        0,                       !- Use Side Inlet Height {m}
+        autocalculate,           !- Use Side Outlet Height {m}
+        <%= condenser_type == "pumped" ? water_heater_name + " water heater outlet" : "" %>,                        !- Source Side Inlet Node Name
+        <%= condenser_type == "pumped" ? water_heater_name + " water heater inlet" : "" %>,                        !- Source Side Outlet Node Name
+        1,                       !- Source Side Effectiveness
+        autocalculate,           !- Source Side Inlet Height {m}
+        ,                        !- Source Side Outlet Height {m}
+        Fixed,                   !- Inlet Mode
+        autosize,                !- Use Side Design Flow Rate {m3/s}
+        autosize,                !- Source Side Design Flow Rate {m3/s}
+        1.5,                     !- Indirect Water Heating Recovery Time {hr}
+        10,                      !- Number of Nodes
+        ,                        !- Additional Destratification Conductivity {W/m-K}
+        ,                        !- Node 1 Additional Loss Coefficient {W/K}
+        ,                        !- Node 2 Additional Loss Coefficient {W/K}
+        ,                        !- Node 3 Additional Loss Coefficient {W/K}
+        ,                        !- Node 4 Additional Loss Coefficient {W/K}
+        ,                        !- Node 5 Additional Loss Coefficient {W/K}
+        ,                        !- Node 6 Additional Loss Coefficient {W/K}
+        ,                        !- Node 7 Additional Loss Coefficient {W/K}
+        ,                        !- Node 8 Additional Loss Coefficient {W/K}
+        ,                        !- Node 9 Additional Loss Coefficient {W/K}
+        ,                        !- Node 10 Additional Loss Coefficient {W/K}
+        ,                        !- Node 11 Additional Loss Coefficient {W/K}
+        ,                        !- Node 12 Additional Loss Coefficient {W/K}
+        IndirectHeatPrimarySetpoint;  !- Source Side Flow Control Mode
+
+    Branch,
+        <%= water_heater_name %> Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        <%if water_heater_type.include?('hpwh') %>
+        <%= condenser_type == "wrapped" ? 'WaterHeater:HeatPump:WrappedCondenser' : 'WaterHeater:HeatPump:PumpedCondenser' %>,  !- Component 1 Object Type
+        <%= water_heater_name %>_HPWH,              !- Component 1 Name
+        <%else%>
+        WaterHeater:Stratified,  !- Component 1 Object Type
+        <%= water_heater_name %>,      !- Component 1 Name
+        <% end %>
+        <%= water_heater_name %> use inlet node,  !- Component 1 Inlet Node Name
+        <%= water_heater_name %> use outlet node;  !- Component 1 Outlet Node Name
+
+    PlantEquipmentList,
+        <%= water_heater_name %> Plant Equipment,  !- Name
+        <%if water_heater_type.include?('hpwh') %>
+        <%= condenser_type == "wrapped" ? 'WaterHeater:HeatPump:WrappedCondenser' : 'WaterHeater:HeatPump:PumpedCondenser' %>,  !- Equipment 1 Object Type
+        <%= water_heater_name %>_HPWH;
+        <% else %>
+        WaterHeater:Stratified,  !- Equipment 1 Object Type
+        <%= water_heater_name %>;      !- Equipment 1 Name
+        <% end %>
+
+<% elsif water_heater_type =='gas_tankless' %>
+    WaterHeater:Mixed,
+        <%= water_heater_name %>,      !- Name
+        <%= tank_size %>,                 !- Tank Volume {m3}
+        <%= water_heater_name %>_Loop_setpt,               !- Setpoint Temperature Schedule Name
+        2,                       !- Deadband Temperature Difference {deltaC}
+        82.2,                    !- Maximum Temperature Limit {C}
+        Modulate,                !- Heater Control Type
+        <%= water_heater_cap %>,        !- Heater Maximum Capacity {W}
+        0,                       !- Heater Minimum Capacity {W}
+        0,                       !- Heater Ignition Minimum Flow Rate {m3/s}
+        ,                        !- Heater Ignition Delay {s}
+        NaturalGas,              !- Heater Fuel Type
+        <%= thermal_eff %>,                    !- Heater Thermal Efficiency
+        ,                        !- Part Load Factor Curve Name
+        <%= parasitic_power %>,                      !- Off Cycle Parasitic Fuel Consumption Rate {W}
+        <%= parasitic_fuel %>,             !- Off Cycle Parasitic Fuel Type
+        ,                        !- Off Cycle Parasitic Heat Fraction to Tank
+        <%= parasitic_power %>,                      !- On Cycle Parasitic Fuel Consumption Rate {W}
+        <%= parasitic_fuel %>,            !- On Cycle Parasitic Fuel Type
+        ,                        !- On Cycle Parasitic Heat Fraction to Tank
+        Zone,                    !- Ambient Temperature Indicator
+        ,                        !- Ambient Temperature Schedule Name
+        <%= water_heater_zone %>,  !- Ambient Temperature Zone Name
+        ,                        !- Ambient Temperature Outdoor Air Node Name
+        0.680511094200001,       !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
+        1,                       !- Off Cycle Loss Fraction to Zone
+        0.680511094200001,       !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
+        1,                       !- On Cycle Loss Fraction to Zone
+        ,                        !- Peak Use Flow Rate {m3/s}
+        ,                        !- Use Flow Rate Fraction Schedule Name
+        ,                        !- Cold Water Supply Temperature Schedule Name
+        <%= water_heater_name %> use inlet node,  !- Use Side Inlet Node Name
+        <%= water_heater_name %> use outlet node,  !- Use Side Outlet Node Name
+        1,                       !- Use Side Effectiveness
+        ,                        !- Source Side Inlet Node Name
+        ,                        !- Source Side Outlet Node Name
+        1,                       !- Source Side Effectiveness
+        autosize,                !- Use Side Design Flow Rate {m3/s}
+        0,                       !- Source Side Design Flow Rate {m3/s}
+        1.5;                     !- Indirect Water Heating Recovery Time {hr}
+
+    Branch,
+        <%= water_heater_name %> Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        WaterHeater:Mixed,       !- Component 1 Object Type
+        <%= water_heater_name %>,      !- Component 1 Name
+        <%= water_heater_name %> use inlet node,  !- Component 1 Inlet Node Name
+        <%= water_heater_name %> use outlet node;  !- Component 1 Outlet Node Name
+
+    PlantEquipmentList,
+        <%= water_heater_name %> Plant Equipment,  !- Name
+        WaterHeater:Mixed,       !- Equipment 1 Object Type
+        <%= water_heater_name %>;      !- Equipment 1 Name
+
+<% end %>
+
+<%# Water Use Equipment and connection %>
+    WaterUse:Equipment,
+        <%= water_heater_name %> hot water use equip,     !- Name
+        Domestic Hot Water,      !- End-Use Subcategory
+        <%= peak_flow %>,                 !- Peak Flow Rate {m3/s}
+        <%= water_heater_name %>_demand_frac_sch,  !- Flow Rate Fraction Schedule Name
+        <%= water_heater_name %> dhw_use_setpt,                        !- Target Temperature Schedule Name
+        ,                        !- Hot Water Supply Temperature Schedule Name
+        ,                        !- Cold Water Supply Temperature Schedule Name
+        <%= water_use_zone %>;  !- Zone Name
+
+    WaterUse:Connections,
+        <%= water_heater_name %> DHW water use,     !- Name
+        <%= water_heater_name %> Water Sink Inlet Node,  !- Inlet Node Name
+        <%= water_heater_name %> Water Sink Outlet Node,  !- Outlet Node Name
+        ,                        !- Supply Water Storage Tank Name
+        ,                        !- Reclamation Water Storage Tank Name
+        <%= water_heater_name %>_Loop_setpt,                        !- Hot Water Supply Temperature Schedule Name
+        ,                        !- Cold Water Supply Temperature Schedule Name
+        None,                    !- Drain Water Heat Exchanger Type
+        ,                        !- Drain Water Heat Exchanger Destination
+        ,                        !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
+        <%= water_heater_name %> hot water use equip;     !- Water Use Equipment 1 Name
+
+
+! Branches
+    Branch,
+        <%= water_heater_name %> mains Inlet Branch,!- Name
+        ,                        !- Pressure Drop Curve Name
+        Pump:VariableSpeed,      !- Component 1 Object Type
+        <%= water_heater_name %> mains Pressure,    !- Component 1 Name
+        <%= water_heater_name %> Mains Inlet Node,  !- Component 1 Inlet Node Name
+        <%= water_heater_name %> Mains Pressure Outlet Node;  !- Component 1 Outlet Node Name
+    Branch,
+        <%= water_heater_name %> DHW Supply Outlet Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        Pipe:Adiabatic,          !- Component 1 Object Type
+        <%= water_heater_name %> DHW Supply Outlet Pipe,  !- Component 1 Name
+        <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+        <%= water_heater_name %> DHW Supply Outlet Node;  !- Component 1 Outlet Node Name
+    Branch,
+        <%= water_heater_name %> DHW Demand Inlet Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        Pipe:Adiabatic,          !- Component 1 Object Type
+        <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Component 1 Name
+        <%= water_heater_name %> DHW Demand Inlet Node,  !- Component 1 Inlet Node Name
+        <%= water_heater_name %> DHW Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+    Branch,
+        <%= water_heater_name %> Water Use Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        WaterUse:Connections,    !- Component 1 Object Type
+        <%= water_heater_name %> DHW water use,     !- Component 1 Name
+        <%= water_heater_name %> Water Sink Inlet Node,  !- Component 1 Inlet Node Name
+        <%= water_heater_name %> Water Sink Outlet Node;  !- Component 1 Outlet Node Name
+    Branch,
+        <%= water_heater_name %> Mains Makeup Branch,  !- Name
+        ,                        !- Pressure Drop Curve Name
+        Pipe:Adiabatic,          !- Component 1 Object Type
+        <%= water_heater_name %> Mains Makeup Pipe, !- Component 1 Name
+        <%= water_heater_name %> Mains Makeup Pipe Inlet Node,  !- Component 1 Inlet Node Name
+        <%= water_heater_name %> Mains Makeup Node; !- Component 1 Outlet Node Name
+    <% if combi %>
+        Branch,
+            <%= water_heater_name %> Supply Bypass Branch,  !- Name
+            ,                        !- Pressure Drop Curve Name
+            Pipe:Adiabatic,          !- Component 1 Object Type
+            <%= water_heater_name %> Heating Supply Bypass Pipe, !- Component 1 Name
+            <%= water_heater_name %> Heating Supply Bypass Inlet Node,  !- Component 1 Inlet Node Name
+            <%= water_heater_name %> Heating Supply Bypass Outlet Node; !- Component 1 Outlet Node Name
+        Branch,
+            <%= water_heater_name %> Demand Bypass Branch,  !- Name
+            ,                        !- Pressure Drop Curve Name
+            Pipe:Adiabatic,          !- Component 1 Object Type
+            <%= water_heater_name %> Heating Demand Bypass Pipe, !- Component 1 Name
+            <%= water_heater_name %> Heating Demand Bypass Inlet Node,  !- Component 1 Inlet Node Name
+            <%= water_heater_name %> Heating Demand Bypass Outlet Node; !- Component 1 Outlet Node Name
+    <% end %>
+
+! Branchlists
+    BranchList,
+        <%= water_heater_name %> DHW Supply Branches,  !- Name
+        <%= water_heater_name %> mains Inlet Branch,!- Branch 1 Name
+        <%= water_heater_name %> Branch,  !- Branch 2 Name
+        <% if combi %>
+            <%= water_heater_name %> Supply Bypass Branch,  !- Branch 3 Name
+        <% end %>
+        <%= water_heater_name %> DHW Supply Outlet Branch;  !- Branch X Name
+    BranchList,
+        <%= water_heater_name %> DHW Demand Branches,  !- Name
+        <%= water_heater_name %> DHW Demand Inlet Branch,  !- Branch 1 Name
+        <%= water_heater_name %> Water Use Branch,  !- Branch 2 Name
+        <% if combi %>
+            <%= system_name %> Heating Coil Branch,  !- Branch 3 Name
+            <%= water_heater_name %> Demand Bypass Branch,  !- Branch 4 Name
+        <% end %>
+        <%= water_heater_name %> Mains Makeup Branch;  !- Branch X Name
+
+! Connector:Splitters
+    Connector:Splitter,
+        <%= water_heater_name %> DHW Demand Splitter,  !- Name
+        <%= water_heater_name %> DHW Demand Inlet Branch,  !- Inlet Branch Name
+        <% if combi %>
+            <%= water_heater_name %> Water Use Branch,  !- Outlet Branch 1 Name
+            <%= system_name %> Heating Coil Branch,  !- Outlet Branch 1 Name
+            <%= water_heater_name %> Demand Bypass Branch;  !- Outlet Branch 1 Name
+        <% else %>
+            <%= water_heater_name %> Water Use Branch;  !- Outlet Branch 1 Name
+        <% end %>        
+    Connector:Splitter,
+        <%= water_heater_name %> DHW Supply Splitter,  !- Name
+        <%= water_heater_name %> mains Inlet Branch,!- Inlet Branch Name
+        <% if combi %>
+            <%= water_heater_name %> Branch,  !- Outlet Branch 1 Name
+            <%= water_heater_name %> Supply Bypass Branch;  !- Outlet Branch 1 Name
+        <% else %>
+            <%= water_heater_name %> Branch;  !- Outlet Branch 1 Name
+        <% end %>
+! Connector:Mixers
+    Connector:Mixer,
+        <%= water_heater_name %> DHW Demand Mixer,  !- Name
+        <%= water_heater_name %> Mains Makeup Branch,  !- Outlet Branch Name
+        <% if combi %>
+            <%= water_heater_name %> Water Use Branch,  !- Inlet Branch 1 Name
+            <%= system_name %> Heating Coil Branch,  !- Inlet Branch 1 Name
+            <%= water_heater_name %> Demand Bypass Branch;  !- Inlet Branch 1 Name
+        <% else %>
+            <%= water_heater_name %> Water Use Branch;  !- Inlet Branch 1 Name
+        <% end %>
+    Connector:Mixer,
+        <%= water_heater_name %> DHW Supply Mixer,  !- Name
+        <%= water_heater_name %> DHW Supply Outlet Branch,  !- Outlet Branch Name
+        <% if combi %>
+            <%= water_heater_name %> Branch,  !- Inlet Branch 1 Name
+            <%= water_heater_name %> Supply Bypass Branch;  !- Inlet Branch 1 Name
+        <% else %>
+            <%= water_heater_name %> Branch;  !- Inlet Branch 1 Name
+        <% end %>
+
+! ConnectorLists
+    ConnectorList,
+        <%= water_heater_name %> DHW Demand Connectors,  !- Name
+        Connector:Splitter,      !- Connector 1 Object Type
+        <%= water_heater_name %> DHW Demand Splitter,  !- Connector 1 Name
+        Connector:Mixer,         !- Connector 2 Object Type
+        <%= water_heater_name %> DHW Demand Mixer;  !- Connector 2 Name
+    ConnectorList,
+        <%= water_heater_name %> DHW Supply Connectors,  !- Name
+        Connector:Splitter,      !- Connector 1 Object Type
+        <%= water_heater_name %> DHW Supply Splitter,  !- Connector 1 Name
+        Connector:Mixer,         !- Connector 2 Object Type
+        <%= water_heater_name %> DHW Supply Mixer;  !- Connector 2 Name
+
+! Pipes
+    Pipe:Adiabatic,
+        <%= water_heater_name %> DHW Supply Outlet Pipe,  !- Name
+        <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+        <%= water_heater_name %> DHW Supply Outlet Node;  !- Outlet Node Name
+    Pipe:Adiabatic,
+        <%= water_heater_name %> Mains Makeup Pipe, !- Name
+        <%= water_heater_name %> Mains Makeup Pipe Inlet Node,  !- Inlet Node Name
+        <%= water_heater_name %> Mains Makeup Node; !- Outlet Node Name
+    Pipe:Adiabatic,
+        <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Name
+        <%= water_heater_name %> DHW Demand Inlet Node,  !- Inlet Node Name
+        <%= water_heater_name %> DHW Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+    <% if combi %>
+        Pipe:Adiabatic,
+            <%= water_heater_name %> Heating Supply Bypass Pipe,  !- Name
+            <%= water_heater_name %> Heating Supply Bypass Inlet Node,  !- Inlet Node Name
+            <%= water_heater_name %> Heating Supply Bypass Outlet Node;  !- Outlet Node Name
+        Pipe:Adiabatic,
+            <%= water_heater_name %> Heating Demand Bypass Pipe,  !- Name
+            <%= water_heater_name %> Heating Demand Bypass Inlet Node,  !- Inlet Node Name
+            <%= water_heater_name %> Heating Demand Bypass Outlet Node;  !- Outlet Node Name
+    <% end %>
+
+Pump:VariableSpeed,
+    <%= water_heater_name %> mains Pressure,    !- Name
+    <%= water_heater_name %> Mains Inlet Node,  !- Inlet Node Name
+    <%= water_heater_name %> Mains Pressure Outlet Node,  !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    1,                       !- Design Pump Head {Pa}
+    0,                       !- Design Power Consumption {W}
+    1,                       !- Motor Efficiency
+    0,                       !- Fraction of Motor Inefficiencies to Fluid Stream
+    0,                       !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    0,                       !- Coefficient 3 of the Part Load Performance Curve
+    0,                       !- Coefficient 4 of the Part Load Performance Curve
+    0,                       !- Design Minimum Flow Rate {m3/s}
+    Intermittent;            !- Pump Control Type
+
+PlantLoop,
+    <%= water_heater_name %> DHW Loop,          !- Name
+    Water,                   !- Fluid Type
+    ,                        !- User Defined Fluid Type
+    <%= water_heater_name %> DHW Loop Operation,!- Plant Equipment Operation Scheme Name
+    <%= water_heater_name %> DHW Supply Outlet Node,  !- Loop Temperature Setpoint Node Name
+    100,                     !- Maximum Loop Temperature {C}
+    0,                       !- Minimum Loop Temperature {C}
+    autosize,                !- Maximum Loop Flow Rate {m3/s}
+    0,                       !- Minimum Loop Flow Rate {m3/s}
+    autocalculate,           !- Plant Loop Volume {m3}
+    <%= water_heater_name %> Mains Inlet Node,  !- Plant Side Inlet Node Name
+    <%= water_heater_name %> DHW Supply Outlet Node,  !- Plant Side Outlet Node Name
+    <%= water_heater_name %> DHW Supply Branches,  !- Plant Side Branch List Name
+    <%= water_heater_name %> DHW Supply Connectors,  !- Plant Side Connector List Name
+    <%= water_heater_name %> DHW Demand Inlet Node,  !- Demand Side Inlet Node Name
+    <%= water_heater_name %> Mains Makeup Node, !- Demand Side Outlet Node Name
+    <%= water_heater_name %> DHW Demand Branches,  !- Demand Side Branch List Name
+    <%= water_heater_name %> DHW Demand Connectors,  !- Demand Side Connector List Name
+    Optimal;                 !- Load Distribution Scheme
+
+PlantEquipmentOperation:HeatingLoad,
+    <%= water_heater_name %> DHW Control Scheme,!- Name
+    0.0,                     !- Load Range 1 Lower Limit {W}
+    1000000000000000,        !- Load Range 1 Upper Limit {W}
+    <%= water_heater_name %> Plant Equipment;  !- Range 1 Equipment List Name
+
+PlantEquipmentOperationSchemes,
+    <%= water_heater_name %> DHW Loop Operation,!- Name
+    PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
+    <%= water_heater_name %> DHW Control Scheme,!- Control Scheme 1 Name
+    always_avail;            !- Control Scheme 1 Schedule Name
+
+SetpointManager:Scheduled,
+    <%= water_heater_name %> DHW Loop Setpoint Manager,  !- Name
+    Temperature,             !- Control Variable
+    <%= water_heater_name %>_Loop_setpt,               !- Schedule Name
+    <%= water_heater_name %> DHW Supply Outlet Node;  !- Setpoint Node or NodeList Name
+
+Sizing:Plant,
+    <%= water_heater_name %> DHW Loop,          !- Plant or Condenser Loop Name
+    Heating,                 !- Loop Type
+    <%= loop_sept %>,        !- Design Loop Exit Temperature {C}
+    5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
