@@ -501,8 +501,6 @@ group "kitch", :prefix => "kitch_" do
   parameter "exh_fan_frac_sch", :default => "Through: 12/31,\nFor: Weekdays SummerDesignDay,\nUntil: 06:00,0,\nUntil: 19:00,1,\nUntil: 24:00,0,\nFor: Saturdays,\nUntil: 08:00,0,\nUntil: 19:00,1,\nUntil: 24:00,0,\nFor: AllOtherdays,\nUntil: 09:00,0,\nUntil: 19:00,1,\nUntil: 24:00,0;"
   parameter "exh_balanced_fan_frac_sch", :default => "Through: 12/31,\nFor: AllDays,\nUntil: 24:00,1;"
   parameter "exh_fan_coupling", :default => false
-  # Afshin Faramarzi, Solaris Technical, May 8, 2024: Expose fan efficiency from unitary template.
-  parameter "fan_eff", :default => 0.75 
 end
 
 group "crac", :prefix => "crac_" do
@@ -521,8 +519,6 @@ group "crac", :prefix => "crac_" do
   parameter "tstat_cool_temp1", :default => 80['F']
   parameter "design_peak_load", :default => "NONCOINCIDENT"
   parameter "oa_econ_type", :default => "DIFFERENTIAL-DRY-BULB"
-  # Afshin Faramarzi, Solaris Technical, May 8, 2024: Expose fan efficiency from unitary template.
-  parameter "fan_eff", :default => 0.65
 end
 %>
 <%
