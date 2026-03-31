@@ -222,10 +222,10 @@ case_cohort_list = df_measure['Measure Group Name'].unique()
 sim_annual_raw = pd.DataFrame()
 for path in paths:
     print(f'processing data in {path}')
-    df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
+    df_raw = pd.read_csv(path+'/results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
     #Read annual data
-    annual_df = pd.read_csv(path+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+    annual_df = pd.read_csv(path+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
     split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
     #looping over multiple folders/cohort cases, use a list
@@ -273,9 +273,9 @@ for path in paths:
     #extract data per bldgtype-bldghvac-bldgvint group
     hourly_df = pd.DataFrame(index=range(0,8760))
     #extract num_runs / split_meta_cols_eu
-    df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
+    df_raw = pd.read_csv(path+'/results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
-    annual_df = pd.read_csv(path+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+    annual_df = pd.read_csv(path+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
     split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
     for i in range(0,num_runs):
         print(f"merging record {i}")
