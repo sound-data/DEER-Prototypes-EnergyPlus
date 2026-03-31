@@ -253,9 +253,12 @@ for i in range(0,num_runs):
     full_path = hrly_path + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
     df = pd.read_csv(full_path, low_memory=False)
     
+    #remove traling spaces on col headers
+    df.columns = df.columns.str.rstrip()
+
     #extract the last column (the total elec hrly profile)
     #if for enduse hourly, then extract the relevant end use column
-    extracted_df = pd.DataFrame(df.iloc[:,-1])
+    extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
     
     #create the column name based on the permutations
     col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
