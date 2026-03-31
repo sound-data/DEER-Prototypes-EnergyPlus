@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'SEER Rated AC/HP'
+measure_name = 'SEER Rated AC HP'
 
 # %%
 #DMo only script
@@ -32,7 +32,7 @@ print(os.path.abspath(os.curdir))
 
 #12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res
-path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
+path = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_DMo'
 
 # %%
 #extract only the 5th portion of the measure group name for expected_att

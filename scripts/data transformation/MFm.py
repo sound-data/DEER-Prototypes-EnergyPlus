@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'Wall Furnace'
+measure_name = 'SEER Rated AC HP'
 
 # %%
 #MFm only script
@@ -30,7 +30,7 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-path = 'residential measures/SWHC049-03 SEER Rated AC HP_MFm_Ex'
+path = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_MFm_New'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
