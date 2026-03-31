@@ -225,6 +225,8 @@ AirTerminal:SingleDuct:VAV:Reheat,
   ,                        !- Minimum Air Flow Fraction Schedule Name
 <% if (atu_reheat_coil_type == "RESISTANCE") %>
   Coil:Heating:Electric,   !- Reheat Coil Object Type
+  <% # Added following line for RESISTANCE atu reheat coil type. Behzad Rizi 2026-03-16 %>
+  <%= atu_name %> ATU Heating Coil,  !- Reheat Coil Name
 <% elsif (atu_reheat_coil_type == "WATER") %>
   Coil:Heating:Water,      !- Reheat Coil Object Type
   <%= atu_name %> ATU Heating Coil,  !- Reheat Coil Name
