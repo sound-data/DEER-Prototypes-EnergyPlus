@@ -1,0 +1,8 @@
+InputVerificationandResultsSummary/Entire Facility/Conditioned Window-Wall Ratio/Total/Window Opening Area/m2
+InputVerificationandResultsSummary/Entire Facility/Conditioned Window-Wall Ratio/North (315 to 45 deg)/Window Opening Area/m2
+InputVerificationandResultsSummary/Entire Facility/Conditioned Window-Wall Ratio/East (45 to 135 deg)/Window Opening Area/m2
+InputVerificationandResultsSummary/Entire Facility/Conditioned Window-Wall Ratio/South (135 to 225 deg)/Window Opening Area/m2
+InputVerificationandResultsSummary/Entire Facility/Conditioned Window-Wall Ratio/West (225 to 315 deg)/Window Opening Area/m2
+
+
+

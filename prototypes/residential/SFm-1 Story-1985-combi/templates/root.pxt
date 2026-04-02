@@ -10801,7 +10801,6 @@ BuildingSurface:Detailed,
     -4.743907200000,         !- Vertex 4 X-coordinate {m}
     34.348552080000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
-
 BuildingSurface:Detailed,
     EL7 UnderRf (G.N2.I5)-mirror,  !- Name
     Floor,                   !- Surface Type

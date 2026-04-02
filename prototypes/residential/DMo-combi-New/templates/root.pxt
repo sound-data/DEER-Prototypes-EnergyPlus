@@ -119,7 +119,6 @@ parameter "duct_r_value", :default => 3.4['R-IP'] #U-IP effective duct R value =
 
 #duct optimization return duct retrofit measure parameter
 parameter 'return_leakage_frac', :default=>0
-
 #Door Infiltration Reduction measures-cases-parameters
 parameter "infiltration_reduction", :default=>0.0  # TRC SWBE013-01, SWBE014-01; default is no reduction from base case (ACH)
 

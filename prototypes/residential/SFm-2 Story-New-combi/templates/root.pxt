@@ -99,7 +99,6 @@ parameter "peak_flow", :default => 0.00062 ['m3/s']
 parameter "dhw_demand_sch", :default => "SFm_minute_dhw_demand_fraction.csv"
 parameter "dhw_use_setpt_t", :default => 110 ['F']
 
-
 #fan power
 parameter "supplyfan_total_eff", :default=>0.25
 parameter "motor_eff", :default=>0.5
