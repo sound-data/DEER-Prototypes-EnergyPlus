@@ -1,5 +1,5 @@
 --Format measure impact table for ex ante database using appropriate significant figures
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS meas_impacts_2022_res;
 CREATE TABLE meas_impacts_2022_res AS 
 SELECT
