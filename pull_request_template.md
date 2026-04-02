@@ -1,7 +1,7 @@
 # Pull Request (PR) Description
 **NOTE: SUBMIT A PLAN TO DEER SUPPORT PRIOR TO WORKING ON CODE FOR A MEASURE, FEATURE, OR BUG TO BE CONNECTED WITH OTHERS WORKING ON THE SAME ISSUE OR TO RECEIVE FEEDBACK ON YOUR PROPOSED METHOD**
 
-**DEER Support Email: DeerSupport@dnv.com**
+**DEER Support Email: DeerSupport@guidehouse.com**
 
 ### PR Author
 - [ ] Make sure the PR branch is up to date with main branch at the time of the PR submission
