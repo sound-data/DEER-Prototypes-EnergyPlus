@@ -290,21 +290,37 @@ ZoneHVAC:Baseboard:Convective:Water,
         OnOff;                   !- Central Cooling Capacity Control Method
 
 !ZoneControl:Thermostat objects
-    ZoneControl:Thermostat,
-        <%= zone_name %> Thermostat,  !- Name
-        <%= zone_name %>,  !- Zone or ZoneList Name
-        HVACTemplate-Always 4,   !- Control Type Schedule Name
-        ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
-        thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
-    <% if secondary_zone %>
-    ZoneControl:Thermostat,
-        <%= secondary_zone %> Thermostat,  !- Name
-        <%= secondary_zone %>,  !- Zone or ZoneList Name
-        HVACTemplate-Always 4,   !- Control Type Schedule Name
-        ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
-        thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
+    <%if cool_type != "NC" %>
+        ZoneControl:Thermostat,
+            <%= zone_name %> Thermostat,  !- Name
+            <%= zone_name %>,  !- Zone or ZoneList Name
+            HVACTemplate-Always 4,   !- Control Type Schedule Name
+            ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
+            thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
+        <% if secondary_zone %>
+        ZoneControl:Thermostat,
+            <%= secondary_zone %> Thermostat,  !- Name
+            <%= secondary_zone %>,  !- Zone or ZoneList Name
+            HVACTemplate-Sizing 4 Other 0,   !- Control Type Schedule Name
+            ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
+            thermostat_living Dual SP Control Dual SP Control;  !- Control 1 Name
+        <% end %>
+    <% else %>
+        ZoneControl:Thermostat,
+            <%= zone_name %> Thermostat,  !- Name
+            <%= zone_name %>,  !- Zone or ZoneList Name
+            HVACTemplate-Always 1,   !- Control Type Schedule Name
+            ThermostatSetpoint:SingleHeating,  !- Control 1 Object Type
+            thermostat_living SP Control Heating SP Control;  !- Control 1 Name
+        <% if secondary_zone %>
+        ZoneControl:Thermostat,
+            <%= secondary_zone %> Thermostat,  !- Name
+            <%= secondary_zone %>,  !- Zone or ZoneList Name
+            HVACTemplate-Sizing 1 Other 0,   !- Control Type Schedule Name
+            ThermostatSetpoint:SingleHeating,  !- Control 1 Object Type
+            thermostat_living SP Control Heating SP Control;  !- Control 1 Name
+        <% end %>       
     <% end %>
-
 !AirTerminal:SingleDuct:ConstantVolume:NoReheat objects
     AirTerminal:SingleDuct:ConstantVolume:NoReheat,
         <%= zone_name %> CV,  !- Name

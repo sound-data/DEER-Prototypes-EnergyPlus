@@ -5,7 +5,7 @@
 
 parameter "zone_name"
 parameter "zone_area"
-parameter "slave_zone"
+parameter "slave_zone", :default => nil
 parameter "number_of_stories", :default=>1
 
 # Duct leakage
@@ -59,9 +59,12 @@ AirLoopHVAC:ReturnPath,
 AirLoopHVAC:ZoneMixer,
   <%= system_name %> Return Air Mixer,   !- Name
   <%= system_name %> Zone Equipment Outlet Node,  !- Outlet Node Name
+   <% if slave_zone %>
   <%= zone_name %> Return Outlet,  !- Inlet 1 Node Name
   <%= slave_zone %> Return Outlet; !- Inlet 2 Node Name
-
+   <% else %>
+  <%= zone_name %> Return Outlet;  !- Inlet 1 Node Name
+   <% end %>
 <% else %>
   <%
   if number_of_stories == 1
@@ -112,8 +115,12 @@ AirLoopHVAC:ZoneMixer,
     <%= system_name %> Dummy Return Plenum Node,  !- Zone Node Name
     <%= system_name %> Zone Equipment Outlet Node,  !- Outlet Node Name
     ,                        !- Induced Air Outlet Node or NodeList Name
+    <% if slave_zone %>
     <%= zone_name %> Return Outlet,  !- Inlet 1 Node Name
     <%= slave_zone %> Return Outlet; !- Inlet 2 Node Name
+   <% else %>
+   <%= zone_name %> Return Outlet;  !- Inlet 1 Node Name
+   <% end %>
 
   AirLoopHVAC:ReturnPath,
     <%= system_name %> Return Path,    !- Name
