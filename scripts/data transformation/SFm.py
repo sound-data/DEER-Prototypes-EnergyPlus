@@ -8,7 +8,7 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -461,7 +461,7 @@ elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
     nvals = list(numunits_vals['Value'])
     #create dictionary of {cz:values}
     numunits = {cz[i]:nvals[i] for i in range(len(cz))}
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     #filter to the corresponding measure
     numunits_vals = numunits_vals[numunits_vals['Msr'] == measure_name]
     #create aligned lists for numunit dictionary
@@ -492,7 +492,7 @@ sim_annual_1s['tstat'] = 0
 sim_annual_1s['normunit'] = df_measure['Normunit'].unique()[0]
 
 #apply numunits appropriately
-if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
 elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
     sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
@@ -508,7 +508,7 @@ sim_annual_2s['tstat'] = 0
 sim_annual_2s['normunit'] = df_measure['Normunit'].unique()[0]
 
 #apply numunits appropriately
-if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     sim_annual_2s['numunits'] = (sim_annual_2s['BldgLoc'].map(numunits))/2
 elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
     sim_annual_2s['numunits'] = (sim_annual_2s['BldgLoc'].map(numunits))/2
@@ -731,9 +731,9 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
@@ -743,9 +743,9 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])

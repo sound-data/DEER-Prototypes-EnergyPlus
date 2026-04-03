@@ -1,6 +1,6 @@
 -- Calculate the measure impacts (per dwelling, per numunit) for the measures specified in the current_msr_mat table.
 --  Note: use more decimals than necessary, as they will be rounded in the final query of the process
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS meas_impacts_2022;
 CREATE TABLE meas_impacts_2022 AS 
 SELECT

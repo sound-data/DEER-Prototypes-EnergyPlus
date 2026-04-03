@@ -8,8 +8,8 @@ parameter "run_name", :default=>"Building"
 
 # CZ/Vintages parameters
 # window
-# parameter "glass_u", :default=>0.66['U-IP']
-# parameter "glass_shgc", :default=>0.52
+parameter "glass_u", :default=>1.09['U-IP']
+parameter "glass_shgc", :default=>0.8
 
 # exterior wall
 # parameter "sheathing_consol_layer_thickness", :default=>0.0127['m']
@@ -4214,8 +4214,8 @@ Material:NoMass,
 !Visible Transmittance
 WindowMaterial:SimpleGlazingSystem,
     Glass,                   !- Name
-    6.18930667,              !- U-Factor {W/m2-K}
-    0.8,                     !- Solar Heat Gain Coefficient
+    <%=glass_u%>,            !- U-Factor {W/m2-K}
+    <%=glass_shgc%>,         !- Solar Heat Gain Coefficient
     0.88;                    !- Visible Transmittance
 
 

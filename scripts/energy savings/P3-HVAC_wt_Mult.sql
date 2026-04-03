@@ -1,6 +1,6 @@
 -- Optional: only if HVAC wtd results are needed
 --Create Res HVAC weight multiplied ver. of measure impacts table (to be summed later)
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS meas_impacts_hvactmp;
 CREATE TABLE meas_impacts_hvactmp AS 
 SELECT
