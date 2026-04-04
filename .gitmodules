@@ -1,0 +1,3 @@
+[submodule "scripts/deer-ues-tool"]
+	path = scripts/deer-ues-tool
+	url = https://github.com/simularis/deer-ues-tool.git
