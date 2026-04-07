@@ -24,8 +24,11 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here (note example commented line for specific measures)
-measure_name = 'SEER Rated AC/HP'
+#measure_name = 'SEER Rated AC/HP'
 #measure_name = 'Efficient Doors'
+#Define measure name here
+measure_name = 'Windows'
+
 # %%
 #DMo only script
 ####Define path
@@ -35,8 +38,12 @@ os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res (note example commented line for specific measures)
-path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
+#to do: use for loop to loop over each folder, using if-else to process different building types for Res
+#path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
 #path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_DMo'
+#The folder path here is specifc to Windows measure which has three subfolders ending with Msr1,Msr2,Msr3. Modify the path for each submeasure.
+path = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_DMo/SWBE011-01 Windows_DMo_Msr1'
+
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -440,7 +447,7 @@ converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Cons
 if len(numunits_vals) == 1:
     numunits = list(numunits_vals['Value'])[0]
     print(f'normunit is {normunit}, numunit is {numunits}.')
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
     print(f'normunit is {normunit}, numunits is varied by CZ')
 elif normunit == 'Each':

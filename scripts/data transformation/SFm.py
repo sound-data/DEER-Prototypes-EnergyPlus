@@ -11,9 +11,9 @@ import helper_functions
 from importlib import reload
 reload(helper_functions)
 # %%
-#Read master workbook for measure / tech list (note example commented line for specific measures)
+#Read master workbook for measure / tech list
 df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
-#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
+
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
@@ -24,8 +24,11 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here (note example commented line for specific measures)
-measure_name = 'SEER Rated AC/HP'
+#measure_name = 'SEER Rated AC/HP'
 #measure_name = 'Efficient Doors'
+#Define measure name here
+measure_name = 'Windows'
+
 # %%
 #SFm only script
 ####Define path
@@ -34,11 +37,13 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-#input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path_new and leave other blank.
-path_1975 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1975'
-path_1985 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1985'
+#input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path_new and leave other blank. (note commented examples/past test cases)
+# path_1975 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1975'
+# path_1985 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1985'
 # path_1975 = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_SFm_1975'
 # path_1985 = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_SFm_1985'
+path_1975 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1975/SWBE011-01 Windows_SFm_1975_Msr1'
+path_1985 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1985/SWBE011-01 Windows_SFm_1985_Msr1'
 path_new = ''
 
 paths = [path_1975, path_1985]
@@ -593,10 +598,14 @@ elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
     #create dictionary of {cz:values}
     numunits = {cz[i]:nvals[i] for i in range(len(cz))}
     print(f'CZ-dependent numunits for this normalizing unit {normunit}')
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
-    #create numunit dictionary
-    normunit = df_numunits['Normunit'].unique()[0]
-    numunits = df_numunits.set_index('BldgLoc')['Value'].to_dict() #numunit is a dictionary
+elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
+    #filter to the corresponding measure
+    numunits_vals = numunits_vals[numunits_vals['Msr'] == measure_name]
+    #create aligned lists for numunit dictionary
+    cz = list(numunits_vals['BldgLoc'])
+    nvals = list(numunits_vals['Value'])
+    #create dictionary of {cz:values}
+    numunits = {cz[i]:nvals[i] for i in range(len(cz))} #numunit is a dictionary
     print(f'CZ-dependent numunits for this normalizing unit {normunit}')
 elif measure_name == 'PTAC / PTHP':
     #create aligned lists for numunit dictionary
@@ -714,7 +723,7 @@ sim_annual_1s['tstat'] = 0
 sim_annual_1s['normunit'] = df_measure['Normunit'].unique()[0]
 
 #apply numunits appropriately
-if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
 elif measure_name == 'SEER Rated AC/HP':
     sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
@@ -732,7 +741,7 @@ sim_annual_2s['tstat'] = 0
 sim_annual_2s['normunit'] = df_measure['Normunit'].unique()[0]
 
 #apply numunits appropriately
-if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     sim_annual_2s['numunits'] = (sim_annual_2s['BldgLoc'].map(numunits))/2
 elif measure_name == 'SEER Rated AC/HP':
     sim_annual_2s['numunits'] = (sim_annual_2s['BldgLoc'].map(numunits))/2

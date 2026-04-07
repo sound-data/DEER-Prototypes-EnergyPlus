@@ -24,8 +24,11 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here (note example commented line for specific measures)
-measure_name = 'SEER Rated AC/HP'
+#measure_name = 'SEER Rated AC/HP'
 #measure_name = 'Efficient Doors'
+#Define measure name here
+measure_name = 'Windows'
+
 # %%
 #MFm only script 
 ####Define path (note example commented line for specific measures)
@@ -33,8 +36,9 @@ os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
-path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
+#path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
 #path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_MFm_Ex'
+path = 'residential measures/SWBE011-01 Windows\SWBE011-01 Windows_MFm\SWBE011-01 Windows_MFm_Msr1'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -436,7 +440,7 @@ elif len(df_numunits) > 1:
     normunit = df_numunits['Normunit'].unique()[0]
     numunits = df_numunits.set_index('BldgLoc')['Value'].to_dict() #numunit is a dictionary
     print(f'CZ-dependent numunits for this normalizing unit {normunit}')
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
     print(f'normunit is {normunit}, numunits is {numunits}.')
 elif measure_name == 'PTAC / PTHP':
