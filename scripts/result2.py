@@ -32,7 +32,7 @@ DEERPEAK_COLUMNS = ["Electricity:Facility [J](Hourly)"]
 # Do you want to append "(units)"" in the column name, if available?
 APPEND_UNITS = False
 # Which definition of peak period dates to use?
-PEAK_VERSION = 'E5152' # 'E5152', 'E5350', 'CZ2025'
+PEAK_VERSION = 'CZ2025' # 'E5152', 'E5350', 'CZ2025'
 
 
 ##STEP 0: Setup (import all necessary libraries)
