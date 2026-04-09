@@ -121,7 +121,7 @@ parameter "heating_coil_cop", :default=>2.4
 <%insert 'site.pxt'%>
 
 <%
-insert 'zoneloads/schedules.imf',
+insert 'zoneloads/schedules-combi.imf',
   :climate_zone => climate_zone
 
 #DUCT loss

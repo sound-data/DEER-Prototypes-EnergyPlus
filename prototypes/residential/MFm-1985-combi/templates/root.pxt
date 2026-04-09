@@ -147,7 +147,7 @@ min_sp = heating_sch_DEER_day+1
 <%insert 'site.pxt'%>
 
 <%
-insert 'zoneloads/mfm_schedules.imf',
+insert 'zoneloads/mfm_schedules-combi.imf',
   :climate_zone => climate_zone
 %>
 

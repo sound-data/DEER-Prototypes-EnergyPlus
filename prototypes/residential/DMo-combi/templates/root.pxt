@@ -132,7 +132,7 @@ parameter "dhw_use_setpt_t", :default => 110 ['F']
 <%insert 'site.pxt'%>
 
 <%
-insert 'zoneloads/schedules.imf',
+insert 'zoneloads/schedules-combi.imf',
   :climate_zone => climate_zone
 
 
