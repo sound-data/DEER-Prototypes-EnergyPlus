@@ -161,7 +161,6 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "lobby", :prefix => "lobby_" do
-    parameter "zn_cool_size_factor", :default => 1.7
     parameter "oa_area", :default => 0.5['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
@@ -169,8 +168,7 @@ group "space_hvac" do
 
   import "zonehvac/hvac-zone.pxt", :group => "mech", :prefix => "mech_" do
     parameter "oa_area", :default => 0.15['CFM/ft2']
-    parameter "zn_cool_size_factor", :default => 1.6
-    parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
+     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
 
@@ -182,7 +180,6 @@ group "space_hvac" do
 
   import "zonehvac/hvac-zone.pxt", :group => "office_large", :prefix => "office_large_" do
     parameter "oa_area", :default => 0.15['CFM/ft2']
-    parameter "zn_cool_size_factor", :default => 1.55
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end

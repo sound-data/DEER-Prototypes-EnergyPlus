@@ -225,7 +225,6 @@ group "space_hvac" do
 
   import "zonehvac/hvac-zone.pxt", :group => "kitchen", :prefix => "kitchen_" do
     parameter "oa_area", :default => 0.15['CFM/ft2']
-    parameter "zn_cool_size_factor", :default => 3.4
     parameter "exh_fan_flow_area", :default => 0.7['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
   end
