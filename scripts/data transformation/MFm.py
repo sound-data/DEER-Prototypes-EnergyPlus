@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'Windows'
+measure_name = 'SEER Rated AC HP'
 
 # %%
 #MFm only script
@@ -30,7 +30,7 @@ print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
-path = 'residential measures/SWBE011-01 Windows\SWBE011-01 Windows_MFm\SWBE011-01 Windows_MFm_Msr1'
+path = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_MFm_New'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -251,9 +251,12 @@ for i in range(0,num_runs):
     full_path = hrly_path + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
     df = pd.read_csv(full_path, low_memory=False)
     
+    #remove traling spaces on col headers
+    df.columns = df.columns.str.rstrip()
+
     #extract the last column (the total elec hrly profile)
     #if for enduse hourly, then extract the relevant end use column
-    extracted_df = pd.DataFrame(df.iloc[:,-1])
+    extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
     
     #create the column name based on the permutations
     col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
