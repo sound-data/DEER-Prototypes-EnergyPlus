@@ -78,7 +78,9 @@ parameter "door_thermal_resistance", :default=>0.214702851['R-SI']  #TRC SWBE013
 parameter "infiltration_ACH", :default=>0.35
 
 # sizing parameter
-parameter "sizing_parameter", :default=>1.8
+parameter "sizing_parameter_heating", :default=>1.8
+parameter "sizing_parameter_cooling", :default=>1.8
+parameter "max_designday_schedules", :default=>true #if true, use 100% schedule for CDD for general misc load, occupancy and lighting schedules. Otherwise, use weekday schedule.
 
 # Thermostat Setpoint
 parameter "heating_sch_DEER_mrn", :default=>15.56
@@ -145,7 +147,7 @@ min_sp = heating_sch_DEER_day+1
 <%insert 'site.pxt'%>
 
 <%
-insert 'zoneloads/mfm_schedules.imf',
+insert 'zoneloads/mfm_schedules-combi.imf',
   :climate_zone => climate_zone
 %>
 
@@ -198,8 +200,7 @@ for zone in all_zones
   water_heater_name = zone[5]
   hydronic_system_name = zone[6]
 
-  
-	#create list of zones served by HW
+    #create list of zones served by HW
     if (!combi and (heat_type == "HW" or heat_type == "ST"))
         # create list of hydronic systems and corresponding zones
         all_hydronic[hydronic_system_name] ||= {system: [], primary: [], secondary: []}
@@ -289,16 +290,16 @@ SimulationControl,
     Yes,                     !- Do Zone Sizing Calculation
     Yes,                     !- Do System Sizing Calculation
     Yes,                     !- Do Plant Sizing Calculation
-    No,                     !- Run Simulation for Sizing Periods
+    Yes,                     !- Run Simulation for Sizing Periods
     Yes,                     !- Run Simulation for Weather File Run Periods
-    ,                        !- Do HVAC Sizing Simulation for Sizing Periods
+    Yes,                        !- Do HVAC Sizing Simulation for Sizing Periods
     ;                        !- Maximum Number of HVAC Sizing Simulation Passes
 
 
 !-   ===========  ALL OBJECTS IN CLASS: BUILDING ===========
 
 Building,
-    MFm+dxgf+existing,       !- Name
+    MFm+1985,       !- Name
     0,                       !- North Axis {deg}
     Suburbs,                 !- Terrain
     0.04,                    !- Loads Convergence Tolerance Value {W}
@@ -1510,6 +1511,62 @@ Schedule:Day:Hourly,
     1,                       !- Hour 23
     1;                       !- Hour 24
 
+Schedule:Day:Hourly,
+    Max CDD,      !- Name
+    fraction,                !- Schedule Type Limits Name
+    1.0,                     !- Hour 1
+    1.0,                     !- Hour 2
+    1.0,                     !- Hour 3
+    1.0,                     !- Hour 4
+    1.0,                     !- Hour 5
+    1.0,                     !- Hour 6
+    1.0,                     !- Hour 7
+    1.0,                     !- Hour 8
+    1.0,                     !- Hour 9
+    1.0,                     !- Hour 10
+    1.0,                     !- Hour 11
+    1.0,                     !- Hour 12
+    1.0,                     !- Hour 13
+    1.0,                     !- Hour 14
+    1.0,                     !- Hour 15
+    1.0,                     !- Hour 16
+    1.0,                     !- Hour 17
+    1.0,                     !- Hour 18
+    1.0,                     !- Hour 19
+    1.0,                     !- Hour 20
+    1.0,                     !- Hour 21
+    1.0,                     !- Hour 22
+    1.0,                     !- Hour 23
+    1.0;                     !- Hour 24
+
+Schedule:Day:Hourly,
+    Max HDD,  !- Name
+    fraction,                !- Schedule Type Limits Name
+    0.0,                     !- Hour 1
+    0.0,                     !- Hour 2
+    0.0,                     !- Hour 3
+    0.0,                     !- Hour 4
+    0.0,                     !- Hour 5
+    0.0,                     !- Hour 6
+    0.0,                     !- Hour 7
+    0.0,                     !- Hour 8
+    0.0,                     !- Hour 9
+    0.0,                     !- Hour 10
+    0.0,                     !- Hour 11
+    0.0,                     !- Hour 12
+    0.0,                     !- Hour 13
+    0.0,                     !- Hour 14
+    0.0,                     !- Hour 15
+    0.0,                     !- Hour 16
+    0.0,                     !- Hour 17
+    0.0,                     !- Hour 18
+    0.0,                     !- Hour 19
+    0.0,                     !- Hour 20
+    0.0,                     !- Hour 21
+    0.0,                     !- Hour 22
+    0.0,                     !- Hour 23
+    0.0;                     !- Hour 24
+
 !-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:WEEK:COMPACT ===========
 
 Schedule:Week:Compact,
@@ -1541,7 +1598,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-2 S1 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL1 Occ-2 S1 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     EL1 Occ-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -1554,7 +1611,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-2 S2 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL1 Occ-2 S2 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     EL1 Occ-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -1567,7 +1624,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-2 S3 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL1 Occ-2 S3 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     EL1 Occ-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -1580,7 +1637,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S1 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL1 Occ-1 S1 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     EL1 Occ-1 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -1593,7 +1650,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S2 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL1 Occ-1 S2 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     EL1 Occ-1 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -1606,7 +1663,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S3 CDD,      !- Schedule:Day Name 3
+    <%= max_designday_schedules ? "Max CDD" : "EL1 Occ-1 S3 CDD" %>,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     EL1 Occ-1 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -25375,8 +25432,8 @@ ZoneInfiltration:DesignFlowRate,
 !-   ===========  ALL OBJECTS IN CLASS: SIZING:PARAMETERS ===========
 
 Sizing:Parameters,
-    <%= sizing_parameter %>,                     !- Heating Sizing Factor
-    <%= sizing_parameter %>;                     !- Cooling Sizing Factor
+    <%= sizing_parameter_heating %>,                     !- Heating Sizing Factor
+    <%= sizing_parameter_cooling %>;                     !- Cooling Sizing Factor
 
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLEDICTIONARY ===========
@@ -25399,7 +25456,6 @@ Output:Table:SummaryReports,
 OutputControl:ReportingTolerances,
     1.11111111,              !- Tolerance for Time Heating Setpoint Not Met {deltaC}
     1.11111111;              !- Tolerance for Time Cooling Setpoint Not Met {deltaC}
-
 
 
     !-   ===========  ALL OBJECTS IN CLASS: OUTPUTCONTROL:TABLE:STYLE ===========
@@ -25426,6 +25482,10 @@ ThermostatSetpoint:DualSetpoint,
   heating_sch_DEER,                                        !- Heating Setpoint Temperature Schedule Name
   cooling_sch_DEER;                                        !- Cooling Setpoint Temperature Schedule Name
 
+ThermostatSetpoint:SingleHeating,
+    thermostat_living SP Control Heating SP Control,  !- Name
+    heating_sch_DEER;        !- Setpoint Temperature Schedule Name
+
 ScheduleTypeLimits,
   HVACTemplate Any Number;                                 !- Name
 
@@ -25437,6 +25497,28 @@ Schedule:Compact,
   Until: 24:00,                                            !- Field 3
   4;                                                       !- Field 4
 
+Schedule:Compact,
+    HVACTemplate-Sizing 4 Other 0,   !- Name
+    HVACTemplate Any Number, !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: SummerDesignDay WinterDesignDay,
+    Until: 24:00,
+    4,
+    For: AllOtherDays,
+    Until: 24:00,
+    0;
+
+Schedule:Compact,
+    HVACTemplate-Sizing 1 Other 0,   !- Name
+    HVACTemplate Any Number, !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: SummerDesignDay WinterDesignDay,
+    Until: 24:00,
+    1,
+    For: AllOtherDays,
+    Until: 24:00,
+    0;
+        
 Schedule:Compact,
   HVACTemplate-Always 1,                                   !- Name
   HVACTemplate Any Number,                                 !- Schedule Type Limits Name
