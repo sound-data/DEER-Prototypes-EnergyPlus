@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'Windows'
+measure_name = 'SEER Rated AC HP'
 
 # %%
 #SFm only script
@@ -31,14 +31,18 @@ os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
 #input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path_new and leave other blank.
-path_1975 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1975/SWBE011-01 Windows_SFm_1975_Msr1'
-path_1985 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1985/SWBE011-01 Windows_SFm_1985_Msr1'
-path_new = ''
+path_1975 = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_SFm_1975'
+path_1985 = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_SFm_1985'
+path_new = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_SFm_New'
 
-paths = [path_1975, path_1985]
-
-if path_new != '' :
+# Select whether to process New or Existing vintage models.
+# The script is not compatible with processing both New and Existing in a single batch.
+MODE_NEW_VINTAGE = False
+if MODE_NEW_VINTAGE:
     paths = [path_new]
+else:
+    paths = [path_1975, path_1985]
+
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -222,10 +226,10 @@ case_cohort_list = df_measure['Measure Group Name'].unique()
 sim_annual_raw = pd.DataFrame()
 for path in paths:
     print(f'processing data in {path}')
-    df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
+    df_raw = pd.read_csv(path+'/results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
     #Read annual data
-    annual_df = pd.read_csv(path+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+    annual_df = pd.read_csv(path+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
     split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
     #looping over multiple folders/cohort cases, use a list
@@ -273,9 +277,9 @@ for path in paths:
     #extract data per bldgtype-bldghvac-bldgvint group
     hourly_df = pd.DataFrame(index=range(0,8760))
     #extract num_runs / split_meta_cols_eu
-    df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
+    df_raw = pd.read_csv(path+'/results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
-    annual_df = pd.read_csv(path+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+    annual_df = pd.read_csv(path+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
     split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
     for i in range(0,num_runs):
         print(f"merging record {i}")
@@ -284,9 +288,12 @@ for path in paths:
         full_path = hrly_path + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
         df = pd.read_csv(full_path, low_memory=False)
         
+        #remove traling spaces on col headers
+        df.columns = df.columns.str.rstrip()
+
         #extract the last column (the total elec hrly profile)
         #if for enduse hourly, then extract the relevant end use column
-        extracted_df = pd.DataFrame(df.iloc[:,-1])
+        extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
         
         #create the column name based on the permutations
         col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
@@ -635,9 +642,14 @@ cz_vint_dict2 = {i:'1985' for i in cz_list2}
 cz_vint_dict = cz_vint_dict1 | cz_vint_dict2
 
 #%%
-##BldgVint label correction for NumStor weights
-sim_annual_f['BldgVint'] = sim_annual_f['BldgLoc'].map(cz_vint_dict)
-sim_hourly_final['BldgVint'] = sim_hourly_final['BldgLoc'].map(cz_vint_dict)
+if MODE_NEW_VINTAGE:
+    pass
+else:
+    ##BldgVint label correction for NumStor weights
+    # Intended to be used only for Existing vintage models.
+    # This overwrites the BldgVint attribute from the model, regardless of New or Existing.    
+    sim_annual_f['BldgVint'] = sim_annual_f['BldgLoc'].map(cz_vint_dict)
+    sim_hourly_final['BldgVint'] = sim_hourly_final['BldgLoc'].map(cz_vint_dict)
 
 # %%
 ##STEP 4: Measure setup file (current_msr_mat.csv)
