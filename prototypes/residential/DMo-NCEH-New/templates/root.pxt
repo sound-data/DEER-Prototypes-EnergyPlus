@@ -76,7 +76,7 @@ parameter "duct_r_value", :default => 3.4['R-IP'] #R-IP effective duct R value =
 parameter 'return_leakage_frac', :default=>0
 %>
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%

@@ -125,7 +125,7 @@ parameter "dhw_demand_sch", :default => "DMo_minute_dhw_demand_fraction.csv"
 parameter "dhw_use_setpt_t", :default => 110 ['F']
 %>
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%

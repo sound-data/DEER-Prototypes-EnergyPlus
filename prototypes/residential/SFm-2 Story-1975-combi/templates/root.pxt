@@ -114,7 +114,7 @@ parameter "dhw_use_setpt_t", :default => 110 ['F']
 <%
 min_sp = heating_sch_DEER_day+1
 %>
-
+<%insert 'holidays.pxt'%>
 <%
 insert 'site.pxt'
 

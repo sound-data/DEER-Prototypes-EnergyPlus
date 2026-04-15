@@ -94,7 +94,7 @@ parameter 'return_leakage_frac', :default=>0
 %>
 
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%

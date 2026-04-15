@@ -78,7 +78,7 @@ parameter "infiltration_reduction", :default=>0  # TRC SWBE013-01, SWBE014-01; d
 <%
 min_sp = heating_sch_DEER_day+1
 %>
-
+<%insert 'holidays.pxt'%>
 <%
 insert 'site.pxt'
 

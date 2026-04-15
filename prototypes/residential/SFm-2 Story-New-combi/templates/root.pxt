@@ -115,7 +115,7 @@ parameter "heating_coil_cop", :default=>2.4
 %>
 
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%

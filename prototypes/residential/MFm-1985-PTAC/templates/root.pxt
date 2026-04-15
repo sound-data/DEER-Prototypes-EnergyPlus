@@ -18,7 +18,7 @@ parameter "system_type", :default=>'PTHP'
 parameter "sizing_parameter", :default=>1.8
 parameter "finished_floor_area", :default=>101
 %>
-
+<%insert 'holidays.pxt'%>
 <%
 all_zones = [
   ['999', 'EL1 SSE Perim Pl Zn (G.SSE14)', finished_floor_area, 'DXFG EL1 G_SSE1','999'],
