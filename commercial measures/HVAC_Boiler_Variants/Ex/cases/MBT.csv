@@ -1,0 +1,4 @@
+skip,case_name,:hw_heating_source,:hw_fluid_type,:hw_boiler_duplicate_1,:main_atu_reheat_coil_type,:hw_pump_type,:hw_boiler_eff,:hw_boiler_type,:hw_setpoint_type,:main_heat_coil_type,:kitch_heat_coil_type,:hw_supply_temp_at_lo,:hw_supply_temp_at_hi,:hw_max_loop_temp,:hw_min_loop_temp
+,Boiler_Non-Condensing,BOILER,WATER,TRUE,WATER,VARIABLE,0.84,NONCONDENSING,Reset,WATER,WATER,73.88,60,100,10
+,Boiler_Condensing,BOILER,WATER,TRUE,WATER,VARIABLE,0.93,CONDENSING,Reset,WATER,WATER,60,46.11,100,10
+,Boiler_Steam,STEAMBOILER,STEAM,FALSE,STEAM,VARIABLESPEEDCONDENSATE,0.81,,Reset,STEAM,STEAM,73.88,60,120,10
