@@ -54,7 +54,7 @@ parameter "refgfrzr_power_level", :default=>91.0575745
 #shading control
 parameter "shading_control", :default=>'AlwaysOn'
 %>
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%

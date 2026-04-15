@@ -127,7 +127,7 @@ parameter "peak_flow", :default => 0.00068 ['m3/s']
 parameter "dhw_use_setpt_t", :default => 110 ['F']
 %>
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%
