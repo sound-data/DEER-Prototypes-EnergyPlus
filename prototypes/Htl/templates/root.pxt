@@ -362,8 +362,6 @@ group "hvac_system", :prefix => "main_" do
   parameter "sat_reset_type", :default => "WARMEST-ZONE"
   parameter "sat_temp_min", :default => 55.0['F']
   parameter "sat_temp_max", :default => 60.0['F']
-#  parameter "design_peak_load", :default => "NONCOINCIDENT"
-# rb - changed to address coil UA sizing failure
   parameter "design_peak_load", :default => "COINCIDENT"
   parameter "heat_flow_frac", :default => 0.5
   parameter "demand_controlled_vent", :default => "No"
