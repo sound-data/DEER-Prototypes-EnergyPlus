@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'SEER Rated AC/HP'
+measure_name = 'SEER Rated AC HP'
 
 # %%
 #DMo only script
@@ -32,7 +32,11 @@ print(os.path.abspath(os.curdir))
 
 #12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res
-path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
+# For most measures, specify a path to a cohort folder, e.g.
+#   path = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_DMo'
+# For SWBE011 Windows, for each subfolder, specify the path to the subfolder and run the script, e.g.
+#   path = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_DMo/SWBE011-01 Windows_DMo_Msr1'.
+path = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_DMo'
 
 # %%
 #extract only the 5th portion of the measure group name for expected_att
@@ -253,9 +257,12 @@ for i in range(0,num_runs):
     full_path = hrly_path + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
     df = pd.read_csv(full_path, low_memory=False)
     
+    #remove traling spaces on col headers
+    df.columns = df.columns.str.rstrip()
+
     #extract the last column (the total elec hrly profile)
     #if for enduse hourly, then extract the relevant end use column
-    extracted_df = pd.DataFrame(df.iloc[:,-1])
+    extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
     
     #create the column name based on the permutations
     col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
@@ -352,7 +359,7 @@ numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].
 
 if len(numunits_vals) == 1:
     numunits = list(numunits_vals['Value'])[0]
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
 else:
     pass
@@ -477,9 +484,9 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
@@ -490,9 +497,9 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])

@@ -1,7 +1,7 @@
 -- Create the simulation peak period demand value table from the hourly data table.
 -- Whole Building kw: PeakDay 2 - 5 (previous DEER), 4 - 9 (DEER2020) on 3-day Heatwave
 -- Time Estimate: 600 seconds
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS sim_peakper;
 CREATE TABLE sim_peakper AS 
 SELECT "TechID","SizingID","BldgType","BldgVint",sim_hourly_wb_wtd."BldgLoc" as "BldgLoc","BldgHVAC",
