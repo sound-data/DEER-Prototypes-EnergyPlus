@@ -27,6 +27,7 @@ Changelog
     * 2024-04-06 Make dependence on measure list and NumStor2 more explicit.
     * ... Include more error checking and progress statements.
     * 2024-04-08 Updates for commercial building type compatibility.
+    * 2025-08-06 Changed conversion factor "W" to "kBtu/h" from 3.412141633 to 0.003412141633.
 
 @Author: Nicholas Fette, Behzad Salimian Rizi
 @Date: 2024-01-19
@@ -209,7 +210,7 @@ def test():
     normunit = 'CapOut-kBtuh'
 
     # Specify a multipler, e.g. for a unit conversion.
-    kbtuh_per_watt = 3.412141633
+    kbtuh_per_watt = 0.003412  # Correct: W → kBtu/h
     sizing_multiplier = 1/kbtuh_per_watt
 
     measure_name = 'Wall Furnace'
