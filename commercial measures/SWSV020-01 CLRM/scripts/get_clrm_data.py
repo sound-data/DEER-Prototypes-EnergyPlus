@@ -85,9 +85,6 @@ def get_avg_peak_cooling_energy(file, cz):
         energy_rows = cur.fetchall()
         energy = [float(x[0]) for x in energy_rows]
 
-    print(len(energy))
-    print(energy)
-
     return round(sum(energy) / len(energy), 2)
 
 
@@ -252,13 +249,13 @@ def main():
 
     if platform.system() in ["Windows"]:
         # root of the DEER package install
-        root = PurePath("C:\\DEER-Prototypes-EnergyPlus\\")
+        root = PurePath("C:/DEER-Prototypes-EnergyPlus")
         # measure to search
-        search_folder = PurePath("commercial measures\\SWSV020-01 CLRM")
+        search_folder = PurePath("commercial measures/SWSV020-01 CLRM")
         # sqlite database to use
         input_file = "instance-out.sql"
         # where to write the results
-        results_folder = "C:\\My Results"
+        results_folder = PurePath("C:/CLRM Results")
         results_file = "CLRM_data.csv"
     elif platform.system() in ["Linux", "Darwin"]:
         root = ""

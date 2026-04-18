@@ -2,7 +2,7 @@ The python script gel_c;rm_daya.py extracts the required data from the instance-
 
 No additional python packages are need.
 
-The script needs to be edited to point to the results as indicated below:
+The script needs to be edited to point to the results as indicated, note the use of forward slahes:
 
 def main():
 
@@ -17,13 +17,13 @@ def main():
 
     if platform.system() in ["Windows"]:
         # root of the DEER package install
-    --> root = PurePath("C:\\DEER-Prototypes-EnergyPlus")
+    --> root = PurePath("C:/DEER-Prototypes-EnergyPlus")
         # measure to search
-    --> search_folder = PurePath("commercial measures\\SWSV020-01 CLRM")
+    --> search_folder = PurePath("commercial measures/SWSV020-01 CLRM")
         # sqlite database to use
         input_file = "instance-out.sql"
         # where to write the results
-    --> results_folder = "C:\\My Results"
+    --> results_folder = "C:/CLRM Results"
         results_file = "CLRM_data.csv"
     elif platform.system() in ["Linux", "Darwin"]:
         root = ""
