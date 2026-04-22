@@ -6716,355 +6716,355 @@ Schedule:Week:Compact,
     ExteriorLightingDay;     !- Schedule:Day Name 1
 
 Schedule:Week:Compact,
-    EL1 Occ-1 S1 Wk,         !- Name
+    EL1 Occ-1 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL1 Occ-1 S1 All,        !- Schedule:Day Name 1
+    EL1 Occ-1 S1 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL1 Occ-1 S1 All,        !- Schedule:Day Name 2
+    EL1 Occ-1 S1 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S1 All,        !- Schedule:Day Name 3
+    EL1 Occ-1 S1 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S1 All,        !- Schedule:Day Name 4
+    EL1 Occ-1 S1 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL1 Occ-1 S1 All;        !- Schedule:Day Name 5
+    EL1 Occ-1 S1 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL1 Occ-1 S2 Wk,         !- Name
+    EL1 Occ-1 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL1 Occ-1 S2 All,        !- Schedule:Day Name 1
+    EL1 Occ-1 S2 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL1 Occ-1 S2 All,        !- Schedule:Day Name 2
+    EL1 Occ-1 S2 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S2 All,        !- Schedule:Day Name 3
+    EL1 Occ-1 S2 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S2 All,        !- Schedule:Day Name 4
+    EL1 Occ-1 S2 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL1 Occ-1 S2 All;        !- Schedule:Day Name 5
+    EL1 Occ-1 S2 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL1 Occ-1 S3 Wk,         !- Name
+    EL1 Occ-1 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL1 Occ-1 S3 All,        !- Schedule:Day Name 1
+    EL1 Occ-1 S3 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL1 Occ-1 S3 All,        !- Schedule:Day Name 2
+    EL1 Occ-1 S3 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S3 All,        !- Schedule:Day Name 3
+    EL1 Occ-1 S3 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S3 All,        !- Schedule:Day Name 4
+    EL1 Occ-1 S3 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL1 Occ-1 S3 All;        !- Schedule:Day Name 5
+    EL1 Occ-1 S3 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL1 ILt-1 S1 Wk,         !- Name
+    EL1 ILt-1 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL1 ILt-1 S1 WD,         !- Schedule:Day Name 1
+    EL1 ILt-1 S1 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL1 ILt-1 S1 WEH,        !- Schedule:Day Name 2
+    EL1 ILt-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ILt-1 S1 HDD,        !- Schedule:Day Name 3
+    EL1 ILt-1 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ILt-1 S1 CDD,        !- Schedule:Day Name 4
+    EL1 ILt-1 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL1 ILt-1 S1 WEH;        !- Schedule:Day Name 5
+    EL1 ILt-1 S1 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL1 ILt-1 S2 Wk,         !- Name
+    EL1 ILt-1 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL1 ILt-1 S2 WD,         !- Schedule:Day Name 1
+    EL1 ILt-1 S2 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL1 ILt-1 S2 WEH,        !- Schedule:Day Name 2
+    EL1 ILt-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ILt-1 S2 HDD,        !- Schedule:Day Name 3
+    EL1 ILt-1 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ILt-1 S2 CDD,        !- Schedule:Day Name 4
+    EL1 ILt-1 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL1 ILt-1 S2 WEH;        !- Schedule:Day Name 5
+    EL1 ILt-1 S2 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL1 ILt-1 S3 Wk,         !- Name
+    EL1 ILt-1 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL1 ILt-1 S3 WD,         !- Schedule:Day Name 1
+    EL1 ILt-1 S3 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL1 ILt-1 S3 WEH,        !- Schedule:Day Name 2
+    EL1 ILt-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ILt-1 S3 HDD,        !- Schedule:Day Name 3
+    EL1 ILt-1 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ILt-1 S3 CDD,        !- Schedule:Day Name 4
+    EL1 ILt-1 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL1 ILt-1 S3 WEH;        !- Schedule:Day Name 5
+    EL1 ILt-1 S3 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Occ-2 S1 Wk,         !- Name
+    EL2 Occ-2 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Occ-2 S1 WD,         !- Schedule:Day Name 1
+    EL2 Occ-2 S1 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Occ-2 S1 WEH,        !- Schedule:Day Name 2
+    EL2 Occ-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-2 S1 HDD,        !- Schedule:Day Name 3
+    EL2 Occ-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-2 S1 CDD,        !- Schedule:Day Name 4
+    EL2 Occ-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Occ-2 S1 WEH;        !- Schedule:Day Name 5
+    EL2 Occ-2 S1 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Occ-2 S2 Wk,         !- Name
+    EL2 Occ-2 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Occ-2 S2 WD,         !- Schedule:Day Name 1
+    EL2 Occ-2 S2 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Occ-2 S2 WEH,        !- Schedule:Day Name 2
+    EL2 Occ-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-2 S2 HDD,        !- Schedule:Day Name 3
+    EL2 Occ-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-2 S2 CDD,        !- Schedule:Day Name 4
+    EL2 Occ-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Occ-2 S2 WEH;        !- Schedule:Day Name 5
+    EL2 Occ-2 S2 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Occ-2 S3 Wk,         !- Name
+    EL2 Occ-2 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Occ-2 S3 WD,         !- Schedule:Day Name 1
+    EL2 Occ-2 S3 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Occ-2 S3 WEH,        !- Schedule:Day Name 2
+    EL2 Occ-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-2 S3 HDD,        !- Schedule:Day Name 3
+    EL2 Occ-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-2 S3 CDD,        !- Schedule:Day Name 4
+    EL2 Occ-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Occ-2 S3 WEH;        !- Schedule:Day Name 5
+    EL2 Occ-2 S3 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Msc-2 S1 Wk,         !- Name
+    EL2 Msc-2 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Msc-2 S1 WD,         !- Schedule:Day Name 1
+    EL2 Msc-2 S1 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Msc-2 S1 WEH,        !- Schedule:Day Name 2
+    EL2 Msc-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Msc-2 S1 HDD,        !- Schedule:Day Name 3
+    EL2 Msc-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Msc-2 S1 CDD,        !- Schedule:Day Name 4
+    EL2 Msc-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Msc-2 S1 WEH;        !- Schedule:Day Name 5
+    EL2 Msc-2 S1 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Msc-2 S2 Wk,         !- Name
+    EL2 Msc-2 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Msc-2 S2 WD,         !- Schedule:Day Name 1
+    EL2 Msc-2 S2 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Msc-2 S2 WEH,        !- Schedule:Day Name 2
+    EL2 Msc-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Msc-2 S2 HDD,        !- Schedule:Day Name 3
+    EL2 Msc-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Msc-2 S2 CDD,        !- Schedule:Day Name 4
+    EL2 Msc-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Msc-2 S2 WEH;        !- Schedule:Day Name 5
+    EL2 Msc-2 S2 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Msc-2 S3 Wk,         !- Name
+    EL2 Msc-2 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Msc-2 S3 WD,         !- Schedule:Day Name 1
+    EL2 Msc-2 S3 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Msc-2 S3 WEH,        !- Schedule:Day Name 2
+    EL2 Msc-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Msc-2 S3 HDD,        !- Schedule:Day Name 3
+    EL2 Msc-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Msc-2 S3 CDD,        !- Schedule:Day Name 4
+    EL2 Msc-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Msc-2 S3 WEH;        !- Schedule:Day Name 5
+    EL2 Msc-2 S3 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Ckg-2 S1 Wk,         !- Name
+    EL2 Ckg-2 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Ckg-2 S1 WD,         !- Schedule:Day Name 1
+    EL2 Ckg-2 S1 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Ckg-2 S1 WEH,        !- Schedule:Day Name 2
+    EL2 Ckg-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Ckg-2 S1 HDD,        !- Schedule:Day Name 3
+    EL2 Ckg-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Ckg-2 S1 CDD,        !- Schedule:Day Name 4
+    EL2 Ckg-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Ckg-2 S1 WEH;        !- Schedule:Day Name 5
+    EL2 Ckg-2 S1 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Ckg-2 S2 Wk,         !- Name
+    EL2 Ckg-2 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Ckg-2 S2 WD,         !- Schedule:Day Name 1
+    EL2 Ckg-2 S2 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Ckg-2 S2 WEH,        !- Schedule:Day Name 2
+    EL2 Ckg-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Ckg-2 S2 HDD,        !- Schedule:Day Name 3
+    EL2 Ckg-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Ckg-2 S2 CDD,        !- Schedule:Day Name 4
+    EL2 Ckg-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Ckg-2 S2 WEH;        !- Schedule:Day Name 5
+    EL2 Ckg-2 S2 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Ckg-2 S3 Wk,         !- Name
+    EL2 Ckg-2 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Ckg-2 S3 WD,         !- Schedule:Day Name 1
+    EL2 Ckg-2 S3 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Ckg-2 S3 WEH,        !- Schedule:Day Name 2
+    EL2 Ckg-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Ckg-2 S3 HDD,        !- Schedule:Day Name 3
+    EL2 Ckg-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Ckg-2 S3 CDD,        !- Schedule:Day Name 4
+    EL2 Ckg-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Ckg-2 S3 WEH;        !- Schedule:Day Name 5
+    EL2 Ckg-2 S3 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Prc-2 S1 Wk,         !- Name
+    EL2 Prc-2 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Prc-2 S1 WD,         !- Schedule:Day Name 1
+    EL2 Prc-2 S1 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Prc-2 S1 WEH,        !- Schedule:Day Name 2
+    EL2 Prc-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Prc-2 S1 HDD,        !- Schedule:Day Name 3
+    EL2 Prc-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Prc-2 S1 CDD,        !- Schedule:Day Name 4
+    EL2 Prc-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Prc-2 S1 WEH;        !- Schedule:Day Name 5
+    EL2 Prc-2 S1 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Prc-2 S2 Wk,         !- Name
+    EL2 Prc-2 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Prc-2 S2 WD,         !- Schedule:Day Name 1
+    EL2 Prc-2 S2 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Prc-2 S2 WEH,        !- Schedule:Day Name 2
+    EL2 Prc-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Prc-2 S2 HDD,        !- Schedule:Day Name 3
+    EL2 Prc-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Prc-2 S2 CDD,        !- Schedule:Day Name 4
+    EL2 Prc-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Prc-2 S2 WEH;        !- Schedule:Day Name 5
+    EL2 Prc-2 S2 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Prc-2 S3 Wk,         !- Name
+    EL2 Prc-2 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Prc-2 S3 WD,         !- Schedule:Day Name 1
+    EL2 Prc-2 S3 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Prc-2 S3 WEH,        !- Schedule:Day Name 2
+    EL2 Prc-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Prc-2 S3 HDD,        !- Schedule:Day Name 3
+    EL2 Prc-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Prc-2 S3 CDD,        !- Schedule:Day Name 4
+    EL2 Prc-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Prc-2 S3 WEH;        !- Schedule:Day Name 5
+    EL2 Prc-2 S3 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Off-2 S1 Wk,         !- Name
+    EL2 Off-2 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Off-2 S1 WD,         !- Schedule:Day Name 1
+    EL2 Off-2 S1 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Off-2 S1 WEH,        !- Schedule:Day Name 2
+    EL2 Off-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Off-2 S1 HDD,        !- Schedule:Day Name 3
+    EL2 Off-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Off-2 S1 CDD,        !- Schedule:Day Name 4
+    EL2 Off-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Off-2 S1 WEH;        !- Schedule:Day Name 5
+    EL2 Off-2 S1 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Off-2 S2 Wk,         !- Name
+    EL2 Off-2 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Off-2 S2 WD,         !- Schedule:Day Name 1
+    EL2 Off-2 S2 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Off-2 S2 WEH,        !- Schedule:Day Name 2
+    EL2 Off-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Off-2 S2 HDD,        !- Schedule:Day Name 3
+    EL2 Off-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Off-2 S2 CDD,        !- Schedule:Day Name 4
+    EL2 Off-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Off-2 S2 WEH;        !- Schedule:Day Name 5
+    EL2 Off-2 S2 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Off-2 S3 Wk,         !- Name
+    EL2 Off-2 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Off-2 S3 WD,         !- Schedule:Day Name 1
+    EL2 Off-2 S3 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Off-2 S3 WEH,        !- Schedule:Day Name 2
+    EL2 Off-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Off-2 S3 HDD,        !- Schedule:Day Name 3
+    EL2 Off-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Off-2 S3 CDD,        !- Schedule:Day Name 4
+    EL2 Off-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Off-2 S3 WEH;        !- Schedule:Day Name 5
+    EL2 Off-2 S3 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Mtr-2 S1 Wk,         !- Name
+    EL2 Mtr-2 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Mtr-2 S1 WD,         !- Schedule:Day Name 1
+    EL2 Mtr-2 S1 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Mtr-2 S1 WEH,        !- Schedule:Day Name 2
+    EL2 Mtr-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Mtr-2 S1 HDD,        !- Schedule:Day Name 3
+    EL2 Mtr-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Mtr-2 S1 CDD,        !- Schedule:Day Name 4
+    EL2 Mtr-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Mtr-2 S1 WEH;        !- Schedule:Day Name 5
+    EL2 Mtr-2 S1 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Mtr-2 S2 Wk,         !- Name
+    EL2 Mtr-2 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Mtr-2 S2 WD,         !- Schedule:Day Name 1
+    EL2 Mtr-2 S2 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Mtr-2 S2 WEH,        !- Schedule:Day Name 2
+    EL2 Mtr-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Mtr-2 S2 HDD,        !- Schedule:Day Name 3
+    EL2 Mtr-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Mtr-2 S2 CDD,        !- Schedule:Day Name 4
+    EL2 Mtr-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Mtr-2 S2 WEH;        !- Schedule:Day Name 5
+    EL2 Mtr-2 S2 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Mtr-2 S3 Wk,         !- Name
+    EL2 Mtr-2 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Mtr-2 S3 WD,         !- Schedule:Day Name 1
+    EL2 Mtr-2 S3 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Mtr-2 S3 WEH,        !- Schedule:Day Name 2
+    EL2 Mtr-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Mtr-2 S3 HDD,        !- Schedule:Day Name 3
+    EL2 Mtr-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Mtr-2 S3 CDD,        !- Schedule:Day Name 4
+    EL2 Mtr-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Mtr-2 S3 WEH;        !- Schedule:Day Name 5
+    EL2 Mtr-2 S3 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 SCR-2 S1 Wk,         !- Name
+    EL2 SCR-2 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 SCR-2 S1 WD,         !- Schedule:Day Name 1
+    EL2 SCR-2 S1 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 SCR-2 S1 WEH,        !- Schedule:Day Name 2
+    EL2 SCR-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 SCR-2 S1 HDD,        !- Schedule:Day Name 3
+    EL2 SCR-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 SCR-2 S1 CDD,        !- Schedule:Day Name 4
+    EL2 SCR-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 SCR-2 S1 WEH;        !- Schedule:Day Name 5
+    EL2 SCR-2 S1 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 SCR-2 S2 Wk,         !- Name
+    EL2 SCR-2 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 SCR-2 S2 WD,         !- Schedule:Day Name 1
+    EL2 SCR-2 S2 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 SCR-2 S2 WEH,        !- Schedule:Day Name 2
+    EL2 SCR-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 SCR-2 S2 HDD,        !- Schedule:Day Name 3
+    EL2 SCR-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 SCR-2 S2 CDD,        !- Schedule:Day Name 4
+    EL2 SCR-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 SCR-2 S2 WEH;        !- Schedule:Day Name 5
+    EL2 SCR-2 S2 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 SCR-2 S3 Wk,         !- Name
+    EL2 SCR-2 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 SCR-2 S3 WD,         !- Schedule:Day Name 1
+    EL2 SCR-2 S3 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 SCR-2 S3 WEH,        !- Schedule:Day Name 2
+    EL2 SCR-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 SCR-2 S3 HDD,        !- Schedule:Day Name 3
+    EL2 SCR-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 SCR-2 S3 CDD,        !- Schedule:Day Name 4
+    EL2 SCR-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 SCR-2 S3 WEH;        !- Schedule:Day Name 5
+    EL2 SCR-2 S3 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
     EL2 GndFlr 2 MtrPrOE Elc S1 Wk,  !- Name
@@ -7073,9 +7073,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 GndFlr 2 MtrPrOE Elc S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 GndFlr 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 3
+    EL2 GndFlr 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 GndFlr 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 4
+    EL2 GndFlr 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 GndFlr 2 MtrPrOE Elc S1 WEH;  !- Schedule:Day Name 5
 
@@ -7086,9 +7086,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 GndFlr 2 MtrPrOE Elc S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 GndFlr 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 3
+    EL2 GndFlr 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 GndFlr 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 4
+    EL2 GndFlr 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 GndFlr 2 MtrPrOE Elc S2 WEH;  !- Schedule:Day Name 5
 
@@ -7099,245 +7099,245 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 GndFlr 2 MtrPrOE Elc S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 GndFlr 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 3
+    EL2 GndFlr 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 GndFlr 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 4
+    EL2 GndFlr 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 GndFlr 2 MtrPrOE Elc S3 WEH;  !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Occ-1 S1 Wk,         !- Name
+    EL2 Occ-1 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Occ-1 S1 WD,         !- Schedule:Day Name 1
+    EL2 Occ-1 S1 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Occ-1 S1 WEH,        !- Schedule:Day Name 2
+    EL2 Occ-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-1 S1 HDD,        !- Schedule:Day Name 3
+    EL2 Occ-1 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-1 S1 CDD,        !- Schedule:Day Name 4
+    EL2 Occ-1 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Occ-1 S1 WEH;        !- Schedule:Day Name 5
+    EL2 Occ-1 S1 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Occ-1 S2 Wk,         !- Name
+    EL2 Occ-1 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Occ-1 S2 WD,         !- Schedule:Day Name 1
+    EL2 Occ-1 S2 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Occ-1 S2 WEH,        !- Schedule:Day Name 2
+    EL2 Occ-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-1 S2 HDD,        !- Schedule:Day Name 3
+    EL2 Occ-1 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-1 S2 CDD,        !- Schedule:Day Name 4
+    EL2 Occ-1 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Occ-1 S2 WEH;        !- Schedule:Day Name 5
+    EL2 Occ-1 S2 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Occ-1 S3 Wk,         !- Name
+    EL2 Occ-1 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Occ-1 S3 WD,         !- Schedule:Day Name 1
+    EL2 Occ-1 S3 WD,       !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Occ-1 S3 WEH,        !- Schedule:Day Name 2
+    EL2 Occ-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-1 S3 HDD,        !- Schedule:Day Name 3
+    EL2 Occ-1 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-1 S3 CDD,        !- Schedule:Day Name 4
+    EL2 Occ-1 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Occ-1 S3 WEH;        !- Schedule:Day Name 5
+    EL2 Occ-1 S3 WEH;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Msc-1 S1 Wk,         !- Name
+    EL2 Msc-1 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Msc-1 S1 All,        !- Schedule:Day Name 1
+    EL2 Msc-1 S1 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Msc-1 S1 All,        !- Schedule:Day Name 2
+    EL2 Msc-1 S1 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Msc-1 S1 All,        !- Schedule:Day Name 3
+    EL2 Msc-1 S1 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Msc-1 S1 All,        !- Schedule:Day Name 4
+    EL2 Msc-1 S1 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Msc-1 S1 All;        !- Schedule:Day Name 5
+    EL2 Msc-1 S1 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Msc-1 S2 Wk,         !- Name
+    EL2 Msc-1 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Msc-1 S2 All,        !- Schedule:Day Name 1
+    EL2 Msc-1 S2 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Msc-1 S2 All,        !- Schedule:Day Name 2
+    EL2 Msc-1 S2 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Msc-1 S2 All,        !- Schedule:Day Name 3
+    EL2 Msc-1 S2 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Msc-1 S2 All,        !- Schedule:Day Name 4
+    EL2 Msc-1 S2 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Msc-1 S2 All;        !- Schedule:Day Name 5
+    EL2 Msc-1 S2 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Msc-1 S3 Wk,         !- Name
+    EL2 Msc-1 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Msc-1 S3 All,        !- Schedule:Day Name 1
+    EL2 Msc-1 S3 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Msc-1 S3 All,        !- Schedule:Day Name 2
+    EL2 Msc-1 S3 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Msc-1 S3 All,        !- Schedule:Day Name 3
+    EL2 Msc-1 S3 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Msc-1 S3 All,        !- Schedule:Day Name 4
+    EL2 Msc-1 S3 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Msc-1 S3 All;        !- Schedule:Day Name 5
+    EL2 Msc-1 S3 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Ckg-1 S1 Wk,         !- Name
+    EL2 Ckg-1 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Ckg-1 S1 All,        !- Schedule:Day Name 1
+    EL2 Ckg-1 S1 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Ckg-1 S1 All,        !- Schedule:Day Name 2
+    EL2 Ckg-1 S1 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Ckg-1 S1 All,        !- Schedule:Day Name 3
+    EL2 Ckg-1 S1 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Ckg-1 S1 All,        !- Schedule:Day Name 4
+    EL2 Ckg-1 S1 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Ckg-1 S1 All;        !- Schedule:Day Name 5
+    EL2 Ckg-1 S1 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Ckg-1 S2 Wk,         !- Name
+    EL2 Ckg-1 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Ckg-1 S2 All,        !- Schedule:Day Name 1
+    EL2 Ckg-1 S2 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Ckg-1 S2 All,        !- Schedule:Day Name 2
+    EL2 Ckg-1 S2 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Ckg-1 S2 All,        !- Schedule:Day Name 3
+    EL2 Ckg-1 S2 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Ckg-1 S2 All,        !- Schedule:Day Name 4
+    EL2 Ckg-1 S2 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Ckg-1 S2 All;        !- Schedule:Day Name 5
+    EL2 Ckg-1 S2 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Ckg-1 S3 Wk,         !- Name
+    EL2 Ckg-1 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Ckg-1 S3 All,        !- Schedule:Day Name 1
+    EL2 Ckg-1 S3 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Ckg-1 S3 All,        !- Schedule:Day Name 2
+    EL2 Ckg-1 S3 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Ckg-1 S3 All,        !- Schedule:Day Name 3
+    EL2 Ckg-1 S3 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Ckg-1 S3 All,        !- Schedule:Day Name 4
+    EL2 Ckg-1 S3 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Ckg-1 S3 All;        !- Schedule:Day Name 5
+    EL2 Ckg-1 S3 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Prc-1 S1 Wk,         !- Name
+    EL2 Prc-1 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Prc-1 S1 All,        !- Schedule:Day Name 1
+    EL2 Prc-1 S1 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Prc-1 S1 All,        !- Schedule:Day Name 2
+    EL2 Prc-1 S1 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Prc-1 S1 All,        !- Schedule:Day Name 3
+    EL2 Prc-1 S1 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Prc-1 S1 All,        !- Schedule:Day Name 4
+    EL2 Prc-1 S1 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Prc-1 S1 All;        !- Schedule:Day Name 5
+    EL2 Prc-1 S1 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Prc-1 S2 Wk,         !- Name
+    EL2 Prc-1 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Prc-1 S2 All,        !- Schedule:Day Name 1
+    EL2 Prc-1 S2 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Prc-1 S2 All,        !- Schedule:Day Name 2
+    EL2 Prc-1 S2 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Prc-1 S2 All,        !- Schedule:Day Name 3
+    EL2 Prc-1 S2 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Prc-1 S2 All,        !- Schedule:Day Name 4
+    EL2 Prc-1 S2 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Prc-1 S2 All;        !- Schedule:Day Name 5
+    EL2 Prc-1 S2 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Prc-1 S3 Wk,         !- Name
+    EL2 Prc-1 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Prc-1 S3 All,        !- Schedule:Day Name 1
+    EL2 Prc-1 S3 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Prc-1 S3 All,        !- Schedule:Day Name 2
+    EL2 Prc-1 S3 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Prc-1 S3 All,        !- Schedule:Day Name 3
+    EL2 Prc-1 S3 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Prc-1 S3 All,        !- Schedule:Day Name 4
+    EL2 Prc-1 S3 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Prc-1 S3 All;        !- Schedule:Day Name 5
+    EL2 Prc-1 S3 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Mtr-1 S1 Wk,         !- Name
+    EL2 Mtr-1 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Mtr-1 S1 All,        !- Schedule:Day Name 1
+    EL2 Mtr-1 S1 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Mtr-1 S1 All,        !- Schedule:Day Name 2
+    EL2 Mtr-1 S1 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Mtr-1 S1 All,        !- Schedule:Day Name 3
+    EL2 Mtr-1 S1 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Mtr-1 S1 All,        !- Schedule:Day Name 4
+    EL2 Mtr-1 S1 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Mtr-1 S1 All;        !- Schedule:Day Name 5
+    EL2 Mtr-1 S1 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Mtr-1 S2 Wk,         !- Name
+    EL2 Mtr-1 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Mtr-1 S2 All,        !- Schedule:Day Name 1
+    EL2 Mtr-1 S2 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Mtr-1 S2 All,        !- Schedule:Day Name 2
+    EL2 Mtr-1 S2 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Mtr-1 S2 All,        !- Schedule:Day Name 3
+    EL2 Mtr-1 S2 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Mtr-1 S2 All,        !- Schedule:Day Name 4
+    EL2 Mtr-1 S2 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Mtr-1 S2 All;        !- Schedule:Day Name 5
+    EL2 Mtr-1 S2 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 Mtr-1 S3 Wk,         !- Name
+    EL2 Mtr-1 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 Mtr-1 S3 All,        !- Schedule:Day Name 1
+    EL2 Mtr-1 S3 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 Mtr-1 S3 All,        !- Schedule:Day Name 2
+    EL2 Mtr-1 S3 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Mtr-1 S3 All,        !- Schedule:Day Name 3
+    EL2 Mtr-1 S3 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Mtr-1 S3 All,        !- Schedule:Day Name 4
+    EL2 Mtr-1 S3 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 Mtr-1 S3 All;        !- Schedule:Day Name 5
+    EL2 Mtr-1 S3 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 SCR-1 S1 Wk,         !- Name
+    EL2 SCR-1 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 SCR-1 S1 All,        !- Schedule:Day Name 1
+    EL2 SCR-1 S1 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 SCR-1 S1 All,        !- Schedule:Day Name 2
+    EL2 SCR-1 S1 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 SCR-1 S1 All,        !- Schedule:Day Name 3
+    EL2 SCR-1 S1 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 SCR-1 S1 All,        !- Schedule:Day Name 4
+    EL2 SCR-1 S1 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 SCR-1 S1 All;        !- Schedule:Day Name 5
+    EL2 SCR-1 S1 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 SCR-1 S2 Wk,         !- Name
+    EL2 SCR-1 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 SCR-1 S2 All,        !- Schedule:Day Name 1
+    EL2 SCR-1 S2 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 SCR-1 S2 All,        !- Schedule:Day Name 2
+    EL2 SCR-1 S2 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 SCR-1 S2 All,        !- Schedule:Day Name 3
+    EL2 SCR-1 S2 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 SCR-1 S2 All,        !- Schedule:Day Name 4
+    EL2 SCR-1 S2 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 SCR-1 S2 All;        !- Schedule:Day Name 5
+    EL2 SCR-1 S2 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL2 SCR-1 S3 Wk,         !- Name
+    EL2 SCR-1 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL2 SCR-1 S3 All,        !- Schedule:Day Name 1
+    EL2 SCR-1 S3 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL2 SCR-1 S3 All,        !- Schedule:Day Name 2
+    EL2 SCR-1 S3 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 SCR-1 S3 All,        !- Schedule:Day Name 3
+    EL2 SCR-1 S3 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 SCR-1 S3 All,        !- Schedule:Day Name 4
+    EL2 SCR-1 S3 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL2 SCR-1 S3 All;        !- Schedule:Day Name 5
+    EL2 SCR-1 S3 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
     EL5 GndFlr 5 MtrPrOE Elc S1 Wk,  !- Name
@@ -7346,9 +7346,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL5 GndFlr 5 MtrPrOE Elc S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL5 GndFlr 5 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 3
+    EL5 GndFlr 5 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL5 GndFlr 5 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 4
+    EL5 GndFlr 5 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL5 GndFlr 5 MtrPrOE Elc S1 WEH;  !- Schedule:Day Name 5
 
@@ -7359,9 +7359,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL5 GndFlr 5 MtrPrOE Elc S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL5 GndFlr 5 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 3
+    EL5 GndFlr 5 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL5 GndFlr 5 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 4
+    EL5 GndFlr 5 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL5 GndFlr 5 MtrPrOE Elc S2 WEH;  !- Schedule:Day Name 5
 
@@ -7372,50 +7372,50 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL5 GndFlr 5 MtrPrOE Elc S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL5 GndFlr 5 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 3
+    EL5 GndFlr 5 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL5 GndFlr 5 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 4
+    EL5 GndFlr 5 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL5 GndFlr 5 MtrPrOE Elc S3 WEH;  !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL7 Off-3 S1 Wk,         !- Name
+    EL7 Off-3 S1 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL7 Off-3 S1 All,        !- Schedule:Day Name 1
+    EL7 Off-3 S1 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL7 Off-3 S1 All,        !- Schedule:Day Name 2
+    EL7 Off-3 S1 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL7 Off-3 S1 All,        !- Schedule:Day Name 3
+    EL7 Off-3 S1 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL7 Off-3 S1 All,        !- Schedule:Day Name 4
+    EL7 Off-3 S1 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL7 Off-3 S1 All;        !- Schedule:Day Name 5
+    EL7 Off-3 S1 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL7 Off-3 S2 Wk,         !- Name
+    EL7 Off-3 S2 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL7 Off-3 S2 All,        !- Schedule:Day Name 1
+    EL7 Off-3 S2 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL7 Off-3 S2 All,        !- Schedule:Day Name 2
+    EL7 Off-3 S2 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL7 Off-3 S2 All,        !- Schedule:Day Name 3
+    EL7 Off-3 S2 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL7 Off-3 S2 All,        !- Schedule:Day Name 4
+    EL7 Off-3 S2 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL7 Off-3 S2 All;        !- Schedule:Day Name 5
+    EL7 Off-3 S2 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    EL7 Off-3 S3 Wk,         !- Name
+    EL7 Off-3 S3 Wk,       !- Name
     Weekdays,                !- DayType List 1
-    EL7 Off-3 S3 All,        !- Schedule:Day Name 1
+    EL7 Off-3 S3 All,      !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    EL7 Off-3 S3 All,        !- Schedule:Day Name 2
+    EL7 Off-3 S3 All,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL7 Off-3 S3 All,        !- Schedule:Day Name 3
+    EL7 Off-3 S3 All,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL7 Off-3 S3 All,        !- Schedule:Day Name 4
+    EL7 Off-3 S3 All,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    EL7 Off-3 S3 All;        !- Schedule:Day Name 5
+    EL7 Off-3 S3 All;      !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
     EL7 ZnGrp 2 MtrPrOE Elc S1 Wk,  !- Name
@@ -7424,9 +7424,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL7 ZnGrp 2 MtrPrOE Elc S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL7 ZnGrp 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 3
+    EL7 ZnGrp 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL7 ZnGrp 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 4
+    EL7 ZnGrp 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL7 ZnGrp 2 MtrPrOE Elc S1 WEH;  !- Schedule:Day Name 5
 
@@ -7437,9 +7437,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL7 ZnGrp 2 MtrPrOE Elc S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL7 ZnGrp 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 3
+    EL7 ZnGrp 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL7 ZnGrp 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 4
+    EL7 ZnGrp 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL7 ZnGrp 2 MtrPrOE Elc S2 WEH;  !- Schedule:Day Name 5
 
@@ -7450,9 +7450,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL7 ZnGrp 2 MtrPrOE Elc S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL7 ZnGrp 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 3
+    EL7 ZnGrp 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL7 ZnGrp 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 4
+    EL7 ZnGrp 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL7 ZnGrp 2 MtrPrOE Elc S3 WEH;  !- Schedule:Day Name 5
 
@@ -7463,9 +7463,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL8 ZnGrp 2 2 MtrPrOE Elc S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL8 ZnGrp 2 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 3
+    EL8 ZnGrp 2 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL8 ZnGrp 2 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 4
+    EL8 ZnGrp 2 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL8 ZnGrp 2 2 MtrPrOE Elc S1 WEH;  !- Schedule:Day Name 5
 
@@ -7476,9 +7476,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL8 ZnGrp 2 2 MtrPrOE Elc S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL8 ZnGrp 2 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 3
+    EL8 ZnGrp 2 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL8 ZnGrp 2 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 4
+    EL8 ZnGrp 2 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL8 ZnGrp 2 2 MtrPrOE Elc S2 WEH;  !- Schedule:Day Name 5
 
@@ -7489,9 +7489,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL8 ZnGrp 2 2 MtrPrOE Elc S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL8 ZnGrp 2 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 3
+    EL8 ZnGrp 2 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL8 ZnGrp 2 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 4
+    EL8 ZnGrp 2 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL8 ZnGrp 2 2 MtrPrOE Elc S3 WEH;  !- Schedule:Day Name 5
 
@@ -7509,69 +7509,69 @@ Schedule:Week:Compact,
     ZG6-S1 (PVVT) C-Inf S1 All;  !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    DHW SF2 R-Lp Prc1 S1 Wk, !- Name
+    DHW SF2 R-Lp Prc1 S1 Wk,  !- Name
     Weekdays,                !- DayType List 1
-    DHW SF2 R-Lp Prc1 S1 WD, !- Schedule:Day Name 1
+    DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    DHW SF2 R-Lp Prc1 S1 WD, !- Schedule:Day Name 2
+    DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,!- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    DHW SF2 R-Lp Prc1 S1 WD, !- Schedule:Day Name 4
+    DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    DHW SF2 R-Lp Prc1 S1 WD; !- Schedule:Day Name 5
+    DHW SF2 R-Lp Prc1 S1 WD;  !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    DHW SF2 R-Lp Prc2 S1 Wk, !- Name
+    DHW SF2 R-Lp Prc2 S1 Wk,  !- Name
     Weekdays,                !- DayType List 1
-    DHW SF2 R-Lp Prc2 S1 WD, !- Schedule:Day Name 1
+    DHW SF2 R-Lp Prc2 S1 WD,  !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    DHW SF2 R-Lp Prc2 S1 WD, !- Schedule:Day Name 2
+    DHW SF2 R-Lp Prc2 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,!- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    DHW SF2 R-Lp Prc2 S1 WD, !- Schedule:Day Name 4
+    DHW SF2 R-Lp Prc2 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    DHW SF2 R-Lp Prc2 S1 WD; !- Schedule:Day Name 5
+    DHW SF2 R-Lp Prc2 S1 WD;  !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    DHW SF2 R-Lp Prc3 S1 Wk, !- Name
+    DHW SF2 R-Lp Prc3 S1 Wk,  !- Name
     Weekdays,                !- DayType List 1
-    DHW SF2 R-Lp Prc3 S1 WD, !- Schedule:Day Name 1
+    DHW SF2 R-Lp Prc3 S1 WD,  !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    DHW SF2 R-Lp Prc3 S1 WD, !- Schedule:Day Name 2
+    DHW SF2 R-Lp Prc3 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,!- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    DHW SF2 R-Lp Prc3 S1 WD, !- Schedule:Day Name 4
+    DHW SF2 R-Lp Prc3 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    DHW SF2 R-Lp Prc3 S1 WD; !- Schedule:Day Name 5
+    DHW SF2 R-Lp Prc3 S1 WD;  !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    DHW SF2 R-Lp Prc4 S1 Wk, !- Name
+    DHW SF2 R-Lp Prc4 S1 Wk,  !- Name
     Weekdays,                !- DayType List 1
-    DHW SF2 R-Lp Prc4 S1 WD, !- Schedule:Day Name 1
+    DHW SF2 R-Lp Prc4 S1 WD,  !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    DHW SF2 R-Lp Prc4 S1 WD, !- Schedule:Day Name 2
+    DHW SF2 R-Lp Prc4 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,!- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    DHW SF2 R-Lp Prc4 S1 WD, !- Schedule:Day Name 4
+    DHW SF2 R-Lp Prc4 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    DHW SF2 R-Lp Prc4 S1 WD; !- Schedule:Day Name 5
+    DHW SF2 R-Lp Prc4 S1 WD;  !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
-    DHW SF2 R-Lp Prc5 S1 Wk, !- Name
+    DHW SF2 R-Lp Prc5 S1 Wk,  !- Name
     Weekdays,                !- DayType List 1
-    DHW SF2 R-Lp Prc5 S1 WD, !- Schedule:Day Name 1
+    DHW SF2 R-Lp Prc5 S1 WD,  !- Schedule:Day Name 1
     Weekends,                !- DayType List 2
-    DHW SF2 R-Lp Prc5 S1 WD, !- Schedule:Day Name 2
+    DHW SF2 R-Lp Prc5 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,!- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    DHW SF2 R-Lp Prc5 S1 WD, !- Schedule:Day Name 4
+    DHW SF2 R-Lp Prc5 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
-    DHW SF2 R-Lp Prc5 S1 WD; !- Schedule:Day Name 5
+    DHW SF2 R-Lp Prc5 S1 WD;  !- Schedule:Day Name 5
 
 Schedule:Week:Compact,
     DEER Res Shade Week Jan, !- Name
