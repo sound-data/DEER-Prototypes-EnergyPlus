@@ -1539,34 +1539,6 @@ Schedule:Day:Hourly,
     1.0,                     !- Hour 23
     1.0;                     !- Hour 24
 
-Schedule:Day:Hourly,
-    Max HDD,  !- Name
-    fraction,                !- Schedule Type Limits Name
-    0.0,                     !- Hour 1
-    0.0,                     !- Hour 2
-    0.0,                     !- Hour 3
-    0.0,                     !- Hour 4
-    0.0,                     !- Hour 5
-    0.0,                     !- Hour 6
-    0.0,                     !- Hour 7
-    0.0,                     !- Hour 8
-    0.0,                     !- Hour 9
-    0.0,                     !- Hour 10
-    0.0,                     !- Hour 11
-    0.0,                     !- Hour 12
-    0.0,                     !- Hour 13
-    0.0,                     !- Hour 14
-    0.0,                     !- Hour 15
-    0.0,                     !- Hour 16
-    0.0,                     !- Hour 17
-    0.0,                     !- Hour 18
-    0.0,                     !- Hour 19
-    0.0,                     !- Hour 20
-    0.0,                     !- Hour 21
-    0.0,                     !- Hour 22
-    0.0,                     !- Hour 23
-    0.0;                     !- Hour 24
-
 !-   ===========  ALL OBJECTS IN CLASS: SCHEDULE:WEEK:COMPACT ===========
 
 Schedule:Week:Compact,
