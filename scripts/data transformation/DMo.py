@@ -268,9 +268,9 @@ for i in range(0,num_runs):
     idf_path = hrly_path + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance.idf"
     runperiod_start_day = helper_functions.get_runperiod_start_day(idf_path)
 
-    #extract the last column (the total elec hrly profile)
+    #extract explicitly the total elec column
     #if for enduse hourly, then extract the relevant end use column
-    extracted_df = pd.DataFrame(df.iloc[:,-1])
+    extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
     
     #create the column name based on the permutations
     col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv" + "/"+runperiod_start_day
