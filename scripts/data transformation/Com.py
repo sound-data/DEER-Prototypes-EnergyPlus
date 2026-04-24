@@ -350,7 +350,10 @@ print(os.path.abspath(os.curdir))
 #lookup each folder, see if there is hourly output inside
 #if so, extract hourly data per bldgtype-bldghvac-bldgvint group
 #put together into one table
-hourly_df = pd.DataFrame(index=range(0,8760))
+
+#4/23/26 fix attempt#1 - avoid multiple dataframe creations
+index = pd.RangeIndex(8760)
+hourly_data = {}
 
 for folder in folder_list:
     print(f"looking at folder {folder}..")
@@ -368,73 +371,98 @@ for folder in folder_list:
         split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
         for i in range(0,num_runs):
-            print(f"merging record {i}")
-            
+            print(f"processing record {i}")
             #loop path of each file, read corresponding file
-            full_path = hrly_subpath + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
-            
+            base_path = (
+                f"{hrly_subpath}/"
+                f"{split_meta_cols_eu.iloc[i][0]}/"
+                f"{split_meta_cols_eu.iloc[i][1]}/"
+                f"{split_meta_cols_eu.iloc[i][2]}"
+                        )
+            csv_path = f"{base_path}/instance-var.csv"
+            idf_path = f"{base_path}/instance.idf"
+
             #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation
-            idf_path = hrly_subpath + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance.idf"
             runperiod_start_day = helper_functions.get_runperiod_start_day(idf_path)
 
-            df = pd.read_csv(full_path, low_memory=False)
-            #remove traling spaces on col headers
-            df.columns = df.columns.str.rstrip()
-        
-            #8/1/2024 update: extract the electricy column only
-            #if for enduse hourly, then extract the relevant end use column
-            extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
+            #note the space after column name, update accordingly if col name changes
+            df = pd.read_csv(csv_path, usecols=['Electricity:Facility [J](Hourly) '])
+
+            #extract values only
+            values = df.iloc[:, 0].to_numpy(copy=False)
+
+            #8760 values check
+            if len(values) != 8760:
+                diff = len(values) - 8760
+                print(f'extra records: {len(values)}, snipping away {diff} records and changing to 8760')
+                values = values[diff:]
+
+            #construct combined string as column header
+            col_name = (
+                        f"{split_meta_cols_eu.iloc[i][0]}/"
+                        f"{split_meta_cols_eu.iloc[i][1]}/"
+                        f"{split_meta_cols_eu.iloc[i][2]}/"
+                        f"instance-var.csv/{runperiod_start_day}"
+                        )
             
-            #create the column name based on the permutations
-            col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv" + "/"+runperiod_start_day
-            
-            #change column name
-            extracted_df = extracted_df.set_axis([col_name],axis=1)
-            if len(extracted_df)!=8760:
-                #8/31/2022 update, need to make the final length 8808. Snip data based on difference to 8760
-                record_count_diff = len(extracted_df) - 8760
-                print(f'extra records: {str(len(extracted_df))}, snipping away {record_count_diff} records and changing to 8760')
-                extracted_df = extracted_df.iloc[record_count_diff:].reset_index(drop=True)
-            
-            #left-merge onto big df
-            hourly_df = hourly_df.merge(extracted_df, left_index=True, right_index=True)
+            #add in corresponding value from values
+            hourly_data[col_name] = values
+
         print(f"hourly data for '{subpath}' processed.")
     else:
         print(f"no data found.")
 
+# Create DataFrame once
+hourly_df = pd.DataFrame(hourly_data, index=index)
 
 # %%
 fyr_hrly = hourly_df
 #rearrange 1-column 8760 format to 365x24 wide format for all runs in hourly_df
-converted_df = pd.DataFrame()
 
-for i in range(0,len(fyr_hrly.columns)):
+#4/23/26 memory saver update - list of row dicts
+converted_records = []
+
+for i, col_name in enumerate(fyr_hrly.columns):
     
-    #isolate single column
-    hrly_df = pd.DataFrame(fyr_hrly.iloc[:,i])
+    #isolate single column values only
+    values = fyr_hrly.iloc[:,i].to_numpy(copy=False)
+
+    #check for data length
+    if len(values) != 8760:
+        raise ValueError(f"{col_name} has {len(values)} hours, expected 8760")
     
-    #create separate metadata columns
-    col_names = hrly_df.columns[0].split('/')
+    #reshape to 365x24 via numpy
+    wide_values = values.reshape(365, 24)
+
+    #parse separate metadata columns
+    col_parts = col_name.split('/')
+    bldg_loc = col_parts[0]
+    bldg_type = col_parts[1][:3]
+    tech_id   = col_parts[2]
+    file_name = col_parts[3]
+    id = col_name
     
-    #create new key column for merge
-    hrly_df['hr in 8760'] = (hrly_df.index) + 1
-    
-    #merge based on "hr in 8760" column, the 8760 map
-    hrly_mapped = pd.merge(hrly_df, annual_map, on='hr in 8760')
-    
-    #transform data format
-    hrly_wide = long2wide_pivot(hrly_mapped, hrly_mapped.columns[0])
-    
-    #add meta data col
-    hrly_wide['BldgLoc'] = col_names[0]
-    hrly_wide['BldgType'] = col_names[1][0:3]  #slight mod to only extract first 3 letters for bldgtype
-    hrly_wide['TechID'] = col_names[2]
-    hrly_wide['file'] = col_names[3]
-    
-    #append to master df
-    #converted_df = converted_df.append(hrly_wide) #deprecated method
-    converted_df = pd.concat([converted_df, hrly_wide])
+    #build row records
+    for day_idx in range(365):
+        row = {
+            "daynum": day_idx + 1,
+            "BldgLoc": bldg_loc,
+            "BldgType": bldg_type,
+            "TechID": tech_id,
+            "file": file_name,
+            "ID": id
+        }
+
+        #add 24 hourly cols
+        for hour in range(24):
+            row[hour + 1] = wide_values[day_idx, hour]
+        
+        converted_records.append(row)
     print(f"col {i} transformed.")
+
+# create DataFrame once
+converted_df = pd.DataFrame.from_records(converted_records)
+
 
 #%%
 #rearrange columns
@@ -487,49 +515,80 @@ print(os.path.abspath(os.curdir))
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
 normunit = df_measure['Normunit'].unique()[0]
 
-
-
-
 #%%
 ################################################################################################
 ################################################################################################
 #12/22/2025 CEDARS Hourly consumption output reformatting
+# 4/23/2026 memory saver update
 # use the hourly data before long2wide pivot transform
+
+#Calendar arrays creation
+N_HOURS = 8760
+hours = np.arange(N_HOURS)
+calendar = {
+    "hr in 8760": hours + 1,
+    "Hour": (hours % 24) + 1,
+    "daynum": (hours // 24) + 1,
+}
+# pick a reference start day, add relevant fields
+dt_index = pd.date_range("2018-01-01", periods=N_HOURS, freq="h")
+calendar["Month"] = dt_index.month
+calendar["Day"] = dt_index.day
+#%%
+#setup data dict
+long_data = {
+    "Total_Elec_Consumption": [],
+    "hr in 8760": [],
+    "Hour": [],
+    "daynum": [],
+    "Month": [],
+    "Day": [],
+    "BldgLoc": [],
+    "BldgType": [],
+    "BldgHVAC": [],
+    "BldgVint": [],
+    "TechGroup": [],
+    "Measure Group Name": [],
+    "TechID": [],
+    "file": [],
+    "RunPeriod Start Day": [],
+}
 print('reformatting hourly data for CEDARS loadshape format..')
-converted_long_df = pd.DataFrame()
 
-for i in range(0,len(fyr_hrly.columns)):
-    
-    #isolate single column
-    hrly_df = pd.DataFrame(fyr_hrly.iloc[:,i])
-    
-    #create separate metadata columns
-    col_names = hrly_df.columns[0].split('/')
-    
-    #create new key column for merge
-    hrly_df['hr in 8760'] = (hrly_df.index) + 1
-    
-    #merge based on "hr in 8760" column, the 8760 map
-    hrly_mapped = pd.merge(hrly_df, annual_map, on='hr in 8760')
+for i, col_name in enumerate(fyr_hrly.columns):
+    #isolate values
+    values = fyr_hrly[col_name].to_numpy(copy=False)
 
-    cohort = parse_measure_name(col_names[1])
+    #check for data length
+    if len(values) != N_HOURS:
+        raise ValueError(f"{col_name} has {len(values)} rows")
+    
+    parts = col_name.split("/")
+    cohort = parse_measure_name(parts[1])
 
-    #rename / rearrange columns
-    hrly_mapped.rename(columns={hrly_mapped.columns[0]: 'Total_Elec_Consumption'}, inplace=True)
-    hrly_mapped['BldgLoc'] = col_names[0]
-    hrly_mapped['BldgType'] = cohort['BldgType']
-    hrly_mapped['BldgHVAC'] = cohort['BldgHVAC']
-    hrly_mapped['BldgVint'] = cohort['BldgVint']
-    hrly_mapped['TechGroup'] = cohort['Measure']
-    hrly_mapped['Measure Group Name'] =col_names[1] #use this to look up tech group tech type
-    hrly_mapped['TechID'] = col_names[2]
-    hrly_mapped['file'] = col_names[3]
-    #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation, and add as a column in the hourly mapped df
-    hrly_mapped['RunPeriod Start Day'] = col_names[4]
+    #hourly data value only put into dict
+    long_data["Total_Elec_Consumption"].append(values)
 
-    converted_long_df = pd.concat([converted_long_df, hrly_mapped])
+    #add calendar fields
+    for k in calendar:
+        long_data[k].append(calendar[k])
+
+    # add metadata
+    long_data["BldgLoc"].append(np.repeat(parts[0], N_HOURS))
+    long_data["BldgType"].append(np.repeat(cohort["BldgType"], N_HOURS))
+    long_data["BldgHVAC"].append(np.repeat(cohort["BldgHVAC"], N_HOURS))
+    long_data["BldgVint"].append(np.repeat(cohort["BldgVint"], N_HOURS))
+    long_data["TechGroup"].append(np.repeat(cohort["Measure"], N_HOURS))
+    long_data["Measure Group Name"].append(np.repeat(parts[1], N_HOURS))
+    long_data["TechID"].append(np.repeat(parts[2], N_HOURS))
+    long_data["file"].append(np.repeat(parts[3], N_HOURS))
+    long_data["RunPeriod Start Day"].append(np.repeat(parts[4], N_HOURS))
 
     print(f"col {i} long format loaded.")
+
+#build dataframe once
+final_data = {k: np.concatenate(v) for k, v in long_data.items()}
+converted_long_df = pd.DataFrame(final_data)
 
 
 #%%
