@@ -385,11 +385,12 @@ for folder in folder_list:
             #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation
             runperiod_start_day = helper_functions.get_runperiod_start_day(idf_path)
 
-            #note the space after column name, update accordingly if col name changes
-            df = pd.read_csv(csv_path, usecols=['Electricity:Facility [J](Hourly) '])
+            #remove trailing spaces for col name if it happens
+            df = pd.read_csv(csv_path, low_memory=False)
+            df.columns = df.columns.str.strip()
 
             #extract values only
-            values = df.iloc[:, 0].to_numpy(copy=False)
+            values = df["Electricity:Facility [J](Hourly)"].to_numpy(copy=False)
 
             #8760 values check
             if len(values) != 8760:
