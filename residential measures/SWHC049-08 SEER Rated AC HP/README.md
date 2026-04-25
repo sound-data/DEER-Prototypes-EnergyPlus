@@ -61,3 +61,60 @@ The file `query_swhc049.txt` includes queries for cooling and heating capacity f
 cd "residential measures/SWHC049-08 SEER Rated AC HP"
 python result2.py -q query_swhc049.txt
 ```
+
+## Data transformation and post-processing
+
+Data transformation uses the measure list workbook from this folder and the
+standard data transformation scripts from the top level 'scripts' folder.
+Remember to copy "DEER_EnergyPlus_Modelkit_Measure_list_working_SWHC049-08.xlsx"
+into the scripts folder and modify each script to enter the measure folder
+path, measure name, and measure list workbook filename.
+
+For post-processing, the user may use the optional PSQL script 'run_residential_processing_SWHC049.psql'
+to apply the standard post-processing workflow in Postgres. The script is
+designed to be run from the top level 'scripts' folder. In order to use the
+script, the user should copy the script and data transformation output files
+into the top level 'scripts' folder as follows:
+
+```
+scripts
+│   run_residential_processing_SWHC049.psql
+│
+├───data transformation
+│       ...
+│
+├───energy savings
+│       ...
+│
+├───results
+│   │
+│   ├───DMo_All
+│   │       current_msr_mat.csv
+│   │       sim_annual.csv
+│   │       sim_hourly_wb.csv
+│   │
+│   ├───MFm_Ex
+│   │       current_msr_mat.csv
+│   │       sim_annual.csv
+│   │       sim_hourly_wb.csv
+│   │
+│   ├───MFm_New
+│   │       current_msr_mat.csv
+│   │       sim_annual.csv
+│   │       sim_hourly_wb.csv
+│   │
+│   ├───SFm_Ex
+│   │       current_msr_mat.csv
+│   │       sfm_annual.csv
+│   │       sfm_hourly_wb.csv
+│   │
+│   └───SFm_New
+│           current_msr_mat.csv
+│           sfm_annual.csv
+│           sfm_hourly_wb.csv
+│
+└───schema
+        ...
+
+```
+
