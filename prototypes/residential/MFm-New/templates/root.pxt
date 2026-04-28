@@ -72,7 +72,7 @@ parameter "duct_r_value", :default => 8['R-IP'] #U-IP effective duct R value = i
 
 %>
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%

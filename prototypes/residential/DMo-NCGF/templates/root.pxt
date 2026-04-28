@@ -88,7 +88,7 @@ parameter 'return_leakage_frac', :default=>0
 parameter "infiltration_reduction", :default=>0.0  # TRC SWBE013-01, SWBE014-01; default is no reduction from base case (ACH)
 %>
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%

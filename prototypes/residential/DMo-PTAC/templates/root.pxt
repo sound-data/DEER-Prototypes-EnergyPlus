@@ -59,7 +59,7 @@ parameter "refgfrzr_power_level", :default=>1.37778053333884
 %>
 
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%

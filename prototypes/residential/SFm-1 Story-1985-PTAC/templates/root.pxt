@@ -48,7 +48,7 @@ parameter "sizing_parameter", :default=>1.8
 #shading control
 parameter "shading_control", :default=>'AlwaysOn'
 %>
-
+<%insert 'holidays.pxt'%>
 <%
 insert 'site.pxt'
 

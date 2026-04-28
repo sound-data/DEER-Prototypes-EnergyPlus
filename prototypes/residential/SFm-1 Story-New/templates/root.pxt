@@ -80,7 +80,7 @@ parameter "shading_control", :default=>'AlwaysOn'
 %>
 
 
-
+<%insert 'holidays.pxt'%>
 <%
 insert 'site.pxt'
 

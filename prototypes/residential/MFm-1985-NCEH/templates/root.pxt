@@ -78,7 +78,7 @@ parameter "infiltration_reduction", :default=>0.0  # TRC SWBE013-01, SWBE014-01;
 %>
 
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%
