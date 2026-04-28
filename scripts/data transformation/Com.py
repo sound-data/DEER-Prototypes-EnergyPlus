@@ -12,8 +12,8 @@ from importlib import reload
 reload(helper_functions)
 # %%
 #Read master workbook for measure / tech list (note example commented line for specific measures)
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
-#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_fanbelts.xlsx', sheet_name='Measure_list', skiprows=4)
+#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_fanbelts.xlsx', sheet_name='Measure_list', skiprows=4)
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
@@ -28,8 +28,8 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself) 
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWXX111-00 Example_SEER_AC'
-#measure_name = 'SWHC024-05 Fan Belt'
+#measure_name = 'SWXX111-00 Example_SEER_AC'
+measure_name = 'SWHC024-05 Fan Belt'
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
 # %%
@@ -42,8 +42,8 @@ print(os.path.abspath(os.curdir))
 
 #12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res
-filepath = f'commercial measures/{measure_name}'
-#filepath = f'commercial measures/SWHC024-06 Fan Belt' #only changed this for testing
+#filepath = f'commercial measures/{measure_name}'
+filepath = f'commercial measures/SWHC024-06 Fan Belt' #only changed this for testing
 
 
 # %%
@@ -607,38 +607,6 @@ converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Cons
 
 
 # %%
-#modify this part for CEDARS
-#measure specific normalizing units table
-df_numunits = df_normunits[df_normunits['Normunit']==normunit]
-#finalize normalizing unit and num based on measure
-
-if len(df_numunits) == 1:
-    numunits = df_numunits['Value'].unique()[0]
-    print('only 1 normalizing unit value across all data')
-elif len(df_numunits) > 1:
-    #mostly applies to Com (or any measure with multiple building types)
-    numunit_lookup = df_numunits.set_index('BldgType')['Value'].to_dict()
-    print(f'building-type dependent numunits for this normalizing unit : {normunit}')
-else:
-    normunit = 'Each' #If normalizing unit isn't anything else, put default as each
-    numunits = 1
-    print('no other available normunits, using default Each')
-
-
-
-#%%
-##Long format data norm unit field updates
-#note the bldgtype specific numunit lookup
-#Added ways to deal with if no normalizing unit is available for CEDARS loadshape format
-try:
-    converted_long_df['Normunit'] = normunit
-    converted_long_df['Numunits'] = converted_long_df['BldgType'].map(numunit_lookup)
-    print(f'using normalizing unit {normunit}')
-except:
-    #no appropriate numunit / normalizing units found
-    converted_long_df['Normunit'] = 'Each'
-    converted_long_df['Numunits'] = 1
-    print('no available normunits, using default Each for long table')
 #%%
 #Long format final field updates
 #need to divide each 8760 by its annual and its corresponding numunit
@@ -647,7 +615,8 @@ except:
 #3, divide and clean up final columns
 
 #convert to UEC by applying numunits
-converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
+#delete UEC col
+#converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
 
 #sort
 df_long = converted_long_df.sort_values(['BldgType','BldgLoc', 'TechID', 'hr in 8760'])
@@ -657,14 +626,14 @@ df_long = converted_long_df.sort_values(['BldgType','BldgLoc', 'TechID', 'hr in 
 df_long['set_id'] = (df_long['hr in 8760'].eq(1)
                 .groupby([df_long['BldgLoc'], df_long['TechID']])
                 .cumsum())
-#calculate annual UEC
+#calculate annual consumption (no UEC involved)
 df_long['annual_sum'] = (df_long
-    .groupby(['BldgLoc', 'TechID', 'set_id'])['UEC']
+    .groupby(['BldgLoc', 'TechID', 'set_id'])['Total_Elec_Consumption']
     .transform('sum'))
 
 #%%
-#Calculate unitzed 8760 values based on annual sum of 8760
-df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
+#Calculate unitzed 8760 values based on annual sum of 8760, updated to exclude numunits and UEC
+df_long['UECproportion'] = df_long['Total_Elec_Consumption'] / df_long['annual_sum']
 #%%
 #rearrange / true-up columns
 #source year mapping:
@@ -688,7 +657,7 @@ df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 #note: UEC and Numunits omitted from draft long table in the final table
 df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
          'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
-         'Hour of Year','UEC','UECproportion']] 
+         'Hour of Year','UECproportion']] 
 
 
 #%%
@@ -697,7 +666,7 @@ df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','N
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-#df_long_final.to_csv('CEDARS_long_ls_Com.csv', index=False) #enable if just need csv export
+df_long_final.to_csv('CEDARS_long_ls_Com.csv', index=False) #enable if just need csv export
 #3/4/2026 Dan P. on CEDARS - need to provide as zip format
 #%%
 import zipfile 
