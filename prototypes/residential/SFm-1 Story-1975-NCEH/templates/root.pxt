@@ -7589,7 +7589,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -7602,7 +7602,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc2 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc2 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -7615,7 +7615,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc3 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc3 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -7628,7 +7628,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc4 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc4 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -7641,7 +7641,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc5 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 CDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc5 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
