@@ -658,7 +658,11 @@ df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
          'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
          'Hour of Year','UECproportion']] 
-
+#%%
+#output annual consumption of each permutation and store for later use if needed
+df_long_annual_loads = df_long[[
+        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Type','Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
+         ]].drop_duplicates().reset_index(drop=True)
 
 #%%
 #export CEDARS long 8760 csv
@@ -666,7 +670,9 @@ df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-df_long_final.to_csv('CEDARS_long_ls_Com.csv', index=False) #enable if just need csv export
+#enable if just need csv export
+#df_long_final.to_csv('CEDARS_long_ls_Com.csv', index=False) 
+df_long_annual_loads.to_csv('CEDARS_ls_annual_loads_Com.csv', index=False)
 #3/4/2026 Dan P. on CEDARS - need to provide as zip format
 #%%
 import zipfile 
