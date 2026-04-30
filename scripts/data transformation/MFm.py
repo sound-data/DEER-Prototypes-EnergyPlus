@@ -445,7 +445,7 @@ elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation
     print(f'normunit is {normunit}, numunits is {numunits}.')
 elif measure_name == 'PTAC / PTHP':
     #create aligned lists for numunit dictionary
-    cz = list(numunits_vals['CZ'])
+    cz = list(numunits_vals['BldgLoc'])
     vint = list(numunits_vals['BldgVint'])
     nvals = list(numunits_vals['Value'])
     #create dictionary of {(cz,vintage):numunits}
