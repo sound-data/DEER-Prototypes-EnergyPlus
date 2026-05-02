@@ -1,4 +1,4 @@
-The python script gel_c;rm_daya.py extracts the required data from the instance-out.sql sqlite database for each simulation run.
+The python script gel_clrm_daya.py extracts the required data from the instance-out.sql sqlite database for each simulation run.
 
 No additional python packages are need.
 
