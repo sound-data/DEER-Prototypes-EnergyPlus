@@ -27,8 +27,7 @@ AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Wat
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Refrigeration
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Generators
 ComponentSizingSummary/Entire Facility/Coil:Heating:Water/Design Size Rated Capacity/*, Coil:Heating:Water Design Size Rated Capacity
-ComponentSizingSummary/Entire Facility/Boiler:HotWater/Design Size Nominal Capacity/*, Boiler:HotWater Design Size Nominal Capacity
-ComponentSizingSummary/Entire Facility/Coil:Heating:Steam/Maximum Steam Flow Rate/*, Coil:Heating:Steam Maximum Steam Flow Rate
-ComponentSizingSummary/Entire Facility/Boiler:Steam/Design Size Nominal Capacity/*, Boiler:Steam Design Size Nominal Capacity
+ComponentSizingSummary/Entire Facility/Boiler:HotWater/Design Size Nominal Capacity/HW HEATING SOURCE 1, Boiler:HotWater Design Size Nominal Capacity (Boiler 1)
+ComponentSizingSummary/Entire Facility/Boiler:Steam/Design Size Nominal Capacity/HW HEATING SOURCE 1, Boiler:Steam Design Size Nominal Capacity (Boiler 1)
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Heating, Unmet Heating
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Cooling, Unmet Cooling
