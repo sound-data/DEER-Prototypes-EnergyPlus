@@ -352,17 +352,7 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr07',     'hr08',     'hr09',     'hr10',     'hr11',     'hr12',
         'hr13',     'hr14',     'hr15',     'hr16',     'hr17',     'hr18',
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
-#%%
-#3/4/2026 update: move normalizing unit conversion to here for better organization
-##STEP 3: Normalizing Units
-bldgtype = 'MFm'
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['BldgLoc','Value', 'Msr','BldgVint']]
-#measure specific normalizing units table
-df_numunits = df_normunits[df_normunits['Msr']==measure_name]
-normunit = df_measure['Normunit'].unique()[0]
+
 
 
 #%%
@@ -431,6 +421,112 @@ converted_long_df['TechType'] = converted_long_df['Measure Group Name'].map(Tech
 converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Consumption']/3600000
 
 #%%
+##Long format data norm unit field updates (remove normunits/UEC for CEDARS?)
+
+#add num unit will be per dwelling, so use numunit / num of dwellings (2 for SFM, DMo, 24 for MFm)
+#delete UEC col from CEDARS format
+# converted_long_df['Normunit'] = normunit
+# if type(numunits) == dict:
+#     converted_long_df['Numunits'] = converted_long_df['BldgLoc'].map(numunits)/24
+# else:
+#     converted_long_df['Numunits'] = numunits/24
+
+#%%
+#Long format final field updates
+#need to divide each 8760 by its annual and its corresponding numunit
+#1. grouby to find sum of each table via unique ID
+#2. merge as a new col in long df
+#3, divide and clean up final columns
+
+#convert to UEC by applying numunits
+#delete UEC col
+#converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
+
+#sort
+df_long = converted_long_df.sort_values(['BldgLoc', 'BldgHVAC', 'TechID', 'hr in 8760'])
+
+#%% 
+#create groupby ids for each 8760 set
+df_long['set_id'] = (df_long['hr in 8760'].eq(1)
+                .groupby([df_long['BldgLoc'], df_long['BldgHVAC'], df_long['TechID']])
+                .cumsum())
+#calculate annual UEC
+df_long['annual_sum'] = (df_long
+    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['Total_Elec_Consumption']
+    .transform('sum'))
+
+#%%
+#Calculate unitzed 8760 values based on annual sum of 8760
+df_long['UECproportion'] = df_long['Total_Elec_Consumption'] / df_long['annual_sum']
+#%%
+#rearrange / true-up columns
+#source year mapping:
+StartDayToSourceYear = {
+    "Monday": 2018, #Basis year for 2024 electric ACCs
+    "Tuesday": 2013, #2013 or 2019 could be used
+    "Wednesday": 2020, #Basis for 2022/2021 electric ACCs
+    "Thursday": 2009, #Per CEC's Nonres/MFm ACM Reference Manual
+    "Friday": 2010, #2016 is Friday but a leap year, so this should be either 2010 or 2021
+    "Saturday": 2011, #Next Saturday option is 2022 because it is skipped between 2016 and 2017 because 2016 is a leap year
+    "Sunday": 2017 #2012 is a leap year, suggest using 2017
+}
+
+df_long['Sector'] = 'Res' #this is MFm script, so Sector = Res
+df_long['Type'] = 'Whole Building'
+df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
+
+df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
+
+#final table fields round-up
+#note: UEC and Numunits omitted from draft long table in the final table, kept UEC for plotting
+df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
+         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'Hour of Year','UECproportion']] 
+
+#%%
+#output annual consumption of each permutation and store for later use if needed
+df_long_annual_loads = df_long[[
+        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Type','Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
+         ]].drop_duplicates().reset_index(drop=True)
+#%%
+#export CEDARS long 8760 csv
+
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+
+#enable if just need csv export
+#df_long_final.to_csv('CEDARS_long_ls_MFm.csv', index=False) 
+df_long_annual_loads.to_csv('CEDARS_ls_annual_loads_Com.csv', index=False)
+#3/4/2026 Dan P. on CEDARS - need to provide as zip format
+import zipfile
+
+zip_filename = 'CEDARS_LoadShape_MFm.zip'
+csv_filename = 'CEDARS_LoadShape_MFm.csv'
+
+print('writing CEDARS long 8760 csv into zip format..')
+#create the zip and write the csv into it
+with zipfile.ZipFile(zip_filename, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
+    #Open a file inside the zip and write CSV to it
+    with zipf.open(csv_filename, 'w') as f:
+        df_long_final.to_csv(f, index=False)
+
+print(f'Zip file {zip_filename} created with {csv_filename} inside.')
+print('CEDARS long 8760 csv exported.')
+################################################################################################
+################################################################################################
+
+## Here resumes the normal post-processing of DEER outputs
+#%%
+##STEP 3: Normalizing Units
+bldgtype = 'MFm'
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['BldgLoc','Value', 'Msr','BldgVint']]
+#measure specific normalizing units table
+df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+normunit = df_measure['Normunit'].unique()[0]
+
 #create numunits object based on what normunit it uses. 
 #numunits can be a single value, or a dictionary
 if len(df_numunits) == 1:
@@ -458,91 +554,6 @@ else:
     normunit = 'Each' #If normalizing unit isn't anything else, put default as each
     numunits = 1
 
-
-#%%
-##Long format data norm unit field updates
-
-#add num unit will be per dwelling, so use numunit / num of dwellings (2 for SFM, DMo, 24 for MFm)
-converted_long_df['Normunit'] = normunit
-if type(numunits) == dict:
-    converted_long_df['Numunits'] = converted_long_df['BldgLoc'].map(numunits)/24
-else:
-    converted_long_df['Numunits'] = numunits/24
-
-#%%
-#Long format final field updates
-#need to divide each 8760 by its annual and its corresponding numunit
-#1. grouby to find sum of each table via unique ID
-#2. merge as a new col in long df
-#3, divide and clean up final columns
-
-#convert to UEC by applying numunits
-converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
-
-#sort
-df_long = converted_long_df.sort_values(['BldgLoc', 'BldgHVAC', 'TechID', 'hr in 8760'])
-
-#%% 
-#create groupby ids for each 8760 set
-df_long['set_id'] = (df_long['hr in 8760'].eq(1)
-                .groupby([df_long['BldgLoc'], df_long['BldgHVAC'], df_long['TechID']])
-                .cumsum())
-#calculate annual UEC
-df_long['annual_sum'] = (df_long
-    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['UEC']
-    .transform('sum'))
-
-#%%
-#Calculate unitzed 8760 values based on annual sum of 8760
-df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
-#%%
-#rearrange / true-up columns
-#source year mapping:
-StartDayToSourceYear = {
-    "Monday": 2018, #Basis year for 2024 electric ACCs
-    "Tuesday": 2013, #2013 or 2019 could be used
-    "Wednesday": 2020, #Basis for 2022/2021 electric ACCs
-    "Thursday": 2009, #Per CEC's Nonres/MFm ACM Reference Manual
-    "Friday": 2010, #2016 is Friday but a leap year, so this should be either 2010 or 2021
-    "Saturday": 2011, #Next Saturday option is 2022 because it is skipped between 2016 and 2017 because 2016 is a leap year
-    "Sunday": 2017 #2012 is a leap year, suggest using 2017
-}
-
-df_long['Sector'] = 'Res' #this is MFm script, so Sector = Res
-df_long['Type'] = 'Whole Building'
-df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
-
-df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
-
-#final table fields round-up
-#note: Numunits omitted from draft long table in the final table, kept UEC for plotting
-df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
-         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
-         'Hour of Year','UEC','UECproportion']] 
-#%%
-#export CEDARS long 8760 csv
-
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-
-#df_long_final.to_csv('CEDARS_long_ls_MFm.csv', index=False) #enable if just need csv export
-#3/4/2026 Dan P. on CEDARS - need to provide as zip format
-import zipfile
-
-zip_filename = 'CEDARS_LoadShape_MFm.zip'
-csv_filename = 'CEDARS_LoadShape_MFm.csv'
-
-print('writing CEDARS long 8760 csv into zip format..')
-#create the zip and write the csv into it
-with zipfile.ZipFile(zip_filename, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
-    #Open a file inside the zip and write CSV to it
-    with zipf.open(csv_filename, 'w') as f:
-        df_long_final.to_csv(f, index=False)
-
-print(f'Zip file {zip_filename} created with {csv_filename} inside.')
-print('CEDARS long 8760 csv exported.')
-################################################################################################
-################################################################################################
 # %%
 ##Annual Data final field fixes
 #note normunit = building area (conditioned)
