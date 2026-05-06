@@ -357,15 +357,6 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr07',     'hr08',     'hr09',     'hr10',     'hr11',     'hr12',
         'hr13',     'hr14',     'hr15',     'hr16',     'hr17',     'hr18',
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
-#%%
-#3/4/2026 update: move normalizing unit conversion to here for better organization
-##STEP 3: Normalizing Units
-bldgtype = 'DMo'
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['Value', 'Msr']]
-normunit = df_measure['Normunit'].unique()[0]
 
 #%%
 ################################################################################################
@@ -443,26 +434,14 @@ converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Cons
 # elif len(df_numunits) > 1:
 #     pass #come back to this with Com (multiple building types)
 
-#%%
-if len(numunits_vals) == 1:
-    numunits = list(numunits_vals['Value'])[0]
-    print(f'normunit is {normunit}, numunit is {numunits}.')
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
-    numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
-    print(f'normunit is {normunit}, numunits is varied by CZ')
-elif normunit == 'Each':
-    numunits = 1 #added numunits for measures with normunit "each" 
-    print('normunit is Each. Setting numunits to 1.')
-else:
-    normunit = 'Each' #If normalizing unit isn't anything else, put default as each
-    numunits = 1
+
 
 # %%
 ##Long format data norm unit field updates
 
 #num unit will be per dwelling, so use roof area / num of dwellings (2 for SFM, DMo, 24 for MFm)
-converted_long_df['Normunit'] = normunit
-converted_long_df['Numunits'] = numunits/2
+# converted_long_df['Normunit'] = normunit
+# converted_long_df['Numunits'] = numunits/2
 
 #%%
 #need to divide each 8760 by its annual and its corresponding numunit
@@ -471,7 +450,8 @@ converted_long_df['Numunits'] = numunits/2
 #3, divide and clean up final columns
 
 #convert to UEC by applying numunits
-converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
+#delete UEC col
+#converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
 
 #%%
 df_long = converted_long_df.sort_values(['BldgLoc', 'BldgHVAC', 'TechID', 'hr in 8760'])
@@ -483,12 +463,12 @@ df_long['set_id'] = (df_long['hr in 8760'].eq(1)
                 .cumsum())
 #calculate annual UEC
 df_long['annual_sum'] = (df_long
-    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['UEC']
+    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['Total_Elec_Consumption']
     .transform('sum'))
 
 #%%
 #Calculate unitzed 8760 values based on annual sum of 8760
-df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
+df_long['UECproportion'] = df_long['Total_Elec_Consumption'] / df_long['annual_sum']
 #%%
 #rearrange / true-up columns
 #source year mapping:
@@ -510,10 +490,14 @@ df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 
 #final table fields round-up
 #note: Numunits omitted from draft long table in the final table, kept UEC for plotting
-df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
+df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
          'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
-         'Hour of Year','UEC','UECproportion']] 
-
+         'Hour of Year','UECproportion']] 
+#%%
+#output annual consumption of each permutation and store for later use if needed
+df_long_annual_loads = df_long[[
+        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Type','Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
+         ]].drop_duplicates().reset_index(drop=True)
 
 
 #%%
@@ -522,7 +506,9 @@ df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','N
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-#df_long_final.to_csv('CEDARS_long_ls_DMo.csv', index=False) #enable if just need csv export
+#enable if just need csv export
+#df_long_final.to_csv('CEDARS_long_ls_DMo.csv', index=False) 
+df_long_annual_loads.to_csv('CEDARS_ls_annual_loads_DMo.csv', index=False)
 #3/4/2026 Dan P. on CEDARS - need to provide as zip format
 import zipfile
 
@@ -540,6 +526,32 @@ print(f'Zip file {zip_filename} created with {csv_filename} inside.')
 print('CEDARS long 8760 csv exported.')
 ################################################################################################
 ################################################################################################
+## Here resumes the normal post-processing of DEER outputs
+#%%
+##STEP 3: Normalizing Units
+bldgtype = 'DMo'
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['Value', 'Msr']]
+normunit = df_measure['Normunit'].unique()[0]
+
+
+
+#%%
+if len(numunits_vals) == 1:
+    numunits = list(numunits_vals['Value'])[0]
+    print(f'normunit is {normunit}, numunit is {numunits}.')
+elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
+    numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
+    print(f'normunit is {normunit}, numunits is varied by CZ')
+elif normunit == 'Each':
+    numunits = 1 #added numunits for measures with normunit "each" 
+    print('normunit is Each. Setting numunits to 1.')
+else:
+    normunit = 'Each' #If normalizing unit isn't anything else, put default as each
+    numunits = 1
+
 #%%
 ##Annual Data final field fixes
 #note normunit = building area (conditioned)
