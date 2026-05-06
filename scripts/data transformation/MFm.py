@@ -496,7 +496,7 @@ print(os.path.abspath(os.curdir))
 
 #enable if just need csv export
 #df_long_final.to_csv('CEDARS_long_ls_MFm.csv', index=False) 
-df_long_annual_loads.to_csv('CEDARS_ls_annual_loads_Com.csv', index=False)
+df_long_annual_loads.to_csv('CEDARS_ls_annual_loads_MFm.csv', index=False)
 #3/4/2026 Dan P. on CEDARS - need to provide as zip format
 import zipfile
 
