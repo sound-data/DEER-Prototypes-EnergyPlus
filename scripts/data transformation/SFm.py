@@ -401,70 +401,7 @@ sim_hourly_wb_1s_v1 = sim_hourly_wb_v1[sim_hourly_wb_v1['BldgType'].str.contains
 sim_hourly_wb_2s_v1 = sim_hourly_wb_v1[sim_hourly_wb_v1['BldgType'].str.contains('&2&')].copy()
 
 
-#%%
-#3/4/2026 update: move normalizing unit conversion to here for better organization
-##Step 3: Norm units
-#Read from normunit table
-bldgtype = 'SFm'
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['BldgLoc','Value', 'Msr','BldgVint']]
-normunit = df_measure['Normunit'].unique()[0]
-#measure specific normalizing units table
-df_numunits = df_normunits[df_normunits['Msr']==measure_name]
 
-
-#%% 
-# 1-S, 2-S combination
-# annual data
-rename_1s_fields = {'kwh_tot':'kwh_tot1', 
-                    'kwh_ltg':'kwh_ltg1',
-                    'kwh_task':'kwh_task1', 
-                    'kwh_equip':'kwh_equip1',
-                    'kwh_htg':'kwh_htg1',
-                    'kwh_clg':'kwh_clg1',                    
-                    'kwh_twr':'kwh_twr1',
-                    'kwh_aux':'kwh_aux1', 
-                    'kwh_vent':'kwh_vent1',
-                    'kwh_venthtga':'kwh_venthtg1a', 
-                    'kwh_ventclga':'kwh_ventclg1a', 
-                    'kwh_venthtgb':'kwh_venthtg1b', 
-                    'kwh_ventclgb':'kwh_ventclg1b',
-                    'kwh_refg':'kwh_refg1', 
-                    'kwh_hpsup':'kwh_hpsup1',
-                    'kwh_shw':'kwh_shw1', 
-                    'kwh_ext':'kwh_ext1', 
-                    'thm_tot':'thm_tot1',
-                    'thm_htg':'thm_htg1',
-                    'thm_equip':'thm_equip1',
-                    'thm_shw':'thm_shw1'}
-
-rename_2s_fields = {'kwh_tot':'kwh_tot2', 
-                    'kwh_ltg':'kwh_ltg2',
-                    'kwh_task':'kwh_task2', 
-                    'kwh_equip':'kwh_equip2',
-                    'kwh_htg':'kwh_htg2',
-                    'kwh_clg':'kwh_clg2',                    
-                    'kwh_twr':'kwh_twr2',
-                    'kwh_aux':'kwh_aux2', 
-                    'kwh_vent':'kwh_vent2',
-                    'kwh_venthtga':'kwh_venthtg2a', 
-                    'kwh_ventclga':'kwh_ventclg2a', 
-                    'kwh_venthtgb':'kwh_venthtg2b', 
-                    'kwh_ventclgb':'kwh_ventclg2b',
-                    'kwh_refg':'kwh_refg2', 
-                    'kwh_hpsup':'kwh_hpsup2',
-                    'kwh_shw':'kwh_shw2', 
-                    'kwh_ext':'kwh_ext2', 
-                    'thm_tot':'thm_tot2',
-                    'thm_htg':'thm_htg2',
-                    'thm_equip':'thm_equip2',
-                    'thm_shw':'thm_shw2'}
-
-#rename columns
-sim_annual_1s = sim_annual_1s_v1.rename(columns=rename_1s_fields)
-sim_annual_2s = sim_annual_2s_v1.rename(columns=rename_2s_fields)
 
 
 #%%
@@ -584,6 +521,170 @@ df_long_1s2s_with_wts['kWh_numstor_wted'] = (
                                              )
 
 
+
+
+# %%
+##CEDARS Long format data norm unit field updates
+#num unit will be per dwelling, so use roof area / num of dwellings (2 for SFM, DMo, 24 for MFm)
+# df_long_1s2s_with_wts['Normunit'] = normunit
+# if type(numunits) == dict:
+#     df_long_1s2s_with_wts['Numunits'] = (df_long_1s2s_with_wts['BldgLoc'].map(numunits))/2
+# else:
+#     df_long_1s2s_with_wts['Numunits'] = numunits/2
+
+#%%
+#need to divide each 8760 by its annual and its corresponding numunit
+#1. grouby to find sum of each table via unique ID
+#2. merge as a new col in long df
+#3, divide and clean up final columns
+
+#convert to UEC by applying numunits
+#delete UEC col
+#df_long_1s2s_with_wts['UEC'] = df_long_1s2s_with_wts['kWh_numstor_wted'] / df_long_1s2s_with_wts['Numunits']
+#%%
+#sort values
+df_long = df_long_1s2s_with_wts.sort_values(['BldgLoc','BldgHVAC', 'TechID', 'hr in 8760'])
+
+#%%
+#create groupby ids for each 8760 set
+df_long['set_id'] = (df_long['hr in 8760'].eq(1)
+                .groupby([df_long['BldgLoc'], df_long['BldgHVAC'], df_long['TechID']])
+                .cumsum())
+#calculate annual UEC
+df_long['annual_sum'] = (df_long
+    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['kWh_numstor_wted']
+    .transform('sum'))
+
+#%%
+#Calculate unitzed 8760 values based on annual sum of 8760
+df_long['UECproportion'] = df_long['kWh_numstor_wted'] / df_long['annual_sum']
+#%%
+
+#%%
+#rearrange / true-up columns
+#source year mapping:
+StartDayToSourceYear = {
+    "Monday": 2018, #Basis year for 2024 electric ACCs
+    "Tuesday": 2013, #2013 or 2019 could be used
+    "Wednesday": 2020, #Basis for 2022/2021 electric ACCs
+    "Thursday": 2009, #Per CEC's Nonres/MFm ACM Reference Manual
+    "Friday": 2010, #2016 is Friday but a leap year, so this should be either 2010 or 2021
+    "Saturday": 2011, #Next Saturday option is 2022 because it is skipped between 2016 and 2017 because 2016 is a leap year
+    "Sunday": 2017 #2012 is a leap year, suggest using 2017
+}
+
+df_long['TechGroup'] = df_long['Measure Group Name'].map(TechGroup_lookup_map)
+df_long['TechType'] = df_long['Measure Group Name'].map(TechType_lookup_map)
+
+df_long['Sector'] = 'Res' #this is DMo script, so Sector = Res
+df_long['Type'] = 'Whole Building'
+df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
+
+
+df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
+
+#final table fields round-up
+#note: UEC, Normunits, and numunits omitted in the final table
+df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
+         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'Hour of Year','UECproportion']] 
+#%%
+#output annual consumption of each permutation and store for later use if needed
+df_long_annual_loads = df_long[[
+        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Type','Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
+         ]].drop_duplicates().reset_index(drop=True)
+#%%
+#export CEDARS long 8760 csv
+
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+
+#enable if just need csv export
+#df_long_final.to_csv('CEDARS_long_ls_SFm.csv', index=False) 
+df_long_annual_loads.to_csv('CEDARS_ls_annual_loads_SFm.csv', index=False)
+#3/4/2026 Dan P. on CEDARS - need to provide as zip format
+import zipfile
+
+zip_filename = 'CEDARS_LoadShape_SFm.zip'
+csv_filename = 'CEDARS_LoadShape_SFm.csv'
+
+print('writing CEDARS long 8760 csv into zip format..')
+#create the zip and write the csv into it
+with zipfile.ZipFile(zip_filename, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
+    #Open a file inside the zip and write CSV to it
+    with zipf.open(csv_filename, 'w') as f:
+        df_long_final.to_csv(f, index=False)
+
+print(f'Zip file {zip_filename} created with {csv_filename} inside.')
+print('CEDARS long 8760 csv exported.')
+################################################################################################
+################################################################################################
+#%%
+#3/4/2026 update: move normalizing unit conversion to here for better organization
+##Step 3: Norm units
+#Read from normunit table
+bldgtype = 'SFm'
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['BldgLoc','Value', 'Msr','BldgVint']]
+normunit = df_measure['Normunit'].unique()[0]
+#measure specific normalizing units table
+df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+
+
+#%% 
+# 1-S, 2-S combination
+# annual data
+rename_1s_fields = {'kwh_tot':'kwh_tot1', 
+                    'kwh_ltg':'kwh_ltg1',
+                    'kwh_task':'kwh_task1', 
+                    'kwh_equip':'kwh_equip1',
+                    'kwh_htg':'kwh_htg1',
+                    'kwh_clg':'kwh_clg1',                    
+                    'kwh_twr':'kwh_twr1',
+                    'kwh_aux':'kwh_aux1', 
+                    'kwh_vent':'kwh_vent1',
+                    'kwh_venthtga':'kwh_venthtg1a', 
+                    'kwh_ventclga':'kwh_ventclg1a', 
+                    'kwh_venthtgb':'kwh_venthtg1b', 
+                    'kwh_ventclgb':'kwh_ventclg1b',
+                    'kwh_refg':'kwh_refg1', 
+                    'kwh_hpsup':'kwh_hpsup1',
+                    'kwh_shw':'kwh_shw1', 
+                    'kwh_ext':'kwh_ext1', 
+                    'thm_tot':'thm_tot1',
+                    'thm_htg':'thm_htg1',
+                    'thm_equip':'thm_equip1',
+                    'thm_shw':'thm_shw1'}
+
+rename_2s_fields = {'kwh_tot':'kwh_tot2', 
+                    'kwh_ltg':'kwh_ltg2',
+                    'kwh_task':'kwh_task2', 
+                    'kwh_equip':'kwh_equip2',
+                    'kwh_htg':'kwh_htg2',
+                    'kwh_clg':'kwh_clg2',                    
+                    'kwh_twr':'kwh_twr2',
+                    'kwh_aux':'kwh_aux2', 
+                    'kwh_vent':'kwh_vent2',
+                    'kwh_venthtga':'kwh_venthtg2a', 
+                    'kwh_ventclga':'kwh_ventclg2a', 
+                    'kwh_venthtgb':'kwh_venthtg2b', 
+                    'kwh_ventclgb':'kwh_ventclg2b',
+                    'kwh_refg':'kwh_refg2', 
+                    'kwh_hpsup':'kwh_hpsup2',
+                    'kwh_shw':'kwh_shw2', 
+                    'kwh_ext':'kwh_ext2', 
+                    'thm_tot':'thm_tot2',
+                    'thm_htg':'thm_htg2',
+                    'thm_equip':'thm_equip2',
+                    'thm_shw':'thm_shw2'}
+
+#rename columns
+sim_annual_1s = sim_annual_1s_v1.rename(columns=rename_1s_fields)
+sim_annual_2s = sim_annual_2s_v1.rename(columns=rename_2s_fields)
+
+
 #%%
 #create numunits object based on what normunit it uses. 
 #numunits can be a single value, or a dictionary
@@ -623,95 +724,6 @@ elif normunit == 'Each':
 else:
     normunit = 'Each' #If normalizing unit isn't anything else, put default as each
     numunits = 1
-
-# %%
-##CEDARS Long format data norm unit field updates
-#num unit will be per dwelling, so use roof area / num of dwellings (2 for SFM, DMo, 24 for MFm)
-df_long_1s2s_with_wts['Normunit'] = normunit
-if type(numunits) == dict:
-    df_long_1s2s_with_wts['Numunits'] = (df_long_1s2s_with_wts['BldgLoc'].map(numunits))/2
-else:
-    df_long_1s2s_with_wts['Numunits'] = numunits/2
-
-#%%
-#need to divide each 8760 by its annual and its corresponding numunit
-#1. grouby to find sum of each table via unique ID
-#2. merge as a new col in long df
-#3, divide and clean up final columns
-
-#convert to UEC by applying numunits
-df_long_1s2s_with_wts['UEC'] = df_long_1s2s_with_wts['kWh_numstor_wted'] / df_long_1s2s_with_wts['Numunits']
-#%%
-df_long = df_long_1s2s_with_wts.sort_values(['BldgLoc','BldgHVAC', 'TechID', 'hr in 8760'])
-
-#%%
-#create groupby ids for each 8760 set
-df_long['set_id'] = (df_long['hr in 8760'].eq(1)
-                .groupby([df_long['BldgLoc'], df_long['BldgHVAC'], df_long['TechID']])
-                .cumsum())
-#calculate annual UEC
-df_long['annual_sum'] = (df_long
-    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['UEC']
-    .transform('sum'))
-
-#%%
-#Calculate unitzed 8760 values based on annual sum of 8760
-df_long['UECproportion'] = df_long['UEC'] / df_long['annual_sum']
-#%%
-
-#%%
-#rearrange / true-up columns
-#source year mapping:
-StartDayToSourceYear = {
-    "Monday": 2018, #Basis year for 2024 electric ACCs
-    "Tuesday": 2013, #2013 or 2019 could be used
-    "Wednesday": 2020, #Basis for 2022/2021 electric ACCs
-    "Thursday": 2009, #Per CEC's Nonres/MFm ACM Reference Manual
-    "Friday": 2010, #2016 is Friday but a leap year, so this should be either 2010 or 2021
-    "Saturday": 2011, #Next Saturday option is 2022 because it is skipped between 2016 and 2017 because 2016 is a leap year
-    "Sunday": 2017 #2012 is a leap year, suggest using 2017
-}
-
-df_long['TechGroup'] = df_long['Measure Group Name'].map(TechGroup_lookup_map)
-df_long['TechType'] = df_long['Measure Group Name'].map(TechType_lookup_map)
-
-df_long['Sector'] = 'Res' #this is DMo script, so Sector = Res
-df_long['Type'] = 'Whole Building'
-df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
-
-
-df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
-
-#final table fields round-up
-#note: Numunits omitted from draft long table in the final table, kept UEC for plotting
-df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Normunit',
-         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
-         'Hour of Year','UEC','UECproportion']] 
-
-#%%
-#export CEDARS long 8760 csv
-
-os.chdir(os.path.dirname(__file__)) #resets to current script directory
-print(os.path.abspath(os.curdir))
-
-#df_long_final.to_csv('CEDARS_long_ls_SFm.csv', index=False) #enable if just need csv export
-#3/4/2026 Dan P. on CEDARS - need to provide as zip format
-import zipfile
-
-zip_filename = 'CEDARS_LoadShape_SFm.zip'
-csv_filename = 'CEDARS_LoadShape_SFm.csv'
-
-print('writing CEDARS long 8760 csv into zip format..')
-#create the zip and write the csv into it
-with zipfile.ZipFile(zip_filename, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
-    #Open a file inside the zip and write CSV to it
-    with zipf.open(csv_filename, 'w') as f:
-        df_long_final.to_csv(f, index=False)
-
-print(f'Zip file {zip_filename} created with {csv_filename} inside.')
-print('CEDARS long 8760 csv exported.')
-################################################################################################
-################################################################################################
 #%%
 #Annual data adding normalizing unit
 #note HVAC type of this dataset
