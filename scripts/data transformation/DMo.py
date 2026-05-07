@@ -309,10 +309,8 @@ fyr_hrly = hourly_df
 #rearrange 1-column 8760 format to 365x24 wide format for all runs in hourly_df
 
 #5/6/26 memory saver update - list of row dicts
-#converted_df = pd.DataFrame()
 converted_records = []
 
-#for i in range(0,len(fyr_hrly.columns)):
 for i, col_name in enumerate(fyr_hrly.columns):
 
     #isolate single column values only
