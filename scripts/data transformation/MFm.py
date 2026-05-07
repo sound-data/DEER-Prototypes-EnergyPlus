@@ -478,7 +478,7 @@ df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear
 df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 
 #final table fields round-up
-#note: UEC and Numunits omitted from draft long table in the final table, kept UEC for plotting
+#note: UEC, Normunits, and numunits omitted in the final table
 df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
          'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
          'Hour of Year','UECproportion']] 
