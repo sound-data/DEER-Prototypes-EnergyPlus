@@ -11,6 +11,12 @@ Before using these scripts make sure:
 After the simulation is done, please make sure simulation is finished successfully, where a particular subdirectory in the measures folder (i.e. **SWSV001-05 Duct Seal_DMo**) contains the file _results-summary.csv_ as well as the subfolder **runs**, which contains climate-zone specific output files.
 
 ### Post-processing steps for residential measures:
+If preparing a new measure or update to an existing measure, then create a measure list workbook to define permutations to be calculated in post-processing.
+1. Make a copy of the measure list workbook template, `DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx`.
+2. Permute rows for all combinations of building type, vintage, HVAC type, and pairings of 'PreTechID', 'StdTechID', 'MeasTechID'. For each unique pairing of 'PreTechID', 'StdTechID', 'MeasTechID', enter one unique MeasureID name; the outputs will be labeled by MeasureID rather than by TechID. All rows for a given MeasureID should share the same Normunit option.
+3. Save your measure list workbook as part of the measure setup documentation.
+
+Apply the following data transformation steps for each subfolder under your measure (e.g. DMo, MFm-Ex, MFm-New, SFm-Ex, SFm-New):
 1. Open one of the provided .py scripts in the **data transformation** directory (either DMo.py, MFm.py, or SFm.py). The corresponding building type script should be used.
 2. Open up the accompanying excel spreadsheet ***DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx***, identify the corresponding measure name in column A of the sheet `Measure_list`.
 3. In the line defining "measure_name = ..", specify the measure name identified in step 2. For example: `measure_name = 'SWSV001-05 Duct Seal_DMo'`
