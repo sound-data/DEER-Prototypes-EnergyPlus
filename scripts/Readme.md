@@ -44,3 +44,16 @@ Apply the following data transformation steps for each subfolder under your meas
 
 ### CEDARS formatted hourly Load shapes:
 1. Note new outputs "CEDARS_LoadShape_XXX.zip" from the scripts, these will be the new CEDARS formatted loadshapes containing the hourly consumption data for CEDARS use. CEDARS accepts them in zip format. In the script, there is a commented-out line (note the comment "#enable if just need csv export") to allow for user to export the table as a CSV on it's own, if the user wishes to do so, uncomment that line and run the script.
+
+### Plotly Viewer outputs from hourly load shapes:
+1. install the plotly library in your python environment. (pip install plotly or conda install plotly, depending on your environment)
+2. Place the csv file(s) "CEDARS_long_ls_*.csv" and "CEDARS_ls_annual_loads_*.csv" (both must be present) in the same directory as the script.
+3. Run the script: python ls_viewer_generation.py
+4. Interactive Plotly .html files will be generated for each available building type. Generating plots for many load shapes may take several minutes.
+
+# Each HTML file includes:
+All hourly load shape profiles (8760 hours)
+Interactive legend filtering (click / double-click)
+Time zoom controls (1d / 1w / 1m + range slider)
+Unified hover showing all traces at a given timestamp
+
