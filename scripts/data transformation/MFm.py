@@ -553,10 +553,11 @@ df_long_annual_loads = df_long[[
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-#enable if just need csv export
-#df_long_final.to_csv('CEDARS_long_ls_MFm.csv', index=False) 
+#enable if html viewer is needed / csv export is needed
+df_long_final.to_csv('CEDARS_long_ls_MFm.csv', index=False) 
 df_long_annual_loads.to_csv('CEDARS_ls_annual_loads_MFm.csv', index=False)
 #3/4/2026 Dan P. on CEDARS - need to provide as zip format
+#%%
 import zipfile
 
 zip_filename = 'CEDARS_LoadShape_MFm.zip'
