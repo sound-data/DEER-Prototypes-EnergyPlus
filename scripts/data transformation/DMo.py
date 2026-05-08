@@ -27,7 +27,7 @@ print(measures)
 #measure_name = 'SEER Rated AC/HP'
 #measure_name = 'Efficient Doors'
 #Define measure name here
-measure_name = 'Windows'
+measure_name = 'SEER Rated AC HP'
 
 # %%
 #DMo only script

@@ -26,7 +26,7 @@ print(measures)
 #measure_name = 'SEER Rated AC/HP'
 #measure_name = 'Efficient Doors'
 #Define measure name here
-measure_name = 'Windows'
+measure_name = 'SEER Rated AC HP'
 
 # %%
 #SFm only script
@@ -52,6 +52,7 @@ if MODE_NEW_VINTAGE:
     paths = [path_new]
 else:
     paths = [path_1975, path_1985]
+
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -235,7 +236,7 @@ case_cohort_list = df_measure['Measure Group Name'].unique()
 sim_annual_raw = pd.DataFrame()
 for path in paths:
     print(f'processing data in {path}')
-    df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
+    df_raw = pd.read_csv(path+'/results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
     #Read annual data
     annual_df = pd.read_csv(path+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
