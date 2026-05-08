@@ -101,10 +101,10 @@ def plot_hourly_loadshapes(df, bldgtype, y_title="Hourly Energy Consumption, kWh
         "1. Click inside the legend to select/unselect load shapes.<br>"
         "2. Double-click a legend item to isolate one load shape.<br>"
         "3. To zoom in/out quickly, use gray buttons to the immediate<br> left or select range with mouse (left-click + drag horizontally).<br>"
-        "4. To tweak the range of the zoomed-in data shown,<br> use the lower mini chart."
+        "4. To adjust the range of the zoomed-in data shown,<br> use the lower Date-Time chart."
     )
 
-    right_gutter = 350
+    right_gutter = 380
     fig.update_layout(margin=dict(l=10, r=right_gutter, t=60, b=40))
 
     fig.add_annotation(
