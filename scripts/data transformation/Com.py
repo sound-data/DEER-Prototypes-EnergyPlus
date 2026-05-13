@@ -498,7 +498,10 @@ if normunit == 'Each':
     unit_table = unit_lookup[unit_lookup['Normunit']=='Each'][['Normunit','Value']]
     sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on='Normunit')
 else:
-    sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on='Normunit')
+    # Revised 2025-09-25 by Nicholas Fette to resolve KeyError: 'BldgType'
+    # Both sim_annual_v1 and unit_lookup have BldgType column when normunit != Each.
+    # If "join on" columns omits BldgType, then sim_annual_v2 gets two columns BldgType_x and BldgType_y.
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on=['Normunit','BldgType'])
 sim_annual_v2['numunits'] = sim_annual_v2['Value']
 
 #%%

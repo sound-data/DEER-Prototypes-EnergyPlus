@@ -1,7 +1,7 @@
 --2022 new post-processing, 
 --Residential Step 2: Weight hourly consumption (WB) based on number of stories (no more thermostat weights)
 
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 
 DROP TABLE IF EXISTS sim_hourly_twtd_2022;
 CREATE TABLE sim_hourly_twtd_2022 AS

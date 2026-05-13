@@ -8,7 +8,7 @@ import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 # %%
 #Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
 
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -20,7 +20,7 @@ measures = list(df_master['Measure (general name)'].unique())
 print(measures)
 #%%
 #Define measure name here
-measure_name = 'Wall Furnace'
+measure_name = 'SEER Rated AC HP'
 
 # %%
 #SFm only script
@@ -31,14 +31,18 @@ os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
 
 #input the two subdirectory of SFm, one being 1975, the other 1985. If New vintage, input path at path_new and leave other blank.
-path_1975 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1975'
-path_1985 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1985'
-path_new = ''
+path_1975 = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_SFm_1975'
+path_1985 = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_SFm_1985'
+path_new = 'residential measures/SWHC049-08 SEER Rated AC HP/SWHC049-08 SEER Rated AC HP_SFm_New'
 
-paths = [path_1975, path_1985]
-
-if path_new != '' :
+# Select whether to process New or Existing vintage models.
+# The script is not compatible with processing both New and Existing in a single batch.
+MODE_NEW_VINTAGE = False
+if MODE_NEW_VINTAGE:
     paths = [path_new]
+else:
+    paths = [path_1975, path_1985]
+
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -222,10 +226,10 @@ case_cohort_list = df_measure['Measure Group Name'].unique()
 sim_annual_raw = pd.DataFrame()
 for path in paths:
     print(f'processing data in {path}')
-    df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
+    df_raw = pd.read_csv(path+'/results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
     #Read annual data
-    annual_df = pd.read_csv(path+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+    annual_df = pd.read_csv(path+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
     split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
 
     #looping over multiple folders/cohort cases, use a list
@@ -273,9 +277,9 @@ for path in paths:
     #extract data per bldgtype-bldghvac-bldgvint group
     hourly_df = pd.DataFrame(index=range(0,8760))
     #extract num_runs / split_meta_cols_eu
-    df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
+    df_raw = pd.read_csv(path+'/results-summary.csv', usecols=['File Name'])
     num_runs = len(df_raw['File Name'].dropna().unique()) - 1
-    annual_df = pd.read_csv(path+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
+    annual_df = pd.read_csv(path+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
     split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
     for i in range(0,num_runs):
         print(f"merging record {i}")
@@ -284,9 +288,12 @@ for path in paths:
         full_path = hrly_path + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
         df = pd.read_csv(full_path, low_memory=False)
         
+        #remove traling spaces on col headers
+        df.columns = df.columns.str.rstrip()
+
         #extract the last column (the total elec hrly profile)
         #if for enduse hourly, then extract the relevant end use column
-        extracted_df = pd.DataFrame(df.iloc[:,-1])
+        extracted_df = pd.DataFrame(df['Electricity:Facility [J](Hourly)'])
         
         #create the column name based on the permutations
         col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
@@ -454,7 +461,7 @@ elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
     nvals = list(numunits_vals['Value'])
     #create dictionary of {cz:values}
     numunits = {cz[i]:nvals[i] for i in range(len(cz))}
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     #filter to the corresponding measure
     numunits_vals = numunits_vals[numunits_vals['Msr'] == measure_name]
     #create aligned lists for numunit dictionary
@@ -485,7 +492,7 @@ sim_annual_1s['tstat'] = 0
 sim_annual_1s['normunit'] = df_measure['Normunit'].unique()[0]
 
 #apply numunits appropriately
-if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
 elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
     sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
@@ -501,7 +508,7 @@ sim_annual_2s['tstat'] = 0
 sim_annual_2s['normunit'] = df_measure['Normunit'].unique()[0]
 
 #apply numunits appropriately
-if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     sim_annual_2s['numunits'] = (sim_annual_2s['BldgLoc'].map(numunits))/2
 elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
     sim_annual_2s['numunits'] = (sim_annual_2s['BldgLoc'].map(numunits))/2
@@ -635,9 +642,14 @@ cz_vint_dict2 = {i:'1985' for i in cz_list2}
 cz_vint_dict = cz_vint_dict1 | cz_vint_dict2
 
 #%%
-##BldgVint label correction for NumStor weights
-sim_annual_f['BldgVint'] = sim_annual_f['BldgLoc'].map(cz_vint_dict)
-sim_hourly_final['BldgVint'] = sim_hourly_final['BldgLoc'].map(cz_vint_dict)
+if MODE_NEW_VINTAGE:
+    pass
+else:
+    ##BldgVint label correction for NumStor weights
+    # Intended to be used only for Existing vintage models.
+    # This overwrites the BldgVint attribute from the model, regardless of New or Existing.    
+    sim_annual_f['BldgVint'] = sim_annual_f['BldgLoc'].map(cz_vint_dict)
+    sim_hourly_final['BldgVint'] = sim_hourly_final['BldgLoc'].map(cz_vint_dict)
 
 # %%
 ##STEP 4: Measure setup file (current_msr_mat.csv)
@@ -719,9 +731,9 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
@@ -731,9 +743,9 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
