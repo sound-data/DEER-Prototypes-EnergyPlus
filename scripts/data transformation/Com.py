@@ -513,8 +513,18 @@ bldgtype = 'Com'
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
+#Added validation message on whether normalizing units existing in Normunits.xlsx
+normunit_missing = False
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
 normunit = df_measure['Normunit'].unique()[0]
+
+if list(normunit) not in list(df_normunits['Normunit'].unique()):
+    normunit = 'Each'
+    normunit_missing = True
+    print('Current normalizing unit(s) for this measure not found on Normunit.xlsx table accordingly, please update Normunit.xlsx table appropriately. \nScript will process using normunit Each as placeholder')
+else:
+    normunit_missing = False
+    print(f'Current normalzing unit is {normunit}, proceeding')
 
 #%%
 ################################################################################################
@@ -715,25 +725,65 @@ sim_annual_v1['Normunit'] = normunit
 #3/2/26 QC check - if Cap-Tons, this code + supporting tables does not address the case. Solaris produced some scripts to extract Cap-Ton, but did not get every building type.
 
 unit_lookup = df_normunits[['BldgType','Normunit','Value']]
-if normunit == 'Each':
+if (normunit == 'Each') & (normunit_missing == False):
     unit_table = unit_lookup[unit_lookup['Normunit']=='Each'][['BldgType','Normunit','Value']]
     sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
-elif normunit == 'Cap-Tons':
+elif (normunit == 'Cap-Tons') & (normunit_missing == False):
     unit_table = unit_lookup[unit_lookup['Normunit']=='Cap-Tons'][['BldgType','Normunit','Value']]
     sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
+elif normunit_missing == True:
+    print('Note: normunit = Each, numunit = 1 as placeholder to continue processing without the appropriate normunit.')
+    sim_annual_v1['Value'] = 1
+    sim_annual_v2 = sim_annual_v1
 else:
     # Revised 2025-09-25 by Nicholas Fette to resolve KeyError: 'BldgType'
     # Both sim_annual_v1 and unit_lookup have BldgType column when normunit != Each.
     # If "join on" columns omits BldgType, then sim_annual_v2 gets two columns BldgType_x and BldgType_y.
-    sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on=['Normunit','BldgType'])
+    # sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on=['Normunit','BldgType'])
+
+    #proposed fix but not tested
+    # unit_table = unit_lookup[unit_lookup['Normunit']==normunit][['BldgType','Normunit','Value']]
+    # sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
+    pass
 sim_annual_v2['numunits'] = sim_annual_v2['Value']
 
 #%%
 #do area separately after normunit merge
-area_lookup = df_normunits[df_normunits['Normunit']=='Area-ft2-BA'][['BldgType','total_area_m2']]
+#area_lookup = df_normunits[df_normunits['Normunit']=='Area-ft2-BA'][['BldgType','total_area_m2']]
 
-sim_annual_v3 = pd.merge(sim_annual_v2, area_lookup, on='BldgType')
-sim_annual_v3['measarea'] = sim_annual_v3['total_area_m2']
+#area look up change to hard lookup (only building type dependent)
+area_lookup = {
+    "Asm": 6318.03,
+    "ECC": 26402.36,
+    "EPr": 3785.38,
+    "ERC": 267.89,
+    "ESe": 6912.2,
+    "EUn": 79690.97,
+    "Fin": 334.45,
+    "Gro": 4644.87,
+    "Hsp": 45899.29,
+    "Htl": 12738.56,
+    "Lib": 929.03,
+    "MBT": 37156.35,
+    "MLI": 9291.61,
+    "Mtl": 2785.81,
+    "Nrs": 10312.12,
+    "OfL": 32508.63,
+    "OfS": 1858.49,
+    "Rel": 1858.04,
+    "RFF": 371.26,
+    "RSD": 1040.99,
+    "Rt3": 22296.73,
+    "RtL": 12123.99,
+    "RtS": 1486.69,
+    "SCn": 46450.63,
+    "SUn": 46450.63,
+    "WRf": 46450.63,
+}
+
+#sim_annual_v3 = pd.merge(sim_annual_v2, area_lookup, on='BldgType')
+sim_annual_v2['measarea'] = sim_annual_v2['BldgType'].map(area_lookup)
+sim_annual_v3 = sim_annual_v2.copy()
 
 # %%
 sim_annual_v3['lastmod']=dt.datetime.now()
