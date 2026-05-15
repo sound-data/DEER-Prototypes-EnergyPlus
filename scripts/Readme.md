@@ -52,8 +52,8 @@ Apply the following data transformation steps for each subfolder under your meas
 4. Interactive Plotly .html files will be generated for each available building type. Generating plots for many load shapes may take several minutes.
 
 #### Each HTML file includes:
-* All hourly load shape profiles (8760 hours)
-* Interactive legend filtering (click / double-click)
-* Time zoom controls (1d / 1w / 1m + range slider)
-* Unified hover showing all traces at a given timestamp
+All hourly load shape profiles (8760 hours)
+Interactive legend filtering (click / double-click)
+Time zoom controls (1d / 1w / 1m + range slider)
+Unified hover showing all traces at a given timestamp
 
