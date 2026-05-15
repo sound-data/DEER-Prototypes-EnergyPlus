@@ -5,6 +5,7 @@ import numpy as np
 import os
 import sys
 import datetime as dt
+import warnings
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 
 import helper_functions
@@ -12,8 +13,9 @@ from importlib import reload
 reload(helper_functions)
 # %%
 #Read master workbook for measure / tech list (note example commented line for specific measures)
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
-#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_fanbelts.xlsx', sheet_name='Measure_list', skiprows=4)
+#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_fanbelts.xlsx', sheet_name='Measure_list', skiprows=4)
+#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_AshControl.xlsx', sheet_name='Measure_list', skiprows=4)
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
@@ -28,8 +30,9 @@ print(measures)
 #%%
 #Define measure name here (name of the measure folder itself) 
 ##NOTE: The example folder used here, 'SWXX111-00 Example_SEER_AC' is only used to illustrate an example workflow thru post-procesing
-measure_name = 'SWXX111-00 Example_SEER_AC'
-#measure_name = 'SWHC024-05 Fan Belt'
+#measure_name = 'SWXX111-00 Example_SEER_AC'
+measure_name = 'SWHC024-05 Fan Belt'
+#measure_name = 'SWCR001-05 ASH_Controls'
 #filter to specific measure mapping records from mapping workbook
 df_measure = df_com[df_com['Modelkit Folder Primary Name']== measure_name]
 # %%
@@ -42,8 +45,8 @@ print(os.path.abspath(os.curdir))
 
 #12/20/2023 After finishing Com, try to condense Res script so one script takes care of one measure folder?
 #to do: use for loop to loop over each folder, using if-else to process different building types for Res
-filepath = f'commercial measures/{measure_name}'
-#filepath = f'commercial measures/SWHC024-06 Fan Belt' #only changed this for testing
+#filepath = f'commercial measures/{measure_name}'
+filepath = f'commercial measures/SWHC024-06 Fan Belt' #only changed this for testing
 
 
 # %%
@@ -513,18 +516,78 @@ bldgtype = 'Com'
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 
-#Added validation message on whether normalizing units existing in Normunits.xlsx
-normunit_missing = False
-df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-normunit = df_measure['Normunit'].unique()[0]
 
-if list(normunit) not in list(df_normunits['Normunit'].unique()):
-    normunit = 'Each'
-    normunit_missing = True
-    print('Current normalizing unit(s) for this measure not found on Normunit.xlsx table accordingly, please update Normunit.xlsx table appropriately. \nScript will process using normunit Each as placeholder')
-else:
+#Normunits.xlsx initial read error handling
+try:
+    df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+#error exception message for file doesn't exist
+except FileNotFoundError:
+    raise FileNotFoundError(
+            "[ERROR] Cannot find workbook 'Normunits.xlsx'.\n"
+            "Please make sure 'Normunits.xlsx' exists in the same directory as this script "
+            "or provide the correct full path."
+        )
+
+#Normunit validation: do they exist in Normunits.xlsx, default state = missing
+normunit_missing = True
+#create set of available unique normunits to test if current measure's normunit is availble in Normunits.xlsx
+available_normunits = set(df_normunits["Normunit"].dropna().astype(str).str.strip())
+
+#locate current measure's normunit from the starting workbook
+#pull raw values before converting to str to check for validity
+raw_normunits = df_measure["Normunit"].dropna().unique()
+
+#If normunit is completely missing, raise a flag / error
+if len(raw_normunits) == 0:
+    raise ValueError(
+            "Normunit is missing: df_measure['Normunit'] contains only NaN/blank values.\n"
+            "Please populate the 'Normunit' column in the starting measure workbook with a valid text value "
+            "(e.g., 'Cap-Tons', 'Each').\n"
+            "And make sure Normunits.xlsx is up-to-date."
+        )
+#(5/14/2026 the less critical issue but ASH Controls hits this edge case)
+#Current script only designed for Normunit is 1 unique value within a batch workbook
+#If there are multiple Normunits within a batch workbook, there needs to be unique identifiers at the EnergyImpactID / MeasureID level 
+# and the unit lookup portion of the script needs to be updated
+
+if len(raw_normunits) != 1:
+    warnings.warn(f"[WARNING] Expected 1 Normunit but found {raw_normunits}. Using the first one.")
+
+raw_normunit = raw_normunits[0]
+
+#If normunit anything other than a string/text, hard stop, provide appropriate error message 
+if not isinstance(raw_normunit, str):
+    raise TypeError(
+            "Invalid Normunit type in df_measure['Normunit'].\n"
+            f"Expected a string like 'Cap-Tons' or 'Each', but got:\n"
+            f"  type = {type(raw_normunit).__name__}\n"
+            f"  value = {raw_normunit!r}\n\n"
+            "Please correct the starting measure workbook column 'Normunit' to contain text values.\n"
+            "And make sure Normunits.xlsx is up-to-date."
+        )
+
+# Normalize whitespace
+normunit = raw_normunit.strip()
+
+# hard stop if Normunit field is empty
+if normunit == "":
+    raise ValueError(
+        "Invalid Normunit value in df_measure['Normunit'].\n"
+        "Normunit is an empty/blank string after stripping whitespace.\n"
+        "Please correct the source workbook column 'Normunit'.\n"
+        "And make sure Normunits.xlsx is up-to-date."
+    )
+
+if normunit in available_normunits:
     normunit_missing = False
     print(f'Current normalzing unit is {normunit}, proceeding')
+else:
+    normunit_missing = True
+    raise ValueError(
+        f"Current normalizing unit(s) for this measure (Normunit = {raw_normunit}) not found on Normunit.xlsx table,\n" 
+        "please update Normunit.xlsx table appropriately and add corresponding normalizing unit and corresponding unit value(s).\n"
+    )
+    
 
 #%%
 ################################################################################################
@@ -615,8 +678,6 @@ converted_long_df['TechType'] = converted_long_df['Measure Group Name'].map(Tech
 #convert from J to kWh
 converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Consumption']/3600000
 
-
-# %%
 #%%
 #Long format final field updates
 #need to divide each 8760 by its annual and its corresponding numunit
@@ -715,7 +776,7 @@ print('CEDARS long 8760 csv exported.')
 sim_annual_v1['SizingID'] = 'None'
 sim_annual_v1['tstat'] = 0
 #now Norm unit is read from measure master table
-#this may need to be modified based on the measure
+#this may need to be modified if there are more than 1 Normunit(s) within the same batch
 sim_annual_v1['Normunit'] = normunit
 
 #%%
@@ -725,65 +786,93 @@ sim_annual_v1['Normunit'] = normunit
 #3/2/26 QC check - if Cap-Tons, this code + supporting tables does not address the case. Solaris produced some scripts to extract Cap-Ton, but did not get every building type.
 
 unit_lookup = df_normunits[['BldgType','Normunit','Value']]
-if (normunit == 'Each') & (normunit_missing == False):
+
+#check for missing first
+if normunit_missing == True:
+    # warnings.warn('Note: normunit = Each, numunit = 1 as placeholder to continue processing without the appropriate normunit.')
+    # sim_annual_v1['Value'] = 1
+    # sim_annual_v2 = sim_annual_v1
+    raise ValueError(
+        "Current normalizing unit(s) for this measure not found on Normunit.xlsx table,\n" 
+        "please update Normunit.xlsx table appropriately and add corresponding normalizing unit and corresponding unit value(s).\n"
+    )
+#hard-code specific normunit examples, may be redundant
+elif (normunit == 'Each') & (normunit_missing == False):
     unit_table = unit_lookup[unit_lookup['Normunit']=='Each'][['BldgType','Normunit','Value']]
-    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
+    #sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType', 'Normunit'], how="left")
+    print(f'normalizing unit is {normunit}, added based on Building Type')
 elif (normunit == 'Cap-Tons') & (normunit_missing == False):
     unit_table = unit_lookup[unit_lookup['Normunit']=='Cap-Tons'][['BldgType','Normunit','Value']]
-    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
-elif normunit_missing == True:
-    print('Note: normunit = Each, numunit = 1 as placeholder to continue processing without the appropriate normunit.')
-    sim_annual_v1['Value'] = 1
-    sim_annual_v2 = sim_annual_v1
+    #sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType', 'Normunit'], how="left")
+    print(f'normalizing unit is {normunit}, added based on Building Type')
 else:
     # Revised 2025-09-25 by Nicholas Fette to resolve KeyError: 'BldgType'
     # Both sim_annual_v1 and unit_lookup have BldgType column when normunit != Each.
     # If "join on" columns omits BldgType, then sim_annual_v2 gets two columns BldgType_x and BldgType_y.
     # sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on=['Normunit','BldgType'])
 
-    #proposed fix but not tested
-    # unit_table = unit_lookup[unit_lookup['Normunit']==normunit][['BldgType','Normunit','Value']]
-    # sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType','Normunit'])
-    pass
+    #proposed if-else branch for other generalized Normunit cases.
+    #Other edge cases not covered may include but not limited to:
+    #What if normalizing unit is not dependent on building type? (some constant, i.e. each, refrigeration reducedkW?)
+    #What if normalizing unit is dependent on climate zone? (i.e. auto-sized capacity?)
+    
+    #possible revision/improvements: Have normunit + numunit be included in the starting measure workbook
+    #possible revision/improvements: Have Measure Name/ID also be an identifier to better manage measure packages
+
+    #work with measure developer(s) / other DEER normalizing units reference to make sure this logic cover all bases
+
+    unit_table = unit_lookup[unit_lookup['Normunit']==normunit][['BldgType','Normunit','Value']]
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['BldgType', 'Normunit'], how="left")
+    print(f'normalizing unit is {normunit}, added based on Building Type')
+
 sim_annual_v2['numunits'] = sim_annual_v2['Value']
 
 #%%
 #do area separately after normunit merge
+#5/14/2026 read from a separate Com_area sheet from Normunits.xlsx to avoid confusion
 #area_lookup = df_normunits[df_normunits['Normunit']=='Area-ft2-BA'][['BldgType','total_area_m2']]
 
-#area look up change to hard lookup (only building type dependent)
-area_lookup = {
-    "Asm": 6318.03,
-    "ECC": 26402.36,
-    "EPr": 3785.38,
-    "ERC": 267.89,
-    "ESe": 6912.2,
-    "EUn": 79690.97,
-    "Fin": 334.45,
-    "Gro": 4644.87,
-    "Hsp": 45899.29,
-    "Htl": 12738.56,
-    "Lib": 929.03,
-    "MBT": 37156.35,
-    "MLI": 9291.61,
-    "Mtl": 2785.81,
-    "Nrs": 10312.12,
-    "OfL": 32508.63,
-    "OfS": 1858.49,
-    "Rel": 1858.04,
-    "RFF": 371.26,
-    "RSD": 1040.99,
-    "Rt3": 22296.73,
-    "RtL": 12123.99,
-    "RtS": 1486.69,
-    "SCn": 46450.63,
-    "SUn": 46450.63,
-    "WRf": 46450.63,
-}
+try:
+    com_area_table = pd.read_excel('Normunits.xlsx', sheet_name='Com_area')[['BldgType','measarea']]
+#error exception message for file doesn't exist
+except FileNotFoundError:
+    raise FileNotFoundError(
+            "[ERROR] Cannot find workbook 'Normunits.xlsx'.\n"
+            "Please make sure 'Normunits.xlsx' exists in the same directory as this script "
+            "or provide the correct full path."
+        )
+except ValueError as e:
+    msg = str(e)
+    #error exception for missing worksheet name
+    if "Worksheet named" in msg or "sheetname" in msg.lower() or "not found" in msg.lower():
+        raise ValueError(
+            "[ERROR] Worksheet 'Com_area' not found in 'Normunits.xlsx'.\n"
+            "Please confirm the sheet name in Excel matches exactly (case-sensitive)."
+        ) from e
+#error exception for missing fields / empty sheets
+except KeyError:
+    raise KeyError(
+            "[ERROR] Worksheet 'Com_area' have missing required columns: 'BldgType','measarea'."
+            "Please make sure those two column exists."
+        )
+else:
+    if com_area_table.empty:
+        raise ValueError(
+            "[ERROR] Sheet 'Com_area' in 'Normunits.xlsx' is empty (no rows). "
+            "Please populate the table with 'BldgType' and 'measarea' values."
+        )
 
-#sim_annual_v3 = pd.merge(sim_annual_v2, area_lookup, on='BldgType')
+
+#create dict area lookup from table
+area_lookup = com_area_table.set_index('BldgType')['measarea'].to_dict()
+#sim_annual_v3 = pd.merge(sim_annual_v2, area_lookup, on='BldgType', how='left')
+
+#5/24/2026: measarea field is now in square-ft, which is contained in Normunits.xlsx, in the Com_area worksheet
 sim_annual_v2['measarea'] = sim_annual_v2['BldgType'].map(area_lookup)
 sim_annual_v3 = sim_annual_v2.copy()
+print('measarea (in sqft) added.')
 
 # %%
 sim_annual_v3['lastmod']=dt.datetime.now()
