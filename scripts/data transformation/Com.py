@@ -547,7 +547,8 @@ if len(raw_normunits) == 0:
         )
 #(5/14/2026 the less critical issue but ASH Controls hits this edge case)
 #Current script only designed for Normunit is 1 unique value within a batch workbook
-#If there are multiple Normunits within a batch workbook, there needs to be unique identifiers at the EnergyImpactID / MeasureID level 
+#If there are multiple Normunits within a batch workbook, there needs to be unique identifiers at the TechID level, perhaps using MeasTechID
+# what about the baseline TechID?  
 # and the unit lookup portion of the script needs to be updated
 
 if len(raw_normunits) != 1:
@@ -813,11 +814,11 @@ else:
     # If "join on" columns omits BldgType, then sim_annual_v2 gets two columns BldgType_x and BldgType_y.
     # sim_annual_v2 = pd.merge(sim_annual_v1, unit_lookup, on=['Normunit','BldgType'])
 
+    #5/14/2026 improvement opportunities for handling Normunits:
     #proposed if-else branch for other generalized Normunit cases.
     #Other edge cases not covered may include but not limited to:
     #What if normalizing unit is not dependent on building type? (some constant, i.e. each, refrigeration reducedkW?)
     #What if normalizing unit is dependent on climate zone? (i.e. auto-sized capacity?)
-    
     #possible revision/improvements: Have normunit + numunit be included in the starting measure workbook
     #possible revision/improvements: Have Measure Name/ID also be an identifier to better manage measure packages
 
