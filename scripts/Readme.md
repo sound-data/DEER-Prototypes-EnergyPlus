@@ -41,6 +41,11 @@ Apply the following data transformation steps for each subfolder under your meas
 9.	Run the post-processing SQL queries P1 to P5 for commercial, located in 'scripts/energy savings/commercial/'.
 10.	Export ‘meas_impacts_2024_com” as the output.
 
+#### Normalizing Units
+1. For standardization purposes, the correct numunit values and their corresponding characteristics (example of varying by BldgType is setup in the script) should be updated within the Normunits.xlsx table (and the corresponding normalizing unit type should be specified in the starting workbook "DEER_EnergyPlus_Modelkit_Measure_list_working_*.xlsx"). The Com.py script should now have error validations to break the run if these files are missing/mismatch.
+2. The current Com.py normalizing unit handling process is not fully robust. In particular, it currently does not support workflows where more than one unique NormUnit is present within a single starting workbook (DEER_EnergyPlus_Modelkit_Measure_list_working_*.xlsx). Measure developers can also choose the replace the numunit values as an external step if the current script functionality doesn't cover edge cases, for example if a normalizing unit varies based on climate-zone.
+3. Support for different types of normalizing units (vary by CZ, etc.) may require further enhancements to the normalization logic and feedbacks from measure developers.
 
 ### CEDARS formatted hourly Load shapes:
 1. Note new outputs "CEDARS_LoadShape_XXX.zip" from the scripts, these will be the new CEDARS formatted loadshapes containing the hourly consumption data for CEDARS use. CEDARS accepts them in zip format. In the script, there is a commented-out line (note the comment "#enable if just need csv export") to allow for user to export the table as a CSV on it's own, if the user wishes to do so, uncomment that line and run the script.
+
