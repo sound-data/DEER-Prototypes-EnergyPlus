@@ -20,3 +20,9 @@ sim_hourly_wb.csv
 stderr
 scripts/data transformation/sfm_annual.csv
 scripts/data transformation/sfm_hourly_wb.csv
+scripts/data transformation/CEDARS_long_ls_SFm.csv
+scripts/data transformation/CEDARS_long_ls_MFm.csv
+scripts/data transformation/CEDARS_long_ls_DMo.csv
+scripts/data transformation/CEDARS_long_ls_Com.csv
+scripts/data transformation/CEDARS_long_ls_*.csv
+scripts/data transformation/CEDARS_long_ls_*.zip

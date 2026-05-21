@@ -1,0 +1,3 @@
+skip,case_name,:system_type,:cooling_coil_cop,:heating_coil_cop
+,RE-HV-PTAC-8.56EER,PTAC,2.51,
+,RE-HV-PTAC-10.27EER,PTAC,3.01,

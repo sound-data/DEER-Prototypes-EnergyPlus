@@ -1,10 +1,10 @@
-﻿title: 2025 California Efficiency Standards,,,,,
+title: 2025 California Efficiency Standards,,,,,
 # PRESCRIPTIVE ENVELOPE CRITERIA FOR NONRESIDENTIAL BUILDINGS (INCLUDING RELOCATABLE PUBLIC SCHOOL BUILDINGS WHERE MANUFACTURER CERTIFIES USE ONLY IN SPECIFIC CLIMATE ZONE; NOT INCLUDING HIGH-RISE RESIDENTIAL BUILDINGS AND GUEST ROOMS OF HOTEL/MOTEL BUILDINGS),,,,,
 # For opaque envelope: see Table 140.3-B,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 1,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.20|0.75 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.20|0.75 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.098,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.06,,
 Walls Above Grade | Mass Light,0,,0.17,,
@@ -12,19 +12,19 @@ Walls Above Grade | Mass Heavy,0,,0.211,,
 Walls Above Grade | Wood Framed and Other,0,,0.078,,
 Floors | Mass,,,0.092,,
 Floors | Other,,,0.048,,
-Slab-On-Grade Floors | Unheated Slabs,,,0.73,,Maximum is an F-Factor.
-Slab-On-Grade Floors | Heated Slabs,,,0.2,16,"R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
+Slab-On-Grade Floors | Unheated Slabs,,,0.73,,Appendix JA4-55 Table 4.4.7; Maximum is an F-Factor.
+Slab-On-Grade Floors | Heated Slabs,,,0.2,16,"Table 110.8-A; R-5 vertical insulation from top of slab down 16 inches or to the frost line, whichever is greater."
 Opaque Doors | Non-Swinging,,,0.5,,
 Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 2,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.138,,
-Walls Above Grade | Mass Heavy,0,,0.575,,
+Walls Above Grade | Mass Heavy,0,,0.65,,
 Walls Above Grade | Wood Framed and Other,0,,0.053,,
 Floors | Mass,,,0.092,,
 Floors | Other,,,0.039,,
@@ -35,12 +35,12 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 3,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.20|0.75 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.20|0.75 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.098,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.071,,
 Walls Above Grade | Mass Light,0,,0.227,,
-Walls Above Grade | Mass Heavy,0,,0.575,,
+Walls Above Grade | Mass Heavy,0,,0.65,,
 Walls Above Grade | Wood Framed and Other,0,,0.102,,
 Floors | Mass,,,0.269,,
 Floors | Other,,,0.071,,
@@ -51,12 +51,12 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 4,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.196,,
-Walls Above Grade | Mass Heavy,0,,0.575,,
+Walls Above Grade | Mass Heavy,0,,0.65,,
 Walls Above Grade | Wood Framed and Other,0,,0.053,,
 Floors | Mass,,,0.269,,
 Floors | Other,,,0.071,,
@@ -67,12 +67,12 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 5,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.364,,
-Walls Above Grade | Mass Heavy,0,,0.575,,
+Walls Above Grade | Mass Heavy,0,,0.65,,
 Walls Above Grade | Wood Framed and Other,0,,0.095,,
 Floors | Mass,,,0.269,,
 Floors | Other,,,0.071,,
@@ -83,12 +83,12 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 6,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.047,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.098,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.06,,
 Walls Above Grade | Mass Light,0,,0.364,,
-Walls Above Grade | Mass Heavy,0,,0.65,,
+Walls Above Grade | Mass Heavy,0,,0.69,,
 Walls Above Grade | Wood Framed and Other,0,,0.102,,
 Floors | Mass,,,0.269,,
 Floors | Other,,,0.071,,
@@ -99,12 +99,12 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 7,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.047,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.098,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.06,,
 Walls Above Grade | Mass Light,0,,0.364,,
-Walls Above Grade | Mass Heavy,0,,0.65,,
+Walls Above Grade | Mass Heavy,0,,0.69,,
 Walls Above Grade | Wood Framed and Other,0,,0.102,,
 Floors | Mass,,,0.269,,
 Floors | Other,,,0.071,,
@@ -115,12 +115,12 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 8,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.047,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.364,,
-Walls Above Grade | Mass Heavy,0,,0.65,,
+Walls Above Grade | Mass Heavy,0,,0.69,,
 Walls Above Grade | Wood Framed and Other,0,,0.095,,
 Floors | Mass,,,0.269,,
 Floors | Other,,,0.071,,
@@ -131,12 +131,12 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 9,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.364,,
-Walls Above Grade | Mass Heavy,0,,0.65,,
+Walls Above Grade | Mass Heavy,0,,0.69,,
 Walls Above Grade | Wood Framed and Other,0,,0.053,,
 Floors | Mass,,,0.269,,
 Floors | Other,,,0.071,,
@@ -147,12 +147,12 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 10,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Not Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.138,,
-Walls Above Grade | Mass Heavy,0,,0.575,,
+Walls Above Grade | Mass Heavy,0,,0.65,,
 Walls Above Grade | Wood Framed and Other,0,,0.053,,
 Floors | Mass,,,0.269,,
 Floors | Other,,,0.071,,
@@ -163,8 +163,8 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 11,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.138,,
@@ -179,8 +179,8 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 12,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.138,,
@@ -195,8 +195,8 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 13,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.138,,
@@ -211,8 +211,8 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 14,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.138,,
@@ -227,9 +227,9 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 15,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Walls Above Grade | Metal Building,0,,0.05,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.138,,
 Walls Above Grade | Mass Heavy,0,,0.16,,
@@ -243,8 +243,8 @@ Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table:   Opaque Envelope Requirements | Climate Zone 16,,,,,
 Envelope Component,Cavity R-Value,Continuous R-Value,Maximum U-Factor,Extent,Notes
-Roofs | Metal Buildings,0,,0.038,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
-Roofs | Wood Framed and Other,0,,0.028,,"0.75 Thermal Emittance, and 0.63 (low-sloped) or 0.2 (steep-sloped) Aged Solar Reflectance"
+Roofs | Metal Buildings,0,,0.038,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
+Roofs | Wood Framed and Other,0,,0.028,,"0.63|0.75|0.25|0.80 (Low-Sloped Aged Solar Reflectance and Thermal Emittance, Steep-Sloped Aged Solar Reflectance and Thermal Emittance)"
 Walls Above Grade | Metal Building,0,,0.053,,Air Barrier - Required
 Walls Above Grade | Metal Framed,0,,0.055,,
 Walls Above Grade | Mass Light,0,,0.138,,
@@ -258,7 +258,7 @@ Opaque Doors | Non-Swinging,,,0.5,,
 Opaque Doors | Swinging,,,0.7,,
 ,,,,,
 table: Fenestration Requirements | Climate Zone 1,max,max,min,,
-Fenestration Component,U-Factor,SHGC,VT,Notes,Fenestration Requirements are same for all CZs - copied for each below
+Fenestration Component,U-Factor,SHGC,VT,Notes,
 Fixed Window,0.36,0.25,0.42,,
 Operable Window,0.46,0.22,0.32,,
 Curtainwall or Storefront,0.38,0.25,0.46,,
@@ -535,6 +535,7 @@ cw_wetbulb_design,20.01,Design OATwb,,,
 cw_design_temp,21.67,CW design temperature / ECWT,,,
 cw_approach,5.56,approach,,,
 ,,,,,
+#see Table 140.6-C,,,,,
 table: Lighting Power Density,,,,,
 space,LPD,FuncType,,,
 auditorium,0.7,Auditorium Area,,,
@@ -565,7 +566,7 @@ mech,0.4,"Electrical, Mechanical, Telephone Rooms",,,
 office_large,0.6,"Office Area, > 250 square feet",,,
 office_small,0.65,"Office Area, <= 250 square feet",,,
 office_open,0.6,"Office Area, > 250 square feet",,,
-plenum,0,,,,
+plenum,0,*Unlisted - 2022 assumptions,,,
 restroom,0.65,Restrooms,,,
 retail_sales,0.95,"Retail Sales Area, Retail Merchandise Sales",,,
 storage_refrig,0.4,"Storage, Commercial/Industrial, Warehouse",,,
@@ -576,7 +577,7 @@ copy,0.5,Copy Room,,,
 parking_zone_ramp,0.1,Parking Zone and Ramps,,,
 parking_daylight_adpat,1,daylight adaptation zones,,,
 ,,,,,
-,,,,,
+#see Table 140.4-G,,,,,
 table:   Economizer Setpoints,,,,,
 Climate Zone,Fixed Drybulb,Differential Dry-bulb,,,
 1,75,0,,,

@@ -1,8 +1,5 @@
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Site and Source Energy/Energy Per Total Building Area/Net Site Energy, Net Site EUI
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Site and Source Energy/Total Energy/Net Site Energy, Net Site Energy
-AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Total End Uses, Electricity
-AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Total End Uses, Natural Gas
-
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Site and Source Energy/Energy Per Total Building Area/Net Source Energy, Net Source EUI
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Site and Source Energy/Total Energy/Net Source Energy, Net Source Energy
 
@@ -21,10 +18,15 @@ AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/He
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Water Systems, Water Systems
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Refrigeration, Refrigeration
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Total Energy/Generators, Generators
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Heating, Heating Elec
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Cooling, Cooling Elec
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Heating, Heating NG
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Cooling, Cooling NG
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Interior Equipment, Interior Equipment Elec
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Interior Equipment, Interior Equipment NG
 
-AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Water/Heat Rejection, Heat Rejection
-AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Water/Humidification, Humidification
-AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Water/Water Systems, Water Systems
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Total End Uses, Electricity
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Total End Uses, Natural Gas
 
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Heating, Unmet Heating
 AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Cooling, Unmet Cooling

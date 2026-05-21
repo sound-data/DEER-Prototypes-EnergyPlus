@@ -30,7 +30,7 @@ if not os.path.exists(cohorts_list_file_path):
 # Read the cohorts_list file into a DataFrame
 cohorts_list_df = pd.read_csv(cohorts_list_file_path, comment="#")
 # Extract the second column skipping the first row
-cohorts_list = cohorts_list_df.iloc[0:, 1].tolist()
+cohorts_list = cohorts_list_df.iloc[0:, 1].drop_duplicates().tolist()
 # Print the extracted cohorts_list
 print("Cohorts_list array:", cohorts_list)
 
