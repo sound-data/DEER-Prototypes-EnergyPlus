@@ -1,0 +1,27 @@
+skip,case_name,:water_heater_type,:water_heater_cap,:heat_element_cap,:thermal_eff,:uef,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:tank_height,:sch,:tank_skin_loss
+,RE-WaterHtg_eq-HP_UEF-40g-MDHI-3.00UEF-240V,hpwh,1230['W'],4500['W'],,3,36,MD-HI,,,45['in'],MFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-40g-MDHI-3.30UEF-240V,hpwh,1230['W'],4500['W'],,3.45,36,MD-HI,,,45['in'],MFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-40g-MDHI-3.50UEF-240V,hpwh,1230['W'],4500['W'],,3.52,36,MD-HI,,,45['in'],MFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-40g-MDHI-3.75UEF-240V,hpwh,1230['W'],4500['W'],,3.75,36,MD-HI,,,45['in'],MFm_minute_dhw_demand_fraction.csv,1.41
+,RE-WaterHtg_eq-HP_UEF-50g-MDHI-3.00UEF-240V,hpwh,1230['W'],4500['W'],,3,46,MD-HI,,,47['in'],MFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-50g-MDHI-3.30UEF-240V,hpwh,1230['W'],4500['W'],,3.42,46,MD-HI,,,47['in'],MFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-50g-MDHI-3.50UEF-240V,hpwh,1230['W'],4500['W'],,3.52,46,MD-HI,,,47['in'],MFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-50g-MDHI-3.75UEF-240V,hpwh,1230['W'],4500['W'],,3.75,46,MD-HI,,,47['in'],MFm_minute_dhw_demand_fraction.csv,1.21
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-2.91UEF-240V,hpwh,1230['W'],4500['W'],,2.91,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.00UEF-240V,hpwh,1230['W'],4500['W'],,3,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.30UEF-240V,hpwh,1230['W'],4500['W'],,3.44,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.50UEF-240V,hpwh,1230['W'],4500['W'],,3.54,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-65g-MDHI-3.75UEF-240V,hpwh,1230['W'],4500['W'],,3.85,66,MD-HI,,,50['in'],MFm_minute_dhw_demand_fraction.csv,0.96
+,RE-WaterHtg_eq-HP_UEF-80g-MDHI-3.00UEF-240V,hpwh,1230['W'],4500['W'],,3,82,MD-HI,,,55['in'],MFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-80g-MDHI-3.30UEF-240V,hpwh,1230['W'],4500['W'],,3.45,82,MD-HI,,,55['in'],MFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-80g-MDHI-3.50UEF-240V,hpwh,1230['W'],4500['W'],,3.61,82,MD-HI,,,55['in'],MFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-HP_UEF-80g-MDHI-3.75UEF-240V,hpwh,1230['W'],4500['W'],,4,82,MD-HI,,,55['in'],MFm_minute_dhw_demand_fraction.csv,0.83
+,RE-WaterHtg_eq-Stor_UEF-30g-MD-0.92UEF-240V,elec,4900['W'],,,0.92,33,MD,,,49['in'],MFm_minute_dhw_demand_fraction.csv,0.55
+,RE-WaterHtg_eq-Stor_UEF-40g-MD-0.92UEF-240V,elec,4900['W'],,,0.93,39,MD,,,45['in'],MFm_minute_dhw_demand_fraction.csv,0.44
+,RE-WaterHtg_eq-Stor_UEF-50g-MD-0.92UEF-240V,elec,4900['W'],,,0.93,49,MD,,,54['in'],MFm_minute_dhw_demand_fraction.csv,0.36
+,RG-WaterHtg_eq-Stor_UEF-30g-HI-0.61UEF,gas,33000['BTUH'],,0.761,0.605,33,HI,350 ['BTUH'],NaturalGas,49['in'],MFm_minute_dhw_demand_fraction.csv,2.12
+,RG-WaterHtg_eq-Stor_UEF-40g-HI-0.64UEF,gas,40000['BTUH'],,0.776,0.644,39,HI,350 ['BTUH'],NaturalGas,45['in'],MFm_minute_dhw_demand_fraction.csv,2.22
+,RG-WaterHtg_eq-Stor_UEF-50g-HI-0.67UEF,gas,45000['BTUH'],,0.792,0.672,49,HI,350 ['BTUH'],NaturalGas,54['in'],MFm_minute_dhw_demand_fraction.csv,2.34
+,RG-WaterHtg_eq-Stor_UEF-60g-HI-0.67UEF,gas,78000['BTUH'],,0.819,0.671,58,HI,350 ['BTUH'],NaturalGas,57['in'],MFm_minute_dhw_demand_fraction.csv,2.67
+,RG-WaterHtg_eq-Stor_UEF-75g-HI-0.66UEF,gas,78000['BTUH'],,0.777,0.659,75,HI,350 ['BTUH'],NaturalGas,59['in'],MFm_minute_dhw_demand_fraction.csv,1.69
+,RG-WaterHtg_eq-Instant_UEF-lt200kBtuh-HI-0.91UEF,gas_tankless,179000['BTUH'],,0.929,0.906,0,HI,50 ['W'],Electricity,,MFm_minute_dhw_demand_fraction.csv,

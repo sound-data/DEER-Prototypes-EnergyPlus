@@ -1,0 +1,145 @@
+lookup_id,wall_base_type,wall_cont_thick,wall_cont_cond,wall_cav_thick,wall_cav_cond
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ01,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ02,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ03,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ04,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ05,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ06,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ07,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ08,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ09,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ10,Steel Framing at 16 in. on center,0.08314710318719999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ11,Steel Framing at 16 in. on center,0.08898198762239999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ12,Steel Framing at 16 in. on center,0.08898198762239999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ13,Steel Framing at 16 in. on center,0.08898198762239999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ14,Steel Framing at 16 in. on center,0.08898198762239999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ15,Steel Framing at 16 in. on center,0.08898198762239999,0.0288,0,0.0288
+T24_2025|MFm|Walls - Metal Building - Any Fire Rating|CZ16,Steel Framing at 16 in. on center,0.08898198762239999,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ01",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ02",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ03",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ04",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ05",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ06",Wood Framing at 16 in. on center,0.0780303583584,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ07",Wood Framing at 16 in. on center,0.0780303583584,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ08",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ09",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ10",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ11",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ12",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ13",Wood Framing at 16 in. on center,0.085965649056,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ14",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ15",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - >1hr fire rating|CZ16",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ01",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ02",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ03",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ04",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ05",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ06",Wood Framing at 16 in. on center,0.0780303583584,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ07",Wood Framing at 16 in. on center,0.0780303583584,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ08",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ09",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ10",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ11",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ12",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ13",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ14",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ15",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+"T24_2025|MFm|Walls - Framed (wood, metal) and other - ?1hr fire rating|CZ16",Wood Framing at 16 in. on center,0.0994504567392,0.0288,0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ01,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ02,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ03,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ04,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ05,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ06,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ07,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ08,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ09,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ10,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ11,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ12,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ13,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ14,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ15,Concrete with Wood Framing,0.065935652832,0.0288,0.0,0.0288
+T24_2025|MFm|Walls - Mass Light|CZ16,Concrete with Wood Framing,0.086223546,0.0288,0.0,0.0288
+T24_2025|SFm|Above Grade Framed Walls|CZ01,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ02,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ03,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ04,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ05,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ06,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.21088941246752027
+T24_2025|SFm|Above Grade Framed Walls|CZ07,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.21088941246752027
+T24_2025|SFm|Above Grade Framed Walls|CZ08,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ09,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ10,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ11,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ12,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ13,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ14,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ15,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Framed Walls|CZ16,Wood Framing at 16 in. on center,0.0608796337536,0.0288,0.08889999999999999,0.07487356886566794
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ01,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ02,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ03,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ04,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ05,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ06,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ07,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ08,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ09,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ10,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ11,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ12,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ13,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ14,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ15,Concrete MW Partially Grouted,0.038099999999999995,0.021307735253713926,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Interior|CZ16,Concrete MW Partially Grouted,0.038099999999999995,0.017330247612941583,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ01,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ02,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ03,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ04,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ05,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ06,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ07,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ08,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ09,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ10,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ11,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ12,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ13,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ14,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ15,Concrete MW Solid Grouted,0.0508,0.04633452818639637,0,0.0459
+T24_2025|SFm|Above Grade Mass Wall Exterior|CZ16,Concrete MW Solid Grouted,0.07619999999999999,0.04296782899702858,0,0.0459
+T24_2025|SFm|Below Grade Interior Walls|CZ01,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ02,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ03,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ04,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ05,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ06,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ07,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ08,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ09,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ10,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ11,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ12,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ13,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ14,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ15,Wood Framing at 16 in. on center,0.0658697830272,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Interior Walls|CZ16,Wood Framing at 16 in. on center,0.0757010939328,0.0288,0,0.0288
+T24_2025|SFm|Below Grade Exterior Walls|CZ01,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ02,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ03,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ04,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ05,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ06,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ07,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ08,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ09,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ10,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ11,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ12,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ13,Concrete MW Solid Grouted,0.0254,0.03792848591243181,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ14,Concrete MW Solid Grouted,0.0635,0.04628229066451749,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ15,Concrete MW Solid Grouted,0.0635,0.04628229066451749,0,0.0459
+T24_2025|SFm|Below Grade Exterior Walls|CZ16,Concrete MW Solid Grouted,0.1016,0.042774544773015656,0,0.0459
