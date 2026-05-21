@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 import math
 from io import StringIO
-
+#from eppy.modeleditor import IDF
 
 # Define the dictionary for mapping abbreviations
 building_type_map = {
@@ -187,44 +187,54 @@ def get_roof_type(file_path):
         with open(file_path, 'r', errors='ignore') as f:
             content = f.read()
 
-        # Split by object separator (semicolon)
-        objects = content.split(';')
-        
+        # Strip inline comments
+        content = re.sub(r'!.*', '', content)
+
+        # Extract every BuildingSurface:Detailed block (keyword included)
+        blocks = re.findall(
+            r'(BuildingSurface:Detailed\s*,.*?);',
+            content, re.DOTALL | re.IGNORECASE
+        )
+
         has_roof = False
 
-        for obj in objects:
-            clean_obj = obj.strip()
-            if not clean_obj: continue
+        for block in blocks:
+            fields = [f.strip() for f in block.split(',')]
 
-            # Clean lines and split by comma
-            lines = clean_obj.splitlines()
-            cleaned_lines = [line.split('!')[0].strip() for line in lines]
-            full_text = ''.join(cleaned_lines)
-            fields = [f.strip() for f in full_text.split(',')]
+            # Minimum fields needed: keyword + 11 header fields + at least 3 vertices (9 coords)
+            if len(fields) < 21:
+                continue
 
-            # Check for BuildingSurface:Detailed
-            if len(fields) > 2 and fields[0].lower() == 'buildingsurface:detailed':
-                # Check if surface type (index 2 usually) is Roof
-                if fields[2].lower() == 'roof':
-                    has_roof = True
-                    
-                    # Extract coordinates (X, Y, Z) working backwards
-                    coords = []
-                    for field in reversed(fields):
-                        try:
-                            val = float(field)
-                            coords.insert(0, val)
-                        except ValueError:
-                            break
-                    
-                    # Check Z coords (every 3rd number)
-                    if len(coords) >= 9:
-                        z_coords = coords[2::3]
-                        unique_z = set([round(z, 4) for z in z_coords])
-                        
-                        # If Z changes, it is tilted
-                        if len(unique_z) > 1:
-                            return "Sloped Roof"
+            # fields[2] = Surface Type
+            if fields[2].lower() != 'roof':
+                continue
+
+            has_roof = True
+
+            # fields[11] = Number of Vertices
+            try:
+                num_vertices = int(fields[11])
+            except (ValueError, IndexError):
+                continue
+
+            # Z is the 3rd coordinate in each X,Y,Z triplet starting at index 12
+            z_coords = []
+            for i in range(num_vertices):
+                z_index = 12 + i * 3 + 2
+                if z_index < len(fields):
+                    try:
+                        z_coords.append(round(float(fields[z_index]), 4))
+                    except ValueError:
+                        continue
+
+            if not z_coords:
+                continue
+
+            unique_z = set(z_coords)
+
+            # If Z values differ across vertices, the surface is tilted
+            if len(unique_z) > 1:
+                return "Sloped Roof"
 
         if has_roof:
             return "Flat Roof"
