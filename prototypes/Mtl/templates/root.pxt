@@ -26,7 +26,7 @@ import "foundation.pxt", :group => "foundation" do
 end
 
 import "constructions.pxt", :group => "constructions" do
-  include "*"
+
   exclude "window_shade*|radiant*"
   exclude "foundation_type|parapet_length|floor_length|wall_area"
   parameter "roof_base_type", :default => "Insulation Entirely Above Deck"
@@ -52,6 +52,7 @@ end
 
 group "space_loads" do # hardcode building-level defaults
   import "zoneloads/zonetemplate.pxt", :group => "building" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "lights_fraction_radiant", :default => 0.58
     parameter "lights_fraction_visible", :default => 0
     parameter "infil_area", :default => 0.26046511627907['CFM/ft2']
@@ -65,6 +66,7 @@ group "space_loads" do # hardcode building-level defaults
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "corridor", :prefix => "corridor_" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "light_area", :default => 0.6['W/ft2']
     parameter "equip_area", :default => 0['W/ft2']
     parameter "occ_area", :default => 0.005['1/ft2']
@@ -77,6 +79,7 @@ group "space_loads" do # hardcode building-level defaults
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "guestroom", :prefix => "guestroom_" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "light_area", :default => 0.5['W/ft2']
     parameter "equip_area", :default => 0.5['W/ft2']
     parameter "occ_area", :default => 0.0025['1/ft2']
@@ -86,9 +89,10 @@ group "space_loads" do # hardcode building-level defaults
     parameter "dhw_flow_area", :default => 0.000373333333333333['GPM/ft2']
     parameter "dhw_water_heater_fuel", :default => "Gas"
     parameter "equip_2_area", :default => 0['W/ft2']
-  end
+  end                                
 
   import "zoneloads/zonetemplate.pxt", :group => "laundry", :prefix => "laundry_" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "light_area", :default => 0.45['W/ft2']
     parameter "equip_area", :default => 3['W/ft2']
     parameter "occ_area", :default => 0.005['1/ft2']
@@ -101,6 +105,7 @@ group "space_loads" do # hardcode building-level defaults
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "office_large", :prefix => "office_large_" do
+    parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"
     parameter "light_area", :default => 0.65['W/ft2']
     parameter "equip_area", :default => 1.5['W/ft2']
     parameter "occ_area", :default => 0.005['1/ft2']
@@ -113,7 +118,7 @@ group "space_loads" do # hardcode building-level defaults
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "office_schs", :prefix => "office_" do
-    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1.0,\nFor: Weekdays,\nUntil: 05:00,0.0,\nUntil: 24:00,1.0,\nFor: Saturday,\nUntil: 05:00,0.0,\nUntil: 19:00,1.0,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 24:00,0.0;"
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay Weekdays,\nUntil: 05:00,0.0,\nUntil: 24:00,1.0,\nFor: Saturday,\nUntil: 05:00,0.0,\nUntil: 19:00,1.0,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 24:00,0.0;"
     parameter "light_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1.0,\nFor: WinterDesignDay,\nUntil: 24:00,0.0,\nFor: Weekdays,\nUntil: 05:00,0.05,\nUntil: 07:00,0.10,\nUntil: 08:00,0.30,\nUntil: 17:00,0.65,\nUntil: 18:00,0.35,\nUntil: 20:00,0.30,\nUntil: 22:00,0.20,\nUntil: 23:00,0.10,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 06:00,0.05,\nUntil: 08:00,0.10,\nUntil: 12:00,0.30,\nUntil: 17:00,0.15,\nUntil: 24:00,0.05,\nFor: AllOtherDays,\nUntil: 24:00,0.05;"
     parameter "equip_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1.0,\nFor: WinterDesignDay,\nUntil: 24:00,0.0,\nFor: Weekdays,\nUntil: 05:00,0.05,\nUntil: 07:00,0.10,\nUntil: 08:00,0.30,\nUntil: 17:00,0.90,\nUntil: 18:00,0.50,\nUntil: 20:00,0.30,\nUntil: 22:00,0.20,\nUntil: 23:00,0.10,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 06:00,0.05,\nUntil: 08:00,0.10,\nUntil: 12:00,0.30,\nUntil: 17:00,0.15,\nUntil: 24:00,0.05,\nFor: AllOtherDays,\nUntil: 24:00,0.05;"
     parameter "occ_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1.0,\nFor: WinterDesignDay,\nUntil: 24:00,0.0,\nFor: Weekdays,\nUntil: 06:00,0.0,\nUntil: 07:00,0.10,\nUntil: 08:00,0.20,\nUntil: 12:00,0.95,\nUntil: 13:00,0.50,\nUntil: 17:00,0.95,\nUntil: 18:00,0.30,\nUntil: 22:00,0.10,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 06:00,0.0,\nUntil: 08:00,0.10,\nUntil: 12:00,0.30,\nUntil: 17:00,0.10,\nUntil: 19:00,0.05,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 06:00,0.0,\nUntil: 18:00,0.05,\nUntil: 24:00,0.0;"
@@ -134,6 +139,7 @@ end
 
 group "space_hvac" do
   import "zonehvac/hvac-zone.pxt", :group => "building" do # hardcode building-level defaults
+    include "disable_ems"
     parameter "oa_person", :default => 0['CFM']
     parameter "sat_min_dt", :default => 20.0['deltaF']
   end
@@ -163,7 +169,7 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "office_hvac_schs", :prefix => "office_" do
-    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1.0,\nFor: Weekdays,\nUntil: 05:00,0.0,\nUntil: 24:00,1.0,\nFor: Saturday,\nUntil: 05:00,0.0,\nUntil: 19:00,1.0,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 24:00,0.0;"
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay Weekdays,\nUntil: 05:00,0.0,\nUntil: 24:00,1.0,\nFor: Saturday,\nUntil: 05:00,0.0,\nUntil: 19:00,1.0,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 24:00,0.0;"
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "residentialliving_hvac_schs", :prefix => "residentialliving_" do
@@ -211,6 +217,7 @@ import "system/dhw.pxt", :group => "dhw_gas", :prefix => "dhw_gas_" do
   parameter "parasitic_on", :default => 0.0['W']
   parameter "cycle_loss_coef", :default => 1.62817
   parameter "wh_config", :default => "CENTRAL"
+  parameter "building_prototype", :default => "Mtl"
 end
 
 parameter "hvac_config", :default => "BUILDING"  # ["BUILDING", "FLOOR", "SECTION", "CLUSTER"]
@@ -262,6 +269,18 @@ group "hvac_system", :prefix => "main_" do
   parameter "hum_cap", :default => nil
   parameter "return_plenum", :default => false
   parameter "swsv005_04_BC", :default => nil #TRC - measure swsv005_04_BC, create economizer repair base case
+  #TRC - SWHC041-05 updates measure: Adding the following variables to parameterize the multi-speed operation air flow ratio and associated supply fan power for UnitarySystems
+  parameter "single_mode_operation", :default => "No"
+  parameter "low_heating_supply_air_ratio", :default => 0.75
+  parameter "low_cooling_supply_air_ratio", :default => 0.75
+  parameter "ventilation_supply_air_ratio", :default => 0.40
+  parameter "constant_fan_speed_power_frac", :default => 1.0
+  parameter "fan_speed_1_flow_frac", :default => 0.72
+  parameter "fan_speed_1_power_frac", :default => 0.418596373
+  parameter "fan_speed_2_flow_frac", :default => 0.72
+  parameter "fan_speed_2_power_frac", :default => 0.418596373
+  parameter "fan_speed_3_flow_frac", :default => 1
+  parameter "fan_speed_3_power_frac", :default => 1
 end
 
 group "alt_hvac_zone", :prefix => "alt_" do
@@ -577,7 +596,7 @@ for zone in all_zones
     :sys_name => "#{this_hvac_type}-#{sys_name}",
     :clear_water_storage_tank => condensate_collection,
     :clear_water_supply_tank => clear_water_supply_tank,
-    **( this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
+    **( space_hvac.building | this_hvac | this_hvac_zone | space_hvac[zone_type] | space_hvac[zone_sch_group])
 
   branch_name = "#{zone_name} #{this_hvac_type}"
 
@@ -635,10 +654,10 @@ end
 
 vrfc_branches.each_key do |sys_name|
   insert "system/vrfc.pxt", **vrf,
-    :name => "#{hvac_type}-#{sys_name}",
+    :name => "#{this_hvac_type}-#{sys_name}",
     :branches => vrfc_branches[sys_name],
-    :op_sch => hvac_sch,
-    **local(:cool_coil_cop, :heat_coil_cop)
+    :cool_coil_cop => this_hvac[:cool_coil_cop],
+    :heat_coil_cop => this_hvac[:heat_coil_cop]
 end
 
 systems_table.each_key do |system_name|
