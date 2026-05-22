@@ -1,6 +1,6 @@
 --building type weights, multiplication step
 
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS meas_impacts_tmp3_2022;
 CREATE TABLE meas_impacts_tmp3_2022 AS 
 SELECT

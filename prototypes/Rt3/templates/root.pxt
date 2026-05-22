@@ -89,7 +89,7 @@ group "space_loads" do # hardcode building-level defaults
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "retail_schs", :prefix => "retail_" do
-    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1,\nFor: Weekdays,\nUntil: 06:00,0,\nUntil: 21:00,1,\nUntil: 24:00,0,\nFor: Saturdays,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 08:00,0,\nUntil: 19:00,1,\nUntil: 24:00,0;"
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay Weekdays,\nUntil: 06:00,0,\nUntil: 21:00,1,\nUntil: 24:00,0,\nFor: Saturdays,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 08:00,0,\nUntil: 19:00,1,\nUntil: 24:00,0;"
     parameter "light_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays,\nUntil: 07:00,0.05,\nUntil: 08:00,0.2,\nUntil: 09:00,0.5,\nUntil: 18:00,0.85,\nUntil: 20:00,0.55,\nUntil: 21:00,0.5,\nUntil: 22:00,0.2,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 07:00,0.05,\nUntil: 08:00,0.1,\nUntil: 09:00,0.3,\nUntil: 10:00,0.55,\nUntil: 18:00,0.85,\nUntil: 19:00,0.5,\nUntil: 21:00,0.3,\nUntil: 22:00,0.1,\nUntil: 24:00,0.05,\nFor: AllOtherdays,\nUntil: 08:00,0.05,\nUntil: 10:00,0.1,\nUntil: 12:00,0.4,\nUntil: 17:00,0.55,\nUntil: 18:00,0.4,\nUntil: 19:00,0.2,\nUntil: 24:00,0.05;"
     parameter "equip_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays,\nUntil: 07:00,0.05,\nUntil: 08:00,0.2,\nUntil: 09:00,0.5,\nUntil: 18:00,0.9,\nUntil: 20:00,0.6,\nUntil: 21:00,0.5,\nUntil: 22:00,0.2,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 07:00,0.05,\nUntil: 08:00,0.1,\nUntil: 09:00,0.3,\nUntil: 10:00,0.6,\nUntil: 18:00,0.9,\nUntil: 19:00,0.5,\nUntil: 21:00,0.3,\nUntil: 22:00,0.1,\nUntil: 24:00,0.05,\nFor: AllOtherdays,\nUntil: 08:00,0.05,\nUntil: 10:00,0.1,\nUntil: 12:00,0.4,\nUntil: 17:00,0.6,\nUntil: 18:00,0.4,\nUntil: 19:00,0.2,\nUntil: 24:00,0.05;"
     parameter "occ_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1,\nFor: WinterDesignDay,\nUntil: 24:00,0,\nFor: Weekdays,\nUntil: 07:00,0,\nUntil: 08:00,0.1,\nUntil: 09:00,0.2,\nUntil: 11:00,0.5,\nUntil: 15:00,0.7,\nUntil: 16:00,0.8,\nUntil: 17:00,0.7,\nUntil: 19:00,0.5,\nUntil: 21:00,0.3,\nUntil: 24:00,0,\nFor: Saturday,\nUntil: 07:00,0,\nUntil: 08:00,0.1,\nUntil: 09:00,0.2,\nUntil: 10:00,0.5,\nUntil: 11:00,0.6,\nUntil: 17:00,0.8,\nUntil: 18:00,0.6,\nUntil: 21:00,0.2,\nUntil: 22:00,0.1,\nUntil: 24:00,0,\nFor: AllOtherdays,\nUntil: 09:00,0,\nUntil: 10:00,0.1,\nUntil: 12:00,0.2,\nUntil: 17:00,0.4,\nUntil: 18:00,0.2,\nUntil: 19:00,0.1,\nUntil: 24:00,0;"
@@ -128,7 +128,7 @@ group "space_hvac" do
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "retail_hvac_schs", :prefix => "retail_" do
-    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay,\nUntil: 24:00,1,\nFor: Weekdays,\nUntil: 06:00,0,\nUntil: 21:00,1,\nUntil: 24:00,0,\nFor: Saturdays,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 08:00,0,\nUntil: 19:00,1,\nUntil: 24:00,0;"
+    parameter "oa_sch", :default => "Through: 12/31,\nFor: SummerDesignDay WinterDesignDay Weekdays,\nUntil: 06:00,0,\nUntil: 21:00,1,\nUntil: 24:00,0,\nFor: Saturdays,\nUntil: 06:00,0,\nUntil: 22:00,1,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 08:00,0,\nUntil: 19:00,1,\nUntil: 24:00,0;"
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "plenum_hvac_schs", :prefix => "plenum_" do
@@ -310,6 +310,10 @@ import "system/hw.pxt", :group => "hw", :prefix => "hw_" do
   parameter "pump_head", :default => 60.0['ft H2O']
   parameter "pump_eff", :default => 0.9
   parameter "pump_control", :default => "INTERMITTENT"
+  parameter "heating_source", :default=>"BOILER"
+  parameter "fluid_type", :default=>"WATER"  # (WATER | STEAM )
+  parameter "max_loop_temp", :default=>100  # (100 | 120 )
+  parameter "min_loop_temp", :default=>10  # (10 | 10 )
 end
 
 import "system/chw.pxt", :group => "chw", :prefix => "chw_" do
@@ -577,6 +581,7 @@ for zone in all_zones
     ahu_branches[sys_name] ||= []
     ahu_branches[sys_name] << branch_name
     hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "WATER")
+    hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "STEAM")
 
     if (this_hvac[:atu_type] == "CAV-CHB")
       chw_branches << branch_name
@@ -586,6 +591,8 @@ for zone in all_zones
     end
 
     if (this_hvac[:heat_coil_type] == "WATER")
+      hw_branches |= ["#{this_hvac_type}-#{sys_name}"]
+    elsif (this_hvac[:heat_coil_type] == "STEAM")
       hw_branches |= ["#{this_hvac_type}-#{sys_name}"]
     elsif (this_hvac[:heat_coil_type] == "DX-WATER")
       wshp_branches  |= ["#{this_hvac_type}-#{sys_name} HR Branch"]
@@ -600,6 +607,9 @@ for zone in all_zones
     if (this_hvac[:heat_coil_type] == "WATER")
       hw_branches << branch_name
       hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "WATER")
+    elsif (this_hvac[:heat_coil_type] == "STEAM")
+      hw_branches << branch_name
+      hw_branches << "#{branch_name} ATU" if (this_hvac_zone[:atu_reheat_coil_type] == "STEAM")
     elsif (this_hvac[:heat_coil_type] == "DX-WATER")
       wshp_branches  |= ["#{branch_name} HR Branch"]
     end
