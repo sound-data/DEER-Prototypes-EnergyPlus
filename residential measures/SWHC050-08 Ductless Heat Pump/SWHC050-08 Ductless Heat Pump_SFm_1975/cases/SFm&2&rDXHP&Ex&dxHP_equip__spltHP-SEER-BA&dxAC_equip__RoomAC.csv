@@ -1,0 +1,3 @@
+skip,case_name,:system_type,:cooling_coil_cop,:heating_coil_cop,:supplyfan_total_eff,:motor_eff
+,Pre-RE-HV-RoomAC-9.0E-ERheat,PTHP,2.64,2.2854,0.7,0.9
+,Std-RE-HV-RoomAC-9.8E-ERheat,PTHP,2.87,2.2854,0.7,0.9
