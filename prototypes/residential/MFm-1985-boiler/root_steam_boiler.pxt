@@ -54998,7 +54998,6 @@ Controller:OutdoorAir,
 !- Inputs based on EnergyPlus defaults and boiler library.
 
 !-   ===========  ALL OBJECTS IN CLASS: SETPOINTMANAGER:OUTDOORAIRRESET ===========
-
 SetpointManager:OutdoorAirReset,
     Boiler Setpoint Manager, !- Name
     Temperature,             !- Control Variable
