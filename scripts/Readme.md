@@ -46,6 +46,18 @@ Apply the following data transformation steps for each subfolder under your meas
 2. The current Com.py normalizing unit handling process is not fully robust. In particular, it currently does not support workflows where more than one unique NormUnit is present within a single starting workbook (DEER_EnergyPlus_Modelkit_Measure_list_working_*.xlsx). Measure developers can also choose the replace the numunit values as an external step if the current script functionality doesn't cover edge cases, for example if a normalizing unit varies based on climate-zone.
 3. Support for different types of normalizing units (vary by CZ, etc.) may require further enhancements to the normalization logic and feedbacks from measure developers.
 
-### CEDARS formatted hourly Load shapes:
-1. Note new outputs "CEDARS_LoadShape_XXX.zip" from the scripts, these will be the new CEDARS formatted loadshapes containing the hourly consumption data for CEDARS use. CEDARS accepts them in zip format. In the script, there is a commented-out line (note the comment "#enable if just need csv export") to allow for user to export the table as a CSV on it's own, if the user wishes to do so, uncomment that line and run the script.
+### CEDARS-ready, unitized hourly load shapes contained in zip files:
+1. Note new outputs "CEDARS_LoadShape_XXX.zip" from the scripts, these will be the new unitized and CEDARS-formatted loadshapes containing the hourly consumption data for CEDARS use. CEDARS accepts them in zip format. 
+2. Also, in the script, the csv files output files "CEDARS_long_ls_\*.csv" and "CEDARS_ls_annual_loads_\*.csv" are enabled by default (note the comment "#enable if html viewer is needed / csv export is needed"), as they are the requirements for generating the plotly viewer, described in the section below. If these are not needed, comment-out those two lines (put # before line) and run the script.
 
+### Plotly Viewer html files showing hourly load shapes by building type:
+1. Install the plotly library in your python environment. (i.e., pip install plotly, conda install plotly, depending on your environment)
+2. Place the csv file(s) "CEDARS_long_ls_\*.csv" and "CEDARS_ls_annual_loads_\*.csv" (both must be present) in the same directory as the script.
+3. Run the script: python ls_viewer_generation.py
+4. Interactive Plotly .html files will be generated for each available building type. Generating plots for many load shapes may take several minutes.
+
+#### Each HTML file includes:
+* All hourly load shape profiles (8760 hours)
+* Interactive legend filtering (click / double-click)
+* Time zoom controls (1d / 1w / 1m + range slider)
+* Unified hover showing all traces at a given timestamp
