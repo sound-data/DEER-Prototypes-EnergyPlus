@@ -17891,6 +17891,11 @@ Output:Variable,
     Unitary System Compressor Part Load Ratio ,  !- Variable Name
     Hourly;                  !- Reporting Frequency
 
+     Output:Variable,
+        *,                       !- Key Value
+        Heating Coil Electricty Energy ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:DIAGNOSTICS ===========
 
 Output:Diagnostics,

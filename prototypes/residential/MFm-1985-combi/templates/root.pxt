@@ -289,10 +289,10 @@ Version,
 SimulationControl,
     Yes,                     !- Do Zone Sizing Calculation
     Yes,                     !- Do System Sizing Calculation
-    Yes,                     !- Do Plant Sizing Calculation
-    Yes,                     !- Run Simulation for Sizing Periods
+    No,                      !- Do Plant Sizing Calculation
+    No,                      !- Run Simulation for Sizing Periods
     Yes,                     !- Run Simulation for Weather File Run Periods
-    Yes,                        !- Do HVAC Sizing Simulation for Sizing Periods
+    ,                        !- Do HVAC Sizing Simulation for Sizing Periods
     ;                        !- Maximum Number of HVAC Sizing Simulation Passes
 
 
@@ -317,7 +317,7 @@ Schedule:File,
     <% if defined?($repository_dir) %>
       <%= $repository_dir %>/templates/hot water profile/site_mains_water_temp_CZ<%= climate_zone_str %>.csv,  !- File Name
     <% else %>
-      ../../../../../../../../templates/hot water profile/site_mains_water_temp_CZ<%= climate_zone_str %>.csv,  !- File Name
+      C:/dev/DEER-Prototypes-EnergyPlus/templates/hot water profile/site_mains_water_temp_CZ<%= climate_zone_str %>.csv,  !- File Name
     <% end %>
     1,                       !- Column Number
     1,                       !- Rows to Skip at Top
@@ -25408,10 +25408,38 @@ Sizing:Parameters,
     <%= sizing_parameter_cooling %>;                     !- Cooling Sizing Factor
 
 
-!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLEDICTIONARY ===========
+!-   ===========  ALL OBJECTS IN CLASS: OUTPUT:VARIABLE ===========
 
-Output:VariableDictionary,
-    regular;                 !- Key Field
+    Output:Variable,
+        *,                       !- Key Value
+        Unitary System Fan Part Load Ratio ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
+    Output:Variable,
+        *,                       !- Key Value
+        Zone Ventilation Air Change Rate,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
+    Output:Variable,
+        *,                       !- Key Value
+        Heating Coil NaturalGas Energy ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
+     Output:Variable,
+        *,                       !- Key Value
+        Heating Coil Electricty Energy ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
+   Output:Variable,
+        *,                       !- Key Value
+        Cooling Coil Total Cooling Energy ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
+    Output:Variable,
+        *,                       !- Key Value
+        Unitary System Compressor Part Load Ratio ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+    
 
 
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:TABLE:SUMMARYREPORTS ===========

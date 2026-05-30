@@ -30,6 +30,12 @@ parameter "motor_eff", :default=>0.24
 parameter "pressure_rise", :default=>125
 #parameter "vfd_curve_name", :default=>"" #"" for constant speed, "VFD_Fan_Curve" for variable speed does not work with Fan:OnOff
 
+# Hardsize
+parameter "coolCap", :default=>"autosize"
+parameter "coolShr", :default=>"autosize"
+parameter "heatCap", :default=>"autosize"
+parameter "heatPumpHeatCap", :default=>"autosize"
+parameter "airflow", :default=>"autosize"
 
 #parameter "heat_coil_object_type",:default => nil
 #parameter "cool_coil_object_type",:default => nil
@@ -430,7 +436,7 @@ ZoneHVAC:Baseboard:Convective:Water,
         always_avail,            !- Availability Schedule Name
         <%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
         <%= pressure_rise %>,                     !- Pressure Rise {Pa}
-        autosize,                !- Maximum Flow Rate {m3/s}
+        <%= airflow %>,                !- Maximum Flow Rate {m3/s}
         <%= motor_eff %>,                     !- Motor Efficiency
         1,                       !- Motor In Airstream Fraction
         <%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
@@ -537,10 +543,10 @@ ZoneHVAC:Baseboard:Convective:Water,
         Coil:Cooling:DX:SingleSpeed,
             <%= system_name %> Cooling Coil,   !- Name
             always_avail,            !- Availability Schedule Name
-            autosize,                !- Gross Rated Total Cooling Capacity {W}
-            autosize,                !- Gross Rated Sensible Heat Ratio
+            <%= coolCap %>,                !- Gross Rated Total Cooling Capacity {W} 
+            <%= coolShr %>,                !- Gross Rated Sensible Heat Ratio 
             <%= cooling_coil_cop %>,               !- Gross Rated Cooling COP {W/W}
-            autosize,                !- Rated Air Flow Rate {m3/s}
+            <%= airflow %>,                !- Rated Air Flow Rate {m3/s}
             ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
             <%= system_name %> <%= heat_type == "DX" ? "Supply Fan Outlet" : "Heating Coil Outlet" %>,  !- Air Inlet Node Name
             <%= system_name %> <%= heat_type == "DX" ? "Cooling Coil Outlet" : "Air Loop Outlet" %>,  !- Air Outlet Node Name
@@ -578,7 +584,7 @@ ZoneHVAC:Baseboard:Convective:Water,
             always_avail,            !- Availability Schedule Name
             NaturalGas,              !- Fuel Type
             <%= burner_eff %>,                     !- Burner Efficiency
-            autosize,                !- Nominal Capacity {W}
+            <%= heatCap %>,                !- Nominal Capacity {W}
             <%= system_name %> Supply Fan Outlet,  !- Air Inlet Node Name
             <% if cool_type == "NC" %>
                 <%= system_name %> Air Loop Outlet;  !- Air Outlet Node Name
@@ -672,9 +678,9 @@ ZoneHVAC:Baseboard:Convective:Water,
             Coil:Heating:DX:SingleSpeed,
                 <%= system_name %> Heating Coil,   !- Name
                 always_avail,            !- Availability Schedule Name
-                autosize,                !- Gross Rated Heating Capacity {W}
+                <%= heatPumpHeatCap %>,                !- Gross Rated Heating Capacity {W}
                 <%= heating_coil_cop %>,                     !- Gross Rated Heating COP {W/W}
-                autosize,                !- Rated Air Flow Rate {m3/s}
+                <%= airflow %>,                !- Rated Air Flow Rate {m3/s}
                 ,                        !- Rated Supply Fan Power Per Volume Flow Rate {W/(m3/s)}
                 <%= system_name %> Cooling Coil Outlet,  !- Air Inlet Node Name
                 <%= system_name %> Heating Coil Outlet,  !- Air Outlet Node Name
@@ -771,17 +777,17 @@ ZoneHVAC:Baseboard:Convective:Water,
                 ,                         !- Supplemental Heating Coil Name
                 <% end %>
                 SupplyAirFlowRate,        !- Cooling Supply Air Flow Rate Method
-                autosize,                 !- Cooling Supply Air Flow Rate
+                <%= airflow %>,                 !- Cooling Supply Air Flow Rate
                 ,                         !- Cooling Supply Air Flow Rate Per Floor Area
                 ,                         !- Cooling Fraction of Autosized Cooling Supply Air Flow Rate
                 ,                         !- Cooling Supply Air Flow Rate Per Unit of Capacity
                 SupplyAirFlowRate,        !- Heating Supply Air Flow Rate Method
-                autosize,                 !- Heating Supply Air Flow Rate
+                <%= airflow %>,                 !- Heating Supply Air Flow Rate
                 ,                         !- Heating Supply Air Flow Rate Per Floor Area
                 ,                         !- Heating Fraction of Autosized Heating Supply Air Flow Rate
                 ,                         !- Heating Supply Air Flow Rate Per Unit of Capacity
                 SupplyAirFlowRate,        !- No Load Supply Air Flow Rate Method
-                autosize,                 !- No Load Supply Air Flow Rate
+                <%= airflow %>,                 !- No Load Supply Air Flow Rate
                 ,                         !- No Load Supply Air Flow Rate Per Floor Area
                 ,                         !- No Load Fraction of Autosized Cooling Supply Air Flow Rate
                 ,                         !- No Load Fraction of Autosized Heating Supply Air Flow Rate
@@ -830,8 +836,8 @@ ZoneHVAC:Baseboard:Convective:Water,
                     <%= system_name %> Air Loop Outlet,!- Furnace Air Outlet Node Name
                     ,                        !- Supply Air Fan Operating Mode Schedule Name
                     32.2,                      !- Maximum Supply Air Temperature {C}
-                    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
-                    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+                    <%= airflow %>,                !- Cooling Supply Air Flow Rate {m3/s}
+                    <%= airflow %>,                !- Heating Supply Air Flow Rate {m3/s}
                     ,                        !- No Load Supply Air Flow Rate {m3/s}
                     <%= zone_name %>,  !- Controlling Zone or Thermostat Location
                     Fan:OnOff,               !- Supply Fan Object Type
@@ -848,8 +854,8 @@ ZoneHVAC:Baseboard:Convective:Water,
                     always_avail,            !- Availability Schedule Name
                     <%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
                     <%= system_name %> Air Loop Outlet,!- Air Outlet Node Name
-                    autosize,                !- Cooling Supply Air Flow Rate {m3/s}
-                    autosize,                !- Heating Supply Air Flow Rate {m3/s}
+                    <%= airflow %>,                !- Cooling Supply Air Flow Rate {m3/s}
+                    <%= airflow %>,                !- Heating Supply Air Flow Rate {m3/s}
                     ,                        !- No Load Supply Air Flow Rate {m3/s}
                     <%= zone_name %>,  !- Controlling Zone or Thermostat Location
                     Fan:OnOff,               !- Supply Air Fan Object Type
