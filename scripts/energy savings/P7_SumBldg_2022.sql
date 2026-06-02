@@ -1,6 +1,6 @@
 --building type weight, sum/division step
 
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DELETE FROM meas_impacts_wtd_2022 WHERE "BldgType" = 'Res';
 INSERT INTO meas_impacts_wtd_2022
 SELECT

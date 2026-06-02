@@ -1,0 +1,9 @@
+pandas
+numpy
+openpyxl
+beautifulsoup4
+xlsxwriter
+lxml
+matplotlib
+tqdm
+plotly

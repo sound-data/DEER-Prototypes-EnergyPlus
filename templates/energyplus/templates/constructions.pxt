@@ -986,3 +986,33 @@ WindowMaterial:Shade,
   0.0,                     !- Left-side Opening Multiplier
   0.0,                     !- Right-side Opening Multiplier
   <%= window_shade_permeability %>;  !- Air flow permeability
+
+
+!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+! added non-adibatic pipe related construction and materials 
+
+Construction,
+    Insulated Pipe,          !- Name
+    Pipe Insulation,         !- Outside Layer
+    Pipe Steel;              !- Layer 2
+	
+Material,
+    Pipe Insulation,         !- Name
+    VeryRough,               !- Roughness
+    0.029999999944,          !- Thickness {m}
+    0.039999999942,          !- Conductivity {W/m-K}
+    91.0,                    !- Density {kg/m3}
+    836.0;                   !- Specific Heat {J/kg-K}
+	
+Material,
+    Pipe Steel,              !- Name
+    Smooth,                  !- Roughness
+    3.00E-03,                !- Thickness {m}
+    45.31,                   !- Conductivity {W/m-K}
+    7833.0,                  !- Density {kg/m3}
+    500.0,                   !- Specific Heat {J/kg-K}
+    0.9,                     !- Thermal Absorptance
+    0.5,                     !- Solar Absorptance
+    0.5;                     !- Visible Absorptance	
+	
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

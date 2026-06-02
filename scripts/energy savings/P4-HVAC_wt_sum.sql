@@ -2,7 +2,7 @@
 -- Run P2.5 first: Create the res HVAC weighted version of the annual results by summing the results of the previous table
 -- Add the results to the measure impacts table
 
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS meas_impacts_hvacwtd;
 CREATE TABLE meas_impacts_hvacwtd AS 
 
@@ -65,7 +65,7 @@ ORDER BY
 ---
 ---then Run second: insert into existing measure impacts results below
 ---after this step, THEN apply subsequent weighting steps (Vint, Loc, BldgType)
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 INSERT INTO meas_impacts_2022
 SELECT
 *

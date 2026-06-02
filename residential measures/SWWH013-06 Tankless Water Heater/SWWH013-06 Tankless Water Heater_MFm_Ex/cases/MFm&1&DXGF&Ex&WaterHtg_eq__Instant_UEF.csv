@@ -1,0 +1,10 @@
+skip,case_name,:water_heater_type,:water_heater_location,:water_heater_cap,:thermal_eff,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:sch,:tank_skin_loss
+,RG-WaterHtg_eq-Instant_UEF-0.81 UEF-HI,gas_tankless,unconditioned,200000['BTUH'],0.84,,HI,0,NaturalGas,MFm_minute_dhw_demand_fraction.csv,
+,RG-WaterHtg_eq-Instant_UEF-0.87 UEF-HI,gas_tankless,unconditioned,200000['BTUH'],0.92,,HI,0,NaturalGas,MFm_minute_dhw_demand_fraction.csv,
+,RG-WaterHtg_eq-Instant_UEF-0.92 UEF-HI,gas_tankless,unconditioned,200000['BTUH'],0.96,,HI,0,NaturalGas,MFm_minute_dhw_demand_fraction.csv,
+,RG-WaterHtg_eq-Instant_UEF-0.96 UEF-HI,gas_tankless,unconditioned,200000['BTUH'],0.99,,HI,0,NaturalGas,MFm_minute_dhw_demand_fraction.csv,
+,RG-WaterHtg_eq-Stor_UEF-40 gal-0.64 UEF-HI,gas,unconditioned,65000['BTUH'],0.752,40,HI,350 ['BTUH'],NaturalGas,MFm_minute_dhw_demand_fraction.csv,2.08
+,RG-WaterHtg_eq-Stor_UEF-40 gal-0.60 EF,gas,unconditioned,65000['BTUH'],0.76,40,,350 ['BTUH'],NaturalGas,MFm_minute_dhw_demand_fraction.csv,2.3
+,RG-WaterHtg_eq-Stor_UEF-40 gal-0.58 UEF-MD,gas,unconditioned,65000['BTUH'],0.74,40,MD,350 ['BTUH'],NaturalGas,MFm_minute_dhw_demand_fraction.csv,2.31
+,RG-WaterHtg_eq-Instant_UEF-0.81 UEF-MD,gas_tankless,unconditioned,200000['BTUH'],0.84,,MD,0,NaturalGas,MFm_minute_dhw_demand_fraction.csv,
+,RG-WaterHtg_eq-Instant_UEF-0.87 UEF-MD,gas_tankless,unconditioned,200000['BTUH'],0.95,,MD,0,NaturalGas,MFm_minute_dhw_demand_fraction.csv,
