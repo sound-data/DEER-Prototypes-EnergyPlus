@@ -42,6 +42,18 @@ parameter "sub_heat_eff",
 parameter "sub_heat_cap",
   :default => Autosize
 
+#Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/15/26 - Added parameters for crankcase and defrost heaters.
+parameter "dx_crankcase_max_temp", :default => 10['C']
+parameter "dx_crankcase_cap", :default => 50['W'] # Original values: 40W (single speed); 0W (multispeed); 50W (unitary.pxt)
+parameter "hp_defrost_temp", :default => 35['F'] # Original values: 5C (single speed, multispeed), 35F (unitary.pxt)
+
+#Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/20/26 - Since defrost strategy is ReverseCycle, resistive defrost capacity should be zero.
+parameter "hp_defrost_cap", :default => 0['W'] # Original values: 20000W (single speed), 0W (multispeed)
+parameter "hp_defrost_strat", :default => "ReverseCycle" # Options: (ReverseCycle | Resistive) Original values: ReverseCycle (single speed, multispeed)
+parameter "hp_defrost_ctrl", :default => "OnDemand" # (Timed | OnDemand) Multispeed coil requires OnDemand defrost control to recognize ReverseCycle.
+# Original values: OnDemand (single speed); Timed (multispeed)
+parameter "hp_defrost_time_frac", :default => 0.058333 # Default value in EnergyPlus. Original values: 0.166667 (single speed) ; 0.058333 (multispeed)
+
 %>
 
 <%
@@ -452,8 +464,9 @@ ZoneHVAC:Baseboard:Convective:Water,
             ,                         !- Condensate Collection Water Storage Tank Name
             No,                       !- Apply Part Load Fraction to Speeds Greater than 1
             No,                       !- Apply Latent Degradation to Speeds Greater than 1
-            0,                        !- Crankcase Heater Capacity
-            10,                       !- Maximum Outdoor DryBulb Temperature for Crankcase Heater Operation
+	!Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/15/26 - Added parameters for crankcase heater.
+            <%= dx_crankcase_cap %>,                        !- Crankcase Heater Capacity
+            <%= dx_crankcase_max_temp %>,                       !- Maximum Outdoor DryBulb Temperature for Crankcase Heater Operation
             0,                        !- Basin Heater Capacity
             2,                        !- Basin Heater Setpoint Temperature
             ,                         !- Basin Heater Operating Schedule Name
@@ -594,14 +607,16 @@ ZoneHVAC:Baseboard:Convective:Water,
                 <%= system_name %> Heating Coil Outlet,  !- Air Outlet Node Name
                 -8,                      !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
                 ,                        !- Outdoor Dry-Bulb Temperature to Turn On Compressor {C}
-                ,                        !- Crankcase Heater Capacity {W}
-                10,                      !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
+	!Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/15/26 - Parameterized crankcase heater objects.
+                <%= dx_crankcase_cap %>,                        !- Crankcase Heater Capacity {W}
+                <%= dx_crankcase_max_temp %>,                      !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
                 Defrost_EIR_FT,          !- Defrost Energy Input Ratio Function of Temperature Curve Name
-                5,                       !- Maximum Outdoor Dry-Bulb Temperature for Defrost Operation {C}
-                ReverseCycle,            !- Defrost Strategy
-                Timed,                   !- Defrost Control
-                0.058333,                !- Defrost Time Period Fraction
-                ,                        !- Resistive Defrost Heater Capacity {W}
+	!Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/15/26 - Parameterized defrost objects.
+                <%= hp_defrost_temp %>,                       !- Maximum Outdoor Dry-Bulb Temperature for Defrost Operation {C}
+                <%= hp_defrost_strat %>,            !- Defrost Strategy
+                <%= hp_defrost_ctrl %>,                   !- Defrost Control
+                <%= hp_defrost_time_frac %>,                !- Defrost Time Period Fraction
+                <%= hp_defrost_cap %>,                        !- Resistive Defrost Heater Capacity {W}
                 No,                      !- Apply Part Load Fraction to Speeds Greater than 1
                 Electricity,             !- Fuel Type
                 4,                       !- Region number for Calculating HSPF
@@ -693,13 +708,16 @@ ZoneHVAC:Baseboard:Convective:Water,
                 Defrost_EIR_FT,                        !- Defrost Energy Input Ratio Function of Temperature Curve Name
                 -5.0,                    !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
                 ,                        !- Outdoor Dry-Bulb Temperature to Turn On Compressor {C}
-                5.0,                     !- Maximum Outdoor Dry-Bulb Temperature for Defrost Operation {C}
-                40,                   !- Crankcase Heater Capacity {W}
-                10.0,                    !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
-                ReverseCycle,               !- Defrost Strategy
-                OnDemand,                   !- Defrost Control
-                0.166667,                !- Defrost Time Period Fraction
-                20000;                   !- Resistive Defrost Heater Capacity {W}
+	!Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/15/26 - Parameterized defrost objects.
+                <%= hp_defrost_temp %>,                     !- Maximum Outdoor Dry-Bulb Temperature for Defrost Operation {C}
+	!Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/15/26 - Parameterized crankcase heater objects.
+                <%= dx_crankcase_cap %>,                   !- Crankcase Heater Capacity {W}
+                <%= dx_crankcase_max_temp %>,                    !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
+	!Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/15/26 - Parameterized defrost objects.
+                <%= hp_defrost_strat %>,               !- Defrost Strategy
+                <%= hp_defrost_ctrl %>,                   !- Defrost Control
+                <%= hp_defrost_time_frac %>,                !- Defrost Time Period Fraction
+                <%= hp_defrost_cap %>;                   !- Resistive Defrost Heater Capacity {W}
         <% end %>
     <% elsif heat_type == "HW" %>
         Coil:Heating:Water,
@@ -975,3 +993,17 @@ ZoneHVAC:Baseboard:Convective:Water,
         <%= system_name %> Supply Fan Outlet,  !- Fan Outlet Node Name
         <%= system_name %> Mixed Air Outlet;  !- Setpoint Node or NodeList Name
 
+Output:Variable,
+    ,                       !- Key Value
+    Heating Coil Defrost Electricity Energy ,  !- Variable Name
+    Annual;                  !- Reporting Frequency
+
+Output:Variable,
+    ,                       !- Key Value
+    Heating Coil Crankcase Heater Electricity Energy ,  !- Variable Name
+    Annual;                  !- Reporting Frequency
+
+Output:Variable,
+    ,                       !- Key Value
+    Heating Coil Electricity Energy ,  !- Variable Name
+    Annual;                  !- Reporting Frequency
