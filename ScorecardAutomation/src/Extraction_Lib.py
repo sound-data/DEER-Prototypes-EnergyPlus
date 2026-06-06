@@ -1408,7 +1408,6 @@ def extract_hvac_params(idf_path, filename):
         "Cooling Efficiency": cool_eff
     }
 
-
 def extract_fan_data(idf_path, htm_path=None):
     """
     Read Fans table from *_etctbl.htm and match each System name to the IDF fan object.
@@ -1557,7 +1556,7 @@ def extract_fan_data(idf_path, htm_path=None):
     def _value_by_field_comment(block: str, field_label: str) -> str | None:
         # extract the value before ",  !- <field_label>"
         pat = re.compile(
-            r"^\s*([^,;]+)\s*,\s*!\-\s*" + re.escape(field_label) + r"\s*$",
+            r"^\s*([^,;]+)\s*,\s*!-\s*" + re.escape(field_label) + r"(?:\s*\{[^}]*\})?\s*$",
             re.I | re.M
         )
         mm = pat.search(block)
@@ -1613,7 +1612,7 @@ def extract_fan_data(idf_path, htm_path=None):
             "Vintage": vintage,
             "HVAC name": hvac_name,
             "System name": system_name_raw,
-            "System type": str(r[idx_sys_type]).strip() if idx_sys_type is not None else "N/A",
+            "System type": (lambda raw: raw if raw.lower() not in {"", "n/a", "general", "nan"} else system_name_raw)(str(r[idx_sys_type]).strip() if idx_sys_type is not None else ""),
             "Total Static Pressure (TSP) (in w.c.)": "N/A",
             "Fan Efficiency": "N/A",
             "Fan Motor and Drive Efficiency": "N/A",
@@ -1666,7 +1665,6 @@ def extract_fan_data(idf_path, htm_path=None):
         out.append(rec)
 
     return out
-
 
 def extract_infiltration_rate(idf_path, tol=1e-9, decimals=6):
     """

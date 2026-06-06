@@ -289,6 +289,10 @@ def attach_fan_hvac_identifier(df_fan: pd.DataFrame, df_zone_summary: pd.DataFra
         )
         return df
 
+    # Determine default label: "Main" only if at least one zone contains it, else "N/A"
+    all_hvac_ids = df_zone_summary["HVAC System Identifier"].astype(str).str.strip().tolist()
+    default_label = "Main" if "Main" in all_hvac_ids else "N/A"
+
     zs = df_zone_summary[["Zone Name", "HVAC System Identifier"]].copy()
     zs["ZoneNameN"] = zs["Zone Name"].apply(norm)
     zs["HVACID"] = zs["HVAC System Identifier"].astype(str).str.strip()
@@ -311,7 +315,7 @@ def attach_fan_hvac_identifier(df_fan: pd.DataFrame, df_zone_summary: pd.DataFra
             return "Customized"
         if "Alternative" in matched:
             return "Alternative"
-        return "Main"
+        return default_label
 
     df["HVAC System Identifier"] = df[sys_col].apply(assign_id)
     return df
