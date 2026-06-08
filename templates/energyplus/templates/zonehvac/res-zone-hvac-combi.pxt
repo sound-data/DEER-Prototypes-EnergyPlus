@@ -44,15 +44,14 @@ parameter "sub_heat_cap",
 
 #Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/15/26 - Added parameters for crankcase and defrost heaters.
 parameter "dx_crankcase_max_temp", :default => 10['C']
-parameter "dx_crankcase_cap", :default => 50['W'] # Original values: 40W (single speed); 0W (multispeed); 50W (unitary.pxt)
-parameter "hp_defrost_temp", :default => 35['F'] # Original values: 5C (single speed, multispeed), 35F (unitary.pxt)
+parameter "dx_crankcase_cap", :default => 50['W']
+parameter "hp_defrost_temp", :default => 35['F']
 
-#Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/20/26 - Since defrost strategy is ReverseCycle, resistive defrost capacity should be zero.
-parameter "hp_defrost_cap", :default => 0['W'] # Original values: 20000W (single speed), 0W (multispeed)
-parameter "hp_defrost_strat", :default => "ReverseCycle" # Options: (ReverseCycle | Resistive) Original values: ReverseCycle (single speed, multispeed)
-parameter "hp_defrost_ctrl", :default => "OnDemand" # (Timed | OnDemand) Multispeed coil requires OnDemand defrost control to recognize ReverseCycle.
-# Original values: OnDemand (single speed); Timed (multispeed)
-parameter "hp_defrost_time_frac", :default => 0.058333 # Default value in EnergyPlus. Original values: 0.166667 (single speed) ; 0.058333 (multispeed)
+#Solaris Technical - Yasemin Agi & Behzad S. Rizi - 05/20/26 - Added parameters for defrost controls.
+parameter "hp_defrost_cap", :default => 0['W']
+parameter "hp_defrost_strat", :default => "ReverseCycle" # (ReverseCycle | Resistive)
+parameter "hp_defrost_ctrl", :default => "OnDemand" # (Timed | OnDemand)
+parameter "hp_defrost_time_frac", :default => 0.058333
 
 %>
 
