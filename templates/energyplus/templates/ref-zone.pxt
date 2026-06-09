@@ -1,0 +1,151 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "zone_name"
+parameter "air_chiller_names"
+parameter "add_heater", :default => true
+parameter "sup_airflow", :default => 0.84['m3/s']
+parameter "heater_capa", :default => 800000['W']
+
+
+parameter "htg_sp", :default=>
+"
+  Through: 12/31,          !- Field 1
+  For: AllDays,            !- Field 2
+  Until: 24:00,2.;         !- Field 7
+"
+parameter "clg_sp", :default=>
+"
+  Through: 12/31,          !- Field 1
+  For: AllDays,            !- Field 2
+  Until: 24:00,4.;         !- Field 7
+"
+%>
+
+  ZoneControl:Thermostat,
+    <%= zone_name %> Thermostat,     !- Name
+    <%= zone_name %>,                !- Zone or ZoneList Name
+    <%= zone_name %> control type sch,  !- Control Type Schedule Name
+    ThermostatSetpoint:DualSetpoint,  !- Control 1 Object Type
+    <%= zone_name %> Setpoints;    !- Control 1 Name
+  
+  Schedule:Compact,
+    <%= zone_name %> control type sch,  !- Name
+    <%= zone_name %> Control Type,            !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,4;          !- Field 3
+
+  ScheduleTypeLimits,
+    <%= zone_name %> Control Type,            !- Name
+    0,                       !- Lower Limit Value
+    4,                       !- Upper Limit Value
+    DISCRETE;                !- Numeric Type
+
+  ThermostatSetpoint:DualSetpoint,
+    <%= zone_name %> Setpoints,    !- Name
+    <%= zone_name %> Heating Setpoints sch,!- Heating Setpoint Temperature Schedule Name
+    <%= zone_name %> Cooling Setpoints sch;!- Cooling Setpoint Temperature Schedule Name
+
+  Schedule:Compact,
+    <%= zone_name %> Heating Setpoints sch,!- Name
+    Temperature,             !- Schedule Type Limits Name
+    <%= htg_sp %>
+
+  Schedule:Compact,
+    <%= zone_name %> Cooling Setpoints sch,!- Name
+    Temperature,             !- Schedule Type Limits Name
+    <%= clg_sp %>
+
+  ZoneHVAC:EquipmentConnections,
+    <%= zone_name %>,                !- Zone Name
+    <%= zone_name %> ref equipment,       !- Zone Conditioning Equipment List Name
+    <%= zone_name %> Inlet Nodes,  !- Zone Air Inlet Node or NodeList Name
+<% if (add_heater) %>
+    <%= zone_name %> Exhaust Nodes,  !- Zone Air Exhaust Node or NodeList Name
+<% else %>
+    ,  !- Zone Air Exhaust Node or NodeList Name
+<% end %>
+    <%= zone_name %> air node,                 !- Zone Air Node Name
+    <%= zone_name %> return air node;                 !- Zone Return Air Node or NodeList Name
+
+  ZoneHVAC:EquipmentList,
+    <%= zone_name %> ref equipment,       !- Name
+    SequentialLoad,          !- Load Distribution Scheme
+    ZoneHVAC:RefrigerationChillerSet,  !- Zone Equipment 1 Object Type
+    <%= zone_name %> chiller set,      !- Zone Equipment 1 Name
+    1,                       !- Zone Equipment 1 Cooling Sequence
+<% if (add_heater) %>
+    2,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+    ZoneHVAC:UnitHeater,     !- Zone Equipment 2 Object Type
+    <%= zone_name %> unit heater,        !- Zone Equipment 2 Name
+    2,                       !- Zone Equipment 2 Cooling Sequence
+    1,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
+
+  ZoneHVAC:UnitHeater,
+    <%= zone_name %> unit heater,        !- Name
+    <%= zone_name %> unit heater avail,    !- Availability Schedule Name
+    <%= zone_name %> Exhaust Nodes,  !- Air Inlet Node Name
+    <%= zone_name %> Inlet Nodes,  !- Air Outlet Node Name
+    Fan:ConstantVolume,      !- Supply Air Fan Object Type
+    <%= zone_name %> unit heater fan,     !- Supply Air Fan Name
+    <%= sup_airflow %>,                    !- Maximum Supply Air Flow Rate {m3/s}
+    Coil:Heating:Electric,   !- Heating Coil Object Type
+    <%= zone_name %> unit heater coil,  !- Heating Coil Name
+    ,                        !- Supply Air Fan Operating Mode Schedule Name
+    Yes,                     !- Supply Air Fan Operation During No Heating
+    ,                        !- Maximum Hot Water or Steam Flow Rate {m3/s}
+    ,                        !- Minimum Hot Water or Steam Flow Rate {m3/s}
+    0.001;                   !- Heating Convergence Tolerance
+
+  Coil:Heating:Electric,
+    <%= zone_name %> unit heater coil,  !- Name
+    <%= zone_name %> unit heater avail,    !- Availability Schedule Name
+    1.0,                     !- Efficiency
+    <%= heater_capa %>,                 !- Nominal Capacity {W}
+    <%= zone_name %> unit heater coil inlet node,  !- Air Inlet Node Name
+    <%= zone_name %> Inlet Nodes;  !- Air Outlet Node Name
+
+  Fan:ConstantVolume,
+    <%= zone_name %> unit heater fan,     !- Name
+    <%= zone_name %> unit heater avail,    !- Availability Schedule Name
+    0.5,                     !- Fan Total Efficiency
+    75.0,                    !- Pressure Rise {Pa}
+    <%= sup_airflow %>,                    !- Maximum Flow Rate {m3/s}
+    0.9,                     !- Motor Efficiency
+    1.0,                     !- Motor In Airstream Fraction
+    <%= zone_name %> Exhaust Nodes,  !- Air Inlet Node Name
+    <%= zone_name %> unit heater coil inlet node;  !- Air Outlet Node Name
+
+  Schedule:Compact,
+    <%= zone_name %> unit heater avail,    !- Name
+    Control Type,            !- Schedule Type Limits Name
+    Through: 3/31,           !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,1,          !- Field 3
+    Through: 9/30,           !- Field 5
+    For: AllDays,            !- Field 6
+    Until: 24:00,0,          !- Field 7
+    Through: 12/31,          !- Field 9
+    For: AllDays,            !- Field 10
+    Until: 24:00,1;          !- Field 11
+<% else %>
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
+<% end %>
+
+  ZoneHVAC:RefrigerationChillerSet,
+    <%= zone_name %> chiller set,      !- Name
+    ,                        !- Availability Schedule Name
+    <%= zone_name %>,                !- Zone Name
+    ,                        !- Air Inlet Node Name
+    ,                        !- Air Outlet Node Name
+<% EnergyPlus.each(air_chiller_names) do |air_chiller_name| %>
+  <%= air_chiller_name %>,  !- Refrigeration Compressor Name
+<% end %>
+

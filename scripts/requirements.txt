@@ -6,3 +6,4 @@ xlsxwriter
 lxml
 matplotlib
 tqdm
+plotly

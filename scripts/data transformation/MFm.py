@@ -6,10 +6,14 @@ import os
 import sys
 import datetime as dt
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
+#%%
+import helper_functions
+from importlib import reload
+reload(helper_functions)
 # %%
-#Read master workbook for measure / tech list
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list.xlsx', sheet_name='Measure_list', skiprows=4)
-
+#Read master workbook for measure / tech list (note example commented line for specific measures)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+#df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
 # %%
@@ -19,18 +23,22 @@ measures = list(df_master['Measure (general name)'].unique())
 #Shows list of measure names 
 print(measures)
 #%%
+#Define measure name here (note example commented line for specific measures)
+#measure_name = 'SEER Rated AC/HP'
+#measure_name = 'Efficient Doors'
 #Define measure name here
-measure_name = 'SEER Rated AC/HP'
+measure_name = 'SEER Rated AC HP'
 
 # %%
-#MFm only script
-####Define path
+#MFm only script 
+####Define path (note example commented line for specific measures)
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 os.chdir("../..") #go up two directory
 print(os.path.abspath(os.curdir))
-
-path = 'Analysis/MFm_SEER Rated AC_HP_Ex'
+#path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_DMo'
+#path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_MFm_Ex'
+path = 'residential measures/SWBE011-01 Windows\SWBE011-01 Windows_MFm\SWBE011-01 Windows_MFm_Msr1'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -238,68 +246,106 @@ print(os.path.abspath(os.curdir))
 hrly_path = path + '/runs' 
 
 #extract data per bldgtype-bldghvac-bldgvint group
-hourly_df = pd.DataFrame(index=range(0,8760))
+#5/6/26 avoid multiple dataframe creations optimization fix
+index = pd.RangeIndex(8760)
+hourly_data = {}
+
 #extract num_runs / split_meta_cols_eu
 df_raw = pd.read_csv(path+'/'+'/results-summary.csv', usecols=['File Name'])
 num_runs = len(df_raw['File Name'].dropna().unique()) - 1
 annual_df = pd.read_csv(path+'/'+'/results-summary.csv', nrows=num_runs, skiprows=num_runs+2)
 split_meta_cols_eu = annual_df['File Name'].str.split('/', expand=True)
+
 for i in range(0,num_runs):
     print(f"merging record {i}")
     
     #loop path of each file, read corresponding file
-    full_path = hrly_path + "/" + split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
-    df = pd.read_csv(full_path, low_memory=False)
+
+    base_path = (
+                f"{hrly_path}/"
+                f"{split_meta_cols_eu.iloc[i][0]}/"
+                f"{split_meta_cols_eu.iloc[i][1]}/"
+                f"{split_meta_cols_eu.iloc[i][2]}"
+                        )
+    csv_path = f"{base_path}/instance-var.csv"
+    idf_path = f"{base_path}/instance.idf"
+
+    #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation
+    runperiod_start_day = helper_functions.get_runperiod_start_day(idf_path)
+
+    #remove trailing spaces for col name if it happens
+    df = pd.read_csv(csv_path, low_memory=False)
+    df.columns = df.columns.str.strip()
     
-    #extract the last column (the total elec hrly profile)
-    #if for enduse hourly, then extract the relevant end use column
-    extracted_df = pd.DataFrame(df.iloc[:,-1])
+    #extract values only
+    values = df["Electricity:Facility [J](Hourly)"].to_numpy(copy=False)
+
+    #8760 values check
+    if len(values) != 8760:
+        diff = len(values) - 8760
+        print(f'extra records: {len(values)}, snipping away {diff} records and changing to 8760')
+        values = values[diff:]
     
-    #create the column name based on the permutations
-    col_name = split_meta_cols_eu.iloc[i][0] + "/" + split_meta_cols_eu.iloc[i][1] + "/" + split_meta_cols_eu.iloc[i][2] + "/instance-var.csv"
-    
-    #change column name
-    extracted_df = extracted_df.set_axis([col_name],axis=1)
-    if len(extracted_df)!=8760:
-        #8/31/2022 update, need to make the final length 8808. Snip data based on difference to 8760
-        record_count_diff = len(extracted_df) - 8760
-        print(f'extra records: {str(len(extracted_df))}, snipping away {record_count_diff} records and changing to 8760')
-        extracted_df = extracted_df.iloc[record_count_diff:].reset_index(drop=True)
-    
-    #left-merge onto big df
-    hourly_df = hourly_df.merge(extracted_df, left_index=True, right_index=True)
+    #construct combined string as column header
+    col_name = (
+                f"{split_meta_cols_eu.iloc[i][0]}/"
+                f"{split_meta_cols_eu.iloc[i][1]}/"
+                f"{split_meta_cols_eu.iloc[i][2]}/"
+                f"instance-var.csv/{runperiod_start_day}"
+                )
+
+    #add in corresponding value from values
+    hourly_data[col_name] = values
+
+# Create DataFrame once
+hourly_df = pd.DataFrame(hourly_data, index=index)
 # %%
 fyr_hrly = hourly_df
 #rearrange 1-column 8760 format to 365x24 wide format for all runs in hourly_df
-converted_df = pd.DataFrame()
 
-for i in range(0,len(fyr_hrly.columns)):
+#5/6/26 memory saver update - list of row dicts
+converted_records = []
+
+for i, col_name in enumerate(fyr_hrly.columns):
+
+    #isolate single column values only
+    values = fyr_hrly.iloc[:,i].to_numpy(copy=False)
+
+    #check for data length
+    if len(values) != 8760:
+        raise ValueError(f"{col_name} has {len(values)} hours, expected 8760")
     
-    #isolate single column
-    hrly_df = pd.DataFrame(fyr_hrly.iloc[:,i])
-    
-    #create separate metadata columns
-    col_names = hrly_df.columns[0].split('/')
-    
-    #create new key column for merge
-    hrly_df['hr in 8760'] = (hrly_df.index) + 1
-    
-    #merge based on "hr in 8760" column, the 8760 map
-    hrly_mapped = pd.merge(hrly_df, annual_map, on='hr in 8760')
-    
-    #transform data format
-    hrly_wide = long2wide_pivot(hrly_mapped, hrly_mapped.columns[0])
-    
-    #add meta data col
-    hrly_wide['BldgLoc'] = col_names[0]
-    hrly_wide['BldgType'] = col_names[1]
-    hrly_wide['TechID'] = col_names[2]
-    hrly_wide['file'] = col_names[3]
-    
-    #append to master df
-    #converted_df = converted_df.append(hrly_wide) #deprecated method
-    converted_df = pd.concat([converted_df, hrly_wide])
+    #reshape to 365x24 via numpy
+    wide_values = values.reshape(365, 24)
+
+    #parse separate metadata columns
+    col_parts = col_name.split('/')
+    bldg_loc = col_parts[0]
+    bldg_type = col_parts[1][:3]
+    tech_id   = col_parts[2]
+    file_name = col_parts[3]
+    id = col_name
+
+    #build row records
+    for day_idx in range(365):
+        row = {
+            "daynum": day_idx + 1,
+            "BldgLoc": bldg_loc,
+            "BldgType": bldg_type,
+            "TechID": tech_id,
+            "file": file_name,
+            "ID": id
+        }
+
+        #add 24 hourly cols
+        for hour in range(24):
+            row[hour + 1] = wide_values[day_idx, hour]
+        
+        converted_records.append(row)
     print(f"col {i} transformed.")
+
+# create DataFrame once
+converted_df = pd.DataFrame.from_records(converted_records)
 #%%
 #rearrange columns
 sim_hourly_wb_proto = converted_df[['TechID','file','BldgLoc','BldgType','ID','daynum',1,          2,          3,          4,          5,
@@ -340,29 +386,233 @@ sim_hourly_wb_v1 = sim_hourly_wb_proto[['TechID','file','BldgLoc','BldgType','ID
         'hr07',     'hr08',     'hr09',     'hr10',     'hr11',     'hr12',
         'hr13',     'hr14',     'hr15',     'hr16',     'hr17',     'hr18',
         'hr19',     'hr20',     'hr21',     'hr22',     'hr23',     'hr24']].copy()
-# %%
+
+
+
+#%%
+################################################################################################
+################################################################################################
+# 12/23/2025 CEDARS hourly consumption output reformatting
+
+#5/6/2026 memorysaver update
+# use the hourly data before long2wide pivot transform
+
+#Calendar arrays creation
+N_HOURS = 8760
+hours = np.arange(N_HOURS)
+calendar = {
+    "hr in 8760": hours + 1,
+    "Hour": (hours % 24) + 1,
+    "daynum": (hours // 24) + 1,
+}
+# pick a reference start day, add relevant fields
+dt_index = pd.date_range("2018-01-01", periods=N_HOURS, freq="h")
+calendar["Month"] = dt_index.month
+calendar["Day"] = dt_index.day
+
+#%%
+#converted_long_df = pd.DataFrame()
+#setup data dict
+long_data = {
+    "Total_Elec_Consumption": [],
+    "hr in 8760": [],
+    "Hour": [],
+    "daynum": [],
+    "Month": [],
+    "Day": [],
+    "BldgLoc": [],
+    "BldgType": [],
+    "BldgHVAC": [],
+    "BldgVint": [],
+    "TechGroup": [],
+    "Measure Group Name": [],
+    "TechID": [],
+    "file": [],
+    "RunPeriod Start Day": [],
+}
+print('reformatting hourly data for CEDARS loadshape format..')
+
+for i, col_name in enumerate(fyr_hrly.columns):
+    #isolate values
+    values = fyr_hrly[col_name].to_numpy(copy=False)
+
+    #check for data length
+    if len(values) != N_HOURS:
+        raise ValueError(f"{col_name} has {len(values)} rows")
+    
+    parts = col_name.split("/")
+    cohort = parse_measure_name(parts[1])
+
+    #hourly data value only put into dict
+    long_data["Total_Elec_Consumption"].append(values)
+
+    #add calendar fields
+    for k in calendar:
+        long_data[k].append(calendar[k])
+    
+    # add metadata
+    long_data["BldgLoc"].append(np.repeat(parts[0], N_HOURS))
+    long_data["BldgType"].append(np.repeat(cohort["BldgType"], N_HOURS))
+    long_data["BldgHVAC"].append(np.repeat(cohort["BldgHVAC"], N_HOURS))
+    long_data["BldgVint"].append(np.repeat(cohort["BldgVint"], N_HOURS))
+    long_data["TechGroup"].append(np.repeat(cohort["Measure"], N_HOURS))
+    long_data["Measure Group Name"].append(np.repeat(parts[1], N_HOURS))
+    long_data["TechID"].append(np.repeat(parts[2], N_HOURS))
+    long_data["file"].append(np.repeat(parts[3], N_HOURS))
+    long_data["RunPeriod Start Day"].append(np.repeat(parts[4], N_HOURS))
+
+    print(f"col {i} long format loaded.")
+
+#build dataframe once
+final_data = {k: np.concatenate(v) for k, v in long_data.items()}
+converted_long_df = pd.DataFrame(final_data)
+
+#%%
+#Setup a lookup using Measure Group name, to lookup for TechGroup_ee, TechType_ee
+TechGroup_lookup_map = df_measure.set_index('Measure Group Name')['TechGroup_ee'].to_dict()
+TechType_lookup_map = df_measure.set_index('Measure Group Name')['TechType_ee'].to_dict()
+
+#add corresponding TechGroup and TechType
+converted_long_df['TechGroup'] = converted_long_df['Measure Group Name'].map(TechGroup_lookup_map)
+converted_long_df['TechType'] = converted_long_df['Measure Group Name'].map(TechType_lookup_map)
+#%%
+#convert from J to kWh
+converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Consumption']/3600000
+
+#%%
+##Long format data norm unit field updates (remove normunits/UEC for CEDARS?)
+
+#add num unit will be per dwelling, so use numunit / num of dwellings (2 for SFM, DMo, 24 for MFm)
+#delete UEC col from CEDARS format
+# converted_long_df['Normunit'] = normunit
+# if type(numunits) == dict:
+#     converted_long_df['Numunits'] = converted_long_df['BldgLoc'].map(numunits)/24
+# else:
+#     converted_long_df['Numunits'] = numunits/24
+
+#%%
+#Long format final field updates
+#need to divide each 8760 by its annual and its corresponding numunit
+#1. grouby to find sum of each table via unique ID
+#2. merge as a new col in long df
+#3, divide and clean up final columns
+
+#convert to UEC by applying numunits
+#delete UEC col
+#converted_long_df['UEC'] = converted_long_df['Total_Elec_Consumption'] / converted_long_df['Numunits']
+
+#sort
+df_long = converted_long_df.sort_values(['BldgLoc', 'BldgHVAC', 'TechID', 'hr in 8760'])
+
+#%% 
+#create groupby ids for each 8760 set
+df_long['set_id'] = (df_long['hr in 8760'].eq(1)
+                .groupby([df_long['BldgLoc'], df_long['BldgHVAC'], df_long['TechID']])
+                .cumsum())
+#calculate annual UEC
+df_long['annual_sum'] = (df_long
+    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['Total_Elec_Consumption']
+    .transform('sum'))
+
+#%%
+#Calculate unitzed 8760 values based on annual sum of 8760
+df_long['UECproportion'] = df_long['Total_Elec_Consumption'] / df_long['annual_sum']
+#%%
+#rearrange / true-up columns
+#source year mapping:
+StartDayToSourceYear = {
+    "Monday": 2018, #Basis year for 2024 electric ACCs
+    "Tuesday": 2013, #2013 or 2019 could be used
+    "Wednesday": 2020, #Basis for 2022/2021 electric ACCs
+    "Thursday": 2009, #Per CEC's Nonres/MFm ACM Reference Manual
+    "Friday": 2010, #2016 is Friday but a leap year, so this should be either 2010 or 2021
+    "Saturday": 2011, #Next Saturday option is 2022 because it is skipped between 2016 and 2017 because 2016 is a leap year
+    "Sunday": 2017 #2012 is a leap year, suggest using 2017
+}
+
+df_long['Sector'] = 'Res' #this is MFm script, so Sector = Res
+df_long['Type'] = 'Whole Building'
+df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
+
+df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
+
+#final table fields round-up
+#note: UEC, Normunits, and numunits omitted in the final table
+df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
+         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'Hour of Year','UECproportion']] 
+
+#%%
+#output annual consumption of each permutation and store for later use if needed
+df_long_annual_loads = df_long[[
+        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Type','Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
+         ]].drop_duplicates().reset_index(drop=True)
+#%%
+#export CEDARS long 8760 csv
+
+os.chdir(os.path.dirname(__file__)) #resets to current script directory
+print(os.path.abspath(os.curdir))
+
+#enable if html viewer is needed / csv export is needed
+df_long_final.to_csv('CEDARS_long_ls_MFm.csv', index=False) 
+df_long_annual_loads.to_csv('CEDARS_ls_annual_loads_MFm.csv', index=False)
+#3/4/2026 Dan P. on CEDARS - need to provide as zip format
+#%%
+import zipfile
+
+zip_filename = 'CEDARS_LoadShape_MFm.zip'
+csv_filename = 'CEDARS_LoadShape_MFm.csv'
+
+print('writing CEDARS long 8760 csv into zip format..')
+#create the zip and write the csv into it
+with zipfile.ZipFile(zip_filename, 'w', compression=zipfile.ZIP_DEFLATED) as zipf:
+    #Open a file inside the zip and write CSV to it
+    with zipf.open(csv_filename, 'w') as f:
+        df_long_final.to_csv(f, index=False)
+
+print(f'Zip file {zip_filename} created with {csv_filename} inside.')
+print('CEDARS long 8760 csv exported.')
+################################################################################################
+################################################################################################
+
+## Here resumes the normal post-processing of DEER outputs
+#%%
 ##STEP 3: Normalizing Units
 bldgtype = 'MFm'
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
 df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['CZ','Value', 'Msr','BldgVint']]
-#%%
+numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['BldgLoc','Value', 'Msr','BldgVint']]
+#measure specific normalizing units table
+df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+normunit = df_measure['Normunit'].unique()[0]
+
 #create numunits object based on what normunit it uses. 
 #numunits can be a single value, or a dictionary
-if len(numunits_vals) == 1:
+if len(df_numunits) == 1:
     numunits = list(numunits_vals['Value'])[0]
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation'):
+elif len(df_numunits) > 1:
+    #for SEER rated ACHP, CZ specific Cap-Ton
+    normunit = df_numunits['Normunit'].unique()[0]
+    numunits = df_numunits.set_index('BldgLoc')['Value'].to_dict() #numunit is a dictionary
+    print(f'CZ-dependent numunits for this normalizing unit {normunit}')
+elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
     numunits = list(numunits_vals[numunits_vals['Msr'] == measure_name]['Value'])[0]
+    print(f'normunit is {normunit}, numunits is {numunits}.')
 elif measure_name == 'PTAC / PTHP':
     #create aligned lists for numunit dictionary
-    cz = list(numunits_vals['CZ'])
+    cz = list(numunits_vals['BldgLoc'])
     vint = list(numunits_vals['BldgVint'])
     nvals = list(numunits_vals['Value'])
     #create dictionary of {(cz,vintage):numunits}
     numunits = {(cz[i],vint[i]):nvals[i] for i in range(len(cz))}
+    print(f'normunit is {normunit}, numunits is varied by CZ.')
+elif normunit == 'Each':
+    numunits = 1 #added numunits for measures with normunit "each"
+    print('normunit is Each. Setting numunits to 1.')
 else:
-    pass
+    normunit = 'Each' #If normalizing unit isn't anything else, put default as each
+    numunits = 1
 
 # %%
 ##Annual Data final field fixes
@@ -448,9 +698,9 @@ metadata_msr = metadata_msr.rename(columns={'TechID':'MeasTechID'})
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     metadata_pre_full = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        metadata_pre_mod = metadata_pre.copy()
+        metadata_pre_mod = metadata_pre[metadata_pre['PreTechID']==common_id].copy()
         metadata_pre_mod['PreTechID'] = new_id
         #merge to final df
         metadata_pre_full = pd.concat([metadata_pre_full, metadata_pre_mod])
@@ -492,9 +742,9 @@ else:
 # %%
 #create raw merged current_msr_mat
 #need to delete/drop incorrect sets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_pre_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     df_measure_set_full = pd.merge(metadata_std_full, metadata_msr_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
 else:
     df_measure_baseline_full = pd.merge(metadata_pre_full, metadata_std_full, on=['BldgLoc','BldgType','BldgVint','BldgHVAC','SizingID','tstat','normunit'])
@@ -505,9 +755,9 @@ else:
 TechID_triplets = df_measure[['EnergyImpactID','MeasureID', 'PreTechID', 'StdTechID','MeasTechID']].drop_duplicates()
 # %%
 #to match TechID triplets, merge on these 3 fields, keeping only valid TechID Triplets
-if np.NaN in list(StdTechIDs['StdTechID'].unique()):
+if np.nan in list(StdTechIDs['StdTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','MeasTechID'])
-elif np.NaN in list(PreTechIDs['PreTechID'].unique()):
+elif np.nan in list(PreTechIDs['PreTechID'].unique()):
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['StdTechID','MeasTechID'])
 else:
     current_msr_mat_proto = pd.merge(df_measure_set_full, TechID_triplets, on=['PreTechID','StdTechID','MeasTechID'])
@@ -543,9 +793,9 @@ sim_annual_msr_common = sim_annual_f[sim_annual_f['TechID'].isin(MeasTechIDs['Co
 # commom_preTechID = PreTechIDs['Common_PreTechID'].unique()[0]
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_annual_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_annual_pre_mod = sim_annual_pre_common.copy()
+        sim_annual_pre_mod = sim_annual_pre_common[sim_annual_pre_common['TechID']==common_id].copy()
         sim_annual_pre_mod['TechID'] = new_id
         #merge to final df
         sim_annual_pre = pd.concat([sim_annual_pre, sim_annual_pre_mod])
@@ -598,9 +848,9 @@ sim_hourly_msr_common = sim_hourly_f[sim_hourly_f['TechID'].isin(MeasTechIDs['Co
 #Pre hourly
 if False in list(PreTechIDs['PreTechID']==PreTechIDs['Common_PreTechID']):
     sim_hourly_pre = pd.DataFrame()
-    for new_id in PreTechIDs['PreTechID']:
+    for _, (common_id, new_id) in PreTechIDs[['Common_PreTechID', 'PreTechID']].iterrows():
         print(f'changing to specific PreTechID {new_id}')
-        sim_hourly_pre_mod = sim_hourly_pre_common.copy()
+        sim_hourly_pre_mod = sim_hourly_pre_common[sim_hourly_pre_common['TechID']==common_id].copy()
         sim_hourly_pre_mod['TechID'] = new_id
         #merge to final df
         sim_hourly_pre = pd.concat([sim_hourly_pre, sim_hourly_pre_mod])
@@ -649,3 +899,5 @@ current_msr_mat.to_csv('current_msr_mat.csv', index=False)
 sim_annual_final.to_csv('sim_annual.csv', index=False)
 sim_hourly_final.to_csv('sim_hourly_wb.csv', index=False)
 
+
+# %%

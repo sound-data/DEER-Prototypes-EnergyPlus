@@ -2,7 +2,7 @@
 # CZ1-CZ16: 1985,,,,
 # Residential Prototype Building Models Key Characteristics Values from RASS and MassControl3 ,,,,
 "# Internal Loads values are estimated, needs further verification or collected from other sources",,,,
-table:   Res Key Prototype Values | Climate Zone CZ01,,,,
+table:   Res Key Prototype Values | Climate Zone 1,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1591,,,sf
 Number of Stories,1.48,,,
@@ -51,7 +51,7 @@ climate_zone,1,,,
 total_leakage_ratio,0.15,,,
 shading_control,OnNightIfHeatingAndOnDayIfCooling,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ02,,,,
+table:   Res Key Prototype Values | Climate Zone 2,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1591,,,sf
 Number of Stories,1.48,,,
@@ -100,7 +100,7 @@ climate_zone,2,,,
 total_leakage_ratio,0.1,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ03,,,,
+table:   Res Key Prototype Values | Climate Zone 3,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1591,,,sf
 Number of Stories,1.48,,,
@@ -149,7 +149,7 @@ climate_zone,3,,,
 total_leakage_ratio,0.2,,,
 shading_control,OnNightIfHeatingAndOnDayIfCooling,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ04,,,,
+table:   Res Key Prototype Values | Climate Zone 4,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1591,,,sf
 Number of Stories,1.48,,,
@@ -198,7 +198,7 @@ climate_zone,4,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ05,,,,
+table:   Res Key Prototype Values | Climate Zone 5,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1591,,,sf
 Number of Stories,1.48,,,
@@ -247,7 +247,7 @@ climate_zone,5,,,
 total_leakage_ratio,0.2,,,
 shading_control,OnNightIfHeatingAndOffDay,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ06,,,,
+table:   Res Key Prototype Values | Climate Zone 6,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1528,,,sf
 Number of Stories,1.55,,,
@@ -296,7 +296,7 @@ climate_zone,6,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ07,,,,
+table:   Res Key Prototype Values | Climate Zone 7,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1528,,,sf
 Number of Stories,1.55,,,
@@ -345,7 +345,7 @@ climate_zone,7,,,
 total_leakage_ratio,0.18,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ08,,,,
+table:   Res Key Prototype Values | Climate Zone 8,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1528,,,sf
 Number of Stories,1.55,,,
@@ -394,7 +394,7 @@ climate_zone,8,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ09,,,,
+table:   Res Key Prototype Values | Climate Zone 9,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1636,,,sf
 Number of Stories,1.33,,,
@@ -443,7 +443,7 @@ climate_zone,9,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ10,,,,
+table:   Res Key Prototype Values | Climate Zone 10,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1811,,,sf
 Number of Stories,1.423115774,,,
@@ -492,7 +492,7 @@ climate_zone,10,,,
 total_leakage_ratio,0.1,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ11,,,,
+table:   Res Key Prototype Values | Climate Zone 11,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1704,,,sf
 Number of Stories,1.229597342,,,
@@ -541,7 +541,7 @@ climate_zone,11,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ12,,,,
+table:   Res Key Prototype Values | Climate Zone 12,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1704,,,sf
 Number of Stories,1.229597342,,,
@@ -590,7 +590,7 @@ climate_zone,12,,,
 total_leakage_ratio,0.1,,,
 shading_control,OnNightIfHeatingAndOffDay,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ13,,,,
+table:   Res Key Prototype Values | Climate Zone 13,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1704,,,sf
 Number of Stories,1.229597342,,,
@@ -639,7 +639,7 @@ climate_zone,13,,,
 total_leakage_ratio,0.2,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ14,,,,
+table:   Res Key Prototype Values | Climate Zone 14,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1741,,,sf
 Number of Stories,1.118772781,,,
@@ -688,7 +688,7 @@ climate_zone,14,,,
 total_leakage_ratio,0.1,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ15,,,,
+table:   Res Key Prototype Values | Climate Zone 15,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1741,,,sf
 Number of Stories,1.118772781,,,
@@ -737,7 +737,7 @@ climate_zone,15,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
 ,,,,
-table:   Res Key Prototype Values | Climate Zone CZ16,,,,
+table:   Res Key Prototype Values | Climate Zone 16,,,,
 Key Values,Value, R-Value,Extent,Notes
 Total Floor Area,1904,,,sf
 Number of Stories,1.307044248,,,

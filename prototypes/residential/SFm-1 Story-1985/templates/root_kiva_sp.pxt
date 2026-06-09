@@ -65,7 +65,7 @@ parameter "shading_control", :default=>'AlwaysOn'
 <%
 min_sp = heating_sch_DEER_day+1
 %>
-
+<%insert 'holidays.pxt'%>
 <%
 insert 'site.pxt'
 
@@ -6823,9 +6823,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ILt-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ILt-1 S1 HDD,      !- Schedule:Day Name 3
+    EL1 ILt-1 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ILt-1 S1 CDD,      !- Schedule:Day Name 4
+    EL1 ILt-1 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ILt-1 S1 WEH;      !- Schedule:Day Name 5
 
@@ -6836,9 +6836,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ILt-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ILt-1 S2 HDD,      !- Schedule:Day Name 3
+    EL1 ILt-1 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ILt-1 S2 CDD,      !- Schedule:Day Name 4
+    EL1 ILt-1 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ILt-1 S2 WEH;      !- Schedule:Day Name 5
 
@@ -6849,9 +6849,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ILt-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ILt-1 S3 HDD,      !- Schedule:Day Name 3
+    EL1 ILt-1 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ILt-1 S3 CDD,      !- Schedule:Day Name 4
+    EL1 ILt-1 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ILt-1 S3 WEH;      !- Schedule:Day Name 5
 
@@ -6862,9 +6862,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-2 S1 HDD,      !- Schedule:Day Name 3
+    EL2 Occ-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-2 S1 CDD,      !- Schedule:Day Name 4
+    EL2 Occ-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -6875,9 +6875,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-2 S2 HDD,      !- Schedule:Day Name 3
+    EL2 Occ-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-2 S2 CDD,      !- Schedule:Day Name 4
+    EL2 Occ-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -6888,9 +6888,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-2 S3 HDD,      !- Schedule:Day Name 3
+    EL2 Occ-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-2 S3 CDD,      !- Schedule:Day Name 4
+    EL2 Occ-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -6901,9 +6901,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Msc-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Msc-2 S1 HDD,      !- Schedule:Day Name 3
+    EL2 Msc-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Msc-2 S1 CDD,      !- Schedule:Day Name 4
+    EL2 Msc-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Msc-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -6914,9 +6914,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Msc-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Msc-2 S2 HDD,      !- Schedule:Day Name 3
+    EL2 Msc-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Msc-2 S2 CDD,      !- Schedule:Day Name 4
+    EL2 Msc-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Msc-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -6927,9 +6927,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Msc-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Msc-2 S3 HDD,      !- Schedule:Day Name 3
+    EL2 Msc-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Msc-2 S3 CDD,      !- Schedule:Day Name 4
+    EL2 Msc-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Msc-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -6940,9 +6940,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Ckg-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Ckg-2 S1 HDD,      !- Schedule:Day Name 3
+    EL2 Ckg-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Ckg-2 S1 CDD,      !- Schedule:Day Name 4
+    EL2 Ckg-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Ckg-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -6953,9 +6953,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Ckg-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Ckg-2 S2 HDD,      !- Schedule:Day Name 3
+    EL2 Ckg-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Ckg-2 S2 CDD,      !- Schedule:Day Name 4
+    EL2 Ckg-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Ckg-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -6966,9 +6966,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Ckg-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Ckg-2 S3 HDD,      !- Schedule:Day Name 3
+    EL2 Ckg-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Ckg-2 S3 CDD,      !- Schedule:Day Name 4
+    EL2 Ckg-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Ckg-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -6979,9 +6979,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Prc-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Prc-2 S1 HDD,      !- Schedule:Day Name 3
+    EL2 Prc-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Prc-2 S1 CDD,      !- Schedule:Day Name 4
+    EL2 Prc-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Prc-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -6992,9 +6992,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Prc-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Prc-2 S2 HDD,      !- Schedule:Day Name 3
+    EL2 Prc-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Prc-2 S2 CDD,      !- Schedule:Day Name 4
+    EL2 Prc-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Prc-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -7005,9 +7005,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Prc-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Prc-2 S3 HDD,      !- Schedule:Day Name 3
+    EL2 Prc-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Prc-2 S3 CDD,      !- Schedule:Day Name 4
+    EL2 Prc-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Prc-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -7018,9 +7018,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Off-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Off-2 S1 HDD,      !- Schedule:Day Name 3
+    EL2 Off-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Off-2 S1 CDD,      !- Schedule:Day Name 4
+    EL2 Off-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Off-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -7031,9 +7031,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Off-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Off-2 S2 HDD,      !- Schedule:Day Name 3
+    EL2 Off-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Off-2 S2 CDD,      !- Schedule:Day Name 4
+    EL2 Off-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Off-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -7044,9 +7044,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Off-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Off-2 S3 HDD,      !- Schedule:Day Name 3
+    EL2 Off-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Off-2 S3 CDD,      !- Schedule:Day Name 4
+    EL2 Off-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Off-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -7057,9 +7057,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Mtr-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Mtr-2 S1 HDD,      !- Schedule:Day Name 3
+    EL2 Mtr-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Mtr-2 S1 CDD,      !- Schedule:Day Name 4
+    EL2 Mtr-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Mtr-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -7070,9 +7070,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Mtr-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Mtr-2 S2 HDD,      !- Schedule:Day Name 3
+    EL2 Mtr-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Mtr-2 S2 CDD,      !- Schedule:Day Name 4
+    EL2 Mtr-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Mtr-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -7083,9 +7083,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Mtr-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Mtr-2 S3 HDD,      !- Schedule:Day Name 3
+    EL2 Mtr-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Mtr-2 S3 CDD,      !- Schedule:Day Name 4
+    EL2 Mtr-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Mtr-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -7096,9 +7096,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 SCR-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 SCR-2 S1 HDD,      !- Schedule:Day Name 3
+    EL2 SCR-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 SCR-2 S1 CDD,      !- Schedule:Day Name 4
+    EL2 SCR-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 SCR-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -7109,9 +7109,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 SCR-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 SCR-2 S2 HDD,      !- Schedule:Day Name 3
+    EL2 SCR-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 SCR-2 S2 CDD,      !- Schedule:Day Name 4
+    EL2 SCR-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 SCR-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -7122,9 +7122,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 SCR-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 SCR-2 S3 HDD,      !- Schedule:Day Name 3
+    EL2 SCR-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 SCR-2 S3 CDD,      !- Schedule:Day Name 4
+    EL2 SCR-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 SCR-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -7135,9 +7135,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 GndFlr 2 MtrPrOE Elc S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 GndFlr 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 3
+    EL2 GndFlr 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 GndFlr 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 4
+    EL2 GndFlr 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 GndFlr 2 MtrPrOE Elc S1 WEH;  !- Schedule:Day Name 5
 
@@ -7148,9 +7148,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 GndFlr 2 MtrPrOE Elc S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 GndFlr 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 3
+    EL2 GndFlr 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 GndFlr 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 4
+    EL2 GndFlr 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 GndFlr 2 MtrPrOE Elc S2 WEH;  !- Schedule:Day Name 5
 
@@ -7161,9 +7161,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 GndFlr 2 MtrPrOE Elc S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 GndFlr 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 3
+    EL2 GndFlr 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 GndFlr 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 4
+    EL2 GndFlr 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 GndFlr 2 MtrPrOE Elc S3 WEH;  !- Schedule:Day Name 5
 
@@ -7174,9 +7174,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-1 S1 HDD,      !- Schedule:Day Name 3
+    EL2 Occ-1 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-1 S1 CDD,      !- Schedule:Day Name 4
+    EL2 Occ-1 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-1 S1 WEH;      !- Schedule:Day Name 5
 
@@ -7187,9 +7187,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-1 S2 HDD,      !- Schedule:Day Name 3
+    EL2 Occ-1 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-1 S2 CDD,      !- Schedule:Day Name 4
+    EL2 Occ-1 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-1 S2 WEH;      !- Schedule:Day Name 5
 
@@ -7200,9 +7200,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL2 Occ-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL2 Occ-1 S3 HDD,      !- Schedule:Day Name 3
+    EL2 Occ-1 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL2 Occ-1 S3 CDD,      !- Schedule:Day Name 4
+    EL2 Occ-1 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL2 Occ-1 S3 WEH;      !- Schedule:Day Name 5
 
@@ -7408,9 +7408,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL5 GndFlr 5 MtrPrOE Elc S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL5 GndFlr 5 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 3
+    EL5 GndFlr 5 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL5 GndFlr 5 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 4
+    EL5 GndFlr 5 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL5 GndFlr 5 MtrPrOE Elc S1 WEH;  !- Schedule:Day Name 5
 
@@ -7421,9 +7421,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL5 GndFlr 5 MtrPrOE Elc S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL5 GndFlr 5 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 3
+    EL5 GndFlr 5 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL5 GndFlr 5 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 4
+    EL5 GndFlr 5 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL5 GndFlr 5 MtrPrOE Elc S2 WEH;  !- Schedule:Day Name 5
 
@@ -7434,9 +7434,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL5 GndFlr 5 MtrPrOE Elc S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL5 GndFlr 5 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 3
+    EL5 GndFlr 5 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL5 GndFlr 5 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 4
+    EL5 GndFlr 5 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL5 GndFlr 5 MtrPrOE Elc S3 WEH;  !- Schedule:Day Name 5
 
@@ -7486,9 +7486,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL7 ZnGrp 2 MtrPrOE Elc S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL7 ZnGrp 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 3
+    EL7 ZnGrp 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL7 ZnGrp 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 4
+    EL7 ZnGrp 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL7 ZnGrp 2 MtrPrOE Elc S1 WEH;  !- Schedule:Day Name 5
 
@@ -7499,9 +7499,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL7 ZnGrp 2 MtrPrOE Elc S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL7 ZnGrp 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 3
+    EL7 ZnGrp 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL7 ZnGrp 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 4
+    EL7 ZnGrp 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL7 ZnGrp 2 MtrPrOE Elc S2 WEH;  !- Schedule:Day Name 5
 
@@ -7512,9 +7512,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL7 ZnGrp 2 MtrPrOE Elc S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL7 ZnGrp 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 3
+    EL7 ZnGrp 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL7 ZnGrp 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 4
+    EL7 ZnGrp 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL7 ZnGrp 2 MtrPrOE Elc S3 WEH;  !- Schedule:Day Name 5
 
@@ -7525,9 +7525,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL8 ZnGrp 2 2 MtrPrOE Elc S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL8 ZnGrp 2 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 3
+    EL8 ZnGrp 2 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL8 ZnGrp 2 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 4
+    EL8 ZnGrp 2 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL8 ZnGrp 2 2 MtrPrOE Elc S1 WEH;  !- Schedule:Day Name 5
 
@@ -7538,9 +7538,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL8 ZnGrp 2 2 MtrPrOE Elc S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL8 ZnGrp 2 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 3
+    EL8 ZnGrp 2 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL8 ZnGrp 2 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 4
+    EL8 ZnGrp 2 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL8 ZnGrp 2 2 MtrPrOE Elc S2 WEH;  !- Schedule:Day Name 5
 
@@ -7551,9 +7551,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL8 ZnGrp 2 2 MtrPrOE Elc S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL8 ZnGrp 2 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 3
+    EL8 ZnGrp 2 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL8 ZnGrp 2 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 4
+    EL8 ZnGrp 2 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL8 ZnGrp 2 2 MtrPrOE Elc S3 WEH;  !- Schedule:Day Name 5
 
@@ -7577,7 +7577,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc1 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -7590,7 +7590,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc2 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc2 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc2 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -7603,7 +7603,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc3 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc3 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc3 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -7616,7 +7616,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc4 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc4 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc4 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -7629,7 +7629,7 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     DHW SF2 R-Lp Prc5 S1 WD,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    DHW SF2 R-Lp Prc1 S1 HDD,  !- Schedule:Day Name 3
+    DHW SF2 R-Lp Prc5 S1 WD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
     DHW SF2 R-Lp Prc5 S1 WD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
@@ -10589,17 +10589,17 @@ BuildingSurface:Detailed,
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
     -4.742688000000,         !- Vertex 1 X-coordinate {m}
-    48.884464080000,         !- Vertex 1 Y-coordinate {m}
+    48.582712080000,         !- Vertex 1 Y-coordinate {m}
     0.000000000000,          !- Vertex 1 Z-coordinate {m}
     -4.742688000000,         !- Vertex 2 X-coordinate {m}
-    52.542064080000,         !- Vertex 2 Y-coordinate {m}
+    52.846864080000,         !- Vertex 2 Y-coordinate {m}
     0.000000000000,          !- Vertex 2 Z-coordinate {m}
     -4.742688000000,         !- Vertex 3 X-coordinate {m}
-    52.542064080000,         !- Vertex 3 Y-coordinate {m}
-    2.286000000000,          !- Vertex 3 Z-coordinate {m}
+    52.846864080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
     -4.742688000000,         !- Vertex 4 X-coordinate {m}
-    48.884464080000,         !- Vertex 4 Y-coordinate {m}
-    2.286000000000;          !- Vertex 4 Z-coordinate {m}
+    48.582712080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 Flr (G.N4.U4),     !- Name
@@ -10924,17 +10924,17 @@ BuildingSurface:Detailed,
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    0.000000000000,          !- Vertex 1 X-coordinate {m}
+    0.609600000000,          !- Vertex 1 X-coordinate {m}
     30.081352080000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    0.609600000000,          !- Vertex 2 X-coordinate {m}
+    0.000000000000,          !- Vertex 2 X-coordinate {m}
     30.081352080000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
-    0.609600000000,          !- Vertex 3 X-coordinate {m}
-    49.189264080000,         !- Vertex 3 Y-coordinate {m}
+    0.000000000000,          !- Vertex 3 X-coordinate {m}
+    48.579664080000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    0.000000000000,          !- Vertex 4 X-coordinate {m}
-    48.579664080000,         !- Vertex 4 Y-coordinate {m}
+    0.609600000000,          !- Vertex 4 X-coordinate {m}
+    49.189264080000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
@@ -10948,14 +10948,14 @@ BuildingSurface:Detailed,
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    -4.742688000000,         !- Vertex 1 X-coordinate {m}
-    48.580304160000,         !- Vertex 1 Y-coordinate {m}
+    0.609600000000,         !- Vertex 1 X-coordinate {m}
+    49.189904160000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
     0.000000000000,          !- Vertex 2 X-coordinate {m}
     48.580304160000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
-    0.609600000000,          !- Vertex 3 X-coordinate {m}
-    49.189904160000,         !- Vertex 3 Y-coordinate {m}
+    -4.742688000000,          !- Vertex 3 X-coordinate {m}
+    48.580304160000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
     -4.133088000000,         !- Vertex 4 X-coordinate {m}
     49.189904160000,         !- Vertex 4 Y-coordinate {m}
@@ -10972,16 +10972,16 @@ BuildingSurface:Detailed,
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    -4.743907200000,         !- Vertex 1 X-coordinate {m}
-    48.580304160000,         !- Vertex 1 Y-coordinate {m}
+    -4.134307200000,         !- Vertex 1 X-coordinate {m}
+    49.189904160000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    -4.134307200000,         !- Vertex 2 X-coordinate {m}
-    49.189904160000,         !- Vertex 2 Y-coordinate {m}
+    -4.742688000000,         !- Vertex 2 X-coordinate {m}
+    48.581523360000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
-    -4.134307200000,         !- Vertex 3 X-coordinate {m}
+    -4.742688000000,         !- Vertex 3 X-coordinate {m}
     52.847504160000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    -4.743907200000,         !- Vertex 4 X-coordinate {m}
+    -4.134307200000,         !- Vertex 4 X-coordinate {m}
     52.847504160000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
@@ -10999,14 +10999,14 @@ BuildingSurface:Detailed,
     -10.097444880000,        !- Vertex 1 X-coordinate {m}
     33.739592160000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    -9.487844880000,         !- Vertex 2 X-coordinate {m}
-    34.349192160000,         !- Vertex 2 Y-coordinate {m}
+    -10.097444880000,         !- Vertex 2 X-coordinate {m}
+    52.847504160000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
     -9.487844880000,         !- Vertex 3 X-coordinate {m}
     52.847504160000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    -10.097444880000,        !- Vertex 4 X-coordinate {m}
-    52.847504160000,         !- Vertex 4 Y-coordinate {m}
+    -9.487844880000,        !- Vertex 4 X-coordinate {m}
+    34.349192160000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
@@ -11020,14 +11020,14 @@ BuildingSurface:Detailed,
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    -10.097444880000,        !- Vertex 1 X-coordinate {m}
-    33.738952080000,         !- Vertex 1 Y-coordinate {m}
+    -4.745156880000,        !- Vertex 1 X-coordinate {m}
+    34.348552080000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
     -5.354756880000,         !- Vertex 2 X-coordinate {m}
     33.738952080000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
-    -4.745156880000,         !- Vertex 3 X-coordinate {m}
-    34.348552080000,         !- Vertex 3 Y-coordinate {m}
+    -10.097444880000,         !- Vertex 3 X-coordinate {m}
+    33.738952080000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
     -9.487844880000,         !- Vertex 4 X-coordinate {m}
     34.348552080000,         !- Vertex 4 Y-coordinate {m}
@@ -11044,17 +11044,17 @@ BuildingSurface:Detailed,
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    -5.353507200000,         !- Vertex 1 X-coordinate {m}
+    -4.743907200000,         !- Vertex 1 X-coordinate {m}
     30.081352080000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    -4.743907200000,         !- Vertex 2 X-coordinate {m}
+    -5.353507200000,         !- Vertex 2 X-coordinate {m}
     30.081352080000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
-    -4.743907200000,         !- Vertex 3 X-coordinate {m}
-    34.348552080000,         !- Vertex 3 Y-coordinate {m}
+    -5.353507200000,         !- Vertex 3 X-coordinate {m}
+    33.738952080000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    -5.353507200000,         !- Vertex 4 X-coordinate {m}
-    33.738952080000,         !- Vertex 4 Y-coordinate {m}
+    -4.743907200000,         !- Vertex 4 X-coordinate {m}
+    34.348552080000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
@@ -11070,16 +11070,16 @@ BuildingSurface:Detailed,
     4,                       !- Number of Vertices
     0.000000000000,          !- Vertex 1 X-coordinate {m}
     41.465632080000,         !- Vertex 1 Y-coordinate {m}
-    0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    -9.488424000000,         !- Vertex 2 X-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 2 X-coordinate {m}
     41.465632080000,         !- Vertex 2 Y-coordinate {m}
-    0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    -9.488424000000,         !- Vertex 3 X-coordinate {m}
-    48.582712080000,         !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
+    -9.487844880000,         !- Vertex 3 X-coordinate {m}
+    48.579664080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
     0.000000000000,          !- Vertex 4 X-coordinate {m}
-    48.582712080000,         !- Vertex 4 Y-coordinate {m}
-    0.000000000000;          !- Vertex 4 Z-coordinate {m}
+    48.579664080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL7 UnderRf (G.N4.I7)-mirror,  !- Name
@@ -11980,16 +11980,16 @@ BuildingSurface:Detailed,
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    -13.755044880000,        !- Vertex 1 X-coordinate {m}
+    5.352867120000,        !- Vertex 1 X-coordinate {m}
     64.125043200000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    5.352867120000,          !- Vertex 2 X-coordinate {m}
+    -13.755044880000,          !- Vertex 2 X-coordinate {m}
     64.125043200000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
-    4.743267120000,          !- Vertex 3 X-coordinate {m}
+    -13.755044880000,          !- Vertex 3 X-coordinate {m}
     64.734643200000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    -13.755044880000,        !- Vertex 4 X-coordinate {m}
+    4.743267120000,        !- Vertex 4 X-coordinate {m}
     64.734643200000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
@@ -12007,14 +12007,14 @@ BuildingSurface:Detailed,
     5.353507200000,          !- Vertex 1 X-coordinate {m}
     64.125043200000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    5.353507200000,          !- Vertex 2 X-coordinate {m}
-    68.867731200000,         !- Vertex 2 Y-coordinate {m}
+    4.743907200000,          !- Vertex 2 X-coordinate {m}
+    64.734643200000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
     4.743907200000,          !- Vertex 3 X-coordinate {m}
     69.477331200000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    4.743907200000,          !- Vertex 4 X-coordinate {m}
-    64.734643200000,         !- Vertex 4 Y-coordinate {m}
+    5.353507200000,          !- Vertex 4 X-coordinate {m}
+    68.867731200000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
@@ -12028,17 +12028,17 @@ BuildingSurface:Detailed,
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    5.353507200000,          !- Vertex 1 X-coordinate {m}
+    9.011107200000,          !- Vertex 1 X-coordinate {m}
     68.868950400000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    9.011107200000,          !- Vertex 2 X-coordinate {m}
+    5.353507200000,          !- Vertex 2 X-coordinate {m}
     68.868950400000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
-    9.011107200000,          !- Vertex 3 X-coordinate {m}
-    69.478550400000,         !- Vertex 3 Y-coordinate {m}
+    4.745126400000,          !- Vertex 3 X-coordinate {m}
+    69.477331200000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    4.743907200000,          !- Vertex 4 X-coordinate {m}
-    69.478550400000,         !- Vertex 4 Y-coordinate {m}
+    9.011107200000,          !- Vertex 4 X-coordinate {m}
+    69.477331200000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
@@ -12052,16 +12052,16 @@ BuildingSurface:Detailed,
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    -9.487204800000,         !- Vertex 1 X-coordinate {m}
+    9.011107200000,         !- Vertex 1 X-coordinate {m}
     74.222488080000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    9.011107200000,          !- Vertex 2 X-coordinate {m}
+    -9.487204800000,          !- Vertex 2 X-coordinate {m}
     74.222488080000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
-    9.011107200000,          !- Vertex 3 X-coordinate {m}
+    -10.096804800000,          !- Vertex 3 X-coordinate {m}
     74.832088080000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    -10.096804800000,        !- Vertex 4 X-coordinate {m}
+    9.011107200000,        !- Vertex 4 X-coordinate {m}
     74.832088080000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
@@ -12079,14 +12079,14 @@ BuildingSurface:Detailed,
     -9.487844880000,         !- Vertex 1 X-coordinate {m}
     69.479800080000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    -9.487844880000,         !- Vertex 2 X-coordinate {m}
-    74.222488080000,         !- Vertex 2 Y-coordinate {m}
+    -10.097444880000,         !- Vertex 2 X-coordinate {m}
+    70.089400080000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
     -10.097444880000,        !- Vertex 3 X-coordinate {m}
     74.832088080000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    -10.097444880000,        !- Vertex 4 X-coordinate {m}
-    70.089400080000,         !- Vertex 4 Y-coordinate {m}
+    -9.487844880000,        !- Vertex 4 X-coordinate {m}
+    74.222488080000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
@@ -12100,16 +12100,16 @@ BuildingSurface:Detailed,
     WindExposed,             !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    -13.755044880000,        !- Vertex 1 X-coordinate {m}
+    -9.487844880000,        !- Vertex 1 X-coordinate {m}
     69.478550400000,         !- Vertex 1 Y-coordinate {m}
     2.590800000000,          !- Vertex 1 Z-coordinate {m}
-    -9.487844880000,         !- Vertex 2 X-coordinate {m}
+    -13.755044880000,         !- Vertex 2 X-coordinate {m}
     69.478550400000,         !- Vertex 2 Y-coordinate {m}
     2.590800000000,          !- Vertex 2 Z-coordinate {m}
-    -10.097444880000,        !- Vertex 3 X-coordinate {m}
+    -13.755044880000,        !- Vertex 3 X-coordinate {m}
     70.088150400000,         !- Vertex 3 Y-coordinate {m}
     2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    -13.755044880000,        !- Vertex 4 X-coordinate {m}
+    -10.097444880000,        !- Vertex 4 X-coordinate {m}
     70.088150400000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
@@ -12124,18 +12124,18 @@ BuildingSurface:Detailed,
     NoWind,                  !- Wind Exposure
     ,                        !- View Factor to Ground
     4,                       !- Number of Vertices
-    4.746315120000,          !- Vertex 1 X-coordinate {m}
-    64.734643200000,         !- Vertex 1 Y-coordinate {m}
-    0.000000000000,          !- Vertex 1 Z-coordinate {m}
+    4.743267120000,          !- Vertex 1 X-coordinate {m}
+    64.737112080000,         !- Vertex 1 Y-coordinate {m}
+    2.590800000000,          !- Vertex 1 Z-coordinate {m}
     -2.370764880000,         !- Vertex 2 X-coordinate {m}
-    64.734643200000,         !- Vertex 2 Y-coordinate {m}
-    0.000000000000,          !- Vertex 2 Z-coordinate {m}
+    64.737112080000,         !- Vertex 2 Y-coordinate {m}
+    2.590800000000,          !- Vertex 2 Z-coordinate {m}
     -2.370764880000,         !- Vertex 3 X-coordinate {m}
-    74.223067200000,         !- Vertex 3 Y-coordinate {m}
-    0.000000000000,          !- Vertex 3 Z-coordinate {m}
-    4.746315120000,          !- Vertex 4 X-coordinate {m}
-    74.223067200000,         !- Vertex 4 Y-coordinate {m}
-    0.000000000000;          !- Vertex 4 Z-coordinate {m}
+    74.222488080000,         !- Vertex 3 Y-coordinate {m}
+    2.590800000000,          !- Vertex 3 Z-coordinate {m}
+    4.743267120000,          !- Vertex 4 X-coordinate {m}
+    74.222488080000,         !- Vertex 4 Y-coordinate {m}
+    2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
 BuildingSurface:Detailed,
     EL8 UnderRf (G.E4.I7)-mirror,  !- Name
@@ -12521,29 +12521,7 @@ BuildingSurface:Detailed,
     69.477331200000,         !- Vertex 4 Y-coordinate {m}
     2.590800000000;          !- Vertex 4 Z-coordinate {m}
 
-BuildingSurface:Detailed,
-    E3D108,                  !- Name
-    Wall,                    !- Surface Type
-    Garage Ext Wall,       !- Construction Name
-    EL7 North Perim Zn (G.N4),  !- Zone Name
-    Outdoors,                !- Outside Boundary Condition
-    ,                        !- Outside Boundary Condition Object
-    SunExposed,              !- Sun Exposure
-    WindExposed,             !- Wind Exposure
-    ,                        !- View Factor to Ground
-    4,                       !- Number of Vertices
-    -4.742688000000,         !- Vertex 1 X-coordinate {m}
-    48.582712080000,         !- Vertex 1 Y-coordinate {m}
-    0.000000000000,          !- Vertex 1 Z-coordinate {m}
-    -4.742688000000,         !- Vertex 2 X-coordinate {m}
-    52.846864080000,         !- Vertex 2 Y-coordinate {m}
-    0.000000000000,          !- Vertex 2 Z-coordinate {m}
-    -4.742688000000,         !- Vertex 3 X-coordinate {m}
-    52.846864080000,         !- Vertex 3 Y-coordinate {m}
-    2.590800000000,          !- Vertex 3 Z-coordinate {m}
-    -4.742688000000,         !- Vertex 4 X-coordinate {m}
-    48.582712080000,         !- Vertex 4 Y-coordinate {m}
-    2.590800000000;          !- Vertex 4 Z-coordinate {m}
+
 
 BuildingSurface:Detailed,
     7C5E9E,                  !- Name
@@ -15112,7 +15090,7 @@ FenestrationSurface:Detailed,
     EL7 East Door (G.N4.E10.D1),  !- Name
     Door,                    !- Surface Type
     Sgl Lyr Unins Mtl Door,!- Construction Name
-    E3D108,                  !- Building Surface Name
+    EL7 East Wall (G.N4.E10),                  !- Building Surface Name
     ,                        !- Outside Boundary Condition Object
     ,                        !- View Factor to Ground
     ,                        !- Frame and Divider Name

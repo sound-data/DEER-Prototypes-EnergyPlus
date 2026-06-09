@@ -1,0 +1,349 @@
+<%#INITIALIZE
+parameter "ahu_name"
+
+parameter "run_around_coil_eff", :default=>0.6
+parameter "run_around_coil_oa_min", :default=>10['F'] # NOT OPERATIONAL
+parameter "run_around_coil_oa_max", :default=>95['F'] # NOT OPERATIONAL
+parameter "run_around_coil_deadband", :default=>5['F']
+parameter "run_around_coil_pump_eff", :default=>0.9
+parameter "run_around_coil_pump_head", :default=>15['ft H2O']
+
+%>
+
+FluidProperties:GlycolConcentration,
+   <%= ahu_name %> Run Around Loop Fluid,         !- Fluid 1 Name
+   PropyleneGlycol,   !- Glycol 1 Name
+   ,                  !- User Defined Glycol Name
+   0.3;               !- Glycol 1 Concentration
+
+PlantLoop,
+  <%= ahu_name %> Run Around Heat Recovery Loop,          !- Name
+  UserDefinedFluidType,                   !- Fluid Type
+  <%= ahu_name %> Run Around Loop Fluid,                        !- User Defined Fluid Type
+  <%= ahu_name %> Run Around Loop Operation Scheme List,  !- Plant Equipment Operation Scheme Name
+  <%= ahu_name %> Run Around Supply Outlet Node,  !- Loop Temperature Setpoint Node Name
+  100.0,                   !- Maximum Loop Temperature {C}
+  0.0,                    !- Minimum Loop Temperature {C}
+  Autosize,                !- Maximum Loop Flow Rate {m3/s}
+  0.0,                     !- Minimum Loop Flow Rate {m3/s}
+  Autosize,                !- Plant Loop Volume {m3}
+  <%= ahu_name %> Run Around Supply Inlet Node,  !- Plant Side Inlet Node Name
+  <%= ahu_name %> Run Around Supply Outlet Node,  !- Plant Side Outlet Node Name
+  <%= ahu_name %> Run Around Supply Branches,  !- Plant Side Branch List Name
+  <%= ahu_name %> Run Around Supply Connectors,  !- Plant Side Connector List Name
+  <%= ahu_name %> Run Around Demand Inlet Node,  !- Demand Side Inlet Node Name
+  <%= ahu_name %> Run Around Demand Outlet Node,  !- Demand Side Outlet Node Name
+  <%= ahu_name %> Run Around Demand Branches,  !- Demand Side Branch List Name
+  <%= ahu_name %> Run Around Demand Connectors,  !- Demand Side Connector List Name
+  Optimal,                 !- Load Distribution Scheme
+  <%= ahu_name %> Run Around Availability Managers;  !- Availability Manager List Name
+
+Sizing:Plant,
+  <%= ahu_name %> Run Around Heat Recovery Loop,          !- Plant or Condenser Loop Name
+  Heating,                 !- Loop Type
+  29.4,     !- Design Loop Exit Temperature {C}
+  5.6;    !- Loop Design Temperature Difference {deltaC}
+
+<% ahu_name_ems = ahu_name.delete(' ') %>
+
+EnergyManagementSystem:Sensor,
+  <%= ahu_name_ems %>Tdb,
+  *,
+  Site Outdoor Air Drybulb Temperature;
+
+EnergyManagementSystem:Sensor,
+  <%= ahu_name_ems %>ReliefTemperature,
+  <%= ahu_name %> OA Relief Node,
+  System Node Temperature;
+
+EnergyManagementSystem:Sensor,
+  <%= ahu_name_ems %>SupplySetpoint,
+  <%= ahu_name %> Supply Equipment Outlet Node,
+  System Node Setpoint Temperature;
+
+EnergyManagementSystem:Actuator,
+  <%= ahu_name_ems %>LoopSetpoint,
+  <%= ahu_name %> Run Around Supply Outlet Node,
+  System Node Setpoint,
+  Temperature Setpoint;
+
+EnergyManagementSystem:Actuator,
+  <%= ahu_name_ems %>ActuatorLoop,       !- Name
+  <%= ahu_name %> Run Around Heat Recovery Loop, !- Actuated Component Unique Name
+  Plant Loop Overall,  !- Actuated Component Type
+  On/Off Supervisory;  !- Actuated Component Control Type
+
+EnergyManagementSystem:Actuator,
+  <%= ahu_name_ems %>PumpFlowOverride,    !- Name
+  <%= ahu_name %> Run Around Pump,  !- Actuated Component Unique Name
+  Pump,                !- Actuated Component Type
+  Pump Mass Flow Rate; !- Actuated Component Control Type
+
+EnergyManagementSystem:GlobalVariable,
+  <%= ahu_name_ems %>PumpFlowOverrideReport;
+
+EnergyManagementSystem:OutputVariable,
+  <%= ahu_name %> EMS Pump Flow Override On, !- Name
+  <%= ahu_name_ems %>PumpFlowOverrideReport,    !- EMS Variable Name
+  Averaged,            !- Type of Data in Variable
+  SystemTimestep;      !- Update Frequency
+
+EnergyManagementSystem:Program,
+  <%= ahu_name_ems %>LoopSetpointProgram,
+  SET <%= ahu_name_ems %>LoopSetpoint = (<%= ahu_name_ems %>ReliefTemperature - <%= ahu_name_ems %>Tdb),
+  SET <%= ahu_name_ems %>LoopSetpoint = (<%= ahu_name_ems %>LoopSetpoint) * (1 - <%= run_around_coil_eff %>),
+  SET <%= ahu_name_ems %>LoopSetpoint = (<%= ahu_name_ems %>LoopSetpoint) + <%= ahu_name_ems %>Tdb;
+
+EnergyManagementSystem:Program,
+  <%= ahu_name_ems %>LoopFlowProgram,
+!  IF (<%= ahu_name_ems %>Tdb < <%= run_around_coil_oa_min %>),
+!    SET <%= ahu_name_ems %>ActuatorLoop = 0.0,
+!    SET <%= ahu_name_ems %>PumpFlowOverride = 0.0,
+!    SET <%= ahu_name_ems %>PumpFlowOverrideReport = 1.0,
+!  ELSEIF (<%= ahu_name_ems %>Tdb > <%= run_around_coil_oa_max %>),
+!    SET <%= ahu_name_ems %>ActuatorLoop = 0.0,
+!    SET <%= ahu_name_ems %>PumpFlowOverride = 0.0,
+!    SET <%= ahu_name_ems %>PumpFlowOverrideReport = 1.0,
+!  ELSE,
+    IF (<%= ahu_name_ems %>Tdb < (<%= ahu_name_ems %>SupplySetpoint - (<%= run_around_coil_deadband %> - <%= 0|'F' %>))),
+      IF (<%= ahu_name_ems %>Tdb < <%= ahu_name_ems %>ReliefTemperature),
+        SET <%= ahu_name_ems %>ActuatorLoop = 1.0,
+        SET <%= ahu_name_ems %>PumpFlowOverride = Null,
+        SET <%= ahu_name_ems %>PumpFlowOverrideReport = 0.0,
+      ELSEIF (<%= ahu_name_ems %>Tdb > <%= ahu_name_ems %>ReliefTemperature),
+        SET <%= ahu_name_ems %>ActuatorLoop = 0.0,
+        SET <%= ahu_name_ems %>PumpFlowOverride = 0.0,
+        SET <%= ahu_name_ems %>PumpFlowOverrideReport = 1.0,
+      ENDIF,
+    ELSEIF (<%= ahu_name_ems %>Tdb > (<%= ahu_name_ems %>SupplySetpoint + (<%= run_around_coil_deadband %> - <%= 0|'F' %>))),
+      IF (<%= ahu_name_ems %>Tdb < <%= ahu_name_ems %>ReliefTemperature),
+        SET <%= ahu_name_ems %>ActuatorLoop = 0.0,
+        SET <%= ahu_name_ems %>PumpFlowOverride = 0.0,
+        SET <%= ahu_name_ems %>PumpFlowOverrideReport = 1.0,
+      ELSEIF (<%= ahu_name_ems %>Tdb > <%= ahu_name_ems %>ReliefTemperature),
+        SET <%= ahu_name_ems %>ActuatorLoop = 1.0,
+        SET <%= ahu_name_ems %>PumpFlowOverride = Null,
+        SET <%= ahu_name_ems %>PumpFlowOverrideReport = 0.0,
+      ENDIF,
+    ELSE,
+      SET <%= ahu_name_ems %>ActuatorLoop = 0.0,
+      SET <%= ahu_name_ems %>PumpFlowOverride = 0.0,
+      SET <%= ahu_name_ems %>PumpFlowOverrideReport = 1.0,
+!    ENDIF,
+  ENDIF;
+
+EnergyManagementSystem:ProgramCallingManager,
+  <%= ahu_name %> Loop Setpoint Program Calling Manager,
+  InsideHVACSystemIterationLoop,
+  <%= ahu_name_ems %>LoopSetpointProgram,
+  <%= ahu_name_ems %>LoopFlowProgram;
+
+PlantEquipmentOperationSchemes,
+  <%= ahu_name %> Run Around Loop Operation Scheme List,  !- Name
+  PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
+  <%= ahu_name %> Run Around Heating Operation Scheme,  !- Control Scheme 1 Name
+  <%= ahu_name %> Always On Schedule,            !- Control Scheme 1 Schedule Name
+  PlantEquipmentOperation:CoolingLoad,  !- Control Scheme 1 Object Type
+  <%= ahu_name %> Run Around Cooling Operation Scheme,  !- Control Scheme 1 Name
+  <%= ahu_name %> Always On Schedule;            !- Control Scheme 1 Schedule Name
+
+PlantEquipmentOperation:HeatingLoad,
+  <%= ahu_name %> Run Around Heating Operation Scheme,  !- Name
+  0.0,                     !- Load Range 1 Lower Limit {W}
+  1000000000000,           !- Load Range 1 Upper Limit {W}
+  <%= ahu_name %> Run Around Heating Equipment List;  !- Priority Control 1 Equipment List Name
+
+PlantEquipmentOperation:CoolingLoad,
+  <%= ahu_name %> Run Around Cooling Operation Scheme,  !- Name
+  0.0,                     !- Load Range 1 Lower Limit {W}
+  1000000000000,           !- Load Range 1 Upper Limit {W}
+  <%= ahu_name %> Run Around Cooling Equipment List;  !- Priority Control 1 Equipment List Name
+
+PlantEquipmentList,
+  <%= ahu_name %> Run Around Heating Equipment List, !- Name
+  DistrictHeating,         !- Equipment 1 Object Type
+  <%= ahu_name %> Run Around District Heating;  !- Equipment 1 Name
+
+PlantEquipmentList,
+  <%= ahu_name %> Run Around Cooling Equipment List, !- Name
+  DistrictCooling,         !- Equipment 1 Object Type
+  <%= ahu_name %> Run Around District Cooling;  !- Equipment 1 Name
+
+AvailabilityManagerAssignmentList,
+  <%= ahu_name %> Run Around Availability Managers,  !- Name
+  AvailabilityManager:Scheduled,  !- Availability Manager 1 Object Type
+  <%= ahu_name %> Run Around Availability Manager;  !- Availability Manager 1 Name
+
+AvailabilityManager:Scheduled,
+  <%= ahu_name %> Run Around Availability Manager,  !- Name
+  <%= ahu_name %> Always On Schedule;               !- Schedule Name
+
+BranchList,
+  <%= ahu_name %> Run Around Supply Branches,!- Name
+  <%= ahu_name %> Run Around Supply Inlet Branch,  !- Branch 1 Name
+  <%= ahu_name %> Run Around Supply Equipment Heating Branch,  !- Branch 2 Name
+  <%= ahu_name %> Run Around Supply Equipment Cooling Branch,  !- Branch 2 Name
+  <%= ahu_name %> Run Around Supply Equipment Bypass Branch,  !- Branch 3 Name
+  <%= ahu_name %> Run Around Supply Outlet Branch;  !- Branch 4 Name
+
+ConnectorList,
+  <%= ahu_name %> Run Around Supply Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= ahu_name %> Run Around Supply Splitter,!- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= ahu_name %> Run Around Supply Mixer;   !- Connector 2 Name
+
+Connector:Splitter,
+  <%= ahu_name %> Run Around Supply Splitter,!- Name
+  <%= ahu_name %> Run Around Supply Inlet Branch,  !- Inlet Branch Name
+  <%= ahu_name %> Run Around Supply Equipment Heating Branch,  !- Outlet Branch 1 Name
+  <%= ahu_name %> Run Around Supply Equipment Cooling Branch,  !- Outlet Branch 1 Name
+  <%= ahu_name %> Run Around Supply Equipment Bypass Branch;  !- Outlet Branch 2 Name
+
+Connector:Mixer,
+  <%= ahu_name %> Run Around Supply Mixer,   !- Name
+  <%= ahu_name %> Run Around Supply Outlet Branch,  !- Outlet Branch Name
+  <%= ahu_name %> Run Around Supply Equipment Heating Branch,  !- Inlet Branch 1 Name
+  <%= ahu_name %> Run Around Supply Equipment Cooling Branch,  !- Inlet Branch 1 Name
+  <%= ahu_name %> Run Around Supply Equipment Bypass Branch;  !- Inlet Branch 2 Name
+
+Branch,
+  <%= ahu_name %> Run Around Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pump:ConstantSpeed,      !- Component 1 Object Type
+  <%= ahu_name %> Run Around Pump,          !- Component 1 Name
+  <%= ahu_name %> Run Around Supply Inlet Node,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around Pump-Run Around BoilerNodeviaConnector;  !- Component 1 Outlet Node Name
+
+Pump:ConstantSpeed,
+  <%= ahu_name %> Run Around Pump,          !- Name
+  <%= ahu_name %> Run Around Supply Inlet Node,  !- Inlet Node Name
+  <%= ahu_name %> Run Around Pump-Run Around BoilerNodeviaConnector,  !- Outlet Node Name
+  Autosize,  !- Rated Flow Rate {m3/s}
+  <%= run_around_coil_pump_head %>,  !- Rated Pump Head {Pa}
+  Autosize,                !- Rated Power Consumption {W}
+  <%= run_around_coil_pump_eff %>,    !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+  Intermittent;              !- Pump Control Type
+
+Branch,
+  <%= ahu_name %> Run Around Supply Equipment Heating Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  DistrictHeating,         !- Component 1 Object Type
+  <%= ahu_name %> Run Around District Heating,  !- Component 1 Name
+  <%= ahu_name %> Run Around District Heating Inlet Node,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around District Heating Outlet Node;  !- Component 1 Outlet Node Name
+
+DistrictHeating,
+  <%= ahu_name %> Run Around District Heating,  !- Name
+  <%= ahu_name %> Run Around District Heating Inlet Node,  !- Hot Water Inlet Node Name
+  <%= ahu_name %> Run Around District Heating Outlet Node,  !- Hot Water Outlet Node Name
+  1000000000;                       !- Nominal Capacity {W}
+
+Branch,
+  <%= ahu_name %> Run Around Supply Equipment Cooling Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  DistrictCooling,         !- Component 1 Object Type
+  <%= ahu_name %> Run Around District Cooling,  !- Component 1 Name
+  <%= ahu_name %> Run Around District Cooling Inlet Node,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around District Cooling Outlet Node;  !- Component 1 Outlet Node Name
+
+DistrictCooling,
+  <%= ahu_name %> Run Around District Cooling,  !- Name
+  <%= ahu_name %> Run Around District Cooling Inlet Node,  !- Hot Water Inlet Node Name
+  <%= ahu_name %> Run Around District Cooling Outlet Node,  !- Hot Water Outlet Node Name
+  1000000000;                       !- Nominal Capacity {W}
+
+Branch,
+  <%= ahu_name %> Run Around Supply Equipment Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= ahu_name %> Run Around Supply Equipment Bypass Pipe,  !- Component 1 Name
+  <%= ahu_name %> Run Around Supply Equip Bypass Inlet Node,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around Supply Equip Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= ahu_name %> Run Around Supply Equipment Bypass Pipe,  !- Name
+  <%= ahu_name %> Run Around Supply Equip Bypass Inlet Node,  !- Inlet Node Name
+  <%= ahu_name %> Run Around Supply Equip Bypass Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= ahu_name %> Run Around Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= ahu_name %> Run Around Supply Outlet Pipe,  !- Component 1 Name
+  <%= ahu_name %> Run Around Supply Mixer-Run Around Supply Outlet Pipe,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= ahu_name %> Run Around Supply Outlet Pipe,  !- Name
+  <%= ahu_name %> Run Around Supply Mixer-Run Around Supply Outlet Pipe,  !- Inlet Node Name
+  <%= ahu_name %> Run Around Supply Outlet Node;  !- Outlet Node Name
+
+BranchList,
+  <%= ahu_name %> Run Around Demand Branches,!- Name
+  <%= ahu_name %> Run Around Demand Inlet Branch,  !- Branch Name
+  <%= ahu_name %> Run Around Heating Demand Branch,  !- Branch Name
+  <%= ahu_name %> Run Around Cooling Demand Branch,  !- Branch Name
+  <%= ahu_name %> Run Around Demand Bypass Branch,  !- Branch Name
+  <%= ahu_name %> Run Around Demand Outlet Branch;  !- Branch Name
+
+ConnectorList,
+  <%= ahu_name %> Run Around Demand Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= ahu_name %> Run Around Demand Splitter,!- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= ahu_name %> Run Around Demand Mixer;   !- Connector 2 Name
+
+Connector:Splitter,
+  <%= ahu_name %> Run Around Demand Splitter,!- Name
+  <%= ahu_name %> Run Around Demand Inlet Branch,  !- Inlet Branch Name
+  <%= ahu_name %> Run Around Heating Demand Branch,  !- Outlet Branch Name
+  <%= ahu_name %> Run Around Cooling Demand Branch,  !- Outlet Branch Name
+  <%= ahu_name %> Run Around Demand Bypass Branch;  !- Outlet Branch Name
+
+Connector:Mixer,
+  <%= ahu_name %> Run Around Demand Mixer,   !- Name
+  <%= ahu_name %> Run Around Demand Outlet Branch,  !- Outlet Branch Name
+  <%= ahu_name %> Run Around Heating Demand Branch,  !- Inlet Branch Name
+  <%= ahu_name %> Run Around Cooling Demand Branch,  !- Inlet Branch Name
+  <%= ahu_name %> Run Around Demand Bypass Branch;  !- Inlet Branch Name
+
+Branch,
+  <%= ahu_name %> Run Around Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= ahu_name %> Run Around Demand Inlet Pipe,  !- Component 1 Name
+  <%= ahu_name %> Run Around Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= ahu_name %> Run Around Demand Inlet Pipe,  !- Name
+  <%= ahu_name %> Run Around Demand Inlet Node,  !- Inlet Node Name
+  <%= ahu_name %> Run Around Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= ahu_name %> Run Around Demand Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= ahu_name %> Run Around Demand Bypass Pipe,  !- Component 1 Name
+  <%= ahu_name %> Run Around Demand Bypass Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around Demand Bypass Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= ahu_name %> Run Around Demand Bypass Pipe,  !- Name
+  <%= ahu_name %> Run Around Demand Bypass Pipe Inlet Node,  !- Inlet Node Name
+  <%= ahu_name %> Run Around Demand Bypass Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= ahu_name %> Run Around Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= ahu_name %> Run Around Demand Outlet Pipe,  !- Component 1 Name
+  <%= ahu_name %> Run Around Demand Mixer-Run Around Demand Outlet Pipe,  !- Component 1 Inlet Node Name
+  <%= ahu_name %> Run Around Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= ahu_name %> Run Around Demand Outlet Pipe,  !- Name
+  <%= ahu_name %> Run Around Demand Mixer-Run Around Demand Outlet Pipe,  !- Inlet Node Name
+  <%= ahu_name %> Run Around Demand Outlet Node;  !- Outlet Node Name

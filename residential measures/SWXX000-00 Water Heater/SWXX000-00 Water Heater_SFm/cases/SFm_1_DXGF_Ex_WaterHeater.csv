@@ -1,0 +1,8 @@
+skip,case_name,:water_heater_type,:water_heater_location,:water_heater_cap,:heat_element_cap,:thermal_eff,:uef,:tank_size,:draw_pattern,:parasitic_power,:parasitic_fuel,:sch
+,tankless,gas_tankless,unconditioned,190000['BTUH'],,0.84,,,HI,50 ['W'],Electricity,SFm_minute_dhw_demand_fraction.csv
+,gas_tank,gas,unconditioned,41000['BTUH'],,0.79,,50,HI,350 ['BTUH'],NaturalGas,
+,gas_tank_conditioned,gas,conditioned,41000['BTUH'],,0.79,,50,HI,350 ['BTUH'],NaturalGas,
+,elec,elec,unconditioned,4900['W'],,0.98,,50,HI,,,
+,hpwh,hpwh,unconditioned,1230['W'],4500['W'],0.98,3.52,50,MD-HI,,,
+,hpwh_conditioned,hpwh,conditioned,1230['W'],4500['W'],0.98,3.52,50,MD-HI,,,
+,120v_hpwh,120v_hpwh,unconditioned,12000['BTUH'],,,3,50,MD-HI,,,

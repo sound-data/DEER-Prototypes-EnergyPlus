@@ -1,0 +1,21 @@
+<%#INITIALIZE
+parameter "ext_equip_name"
+parameter "power"
+
+parameter "fuel_type", :default=>'Electricity' # (Electricity | NaturalGas | PropaneGas | FuelOilNo1 | FuelOilNo2 | Diesel | Gasoline | Coal | Steam | DistrictHeating | DistrictCooling | OtherFuel1 | OtherFuel2)
+parameter "enduse_subcategory", :default=>"Exterior Equipment"
+parameter "schedule", :default=>"Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1.0;"
+
+%>
+
+Exterior:FuelEquipment,
+  <%= ext_equip_name %>,  !- Name
+  <%= fuel_type %>,  !- Fuel Use Type
+  <%= ext_equip_name %> Schedule,  !- Schedule Name
+  <%= power %>,  !- Design Level {W}
+  <%= enduse_subcategory %>;  !- End-Use Subcategory
+
+Schedule:Compact,
+  <%= ext_equip_name %> Schedule,  !- Name
+  Unit Interval,           !- Schedule Type Limits Name
+  <%= schedule %>

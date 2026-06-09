@@ -1,0 +1,766 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "name"
+parameter "branch_names"
+
+parameter "op_sch",
+  :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+
+parameter "design_temp", :name => "Domestic Hot Water System Supply Temperature", :description => "Domestic hot water system supply temperature",
+  :default => 140['F']  # Water heater setpoint and system supply temperature
+parameter "design_delta", :name => "Domestic Hot Water System Temperature Difference", :description => "Domestic hot water system design temperature difference",
+  :default => 9['deltaF']
+
+parameter "pump_speed", :name => "Domestic Hot Water Pump Speed Type", :description => "Domestic Hot Water Pump Speed Type",
+  :default => "CONSTANT" # (CONSTANT | VARIABLE)
+parameter "pump_eff", :name => "Domestic Hot Water Pump Efficiency", :description => "Domestic hot water pump motor efficiency",
+  :default => 1.0
+parameter "pump_head", :name => "Domestic Hot Water Pump Head", :description => "Domestic hot water pump head",
+  :default => 0['ft H2O']  # Assume no pump energy if flow is driven by mains pressure
+
+parameter "water_heater_volume", :name => "Water Heater Tank Volume", :description => "Storage volume of water heater tank",
+  :default => Autosize
+parameter "water_heater_capacity", :name => "Water Heater Max Heating Capacity", :description => "Water heater max heating capacity",
+  :default => Autosize
+parameter "water_heater_fuel", :name => "Domestic Hot Water Heater Fuel Type", :description => "Domestic hot water heater fuel type",
+  :default => "NaturalGas"  # (NaturalGas | Electricity | DistrictHeating)
+parameter "water_heater_eff", :name => "Domestic Hot Water Heater Efficiency", :description => "Domestic hot water heater nominal efficiency",
+  :default => 0.8
+
+rule "water_heater_fuel_electricity", :parameters => {:water_heater_fuel => "Electricity"} do
+  default :water_heater_eff => 1.0
+end
+
+parameter "parasitic_on",  :name => "On Cycle Parasitic Fuel Consumption Rate", :description => "Domestic Hot Water Heater On Cycle Parasitic Fuel Consumption Rate [W]",
+  :default=> 0['W']
+parameter "parasitic_off",  :name => "Off Cycle Parasitic Fuel Consumption Rate", :description => "Domestic Hot Water Heater Off Cycle Parasitic Fuel Consumption Rate [W]",
+  :default=> 0.8
+
+parameter "cycle_loss_coef",  :name => "Cycle Loss Coefficient {W/K}", :description => "Domestic Hot Water Heater Cycle Loss Coefficient to Ambient Temperature {W/K}",
+  :default=> 6.0
+
+parameter "peak_draw_time", :name => "Expected Peak Draw Duration", :description => "Expected length of peak DHW draw in hours",
+  :default => 1.0  # Input in units of hour
+parameter "storage_recovery_time", :name => "DHW Storage Recovery Time", :description => "Length of desired DHW storage tank recovery time in hours",
+  :default => 0.5  # Input in units of hour
+
+parameter "number_of_bedrooms", :default=>0 # Number of bedrooms in residential models (DON'T use for commercial models)
+parameter "number_of_bathrooms", :default=>0 # Number of bathrooms in residential models (DON'T use for commercial models)
+
+parameter "water_heater_ambient_method", :default=>"TEMPERATURE"  # (TEMPERATURE | ZONE | OUTDOORS)
+parameter "water_heater_ambient_temp", :default=>71.6['F']  # Only used if using TEMPERATURE method
+parameter "water_heater_ambient_zone", :default=>""  # Only used if using ZONE method
+
+parameter "preheat_name", :default=>""  # Name of plant loop heating source to connect a storage tank; for use with solar collectors, chiller heat recovery, CHP, etc.
+parameter "plantloop", :default=>true # Create planltoop system (true) or standalone heater with load profile (false)
+parameter "peak_flow", :default=>0['GPM']
+parameter "wh_config", :default=>"CENTRAL" # (CENTRAL | SEPARATE) if separate, create separate waterheater:mixed for each zone/load
+parameter "dhw_loop_configuration", :default=>"RECIRCULATION-LOOP"  # (DEFAULT-LOOP | RECIRCULATION-LOOP)
+parameter "schedule_file_path", :default=>"C:\Users\afaramarzi\Desktop\DHW-Commercials-initial experiment\schedule.csv"
+parameter "deadband_temperature", :default=> 2.0
+parameter "pipe_inside_diameter", :default=> 0.0127
+parameter "pipe_length", :default=> 30
+parameter "peak_flow_rate", :default=> 0.000025026
+parameter "case_configuration", :default=> "BASE" # (BASE | MEASURE)
+parameter "water_heater_temperature_control", :default=> "CONSTANT" # (CONSTANT | SCHEDULED)
+parameter "building_prototype", :default => "Mtl"
+%>
+
+<%
+number_of_bedrooms = nil if (number_of_bedrooms == 0)
+number_of_bathrooms = nil if (number_of_bathrooms == 0)
+
+water_heater_design_mode = "" # string used to set Autosize method used in WaterHeater:Sizing object
+if (water_heater_capacity == Autosize || water_heater_volume == Autosize)
+  if (number_of_bedrooms)
+    water_heater_design_mode = "ResidentialHUD-FHAMinimum"
+  else
+    water_heater_design_mode = "PeakDraw"
+  end
+else
+  water_heater_design_mode = "PeakDraw"
+end
+
+nominal_tank_volume = 0.15 # Nominal Tank Volume for Autosizing Plant Connections {m3}, equivalent to 40 gal
+
+%>
+
+<% if plantloop %>
+Sizing:Plant,
+  <%= name %>,  !- Plant or Condenser Loop Name
+  Heating,                 !- Loop Type
+  <%= design_temp %>,  !- Design Loop Exit Temperature {C}
+  <%= design_delta %>;                    !- Loop Design Temperature Difference {deltaC}
+<%# NOTE: Design temperature difference does not affect water heater sizing. %>
+
+Schedule:Compact,
+  <%= name %> Operation Schedule,  !- Name
+  Binary Control,          !- Schedule Type Limits Name
+  <%= op_sch %>
+
+
+PlantLoop,
+  <%= name %>,  !- Name
+  Water,                   !- Fluid Type
+  ,                        !- User Defined Fluid Type
+  <%= name %> Loop Operation Scheme List,  !- Plant Equipment Operation Scheme Name
+  <%= name %> Supply Outlet Node,  !- Loop Temperature Setpoint Node Name
+  100.0,                   !- Maximum Loop Temperature {C}
+  10.0,                    !- Minimum Loop Temperature {C}
+  Autosize,                !- Maximum Loop Flow Rate {m3/s}
+  0.0,                     !- Minimum Loop Flow Rate {m3/s}
+  Autosize,                !- Plant Loop Volume {m3}
+  <%= name %> Supply Inlet Node,  !- Plant Side Inlet Node Name
+  <%= name %> Supply Outlet Node,  !- Plant Side Outlet Node Name
+  <%= name %> Supply Branches, !- Plant Side Branch List Name
+  <%= name %> Supply Connectors,  !- Plant Side Connector List Name
+  <%= name %> Demand Inlet Node,  !- Demand Side Inlet Node Name
+  <%= name %> Demand Outlet Node,  !- Demand Side Outlet Node Name
+  <%= name %> Demand Branches, !- Demand Side Branch List Name
+  <%= name %> Demand Connectors,  !- Demand Side Connector List Name
+  Optimal,                 !- Load Distribution Scheme
+  <%= name %> Availability Managers;  !- Availability Manager List Name
+
+<%# NOTE:  Availability manager added above because of problems seen with lack of a manager in the heat recovery loop. %>
+
+SetpointManager:Scheduled,
+  <%= name %> Loop Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> Supply Temperature Schedule,  !- Schedule Name
+  <%= name %> Supply Outlet Node;  !- Setpoint Node or NodeList Name
+
+Schedule:Constant,
+  <%= name %> Supply Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= design_temp %>;  !- Hourly Value
+
+PlantEquipmentOperationSchemes,
+  <%= name %> Loop Operation Scheme List,  !- Name
+  PlantEquipmentOperation:Uncontrolled,  !- Control Scheme 1 Object Type
+  <%= name %> Operation Scheme,!- Control Scheme 1 Name
+  <%= name %> Operation Schedule;  !- Control Scheme 1 Schedule Name
+
+PlantEquipmentOperation:Uncontrolled,
+  <%= name %> Operation Scheme,!- Name
+  <%= name %> Equipment List;  !- Priority Control 1 Equipment List Name
+
+PlantEquipmentList,
+  <%= name %> Equipment List;  !- Name
+
+AvailabilityManagerAssignmentList,
+  <%= name %> Availability Managers,  !- Name
+  AvailabilityManager:Scheduled,  !- Availability Manager 1 Object Type
+  <%= name %> Availability Manager;  !- Availability Manager 1 Name
+
+AvailabilityManager:Scheduled,
+  <%= name %> Availability Manager,  !- Name
+  <%= name %> Operation Schedule;  !- Schedule Name
+
+!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ 
+BranchList,
+  <%= name %> Supply Branches, !- Name
+  <%= name %> Supply Inlet Branch,  !- Branch 1 Name
+  <%= name %> Supply Equipment Branch,  !- Branch 2 Name
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
+  <%= name %> Supply Equipment Bypass Branch,  !- Branch 3 Name
+<% end %>  
+  <%= name %> Supply Outlet Branch;  !- Branch 4 Name
+
+! Comment: Removing the pump on supply side (we are allowed to have pumps either on supply side or demand side) 
+
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
+Branch,
+  <%= name %> Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if pump_speed == "VARIABLE" %>
+  Pump:VariableSpeed,      !- Component 1 Object Type
+<% else %>
+  Pump:ConstantSpeed,      !- Component 1 Object Type
+<% end %>
+  <%= name %> Pump,            !- Component 1 Name
+  <%= name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
+
+<% if pump_speed == "VARIABLE" %>
+Pump:VariableSpeed,
+  <%= name %> Pump,            !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  Autosize,                !- Rated Flow Rate {m3/s}
+  <%= pump_head %>,  !- Rated Pump Head {Pa}
+  Autosize,                !- Rated Power Consumption {W}
+  <%= pump_eff %>,  !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+  0,                       !- Coefficient 1 of the Part Load Performance Curve
+  1,                       !- Coefficient 2 of the Part Load Performance Curve
+  0,                       !- Coefficient 3 of the Part Load Performance Curve
+  0,                       !- Coefficient 4 of the Part Load Performance Curve
+  0.0,                     !- Minimum Flow Rate {m3/s}
+  Intermittent;            !- Pump Control Type
+
+<% else %>
+Pump:ConstantSpeed,
+  <%= name %> Pump,            !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  Autosize,                !- Design Flow Rate
+  <%= pump_head %>,                   !- Design Pump Head
+  Autosize,                !- Design Power Consumption
+  <%= pump_eff %>,                     !- Motor Efficiency
+  0,                       !- Fraction of Motor Inefficiencies to Fluid Stream
+  Intermittent;            !- Pump Control Type
+
+<% end %>
+
+<% end %>
+
+! Comment: adding supply side inlet branch and defining corresponding pipe, since we removed pump as the supply inlet node
+
+<% if (dhw_loop_configuration == "RECIRCULATION-LOOP") %>
+ 
+Branch,
+  <%= name %> Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Supply Inlet Pipe,  !- Component 1 Name
+  <%= name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+  
+Pipe:Adiabatic,
+  <%= name %> Supply Inlet Pipe,  !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Inlet Pipe Outlet Node;  !- Outlet Node Name  
+  
+<% end %>
+
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+Branch,
+  <%= name %> Supply Equipment Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if (not preheat_name.empty?) %>
+  WaterHeater:Mixed,       !- Component 1 Object Type
+  <%= preheat_name %> Storage Tank,  !- Component 1 Name
+  <%= preheat_name %> Storage Tank Use Inlet Node,  !- Component 1 Inlet Node Name
+  <%= preheat_name %> Storage Tank Use Outlet Node,  !- Component 1 Outlet Node Name
+  WaterHeater:Mixed,       !- Component 2 Object Type
+  <%= name %> Water Heater,  !- Component 2 Name
+  <%= preheat_name %> Storage Tank Use Outlet Node,  !- Component 2 Inlet Node Name
+  <%= name %> Water Heater Outlet Node;  !- Component 2 Outlet Node Name
+<% else %>
+  WaterHeater:Mixed,       !- Component 1 Object Type
+  <%= name %> Water Heater,  !- Component 1 Name
+  <%= name %> Water Heater Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Water Heater Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+
+WaterHeater:Sizing,
+  <%= name %> Water Heater,  !- WaterHeater Name
+  <%= water_heater_design_mode %>,  !- Design Mode
+  <%= peak_draw_time %>,  !- Time Storage Can Meet Peak Draw {hr}
+  <%= storage_recovery_time %>,  !- Time for Tank Recovery {hr}
+  <%= nominal_tank_volume %>,  !- Nominal Tank Volume for Autosizing Plant Connections {m3}
+  <%= number_of_bedrooms %>,  !- Number of Bedrooms
+  <%= number_of_bathrooms %>,  !- Number of Bathrooms
+  ,                        !- Storage Capacity per Person {m3/Person}
+  ,                        !- Recovery Capacity per Person {m3/hr-person}
+  ,                        !- Storage Capacity per Floor Area {m3/m2}
+  ,                        !- Recovery Capacity per Floor Area {m3/hr-m2}
+  ,                        !- Number of Units
+  ,                        !- Storage Capacity per Unit {m3}
+  ,                        !- Recovery Capacity PerUnit {m3/hr}
+  ,                        !- Storage Capacity per Collector Area {m3/m2}
+  ;                        !- Height Aspect Ratio
+
+WaterHeater:Mixed,
+  <%= name %> Water Heater,  !- Name
+  <%= water_heater_volume %>,  !- Tank Volume {m3}
+  <% if (water_heater_temperature_control == "CONSTANT") %>
+  <%= name %> Water Heater Setpoint Temperature Schedule,  !- Setpoint Temperature Schedule Name 
+  <% elsif (water_heater_temperature_control == "SCHEDULED") %>
+  <%= building_prototype %> Water Heater Scheduled Tempereture Setpoint,  !- Setpoint Temperature Schedule Name
+  <% end %>  
+  <% deadband_temperature %>,                     !- Deadband Temperature Difference {deltaC}
+  100.0,                   !- Maximum Temperature Limit {C}
+  Cycle,                   !- Heater Control Type
+  <%= water_heater_capacity %>,  !- Heater Maximum Capacity {W}
+  ,                        !- Heater Minimum Capacity {W}
+  ,                        !- Heater Ignition Minimum Flow Rate {m3/s}
+  ,                        !- Heater Ignition Delay {s}
+  <%= water_heater_fuel %>,  !- Heater Fuel Type
+  <%= water_heater_eff %>,  !- Heater Thermal Efficiency
+  ,                        !- Part Load Factor Curve Name
+  <%= parasitic_off %>,     !- Off Cycle Parasitic Fuel Consumption Rate {W}
+  <%= water_heater_fuel %>,  !- Off Cycle Parasitic Fuel Type
+  0.8,                     !- Off Cycle Parasitic Heat Fraction to Tank
+  <%= parasitic_on %>,                        !- On Cycle Parasitic Fuel Consumption Rate {W}
+  <%= water_heater_fuel %>,  !- On Cycle Parasitic Fuel Type
+  ,                        !- On Cycle Parasitic Heat Fraction to Tank
+<% if (water_heater_ambient_method == "TEMPERATURE") %>
+  Schedule,                !- Ambient Temperature Indicator
+  <%= name %> Water Heater Ambient Temperature Schedule,  !- Ambient Temperature Schedule Name
+  ,                        !- Ambient Temperature Zone Name
+  ,                        !- Ambient Temperature Outdoor Air Node Name
+<% elsif (water_heater_ambient_method == "ZONE") %>
+  Zone,                    !- Ambient Temperature Indicator
+  ,                        !- Ambient Temperature Schedule Name
+  <%= water_heater_ambient_zone %>,  !- Ambient Temperature Zone Name
+  ,                        !- Ambient Temperature Outdoor Air Node Name
+<% else (water_heater_ambient_method == "OUTDOORS") %>
+  Outdoors,                !- Ambient Temperature Indicator
+  ,                        !- Ambient Temperature Schedule Name
+  ,                        !- Ambient Temperature Zone Name
+  <%= name %> Outdoor Air Node,  !- Ambient Temperature Outdoor Air Node Name
+<% end %>
+  <%= cycle_loss_coef %>,                     !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
+  ,                        !- Off Cycle Loss Fraction to Zone
+  <%= cycle_loss_coef %>,                     !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
+  ,                        !- On Cycle Loss Fraction to Zone
+  ,                        !- Peak Use Flow Rate {m3/s}
+  ,                        !- Use Flow Rate Fraction Schedule Name
+  ,                        !- Cold Water Supply Temperature Schedule Name
+<% if (not preheat_name.empty?) %>
+  <%= preheat_name %> Storage Tank Use Outlet Node,  !- Use Side Inlet Node Name
+<% else %>
+  <%= name %> Water Heater Inlet Node,  !- Use Side Inlet Node Name
+<% end %>
+  <%= name %> Water Heater Outlet Node,  !- Use Side Outlet Node Name
+  1.0,                     !- Use Side Effectiveness
+  ,                        !- Source Side Inlet Node Name
+  ,                        !- Source Side Outlet Node Name
+  ,                        !- Source Side Effectiveness
+  Autosize;                !- Use Side Design Flow Rate {m3/s}
+
+Schedule:Constant,
+  <%= name %> Water Heater Setpoint Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= design_temp %>;  !- Hourly Value
+
+<% if (water_heater_ambient_method == "TEMPERATURE") %>
+Schedule:Constant,
+  <%= name %> Water Heater Ambient Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= water_heater_ambient_temp %>;  !- Hourly Value
+<% elsif (water_heater_ambient_method == "ZONE") %>
+
+<% else %>
+OutdoorAir:Node,
+  <%= name %> Outdoor Air Node;  !- Name
+<% end %>
+
+
+!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< 
+! Comment : removing tempering valve from supply bypass branch
+ 
+
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
+Branch,
+  <%= name %> Supply Equipment Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  TemperingValve,          !- Component 1 Object Type
+  <%= name %> Tempering Valve,  !- Component 1 Name
+  <%= name %> Tempering Valve Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Tempering Valve Outlet Node;  !- Component 1 Outlet Node Name
+
+TemperingValve,
+  <%= name %> Tempering Valve,  !- Name
+  <%= name %> Tempering Valve Inlet Node,  !- Inlet Node Name
+  <%= name %> Tempering Valve Outlet Node,  !- Outlet Node Name
+  <%= name %> Water Heater Outlet Node,  !- Stream 2 Source Node Name
+  <%= name %> Supply Outlet Node,  !- Temperature Setpoint Node Name
+  <%= name %> Pump Outlet Node;  !- Pump Outlet Node Name
+<% end %>
+
+! Comment: changing the name of the pipe:indoor
+
+Branch,
+  <%= name %> Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  <% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
+    Pipe:Adiabatic,          !- Component 1 Object Type
+  <% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>
+    Pipe:Indoor,          !- Component 1 Object Type
+  <% end %>	
+  <%= name %> Supply Outlet Pipe,  !- Component 1 Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+! Comment: removing adiabatic pipe in the supply outlet, since we need to add non-adibatic pipes
+
+
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
+
+Pipe:Adiabatic,
+  <%= name %> Supply Outlet Pipe,  !- Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Outlet Node Name
+  
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>	  
+
+
+! Comment: adding two non adibatic pipes, one in the inlet of demand side and the other one in load profile branch 
+
+Pipe:Indoor,
+    <%= name %> Supply Outlet Pipe,  !- Name
+    Insulated Pipe,          !- Construction Name
+    <%= name %> Supply Outlet Pipe Inlet Node,  !- Fluid Inlet Node Name
+    <%= name %> Supply Outlet Node,  !- Fluid Outlet Node Name
+    Schedule,                !- Environment Type
+    ,                        !- Ambient Temperature Zone Name
+    Ambient Varying Zone Temperature ,  !- Ambient Temperature Schedule Name
+    Ambient Air Velocity,    !- Ambient Air Velocity Schedule Name
+    <%= pipe_inside_diameter %>,                  !- Pipe Inside Diameter {m}
+    <%= pipe_length %>;        !- Pipe Length {m}  
+	
+Pipe:Indoor,
+    <%= name %> LoadProfile Non-Adiabatic Outlet Pipe,  !- Name
+    Insulated Pipe,          !- Construction Name
+    <%= name %> Load Profile Pump Oulet Node,  !- Fluid Inlet Node Name
+    <%= name %> LoadProfile Non-Adiabatic Outlet Node,  !- Fluid Outlet Node Name
+    Schedule,                !- Environment Type
+    ,                        !- Ambient Temperature Zone Name
+    Ambient Varying Zone Temperature ,  !- Ambient Temperature Schedule Name
+    Ambient Air Velocity,    !- Ambient Air Velocity Schedule Name
+    <%= pipe_inside_diameter %>,                  !- Pipe Inside Diameter {m}
+    <%= pipe_length %>;        !- Pipe Length {m}	
+	
+! Comment: Adding load profile plant 
+
+LoadProfile:Plant,
+    <%= name %> Load Profile,         !- Name
+    <%= name %> Demand Load Profile Inlet Node,  !- Inlet Node Name
+    <%= name %> Demand Load Profile Outlet Node,  !- Outlet Node Name
+    <%= name %> Load Profile Load Schedule,  	 !- Load Schedule Name
+    <%= peak_flow_rate %>,            !- Peak Flow Rate {m3/s}
+  <% if (case_configuration == "BASE") %> 
+	<%= name %> Load Profile Constant Flow Frac Schedule;
+  <% elsif (case_configuration == "MEASURE") %>
+    <%= name %> Load Profile Varying Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name	
+  <% end %>
+	
+! Comment: Adding load profile branch 	
+	
+Branch,
+    <%= name %> Load Profile Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    LoadProfile:Plant,       !- Component 1 Object Type
+    <%= name %> Load Profile,         !- Component 1 Name
+    <%= name %> Demand Load Profile Inlet Node,  !- Component 1 Inlet Node Name
+    <%= name %> Demand Load Profile Outlet Node,  !- Component 1 Outlet Node Name
+    Pump:VariableSpeed,      !- Component 2 Object Type
+    <%= name %> Load Profile Pump,    !- Component 2 Name
+    <%= name %> Demand Load Profile Outlet Node,  !- Component 2 Inlet Node Name
+    <%= name %> Load Profile Pump Oulet Node,  !- Component 2 Outlet Node Name
+    Pipe:Indoor,             !- Component 3 Object Type
+    <%= name %> LoadProfile Non-Adiabatic Outlet Pipe,  !- Component 3 Name
+    <%= name %> Load Profile Pump Oulet Node,  !- Component 3 Inlet Node Name
+    <%= name %> LoadProfile Non-Adiabatic Outlet Node;  !- Component 3 Outlet Node Name	
+	
+! Comment: Adding load profile pump 	
+	
+Pump:VariableSpeed,
+    <%= name %> Load Profile Pump,    !- Name
+    <%= name %> Demand Load Profile Outlet Node,  !- Inlet Node Name
+    <%= name %> Load Profile Pump Oulet Node,  !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    21521.4467194739,        !- Design Pump Head {Pa}
+    autosize,                !- Design Power Consumption {W}
+    0.9,                     !- Motor Efficiency
+    ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+    ,                        !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    ,                        !- Coefficient 3 of the Part Load Performance Curve
+    ,                        !- Coefficient 4 of the Part Load Performance Curve
+    0,                       !- Design Minimum Flow Rate {m3/s}
+    Intermittent,            !- Pump Control Type
+    ,                        !- Pump Flow Rate Schedule Name
+    ,                        !- Pump Curve Name
+    ,                        !- Impeller Diameter {m}
+    ,                        !- VFD Control Type
+    ,                        !- Pump RPM Schedule Name
+    ,                        !- Minimum Pressure Schedule {Pa}
+    ,                        !- Maximum Pressure Schedule {Pa}
+    ,                        !- Minimum RPM Schedule {rev/min}
+    ,                        !- Maximum RPM Schedule {rev/min}
+    ,                        !- Zone Name
+    ,                        !- Skin Loss Radiative Fraction
+    PowerPerFlowPerPressure, !- Design Power Sizing Method
+    348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+    1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+    ,                        !- Design Minimum Flow Rate Fraction
+    General;                 !- End-Use Subcategory	
+	
+! Comment: Adding demand branch pumps with for loop over branch_names		
+
+<% for branch_name in branch_names %>	
+Pump:VariableSpeed,
+  <%= branch_name %> DHW Pump,    !- Name
+  <%= branch_name %> DHW Outlet Node,  !- Inlet Node Name
+  <%= branch_name %> Pump Oulet Node,  !- Outlet Node Name
+  autosize,                !- Design Maximum Flow Rate {m3/s}
+  21521.4467194739,        !- Design Pump Head {Pa}
+  0,                !- Design Power Consumption {W}
+  0.9,                     !- Motor Efficiency
+  ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+  ,                        !- Coefficient 1 of the Part Load Performance Curve
+  1,                       !- Coefficient 2 of the Part Load Performance Curve
+  ,                        !- Coefficient 3 of the Part Load Performance Curve
+  ,                        !- Coefficient 4 of the Part Load Performance Curve
+  0,                       !- Design Minimum Flow Rate {m3/s}
+  Intermittent,            !- Pump Control Type
+  ,                        !- Pump Flow Rate Schedule Name
+  ,                        !- Pump Curve Name
+  ,                        !- Impeller Diameter {m}
+  ,                        !- VFD Control Type
+  ,                        !- Pump RPM Schedule Name
+  ,                        !- Minimum Pressure Schedule {Pa}
+  ,                        !- Maximum Pressure Schedule {Pa}
+  ,                        !- Minimum RPM Schedule {rev/min}
+  ,                        !- Maximum RPM Schedule {rev/min}
+  ,                        !- Zone Name
+  ,                        !- Skin Loss Radiative Fraction
+  PowerPerFlowPerPressure, !- Design Power Sizing Method
+  348701.1,                !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+  1.282051282,             !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+  ,                        !- Design Minimum Flow Rate Fraction
+  General;                 !- End-Use Subcategory  
+<% end %>
+
+<% end %> 
+
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  
+
+ConnectorList,
+  <%= name %> Supply Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Supply Splitter, !- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Supply Mixer;    !- Connector 2 Name
+   
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>  
+Connector:Splitter,
+  <%= name %> Supply Splitter, !- Name
+  <%= name %> Supply Inlet Branch,  !- Inlet Branch Name
+  <%= name %> Supply Equipment Branch  !- Outlet Branch 1 Name
+  <%= name %> Supply Equipment Bypass Branch;  !- Outlet Branch 2 Name
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>
+Connector:Splitter,
+  <%= name %> Supply Splitter, !- Name
+  <%= name %> Supply Inlet Branch,  !- Inlet Branch Name
+  <%= name %> Supply Equipment Branch;  !- Outlet Branch 1 Name
+<% end %>
+
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>  
+Connector:Mixer,
+  <%= name %> Supply Mixer,    !- Name
+  <%= name %> Supply Outlet Branch,  !- Outlet Branch Name
+  <%= name %> Supply Equipment Branch,  !- Inlet Branch 1 Name
+  <%= name %> Supply Equipment Bypass Branch;  !- Inlet Branch 2 Name
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>  
+Connector:Mixer,
+  <%= name %> Supply Mixer,    !- Name
+  <%= name %> Supply Outlet Branch,  !- Outlet Branch Name
+  <%= name %> Supply Equipment Branch;  !- Inlet Branch 1 Name
+<% end %> 
+
+!!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+! Comment: Change the name of Bypass branch to load profile branch
+
+BranchList,
+  <%= name %> Demand Branches,!- Name
+  <%= name %> Demand Inlet Branch,  !- Branch Name
+<% for branch_name in branch_names %>
+  <%= branch_name %> DHW Demand Branch,  !- Branch Name
+<% end %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
+  <%= name %> Demand Bypass Branch,  !- Branch Name
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>	  
+  <%= name %> Load Profile Branch,  !- Branch Name
+<% end %>   
+  <%= name %> Demand Outlet Branch;  !- Branch Name
+
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  
+
+Branch,
+  <%= name %> Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Inlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Inlet Pipe,  !- Name
+  <%= name %> Demand Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+
+!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+! Comment: removing demand bypass branch, since we use loadprofile branch
+
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
+Branch,
+  <%= name %> Demand Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Bypass Pipe,  !- Component 1 Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+! removing demand bypass pipe, since we use loadprofile branch
+Pipe:Adiabatic,
+  <%= name %> Demand Bypass Pipe,  !- Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Outlet Node Name
+
+<% end %> 
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+Branch,
+  <%= name %> Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Outlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Outlet Pipe,  !- Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= name %> Demand Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Demand Splitter,!- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Demand Mixer;   !- Connector 2 Name
+
+
+!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+! Comment: revising the name of Demand Bypass to Demand LoadProfile Branch in splitter and mixer connectors
+
+Connector:Splitter,
+  <%= name %> Demand Splitter,!- Name
+  <%= name %> Demand Inlet Branch,  !- Inlet Branch Name
+<% for branch_name in branch_names %>
+  <%= branch_name %> DHW Demand Branch,  !- Outlet Branch Name
+<% end %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
+  <%= name %> Demand Bypass Branch;  !- Outlet Branch Name
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>	
+  <%= name %> Load Profile Branch;  !- Outlet Branch Name
+<% end %> 
+   
+  
+Connector:Mixer,
+  <%= name %> Demand Mixer,   !- Name
+  <%= name %> Demand Outlet Branch,  !- Outlet Branch Name
+<% for branch_name in branch_names %>
+  <%= branch_name %> DHW Demand Branch,  !- Inlet Branch Name
+<% end %>
+<% if (dhw_loop_configuration == "DEFAULT-LOOP") %>
+  <%= name %> Demand Bypass Branch;  !- Inlet Branch Name
+<% elsif (dhw_loop_configuration == "RECIRCULATION-LOOP") %>  
+  <%= name %> Load Profile Branch;  !- Inlet Branch Name
+<% end %> 
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  
+<% else # if not plantloop %>
+
+WaterHeater:Sizing,
+  <%= name %> Water Heater,  !- WaterHeater Name
+  <%= water_heater_design_mode %>,  !- Design Mode
+  <%= peak_draw_time %>,  !- Time Storage Can Meet Peak Draw {hr}
+  <%= storage_recovery_time %>,  !- Time for Tank Recovery {hr}
+  <%= nominal_tank_volume %>,  !- Nominal Tank Volume for Autosizing Plant Connections {m3}
+  <%= number_of_bedrooms %>,  !- Number of Bedrooms
+  <%= number_of_bathrooms %>,  !- Number of Bathrooms
+  ,                        !- Storage Capacity per Person {m3/Person}
+  ,                        !- Recovery Capacity per Person {m3/hr-person}
+  ,                        !- Storage Capacity per Floor Area {m3/m2}
+  ,                        !- Recovery Capacity per Floor Area {m3/hr-m2}
+  ,                        !- Number of Units
+  ,                        !- Storage Capacity per Unit {m3}
+  ,                        !- Recovery Capacity PerUnit {m3/hr}
+  ,                        !- Storage Capacity per Collector Area {m3/m2}
+  ;                        !- Height Aspect Ratio
+
+WaterHeater:Mixed,
+  <%= name %> Water Heater,  !- Name
+  <%= water_heater_volume %>,  !- Tank Volume {m3}
+  <%= name %> Water Heater Setpoint Temperature Schedule,  !- Setpoint Temperature Schedule Name
+  <% deadband_temperature %>,                     !- Deadband Temperature Difference {deltaC}
+  100.0,                   !- Maximum Temperature Limit {C}
+  Cycle,                   !- Heater Control Type
+  <%= water_heater_capacity %>,  !- Heater Maximum Capacity {W}
+  ,                        !- Heater Minimum Capacity {W}
+  ,                        !- Heater Ignition Minimum Flow Rate {m3/s}
+  ,                        !- Heater Ignition Delay {s}
+  <%= water_heater_fuel %>,  !- Heater Fuel Type
+  <%= water_heater_eff %>,  !- Heater Thermal Efficiency
+  ,                        !- Part Load Factor Curve Name
+  <%= parasitic_off %>,     !- Off Cycle Parasitic Fuel Consumption Rate {W}
+  <%= water_heater_fuel %>,  !- Off Cycle Parasitic Fuel Type
+  0,                     !- Off Cycle Parasitic Heat Fraction to Tank
+  <%= parasitic_on %>,                        !- On Cycle Parasitic Fuel Consumption Rate {W}
+  <%= water_heater_fuel %>,  !- On Cycle Parasitic Fuel Type
+  ,                        !- On Cycle Parasitic Heat Fraction to Tank
+<% if (water_heater_ambient_method == "TEMPERATURE") %>
+  Schedule,                !- Ambient Temperature Indicator
+  <%= name %> Water Heater Ambient Temperature Schedule,  !- Ambient Temperature Schedule Name
+  ,                        !- Ambient Temperature Zone Name
+  ,                        !- Ambient Temperature Outdoor Air Node Name
+<% elsif (water_heater_ambient_method == "ZONE") %>
+  Zone,                    !- Ambient Temperature Indicator
+  ,                        !- Ambient Temperature Schedule Name
+  <%= water_heater_ambient_zone %>,  !- Ambient Temperature Zone Name
+  ,                        !- Ambient Temperature Outdoor Air Node Name
+<% elsif (water_heater_ambient_method == "OUTDOORS") %>
+  Outdoors,                !- Ambient Temperature Indicator
+  ,                        !- Ambient Temperature Schedule Name
+  ,                        !- Ambient Temperature Zone Name
+  <%= name %> Outdoor Air Node,  !- Ambient Temperature Outdoor Air Node Name
+<% end %>
+  <%= cycle_loss_coef %>,                     !- Off Cycle Loss Coefficient to Ambient Temperature {W/K}
+  ,                        !- Off Cycle Loss Fraction to Zone
+  <%= cycle_loss_coef %>,                     !- On Cycle Loss Coefficient to Ambient Temperature {W/K}
+  ,                        !- On Cycle Loss Fraction to Zone
+  <%= peak_flow %>,                        !- Peak Use Flow Rate {m3/s}
+  <%= name %> Sch;                        !- Use Flow Rate Fraction Schedule Name
+
+Schedule:Constant,
+  <%= name %> Water Heater Setpoint Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= design_temp %>;  !- Hourly Value
+
+<% if (water_heater_ambient_method == "TEMPERATURE") %>
+Schedule:Constant,
+  <%= name %> Water Heater Ambient Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= water_heater_ambient_temp %>;  !- Hourly Value
+<% elsif (water_heater_ambient_method == "OUTDOORS") %>
+OutdoorAir:Node,
+  <%= name %> Outdoor Air Node;  !- Name
+<% end %>
+
+<% end %>
+
+! Comment: adding file:schedule class for measure case (SWWH015)
+
+
+<% if (case_configuration == "MEASURE") %>
+Schedule:File,
+    <%= name %> Load Profile Varying Flow Frac Schedule,  !- Name
+    Fraction,                !- Schedule Type Limits Name
+    <%= schedule_file_path %>,  !- File Name
+    2,                       !- Column Number
+    1,                       !- Rows to Skip at Top
+    8760,                    !- Number of Hours of Data
+    Comma,                   !- Column Separator
+    No,                      !- Interpolate to Timestep
+    60,                      !- Minutes per Item
+    Yes;                     !- Adjust Schedule for Daylight Savings
+<% end %>

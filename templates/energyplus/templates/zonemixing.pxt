@@ -1,0 +1,27 @@
+<%#INITIALIZE
+parameter "zone_name"         # Primary zone where mixing occurs
+parameter "source_zone_name"  # Secondary zone where mixing air originates from
+
+parameter "zone_flow", :default=>0.0
+parameter "zone_flow_ach", :default=>1
+parameter "mix_calc_method", :default=>"AirChanges/Hour"    # Flow/Zone | Flow/Area | Flow/Person | AirChanges/Hour
+parameter "mixing_schedule", :default=> "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1.0;"
+
+%>
+
+ZoneMixing,
+  <%= zone_name + " : " + source_zone_name %> Zone Mixing,  !- Name
+  <%= zone_name %>,                 !- Zone Name
+  <%= zone_name + " : " + source_zone_name %> Air Mixing Schedule,       !- Schedule Name
+  <%= mix_calc_method %>,               !- Design Flow Rate Calculation Method
+  <%= zone_flow %>,       !- Design Flow Rate {m3/s}
+  ,                        !- Flow Rate per Zone Floor Area {m3/s-m2}
+  ,                        !- Flow Rate per Person {m3/s-person}
+  <%= zone_flow_ach %>,                        !- Air Changes per Hour {1/hr}
+  <%= source_zone_name %>,                  !- Source Zone Name
+  0.0;                     !- Delta Temperature {deltaC}
+
+Schedule:Compact,
+  <%= zone_name + " : " + source_zone_name%> Air Mixing Schedule,       !- Schedule Name
+  Unit Interval,           !- Schedule Type Limits Name
+  <%= mixing_schedule %>

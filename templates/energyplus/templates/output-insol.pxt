@@ -1,0 +1,71 @@
+<%#INITIALIZE
+parameter "latitude", :name=>"Latitude", :description=>"Latitude for solar insolation calculations only",
+  :default=>0, :domain=>Numeric  # :range=>[-90, 90]
+
+# change to just inclination angle; Citadel will set it
+
+# should make y_offset a parameter, in case need to avoid some existing geometry
+
+%>
+
+<%# Creates a tiny 1-ft2 test surface to measure insolation at an inclination angle equal to the latitude.
+Insolation can be reported with the following:
+
+  Output:Variable,Insolation,Surface Ext Solar Incident,Hourly; !- Zone Average [W/m2]
+
+NOTE:  The Photovoltaic objects do not generate any electricity (without ElectricLoadCenter:Generators)
+       but are required to activate the "Surface Ext Solar Incident" output variable.
+%>
+
+<%
+y_offset = -100.0
+inclination = latitude * Math::PI / 180.0
+%>
+
+Shading:Site:Detailed,
+  Insolation,              !- Name
+  ,                        !- Transmittance Schedule Name
+  4,                       !- Number of Vertices
+  0.0,                     !- Vertex 1 X-coordinate {m}
+  <%= y_offset + 0.3048 * Math.cos(inclination) %>,  !- Vertex 1 Y-coordinate {m}
+  <%= 0.3048 * Math.sin(inclination) %>,  !- Vertex 1 Z-coordinate {m}
+  0.0,                     !- Vertex 2 X-coordinate {m}
+  <%= y_offset %>,  !- Vertex 2 Y-coordinate {m}
+  0.0,                     !- Vertex 2 Z-coordinate {m}
+  0.3048,                  !- Vertex 3 X-coordinate {m}
+  <%= y_offset %>,  !- Vertex 3 Y-coordinate {m}
+  0.0,                     !- Vertex 3 Z-coordinate {m}
+  0.3048,                  !- Vertex 4 X-coordinate {m}
+  <%= y_offset + 0.3048 * Math.cos(inclination) %>,  !- Vertex 4 Y-coordinate {m}
+  <%= 0.3048 * Math.sin(inclination) %>;  !- Vertex 4 Z-coordinate {m}
+
+Generator:Photovoltaic,
+  Dummy Generator,         !- Name
+  Insolation,              !- Surface Name
+  PhotovoltaicPerformance:Simple,  !- Photovoltaic Performance Object Type
+  Dummy Photovoltaic Performance,  !- Module Performance Name
+  Decoupled,               !- Heat Transfer Integration Mode
+  1,                       !- Number of Modules in Parallel {dimensionless}
+  1;                       !- Number of Modules in Series {dimensionless}
+
+PhotovoltaicPerformance:Simple,
+  Dummy Photovoltaic Performance,  !- Name
+  1.0,                     !- Fraction of Surface Area with Active Solar Cells {dimensionless}
+  Fixed,                   !- Conversion Efficiency Input Mode
+  0.12;                    !- Value for Cell Efficiency if Fixed
+
+ElectricLoadCenter:Distribution,
+  DummyElecLoadCentDistro,      !- Name
+  ,                        !- Generator List Name
+  ,                        !- Generator Operation Scheme Type
+  ,                        !- Generator Demand Limit Scheme Purchased Electric Demand Limit {W}
+  ,                        !- Generator Track Schedule Name Scheme Schedule Name
+  ,                        !- Generator Track Meter Scheme Meter Name
+  AlternatingCurrent,      !- Electrical Buss Type
+  ,                        !- Inverter Name
+  ,                        !- Electrical Storage Object Name
+  ,                        !- Transformer Object Name
+  TrackFacilityElectricDemandStoreExcessOnSite,  !- Storage Operation Scheme
+  ,                        !- Storage Control Track Meter Name
+  ,                        !- Storage Converter Object Name
+  1;                       !- Maximum Storage State of Charge Fraction

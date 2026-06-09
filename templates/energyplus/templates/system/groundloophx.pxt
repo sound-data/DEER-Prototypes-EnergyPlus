@@ -1,0 +1,320 @@
+<%#INITIALIZE
+parameter "system_name"
+
+# should be a different identifier?  branches?  central cooling coil is not a zone
+parameter "zone_names"
+
+parameter "gshp_flow_rate", :default=>60['GPM']
+parameter "gshp_pump_head", :default=>35['ft']
+parameter "gshp_pump_eff", :default=>0.7
+
+parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+
+%>
+
+FluidProperties:GlycolConcentration,
+   GLHXFluid,         !- Fluid 1 Name
+   PropyleneGlycol,   !- Glycol 1 Name
+   ,                  !- User Defined Glycol Name
+   0.3;               !- Glycol 1 Concentration
+
+Sizing:Plant,
+  <%= system_name %>,      !- Plant or Condenser Loop Name
+  Condenser,               !- Loop Type
+  29.4,                    !- Design Loop Exit Temperature {C}
+  5.6;                     !- Loop Design Temperature Difference {deltaC}
+
+Schedule:Compact,
+  <%= system_name %> Operation Schedule,  !- Name
+  Binary Control,          !- Schedule Type Limits Name
+ <%= operation_schedule %>
+
+CondenserLoop,
+  <%= system_name %>,      !- Name
+  UserDefinedFluidType,                   !- Fluid Type
+  GLHXFluid,                        !- User Defined Fluid Type
+  <%= system_name %> Operation Schemes,  !- Plant Equipment Operation Scheme Name
+  <%= system_name %> Supply Outlet Node,  !- Condenser Loop Temperature Setpoint Node Name or Reference
+  80.0,                    !- Maximum Loop Temperature {C}
+  5.0,                     !- Minimum Loop Temperature {C}
+  <%= gshp_flow_rate %>,   !- Maximum Loop Flow Rate {m3/s}
+  0.0,                     !- Minimum Loop Flow Rate {m3/s}
+  Autosize,                !- Condenser Loop Volume {m3}
+  <%= system_name %> Supply Inlet Node,  !- Plant Side Inlet Node Name
+  <%= system_name %> Supply Outlet Node,  !- Plant Side Outlet Node Name
+  <%= system_name %> Supply Branches,!- Plant Side Branch List Name
+  <%= system_name %> Supply Connectors,  !- Plant Side Connector List Name
+  <%= system_name %> Demand Inlet Node,  !- Demand Side Inlet Node Name
+  <%= system_name %> Demand Outlet Node,  !- Demand Side Outlet Node Name
+  <%= system_name %> Demand Branches,!- Demand Side Branch List Name
+  <%= system_name %> Demand Connectors,  !- Demand Side Connector List Name
+  SequentialLoad;              !- Load Distribution Scheme
+
+SetpointManager:FollowGroundTemperature,
+  <%= system_name %> Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  Site:GroundTemperature:Deep,  !- Reference Ground Temperature Object Type
+  0,                       !- Offset Temperature Difference {deltaC}
+  80.0,                    !- Maximum Setpoint Temperature {C}
+  10.0,                    !- Minimum Setpoint Temperature {C}
+  <%= system_name %> Supply Outlet Node;  !- Setpoint Node or NodeList Name
+
+CondenserEquipmentOperationSchemes,
+  <%= system_name %> Operation Schemes,  !- Name
+  PlantEquipmentOperation:Uncontrolled,  !- Control Scheme 1 Object Type
+  <%= system_name %> Operation Scheme,  !- Control Scheme 1 Name
+  <%= system_name %> Operation Schedule;  !- Control Scheme 1 Schedule Name
+
+PlantEquipmentOperation:Uncontrolled,
+  <%= system_name %> Operation Scheme,  !- Name
+  <%= system_name %> Equipment List; !- Priority Control 1 Equipment List Name
+
+CondenserEquipmentList,
+  <%= system_name %> Equipment List,  !- Name
+  GroundHeatExchanger:Vertical,  !- Equipment 1 Object Type
+  <%= system_name %> Field;  !- Equipment 1 Name
+
+BranchList,
+  <%= system_name %> Supply Branches,!- Name
+  <%= system_name %> Supply Inlet Branch,  !- Branch 1 Name
+  <%= system_name %> Supply Equipment Branch,  !- Branch 2 Name
+  <%= system_name %> Supply Equipment Bypass Branch,  !- Branch 3 Name
+  <%= system_name %> Supply Outlet Branch;  !- Branch 4 Name
+
+Branch,
+  <%= system_name %> Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pump:VariableSpeed,      !- Component 1 Object Type
+  <%= system_name %> Pump,           !- Component 1 Name
+  <%= system_name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
+
+Pump:VariableSpeed,
+  <%= system_name %> Pump,  !- Name
+  <%= system_name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Pump Outlet Node,  !- Outlet Node Name
+  <%= gshp_flow_rate %>,   !- Rated Flow Rate {m3/s}
+  <%= gshp_pump_head %>,   !- Rated Pump Head {Pa}
+  Autosize,                !- Rated Power Consumption {W}
+  <%= gshp_pump_eff %>,    !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+  0,                             !- Coefficient 1 of the Part Load Performance Curve
+  1,                             !- Coefficient 2 of the Part Load Performance Curve
+  0,                             !- Coefficient 3 of the Part Load Performance Curve
+  0,                             !- Coefficient 4 of the Part Load Performance Curve
+  0,                             !- Minimum Flow Rate (m3/s)
+  Intermittent;            !- Pump Control Type
+
+Branch,
+  <%= system_name %> Supply Equipment Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  GroundHeatExchanger:Vertical,  !- Component 1 Object Type
+  <%= system_name %> Field,  !- Component 1 Name
+  <%= system_name %> Field Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Supply Equipment Outlet Node;  !- Component 1 Outlet Node Name
+
+GroundHeatExchanger:Vertical,
+  <%= system_name %> Field,  !- Name
+  <%= system_name %> Field Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Supply Equipment Outlet Node,  !- Outlet Node Name
+  <%= gshp_flow_rate %>,      !- Maximum Flow Rate {m3/s}
+  120,                     !- Number of Bore Holes
+  76.2,                    !- Bore Hole Length {m}
+  0.635080E-01,            !- Bore Hole Radius {m}
+  0.692626E+00,            !- Ground Thermal Conductivity {W/m-K}
+  0.234700E+07,            !- Ground Thermal Heat Capacity {J/m3-K}
+  13.375,                  !- Ground Temperature {C}
+  0.692626E+00,            !- Grout Thermal Conductivity {W/m-K}
+  0.391312E+00,            !- Pipe Thermal Conductivity {W/m-K}
+  2.66667E-02,             !- Pipe Out Diameter {m}
+  2.53977E-02,             !- U-Tube Distance {m}
+  2.41285E-03,             !- Pipe Thickness {m}
+  2,                       !- Maximum Length of Simulation
+  ,                        !- G-Function Reference Ratio
+  35,                      !- Number of Data Pairs of the G Function
+  -15.2996,                !- G-Function Ln(T/Ts) Value 1
+  -0.348322,               !- G-Function G Value 1
+  -14.201,                 !- G-Function Ln(T/Ts) Value 2
+  0.022208,                !- G-Function G Value 2
+  -13.2202,                !- G-Function Ln(T/Ts) Value 3
+  0.412345,                !- G-Function G Value 3
+  -12.2086,                !- G-Function Ln(T/Ts) Value 4
+  0.867498,                !- G-Function G Value 4
+  -11.1888,                !- G-Function Ln(T/Ts) Value 5
+  1.357839,                !- G-Function G Value 5
+  -10.1816,                !- G-Function Ln(T/Ts) Value 6
+  1.852024,                !- G-Function G Value 6
+  -9.1815,                 !- G-Function Ln(T/Ts) Value 7
+  2.345656,                !- G-Function G Value 7
+  -8.6809,                 !- G-Function Ln(T/Ts) Value 8
+  2.593958,                !- G-Function G Value 8
+  -8.5,                    !- G-Function Ln(T/Ts) Value 9
+  2.679,                   !- G-Function G Value 9
+  -7.8,                    !- G-Function Ln(T/Ts) Value 10
+  3.023,                   !- G-Function G Value 10
+  -7.2,                    !- G-Function Ln(T/Ts) Value 11
+  3.32,                    !- G-Function G Value 11
+  -6.5,                    !- G-Function Ln(T/Ts) Value 12
+  3.681,                   !- G-Function G Value 12
+  -5.9,                    !- G-Function Ln(T/Ts) Value 13
+  4.071,                   !- G-Function G Value 13
+  -5.2,                    !- G-Function Ln(T/Ts) Value 14
+  4.828,                   !- G-Function G Value 14
+  -4.5,                    !- G-Function Ln(T/Ts) Value 15
+  6.253,                   !- G-Function G Value 15
+  -3.963,                  !- G-Function Ln(T/Ts) Value 16
+  7.894,                   !- G-Function G Value 16
+  -3.27,                   !- G-Function Ln(T/Ts) Value 17
+  11.82,                   !- G-Function G Value 17
+  -2.864,                  !- G-Function Ln(T/Ts) Value 18
+  15.117,                  !- G-Function G Value 18
+  -2.577,                  !- G-Function Ln(T/Ts) Value 19
+  18.006,                  !- G-Function G Value 19
+  -2.171,                  !- G-Function Ln(T/Ts) Value 20
+  22.887,                  !- G-Function G Value 20
+  -1.884,                  !- G-Function Ln(T/Ts) Value 21
+  26.924,                  !- G-Function G Value 21
+  -1.191,                  !- G-Function Ln(T/Ts) Value 22
+  38.004,                  !- G-Function G Value 22
+  -0.497,                  !- G-Function Ln(T/Ts) Value 23
+  49.919,                  !- G-Function G Value 23
+  -0.274,                  !- G-Function Ln(T/Ts) Value 24
+  53.407,                  !- G-Function G Value 24
+  -0.051,                  !- G-Function Ln(T/Ts) Value 25
+  56.632,                  !- G-Function G Value 25
+  0.196,                   !- G-Function Ln(T/Ts) Value 26
+  59.825,                  !- G-Function G Value 26
+  0.419,                   !- G-Function Ln(T/Ts) Value 27
+  62.349,                  !- G-Function G Value 27
+  0.642,                   !- G-Function Ln(T/Ts) Value 28
+  64.524,                  !- G-Function G Value 28
+  0.873,                   !- G-Function Ln(T/Ts) Value 29
+  66.412,                  !- G-Function G Value 29
+  1.112,                   !- G-Function Ln(T/Ts) Value 30
+  67.993,                  !- G-Function G Value 30
+  1.335,                   !- G-Function Ln(T/Ts) Value 31
+  69.162,                  !- G-Function G Value 31
+  1.679,                   !- G-Function Ln(T/Ts) Value 32
+  70.476,                  !- G-Function G Value 32
+  2.028,                   !- G-Function Ln(T/Ts) Value 33
+  71.361,                  !- G-Function G Value 33
+  2.275,                   !- G-Function Ln(T/Ts) Value 34
+  71.79,                   !- G-Function G Value 34
+  3.003,                   !- G-Function Ln(T/Ts) Value 35
+  72.511;                  !- G-Function G Value 35
+
+Branch,
+  <%= system_name %> Supply Equipment Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= system_name %> Supply Equipment Bypass Pipe,  !- Component 1 Name
+  <%= system_name %> Supply Equip Bypass Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Supply Equip Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= system_name %> Supply Equipment Bypass Pipe,  !- Name
+  <%= system_name %> Supply Equip Bypass Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Supply Equip Bypass Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= system_name %> Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= system_name %> Supply Outlet Pipe,  !- Component 1 Name
+  <%= system_name %> Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= system_name %> Supply Outlet Pipe,  !- Name
+  <%= system_name %> Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Supply Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= system_name %> Supply Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= system_name %> Supply Splitter,!- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= system_name %> Supply Mixer;   !- Connector 2 Name
+
+Connector:Splitter,
+  <%= system_name %> Supply Splitter,!- Name
+  <%= system_name %> Supply Inlet Branch,  !- Inlet Branch Name
+  <%= system_name %> Supply Equipment Branch,  !- Outlet Branch 1 Name
+  <%= system_name %> Supply Equipment Bypass Branch;  !- Outlet Branch 2 Name
+
+Connector:Mixer,
+  <%= system_name %> Supply Mixer,   !- Name
+  <%= system_name %> Supply Outlet Branch,  !- Outlet Branch Name
+  <%= system_name %> Supply Equipment Branch,  !- Inlet Branch 1 Name
+  <%= system_name %> Supply Equipment Bypass Branch;  !- Inlet Branch 2 Name
+
+BranchList,
+  <%= system_name %> Demand Branches,!- Name
+  <%= system_name %> Demand Inlet Branch,  !- Branch Name
+<% for zone_name in zone_names %>
+  <%= zone_name %> GHX Demand Branch,  !- Branch Name
+<% end %>
+  <%= system_name %> Demand Bypass Branch,  !- Branch Name
+  <%= system_name %> Demand Outlet Branch;  !- Branch Name
+
+Branch,
+  <%= system_name %> Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= system_name %> Demand Inlet Pipe,  !- Component 1 Name
+  <%= system_name %> Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= system_name %> Demand Inlet Pipe,  !- Name
+  <%= system_name %> Demand Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= system_name %> Demand Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= system_name %> Demand Bypass Pipe,  !- Component 1 Name
+  <%= system_name %> Demand Bypass Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Demand Bypass Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= system_name %> Demand Bypass Pipe,  !- Name
+  <%= system_name %> Demand Bypass Pipe Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Demand Bypass Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= system_name %> Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= system_name %> Demand Outlet Pipe,  !- Component 1 Name
+  <%= system_name %> Demand Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= system_name %> Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= system_name %> Demand Outlet Pipe,  !- Name
+  <%= system_name %> Demand Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= system_name %> Demand Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= system_name %> Demand Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= system_name %> Demand Splitter,!- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= system_name %> Demand Mixer;   !- Connector 2 Name
+
+Connector:Splitter,
+  <%= system_name %> Demand Splitter,!- Name
+  <%= system_name %> Demand Inlet Branch,  !- Inlet Branch Name
+<% for zone_name in zone_names %>
+  <%= zone_name %> GHX Demand Branch,  !- Outlet Branch Name
+<% end %>
+  <%= system_name %> Demand Bypass Branch;  !- Outlet Branch Name
+
+Connector:Mixer,
+  <%= system_name %> Demand Mixer,   !- Name
+  <%= system_name %> Demand Outlet Branch,  !- Outlet Branch Name
+<% for zone_name in zone_names %>
+  <%= zone_name %> GHX Demand Branch,  !- Inlet Branch Name
+<% end %>
+  <%= system_name %> Demand Bypass Branch;  !- Inlet Branch Name

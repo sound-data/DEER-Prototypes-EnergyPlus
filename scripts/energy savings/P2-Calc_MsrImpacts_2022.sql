@@ -1,6 +1,6 @@
 -- Calculate the measure impacts (per dwelling, per numunit) for the measures specified in the current_msr_mat table.
 --  Note: use more decimals than necessary, as they will be rounded in the final query of the process
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 DROP TABLE IF EXISTS meas_impacts_2022;
 CREATE TABLE meas_impacts_2022 AS 
 SELECT
@@ -61,7 +61,7 @@ NULL::numeric(15,5) as "AMsrUseEUtherm"
 
 FROM current_msr_mat
 LEFT JOIN sim_annual_wtd msr on 
-  msr."TechID"   = current_msr_mat."MsrTechID" AND  
+  msr."TechID"   = current_msr_mat."MeasTechID" AND  
   msr."SizingID" = current_msr_mat."MsrSizingID" AND  
   msr."BldgType" = current_msr_mat."BldgType" AND
   msr."BldgVint" = current_msr_mat."BldgVint" AND  
@@ -82,7 +82,7 @@ LEFT JOIN sim_annual_wtd std on
   std."BldgLoc"  = current_msr_mat."BldgLoc" AND  
   std."BldgHVAC" = current_msr_mat."BldgHVAC"
 LEFT JOIN sim_peakper mpk ON
-  mpk."TechID"   = current_msr_mat."MsrTechID" AND  
+  mpk."TechID"   = current_msr_mat."MeasTechID" AND  
   mpk."SizingID" = current_msr_mat."MsrSizingID" AND  
   mpk."BldgType" = current_msr_mat."BldgType" AND
   mpk."BldgVint" = current_msr_mat."BldgVint" AND  
@@ -105,3 +105,4 @@ LEFT JOIN sim_peakper spk ON
 
 ORDER BY 
  current_msr_mat."MeasureID",current_msr_mat."BldgType",current_msr_mat."BldgHVAC",current_msr_mat."BldgVint",current_msr_mat."BldgLoc"
+;

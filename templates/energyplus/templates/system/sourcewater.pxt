@@ -1,0 +1,372 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "name"
+parameter "branch_names"
+
+parameter "design_temp", :default=>30['C']  # Condenser water system supply temperature
+parameter "design_delta", :default=>11['deltaC']  # Condenser water system design temperature difference
+
+parameter "spray_rate", :default=>0.002208['m3/s']
+parameter "boiler_cap", :default=>Autosize
+parameter "boiler_eff", :default=>0.75
+parameter "boiler_type", :default=>"NONCONDENSING" # (NONCONDENSING | CONDENSING | ELECTRIC)
+parameter "high_temp_setpoint", :default=>30['C']
+parameter "low_temp_setpoint", :default=>20['C']
+parameter "max_loop_temp", :default=>35['C']
+parameter "min_loop_temp", :default=>10['C']
+
+parameter "pump_eff", :default=>0.9
+parameter "pump_head", :default=>75['ft H2O']
+
+parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+
+%>
+
+Sizing:Plant,
+  <%= name %>,  !- Plant or Condenser Loop Name
+  Heating,               !- Loop Type
+  <%= design_temp %>,  !- Design Loop Exit Temperature {C}
+  <%= design_delta %>,  !- Loop Design Temperature Difference {deltaC}
+  Coincident,              !- Sizing Option
+  6,                       !- Zone Timesteps in Averaging Window
+  GlobalCoolingSizingFactor;  !- Coincident Sizing Factor Mode
+
+PlantLoop,
+  <%= name %>, !- Name
+  Water,                   !- Fluid Type
+  ,                        !- User Defined Fluid Type
+  <%= name %> Operation,    !- Plant Equipment Operation Scheme Name
+  <%= name %> Supply Outlet Node,!- Loop Temperature Setpoint Node Name
+  <%= max_loop_temp %>,                      !- Maximum Loop Temperature
+  <%= min_loop_temp %>,                      !- Minimum Loop Temperature
+  autosize,                !- Maximum Loop Flow Rate
+  0,                       !- Minimum Loop Flow Rate
+  autocalculate,           !- Plant Loop Volume
+  <%= name %> Supply Inlet Node, !- Plant Side Inlet Node Name
+  <%= name %> Supply Outlet Node,!- Plant Side Outlet Node Name
+  <%= name %> Supply Branches,  !- Plant Side Branch List Name
+  <%= name %> Supply Connectors,  !- Plant Side Connector List Name
+  <%= name %> Demand Inlet Node, !- Demand Side Inlet Node Name
+  <%= name %> Demand Outlet Pipe Outlet Node,!- Demand Side Outlet Node Name
+  <%= name %> Demand Branches,  !- Demand Side Branch List Name
+  <%= name %> Demand Connectors,  !- Demand Side Connector List Name
+  SequentialLoad,          !- Load Distribution Scheme
+  ,                        !- Availability Manager List Name
+  DualSetpointDeadband;    !- Plant Loop Demand Calculation Scheme
+
+ConnectorList,
+  <%= name %> Supply Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Supply Splitter,   !- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Supply Mixer;      !- Connector 2 Name
+
+PlantEquipmentOperationSchemes,
+  <%= name %> Operation,    !- Name
+  PlantEquipmentOperation:HeatingLoad,  !- Control Scheme 1 Object Type
+  <%= name %> Heat Operation Scheme,  !- Control Scheme 1 Name
+  <%= name %> Operation Schedule,                  !- Control Scheme 1 Schedule Name
+  PlantEquipmentOperation:CoolingLoad,  !- Control Scheme 2 Object Type
+  <%= name %> Cool Operation Scheme,  !- Control Scheme 2 Name
+  <%= name %> Operation Schedule;                  !- Control Scheme 2 Schedule Name
+
+Schedule:Compact,
+  <%= name %> Operation Schedule,  !- Name
+  On/Off,                  !- Schedule Type Limits Name
+<%= operation_schedule %>
+
+PlantEquipmentOperation:CoolingLoad,
+  <%= name %> Cool Operation Scheme,  !- Name
+  0,                       !- Load Range 1 Lower Limit
+  1000000000000000,        !- Load Range 1 Upper Limit
+  <%= name %> Cooling Equipment;  !- Range 1 Equipment List Name
+
+PlantEquipmentOperation:HeatingLoad,
+  <%= name %> Heat Operation Scheme,  !- Name
+  0,                       !- Load Range 1 Lower Limit
+  1000000000000000,        !- Load Range 1 Upper Limit
+  <%= name %> Heating Equipment;  !- Range 1 Equipment List Name
+
+PlantEquipmentList,
+  <%= name %> Cooling Equipment,  !- Name
+  EvaporativeFluidCooler:SingleSpeed,  !- Equipment 1 Object Type
+  <%= name %> Fluid Cooler;           !- Equipment 1 Name
+
+PlantEquipmentList,
+  <%= name %> Heating Equipment,  !- Name
+  Boiler:HotWater,         !- Equipment 1 Object Type
+  <%= name %> Boiler;          !- Equipment 1 Name
+
+BranchList,
+  <%= name %> Supply Branches,  !- Name
+  <%= name %> Supply Inlet Branch,  !- Branch 1 Name
+  <%= name %> Fluid Cooler Branch,  !- Branch 2 Name
+  <%= name %> Boiler Branch,   !- Branch 3 Name
+  <%= name %> Supply Bypass Branch,  !- Branch 4 Name
+  <%= name %> Supply Outlet Branch;  !- Branch 5 Name
+
+Branch,
+  <%= name %> Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pump:ConstantSpeed,      !- Component 1 Object Type
+  <%= name %> Pump,         !- Component 1 Name
+  <%= name %> Supply Inlet Node, !- Component 1 Inlet Node Name
+  <%= name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
+
+Pump:ConstantSpeed,
+  <%= name %> Pump,         !- Name
+  <%= name %> Supply Inlet Node, !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  Autosize,                !- Rated Flow Rate {m3/s}
+  <%= pump_head %>,  !- Rated Pump Head {Pa}
+  Autosize,                !- Rated Power Consumption {W}
+  <%= pump_eff %>,  !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+  Intermittent;            !- Pump Control Type
+
+Connector:Splitter,
+  <%= name %> Supply Splitter,   !- Name
+  <%= name %> Supply Inlet Branch,  !- Inlet Branch Name
+  <%= name %> Fluid Cooler Branch,  !- Outlet Branch 1 Name
+  <%= name %> Boiler Branch,   !- Outlet Branch 2 Name
+  <%= name %> Supply Bypass Branch;  !- Outlet Branch 3 Name
+
+Branch,
+  <%= name %> Fluid Cooler Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  EvaporativeFluidCooler:SingleSpeed,  !- Component 1 Object Type
+  <%= name %> Fluid Cooler,           !- Component 1 Name
+  <%= name %> Fluid Cooler Inlet Node,!- Component 1 Inlet Node Name
+  <%= name %> Fluid Cooler Outlet Node;  !- Component 1 Outlet Node Name
+
+EvaporativeFluidCooler:SingleSpeed,
+  <%= name %> Fluid Cooler,           !- Name
+  <%= name %> Fluid Cooler Inlet Node,!- Water Inlet Node Name
+  <%= name %> Fluid Cooler Outlet Node,  !- Water Outlet Node Name
+  autosize,                !- Design Air Flow Rate
+  autosize,                !- Design Air Flow Rate Fan Power
+  <%= spray_rate %>,                !- Design Spray Water Flow Rate
+  UFactorTimesAreaAndDesignWaterFlowRate,  !- Performance Input Method
+  ,                        !- Outdoor Air Inlet Node Name
+  1.25,                    !- Heat Rejection Capacity and Nominal Capacity Sizing Ratio
+  ,                        !- Standard Design Capacity
+  autosize,                !- Design Air Flow Rate U-factor Times Area Value
+  autosize;                !- Design Water Flow Rate
+
+Branch,
+  <%= name %> Boiler Branch,   !- Name
+  ,                        !- Pressure Drop Curve Name
+  Boiler:HotWater,         !- Component 1 Object Type
+  <%= name %> Boiler,          !- Component 1 Name
+  <%= name %> Boiler Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Boiler Outlet Node;  !- Component 1 Outlet Node Name
+
+Boiler:HotWater,
+  <%= name %> Boiler,          !- Name
+  NaturalGas,              !- Fuel Type
+  <%= boiler_cap %>,               !- Nominal Capacity
+  <%= boiler_eff %>,                    !- Nominal Thermal Efficiency
+  LeavingBoiler,           !- Efficiency Curve Temperature Evaluation Variable
+  <%= name %> Boiler Curve,  !- Normalized Boiler Efficiency Curve Name
+  autosize,                !- Design Water Flow Rate
+  0,                       !- Minimum Part Load Ratio
+  1.2,                     !- Maximum Part Load Ratio
+  1,                       !- Optimum Part Load Ratio
+  <%= name %> Boiler Inlet Node,  !- Boiler Water Inlet Node Name
+  <%= name %> Boiler Outlet Node,  !- Boiler Water Outlet Node Name
+  95,                      !- Water Outlet Upper Temperature Limit
+  ConstantFlow;            !- Boiler Flow Mode
+
+Branch,
+  <%= name %> Supply Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Supply Bypass,!- Component 1 Name
+  <%= name %> Supply Bypass Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Supply Bypass,!- Name
+  <%= name %> Supply Bypass Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Bypass Outlet Node;  !- Outlet Node Name
+
+Connector:Mixer,
+  <%= name %> Supply Mixer,      !- Name
+  <%= name %> Supply Outlet Branch,  !- Outlet Branch Name
+  <%= name %> Fluid Cooler Branch,  !- Inlet Branch 1 Name
+  <%= name %> Boiler Branch,   !- Inlet Branch 2 Name
+  <%= name %> Supply Bypass Branch;  !- Inlet Branch 3 Name
+
+Branch,
+  <%= name %> Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Supply Outlet,     !- Component 1 Name
+  <%= name %> Supply Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Outlet Node;!- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Supply Outlet,     !- Name
+  <%= name %> Supply Exit Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Outlet Node;!- Outlet Node Name
+
+SetpointManager:Scheduled:DualSetpoint,
+  <%= name %> Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> High Temp Schedule,  !- High Setpoint Schedule Name
+  <%= name %> Low Temp Schedule,  !- Low Setpoint Schedule Name
+  <%= name %> Supply Outlet Node;  !- Setpoint Node or NodeList Name
+
+SetpointManager:Scheduled:DualSetpoint,
+  <%= name %> Fluid Cooler Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> High Temp Schedule,  !- High Setpoint Schedule Name
+  <%= name %> Low Temp Schedule,  !- Low Setpoint Schedule Name
+  <%= name %> Fluid Cooler Outlet Node;  !- Setpoint Node or NodeList Name
+
+SetpointManager:Scheduled:DualSetpoint,
+  <%= name %> Boiler Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> High Temp Schedule,  !- High Setpoint Schedule Name
+  <%= name %> Low Temp Schedule,  !- Low Setpoint Schedule Name
+  <%= name %> Boiler Outlet Node;  !- Setpoint Node or NodeList Name
+
+Schedule:Compact,
+  <%= name %> High Temp Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  Through: 12/31,
+  For: Alldays,
+  Until: 24:00,<%= high_temp_setpoint %>;
+
+Schedule:Compact,
+  <%= name %> Low Temp Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  Through: 12/31,
+  For: Alldays,
+  Until: 24:00,<%= low_temp_setpoint %>;
+
+BranchList,
+  <%= name %> Demand Branches,
+  <%= name %> Demand Inlet Branch,  !- Branch 1 Name
+  <% for i in (0...branch_names.length()) %>
+  <%= branch_names[i] %>, !- Branch Name
+  <% end %>
+  <%= name %> Demand Bypass Branch,  !- Branch Name
+  <%= name %> Demand Outlet Branch;  !- Branch Name
+
+Connector:Splitter,
+  <%= name %> Demand Splitter,
+  <%= name %> Demand Inlet Branch,  !- Inlet Branch Name
+  <% for i in (0...branch_names.length()) %>
+  <%= branch_names[i] %>, !- Outlet Branch Name
+  <% end %>
+  <%= name %> Demand Bypass Branch;
+
+Connector:Mixer,
+  <%= name %> Demand Mixer,
+  <%= name %> Demand Outlet Branch,  !- Outlet Branch Name
+  <% for i in (0...branch_names.length()) %>
+  <%= branch_names[i] %>, !- Outlet Branch Name
+  <% end %>
+  <%= name %> Demand Bypass Branch;
+
+ConnectorList,
+  <%= name %> Demand Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Demand Splitter,   !- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Demand Mixer;      !- Connector 2 Name
+
+Branch,
+  <%= name %> Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Inlet Pipe, !- Component 1 Name
+  <%= name %> Demand Inlet Node, !- Component 1 Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Inlet Pipe, !- Name
+  <%= name %> Demand Inlet Node, !- Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Demand Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Side Bypass,!- Component 1 Name
+  <%= name %> HR Demand Bypass Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> HR Demand Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Side Bypass,!- Name
+  <%= name %> HR Demand Bypass Inlet Node,  !- Inlet Node Name
+  <%= name %> HR Demand Bypass Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Outlet Pipe,!- Component 1 Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Outlet Pipe Outlet Node;!- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Outlet Pipe,!- Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Outlet Pipe Outlet Node; !- Outlet Node Name
+
+<% if (boiler_type == "ELECTRIC") %>
+  ! Constant Efficiency Boiler Curve
+Curve:Quadratic,
+  <%= name %> Boiler Curve,  !- Name
+  1.0,                     !- Coefficient1 Constant
+  0.0,                     !- Coefficient2 x
+  0.0,                     !- Coefficient3 x**2
+  0,                       !- Minimum Value of x
+  1;                       !- Maximum Value of x
+<% elsif (boiler_type == "NONCONDENSING") %>
+  ! Noncondensing Boiler Curve from EnergyPlusV7-0-0\DataSets\Boilers.idf
+  ! NOTE:  This curve is for leaving water temperature, not entering water!
+Curve:Bicubic,
+  <%= name %> Boiler Curve,  !- Name
+  1.111720116,             !- Coefficient1 Constant
+  0.078614078,             !- Coefficient2 x
+  -0.400425756,            !- Coefficient3 x**2
+  0.0,                     !- Coefficient4 y
+  -0.000156783,            !- Coefficient5 y**2
+  0.009384599,             !- Coefficient6 x*y
+  0.234257955,             !- Coefficient7 x**3
+  1.32927E-06,             !- Coefficient8 y**3
+  -0.004446701,            !- Coefficient9 x**2*y
+  -1.22498E-05,            !- Coefficient10 x*y**2
+  0.1,                     !- Minimum Value of x
+  1.0,                     !- Maximum Value of x
+  15.0,                    !- Minimum Value of y
+  85.0,                    !- Maximum Value of y
+  0.60,                    !- Minimum Curve Output
+  0.85;                    !- Maximum Curve Output
+<% elsif (boiler_type == "CONDENSING") %>
+  ! AERCO MLX-454 Condensing Boiler
+  ! NOTE:  Curve is for entering water temperature.
+  ! Curve fit is "OK" but Table:MultiVariableLookup would probably be better.
+Curve:Bicubic,
+  <%= name %> Boiler Curve,  !- Name
+  1.17905243,             !- Coefficient1 Constant
+  -0.0441358,            !- Coefficient2 x
+  0,                       !- Coefficient3 x**2
+  -0.0031175,             !- Coefficient4 y
+  6.3461E-06,             !- Coefficient5 y**2
+  -0.0003491,            !- Coefficient6 x*y
+  0,                       !- Coefficient7 x**3
+  1.5552E-08,                !- Coefficient8 y**3
+  0,                       !- Coefficient9 x**2*y
+  1.412E-05,             !- Coefficient10 x*y**2
+  0.1,                     !- Minimum Value of x
+  1.0,                     !- Maximum Value of x
+  15.0,                    !- Minimum Value of y
+  85.0,                    !- Maximum Value of y
+  0.85,                    !- Minimum Curve Output
+  0.99;                    !- Maximum Curve Output
+<% end %>

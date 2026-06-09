@@ -1,0 +1,628 @@
+
+GlobalGeometryRules,
+  UpperLeftCorner,         !- Starting Vertex Position
+  Counterclockwise,        !- Vertex Entry Direction
+  Relative,                !- Coordinate System
+  Relative,                !- Daylighting Reference Point Coordinate System
+  Relative;                !- Rectangular Surface Coordinate System
+
+Zone,
+  Classroom EL1 Spc (G.1), !- Name
+  ,                        !- Direction of Relative North
+  ,                        !- X Origin
+  ,                        !- Y Origin
+  ,                        !- Z Origin
+  ,                        !- Type
+  1;                       !- Multiplier
+
+Zone,
+  CrawlSpace EL1 CrS (G.1),!- Name
+  ,                        !- Direction of Relative North
+  ,                        !- X Origin
+  ,                        !- Y Origin
+  ,                        !- Z Origin
+  ,                        !- Type
+  1;                       !- Multiplier
+
+Zone,
+  Plenum EL1 Plnm (G.2),   !- Name
+  ,                        !- Direction of Relative North
+  ,                        !- X Origin
+  ,                        !- Y Origin
+  ,                        !- Z Origin
+  ,                        !- Type
+  1;                       !- Multiplier
+
+BuildingSurface:Detailed,
+  EL1 Ceiling (G.1.I2)-mirror,  !- Name
+  Floor,                   !- Surface Type
+  Interior Floor,  !- Construction Name
+  Plenum EL1 Plnm (G.2),   !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 Ceiling (G.1.I2)-mirror Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  7.3152,                  !- Vertex 1 Y-coordinate
+  2.7432,                  !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  2.7432,                  !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  2.7432,                  !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  7.3152,                  !- Vertex 4 Y-coordinate
+  2.7432;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Ceiling (G.1.I2)-mirror Reversed,  !- Name
+  Ceiling,                 !- Surface Type
+  Radiant Interior Ceiling,  !- Construction Name
+  Classroom EL1 Spc (G.1), !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 Ceiling (G.1.I2)-mirror,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  2.7432,                  !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  7.3152,                  !- Vertex 2 Y-coordinate
+  2.7432,                  !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  7.3152,                  !- Vertex 3 Y-coordinate
+  2.7432,                  !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  2.7432;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.1.E2),  !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  Classroom EL1 Spc (G.1), !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  2.7432,                  !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  12.20720952,             !- Vertex 3 X-coordinate
+  7.3152,                  !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  12.20720952,             !- Vertex 4 X-coordinate
+  7.3152,                  !- Vertex 4 Y-coordinate
+  2.7432;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.1.E6),  !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,  !- Construction Name
+  CrawlSpace EL1 CrS (G.1),!- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  -0.9144,                 !- Vertex 2 Z-coordinate
+  12.20720952,             !- Vertex 3 X-coordinate
+  7.3152,                  !- Vertex 3 Y-coordinate
+  -0.9144,                 !- Vertex 3 Z-coordinate
+  12.20720952,             !- Vertex 4 X-coordinate
+  7.3152,                  !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 East Wall (G.2.E10), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  Plenum EL1 Plnm (G.2),   !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  2.7432,                  !- Vertex 2 Z-coordinate
+  12.20720952,             !- Vertex 3 X-coordinate
+  7.3152,                  !- Vertex 3 Y-coordinate
+  2.7432,                  !- Vertex 3 Z-coordinate
+  12.20720952,             !- Vertex 4 X-coordinate
+  7.3152,                  !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Flr (G.1.I1),        !- Name
+  Floor,                   !- Surface Type
+  Interior Floor,          !- Construction Name
+  Classroom EL1 Spc (G.1), !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 Flr (G.1.I1) Reversed,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  7.3152,                  !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  7.3152,                  !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Flr (G.1.I1) Reversed,  !- Name
+  Ceiling,                 !- Surface Type
+  Radiant Interior Ceiling, !- Construction Name
+  CrawlSpace EL1 CrS (G.1),!- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  EL1 Flr (G.1.I1),        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  7.3152,                  !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  7.3152,                  !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Flr (G.1.U1),        !- Name
+  Floor,                   !- Surface Type
+  EL1 Flr (G.1.U1) SlabOnOrBelowGradeF073,  !- Construction Name
+  CrawlSpace EL1 CrS (G.1),!- Zone Name
+  ,                        !- Space Name
+  GroundFCfactorMethod,    !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  7.3152,                  !- Vertex 1 Y-coordinate
+  -0.9144,                 !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  -0.9144,                 !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  -0.9144,                 !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  7.3152,                  !- Vertex 4 Y-coordinate
+  -0.9144;                 !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.1.E3), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  Classroom EL1 Spc (G.1), !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  7.3152,                  !- Vertex 1 Y-coordinate
+  2.7432,                  !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  7.3152,                  !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  7.3152,                  !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  7.3152,                  !- Vertex 4 Y-coordinate
+  2.7432;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.1.E7), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,  !- Construction Name
+  CrawlSpace EL1 CrS (G.1),!- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  7.3152,                  !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  7.3152,                  !- Vertex 2 Y-coordinate
+  -0.9144,                 !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  7.3152,                  !- Vertex 3 Y-coordinate
+  -0.9144,                 !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  7.3152,                  !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 North Wall (G.2.E11),!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  Plenum EL1 Plnm (G.2),   !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  7.3152,                  !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  7.3152,                  !- Vertex 2 Y-coordinate
+  2.7432,                  !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  7.3152,                  !- Vertex 3 Y-coordinate
+  2.7432,                  !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  7.3152,                  !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 Roof (G.2.E13),      !- Name
+  Roof,                    !- Surface Type
+  Exterior Roof,  !- Construction Name
+  Plenum EL1 Plnm (G.2),   !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  7.3152,                  !- Vertex 2 Y-coordinate
+  3.6576,                  !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  7.3152,                  !- Vertex 3 Y-coordinate
+  3.6576,                  !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 South Wall (G.1.E1), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  Classroom EL1 Spc (G.1), !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  2.7432,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  12.20720952,             !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  12.20720952,             !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  2.7432;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 South Wall (G.1.E5), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,  !- Construction Name
+  CrawlSpace EL1 CrS (G.1),!- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  -0.9144,                 !- Vertex 2 Z-coordinate
+  12.20720952,             !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  -0.9144,                 !- Vertex 3 Z-coordinate
+  12.20720952,             !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 South Wall (G.2.E9), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  Plenum EL1 Plnm (G.2),   !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  2.7432,                  !- Vertex 2 Z-coordinate
+  12.20720952,             !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  2.7432,                  !- Vertex 3 Z-coordinate
+  12.20720952,             !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.1.E4),  !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  Classroom EL1 Spc (G.1), !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  7.3152,                  !- Vertex 1 Y-coordinate
+  2.7432,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  7.3152,                  !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  2.7432;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.1.E8),  !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,  !- Construction Name
+  CrawlSpace EL1 CrS (G.1),!- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  7.3152,                  !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  7.3152,                  !- Vertex 2 Y-coordinate
+  -0.9144,                 !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  -0.9144,                 !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  EL1 West Wall (G.2.E12), !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,      !- Construction Name
+  Plenum EL1 Plnm (G.2),   !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  7.3152,                  !- Vertex 1 Y-coordinate
+  3.6576,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  7.3152,                  !- Vertex 2 Y-coordinate
+  2.7432,                  !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  2.7432,                  !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  3.6576;                  !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  EL1 East Door (G.1.E2.D1),  !- Name
+  Door,                    !- Surface Type
+  Swinging Door,       !- Construction Name
+  EL1 East Wall (G.1.E2),  !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  3.2004,                  !- Vertex 1 Y-coordinate
+  2.04216,                 !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  3.2004,                  !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  12.20720952,             !- Vertex 3 X-coordinate
+  4.1148,                  !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  12.20720952,             !- Vertex 4 X-coordinate
+  4.1148,                  !- Vertex 4 Y-coordinate
+  2.04216;                 !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  EL1 East Win (G.1.E2.W1),!- Name
+  Window,                  !- Surface Type
+  Exterior Window,  !- Construction Name
+  EL1 East Wall (G.1.E2),  !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  0.8388096,               !- Vertex 1 Y-coordinate
+  2.1336,                  !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  0.8388096,               !- Vertex 2 Y-coordinate
+  0.9144,                  !- Vertex 2 Z-coordinate
+  12.20720952,             !- Vertex 3 X-coordinate
+  2.0567904,               !- Vertex 3 Y-coordinate
+  0.9144,                  !- Vertex 3 Z-coordinate
+  12.20720952,             !- Vertex 4 X-coordinate
+  2.0567904,               !- Vertex 4 Y-coordinate
+  2.1336;                  !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  EL1 East Win (G.1.E2.W2),!- Name
+  Window,                  !- Surface Type
+  Exterior Window,  !- Construction Name
+  EL1 East Wall (G.1.E2),  !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  ,                        !- Number of Vertices
+  12.20720952,             !- Vertex 1 X-coordinate
+  5.2584096,               !- Vertex 1 Y-coordinate
+  2.1336,                  !- Vertex 1 Z-coordinate
+  12.20720952,             !- Vertex 2 X-coordinate
+  5.2584096,               !- Vertex 2 Y-coordinate
+  0.9144,                  !- Vertex 2 Z-coordinate
+  12.20720952,             !- Vertex 3 X-coordinate
+  6.4763904,               !- Vertex 3 Y-coordinate
+  0.9144,                  !- Vertex 3 Z-coordinate
+  12.20720952,             !- Vertex 4 X-coordinate
+  6.4763904,               !- Vertex 4 Y-coordinate
+  2.1336;                  !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  EL1 West Door (G.1.E4.D1),  !- Name
+  Door,                    !- Surface Type
+  Swinging Door,       !- Construction Name
+  EL1 West Wall (G.1.E4),  !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  4.1148,                  !- Vertex 1 Y-coordinate
+  2.04216,                 !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  4.1148,                  !- Vertex 2 Y-coordinate
+  -5.8891932e-47,          !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  3.2004,                  !- Vertex 3 Y-coordinate
+  5.8891932e-47,           !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  3.2004,                  !- Vertex 4 Y-coordinate
+  2.04216;                 !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  EL1 West Win (G.1.E4.W1),!- Name
+  Window,                  !- Surface Type
+  Exterior Window,  !- Construction Name
+  EL1 West Wall (G.1.E4),  !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  6.4763904,               !- Vertex 1 Y-coordinate
+  2.1336,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  6.4763904,               !- Vertex 2 Y-coordinate
+  0.9144,                  !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  5.2584096,               !- Vertex 3 Y-coordinate
+  0.9144,                  !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  5.2584096,               !- Vertex 4 Y-coordinate
+  2.1336;                  !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  EL1 West Win (G.1.E4.W2),!- Name
+  Window,                  !- Surface Type
+  Exterior Window,  !- Construction Name
+  EL1 West Wall (G.1.E4),  !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  ,                        !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  2.0567904,               !- Vertex 1 Y-coordinate
+  2.1336,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  2.0567904,               !- Vertex 2 Y-coordinate
+  0.9144,                  !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0.8388096,               !- Vertex 3 Y-coordinate
+  0.9144,                  !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0.8388096,               !- Vertex 4 Y-coordinate
+  2.1336;                  !- Vertex 4 Z-coordinate
+
+Construction:FfactorGroundFloor,
+  EL1 Flr (G.1.U1) SlabOnOrBelowGradeF073,  !- Name
+  1.26343630645111,        !- F-Factor
+  89.298179080704,         !- Area
+  39.04488;                !- PerimeterExposed

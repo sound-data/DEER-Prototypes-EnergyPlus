@@ -1,0 +1,36 @@
+<%
+insert 'daylight-controls.pxt',
+  :zone_name=>"WarehouseCond EL1 North Perim Spc (G.N2)",
+  :azimuth=>0,
+  :power_frac_min=>0.2,
+  :light_frac_min=>0.2,
+  :reference_points=>2,
+  :x_1=>107.7617352,
+  :y_1=>213.018624,
+  :z_1=>0.762,
+  :fraction_1=>0.00508106,
+  :illum_setpoint_1=>262.5,
+  :x_2=>210.513168,
+  :y_2=>161.64306,
+  :z_2=>0.762,
+  :fraction_2=>0.00508785,
+  :illum_setpoint_2=>350
+
+insert 'daylight-controls.pxt',
+  :zone_name=>"WarehouseCond EL1 South Perim Spc (G.S1)",
+  :azimuth=>0,
+  :power_frac_min=>0.2,
+  :light_frac_min=>0.2,
+  :reference_points=>2,
+  :x_1=>107.76204,
+  :y_1=>2.505456,
+  :z_1=>0.762,
+  :fraction_1=>0.00507832,
+  :illum_setpoint_1=>262.5,
+  :x_2=>107.76204,
+  :y_2=>5.010912,
+  :z_2=>0.762,
+  :fraction_2=>0.00509731,
+  :illum_setpoint_2=>350
+
+%>

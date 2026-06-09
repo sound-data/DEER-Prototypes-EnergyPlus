@@ -84,7 +84,7 @@ parameter "duct_r_value", :default => 8['R-IP'] #U-IP effective duct R value = d
 %>
 
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%
@@ -1352,9 +1352,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-2 S1 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-2 S1 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -1365,9 +1365,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-2 S2 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-2 S2 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -1378,9 +1378,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-2 S3 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-2 S3 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -1391,9 +1391,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S1 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-1 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S1 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-1 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-1 S1 WEH;      !- Schedule:Day Name 5
 
@@ -1404,9 +1404,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S2 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-1 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S2 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-1 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-1 S2 WEH;      !- Schedule:Day Name 5
 
@@ -1417,9 +1417,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S3 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-1 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S3 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-1 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-1 S3 WEH;      !- Schedule:Day Name 5
 

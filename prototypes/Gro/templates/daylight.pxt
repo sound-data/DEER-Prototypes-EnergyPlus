@@ -1,0 +1,49 @@
+
+<%
+insert 'daylight-controls.pxt',
+  :zone_name=>"Grocery Sales EL1 SSE Perim Spc (G.SSE1)",
+  :azimuth=>0,
+  :power_frac_min=>0.2,
+  :light_frac_min=>0.2,
+  :reference_points=>2,
+  :x_1=>38.1877824,
+  :y_1=>24.9332496,
+  :z_1=>0.762,
+  :fraction_1=>0.481714,
+  :illum_setpoint_1=>550,
+  :x_2=>42.2148,
+  :y_2=>14.6304,
+  :z_2=>0.762,
+  :fraction_2=>0.260647,
+  :illum_setpoint_2=>1100
+
+insert 'daylight-controls.pxt',
+  :zone_name=>"IndLoadDock EL1 North Perim Spc (G.N3)",
+  :azimuth=>0,
+  :power_frac_min=>0.2,
+  :light_frac_min=>0.2,
+  :reference_points=>1,
+  :x_1=>3.9624,
+  :y_1=>66.21018,
+  :z_1=>0.762,
+  :fraction_1=>0.143113,
+  :illum_setpoint_1=>975
+
+insert 'daylight-controls.pxt',
+  :zone_name=>"Office EL1 SW Perim Spc (G.SW2)",
+  :azimuth=>0,
+  :power_frac_min=>0.2,
+  :light_frac_min=>0.2,
+  :reference_points=>2,
+  :x_1=>8.5344,
+  :y_1=>3.9624,
+  :z_1=>0.762,
+  :fraction_1=>0.208007,
+  :illum_setpoint_1=>287.5,
+  :x_2=>8.5344,
+  :y_2=>7.9248,
+  :z_2=>0.762,
+  :fraction_2=>0.145987,
+  :illum_setpoint_2=>1150
+
+%>

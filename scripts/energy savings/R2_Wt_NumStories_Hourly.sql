@@ -1,7 +1,7 @@
 --2022 new post-processing, 
 --Residential Step 2: Weight hourly consumption (WB) based on number of stories (no more thermostat weights)
 
-SET search_path TO "MC_results_database";
+SET search_path TO PUBLIC;
 
 DROP TABLE IF EXISTS sim_hourly_twtd_2022;
 CREATE TABLE sim_hourly_twtd_2022 AS
@@ -80,3 +80,4 @@ sfm_hourly_wb.daynum::int2,
 ((hr24a * (2 - numstor) + hr24b * (numstor - 1)))::numeric(15,3) AS hr24
 from sfm_hourly_wb
 JOIN "NumStor" on "NumStor"."VintYear" = sfm_hourly_wb."BldgVint" and "NumStor"."BldgLoc" = sfm_hourly_wb."BldgLoc"
+;

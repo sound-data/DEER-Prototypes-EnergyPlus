@@ -1,0 +1,83 @@
+<%#INITIALIZE
+parameter "name", :default=>"Transformer 1"
+parameter "capacity", :default=>50000['W']
+parameter "efficiency", :default=>0.966
+
+parameter "light_frac", :default=>0.0015
+parameter "equipment_key_name", :default=>"ALL"
+parameter "equipment_meter_name", :default=>"Electric Equipment Electric Energy"
+
+%>
+
+ElectricLoadCenter:Transformer,
+  <%= name %>,           !- Name
+  Always_On_<%= name %>,               !- Availability Schedule Name
+  PowerInFromGrid,         !- Transformer Usage
+  ,                        !- Zone Name
+  ,                        !- Radiative Fraction
+  <%= capacity %>,  !- Rated Capacity {VA}
+  3,                       !- Phase
+  Aluminum,                !- Conductor Material
+  150,                     !- Full Load Temperature Rise {C}
+  0.1,                     !- Fraction of Eddy Current Losses
+  NominalEfficiency,       !- Performance Input Method
+  ,                        !- Rated No Load Loss {W}
+  ,                        !- Rated Load Loss {W}
+  <%= efficiency %>,  !- Nameplate Efficiency
+  0.35,                    !- Per Unit Load for Nameplate Efficiency
+  75,                      !- Reference Temperature for Nameplate Efficiency {C}
+  ,                        !- Per Unit Load for Maximum Efficiency
+  Yes,                     !- Consider Transformer Loss for Utility Cost
+  Wired_LTG_Electricity,   !- Meter 1 Name
+<% if equipment_key_name == "NONE"%>
+  ;         !- Meter 2 Name
+<% elsif equipment_key_name == "ALL" %>
+  InteriorEquipment:Electricity;         !- Meter 2 Name
+<% else %>
+  Wired_INT_EQUIP;         !- Meter 2 Name
+
+Meter:CustomDecrement,
+  Wired_Int_EQUIP,         !- Name
+  Electricity,             !- Fuel Type
+  InteriorEquipment:Electricity,  !- Source Meter Name
+  <%= equipment_key_name %>,  !- Key Name 1
+  <%= equipment_meter_name %>;  !- Output Variable or Meter Name 1
+<% end %>
+
+EnergyManagementSystem:GlobalVariable,
+  Wired_LTG;               !- Erl Variable 1 Name
+
+EnergyManagementSystem:OutputVariable,
+  Wired_LTG,               !- Name
+  Wired_LTG,               !- EMS Variable Name
+  Summed,                  !- Type of Data in Variable
+  ZoneTimeStep,            !- Update Frequency
+  ,                        !- EMS Program or Subroutine Name
+  J;                       !- Units
+
+EnergyManagementSystem:Sensor,
+  Facility_Int_LTG,        !- Name
+  ,                        !- Output:Variable or Output:Meter Index Key Name
+  InteriorLights:Electricity;  !- Output:Variable or Output:Meter Name
+
+EnergyManagementSystem:ProgramCallingManager,
+  Transformer_Load_Prog_Manager,  !- Name
+  AfterPredictorAfterHVACManagers,  !- EnergyPlus Model Calling Point
+  Transformer_Load_Prog;   !- Program Name 1
+
+EnergyManagementSystem:Program,
+  Transformer_Load_Prog,   !- Name
+  SET Wired_LTG = Facility_Int_LTG*<%= light_frac %>;  !- Program Line 1
+
+Meter:Custom,
+  Wired_LTG_Electricity,   !- Name
+  Electricity,             !- Fuel Type
+  ,                        !- Key Name 1
+  Wired_LTG;               !- Output Variable or Meter Name 1
+
+Schedule:Compact,
+  Always_On_<%= name %>,               !- Name
+  Fraction,                !- Schedule Type Limits Name
+  Through: 12/31,          !- Field 1
+  For: AllDays,            !- Field 2
+  Until: 24:00,1.0;        !- Field 3

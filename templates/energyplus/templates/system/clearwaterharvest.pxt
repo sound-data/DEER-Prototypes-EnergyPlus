@@ -1,0 +1,110 @@
+<%#INITIALIZE
+parameter "total_roof_area"
+
+parameter "rainwater_harvest", :default=>false # (true | false ) Used to create rain collector surface
+parameter "collection_loss_factor", :default=>0.2 # portion of collected rainwater lost due to evaporation, leaks, etc.
+parameter "max_collection_rate", :default=>100000['m3/s'] # maximum flow rate in m3/s at which rainwater can be collected
+parameter "initial_volume", :default=>5['m3'] # initial volume of rainwater storage tank for each timestep
+parameter "storage_water_temperature", :default=>60['F'] # temperature of water in storage tank, assumed to be annual constant
+parameter "clear_water_storage_tank", :default=>"" # ("" | "Clear Water Tank" )
+parameter "clear_water_supply_tank", :default=>"" # ("" | "Clear Water Tank" )
+%>
+
+<%
+# Need to reference one tank to collect all rainwater and condensate, then supply to cooling tower makeup and evaporative cooling when needed
+# Every Coil:Cooling object created in zonehvac and system templates will reference this tank as the Condensate Collection Water Storage Tank Name
+# Every CoolingTower object created by heatrejection template will reference this tank as the Supply Water Storage Tank Name for makeup water
+# Every EvaporativeCooler:Indirect:ResearchSpecial  created by zonehvac templates (CAV, Central Unitary, DAOS, Dual Duct, Induction, VAV) will reference this tank as the Supply Water Storage Tank Name for makeup water
+# Every EvaporativeCooler:Direct:ResearchSpecial  created by directevap system templates will reference this tank as the Supply Water Storage Tank Name for makeup water
+%>
+
+<%
+# Need to create one dummy roof collection surface equal to the total roof area
+x_origin = -100.0 # Highest x-coordinate value of rainwater collector
+y_origin = -10.0 # Lowest y-coordinate value of rainwater collector
+z_origin = 0.0 # Lowest z-coordinate value of rainwater collector
+collector_length = Math.sqrt(total_roof_area) # assumes roof is square
+%>
+
+<% if (rainwater_harvest) %>
+Shading:Site:Detailed,
+  Rainwater Collector Surface,          !- Name
+  ,                                     !- Transmittance Schedule Name
+  4,                                    !- Number of Vertices
+  <%= x_origin - collector_length %>,   !- Vertex 1 X-coordinate {m}
+  <%= y_origin %>,                      !- Vertex 1 Y-coordinate {m}
+  <%= z_origin  %>,                     !- Vertex 1 Z-coordinate {m}
+  <%= x_origin - collector_length %>,   !- Vertex 2 X-coordinate {m}
+  <%= y_origin - collector_length %>,   !- Vertex 2 Y-coordinate {m}
+  <%= z_origin %>,                      !- Vertex 2 Z-coordinate {m}
+  <%= x_origin %>,                      !- Vertex 3 X-coordinate {m}
+  <%= y_origin - collector_length%>,    !- Vertex 3 Y-coordinate {m}
+  <%= z_origin %>,                      !- Vertex 3 Z-coordinate {m}
+  <%= x_origin%>,                       !- Vertex 4 X-coordinate {m}
+  <%= y_origin %>,                      !- Vertex 4 Y-coordinate {m}
+  <%= z_origin %>;                      !- Vertex 4 Z-coordinate {m}
+
+WaterUse:RainCollector,
+  Rainwater Collector,           !- Name
+  <%= clear_water_storage_tank %>,                !- Storage Tank Name
+  Constant,                       !- Loss Factor Mode
+  <%= collection_loss_factor %>, !- Collection Loss Factor
+  ,                               !- Collection Loss Factor Schedule Name
+  <%= max_collection_rate %>,     !- Maximum Collection Rate {m3/s}
+  Rainwater Collector Surface;   !- Collection Surface Name
+
+<% end %>
+WaterUse:Storage,
+  <%= clear_water_storage_tank %>,           !- Name
+  Clear Water Harvesting,     !- Water Quality Subcategory
+  100000,                         !- Maximum Capacity {m3}
+  <%= initial_volume %>,    !- Initial Volume {m3}
+  5,                         !- Design In Flow Rate {m3}
+  5,                         !- Design Out Flow Rate {m3}
+  ,                         !- Overflow Destination
+  Mains,                     !- Type of Supply Controlled by Float Valve
+  2,                         !- Float Valve On Capacity {m3}
+  2.5,                         !- Float Valve Off Capacity {m3}
+  1,                         !- Backup Mains Capacity {m3}
+  ,                         !- Other Tank Name
+  ScheduledTemperature,     !- Water Thermal Mode
+  <%= clear_water_storage_tank %> Temperature Schedule,  !- Water Temperature Schedule Name
+  , !- Ambient Temperature Indicator
+  , !- Ambient Temperature Schedule Name
+  , !- Zone Name
+  , !- Tank Surface Area {m2}
+  , !- Tank U Value {W/m2-K}
+  ; !- Tank Outside Surface Material Name
+
+Schedule:Compact,
+  <%= clear_water_storage_tank %> Temperature Schedule,   !- Name
+  Temperature,             !- Schedule Type Limits Name
+  Through: 12/31,          !- Field 1
+  For: AllDays,            !- Field 2
+  Until: 24:00,<%= storage_water_temperature %>;       !- Field 3
+
+<% if (clear_water_storage_tank != clear_water_supply_tank) %>
+
+WaterUse:Storage,
+  <%= clear_water_supply_tank %>, !- Name
+  Graywater Reclamation, !- Water Quality Subcategory
+  , !- Maximum Capacity {m3}
+  <%= initial_volume %>, !- Initial Volume {m3}
+  , !- Design In Flow Rate {m3}
+  , !- Design Out Flow Rate {m3}
+  , !- Overflow Destination
+  None, !- Type of Supply Controlled by Float Valve
+  , !- Float Valve On Capacity {m3}
+  , !- Float Valve Off Capacity {m3}
+  , !- Backup Mains Capacity {m3}
+  , !- Other Tank Name
+  ScheduledTemperature, !- Water Thermal Mode
+  <%= clear_water_storage_tank %> Temperature Schedule, !- Water Temperature Schedule Name
+  , !- Ambient Temperature Indicator
+  , !- Ambient Temperature Schedule Name
+  , !- Zone Name
+  , !- Tank Surface Area {m2}
+  , !- Tank U Value {W/m2-K}
+  ; !- Tank Outside Surface Material Name
+
+<% end %>

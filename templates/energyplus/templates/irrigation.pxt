@@ -1,0 +1,60 @@
+<%#INITIALIZE
+parameter "landscaping_area", :name => "Landscaping Irrigation Area", :description => "Area of landscaping requiring irrigation",
+  :domain => Quantity  # Area Quantity
+
+parameter "landscaping_water_temperature", :default=>12['C'], :domain => Quantity # Temperature of water used for landscaping, assumed to be annual constant
+
+parameter "annual_irrigation_factor", :name => "Annual Landscaping Irrigation Factor", :description => "Location and irrigation system specific factor in units of gal/ft2/year used to calculate annual irrigation water use",
+  :default => 5.28, :domain => Numeric  # gal/ft2/year
+# Location and irrigation system specific, default is average of all US locations for average landscaping density and moderate water requirements, units of gal/ft2/year
+# Reference https://www1.eere.energy.gov/femp/pdfs/est_unmetered_landscape_wtr.pdf for irrigation factor values
+
+parameter "irrigation_system_efficiency", :name => "Landscaping Irrigation System Efficiency", :description => "0.5, 0.65, or 0.85 if system is low, medium, or high efficiency",
+  :default => 0.65, :domain => Numeric  # 0.5, 0.65, or 0.85 if system is low, medium, or high efficiency
+# Reference https://www1.eere.energy.gov/femp/pdfs/est_unmetered_landscape_wtr.pdf for irrigation system efficiency values
+
+parameter "graywater_supply_tank", :default => ""  # ("" | "Graywater Tank" )
+%>
+<%
+annual_irrigation_factor = annual_irrigation_factor * 0.003785412 # Converting gal to m3
+annual_landscape_water_use = annual_irrigation_factor * landscaping_area / irrigation_system_efficiency
+landscaping_peak_flow = annual_landscape_water_use / 8760 / 3600 # Converting m3/year to m3/s, maximum flow of water used for landscaping
+%>
+Schedule:Compact,
+  Landscaping Temperature Schedule,   !- Name
+  Temperature,             !- Schedule Type Limits Name
+  Through: 12/31,          !- Field 1
+  For: AllDays,            !- Field 2
+  Until: 24:00,<%= landscaping_water_temperature %>;       !- Field 3
+
+Schedule:Compact,
+  Landscaping Flow Fraction Schedule,   !- Name
+  Unit Interval,           !- Schedule Type Limits Name
+  Through: 12/31,          !- Field 1
+  For: AllDays,            !- Field 2
+  Until: 24:00, 1.0;       !- Field 3
+
+WaterUse:Connections,
+  Landscaping Connections,  !- Name
+  ,                        !- Inlet Node Name
+  ,                        !- Outlet Node Name
+  <%= graywater_supply_tank %>,  !- Supply Water Storage Tank Name
+  ,                        !- Reclamation Water Storage Tank Name
+  ,                        !- Hot Water Supply Temperature Schedule Name
+  ,                        !- Cold Water Supply Temperature Schedule Name
+  ,                        !- Drain Water Heat Exchanger Type
+  ,                        !- Drain Water Heat Exchanger Destination
+  ,                        !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
+  Landscaping Equipment;   !- Water Use Equipment 1 Name
+
+WaterUse:Equipment,
+  Landscaping Equipment,   !- Name
+  Landscaping,             !- End-Use Subcategory
+  <%= landscaping_peak_flow %>,  !- Peak Flow Rate {m3/s}
+  Landscaping Flow Fraction Schedule,  !- Flow Rate Fraction Schedule Name
+  Landscaping Temperature Schedule,  !- Target Temperature Schedule Name
+  ,                        !- Hot Water Supply Temperature Schedule Name
+  ,                        !- Cold Water Supply Temperature Schedule Name
+  ,                        !- Zone Name
+  ,                        !- Sensible Fraction Schedule Name
+  ;                        !- Latent Fraction Schedule Name

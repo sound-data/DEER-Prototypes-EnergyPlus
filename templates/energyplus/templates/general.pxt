@@ -1,0 +1,571 @@
+<%#INITIALIZE
+parameter "run_name", :name=>"Run Name", :description=>"Descriptive name of this simulation run",
+  :default=>"EnergyPlus Simulation", :domain=>String
+parameter "run_control", :name=>"Run Control", :description=>"Sets the simulation run control type",
+  :default=>"ANNUAL", :domain=>String  # (ANNUAL | SIZING | TEST)
+parameter "orientation", :name=>"Orientation", :description=>"0 = Front faces South, 180 = Front faces North, 90 = Front faces West, 270 = Front faces East",
+  :default=>0, :domain=>Numeric  # Interval [0-360]
+
+parameter "terrain", :default=>"City", :domain=>String
+
+# name runperiods?  "Run Period 1"
+
+# rename: sizing_heat_factor   I think?
+
+# DNV: EnergyPlus auto-size function consistently underestimates system capacities (compared to survey data of installed
+# capacity like CEUS where the 2006 study has a table of capacity per floor area for several commercial building types).
+# As a quick fix, stakeholders decided to adjusted the heat_sizing_factor and cool_sizing_factor defaults by multiplying the ASHRAE factors 
+# by two to get values of 1.15 and 1.25 for cooling and heating respectively.
+parameter "heat_sizing_factor", :name=>"Heating Sizing Factor", :description=>"Safety factor used in heat sizing calculations",
+  :default=>1.25, :domain=>Numeric  # Interval (0, 10]
+parameter "cool_sizing_factor", :name=>"Cooling Sizing Factor", :description=>"Safety factor used in cool sizing calculations",
+  :default=>1.15, :domain=>Numeric  # Interval (0, 10]
+parameter "timestep", :name=>"Timesteps Per Hour", :description=>"Number of simulation timesteps per hour",
+  :default=>4, :domain=>Integer  # Interval [1, 60]
+parameter "sizing_window", :name=>"Sizing Window", :description=>"Duration of averaging window for sizing (hours)",
+  :default=>1, :domain=>Integer  # Interval [1, 24]
+
+parameter "min_hvac_timestep", :default=>1  # Minimum HVAC system timestep (minutes)
+parameter "max_hvac_iterations", :default=>25
+
+parameter "min_warmup_days", :default=>2
+parameter "max_warmup_days", :default=>25
+parameter "loads_convergence", :default=>0.5  # Loads convergence tolerance (fraction of load)
+parameter "temp_convergence", :default=>0.5  # Temperature convergence tolerance (deltaC)
+
+parameter "zone_air_heat_balance_algorithm", :default=>"AnalyticalSolution"
+
+parameter "shadow_frequency", :default=>7  # Shadow calculation frequency (days)
+parameter "max_shadow_figures", :default=>15000  # Maximum figures in shadow overlap calculation
+%>
+<%#
+Rename this whole template??? run_control.pxt  ?
+
+- general, generic
+- the first thing: prologue, preface, initial, origin, start, introduction,
+  primary
+
+- tip, point, entry, entrance, forefront
+
+- antecedent, precursor, anterior
+
+
+
+If run_periods input is added, don't need run_control parameter?
+e.g. if run_periods is nil, or empty [], then do sizing-only run.
+
+Docs says don't need Location object if it's an annual run!
+%>
+
+Version,
+  22.2;                    !- Version Identifier
+
+Building,
+  <%= run_name %>,         !- Name
+  <%= orientation %>,      !- North Axis {deg}
+  <%= terrain %>,          !- Terrain
+  <%= loads_convergence %>,  !- Loads Convergence Tolerance Value
+  <%= temp_convergence %>,  !- Temperature Convergence Tolerance Value {deltaC}
+  FullInteriorAndExterior,  !- Solar Distribution
+  <%= max_warmup_days %>,  !- Maximum Number of Warmup Days
+  <%= min_warmup_days %>;  !- Minimum Number of Warmup Days
+
+SimulationControl,
+  Yes,                     !- Do Zone Sizing Calculation
+  Yes,                     !- Do System Sizing Calculation
+  Yes,                     !- Do Plant Sizing Calculation
+<% if (run_control == "SIZING") %>
+  Yes,                     !- Run Simulation for Sizing Periods
+  No;                      !- Run Simulation for Weather File Run Periods
+<% else %>
+  No,                     !- Run Simulation for Sizing Periods
+  Yes;                     !- Run Simulation for Weather File Run Periods
+<% end %>
+
+<% if (run_control == "ANNUAL") %>
+RunPeriod,
+  Annual,                  !- Name
+  1,                       !- Begin Month
+  1,                       !- Begin Day of Month
+  ,                        !- Begin Year
+  12,                      !- End Month
+  31,                      !- End Day of Month
+  ,                        !- End Year
+  Thursday,                  !- Day of Week for Start Day
+  Yes,                      !- Use Weather File Holidays and Special Days
+  Yes,                      !- Use Weather File Daylight Saving Period
+  Yes,                      !- Apply Weekend Holiday Rule
+  Yes,                     !- Use Weather File Rain Indicators
+  Yes;                     !- Use Weather File Snow Indicators
+<% elsif run_control == "TEST" %>
+RunPeriod,
+  Test,                    !- Name
+  1,                       !- Begin Month
+  1,                       !- Begin Day of Month
+  ,                        !- Begin Year
+  1,                       !- End Month
+  1,                       !- End Day of Month
+  ,                        !- End Year
+  Thursday,                  !- Day of Week for Start Day
+  Yes,                      !- Use Weather File Holidays and Special Days
+  Yes,                      !- Use Weather File Daylight Saving Period
+  Yes,                      !- Apply Weekend Holiday Rule
+  Yes,                     !- Use Weather File Rain Indicators
+  Yes;                     !- Use Weather File Snow Indicators
+<% end %>
+
+Timestep,
+  <%= timestep %>;         !- Number of Timesteps per Hour
+
+Sizing:Parameters,
+  <%= heat_sizing_factor %>,  !- Heating Sizing Factor
+  <%= cool_sizing_factor %>,  !- Cooling Sizing Factor
+  <%= (timestep * sizing_window).to_i %>;  !- Timesteps in Averaging Window
+
+ConvergenceLimits,
+  <%= min_hvac_timestep %>,  !- Minimum System Timestep {minutes}
+  <%= max_hvac_iterations %>;  !- Maximum HVAC Iterations
+
+HeatBalanceAlgorithm,
+  ConductionTransferFunction;  !- Algorithm
+
+ZoneAirHeatBalanceAlgorithm,
+  <%= zone_air_heat_balance_algorithm %>;  !- Algorithm
+
+!ZoneAirMassFlowConservation,
+! to try
+
+SurfaceConvectionAlgorithm:Inside,
+  TARP;                    !- Algorithm
+
+SurfaceConvectionAlgorithm:Outside,
+  DOE-2;                   !- Algorithm
+
+SurfaceProperty:OtherSideConditionsModel,
+  GapConvectionModel,      !- Name
+  GapConvectionRadiation;  !- Type of Modeling
+
+ShadowCalculation,
+  PolygonClipping,         !- Shading Calculation Method
+  Periodic,                !- Shading Calculation Update Frequency Method
+  <%= shadow_frequency %>,  !- Shading Calculation Update Frequency
+  <%= max_shadow_figures %>;  !- Maximum Figures in Shadow Overlap Calculations
+
+ScheduleTypeLimits,
+  Any Number,              !- Name
+  ,                        !- Lower Limit Value
+  ,                        !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Dimensionless;           !- Unit Type
+
+ScheduleTypeLimits,
+  Nonnegative Number,      !- Name
+  0.0,                     !- Lower Limit Value
+  ,                        !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Dimensionless;           !- Unit Type
+
+ScheduleTypeLimits,
+  Unit Interval,           !- Name
+  0.0,                     !- Lower Limit Value
+  1.0,                     !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Dimensionless;           !- Unit Type
+
+ScheduleTypeLimits,
+  Binary Control,          !- Name
+  0,                       !- Lower Limit Value
+  1,                       !- Upper Limit Value
+  Discrete,                !- Numeric Type
+  Control;                 !- Unit Type
+
+ScheduleTypeLimits,
+  Fan Mode Control,        !- Name
+  0,                       !- Lower Limit Value
+  1,                       !- Upper Limit Value
+  Discrete,                !- Numeric Type
+  Control;                 !- Unit Type
+
+ScheduleTypeLimits,
+  Thermostat Control,      !- Name
+  0,                       !- Lower Limit Value
+  4,                       !- Upper Limit Value
+  Discrete,                !- Numeric Type
+  Control;                 !- Unit Type
+
+ScheduleTypeLimits,
+  Temperature,             !- Name
+  -100.0,                  !- Lower Limit Value
+  200.0,                   !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Temperature;             !- Unit Type
+
+ScheduleTypeLimits,
+  Relative Humidity,       !- Name
+  0.0,                     !- Lower Limit Value
+  100.0,                   !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Percent;                 !- Unit Type
+
+ScheduleTypeLimits,
+  Humidity Ratio,          !- Name
+  0.0,                     !- Lower Limit Value
+  0.03,                    !- Upper Limit Value
+  Continuous,              !- Numeric Type
+  Dimensionless;           !- Unit Type
+
+
+<%# Save old ones for testing against old templates.
+    These will be deleted later. %>
+ScheduleTypeLimits,
+  On/Off,                  !- Name
+  0,                       !- Lower Limit Value
+  1,                       !- Upper Limit Value
+  Discrete;                !- Numeric Type
+
+ScheduleTypeLimits,
+  Control Type,            !- Name
+  0,                       !- Lower Limit Value
+  4,                       !- Upper Limit Value
+  Discrete;                !- Numeric Type
+
+ScheduleTypeLimits,
+  Humidity,                !- Name
+  10,                      !- Lower Limit Value
+  90,                      !- Upper Limit Value
+  Continuous;              !- Numeric Type
+
+ScheduleTypeLimits,
+  Fraction,                !- Name
+  0.0,                     !- Lower Limit Value
+  1.0,                     !- Upper Limit Value
+  Continuous;              !- Numeric Type
+
+
+!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+! Defining Ambient Varying Zone Temperature schedule
+
+Schedule:Compact,
+    Ambient Varying Zone Temperature ,  !- Name
+    Temperature,             !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 1:00,             !- Field 3
+    16.8,                    !- Field 4
+    Until: 2:00,             !- Field 5
+    16.2,                    !- Field 6
+    Until: 3:00,             !- Field 7
+    15.7,                    !- Field 8
+    Until: 4:00,             !- Field 9
+    15.1,                    !- Field 10
+    Until: 5:00,             !- Field 11
+    14.6,                    !- Field 12
+    Until: 6:00,             !- Field 13
+    14,                      !- Field 14
+    Until: 7:00,             !- Field 15
+    15.1,                    !- Field 16
+    Until: 8:00,             !- Field 17
+    18.4,                    !- Field 18
+    Until: 9:00,             !- Field 19
+    22.3,                    !- Field 20
+    Until: 10:00,            !- Field 21
+    23.1,                    !- Field 22
+    Until: 11:00,            !- Field 23
+    24.6,                    !- Field 24
+    Until: 12:00,            !- Field 25
+    25.8,                    !- Field 26
+    Until: 13:00,            !- Field 27
+    26.9,                    !- Field 28
+    Until: 14:00,            !- Field 29
+    27.4,                    !- Field 30
+    Until: 15:00,            !- Field 31
+    28.9,                    !- Field 32
+    Until: 16:00,            !- Field 33
+    29.1,                    !- Field 34
+    Until: 17:00,            !- Field 35
+    28.5,                    !- Field 36
+    Until: 18:00,            !- Field 37
+    27.6,                    !- Field 38
+    Until: 19:00,            !- Field 39
+    26.5,                    !- Field 40
+    Until: 20:00,            !- Field 41
+    25.1,                    !- Field 42
+    Until: 21:00,            !- Field 43
+    22.3,                    !- Field 44
+    Until: 22:00,            !- Field 45
+    19.6,                    !- Field 46
+    Until: 23:00,            !- Field 47
+    18.4,                    !- Field 48
+    Until: 24:00,            !- Field 49
+    17.3;                    !- Field 50
+
+! Defining Ambient Ambient Air Velocity	
+Schedule:Compact,
+    Ambient Air Velocity,    !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    2.38;                     !- Field 4
+	
+! Defining DHW Load Profile Load Schedule (should be zero)		
+Schedule:Compact,
+    DHW Load Profile Load Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    0;                       !- Field 4	
+	
+! Defining DHW Load Profile Constant Flow Frac Schedule (0.5 for base case and varying for measure case (SWWH015))	
+Schedule:Compact,
+    DHW Load Profile Constant Flow Frac Schedule,  !- Name
+    any number,              !- Schedule Type Limits Name
+    Through: 12/31,          !- Field 1
+    For: AllDays,            !- Field 2
+    Until: 24:00,            !- Field 3
+    0.5;                      !- Field 4	
+
+! Defining calculated Water Heater Scheduled Tempereture Setpoint for Mtl prototype (SWWH016) 		
+Schedule:Compact,
+	Mtl Water Heater Scheduled Tempereture Setpoint,
+	Temperature,             !- Schedule Type Limits Name
+	Through: 12/31,
+	For: Weekdays,
+    Until: 01:00,46.22,
+    Until: 02:00,44.78,
+    Until: 03:00,44.33,
+    Until: 04:00,44.6,
+    Until: 05:00,45.8,
+    Until: 06:00,51.42,
+    Until: 07:00,57.22,
+    Until: 08:00,57.22,
+    Until: 09:00,57.22,
+    Until: 10:00,57.22,
+    Until: 11:00,57.22,
+    Until: 12:00,55.41,
+    Until: 13:00,54.05,
+    Until: 14:00,52.83,
+    Until: 15:00,51.79,
+    Until: 16:00,51.46,
+    Until: 17:00,53.40,
+    Until: 18:00,55.73,
+    Until: 19:00,57.22,
+    Until: 20:00,57.22,
+    Until: 21:00,56.53,
+    Until: 22:00,54.70,
+    Until: 23:00,52.25,
+    Until: 24:00,49.39,
+    For: Saturday,
+    Until: 01:00,46.22,
+    Until: 02:00,44.78,
+    Until: 03:00,44.33,
+    Until: 04:00,44.6,
+    Until: 05:00,45.87,
+    Until: 06:00,51.42,
+    Until: 07:00,57.22,
+    Until: 08:00,57.22,
+    Until: 09:00,57.22,
+    Until: 10:00,57.22,
+    Until: 11:00,56.77,
+    Until: 12:00,54.79,
+    Until: 13:00,53.09,
+    Until: 14:00,51.91,
+    Until: 15:00,51.29,
+    Until: 16:00,50.91,
+    Until: 17:00,52.61,
+    Until: 18:00,55.23,
+    Until: 19:00,57.22,
+    Until: 20:00,57.22,
+    Until: 21:00,56.27,
+    Until: 22:00,54.72,
+    Until: 23:00,52.25,
+    Until: 24:00,49.39,
+    For: Sunday,
+    Until: 01:00,46.19,
+    Until: 02:00,44.78,
+    Until: 03:00,44.33,
+    Until: 04:00,44.57,
+    Until: 05:00,45.87,
+    Until: 06:00,51.42,
+    Until: 07:00,57.22,
+    Until: 08:00,57.22,
+    Until: 09:00,57.22,
+    Until: 10:00,57.22,
+    Until: 11:00,56.37,
+    Until: 12:00,54.79,
+    Until: 13:00,52.72,
+    Until: 14:00,51.65,
+    Until: 15:00,51.09,
+    Until: 16:00,50.70,
+    Until: 17:00,52.35,
+    Until: 18:00,55.15,
+    Until: 19:00,57.22,
+    Until: 20:00,57.22,
+    Until: 21:00,56.19,
+    Until: 22:00,54.67,
+    Until: 23:00,52.25,
+    Until: 24:00,49.37;
+
+! Defining calculated Water Heater Scheduled Tempereture Setpoint for Htl prototype (SWWH016)
+Schedule:Compact,
+	Htl Water Heater Scheduled Tempereture Setpoint,
+	Temperature,             !- Schedule Type Limits Name
+	Through: 12/31,
+	For: Weekdays,
+    Until: 01:00,48.28,
+    Until: 02:00,47.38,
+    Until: 03:00,47.14,
+    Until: 04:00,47.23,
+    Until: 05:00,48.02,
+    Until: 06:00,51.42,
+    Until: 07:00,57.22,
+    Until: 08:00,57.22,
+    Until: 09:00,57.22,
+    Until: 10:00,56.93,
+    Until: 11:00,55.30,
+    Until: 12:00,57.22,
+    Until: 13:00,53.01,
+    Until: 14:00,52.83,
+    Until: 15:00,51.95,
+    Until: 16:00,51.77,
+    Until: 17:00,52.79,
+    Until: 18:00,53.87,
+    Until: 19:00,55.22,
+    Until: 20:00,55.27,
+    Until: 21:00,54.53,
+    Until: 22:00,53.56,
+    Until: 23:00,52.07,
+    Until: 24:00,50.26,
+    For: Saturday,
+    Until: 01:00,48.28,
+    Until: 02:00,47.38,
+    Until: 03:00,47.14,
+    Until: 04:00,47.23,
+    Until: 05:00,48.02,
+    Until: 06:00,51.42,
+    Until: 07:00,57.22,
+    Until: 08:00,57.22,
+    Until: 09:00,57.22,
+    Until: 10:00,56.93,
+    Until: 11:00,55.30,
+    Until: 12:00,56.07,
+    Until: 13:00,52.36,
+    Until: 14:00,51.64,
+    Until: 15:00,51.30,
+    Until: 16:00,51.12,
+    Until: 17:00,52.12,
+    Until: 18:00,53.87,
+    Until: 19:00,55.22,
+    Until: 20:00,57.22,
+    Until: 21:00,57.22,
+    Until: 22:00,53.56,
+    Until: 23:00,52.07,
+    Until: 24:00,50.26,
+    For: Sunday,
+    Until: 01:00,48.28,
+    Until: 02:00,47.38,
+    Until: 03:00,47.14,
+    Until: 04:00,47.23,
+    Until: 05:00,48.02,
+    Until: 06:00,51.42,
+    Until: 07:00,57.22,
+    Until: 08:00,57.22,
+    Until: 09:00,57.22,
+    Until: 10:00,56.81,
+    Until: 11:00,55.30,
+    Until: 12:00,54.72,
+    Until: 13:00,52.36,
+    Until: 14:00,51.64,
+    Until: 15:00,51.30,
+    Until: 16:00,51.12,
+    Until: 17:00,52.12,
+    Until: 18:00,53.87,
+    Until: 19:00,55.22,
+    Until: 20:00,57.22,
+    Until: 21:00,57.22,
+    Until: 22:00,53.56,
+    Until: 23:00,52.07,
+    Until: 24:00,50.26;
+
+! Defining calculated Water Heater Scheduled Tempereture Setpoint for Nrs prototype (SWWH016)
+Schedule:Compact,
+	Nrs Water Heater Scheduled Tempereture Setpoint,
+	Temperature,             !- Schedule Type Limits Name
+	Through: 12/31,
+	For: Weekdays,
+    Until: 01:00,49.53,
+    Until: 02:00,49.48,
+    Until: 03:00,49.48,
+    Until: 04:00,49.32,
+    Until: 05:00,49.32,
+    Until: 06:00,50.44,
+    Until: 07:00,50.07,
+    Until: 08:00,56.53,
+    Until: 09:00,57.22,
+    Until: 10:00,57.22,
+    Until: 11:00,57.22,
+    Until: 12:00,57.22,
+    Until: 13:00,57.22,
+    Until: 14:00,57.22,
+    Until: 15:00,57.22,
+    Until: 16:00,57.22,
+    Until: 17:00,57.22,
+    Until: 18:00,57.22,
+    Until: 19:00,57.22,
+    Until: 20:00,55.12,
+    Until: 21:00,55.77,
+    Until: 22:00,51.01,
+    Until: 23:00,49.79,
+    Until: 24:00,49.58,
+    For: Saturday,
+    Until: 01:00,49.53,
+    Until: 02:00,49.48,
+    Until: 03:00,49.48,
+    Until: 04:00,49.32,
+    Until: 05:00,49.32,
+    Until: 06:00,50.44,
+    Until: 07:00,50.07,
+    Until: 08:00,51.53,
+    Until: 09:00,54.67,
+    Until: 10:00,57.22,
+    Until: 11:00,57.22,
+    Until: 12:00,57.22,
+    Until: 13:00,57.22,
+    Until: 14:00,56.97,
+    Until: 15:00,55.34,
+    Until: 16:00,54.22,
+    Until: 17:00,54.91,
+    Until: 18:00,51.24,
+    Until: 19:00,50.64,
+    Until: 20:00,50.64,
+    Until: 21:00,50.59,
+    Until: 22:00,51.38,
+    Until: 23:00,49.74,
+    Until: 24:00,49.63,
+    For: Sunday,
+    Until: 01:00,49.53,
+    Until: 02:00,49.48,
+    Until: 03:00,49.48,
+    Until: 04:00,48.95,
+    Until: 05:00,48.95,
+    Until: 06:00,50.07,
+    Until: 07:00,48.95,
+    Until: 08:00,48.95,
+    Until: 09:00,48.95,
+    Until: 10:00,48.95,
+    Until: 11:00,49.47,
+    Until: 12:00,50.21,
+    Until: 13:00,50.11,
+    Until: 14:00,51.23,
+    Until: 15:00,50.00,
+    Until: 16:00,49.22,
+    Until: 17:00,49.26,
+    Until: 18:00,49.36,
+    Until: 19:00,49.46,
+    Until: 20:00,49.46,
+    Until: 21:00,49.36,
+    Until: 22:00,50.59,
+    Until: 23:00,49.36,
+    Until: 24:00,49.16;
+!>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -1,0 +1,756 @@
+
+GlobalGeometryRules,
+  UpperLeftCorner,         !- Starting Vertex Position
+  Counterclockwise,        !- Vertex Entry Direction
+  Relative,                !- Coordinate System
+  Relative;                !- Daylighting Reference Point Coordinate System
+
+Zone,
+  Classroom,               !- Name
+  0,                       !- Direction of Relative North
+  0,                       !- X Origin
+  0,                       !- Y Origin
+  0,                       !- Z Origin
+  ,                        !- Type
+  1,                       !- Multiplier
+  ,                        !- Ceiling Height
+  ,                        !- Volume
+  autocalculate,           !- Floor Area
+  ,                        !- Zone Inside Convection Algorithm
+  ,                        !- Zone Outside Convection Algorithm
+  Yes;                     !- Part of Total Floor Area
+
+Zone,
+  Office,                  !- Name
+  0,                       !- Direction of Relative North
+  0,                       !- X Origin
+  0,                       !- Y Origin
+  0,                       !- Z Origin
+  ,                        !- Type
+  1,                       !- Multiplier
+  ,                        !- Ceiling Height
+  ,                        !- Volume
+  autocalculate,           !- Floor Area
+  ,                        !- Zone Inside Convection Algorithm
+  ,                        !- Zone Outside Convection Algorithm
+  Yes;                     !- Part of Total Floor Area
+
+Zone,
+  Worship,                 !- Name
+  0,                       !- Direction of Relative North
+  0,                       !- X Origin
+  0,                       !- Y Origin
+  0,                       !- Z Origin
+  ,                        !- Type
+  1,                       !- Multiplier
+  ,                        !- Ceiling Height
+  ,                        !- Volume
+  autocalculate,           !- Floor Area
+  ,                        !- Zone Inside Convection Algorithm
+  ,                        !- Zone Outside Convection Algorithm
+  Yes;                     !- Part of Total Floor Area
+
+BuildingSurface:Detailed,
+  classroom_east_int_wall, !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,           !- Construction Name
+  Classroom,               !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  office_west_int_wall,    !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  13.716,                  !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  13.716,                  !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  13.716,                  !- Vertex 3 X-coordinate
+  67.732656,               !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  13.716,                  !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  classroom_floor,         !- Name
+  Floor,                   !- Surface Type
+  classroom_floor SlabOnOrBelowGradeF073,     !- Construction Name
+  Classroom,               !- Zone Name
+  ,                        !- Space Name
+  GroundFCfactorMethod,              !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  13.716,                  !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  13.716,                  !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+Construction:FfactorGroundFloor,
+  classroom_floor SlabOnOrBelowGradeF073,  !- Name
+  1.26343630645111,        !- F-Factor
+  92.89,        !- Area
+  20.49;              !- PerimeterExposed
+
+
+BuildingSurface:Detailed,
+  classroom_north_ext_wall,!- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,           !- Construction Name
+  Classroom,               !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  13.716,                  !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  13.716,                  !- Vertex 2 X-coordinate
+  67.732656,               !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  67.732656,               !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  classroom_roof,          !- Name
+  Roof,                    !- Surface Type
+  Exterior Roof,           !- Construction Name
+  Classroom,               !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  4.572,                   !- Vertex 2 Z-coordinate
+  13.716,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  4.572,                   !- Vertex 3 Z-coordinate
+  13.716,                  !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  classroom_south_int_wall,!- Name
+  Wall,                    !- Surface Type
+  Interior Wall,           !- Construction Name
+  Classroom,               !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  worship_northwest_int_wall,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  13.716,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  13.716,                  !- Vertex 4 X-coordinate
+  60.96,                   !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  classroom_west_ext_wall, !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,           !- Construction Name
+  Classroom,               !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  67.732656,               !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  60.96,                   !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  office_east_ext_wall,    !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,           !- Construction Name
+  Office,                  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  27.432,                  !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  27.432,                  !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  27.432,                  !- Vertex 3 X-coordinate
+  67.732656,               !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  27.432,                  !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  office_floor,            !- Name
+  Floor,                   !- Surface Type
+  office_floor SlabOnOrBelowGradeF073,     !- Construction Name
+  Office,                  !- Zone Name
+  ,                        !- Space Name
+  GroundFCfactorMethod,              !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  27.432,                  !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  27.432,                  !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  13.716,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  13.716,                  !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+Construction:FfactorGroundFloor,
+  office_floor SlabOnOrBelowGradeF073,  !- Name
+  1.26343630645111,        !- F-Factor
+  92.89,        !- Area
+  20.49;              !- PerimeterExposed
+
+BuildingSurface:Detailed,
+  office_north_ext_wall,   !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,           !- Construction Name
+  Office,                  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  27.432,                  !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  27.432,                  !- Vertex 2 X-coordinate
+  67.732656,               !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  13.716,                  !- Vertex 3 X-coordinate
+  67.732656,               !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  13.716,                  !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  office_roof,             !- Name
+  Roof,                    !- Surface Type
+  Exterior Roof,           !- Construction Name
+  Office,                  !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  13.716,                  !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  13.716,                  !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  4.572,                   !- Vertex 2 Z-coordinate
+  27.432,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  4.572,                   !- Vertex 3 Z-coordinate
+  27.432,                  !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  office_south_int_wall,   !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,           !- Construction Name
+  Office,                  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  worship_northeast_int_wall,  !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  13.716,                  !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  13.716,                  !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  27.432,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  27.432,                  !- Vertex 4 X-coordinate
+  60.96,                   !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  office_west_int_wall,    !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,           !- Construction Name
+  Office,                  !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  classroom_east_int_wall, !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  13.716,                  !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  13.716,                  !- Vertex 2 X-coordinate
+  67.732656,               !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  13.716,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  13.716,                  !- Vertex 4 X-coordinate
+  60.96,                   !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  worship_east_ext_wall,   !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,           !- Construction Name
+  Worship,                 !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  27.432,                  !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  27.432,                  !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  27.432,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  27.432,                  !- Vertex 4 X-coordinate
+  60.96,                   !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  worship_east_roof,       !- Name
+  Roof,                    !- Surface Type
+  Exterior Roof,           !- Construction Name
+  Worship,                 !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  13.716,                  !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  18.288,                  !- Vertex 1 Z-coordinate
+  27.432,                  !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  4.572,                   !- Vertex 2 Z-coordinate
+  27.432,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  4.572,                   !- Vertex 3 Z-coordinate
+  13.716,                  !- Vertex 4 X-coordinate
+  60.96,                   !- Vertex 4 Y-coordinate
+  18.288;                  !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  worship_floor,           !- Name
+  Floor,                   !- Surface Type
+  worship_floor SlabOnOrBelowGradeF073,     !- Construction Name
+  Worship,                 !- Zone Name
+  ,                        !- Space Name
+  GroundFCfactorMethod,              !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  27.432,                  !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  0,                       !- Vertex 1 Z-coordinate
+  27.432,                  !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  60.96,                   !- Vertex 4 Y-coordinate
+  0;                       !- Vertex 4 Z-coordinate
+
+Construction:FfactorGroundFloor,
+  worship_floor SlabOnOrBelowGradeF073,  !- Name
+  1.26343630645111,        !- F-Factor
+  1672.25,        !- Area
+  149.35;              !- PerimeterExposed
+
+BuildingSurface:Detailed,
+  worship_north_ext_wall,  !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,           !- Construction Name
+  Worship,                 !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  0,                       !- View Factor to Ground
+  3,                       !- Number of Vertices
+  27.432,                  !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  4.572,                   !- Vertex 2 Z-coordinate
+  13.716,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  18.288;                  !- Vertex 3 Z-coordinate
+
+BuildingSurface:Detailed,
+  worship_northeast_int_wall,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,           !- Construction Name
+  Worship,                 !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  office_south_int_wall,   !- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  27.432,                  !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  27.432,                  !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  13.716,                  !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  13.716,                  !- Vertex 4 X-coordinate
+  60.96,                   !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  worship_northwest_int_wall,  !- Name
+  Wall,                    !- Surface Type
+  Interior Wall,           !- Construction Name
+  Worship,                 !- Zone Name
+  ,                        !- Space Name
+  Surface,                 !- Outside Boundary Condition
+  classroom_south_int_wall,!- Outside Boundary Condition Object
+  NoSun,                   !- Sun Exposure
+  NoWind,                  !- Wind Exposure
+  0,                       !- View Factor to Ground
+  4,                       !- Number of Vertices
+  13.716,                  !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  13.716,                  !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  60.96,                   !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  60.96,                   !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  worship_south_ext_wall,  !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,           !- Construction Name
+  Worship,                 !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  5,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  27.432,                  !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  27.432,                  !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  4.572,                   !- Vertex 4 Z-coordinate
+  13.716,                  !- Vertex 5 X-coordinate
+  0,                       !- Vertex 5 Y-coordinate
+  18.288;                  !- Vertex 5 Z-coordinate
+
+BuildingSurface:Detailed,
+  worship_west_ext_wall,   !- Name
+  Wall,                    !- Surface Type
+  Exterior Wall,           !- Construction Name
+  Worship,                 !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  4.572,                   !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  0,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  0,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  4.572;                   !- Vertex 4 Z-coordinate
+
+BuildingSurface:Detailed,
+  worship_west_roof,       !- Name
+  Roof,                    !- Surface Type
+  Exterior Roof,           !- Construction Name
+  Worship,                 !- Zone Name
+  ,                        !- Space Name
+  Outdoors,                !- Outside Boundary Condition
+  ,                        !- Outside Boundary Condition Object
+  SunExposed,              !- Sun Exposure
+  WindExposed,             !- Wind Exposure
+  ,                        !- View Factor to Ground
+  4,                       !- Number of Vertices
+  13.716,                  !- Vertex 1 X-coordinate
+  60.96,                   !- Vertex 1 Y-coordinate
+  18.288,                  !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  60.96,                   !- Vertex 2 Y-coordinate
+  4.572,                   !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  4.572,                   !- Vertex 3 Z-coordinate
+  13.716,                  !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  18.288;                  !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  classroom_north_window,  !- Name
+  Window,                  !- Surface Type
+  Exterior Window,   !- Construction Name
+  classroom_north_ext_wall,!- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  4,                       !- Number of Vertices
+  13.6906,                 !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  3.458899628253,          !- Vertex 1 Z-coordinate
+  13.6906,                 !- Vertex 2 X-coordinate
+  67.732656,               !- Vertex 2 Y-coordinate
+  3,                       !- Vertex 2 Z-coordinate
+  0.0254,                  !- Vertex 3 X-coordinate
+  67.732656,               !- Vertex 3 Y-coordinate
+  3,                       !- Vertex 3 Z-coordinate
+  0.0254,                  !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  3.458899628253;          !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  classroom_west_window,   !- Name
+  Window,                  !- Surface Type
+  Exterior Window,         !- Construction Name
+  classroom_west_ext_wall, !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  4,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  67.707256,               !- Vertex 1 Y-coordinate
+  3.460655259976,          !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  67.707256,               !- Vertex 2 Y-coordinate
+  3,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  60.9854,                 !- Vertex 3 Y-coordinate
+  3,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  60.9854,                 !- Vertex 4 Y-coordinate
+  3.460655259976;          !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  office_east_window,      !- Name
+  Window,                  !- Surface Type
+  Exterior Window,         !- Construction Name
+  office_east_ext_wall,    !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  4,                       !- Number of Vertices
+  27.432,                  !- Vertex 1 X-coordinate
+  60.9854,                 !- Vertex 1 Y-coordinate
+  3.460655259976,          !- Vertex 1 Z-coordinate
+  27.432,                  !- Vertex 2 X-coordinate
+  60.9854,                 !- Vertex 2 Y-coordinate
+  3,                       !- Vertex 2 Z-coordinate
+  27.432,                  !- Vertex 3 X-coordinate
+  67.707256,               !- Vertex 3 Y-coordinate
+  3,                       !- Vertex 3 Z-coordinate
+  27.432,                  !- Vertex 4 X-coordinate
+  67.707256,               !- Vertex 4 Y-coordinate
+  3.460655259976;          !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  office_north_window,     !- Name
+  Window,                  !- Surface Type
+  Exterior Window,   !- Construction Name
+  office_north_ext_wall,   !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  4,                       !- Number of Vertices
+  27.4066,                 !- Vertex 1 X-coordinate
+  67.732656,               !- Vertex 1 Y-coordinate
+  3.458899628253,          !- Vertex 1 Z-coordinate
+  27.4066,                 !- Vertex 2 X-coordinate
+  67.732656,               !- Vertex 2 Y-coordinate
+  3,                       !- Vertex 2 Z-coordinate
+  13.7414,                 !- Vertex 3 X-coordinate
+  67.732656,               !- Vertex 3 Y-coordinate
+  3,                       !- Vertex 3 Z-coordinate
+  13.7414,                 !- Vertex 4 X-coordinate
+  67.732656,               !- Vertex 4 Y-coordinate
+  3.458899628253;          !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  worship_east_window,     !- Name
+  Window,                  !- Surface Type
+  Exterior Window,         !- Construction Name
+  worship_east_ext_wall,   !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  4,                       !- Number of Vertices
+  27.432,                  !- Vertex 1 X-coordinate
+  0.0254,                  !- Vertex 1 Y-coordinate
+  3.457581317765,          !- Vertex 1 Z-coordinate
+  27.432,                  !- Vertex 2 X-coordinate
+  0.0254,                  !- Vertex 2 Y-coordinate
+  3,                       !- Vertex 2 Z-coordinate
+  27.432,                  !- Vertex 3 X-coordinate
+  60.9346,                 !- Vertex 3 Y-coordinate
+  3,                       !- Vertex 3 Z-coordinate
+  27.432,                  !- Vertex 4 X-coordinate
+  60.9346,                 !- Vertex 4 Y-coordinate
+  3.457581317765;          !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  worship_south_window,    !- Name
+  Window,                  !- Surface Type
+  Exterior Window,         !- Construction Name
+  worship_south_ext_wall,  !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  4,                       !- Number of Vertices
+  0.0254,                  !- Vertex 1 X-coordinate
+  0,                       !- Vertex 1 Y-coordinate
+  3.458048237477,          !- Vertex 1 Z-coordinate
+  0.0254,                  !- Vertex 2 X-coordinate
+  0,                       !- Vertex 2 Y-coordinate
+  3,                       !- Vertex 2 Z-coordinate
+  27.4066,                 !- Vertex 3 X-coordinate
+  0,                       !- Vertex 3 Y-coordinate
+  3,                       !- Vertex 3 Z-coordinate
+  27.4066,                 !- Vertex 4 X-coordinate
+  0,                       !- Vertex 4 Y-coordinate
+  3.458048237477;          !- Vertex 4 Z-coordinate
+
+FenestrationSurface:Detailed,
+  worship_west_window,     !- Name
+  Window,                  !- Surface Type
+  Exterior Window,         !- Construction Name
+  worship_west_ext_wall,   !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  4,                       !- Number of Vertices
+  0,                       !- Vertex 1 X-coordinate
+  60.9346,                 !- Vertex 1 Y-coordinate
+  3.457581317765,          !- Vertex 1 Z-coordinate
+  0,                       !- Vertex 2 X-coordinate
+  60.9346,                 !- Vertex 2 Y-coordinate
+  3,                       !- Vertex 2 Z-coordinate
+  0,                       !- Vertex 3 X-coordinate
+  0.0254,                  !- Vertex 3 Y-coordinate
+  3,                       !- Vertex 3 Z-coordinate
+  0,                       !- Vertex 4 X-coordinate
+  0.0254,                  !- Vertex 4 Y-coordinate
+  3.457581317765;          !- Vertex 4 Z-coordinate

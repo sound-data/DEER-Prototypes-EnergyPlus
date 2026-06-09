@@ -1,0 +1,2099 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "name"
+parameter "branch_names"
+
+parameter "design_flow", :default=>Autosize
+parameter "design_temp", :default=>44['F']  # Chilled water system supply temperature
+parameter "design_delta", :default=>12['deltaF']  # Chilled water system design temperature difference
+parameter "sec_design_flow", :default=>Autosize # Secondary pump flow rate
+parameter "sec_pump_head",:default=>70['ft H2O'] # Secondary pump head
+parameter "sec_pump_power", :default=>Autosize # Secondary pump power
+parameter "sec_pump_eff", :default=>0.9 # Secondary pump motor efficiency
+
+# supply temp schedule?
+
+# Constant speed pump might not be correct yet
+parameter "loop_config", :default=>"PRIMARY-ONLY" # ("PRIMARY-ONLY" | "PRIMARY-SECONDARY" | "PRIMARY-SECONDARY-COMMON")
+parameter "pump_type", :default=>"CONSTANT"     #  (CONSTANT | VARIABLE)
+parameter "pump_eff", :default=>0.6
+parameter "pump_head", :default=>70['ft H2O']
+parameter "pump_control", :default=>"CONTINUOUS"   # (CONTINUOUS | INTERMITTENT)
+parameter "pump_power", :default=>Autosize
+parameter "pump_curve", :default=>"NOT USED"
+
+parameter "cooling_source", :default=>"CHILLER"  # Central cooling source equipment (CHILLER | GSHP | DISTRICT)
+
+parameter "chiller_type", :default=>"ELECTRIC"  # (ELECTRIC | ABSORPTION)
+parameter "chiller_generator_type", :default=>"HOTWATER"  # For absorption chillers only (HOTWATER | STEAM | DIRECTFIRED)
+# NOTE: If HOTWATER or STEAM is selected, the chiller condenser type must be set to WATERCOOLED.
+# NOTE: If DIRECTFIRED is selected, the heating_source must be set to "ABSORPTIONCHILLER" for hotwater.imf.
+
+parameter "num_chillers", :default=>1
+parameter "chiller_model", :default=>"TRANE_RTAA_125"  # (TRANE_RTAA_125 | TRANE_CGA_120 | Air-Cooled GTE 150tons Default 90.1-2004 | WC Screw Default 90.1-2004 | WC Centrifugal Default 90.1-2004 | AC 2010 | AC 2004 | WC Cent 2010 A | WC Cent 2010 B | WC Cent 2004 Small | WC Cent 2004 Large | WC PD 2010 B | WC PD 2010 A Small | WC PD 2010 A Large | WC PD 2004 )
+parameter "chiller_cop", :default=>2.87  # Chiller nominal COP
+parameter "chiller_sizing", :default=>1.0  # Chiller sizing factor (formerly to counteract oversizing problem; as of 7.2 chiller seems to undersize)
+parameter "chiller_condenser", :default=>"AIRCOOLED"  # Chiller condenser type (AIRCOOLED | WATERCOOLED | EVAPCOOLED)
+parameter "chiller_heatpump_hr", :default=>false  # Chiller heat pump heat recovery
+parameter "chiller_heatpump_hr_type", :default=>"SERIES"  # Chiller condenser type (SERIES | PARALLEL)
+parameter "chiller_hr_load_flow", :default=>1440['GPM']
+parameter "chiller_hr_source_flow", :default=>860['GPM']
+parameter "chiller_cond_hr", :default=>false  # Chiller condenser heat recovery
+parameter "chiller_cond_hr_type", :default=>"SERIES"  # Chiller condenser type (SERIES | PARALLEL)
+parameter "chiller_hr_cap", :default=>Autosize  # Heat recovery chiller capacity (W)
+parameter "chiller_hr_cop", :default=>3.45  # Heat recovery chiller nominal COP
+parameter "chiller_hr_flow", :default=>Autosize  # Design heat recovery flow rate (m3/s) - don't mess with it! Autosize
+parameter "chiller_hr_temp", :default=>155['F']  # Chiller heat pump heat recovery
+parameter "chiller_outdoor_min", :default=>-99['F']  # Minimum outdoor temperature below which the chiller is shut-off
+parameter "chiller_flow_mode", :default=>"LeavingSetpointModulated"
+parameter "chiller_economizer", :default=>false  # Turn on/off chiller water-side economizer; requires water-cooled chiller
+
+parameter "gshp_cooling_cop", :default=>5.6
+parameter "gshp_cooling_capacity", :default=>200000000['W']
+parameter "gshp_flow_rate", :default=>60['GPM']
+
+parameter "setpoint_type", :default=>"Constant"  # Constant | Reset
+parameter "supply_temp_at_lo", :default=>54['F'] # Chilled water system supply temperature at outside air low temperature
+parameter "lo_outdoor_temp", :default=>60['F']  # Outside air low temperature for CW reset
+parameter "supply_temp_at_hi", :default=>44['F']  # Chilled water system supply temperature at outside air high temperature
+parameter "hi_outdoor_temp", :default=>80['F']  # Outside air high temperature for CW reset
+
+parameter "chw_temp_ref", :default=>6.67['C'] # Reference Leaving Chilled Water Temperature
+parameter "cw_temp_ref", :default=>34.4444['C'] # Reference Leaving Condenser Water Temperature
+
+parameter "operation_schedule", :default => "Through: 12/31,\n  For: AllDays,\n  Until: 24:00, 1;"
+
+%>
+
+<% if loop_config == "PRIMARY-SECONDARY" %>
+Sizing:Plant,
+  <%= name %> Secondary,  !- Plant or Condenser Loop Name
+  Cooling,                 !- Loop Type
+  <%= design_temp %>,  !- Design Loop Exit Temperature {C}
+  <%= design_delta %>;  !- Loop Design Temperature Difference {deltaC}
+
+PlantLoop,
+  <%= name %> Secondary,                 !- Name
+  Water,                   !- Fluid Type
+  ,                        !- User Defined Fluid Type
+  <%= name %> Sec Loop Operation Scheme List,  !- Plant Equipment Operation Scheme Name
+  <%= name %> Sec Supply Outlet Node,  !- Loop Temperature Setpoint Node Name
+  98,                      !- Maximum Loop Temperature
+  1,                       !- Minimum Loop Temperature
+  autosize,                !- Maximum Loop Flow Rate
+  0,                       !- Minimum Loop Flow Rate
+  AUTOSIZE,                !- Plant Loop Volume
+  <%= name %> Sec Supply Inlet Node,  !- Plant Side Inlet Node Name
+  <%= name %> Sec Supply Outlet Node,  !- Plant Side Outlet Node Name
+  <%= name %> Sec Supply Branches, !- Plant Side Branch List Name
+  <%= name %> Sec Supply Connectors,  !- Plant Side Connector List Name
+  <%= name %> Sec Demand Inlet Node,  !- Demand Side Inlet Node Name
+  <%= name %> Sec Demand Outlet Node,  !- Demand Side Outlet Node Name
+  <%= name %> Sec Demand Branches, !- Demand Side Branch List Name
+  <%= name %> Sec Demand Connectors,  !- Demand Side Connector List Name
+  OPTIMAL;                 !- Load Distribution Scheme
+
+PlantEquipmentList,
+  <%= name %> Sec Heat Exchanger,  !- Name
+  HeatExchanger:FluidToFluid,  !- Equipment 1 Object Type
+  Primary Secondary Heat Exchanger;  !- Equipment 1 Name
+
+PlantEquipmentOperation:CoolingLoad,
+  <%= name %> Sec Operation Scheme,!- Name
+  0,                       !- Load Range 1 Lower Limit
+  1000000000,              !- Load Range 1 Upper Limit
+  <%= name %> Sec Heat Exchanger;  !- Range 1 Equipment List Name
+
+PlantEquipmentOperationSchemes,
+  <%= name %> Sec Loop Operation Scheme List,  !- Name
+  PlantEquipmentOperation:CoolingLoad,  !- Control Scheme 1 Object Type
+  <%= name %> Sec Operation Scheme, !- Control Scheme 1 Name
+  <%= name %> Operation Schedule;                      !- Control Scheme 1 Schedule Name
+
+SetpointManager:Scheduled,
+  <%= name %> Sec Loop Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> Supply Temperature Schedule,  !- Schedule Name
+  <%= name %> Sec Supply Outlet Node;  !- Setpoint Node or NodeList Name
+
+Branch,
+  <%= name %> Sec Demand Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Sec Demand Bypass Pipe,  !- Component 1 Name
+  <%= name %> Sec Demand Bypass Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Sec Demand Bypass Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+  <%= name %> Sec Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Sec Demand Inlet Pipe,  !- Component 1 Name
+  <%= name %> Sec Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Sec Demand Entrance Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+  <%= name %> Sec Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Sec Demand Outlet Pipe,  !- Component 1 Name
+  <%= name %> Sec Demand Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Sec Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+  <%= name %> Sec Supply Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Sec Supply Bypass Pipe,  !- Component 1 Name
+  <%= name %> Sec Supply Bypass Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Sec Supply Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+  <%= name %> Sec Supply Heat Exchanger Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  HeatExchanger:FluidToFluid,  !- Component 1 Object Type
+  Primary Secondary Heat Exchanger,    !- Component 1 Name
+  Heat Exchanger Supply Inlet Node,   !- Component 1 Inlet Node Name
+  Heat Exchanger Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+  <%= name %> Heat Exchanger Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  HeatExchanger:FluidToFluid,  !- Component 1 Object Type
+  Primary Secondary Heat Exchanger,    !- Component 1 Name
+  Heat Exchanger Demand Inlet Node,   !- Component 1 Inlet Node Name
+  Heat Exchanger Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+  <%= name %> Sec Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pump:VariableSpeed,      !- Component 1 Object Type
+  <%= name %> Sec Circ Pump,       !- Component 1 Name
+  <%= name %> Sec Supply Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Sec Circ Pump Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+  <%= name %> Sec Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Sec Supply Outlet Pipe,  !- Component 1 Name
+  <%= name %> Sec Supply Exit Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Sec Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+HeatExchanger:FluidToFluid,
+  Primary Secondary Heat Exchanger,  !- Name
+  ,                        !- Availability Schedule Name
+  Heat Exchanger Demand Inlet Node,  !- Loop Demand Side Inlet Node Name
+  Heat Exchanger Demand Outlet Node,  !- Loop Demand Side Outlet Node Name
+  autosize,                  !- Loop Demand Side Design Flow Rate
+  Heat Exchanger Supply Inlet Node,  !- Loop Supply Side Inlet Node Name
+  Heat Exchanger Supply Outlet Node,  !- Loop Supply Side Outlet Node Name
+  autosize,                !- Loop Supply Side Design Flow Rate {m3/s}
+  Ideal,                   !- Heat Exchange Model Type
+  autosize,                !- Heat Exchanger U-Factor Times Area Value {W/K}
+  UncontrolledOn,          !- Control Type
+  ,                        !- Heat Exchanger Setpoint Node Name
+  0.01,                    !- Minimum Temperature Difference to Activate Heat Exchanger {deltaC}
+  LoopToLoop,              !- Heat Transfer Metering End Use Type
+  ,                        !- Component Override Loop Supply Side Inlet Node Name
+  ,                        !- Component Override Loop Demand Side Inlet Node Name
+  Loop,                    !- Component Override Cooling Control Temperature Mode
+  1;                       !- Sizing Factor
+
+<% end # if primary-secondary %>
+
+Sizing:Plant,
+  <%= name %>,  !- Plant or Condenser Loop Name
+  Cooling,                 !- Loop Type
+  <%= design_temp %>,  !- Design Loop Exit Temperature {C}
+  <%= design_delta %>;  !- Loop Design Temperature Difference {deltaC}
+
+Schedule:Compact,
+  <%= name %> Operation Schedule,  !- Name
+  Binary Control,          !- Schedule Type Limits Name
+  <%= operation_schedule %>
+
+
+PlantLoop,
+  <%= name %>,      !- Name
+  Water,                   !- Fluid Type
+  ,                        !- User Defined Fluid Type
+  <%= name %> Operation Schemes,  !- Plant Equipment Operation Scheme Name
+  <%= name %> Supply Outlet Node,  !- Loop Temperature Setpoint Node Name
+  98.0,                    !- Maximum Loop Temperature {C}
+  1.0,                     !- Minimum Loop Temperature {C}
+  Autosize,                !- Maximum Loop Flow Rate {m3/s}
+  0.0,                     !- Minimum Loop Flow Rate {m3/s}
+  Autosize,                !- Plant Loop Volume {m3}
+  <%= name %> Supply Inlet Node,  !- Plant Side Inlet Node Name
+  <%= name %> Supply Outlet Node,  !- Plant Side Outlet Node Name
+  <%= name %> Supply Branches,!- Plant Side Branch List Name
+  <%= name %> Supply Connectors,  !- Plant Side Connector List Name
+  <%= name %> Demand Inlet Node,  !- Demand Side Inlet Node Name
+  <%= name %> Demand Outlet Node,  !- Demand Side Outlet Node Name
+  <%= name %> Demand Branches,!- Demand Side Branch List Name
+  <%= name %> Demand Connectors,  !- Demand Side Connector List Name
+  Optimal,                 !- Load Distribution Scheme
+<% if loop_config == "PRIMARY-SECONDARY-COMMON" %>
+  <%= name %> Availability Managers,  !- Availability Manager List Name
+  ,                        !- Plant Loop Demand Calculation Scheme
+  TwoWayCommonPipe;        !- Common Pipe Simulation
+<% else %>
+  <%= name %> Availability Managers;  !- Availability Manager List Name
+<% end %>
+<%# NOTE:  Availability Managers added above because of problems seen with lack of a manager in the heat recovery loop. %>
+
+<% if (setpoint_type == "Constant") %>
+SetpointManager:Scheduled,
+  <%= name %> Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> Supply Temperature Schedule,  !- Schedule Name
+  <%= name %> Setpoint Nodes;  !- Setpoint Node or NodeList Name
+
+Schedule:Constant,
+  <%= name %> Supply Temperature Schedule,   !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= design_temp %>;  !- Hourly Value
+
+<% elsif (setpoint_type == "Reset") %>
+
+SetpointManager:OutdoorAirReset,
+  <%= name %> Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= supply_temp_at_lo %>,  !- Setpoint at Outdoor Low Temperature
+  <%= lo_outdoor_temp %>,  !- Outdoor Low Temperature
+  <%= supply_temp_at_hi %>,  !- Setpoint at Outdoor High Temperature
+  <%= hi_outdoor_temp %>,  !- Outdoor High Temperature
+  <%= name %> Setpoint Nodes;  !- Setpoint Node or NodeList Name
+
+<% end %>
+
+NodeList,
+  <%= name %> Setpoint Nodes,  !- Name
+<% if (chiller_cond_hr) || (chiller_heatpump_hr) %>
+  <%= name %> Heat Recovery Chiller Outlet Node,  !- Node Name
+<% end %>
+<% if (chiller_economizer) %>
+  <%= name %> Free Cooling HX Outlet Node,  !- Node Name
+<% end %>
+<% for i in (1..num_chillers) %>
+  <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Node Name
+<% end %>
+  <%= name %> Supply Outlet Node;  !- Node Name
+
+PlantEquipmentOperationSchemes,
+  <%= name %> Operation Schemes,  !- Name
+  PlantEquipmentOperation:CoolingLoad,  !- Control Scheme 1 Object Type
+  <%= name %> Operation Scheme,  !- Control Scheme 1 Name
+  <%= name %> Operation Schedule;  !- Control Scheme 1 Schedule Name
+
+PlantEquipmentOperation:CoolingLoad,
+  <%= name %> Operation Scheme,  !- Name
+  0.0,                     !- Load Range 1 Lower Limit {W}
+  100000000000000,         !- Load Range 1 Upper Limit {W}
+  <%= name %> Equipment List; !- Priority Control 1 Equipment List Name
+
+PlantEquipmentList,
+  <%= name %> Equipment List, !- Name
+<% if (chiller_cond_hr) %>
+  Chiller:Electric:EIR,    !- Equipment 1 Object Type
+  Heat Recovery Chiller,        !- Equipment 1 Name
+<% elsif (chiller_heatpump_hr) %>
+  HeatPump:WaterToWater:EquationFit:Cooling,    !- Equipment 1 Object Type
+  Heat Recovery Chiller,        !- Equipment 1 Name
+<% end %>
+<% if (chiller_economizer) %>
+  HeatExchanger:FluidToFluid,  !- Equipment Object Type
+  <%= name %> Free Cooling HX,  !- Equipment Name
+<% end %>
+<% if (cooling_source == "CHILLER") %>
+  <% if (chiller_type == "ELECTRIC") %>
+    <% if (chiller_condenser == "WATERCOOLED") %>
+  Chiller:Electric:ReformulatedEIR,  !- Equipment 1 Object Type
+    <% else %>
+  Chiller:Electric:EIR,    !- Equipment 1 Object Type
+    <% end %>
+  <% elsif (chiller_type == "ABSORPTION") %>
+    <% if (chiller_generator_type == "DIRECTFIRED") %>
+  ChillerHeater:Absorption:DirectFired,  !- Equipment 1 Object Type
+    <% elsif (chiller_generator_type == "HOTWATER" or chiller_generator_type == "STEAM") %>
+  Chiller:Absorption:Indirect,  !- Equipment 1 Object Type
+    <% end %>
+  <% end %>
+<% elsif (cooling_source == "GSHP") %>
+  HeatPump:WaterToWater:EquationFit:Cooling,  !- Equipment 1 Object Type
+<% elsif (cooling_source == "DISTRICT") %>
+  DistrictCooling,  !- Equipment 1 Object Type
+<% end %>
+<% if (num_chillers > 1) %>
+  <% for i in (1..num_chillers-1) %>
+  <%= name %> Chiller <%= i %>,        !- Equipment 1 Name
+  <% if (chiller_condenser == "WATERCOOLED") %>
+  Chiller:Electric:ReformulatedEIR,  !- Equipment 2 Object Type
+  <% else %>
+  Chiller:Electric:EIR,    !- Equipment 2 Object Type
+  <% end %>
+  <% end %>
+  <%= name %> Chiller <%= num_chillers.to_i %>;        !- Equipment 2 Name
+<% else %>
+  <%= name %> Chiller <%= i %>;        !- Equipment 1 Name
+<% end %>
+
+AvailabilityManagerAssignmentList,
+  <%= name %> Availability Managers,  !- Name
+  AvailabilityManager:LowTemperatureTurnOff,  !- Availability Manager 1 Object Type
+  <%= name %> Availability Manager;  !- Availability Manager 1 Name
+
+!AvailabilityManager:Scheduled,
+!  <%= name %> Availability Manager,  !- Name
+!  <%= name %> Operation Schedule;  !- Schedule Name
+
+AvailabilityManager:LowTemperatureTurnOff,
+  <%= name %> Availability Manager,  !- Name
+  <%= name %> Chiller OA Node,  !- Sensor Node Name
+  <%= chiller_outdoor_min %>;  !- Temperature {C}
+
+OutdoorAir:Node,
+  <%= name %> Chiller OA Node;  !- Name
+
+BranchList,
+  <%= name %> Supply Branches,!- Name
+  <%= name %> Supply Inlet Branch,  !- Branch 1 Name
+<% if (chiller_cond_hr) && (chiller_cond_hr_type == "PARALLEL") %>
+  <%= name %> Heat Recovery Chiller Branch,  !- Branch 2 Name
+<% elsif (chiller_heatpump_hr) && (chiller_heatpump_hr_type == "PARALLEL") %>
+  <%= name %> Heat Recovery Chiller Branch,  !- Branch 2 Name
+<% end %>
+<% for i in (1..num_chillers) %>
+  <%= name %> Supply Equipment Branch <%= i %>,  !- Branch 3 Name
+<% end %>
+  <%= name %> Supply Equipment Bypass Branch,  !- Branch 4 Name
+  <%= name %> Supply Outlet Branch;  !- Branch 5 Name
+
+Branch,
+  <%= name %> Supply Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if (pump_type == "CONSTANT") %>
+  Pump:ConstantSpeed,      !- Component 1 Object Type
+<% elsif (pump_type == "VARIABLE") %>
+  Pump:VariableSpeed,      !- Component 1 Object Type
+<% end %>
+  <%= name %> Pump,           !- Component 1 Name
+  <%= name %> Supply Inlet Node,  !- Component 1 Inlet Node Name
+<% if (chiller_economizer) %>
+  <%= name %> Pump Outlet Node,  !- Component 1 Outlet Node Name
+  HeatExchanger:FluidToFluid,  !- Component 1 Object Type
+  <%= name %> Free Cooling HX,  !- Component 1 Name
+  <%= name %> Pump Outlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Free Cooling HX Outlet Node;  !- Component 1 Outlet Node Name
+<% elsif (chiller_cond_hr) && (chiller_cond_hr_type == "SERIES") %>
+  <%= name %> Pump Outlet Node,  !- Component 1 Outlet Node Name
+  Chiller:Electric:EIR,  !- Component 1 Object Type
+  Heat Recovery Chiller,  !- Component 1 Name
+  <%= name %> Pump Outlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Heat Recovery Chiller Outlet Node;  !- Component 1 Outlet Node Name
+<% elsif (chiller_heatpump_hr) && (chiller_heatpump_hr_type == "SERIES") %>
+  <%= name %> Pump Outlet Node,  !- Component 1 Outlet Node Name
+  HeatPump:WaterToWater:EquationFit:Cooling,  !- Component 1 Object Type
+  Heat Recovery Chiller,  !- Component 1 Name
+  <%= name %> Pump Outlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Heat Recovery Chiller Outlet Node;  !- Component 1 Outlet Node Name
+<% else %>
+  <%= name %> Pump Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+
+<% if (pump_type == "CONSTANT") %>
+Pump:ConstantSpeed,
+  <%= name %> Pump,  !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  <%= design_flow %>,  !- Rated Flow Rate {m3/s}
+  <%= pump_head %>,  !- Rated Pump Head {Pa}
+  <%= pump_power %>,  !- Rated Power Consumption {W}
+  <%= pump_eff %>,  !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+<%# if (pump_control == "CONTINUOUS") %>
+<%# There's an EnergyPlus bug with continuous, constant speed pumps that causes overheating.  Always use intermittent mode. %>
+  <%# Continuous;              !- Pump Control Type %>
+<%# elsif (pump_control == "INTERMITTENT") %>
+  Intermittent;            !- Pump Control Type
+<%# end %>
+
+<% elsif (pump_type == "VARIABLE") %>
+Pump:VariableSpeed,
+  <%= name %> Pump,  !- Name
+  <%= name %> Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Pump Outlet Node,  !- Outlet Node Name
+  <%= design_flow %>,  !- Rated Flow Rate {m3/s}
+  <%= pump_head %>,  !- Rated Pump Head {Pa}
+  <%= pump_power %>,  !- Rated Power Consumption {W}
+  <%= pump_eff %>,  !- Motor Efficiency
+  0.0,                     !- Fraction of Motor Inefficiencies to Fluid Stream
+  0,                       !- Coefficient 1 of the Part Load Performance Curve
+  1,                       !- Coefficient 2 of the Part Load Performance Curve
+  0,                       !- Coefficient 3 of the Part Load Performance Curve
+  0,                       !- Coefficient 4 of the Part Load Performance Curve
+  0.0,                     !- Minimum Flow Rate {m3/s}
+<% if (pump_control == "CONTINUOUS") %>
+  Continuous;              !- Pump Control Type
+<% elsif (pump_control == "INTERMITTENT") %>
+  Intermittent;            !- Pump Control Type
+<% end %>
+
+<% end %>
+
+<% if loop_config == "PRIMARY-SECONDARY" %>
+Pump:VariableSpeed,
+  <%= name %> Sec Circ Pump,       !- Name
+  <%= name %> Sec Supply Inlet Node,  !- Inlet Node Name
+  <%= name %> Sec Circ Pump Outlet Node,  !- Outlet Node Name
+  <%= sec_design_flow %>,                  !- Design Maximum Flow Rate
+  <%= sec_pump_head %>,                  !- Design Pump Head
+  <%= sec_pump_power %>,                     !- Design Power Consumption
+  <%= sec_pump_eff %>,                    !- Motor Efficiency
+  0,                       !- Fraction of Motor Inefficiencies to Fluid Stream
+  0,                       !- Coefficient 1 of the Part Load Performance Curve
+  3.2485,                  !- Coefficient 2 of the Part Load Performance Curve
+  -4.7443,                 !- Coefficient 3 of the Part Load Performance Curve
+  2.5295,                  !- Coefficient 4 of the Part Load Performance Curve
+  0,                       !- Design Minimum Flow Rate {m3/s}
+  Intermittent;            !- Pump Control Type
+<% end %>
+<%#
+IMPORTANT!  HeatExchanger:WatersideEconomizer MUST be on the pump branch / inlet branch or it
+will not control properly.  If put on the chiller branch, the chilled water loop setpoint will not
+be met, the cooling tower will appear to be undersized, and other generally strange results.
+UPDATE: This might not apply anymore with new HeatExchanger:FluidToFluid object.
+%>
+
+<% if (chiller_economizer) %>
+
+HeatExchanger:FluidToFluid,
+  <%= name %> Free Cooling HX,  !- Name
+  <%= name %> Operation Schedule,  !- Availability Schedule Name
+  <%= name %> Free Cooling HX Condenser Inlet Node,  !- Loop Demand Side Inlet Node Name
+  <%= name %> Free Cooling HX Condenser Outlet Node,  !- Loop Demand Side Outlet Node Name
+  Autosize,                !- Loop Demand Side Design Flow Rate {m3/s}
+  <%= name %> Pump Outlet Node,  !- Loop Supply Side Inlet Node Name
+  <%= name %> Free Cooling HX Outlet Node,  !- Loop Supply Side Outlet Node Name
+  Autosize,                !- Loop Supply Side Design Flow Rate {m3/s}
+  Ideal,                   !- Heat Exchange Model Type
+  Autosize,                !- Heat Exchanger U-Factor Times Area Value {W/k}
+<%# NOTE: was 1.0 for old HeatExchanger:WatersideEconomizer object. %>
+  CoolingSetpointModulated,  !- Control Type
+  <%= name %> Supply Outlet Node,                        !- Heat Exchanger Setpoint Node Name
+  0.001,                   !- Minimum Temperature Difference to Activate Heat Exchanger {deltaC}
+  FreeCooling;             !- Heat Transfer Metering End Use Type
+
+Branch,
+  <%= name %> Free Cooling HR Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  HeatExchanger:FluidToFluid,  !- Component 1 Object Type
+  <%= name %> Free Cooling HX,  !- Component 1 Name
+  <%= name %> Free Cooling HX Condenser Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Free Cooling HX Condenser Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+
+<% for i in (1..num_chillers) %>
+Branch,
+  <%= name %> Supply Equipment Branch <%= i %>,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if (cooling_source == "CHILLER") %>
+  <% if (chiller_type == "ELECTRIC") %>
+    <% if (chiller_condenser == "WATERCOOLED") %>
+  Chiller:Electric:ReformulatedEIR,  !- Component 1 Object Type
+    <% else %>
+  Chiller:Electric:EIR,    !- Component 1 Object Type
+    <% end %>
+  <% elsif (chiller_type == "ABSORPTION") %>
+    <% if (chiller_generator_type == "DIRECTFIRED") %>
+  ChillerHeater:Absorption:DirectFired,  !- Component 1 Object Type
+    <% elsif (chiller_generator_type == "HOTWATER" or chiller_generator_type == "STEAM") %>
+  Chiller:Absorption:Indirect,  !- Component 1 Object Type
+    <% end %>
+  <% end %>
+<% elsif (cooling_source == "GSHP") %>
+  HeatPump:WaterToWater:EquationFit:Cooling,  !- Component 1 Object Type
+<% elsif (cooling_source == "DISTRICT") %>
+  DistrictCooling,  !- Component 1 Object Type
+<% end %>
+  <%= name %> Chiller <%= i %>,  !- Component 1 Name
+  <%= name %> Chiller <%= i %> Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>;  !- Component 1 Outlet Node Name
+
+<% if (cooling_source == "CHILLER") %>
+<% if (chiller_type == "ELECTRIC") %>
+<% if (chiller_condenser == "WATERCOOLED") %>
+Chiller:Electric:ReformulatedEIR,
+  <%= name %> Chiller <%= i %>,  !- Name
+  Autosize,                !- Reference Capacity {W}
+  <%= chiller_cop %>,  !- Reference COP {}
+  <%= chw_temp_ref %>,                    !- Reference Leaving Chilled Water Temperature {C}
+  <%= cw_temp_ref %>,                    !- Reference Leaving Condenser Water Temperature {C}
+  <%= design_flow %>,  !- Reference Chilled Water Flow Rate {m3/s}
+  Autosize,                !- Reference Condenser Water Flow Rate {m3/s}
+  <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
+  <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
+  LeavingCondenserWaterTemperature,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Type
+  <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
+  0.1,                    !- Minimum Part Load Ratio {}
+  1.0,                     !- Maximum Part Load Ratio {}
+  1.0,                     !- Optimum Part Load Ratio {}
+  0.1,                    !- Minimum Unloading Ratio {}
+  <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Chilled Water Outlet Node Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Condenser Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node,  !- Condenser Outlet Node Name
+  1.0,                     !- Fraction of Compressor Electric Consumption Rejected by Condenser
+  5.0,                     !- Leaving Chilled Water Lower Temperature Limit {C}
+  <%= chiller_flow_mode %>,  !- Chiller Flow Mode Type
+  0.0,                     !- Design Heat Recovery Water Flow Rate {m3/s}
+  ,                        !- Heat Recovery Inlet Node Name
+  ,                        !- Heat Recovery Outlet Node Name
+  <%= chiller_sizing %>;  !- Sizing Factor
+
+Branch,
+  <%= name %> <%= i %> HR Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Chiller:Electric:ReformulatedEIR,    !- Component 1 Object Type
+  <%= name %> Chiller <%= i %>,   !- Component 1 Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
+
+<% else %>
+Chiller:Electric:EIR,
+  <%= name %> Chiller <%= i %>,  !- Name
+  Autosize,                !- Reference Capacity {W}
+  <%= chiller_cop %>,  !- Reference COP {}
+  <%= chw_temp_ref %>,                    !- Reference Leaving Chilled Water Temperature {C}
+  <%= cw_temp_ref %>,                    !- Reference Leaving Condenser Water Temperature {C}
+  <%= design_flow %>,  !- Reference Chilled Water Flow Rate {m3/s}
+  Autosize,                !- Reference Condenser Fluid Flow Rate {m3/s}
+  <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
+  <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
+  <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
+  0.15,                    !- Minimum Part Load Ratio {}
+  1.0,                     !- Maximum Part Load Ratio {}
+  0.8,                     !- Optimum Part Load Ratio {}
+  0.15,                    !- Minimum Unloading Ratio {}
+  <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Chilled Water Outlet Node Name
+  <%= name %> Chiller <%= i %> Condenser Inlet Node,  !- Condenser Inlet Node Name
+  ,                        !- Condenser Outlet Node Name
+<% if (chiller_condenser == "AIRCOOLED") %>
+  AirCooled,               !- Condenser Type
+<% elsif (chiller_condenser == "EVAPCOOLED") %>
+  EvaporativelyCooled,     !- Condenser Type
+<% end %>
+  ,                        !- Condenser Fan Power Ratio {W/W}
+  1.0,                     !- Fraction of Compressor Electric Consumption Rejected by Condenser {}
+  2.0,                     !- Leaving Chilled Water Lower Temperature Limit {C}
+  <%= chiller_flow_mode %>,  !- Chiller Flow Mode
+  0.0,                     !- Design Heat Recovery Water Flow Rate {m3/s}
+  ,                        !- Heat Recovery Inlet Node Name
+  ,                        !- Heat Recovery Outlet Node Name
+  <%= chiller_sizing %>;  !- Sizing Factor
+
+
+OutdoorAir:Node,
+  <%= name %> Chiller <%= i %> Condenser Inlet Node;    !- Name
+
+<% end %>
+
+<% elsif (chiller_type == "ABSORPTION") %>
+<% if (chiller_generator_type == "DIRECTFIRED") %>
+ChillerHeater:Absorption:DirectFired,
+  <%= name %> Chiller <%= i %>,             !- Name
+  Autosize,                  !- Nominal Cooling Capacity {W}
+  0.8,                     !- Heating to Cooling Capacity Ratio
+  0.97,                    !- Fuel Input to Cooling Output Ratio
+  1.25,                    !- Fuel Input to Heating Output Ratio
+  0.01,                    !- Electric Input to Cooling Output Ratio
+  0.005,                       !- Electric Input to Heating Output Ratio
+  <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>, !- Chilled Water Outlet Node Name
+<% if (chiller_condenser == "WATERCOOLED") %>
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Condenser Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node,  !- Condenser Outlet Node Name
+<% else %>
+  <%= name %> Chiller <%= i %> Condenser Inlet Node,  !- Condenser Inlet Node Name
+  <%= name %> Chiller <%= i %> Condenser Outlet Node,  !- Condenser Outlet Node Name
+<% end %>
+  <%= name %> Heat <%= i %> Inlet Node,  !- Hot Water Inlet Node Name
+  <%= name %> Heat <%= i %> Outlet Node,  !- Hot Water Outlet Node Name
+  0.000001,                     !- Minimum Part Load Ratio
+  1.0,                     !- Maximum Part Load Ratio
+  0.6,                     !- Optimum Part Load Ratio
+  29,                      !- Design Entering Condenser Water Temperature {C}
+  7,                       !- Design Leaving Chilled Water Temperature {C}
+  <%= design_flow %>,                  !- Design Chilled Water Flow Rate {m3/s}
+  Autosize,                  !- Design Condenser Water Flow Rate {m3/s}
+  Autosize,                  !- Design Hot Water Flow Rate {m3/s}
+  <%= name %> GasAbsFlatBiQuad,        !- Cooling Capacity Function of Temperature Curve Name
+  <%= name %> GasAbsFlatBiQuad,        !- Fuel Input to Cooling Output Ratio Function of Temperature Curve Name
+  <%= name %> GasAbsLinearQuad,        !- Fuel Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
+  <%= name %> GasAbsFlatBiQuad,        !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
+  <%= name %> GasAbsFlatQuad,          !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
+  <%= name %> GasAbsInvLinearQuad,     !- Heating Capacity Function of Cooling Capacity Curve Name
+  <%= name %> GasAbsLinearQuad,        !- Fuel Input to Heat Output Ratio During Heating Only Operation Curve Name
+  EnteringCondenser,       !- Temperature Curve Input Variable
+<% if (chiller_condenser == "AIRCOOLED") %>
+  AirCooled,               !- Condenser Type
+<% elsif (chiller_condenser == "WATERCOOLED") %>
+  WaterCooled,             !- Condenser Type
+<% end %>
+  2,                       !- Chilled Water Temperature Lower Limit {C}
+  0,                       !- Fuel Higher Heating Value {kJ/kg}
+  VariableFlow,            !- Chiller Flow Mode
+  NaturalGas,              !- Fuel Type
+  <%= chiller_sizing %>;                        !- Sizing Factor
+
+<% if (chiller_condenser == "WATERCOOLED") %>
+Branch,
+  <%= name %> <%= i %> HR Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  ChillerHeater:Absorption:DirectFired,    !- Component 1 Object Type
+  <%= name %> Chiller <%= i %>,   !- Component 1 Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
+<% else %>
+OutdoorAir:Node,
+  <%= name %> Chiller <%= i %> Condenser Inlet Node;    !- Name
+<% end %>
+
+SetpointManager:Scheduled,
+  <%= name %> Chiller <%= i %> HW Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> Chiller <%= i %> HW Loop Temp Schedule,   !- Schedule Name
+  <%= name %> Heat <%= i %> Outlet Node;  !- Setpoint Node or NodeList Name
+
+Schedule:Compact,
+  <%= name %> Chiller <%= i %> HW Loop Temp Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  Through: 12/31,          !- Field 1
+  For: AllDays,            !- Field 2
+  Until: 24:00,60;         !- Field 3
+
+<% else %>
+
+<%# NOTE: Chiller:Absorption:Indirect assumes steam as the source if no generator nodes are specified, even if Generator Heat Source Type is set to "HotWater". %>
+Chiller:Absorption:Indirect,
+  <%= name %> Chiller <%= i %>,             !- Name
+  Autosize,                   !- Nominal Capacity {W}
+  150,                     !- Nominal Pumping Power {W}
+  <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>, !- Chilled Water Outlet Node Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Condenser Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node,  !- Condenser Outlet Node Name
+  0.15,                     !- Minimum Part Load Ratio
+  1.0,                     !- Maximum Part Load Ratio
+  0.65,                    !- Optimum Part Load Ratio
+  35.0,                    !- Design Condenser Inlet Temperature {C}
+  5.0,                    !- Condenser Inlet Temperature Lower Limit {C}
+  5.0,                     !- Chilled Water Outlet Temperature Lower Limit {C}
+  <%= design_flow %>,      !- Design Chilled Water Flow Rate {m3/s}
+  Autosize,                !- Design Condenser Water Flow Rate {m3/s}
+  LeavingSetpointModulated,            !- Chiller Flow Mode
+  <%= name %> SteamUseFPLR,            !- Generator Heat Input Function of Part Load Ratio Curve Name
+  <%= name %> PumpUseFPLR,             !- Pump Electric Input Function of Part Load Ratio Curve Name
+  <% if (chiller_generator_type == "HOTWATER") %>
+  , !<%= name %> Chiller Generator Inlet Node,  !- Generator Inlet Node Name
+  , !<%= name %> Chiller Generator Outlet Node, !- Generator Outlet Node Name
+  <% elsif (chiller_generator_type == "STEAM") %>
+  ,                                       !- Generator Inlet Node Name
+  ,                                       !- Generator Outlet Node Name
+  <% end %>
+  <%= name %> CAPfCOND,                !- Capacity Correction Function of Condenser Temperature Curve Name
+  <%= name %> CAPfEVAP,                !- Capacity Correction Function of Chilled Water Temperature Curve Name
+  ,                                           !- Capacity Correction Function of Generator Temperature Curve Name
+  <%= name %> SteamFCondTemp,          !- Generator Heat Input Correction Function of Condenser Temperature Curve Name
+  <%= name %> SteamFEvapTemp,          !- Generator Heat Input Correction Function of Chilled Water Temperature Curve Name
+  <% if (chiller_generator_type == "HOTWATER") %>
+  HotWater,                   !- Generator Heat Source Type
+  <% elsif (chiller_generator_type == "STEAM") %>
+  Steam,                   !- Generator Heat Source Type
+  <% end %>
+  Autosize,                !- Design Generator Fluid Flow Rate {m3/s}
+  30.0,                    !- Temperature Lower Limit Generator Inlet {C}
+  2.0,                     !- Degree of Subcooling in Steam Generator {C}
+  12.0;                    !- Degree of Subcooling in Steam Condensate Loop {C}
+
+<% if (chiller_condenser == "WATERCOOLED") %>
+Branch,
+  <%= name %> <%= i %> HR Demand Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Chiller:Absorption:Indirect,    !- Component 1 Object Type
+  <%= name %> Chiller <%= i %>,   !- Component 1 Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
+<% else %>
+OutdoorAir:Node,
+  <%= name %> Chiller <%= i %> Condenser Inlet Node;    !- Name
+<% end %>
+
+<%# NOTE: Sizing for a steam loop is needed because Chiller:Absorption:Indirect assumes steam as the source if no generator nodes are specified. %>
+Sizing:Plant,
+  <%= name %> Steam Loop,  !- Plant or Condenser Loop Name
+  Steam,                   !- Loop Type
+  <%= 230|'F' %>,          !- Design Loop Exit Temperature
+  <%= 45|'deltaF' %>;      !- Loop Design Temperature Difference
+<% end %>
+
+<% end %>
+
+<% elsif (cooling_source == "GSHP") %>
+
+<% gshp_cooling_power = gshp_cooling_capacity / gshp_cooling_cop %>
+
+HeatPump:WaterToWater:EquationFit:Cooling,
+  <%= name %> Chiller <%= i %>,  !- Name
+  <%= name %> Chiller Water Inlet Node <%= i %>,  !- Source Side Inlet Node Name
+  <%= name %> Chiller Water Outlet Node <%= i %>,  !- Source Side Outlet Node Name
+  <%= name %> Chiller Inlet Node <%= i %>,  !- Load Side Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Load Side Outlet Node Name
+  1,                       !- Rated Load Side Flow Rate {m3/s} <%# Not used since performance is not a function of flow rate (see coefficients 4 & 5 below %>
+  1,                       !- Rated Source Side Flow Rate {m3/s} <%# Not used since performance is not a function of flow rate (see coefficients 4 & 5 below %>
+  <%= gshp_cooling_capacity %>,  !- Rated Cooling Capacity {W}
+  <%= gshp_cooling_power %>,  !- Rated Cooling Power Consumption {W}
+  -1.15,                   !- Cooling Capacity Coefficient 1
+  3.47,                    !- Cooling Capacity Coefficient 2
+  -1.32,                   !- Cooling Capacity Coefficient 3
+  0,                       !- Cooling Capacity Coefficient 4
+  0,                       !- Cooling Capacity Coefficient 5
+  -8.65,                   !- Cooling Compressor Power Coefficient 1
+  0.96,                    !- Cooling Compressor Power Coefficient 2
+  8.69,                    !- Cooling Compressor Power Coefficient 3
+  0,                       !- Cooling Compressor Power Coefficient 4
+  0;                       !- Cooling Compressor Power Coefficient 5
+
+Branch,
+  <%= name %> GHX Demand Branch <%= i %>,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  HeatPump:WaterToWater:EquationFit:Cooling,  !- Component 1 Object Type
+  <%= name %> Chiller <%= i %>,   !- Component 1 Name
+  <%= name %> Chiller <%= i %> Water Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Chiller <%= i %> Water Outlet Node;  !- Component 1 Outlet Node Name
+
+<% elsif (cooling_source == "DISTRICT") %>
+
+DistrictCooling,
+  <%= name %> Chiller <%= i %>,  !- Name
+  <%= name %> Chiller <%= i %> Inlet Node,  !- Chilled Water Inlet Node Name
+  <%= name %> Supply Equipment Outlet Node <%= i %>,  !- Chilled Water Outlet Node Name
+  1000000000000000;  !- Nominal Capacity {W}
+
+<% end %>
+<% end %>
+
+<% if (chiller_type == "ABSORPTION") %>
+<% if (chiller_generator_type == "DIRECTFIRED") %>
+Curve:Biquadratic,
+  <%= name %> GasAbsFlatBiQuad,        !- Name
+  1.000000000,             !- Coefficient1 Constant
+  0.000000000,             !- Coefficient2 x
+  0.000000000,             !- Coefficient3 x**2
+  0.000000000,             !- Coefficient4 y
+  0.000000000,             !- Coefficient5 y**2
+  0.000000000,             !- Coefficient6 x*y
+  0.,                      !- Minimum Value of x
+  50.,                     !- Maximum Value of x
+  0.,                      !- Minimum Value of y
+  50.;                     !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= name %> GasAbsFlatQuad,          !- Name
+  1.000000000,             !- Coefficient1 Constant
+  0.000000000,             !- Coefficient2 x
+  0.000000000,             !- Coefficient3 x**2
+  0.,                      !- Minimum Value of x
+  50.;                     !- Maximum Value of x
+
+Curve:Quadratic,
+  <%= name %> GasAbsLinearQuad,        !- Name
+  0.000000000,             !- Coefficient1 Constant
+  1.000000000,             !- Coefficient2 x
+  0.000000000,             !- Coefficient3 x**2
+  0.,                      !- Minimum Value of x
+  50.;                     !- Maximum Value of x
+
+Curve:Quadratic,
+  <%= name %> GasAbsInvLinearQuad,     !- Name
+  1.000000000,             !- Coefficient1 Constant
+  -1.000000000,            !- Coefficient2 x
+  0.000000000,             !- Coefficient3 x**2
+  0.,                      !- Minimum Value of x
+  50.;                     !- Maximum Value of x
+<% else %>
+Curve:Cubic,
+  <%= name %> SteamUseFPLR,            !- Name
+  0.18892,                 !- Coefficient1 Constant
+  0.968044,                !- Coefficient2 x
+  1.119202,                !- Coefficient3 x**2
+  -0.5034,                 !- Coefficient4 x**3
+  0.15,                    !- Minimum Value of x
+  1.0;                     !- Maximum Value of x
+
+Curve:Quadratic,
+  <%= name %> PumpUseFPLR,             !- Name
+  1.0,                     !- Coefficient1 Constant
+  0.0,                     !- Coefficient2 x
+  0.0,                     !- Coefficient3 x**2
+  0.15,                    !- Minimum Value of x
+  1.0;                     !- Maximum Value of x
+
+Curve:Cubic,
+  <%= name %> CAPfCOND,                !- Name
+  0.245507,                !- Coefficient1 Constant
+  0.023614,                !- Coefficient2 x
+  0.0000278,               !- Coefficient3 x**2
+  0.000013,                !- Coefficient4 x**3
+  7.0,                     !- Minimum Value of x
+  25.0;                    !- Maximum Value of x
+
+Curve:Cubic,
+  <%= name %> CAPfEVAP,                !- Name
+  0.690571,                !- Coefficient1 Constant
+  0.065571,                !- Coefficient2 x
+  -0.00289,                !- Coefficient3 x**2
+  0.0,                     !- Coefficient4 x**3
+  4.0,                     !- Minimum Value of x
+  10.0;                    !- Maximum Value of x
+
+Curve:Cubic,
+  <%= name %> SteamFCondTemp,          !- Name
+  0.712019,                !- Coefficient1 Constant
+  -0.00478,                !- Coefficient2 x
+  0.000864,                !- Coefficient3 x**2
+  -0.000013,               !- Coefficient4 x**3
+  7.0,                     !- Minimum Value of x
+  30.0,                    !- Maximum Value of x
+  ,                        !- Minimum Curve Output
+  ,                        !- Maximum Curve Output
+  Temperature,             !- Input Unit Type for X
+  Dimensionless;           !- Output Unit Type
+
+Curve:Cubic,
+  <%= name %> SteamFEvapTemp,          !- Name
+  0.995571,                !- Coefficient1 Constant
+  0.046821,                !- Coefficient2 x
+  -0.01099,                !- Coefficient3 x**2
+  0.000608,                !- Coefficient4 x**3
+  4.0,                     !- Minimum Value of x
+  10.0,                    !- Maximum Value of x
+  ,                        !- Minimum Curve Output
+  ,                        !- Maximum Curve Output
+  Temperature,             !- Input Unit Type for X
+  Dimensionless;           !- Output Unit Type
+<% end %>
+<% end %>
+
+<% if (chiller_cond_hr) && (chiller_cond_hr_type == "PARALLEL") %>
+Branch,
+  <%= name %> Heat Recovery Chiller Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Chiller:Electric:EIR,          !- Component 1 Object Type
+  Heat Recovery Chiller,  !- Component 1 Name
+  <%= name %> Heat Recovery Chiller Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Heat Recovery Chiller Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+
+<% if (chiller_cond_hr) %>
+Chiller:Electric:EIR,
+  Heat Recovery Chiller,  !- Name
+  <%= chiller_hr_cap %>,                !- Reference Capacity {W}
+  <%= chiller_hr_cop %>,  !- Reference COP {}
+  6.67,                    !- Reference Leaving Chilled Water Temperature {C}
+  35.0,                    !- Reference Entering Condenser Fluid Temperature {C}
+  Autosize,  !- Reference Chilled Water Flow Rate {m3/s}
+  Autosize,                !- Reference Condenser Water Flow Rate {m3/s}
+  <%= name %> Chiller Cap Curve,  !- Cooling Capacity Function of Temperature Curve Name
+  <%= name %> Chiller EIR Curve,  !- Electric Input to Cooling Output Ratio Function of Temperature Curve Name
+  <%= name %> Chiller PLR Curve,  !- Electric Input to Cooling Output Ratio Function of Part Load Ratio Curve Name
+  0.15,                    !- Minimum Part Load Ratio {}
+  1.0,                     !- Maximum Part Load Ratio {}
+  1.0,                    !- Optimum Part Load Ratio {}
+  0.25,                     !- Minimum Unloading Ratio {}
+<% if (chiller_cond_hr) && (chiller_cond_hr_type == "PARALLEL") %>
+  <%= name %> Heat Recovery Chiller Inlet Node,  !- Chilled Water Inlet Node Name
+<% elsif (chiller_cond_hr) && (chiller_cond_hr_type == "SERIES") %>
+  <%= name %> Pump Outlet Node,  !- Chilled Water Inlet Node Name
+<% end %>
+  <%= name %> Heat Recovery Chiller Outlet Node,  !- Chilled Water Outlet Node Name
+  <%= name %> Heat Recovery Chiller Condenser Inlet Node,  !- Condenser Inlet Node Name
+  <%= name %> Heat Recovery Chiller Condenser Outlet Node,  !- Condenser Outlet Node Name
+<% if (chiller_condenser == "AIRCOOLED") %>
+  AirCooled,               !- Condenser Type
+<% elsif (chiller_condenser == "EVAPCOOLED") %>
+  EvaporativelyCooled,     !- Condenser Type
+<% elsif (chiller_condenser == "WATERCOOLED") %>
+  WaterCooled,             !- Condenser Type
+<% end %>
+  ,                  !- Condenser Fan Power Ratio {W/W}
+  ,                     !- Compressor Motor Efficiency {}
+  2.0,                    !- Leaving Chilled Water Lower Temperature Limit {C}
+  LeavingSetpointModulated,  !- Chiller Flow Mode
+  <%= chiller_hr_flow %>,                 !- Design Heat Recovery Water Flow Rate {m3/s}
+  Heat Recovery Chiller Demand Inlet Node,  !- Heat Recovery Inlet Node Name
+  Heat Recovery Chiller Chiller Outlet Node,  !- Heat Recovery Outlet Node Name
+  ,  !- Sizing Factor
+  ,  !- Basin Heater Capacity
+  ,  !- Basin Heater Setpoint Temperature
+  ,  !- Basin Heater Operating Schedule Name
+  ,  !- Condenser Heat Recovery Relative Capacity Fraction
+  ,  !- Heat Recovery Inlet High Temperature Limit Schedule Name
+  Heat Recovery Chiller Chiller Outlet Node;  !- Heat Recovery Leaving Temperature Setpoint Node Name
+
+SetpointManager:Scheduled,
+  <%= name %> Chiller Heat Recovery Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> Chiller Heat Recovery Supply Temperature Schedule,  !- Schedule Name
+  Heat Recovery Chiller Chiller Outlet Node;  !- Setpoint Node or NodeList Name
+
+Schedule:Constant,
+  <%= name %> Chiller Heat Recovery Supply Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= chiller_hr_temp %>;  !- Hourly Value
+
+<% if (chiller_condenser == "WATERCOOLED") %>
+Branch,
+  <%= name %> Heat Recovery Chiller HR Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Chiller:Electric:EIR,    !- Component 1 Object Type
+  Heat Recovery Chiller,   !- Component 1 Name
+  <%= name %> Heat Recovery Chiller Condenser Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Heat Recovery Chiller Condenser Outlet Node;  !- Component 1 Outlet Node Name
+<% else %>
+OutdoorAir:Node,
+  <%= name %> Heat Recovery Chiller Condenser Inlet Node;    !- Name
+<% end %>
+
+<% end %>
+
+<% if (chiller_heatpump_hr) && (chiller_heatpump_hr_type == "PARALLEL") %>
+Branch,
+  <%= name %> Heat Recovery Chiller Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  HeatPump:WaterToWater:EquationFit:Cooling,          !- Component 1 Object Type
+  Heat Recovery Chiller,  !- Component 1 Name
+  <%= name %> Heat Recovery Chiller Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Heat Recovery Chiller Outlet Node;  !- Component 1 Outlet Node Name
+<% end %>
+
+<% if (chiller_heatpump_hr) %>
+
+<% chiller_hr_power = chiller_hr_cap / chiller_hr_cop %>
+
+HeatPump:WaterToWater:EquationFit:Cooling,
+  Heat Recovery Chiller,  !- Name
+  Heat Recovery Chiller Demand Inlet Node,  !- Heating Loop Inlet Node Name
+  Heat Recovery Chiller Chiller Outlet Node,  !- Heating Loop Outlet Node Name
+<% if (chiller_heatpump_hr) && (chiller_heatpump_hr_type == "PARALLEL") %>
+  <%= name %> Heat Recovery Chiller Inlet Node,  !- Chilled Water Inlet Node Name
+<% elsif (chiller_heatpump_hr) && (chiller_heatpump_hr_type == "SERIES") %>
+  <%= name %> Pump Outlet Node,  !- Chilled Water Inlet Node Name
+<% end %>
+  <%= name %> Heat Recovery Chiller Outlet Node,  !- Chilled Water Outlet Node Name
+    <%= chiller_hr_load_flow %>,                !- Rated Load Side Flow Rate {m3/s}
+    <%= chiller_hr_source_flow %>,                !- Rated Source Side Flow Rate {m3/s}
+    <%= chiller_hr_cap %>,                !- Rated Cooling Capacity {W}
+    <%= chiller_hr_power %>,                 !- Rated Cooling Power Consumption {W}
+!    -0.0000165512319654226,             !- Cooling Capacity Coefficient 1
+!    0.0000349043402820826,              !- Cooling Capacity Coefficient 2
+!    -0.0000140930060297251,             !- Cooling Capacity Coefficient 3
+!    0.999994016718119,              !- Cooling Capacity Coefficient 4
+!    1.75903551280499E-06,             !- Cooling Capacity Coefficient 5
+!    -0.1856841344852,             !- Cooling Compressor Power Coefficient 1
+!    -0.00611874950118363,              !- Cooling Compressor Power Coefficient 2
+!    0.206641840515658,              !- Cooling Compressor Power Coefficient 3
+!    -6.69008616963401,              !- Cooling Compressor Power Coefficient 4
+!    7.66500853002071;             !- Cooling Compressor Power Coefficient 5
+    1,!-1.15,                   !- Cooling Capacity Coefficient 1
+    0,!3.47,                    !- Cooling Capacity Coefficient 2
+    0,!-1.32,                   !- Cooling Capacity Coefficient 3
+    0,!0,                       !- Cooling Capacity Coefficient 4
+    0,!0,                       !- Cooling Capacity Coefficient 5
+    1,!-8.65,                   !- Cooling Compressor Power Coefficient 1
+    0,!0.96,                    !- Cooling Compressor Power Coefficient 2
+    0,!8.69,                    !- Cooling Compressor Power Coefficient 3
+    0,!0,              !- Cooling Compressor Power Coefficient 4
+    0;!0;             !- Cooling Compressor Power Coefficient 5
+
+SetpointManager:Scheduled,
+  <%= name %> Chiller Heat Recovery Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> Chiller Heat Recovery Supply Temperature Schedule,  !- Schedule Name
+  Heat Recovery Chiller Chiller Outlet Node;  !- Setpoint Node or NodeList Name
+
+Schedule:Constant,
+  <%= name %> Chiller Heat Recovery Supply Temperature Schedule,  !- Name
+  Temperature,             !- Schedule Type Limits Name
+  <%= chiller_hr_temp %>;  !- Hourly Value
+
+<% end %>
+
+Branch,
+  <%= name %> Supply Equipment Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Supply Equipment Bypass Pipe,  !- Component 1 Name
+  <%= name %> Supply Equip Bypass Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Equip Bypass Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Supply Equipment Bypass Pipe,  !- Name
+  <%= name %> Supply Equip Bypass Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Equip Bypass Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Supply Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Supply Outlet Pipe,  !- Component 1 Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Supply Outlet Pipe,  !- Name
+  <%= name %> Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Supply Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= name %> Supply Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Supply Splitter,!- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Supply Mixer;   !- Connector 2 Name
+
+<% if loop_config == "PRIMARY-SECONDARY" %>
+ConnectorList,
+  <%= name %> Sec Demand Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Sec Demand Splitter, !- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Sec Demand Mixer;    !- Connector 2 Name
+
+ConnectorList,
+  <%= name %> Sec Supply Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Sec Supply Splitter, !- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Sec Supply Mixer;    !- Connector 2 Name
+
+Connector:Splitter,
+  <%= name %> Sec Demand Splitter, !- Name
+  <%= name %> Sec Demand Inlet Branch,  !- Inlet Branch Name
+  <% for branch_name in branch_names %>
+    <%= branch_name %> CHW Branch,  !- Branch Name
+  <% end %>
+  <%= name %> Sec Demand Bypass Branch;  !- Outlet Branch 5 Name
+
+Connector:Splitter,
+  <%= name %> Sec Supply Splitter, !- Name
+  <%= name %> Sec Supply Inlet Branch,  !- Inlet Branch Name
+  <%= name %> Sec Supply Heat Exchanger Branch,  !- Outlet Branch 1 Name
+  <%= name %> Sec Supply Bypass Branch;  !- Outlet Branch 2 Name
+<% end %>
+
+Connector:Splitter,
+  <%= name %> Supply Splitter,!- Name
+  <%= name %> Supply Inlet Branch,  !- Inlet Branch Name
+<% if (chiller_cond_hr) && (chiller_cond_hr_type == "PARALLEL") %>
+  <%= name %> Heat Recovery Chiller Branch,  !- Branch 2 Name
+<% elsif (chiller_heatpump_hr) && (chiller_heatpump_hr_type == "PARALLEL") %>
+  <%= name %> Heat Recovery Chiller Branch,  !- Branch 2 Name
+<% end %>
+<% for i in (1..num_chillers) %>
+  <%= name %> Supply Equipment Branch <%= i %>,  !- Outlet Branch 2 Name
+<% end %>
+  <%= name %> Supply Equipment Bypass Branch;  !- Outlet Branch 3 Name
+
+Connector:Mixer,
+  <%= name %> Supply Mixer,   !- Name
+  <%= name %> Supply Outlet Branch,  !- Outlet Branch Name
+<% if (chiller_cond_hr) && (chiller_cond_hr_type == "PARALLEL") %>
+  <%= name %> Heat Recovery Chiller Branch,  !- Branch 2 Name
+<% elsif (chiller_heatpump_hr) && (chiller_heatpump_hr_type == "PARALLEL") %>
+  <%= name %> Heat Recovery Chiller Branch,  !- Branch 2 Name
+<% end %>
+<% for i in (1..num_chillers) %>
+  <%= name %> Supply Equipment Branch <%= i %>,  !- Inlet Branch 2 Name
+<% end %>
+  <%= name %> Supply Equipment Bypass Branch;  !- Inlet Branch 3 Name
+
+<% if loop_config == "PRIMARY-SECONDARY" %>
+  Connector:Mixer,
+    <%= name %> Sec Supply Mixer,    !- Name
+    <%= name %> Sec Supply Outlet Branch,  !- Outlet Branch Name
+    <%= name %> Sec Supply Heat Exchanger Branch,  !- Inlet Branch 1 Name
+    <%= name %> Sec Supply Bypass Branch;  !- Inlet Branch 2 Name
+<% end %>
+
+BranchList,
+  <%= name %> Demand Branches,!- Name
+  <%= name %> Demand Inlet Branch,  !- Branch Name
+<% if loop_config == "PRIMARY-SECONDARY"%>
+  <%= name %> Heat Exchanger Demand Branch,  !- Branch Name
+<% else %>
+  <% for branch_name in branch_names %>
+    <%= branch_name %> CHW Branch,  !- Branch Name
+  <% end %>
+<% end %>
+  <%= name %> Demand Bypass Branch,  !- Branch Name
+  <%= name %> Demand Outlet Branch;  !- Branch Name
+
+<% if loop_config == "PRIMARY-SECONDARY"%>
+BranchList,
+  <%= name %> Sec Demand Branches,!- Name
+  <%= name %> Sec Demand Inlet Branch,  !- Branch Name
+  <% for branch_name in branch_names %>
+    <%= branch_name %> CHW Branch,  !- Branch Name
+  <% end %>
+  <%= name %> Sec Demand Bypass Branch,  !- Branch Name
+  <%= name %> Sec Demand Outlet Branch;  !- Branch Name
+
+BranchList,
+  <%= name %> Sec Supply Branches,!- Name
+  <%= name %> Sec Supply Inlet Branch,  !- Branch 1 Name
+  <%= name %> Sec Supply Heat Exchanger Branch,  !- Branch 2 Name
+  <%= name %> Sec Supply Bypass Branch,  !- Branch 3 Name
+  <%= name %> Sec Supply Outlet Branch;  !- Branch 4 Name
+<% end %>
+
+Branch,
+  <%= name %> Demand Inlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+<% if loop_config == "PRIMARY-SECONDARY-COMMON" %>
+  Pump:VariableSpeed,      !- Component 1 Object Type
+  <%= name %> Pump Secondary,  !- Component 1 Name
+  <%= name %> Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Inlet Outlet Node;  !- Component 1 Outlet Node Name
+
+Pump:VariableSpeed,
+  <%= name %> Pump Secondary,       !- Name
+  <%= name %> Demand Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Inlet Outlet Node,  !- Outlet Node Name
+  <%= sec_design_flow %>,                  !- Design Maximum Flow Rate
+  <%= sec_pump_head %>,                  !- Design Pump Head
+  <%= sec_pump_power %>,                     !- Design Power Consumption
+  <%= sec_pump_eff %>,                    !- Motor Efficiency
+  0,                       !- Fraction of Motor Inefficiencies to Fluid Stream
+  0,                       !- Coefficient 1 of the Part Load Performance Curve
+  3.2485,                  !- Coefficient 2 of the Part Load Performance Curve
+  -4.7443,                 !- Coefficient 3 of the Part Load Performance Curve
+  2.5295,                  !- Coefficient 4 of the Part Load Performance Curve
+  0,                       !- Design Minimum Flow Rate {m3/s}
+  Intermittent;            !- Pump Control Type
+
+SetpointManager:Scheduled,
+  <%= name %> Sec Loop Setpoint Manager,  !- Name
+  Temperature,             !- Control Variable
+  <%= name %> Supply Temperature Schedule,   !- Schedule Name
+  <%= name %> Demand Inlet Node;   !- Setpoint Node or NodeList Name
+
+<% else %>
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Inlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Inlet Pipe,  !- Name
+  <%= name %> Demand Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+<% end %>
+
+Branch,
+  <%= name %> Demand Bypass Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Bypass Pipe,  !- Component 1 Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Bypass Pipe,  !- Name
+  <%= name %> Demand Bypass Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Bypass Pipe Outlet Node;  !- Outlet Node Name
+
+Branch,
+  <%= name %> Demand Outlet Branch,  !- Name
+  ,                        !- Pressure Drop Curve Name
+  Pipe:Adiabatic,          !- Component 1 Object Type
+  <%= name %> Demand Outlet Pipe,  !- Component 1 Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Component 1 Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Demand Outlet Pipe,  !- Name
+  <%= name %> Demand Outlet Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Demand Outlet Node;  !- Outlet Node Name
+
+ConnectorList,
+  <%= name %> Demand Connectors,  !- Name
+  Connector:Splitter,      !- Connector 1 Object Type
+  <%= name %> Demand Splitter,!- Connector 1 Name
+  Connector:Mixer,         !- Connector 2 Object Type
+  <%= name %> Demand Mixer;   !- Connector 2 Name
+
+Connector:Splitter,
+  <%= name %> Demand Splitter,!- Name
+  <%= name %> Demand Inlet Branch,  !- Inlet Branch Name
+<% if loop_config == "PRIMARY-SECONDARY" %>
+    <%= name %> Heat Exchanger Demand Branch,  !- Outlet Branch Name
+<% else %>
+  <% for branch_name in branch_names %>
+    <%= branch_name %> CHW Branch,  !- Outlet Branch Name
+  <% end %>
+<% end %>
+  <%= name %> Demand Bypass Branch;  !- Outlet Branch Name
+
+Connector:Mixer,
+  <%= name %> Demand Mixer,   !- Name
+  <%= name %> Demand Outlet Branch,  !- Outlet Branch Name
+<% if loop_config == "PRIMARY-SECONDARY" %>
+  <%= name %> Heat Exchanger Demand Branch,  !- Outlet Branch Name
+<% else %>
+  <% for branch_name in branch_names %>
+    <%= branch_name %> CHW Branch,  !- Inlet Branch Name
+  <% end %>
+<% end %>
+  <%= name %> Demand Bypass Branch;  !- Inlet Branch Name
+
+<% if loop_config == "PRIMARY-SECONDARY" %>
+Connector:Mixer,
+  <%= name %> Sec Demand Mixer,    !- Name
+  <%= name %> Sec Demand Outlet Branch,  !- Outlet Branch Name
+  <% for branch_name in branch_names %>
+    <%= branch_name %> CHW Branch,  !- Inlet Branch Name
+  <% end %>
+  <%= name %> Sec Demand Bypass Branch;  !- Inlet Branch 5 Name
+
+Pipe:Adiabatic,
+  <%= name %> Sec Demand Bypass Pipe,  !- Name
+  <%= name %> Sec Demand Bypass Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Sec Demand Bypass Pipe Outlet Node;  !- Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Sec Demand Inlet Pipe,  !- Name
+  <%= name %> Sec Demand Inlet Node,  !- Inlet Node Name
+  <%= name %> Sec Demand Entrance Pipe Outlet Node;  !- Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Sec Demand Outlet Pipe,  !- Name
+  <%= name %> Sec Demand Exit Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Sec Demand Outlet Node;  !- Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Sec Supply Bypass Pipe,  !- Name
+  <%= name %> Sec Supply Bypass Inlet Node,  !- Inlet Node Name
+  <%= name %> Sec Supply Bypass Outlet Node;  !- Outlet Node Name
+
+Pipe:Adiabatic,
+  <%= name %> Sec Supply Outlet Pipe,  !- Name
+  <%= name %> Sec Supply Exit Pipe Inlet Node,  !- Inlet Node Name
+  <%= name %> Sec Supply Outlet Node;  !- Outlet Node Name
+
+
+<% end %>
+
+<% if (cooling_source == "CHILLER") %>
+  <% if (chiller_type == "ELECTRIC") %>
+<% if (chiller_model == "TRANE_RTAA_125") %>
+! TRANE RTAA 125 performance curves
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.754288669,             !- Coefficient1 Constant
+  0.06077175,              !- Coefficient2 x
+  -0.000206602,            !- Coefficient3 x**2
+  0.009280028,             !- Coefficient4 y
+  -0.000215216,            !- Coefficient5 y**2
+  -0.000869018,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.749522947,             !- Coefficient1 Constant
+  -0.000485997,            !- Coefficient2 x
+  0.000212959,             !- Coefficient3 x**2
+  -0.007691215,            !- Coefficient4 y
+  0.000523089,             !- Coefficient5 y**2
+  -0.000545585,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+Curve:Quadratic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  0.76467456,              !- Coefficient1 Constant
+  -0.318529669,            !- Coefficient2 x
+  0.563591573,             !- Coefficient3 x**2
+  0,                       !- Minimum Value of x
+  1.5,                     !- Maximum Value of x
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+<% elsif (chiller_model == "TRANE_CGA_120") %>
+! Trane CGA 120 performance curves
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.993364573,             !- Coefficient1 Constant
+  0.035138141,             !- Coefficient2 x
+  0.00032722,              !- Coefficient3 x**2
+  -0.003473761,            !- Coefficient4 y
+  -5.33148E-05,            !- Coefficient5 y**2
+  -0.000229757,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.638754676,             !- Coefficient1 Constant
+  -0.007435483,            !- Coefficient2 x
+  0.00057686,              !- Coefficient3 x**2
+  -0.00086099,             !- Coefficient4 y
+  0.000474989,             !- Coefficient5 y**2
+  -0.000707363,            !- Coefficient6 x*y
+  0,                       !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0,                       !- Minimum Value of y
+  100,                     !- Maximum Value of y
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+Curve:Quadratic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  0.7541142,               !- Coefficient1 Constant
+  -0.320493533,            !- Coefficient2 x
+  0.566095203,             !- Coefficient3 x**2
+  0,                       !- Minimum Value of x
+  1.5,                     !- Maximum Value of x
+  0,                       !- Minimum Curve Output
+  1.5;                     !- Maximum Curve Output
+
+<% elsif (chiller_model == "Air-Cooled GTE 150tons Default 90.1-2004") %>
+! Curve adapted by R. Lord for ANSI/ASHRAE/IESNA 90.1-2004 performance
+! for an air-cooled chiller
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  1.0433811,               !- Coefficient1 Constant
+  0.0407077,               !- Coefficient2 x
+  0.0004506,               !- Coefficient3 x**2
+  -0.0041514,              !- Coefficient4 y
+  -0.0000886,              !- Coefficient5 y**2
+  -0.0003467,              !- Coefficient6 x*y
+  0.0,                     !- Minimum Value of x
+  20.0,                    !- Maximum Value of x
+  0.0,                     !- Minimum Value of y
+  50.0;                    !- Maximum Value of y
+
+! Curve adapted by R. Lord for ANSI/ASHRAE/IESNA 90.1-2004 performance
+! for an air-cooled chiller
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.5961915,               !- Coefficient1 Constant
+  -0.0099496,              !- Coefficient2 x
+  0.0007888,               !- Coefficient3 x**2
+  0.0004506,               !- Coefficient4 y
+  0.0004875,               !- Coefficient5 y**2
+  -0.0007623,              !- Coefficient6 x*y
+  0.0,                     !- Minimum Value of x
+  20.0,                    !- Maximum Value of x
+  0.0,                     !- Minimum Value of y
+  50.0;                    !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  0.0727,                  !- Coefficient1 Constant
+  0.953,                   !- Coefficient2 x
+  -0.0266,                 !- Coefficient3 x**2
+  0.0,                     !- Minimum Value of x
+  1.2;                     !- Maximum Value of x
+
+<% elsif (chiller_model == "WC Screw Default 90.1-2004") %>
+! ElectricEIRChiller Carrier 23XL 1062kW/5.50COP/Valve
+! Manufacturer = Carrier, Model Line = 23XL
+! Reference Capacity = 1062 kW (302 tons)
+! Compressor Type = Screw, Condenser Type = Water
+! Refrigerant = R-22, Voltage & Phase = N/A
+! Unloading Mechanism = Slide Valve
+
+! Cooling Capacity Function of Temperature Curve
+! x = Leaving Chilled Water Temperature and y = Entering Condenser Water Temperature
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  1.025695E+00,            !- Coefficient1 Constant
+  2.327484E-02,            !- Coefficient2 x
+  -4.693708E-03,           !- Coefficient3 x**2
+  -7.092715E-03,           !- Coefficient4 y
+  -3.754967E-04,           !- Coefficient5 y**2
+  2.843046E-03,            !- Coefficient6 x*y
+  6.67,                    !- Minimum Value of x
+  10.00,                   !- Maximum Value of x
+  21.11,                   !- Minimum Value of y
+  29.44;                   !- Maximum Value of y
+
+! Energy Input to Cooling Output Ratio Function of Temperature Curve
+! x = Leaving Chilled Water Temperature and y = Entering Condenser Water Temperature
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  2.634070E-01,            !- Coefficient1 Constant
+  -7.025220E-03,           !- Coefficient2 x
+  -4.942613E-04,           !- Coefficient3 x**2
+  2.516931E-02,            !- Coefficient4 y
+  1.712769E-04,            !- Coefficient5 y**2
+  -4.309735E-04,           !- Coefficient6 x*y
+  6.67,                    !- Minimum Value of x
+  10.00,                   !- Maximum Value of x
+  21.11,                   !- Minimum Value of y
+  29.44;                   !- Maximum Value of y
+
+! Energy Input to Cooling Output Ratio Function of Part Load Ratio Curve
+! x = Part Load Ratio (load/capacity)
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  4.602131E-02,            !- Coefficient1 Constant
+  2.433945E-02,            !- Coefficient2 x
+  6.394526E-05,            !- Coefficient3 x**2
+  -3.648563E-01,           !- Coefficient4 y
+  1.854759E+00,            !- Coefficient5 y**2
+  -2.809346E-02,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  -4.821515E-01,           !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  14.56,                   !- Minimum Value of x
+  34.97,                   !- Maximum Value of x
+  0.18,                    !- Minimum Value of y
+  1.03,                    !- Maximum Value of y
+  ,                        !- Minimum Curve Output
+  ,                        !- Maximum Curve Output
+  Temperature,             !- Input Unit Type for X
+  Dimensionless,           !- Input Unit Type for Y
+  Dimensionless;           !- Output Unit Type
+
+! used to be:
+! Curve:Quadratic,
+!   <%= name %> Chiller PLR Curve,  !- Name
+!   2.576261E-01,            !- Coefficient1 Constant
+!   3.416910E-01,            !- Coefficient2 x
+!   4.007672E-01,            !- Coefficient3 x**2
+!   0.20,                    !- Minimum Value of x
+!   1.01;                    !- Maximum Value of x
+
+<% elsif (chiller_model == "WC Centrifugal Default 90.1-2004") %>
+! ElectricEIRChiller York YT 1055kW/5.96COP/Vanes
+! Manufacturer = York, Model Line = YT
+! Reference Capacity = 1055 kW (300 tons)
+! Compressor Type = Centrifugal, Condenser Type = Water
+! Refrigerant = R-123, Voltage & Phase = 460V-3PH-60HZ
+! Unloading Mechanism = Inlet Vanes
+!
+
+! Cooling Capacity Function of Temperature Curve
+! x = Leaving Chilled Water Temperature and y = Entering Condenser Water Temperature
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  1.785912E-01,            !- Coefficient1 Constant
+  -5.900023E-02,           !- Coefficient2 x
+  -5.946963E-04,           !- Coefficient3 x**2
+  9.297889E-02,            !- Coefficient4 y
+  -2.841024E-03,           !- Coefficient5 y**2
+  4.974221E-03,            !- Coefficient6 x*y
+  4.44,                    !- Minimum Value of x
+  8.89,                    !- Maximum Value of x
+  12.78,                   !- Minimum Value of y
+  35.00;                   !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Temperature Curve
+! x = Leaving Chilled Water Temperature and y = Entering Condenser Water Temperature
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.7728770,               !- Coefficient1 Constant
+  0.0221010,               !- Coefficient2 x
+  -0.0000799,              !- Coefficient3 x**2
+  -0.0070045,              !- Coefficient4 y
+  0.0004763,               !- Coefficient5 y**2
+  -0.0010612,              !- Coefficient6 x*y
+  0.0,                     !- Minimum Value of x
+  20.0,                    !- Maximum Value of x
+  0.0,                     !- Minimum Value of y
+  50.0;                    !- Maximum Value of y
+
+!
+! Energy Input to Cooling Output Ratio Function of Part Load Ratio Curve
+! x = Part Load Ratio (load/capacity)
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  4.602131E-02,            !- Coefficient1 Constant
+  2.433945E-02,            !- Coefficient2 x
+  6.394526E-05,            !- Coefficient3 x**2
+  -3.648563E-01,           !- Coefficient4 y
+  1.854759E+00,            !- Coefficient5 y**2
+  -2.809346E-02,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  -4.821515E-01,           !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  14.56,                   !- Minimum Value of x
+  34.97,                   !- Maximum Value of x
+  0.18,                    !- Minimum Value of y
+  1.03,                    !- Maximum Value of y
+  ,                        !- Minimum Curve Output
+  ,                        !- Maximum Curve Output
+  Temperature,             !- Input Unit Type for X
+  Dimensionless,           !- Input Unit Type for Y
+  Dimensionless;           !- Output Unit Type
+
+! used to be:
+! Curve:Quadratic,
+!   <%= name %> Chiller PLR Curve,  !- Name
+!   2.619878E-01,            !- Coefficient1 Constant
+!   2.393605E-01,            !- Coefficient2 x
+!   4.988306E-01,            !- Coefficient3 x**2
+!   0.10,                    !- Minimum Value of x
+!   1.05;                    !- Maximum Value of x
+
+<% elsif (chiller_model == "AC 2010") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  1.0433825,                  !- Coefficient1 Constant
+  0.0407073,                  !- Coefficient2 x
+  0.0004506,                  !- Coefficient3 x**2
+  -0.0041514,                 !- Coefficient4 y
+  -0.0000886,                 !- Coefficient5 y**2
+  -0.0003467,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  12.7,                   !- Minimum Value of y
+  51.67;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.5961907,                  !- Coefficient1 Constant
+  -0.0099493,                 !- Coefficient2 x
+  0.0007888,                  !- Coefficient3 x**2
+  0.0004506,                  !- Coefficient4 y
+  0.0004875,                  !- Coefficient5 y**2
+  -0.0007623,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  12.7,                   !- Minimum Value of y
+  51.67;                  !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  0.1410,                  !- Coefficient1 Constant
+  0.6550,                  !- Coefficient2 x
+  0.2030,                  !- Coefficient3 x**2
+  0.0000,                  !- Minimum Value of x
+  1.0000;                  !- Maximum Value of x
+
+<% elsif (chiller_model == "AC 2004") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  1.0433811,                  !- Coefficient1 Constant
+  0.0407077,                  !- Coefficient2 x
+  0.0004506,                  !- Coefficient3 x**2
+  -0.0041514,                 !- Coefficient4 y
+  -0.0000886,                 !- Coefficient5 y**2
+  -0.0003467,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  12.7,                   !- Minimum Value of y
+  51.67;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.5961915,                  !- Coefficient1 Constant
+  -0.0099496,                 !- Coefficient2 x
+  0.0007888,                  !- Coefficient3 x**2
+  0.0004506,                  !- Coefficient4 y
+  0.0004875,                  !- Coefficient5 y**2
+  -0.0007623,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  12.7,                   !- Minimum Value of y
+  51.67;                  !- Maximum Value of y
+
+Curve:Quadratic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  0.1410,                  !- Coefficient1 Constant
+  0.6550,                  !- Coefficient2 x
+  0.2030,                  !- Coefficient3 x**2
+  0.0000,                  !- Minimum Value of x
+  1.0000;                  !- Maximum Value of x
+
+<% elsif (chiller_model == "WC Cent 2010 A") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.7600172,                  !- Coefficient1 Constant
+  0.0147432,                  !- Coefficient2 x
+  0.0002144,                  !- Coefficient3 x**2
+  0.0207218,                  !- Coefficient4 y
+  -0.0006425,                 !- Coefficient5 y**2
+  0.0008007,                  !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.6772577,                  !- Coefficient1 Constant
+  0.0117857,                  !- Coefficient2 x
+  -0.0001967,                 !- Coefficient3 x**2
+  0.0014414,                  !- Coefficient4 y
+  0.0003005,                  !- Coefficient5 y**2
+  -0.0006807,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  -1.360532E-01,           !- Coefficient1 Constant
+  8.642703E-03,            !- Coefficient2 x
+  3.855583E-06,            !- Coefficient3 x**2
+  1.024034E+00,            !- Coefficient4 y
+  6.047444E-02,            !- Coefficient5 y**2
+  -8.947860E-03,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  5.706602E-02,            !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  31.13,                   !- Minimum Value of x
+  36.52,                   !- Maximum Value of x
+  0.19,                    !- Minimum Value of y
+  1.03;                    !- Maximum Value of y
+
+<% elsif (chiller_model == "T24PathBGtEql300Lt600tonQRatio") %>
+! ChlrWtrCentPathBGtEql300Lt600tonQRatio_fTchwsTcwsSI
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  1.35608,                 !- Coefficient1 Constant
+  0.04875,                 !- Coefficient2 x
+  -0.000888,               !- Coefficient3 x**2
+  -0.014525,               !- Coefficient4 y
+  -0.000286,               !- Coefficient5 y**2
+  -4.0e-05,                !- Coefficient6 x*y
+  4.44,                    !- Minimum Value of x
+  12.22,                   !- Maximum Value of x
+  15.56,                   !- Minimum Value of y
+  29.44,                   !- Maximum Value of y
+  0.87,                    !- Minimum Curve Output
+  1.52;                    !- Maximum Curve Output
+
+! ChlrWtrCentPathBGtEql300Lt600tonEIRRatio_fTchwsTcwsSI
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.756376,                !- Coefficient1 Constant
+  -0.015019,               !- Coefficient2 x
+  0.000156,                !- Coefficient3 x**2
+  0.00246,                 !- Coefficient4 y
+  0.000515,                !- Coefficient5 y**2
+  -0.000687,               !- Coefficient6 x*y
+  4.44,                    !- Minimum Value of x
+  12.22,                   !- Maximum Value of x
+  15.56,                   !- Minimum Value of y
+  29.44,                   !- Maximum Value of y
+  0.63,                    !- Minimum Curve Output
+  1.12;                    !- Maximum Curve Output
+
+! ChlrWtrCentPathBGtEql300Lt600tonEIRRatio_fQRatio
+Curve:Quadratic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  0.055483,                !- Coefficient1 Constant
+  0.451866,                !- Coefficient2 x
+  0.488242,                !- Coefficient3 x**2
+  0.1,                     !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0.11;                    !- Minimum Curve Output
+
+
+<% elsif (chiller_model == "ChlrWtrPosDispPathBAll") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.899926,                !- Coefficient1 Constant
+  0.030102,                !- Coefficient2 x
+  -0.000332,               !- Coefficient3 x**2
+  -0.001743,               !- Coefficient4 y
+  -9.2e-05,                !- Coefficient5 y**2
+  0.000229,                !- Coefficient6 x*y
+  4.44,                    !- Minimum Value of x
+  12.22,                   !- Maximum Value of x
+  15.56,                   !- Minimum Value of y
+  29.44,                   !- Maximum Value of y
+  0.93,                    !- Minimum Curve Output
+  1.21;                    !- Maximum Curve Output
+
+! ChlrWtrPosDispPathBAllEIRRatio_fTchwsTcwsSI
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.428265,                !- Coefficient1 Constant
+  -0.024071,               !- Coefficient2 x
+  0.000849,                !- Coefficient3 x**2
+  0.016416,                !- Coefficient4 y
+  0.000381,                !- Coefficient5 y**2
+  -0.00059,                !- Coefficient6 x*y
+  4.44,                    !- Minimum Value of x
+  12.22,                   !- Maximum Value of x
+  15.56,                   !- Minimum Value of y
+  29.44,                   !- Maximum Value of y
+  0.5,                     !- Minimum Curve Output
+  1.07;                    !- Maximum Curve Output
+
+! ChlrWtrPosDispPathBAllEIRRatio_fQRatio
+Curve:Quadratic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  0,                       !- Coefficient1 Constant
+  0.6206,                  !- Coefficient2 x
+  0.3893,                  !- Coefficient3 x**2
+  0.1,                     !- Minimum Value of x
+  100,                     !- Maximum Value of x
+  0.07;                    !- Minimum Curve Output
+
+<% elsif (chiller_model == "WC Cent 2010 B") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.5362340,                  !- Coefficient1 Constant
+  0.005581,                  !- Coefficient2 x
+  -0.0013654,                 !- Coefficient3 x**2
+  0.0488966,                 !- Coefficient4 y
+  -0.0012018,                 !- Coefficient5 y**2
+  0.0010523,                  !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  1.0821822,                  !- Coefficient1 Constant
+  0.0042977,                 !- Coefficient2 x
+  -0.0013182,                  !- Coefficient3 x**2
+  -0.0260781,                  !- Coefficient4 y
+  0.0008256,                  !- Coefficient5 y**2
+  -0.0006013,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  -1.360532E-01,           !- Coefficient1 Constant
+  8.642703E-03,            !- Coefficient2 x
+  3.855583E-06,            !- Coefficient3 x**2
+  1.024034E+00,            !- Coefficient4 y
+  6.047444E-02,            !- Coefficient5 y**2
+  -8.947860E-03,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  5.706602E-02,            !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  31.13,                   !- Minimum Value of x
+  36.52,                   !- Maximum Value of x
+  0.19,                    !- Minimum Value of y
+  1.03;                    !- Maximum Value of y
+
+<% elsif (chiller_model == "WC Cent 2004 Small") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.7446451,                  !- Coefficient1 Constant
+  0.0114858,                  !- Coefficient2 x
+  0.0000148,                  !- Coefficient3 x**2
+  0.0224010,                  !- Coefficient4 y
+  -0.0006880,                  !- Coefficient5 y**2
+  0.0009839,                  !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.7728770,                  !- Coefficient1 Constant
+  0.0221010,                  !- Coefficient2 x
+  -0.0000799,                 !- Coefficient3 x**2
+  -0.0070045,                 !- Coefficient4 y
+  0.0004763,                  !- Coefficient5 y**2
+  -0.0010612,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  -1.360532E-01,           !- Coefficient1 Constant
+  8.642703E-03,            !- Coefficient2 x
+  3.855583E-06,            !- Coefficient3 x**2
+  1.024034E+00,            !- Coefficient4 y
+  6.047444E-02,            !- Coefficient5 y**2
+  -8.947860E-03,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  5.706602E-02,            !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  31.13,                   !- Minimum Value of x
+  36.52,                   !- Maximum Value of x
+  0.19,                    !- Minimum Value of y
+  1.03;                    !- Maximum Value of y
+
+<% elsif (chiller_model == "WC Cent 2004 Large") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.7600172,                  !- Coefficient1 Constant
+  0.0147432,                  !- Coefficient2 x
+  0.0002144,                  !- Coefficient3 x**2
+  0.0207218,                  !- Coefficient4 y
+  -0.0006425,                 !- Coefficient5 y**2
+  0.0008007,                  !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.6772577,                  !- Coefficient1 Constant
+  0.0117857,                  !- Coefficient2 x
+  -0.0001967,                 !- Coefficient3 x**2
+  0.0014414,                  !- Coefficient4 y
+  0.0003005,                  !- Coefficient5 y**2
+  -0.0006807,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  -1.360532E-01,           !- Coefficient1 Constant
+  8.642703E-03,            !- Coefficient2 x
+  3.855583E-06,            !- Coefficient3 x**2
+  1.024034E+00,            !- Coefficient4 y
+  6.047444E-02,            !- Coefficient5 y**2
+  -8.947860E-03,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  5.706602E-02,            !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  31.13,                   !- Minimum Value of x
+  36.52,                   !- Maximum Value of x
+  0.19,                    !- Minimum Value of y
+  1.03;                    !- Maximum Value of y
+
+<% elsif (chiller_model == "WC PD 2010 B") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.9061171,                  !- Coefficient1 Constant
+  0.0292267,                  !- Coefficient2 x
+  -0.0003665,                 !- Coefficient3 x**2
+  -0.0009698,                 !- Coefficient4 y
+  -0.0000907,                 !- Coefficient5 y**2
+  0.0002535,                  !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.3617782,                  !- Coefficient1 Constant
+  -0.0230016,                 !- Coefficient2 x
+  0.0009672,                  !- Coefficient3 x**2
+  0.0131801,                  !- Coefficient4 y
+  0.0003761,                  !- Coefficient5 y**2
+  -0.0007121,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  -1.360532E-01,           !- Coefficient1 Constant
+  8.642703E-03,            !- Coefficient2 x
+  3.855583E-06,            !- Coefficient3 x**2
+  1.024034E+00,            !- Coefficient4 y
+  6.047444E-02,            !- Coefficient5 y**2
+  -8.947860E-03,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  5.706602E-02,            !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  31.13,                   !- Minimum Value of x
+  36.52,                   !- Maximum Value of x
+  0.19,                    !- Minimum Value of y
+  1.03;                    !- Maximum Value of y
+
+<% elsif (chiller_model == "WC PD 2010 A Small") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.9061150,                  !- Coefficient1 Constant
+  0.0292277,                  !- Coefficient2 x
+  -0.0003647,                 !- Coefficient3 x**2
+  -0.0009709,                 !- Coefficient4 y
+  -0.0000905,                 !- Coefficient5 y**2
+  0.0002527,                  !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.3617105,                  !- Coefficient1 Constant
+  -0.0229833,                 !- Coefficient2 x
+  0.0009519,                  !- Coefficient3 x**2
+  0.0131889,                  !- Coefficient4 y
+  0.0003752,                  !- Coefficient5 y**2
+  -0.0007059,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  -1.360532E-01,           !- Coefficient1 Constant
+  8.642703E-03,            !- Coefficient2 x
+  3.855583E-06,            !- Coefficient3 x**2
+  1.024034E+00,            !- Coefficient4 y
+  6.047444E-02,            !- Coefficient5 y**2
+  -8.947860E-03,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  5.706602E-02,            !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  31.13,                   !- Minimum Value of x
+  36.52,                   !- Maximum Value of x
+  0.19,                    !- Minimum Value of y
+  1.03;                    !- Maximum Value of y
+
+<% elsif (chiller_model == "WC PD 2010 A Large") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.9061150,                  !- Coefficient1 Constant
+  0.0292277,                  !- Coefficient2 x
+  -0.0003647,                 !- Coefficient3 x**2
+  -0.0009709,                 !- Coefficient4 y
+  -0.0000905,                 !- Coefficient5 y**2
+  0.0002527,                  !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.3773115,                  !- Coefficient1 Constant
+  -0.0229032,                 !- Coefficient2 x
+  0.0016504,                  !- Coefficient3 x**2
+  0.0118156,                  !- Coefficient4 y
+  0.0004345,                  !- Coefficient5 y**2
+  -0.0010132,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  -1.360532E-01,           !- Coefficient1 Constant
+  8.642703E-03,            !- Coefficient2 x
+  3.855583E-06,            !- Coefficient3 x**2
+  1.024034E+00,            !- Coefficient4 y
+  6.047444E-02,            !- Coefficient5 y**2
+  -8.947860E-03,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  5.706602E-02,            !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  31.13,                   !- Minimum Value of x
+  36.52,                   !- Maximum Value of x
+  0.19,                    !- Minimum Value of y
+  1.03;                    !- Maximum Value of y
+
+<% elsif (chiller_model == "WC PD 2004") %>
+
+Curve:Biquadratic,
+  <%= name %> Chiller Cap Curve,  !- Name
+  0.9061150,                  !- Coefficient1 Constant
+  0.0292277,                  !- Coefficient2 x
+  -0.0003647,                 !- Coefficient3 x**2
+  -0.0009709,                 !- Coefficient4 y
+  -0.0000905,                 !- Coefficient5 y**2
+  0.0002527,                  !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Biquadratic,
+  <%= name %> Chiller EIR Curve,  !- Name
+  0.3617105,                  !- Coefficient1 Constant
+  -0.0229833,                 !- Coefficient2 x
+  0.0009519,                  !- Coefficient3 x**2
+  0.0131889,                  !- Coefficient4 y
+  0.0003752,                  !- Coefficient5 y**2
+  -0.0007059,                 !- Coefficient6 x*y
+  5.0000,                   !- Minimum Value of x
+  10.0000,                  !- Maximum Value of x
+  17.78,                  !- Minimum Value of y
+  46.11;                  !- Maximum Value of y
+
+Curve:Bicubic,
+  <%= name %> Chiller PLR Curve,  !- Name
+  -1.360532E-01,           !- Coefficient1 Constant
+  8.642703E-03,            !- Coefficient2 x
+  3.855583E-06,            !- Coefficient3 x**2
+  1.024034E+00,            !- Coefficient4 y
+  6.047444E-02,            !- Coefficient5 y**2
+  -8.947860E-03,           !- Coefficient6 x*y
+  0.000000E+00,            !- Coefficient7 x**3
+  5.706602E-02,            !- Coefficient8 y**3
+  0.000000E+00,            !- Coefficient9 x**2*y
+  0.000000E+00,            !- Coefficient10 x*y**2
+  31.13,                   !- Minimum Value of x
+  36.52,                   !- Maximum Value of x
+  0.19,                    !- Minimum Value of y
+  1.03;                    !- Maximum Value of y
+
+  <% end %>
+  <% end %>
+<% end %>
