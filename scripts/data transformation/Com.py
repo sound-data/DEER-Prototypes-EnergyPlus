@@ -694,13 +694,9 @@ converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Cons
 df_long = converted_long_df.sort_values(['BldgType','BldgLoc', 'TechID', 'hr in 8760'])
 
 #%% 
-#create groupby ids for each 8760 set
-df_long['set_id'] = (df_long['hr in 8760'].eq(1)
-                .groupby([df_long['BldgLoc'], df_long['TechID']])
-                .cumsum())
 #calculate annual consumption (no UEC involved)
 df_long['annual_sum'] = (df_long
-    .groupby(['BldgLoc', 'TechID', 'set_id'])['Total_Elec_Consumption']
+    .groupby(['BldgType', 'BldgVint', 'BldgHVAC', 'BldgLoc', 'TechID'])['Total_Elec_Consumption']
     .transform('sum'))
 
 #%%
