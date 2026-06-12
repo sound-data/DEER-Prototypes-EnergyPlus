@@ -28,9 +28,9 @@ print(measures)
 #measure_name = 'SEER Rated AC/HP'
 #measure_name = 'Efficient Doors'
 #measure_name = 'Wall Insulation'
-#measure_name = 'PTAC / PTHP'
+measure_name = 'PTAC / PTHP'
 #Define measure name here
-measure_name = 'Duct Seal'
+#measure_name = 'Duct Seal'
 
 # %%
 #MFm only script 
@@ -42,9 +42,9 @@ print(os.path.abspath(os.curdir))
 #path = 'residential measures/SWHC049-03 SEER Rated AC HP/SWHC049-03 SEER Rated AC HP_MFm_Ex'
 #path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_MFm_Ex'
 #path = 'residential measures/SWBE011-01 Windows\SWBE011-01 Windows_MFm\SWBE011-01 Windows_MFm_Msr1'
-path = 'residential measures/SWSV001-05 Duct Seal/SWSV001-05 Duct Seal_MFm_Ex'
+#path = 'residential measures/SWSV001-05 Duct Seal/SWSV001-05 Duct Seal_MFm_Ex'
 #path = 'residential measures/SWBE007-02 Wall Insulation/SWBE007-02 Wall Insulation_MFm'
-#path = 'residential measures/SWHC027-08 PTAC PTHP/SWHC027-08 PTAC PTHP_MFm_Ex'
+path = 'residential measures/SWHC027-08 PTAC PTHP/SWHC027-08 PTAC PTHP_MFm_Ex'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
@@ -724,10 +724,11 @@ elif (measure_name == 'Windows') & (normunit_missing == False):
 
 #if NormUnit is measure dependent and Climate Zone dependent, 2 examples
 elif (measure_name == 'PTAC / PTHP') & (normunit_missing == False):
+    #PTAC/PTHP is dependent on measure, climate zone, and vintage
     unit_table = unit_lookup[((unit_lookup['Normunit']=='Cap-Tons') & 
-                             (unit_lookup['Msr']=='PTAC / PTHP'))][['Normunit','BldgLoc','Value']]
-    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['Normunit', 'BldgLoc'], how="left")
-    print(f'normalizing unit is {normunit}, added based on the measure {measure_name} and based on climate zone')
+                             (unit_lookup['Msr']=='PTAC / PTHP'))][['Normunit','BldgLoc','BldgVint','Value']]
+    sim_annual_v2 = pd.merge(sim_annual_v1, unit_table, on=['Normunit', 'BldgLoc','BldgVint'], how="left")
+    print(f'normalizing unit is {normunit}, added based on the measure {measure_name} and based on climate zone and vintage')
 elif (measure_name == 'SEER Rated AC/HP') & (normunit_missing == False):
     #only applies if SEER rated AC/HP has Normunit = Cap-Tons at starting workbook
     unit_table = unit_lookup[((unit_lookup['Normunit']=='Cap-Tons') & 
