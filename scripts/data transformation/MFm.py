@@ -49,7 +49,7 @@ tech_uniques = list(np.unique((np.array(techgroup_techtypes))))
 expected_att = {
     'BldgType': ['MFm','SFm', 'DMo'],
     'Story': ['0','1','2'], # NA for Not Applicable
-    'BldgHVAC': ['rDXGF','rDXHP','rNCEH','rNCGF'],
+    'BldgHVAC': ['rDXGF','rDXHP','rNCEH','rNCGF','rNCOH','rDXHW'],
     'BldgVint': ['Ex','New'],
     'Measure': tech_uniques
 }
@@ -531,7 +531,8 @@ StartDayToSourceYear = {
 }
 
 df_long['Sector'] = 'Res' #this is MFm script, so Sector = Res
-df_long['Type'] = 'Whole Building'
+df_long['NormUnit'] = normunit
+df_long['Type (Whole Building or End Use)'] = 'Whole Building'
 df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
 
 df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
@@ -539,13 +540,16 @@ df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 #final table fields round-up
 #note: UEC, Normunits, and numunits omitted in the final table
 df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
-         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'NormUnit', 'Type (Whole Building or End Use)',
+         'Source Year', 'TechGroup', 'TechType','TechID',
          'Hour of Year','UECproportion']] 
 
 #%%
 #output annual consumption of each permutation and store for later use if needed
 df_long_annual_loads = df_long[[
-        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Type','Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
+        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
+        'NormUnit','Type (Whole Building or End Use)',
+        'Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
          ]].drop_duplicates().reset_index(drop=True)
 #%%
 #export CEDARS long 8760 csv

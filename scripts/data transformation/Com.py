@@ -694,13 +694,9 @@ converted_long_df['Total_Elec_Consumption'] = converted_long_df['Total_Elec_Cons
 df_long = converted_long_df.sort_values(['BldgType','BldgLoc', 'TechID', 'hr in 8760'])
 
 #%% 
-#create groupby ids for each 8760 set
-df_long['set_id'] = (df_long['hr in 8760'].eq(1)
-                .groupby([df_long['BldgLoc'], df_long['TechID']])
-                .cumsum())
 #calculate annual consumption (no UEC involved)
 df_long['annual_sum'] = (df_long
-    .groupby(['BldgLoc', 'TechID', 'set_id'])['Total_Elec_Consumption']
+    .groupby(['BldgType', 'BldgVint', 'BldgHVAC', 'BldgLoc', 'TechID'])['Total_Elec_Consumption']
     .transform('sum'))
 
 #%%
@@ -720,7 +716,8 @@ StartDayToSourceYear = {
 }
 
 df_long['Sector'] = 'Com' #this is Com script, so Sector = Com
-df_long['Type'] = 'Whole Building'
+df_long['NormUnit'] = normunit
+df_long['Type (Whole Building or End Use)'] = 'Whole Building'
 df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
 
 df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
@@ -728,12 +725,15 @@ df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 #final table fields round-up
 #note: UEC and Numunits omitted from draft long table in the final table
 df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
-         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'NormUnit', 'Type (Whole Building or End Use)',
+         'Source Year', 'TechGroup', 'TechType','TechID',
          'Hour of Year','UECproportion']] 
 #%%
 #output annual consumption of each permutation and store for later use if needed
 df_long_annual_loads = df_long[[
-        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Type','Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
+        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
+        'NormUnit','Type (Whole Building or End Use)',
+        'Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
          ]].drop_duplicates().reset_index(drop=True)
 
 #%%
