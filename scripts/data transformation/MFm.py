@@ -626,7 +626,7 @@ if len(raw_normunits) == 0:
 # and the unit lookup portion of the script needs to be updated
 
 if len(raw_normunits) != 1:
-    warnings.warn(f"[WARNING] Expected 1 Normunit but found {raw_normunits}. Using the first one.")
+    raise ValueError(f"[ERROR] Expected 1 Normunit but found {raw_normunits}. Please make sure only 1 Normunit exists on starting workbook.")
 
 raw_normunit = raw_normunits[0]
 
@@ -766,8 +766,6 @@ else:
 # else:
 #     normunit = 'Each' #If normalizing unit isn't anything else, put default as each
 #     numunits = 1
-
-# %%
 
 
 #apply normunits where appropriate
