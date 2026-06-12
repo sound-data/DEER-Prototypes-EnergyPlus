@@ -617,13 +617,9 @@ df_long_1s2s_with_wts['kWh_numstor_wted'] = (
 df_long = df_long_1s2s_with_wts.sort_values(['BldgLoc','BldgHVAC', 'TechID', 'hr in 8760'])
 
 #%%
-#create groupby ids for each 8760 set
-df_long['set_id'] = (df_long['hr in 8760'].eq(1)
-                .groupby([df_long['BldgLoc'], df_long['BldgHVAC'], df_long['TechID']])
-                .cumsum())
 #calculate annual UEC
 df_long['annual_sum'] = (df_long
-    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['kWh_numstor_wted']
+    .groupby(['BldgType', 'BldgVint', 'BldgHVAC', 'BldgLoc', 'TechID'])['kWh_numstor_wted']
     .transform('sum'))
 
 #%%
