@@ -20,6 +20,39 @@ parameter "defrost_type", :default=>"OFF-CYCLE" # (NONE | OFF-CYCLE | ELECTRIC |
 parameter "case_type", :default=>"OPEN" # (GLASS-DOOR | OPEN | WALK-IN | SELF-CONTAINED)
 parameter "case_credit", :default=>true # (true | false)
 parameter "under_case_hvac_ret_frac", :default=>0
+
+# Behzad Rizi - Defined "credit_sch" to allow changing the refrigeration load
+parameter "credit_sch", :default=> "
+  Through: 12/31,
+  For:AllDays,
+  Interpolate:No,
+  Until: 7:00, 0.2,
+  Until: 21:00, 0.6,
+  Until: 24:00, 0.2;
+"
+
+rule "credit_type_walkin", :parameters => {:case_type => "WALK-IN"} do
+  default :credit_sch => "
+  Through: 12/31,
+  For:AllDays,
+  Interpolate:No,
+  Until: 7:00, 0.2,
+  Until: 21:00, 0.4,
+  Until: 24:00, 0.2;
+"
+end
+rule "credit_type_selfcontained", :parameters => {:case_type => "SELF-CONTAINED"} do
+  default :credit_sch => "
+  Through: 12/31,
+  For:AllDays,
+  Interpolate:No,
+  Until: 7:00, 0.2,
+  Until: 21:00, 0.6,
+  Until: 24:00, 0.2;
+"
+end
+# Behzad Rizi - Defined "available" to switch off/on refrigerated cases if needed
+parameter "available", :default=> true # (true | false)
 parameter "lighting_schedule", :default=>
 "
   Through: 12/31,
@@ -109,7 +142,11 @@ Refrigeration:Case,
 Schedule:Constant,
   <%= case_name %> Case Availability Sch,  !- Name
   Binary Control,          !- Schedule Type Limits Name
+<% if available %>
   1;                       !- Hourly Value
+<% else %>
+  0;                       !- Hourly Value
+<% end %>
 
 Schedule:Compact,
   <%= case_name %> Case Light Sch,  !- Name
@@ -219,17 +256,6 @@ Schedule:Compact,
   Until: 21:00, 117.0,     !- Field 27
   Until: 22:00, 90.0,      !- Field 29
   Until: 24:00, 0.0;       !- Field 31
-  <% if case_credit %>
-Schedule:Compact,
-  <%= case_name %> Credit Sch,  !- Name
-  Unit Interval,           !- Schedule Type Limits Name
-  Through: 12/31,          !- Field 1
-  For:AllDays,             !- Field 2
-  Interpolate:No,          !- Field 3
-  Until: 7:00, 0.2,        !- Field 5
-  Until: 21:00, 0.4,       !- Field 7
-  Until: 24:00, 0.2;       !- Field 9
-  <% end %>
 <% elsif (case_type == "SELF-CONTAINED") %>
 Schedule:Compact,
   <%= case_name %> Restock Sch,  !- Name
@@ -246,17 +272,6 @@ Schedule:Compact,
   Until: 15:00,90.0,       !- Field 17
   Until: 16:00,80.0,       !- Field 19
   Until: 24:00,0.0;        !- Field 21
-  <% if case_credit %>
-Schedule:Compact,
-  <%= case_name %> Credit Sch,  !- Name
-  Unit Interval,           !- Schedule Type Limits Name
-  Through: 12/31,          !- Field 1
-  For:AllDays,             !- Field 2
-  Interpolate:No,          !- Field 3
-  Until: 7:00, 0.2,        !- Field 5
-  Until: 21:00, 0.6,       !- Field 7
-  Until: 24:00, 0.2;       !- Field 9
-  <% end %>
 <% else %>
 Schedule:Compact,
   <%= case_name %> Restock Sch,  !- Name
@@ -267,15 +282,11 @@ Schedule:Compact,
   Until: 14:00,50.0,       !- Field 5
   Until: 15:00,35.0,       !- Field 7
   Until: 24:00,0.0;        !- Field 9
-  <% if case_credit %>
+<% end %>
+
+<% if case_credit %>
 Schedule:Compact,
   <%= case_name %> Credit Sch,  !- Name
   Unit Interval,           !- Schedule Type Limits Name
-  Through: 12/31,          !- Field 1
-  For:AllDays,             !- Field 2
-  Interpolate:No,          !- Field 3
-  Until: 7:00, 0.2,        !- Field 5
-  Until: 21:00, 0.6,       !- Field 7
-  Until: 24:00, 0.2;       !- Field 9
-  <% end %>
+  <%= credit_sch %>
 <% end %>

@@ -2,10 +2,33 @@
 parameter "comp_name"
 parameter "comp_curves_source", :default=>"Carlyle_R-22_Med_06DM808" # (Carlyle_R-22_Low_06CC665 | Carlyle_R-22_Low_06DR718 | Carlyle_R-22_Med_06DM808 | Carlyle_R-22_Med_06DR820 | Copeland_R507_Med_3DS3150ETFE |Copeland_R507_Med_2da3075e | 
 # Copeland_R507_Low_3db30750 | Copeland_R507_Low_3DS3100E |Copeland_R507_Low_4dl3150e | Copeland_R507_Med_3db3100e)
-parameter "rated_sh", :default=>5
+parameter "rated_sh", :default=>"" # ['C']
 parameter "return_gas_temp", :default=>18['C']
 parameter "liquid_temp", :default=>4.4['C']
-parameter "rated_subcooling", :default=>""
+parameter "rated_subcooling", :default=>"" # ['C']
+%>
+
+<%
+# 2024-04-03 Nicholas Fette on advice from Roger Baker
+# EnergyPlus expects at most one input from these:
+# * rated superheat (rated_sh)
+# * rated return gas temperature (return_gas_temp)
+
+# Rules with a "not equals" comparison are not yet implemented.
+#rule "return_gas_given", :condition => Proc.new {return_gas_temp != ""} do
+#  force :rated_sh => ""
+#end
+if return_gas_temp != ""
+  rated_sh = ""
+end
+
+# EnergyPlus expects at most one input from these:
+# * rated liquid temperature (liquid_temp)
+# * rated subcooling (rated_subcooling)
+if liquid_temp != ""
+  rated_subcooling = ""
+end
+
 %>
 
 Refrigeration:Compressor,

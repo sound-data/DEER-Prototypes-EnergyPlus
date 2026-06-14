@@ -8,8 +8,8 @@ parameter "run_name", :default=>"Building"
 
 # CZ/Vintages parameters
 # window
-# parameter "glass_u", :default=>0.66['U-IP']
-# parameter "glass_shgc", :default=>0.52
+parameter "glass_u", :default=>1.09['U-IP']
+parameter "glass_shgc", :default=>0.8
 
 # exterior wall
 # parameter "sheathing_consol_layer_thickness", :default=>0.0127['m']
@@ -91,9 +91,12 @@ parameter "duct_r_value", :default => 2.8['R-IP'] #U-IP effective duct R value =
 
 #duct optimization return duct retrofit measure parameter
 parameter 'return_leakage_frac', :default=>0
+
+#Door Infiltration Reduction measures-cases-parameters
+parameter "infiltration_reduction", :default=>0.0  # TRC SWBE013-01, SWBE014-01; default is no reduction from base case (ACH)
 %>
 
-
+<%insert 'holidays.pxt'%>
 <%insert 'site.pxt'%>
 
 <%
@@ -3134,9 +3137,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-2 S1 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-2 S1 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -3147,9 +3150,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-2 S2 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-2 S2 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -3160,9 +3163,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-2 S3 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-2 S3 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -3173,9 +3176,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S1 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-1 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S1 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-1 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-1 S1 WEH;      !- Schedule:Day Name 5
 
@@ -3186,9 +3189,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S2 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-1 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S2 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-1 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-1 S2 WEH;      !- Schedule:Day Name 5
 
@@ -3199,9 +3202,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Occ-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Occ-1 S3 HDD,      !- Schedule:Day Name 3
+    EL1 Occ-1 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Occ-1 S3 CDD,      !- Schedule:Day Name 4
+    EL1 Occ-1 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Occ-1 S3 WEH;      !- Schedule:Day Name 5
 
@@ -3212,9 +3215,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ILt-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ILt-1 S1 HDD,      !- Schedule:Day Name 3
+    EL1 ILt-1 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ILt-1 S1 CDD,      !- Schedule:Day Name 4
+    EL1 ILt-1 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ILt-1 S1 WEH;      !- Schedule:Day Name 5
 
@@ -3225,9 +3228,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ILt-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ILt-1 S2 HDD,      !- Schedule:Day Name 3
+    EL1 ILt-1 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ILt-1 S2 CDD,      !- Schedule:Day Name 4
+    EL1 ILt-1 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ILt-1 S2 WEH;      !- Schedule:Day Name 5
 
@@ -3238,9 +3241,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ILt-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ILt-1 S3 HDD,      !- Schedule:Day Name 3
+    EL1 ILt-1 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ILt-1 S3 CDD,      !- Schedule:Day Name 4
+    EL1 ILt-1 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ILt-1 S3 WEH;      !- Schedule:Day Name 5
 
@@ -3251,9 +3254,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Msc-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Msc-2 S1 HDD,      !- Schedule:Day Name 3
+    EL1 Msc-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Msc-2 S1 CDD,      !- Schedule:Day Name 4
+    EL1 Msc-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Msc-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -3264,9 +3267,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Msc-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Msc-2 S2 HDD,      !- Schedule:Day Name 3
+    EL1 Msc-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Msc-2 S2 CDD,      !- Schedule:Day Name 4
+    EL1 Msc-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Msc-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -3277,9 +3280,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Msc-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Msc-2 S3 HDD,      !- Schedule:Day Name 3
+    EL1 Msc-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Msc-2 S3 CDD,      !- Schedule:Day Name 4
+    EL1 Msc-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Msc-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -3290,9 +3293,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 SCR-2 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 SCR-2 S1 HDD,      !- Schedule:Day Name 3
+    EL1 SCR-2 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 SCR-2 S1 CDD,      !- Schedule:Day Name 4
+    EL1 SCR-2 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 SCR-2 S1 WEH;      !- Schedule:Day Name 5
 
@@ -3303,9 +3306,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 SCR-2 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 SCR-2 S2 HDD,      !- Schedule:Day Name 3
+    EL1 SCR-2 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 SCR-2 S2 CDD,      !- Schedule:Day Name 4
+    EL1 SCR-2 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 SCR-2 S2 WEH;      !- Schedule:Day Name 5
 
@@ -3316,9 +3319,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 SCR-2 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 SCR-2 S3 HDD,      !- Schedule:Day Name 3
+    EL1 SCR-2 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 SCR-2 S3 CDD,      !- Schedule:Day Name 4
+    EL1 SCR-2 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 SCR-2 S3 WEH;      !- Schedule:Day Name 5
 
@@ -3329,9 +3332,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ZnGrp 2 CookPrc Gas S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ZnGrp 2 CookPrc Gas S1 HDD,  !- Schedule:Day Name 3
+    EL1 ZnGrp 2 CookPrc Gas S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ZnGrp 2 CookPrc Gas S1 CDD,  !- Schedule:Day Name 4
+    EL1 ZnGrp 2 CookPrc Gas S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ZnGrp 2 CookPrc Gas S1 WEH;  !- Schedule:Day Name 5
 
@@ -3342,9 +3345,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ZnGrp 2 CookPrc Gas S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ZnGrp 2 CookPrc Gas S2 HDD,  !- Schedule:Day Name 3
+    EL1 ZnGrp 2 CookPrc Gas S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ZnGrp 2 CookPrc Gas S2 CDD,  !- Schedule:Day Name 4
+    EL1 ZnGrp 2 CookPrc Gas S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ZnGrp 2 CookPrc Gas S2 WEH;  !- Schedule:Day Name 5
 
@@ -3355,9 +3358,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ZnGrp 2 CookPrc Gas S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ZnGrp 2 CookPrc Gas S3 HDD,  !- Schedule:Day Name 3
+    EL1 ZnGrp 2 CookPrc Gas S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ZnGrp 2 CookPrc Gas S3 CDD,  !- Schedule:Day Name 4
+    EL1 ZnGrp 2 CookPrc Gas S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ZnGrp 2 CookPrc Gas S3 WEH;  !- Schedule:Day Name 5
 
@@ -3368,9 +3371,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ZnGrp 2 MtrPrOE Elc S1 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ZnGrp 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 3
+    EL1 ZnGrp 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ZnGrp 2 MtrPrOE Elc S1 CDD,  !- Schedule:Day Name 4
+    EL1 ZnGrp 2 MtrPrOE Elc S1 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ZnGrp 2 MtrPrOE Elc S1 WEH;  !- Schedule:Day Name 5
 
@@ -3381,9 +3384,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ZnGrp 2 MtrPrOE Elc S2 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ZnGrp 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 3
+    EL1 ZnGrp 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ZnGrp 2 MtrPrOE Elc S2 CDD,  !- Schedule:Day Name 4
+    EL1 ZnGrp 2 MtrPrOE Elc S2 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ZnGrp 2 MtrPrOE Elc S2 WEH;  !- Schedule:Day Name 5
 
@@ -3394,9 +3397,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 ZnGrp 2 MtrPrOE Elc S3 WEH,  !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 ZnGrp 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 3
+    EL1 ZnGrp 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 ZnGrp 2 MtrPrOE Elc S3 CDD,  !- Schedule:Day Name 4
+    EL1 ZnGrp 2 MtrPrOE Elc S3 HDD,  !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 ZnGrp 2 MtrPrOE Elc S3 WEH;  !- Schedule:Day Name 5
 
@@ -3407,9 +3410,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Off-1 S1 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Off-1 S1 HDD,      !- Schedule:Day Name 3
+    EL1 Off-1 S1 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Off-1 S1 CDD,      !- Schedule:Day Name 4
+    EL1 Off-1 S1 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Off-1 S1 WEH;      !- Schedule:Day Name 5
 
@@ -3420,9 +3423,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Off-1 S2 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Off-1 S2 HDD,      !- Schedule:Day Name 3
+    EL1 Off-1 S2 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Off-1 S2 CDD,      !- Schedule:Day Name 4
+    EL1 Off-1 S2 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Off-1 S2 WEH;      !- Schedule:Day Name 5
 
@@ -3433,9 +3436,9 @@ Schedule:Week:Compact,
     Weekends,                !- DayType List 2
     EL1 Off-1 S3 WEH,      !- Schedule:Day Name 2
     SummerDesignDay,         !- DayType List 3
-    EL1 Off-1 S3 HDD,      !- Schedule:Day Name 3
+    EL1 Off-1 S3 CDD,      !- Schedule:Day Name 3
     WinterDesignDay,         !- DayType List 4
-    EL1 Off-1 S3 CDD,      !- Schedule:Day Name 4
+    EL1 Off-1 S3 HDD,      !- Schedule:Day Name 4
     AllOtherDays,            !- DayType List 5
     EL1 Off-1 S3 WEH;      !- Schedule:Day Name 5
 
@@ -4211,8 +4214,8 @@ Material:NoMass,
 !Visible Transmittance
 WindowMaterial:SimpleGlazingSystem,
     Glass,                   !- Name
-    6.18930667,              !- U-Factor {W/m2-K}
-    0.8,                     !- Solar Heat Gain Coefficient
+    <%=glass_u%>,            !- U-Factor {W/m2-K}
+    <%=glass_shgc%>,         !- Solar Heat Gain Coefficient
     0.88;                    !- Visible Transmittance
 
 
@@ -6801,7 +6804,7 @@ ZoneInfiltration:DesignFlowRate,
     ,                        !- Design Flow Rate {m3/s}
     ,    !- Flow per Zone Floor Area {m3/s-m2}
     ,                        !- Flow per Exterior Surface Area {m3/s-m2}
-    <%= infiltration_ACH %>,                    !- Air Changes per Hour {1/hr}
+    <%= infiltration_ACH - infiltration_reduction %>,                    !- Air Changes per Hour {1/hr}
     1,                       !- Constant Term Coefficient
     ,                        !- Temperature Term Coefficient
     ,                        !- Velocity Term Coefficient

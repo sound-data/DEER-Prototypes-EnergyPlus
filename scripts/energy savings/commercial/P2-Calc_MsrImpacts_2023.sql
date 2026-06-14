@@ -1,8 +1,8 @@
 -- Calculate the measure impacts (per dwelling, per numunit) for the measures specified in the current_msr_mat table.
 --  Note: use more decimals than necessary, as they will be rounded in the final query of the process
 SET search_path TO "MC_results_database";
-DROP TABLE IF EXISTS meas_impacts_2022;
-CREATE TABLE meas_impacts_2022 AS 
+DROP TABLE IF EXISTS meas_impacts_vint_wtd;
+CREATE TABLE meas_impacts_vint_wtd AS 
 SELECT
 current_msr_mat."MeasureID" as "EnergyImpactID",
 'DEER2024'::text as "Version",
@@ -25,19 +25,19 @@ msr.measarea as "MeasArea",
 -- DEER whole-building, above pre-exising impacts
 case (pre.kwh_tot - msr.kwh_tot) when 0 then 0 
   else round(((pre.kwh_tot - msr.kwh_tot)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((pre.kwh_tot - msr.kwh_tot)/msr.numunits)))))::SMALLINT) end as "APreWBkWh", 
-case (ppk.bldg_kw25 - mpk.bldg_kw25) when 0 then 0 
-  else round(((ppk.bldg_kw25 - mpk.bldg_kw25)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((ppk.bldg_kw25 - mpk.bldg_kw25)/msr.numunits)))))::SMALLINT) end as "APreWBkW25", 
+-- case (ppk.bldg_kw25 - mpk.bldg_kw25) when 0 then 0 
+  -- else round(((ppk.bldg_kw25 - mpk.bldg_kw25)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((ppk.bldg_kw25 - mpk.bldg_kw25)/msr.numunits)))))::SMALLINT) end as "APreWBkW25", 
 case (ppk.bldg_kw49 - mpk.bldg_kw49) when 0 then 0 
-  else round(((ppk.bldg_kw49 - mpk.bldg_kw49)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((ppk.bldg_kw49 - mpk.bldg_kw49)/msr.numunits)))))::SMALLINT) end as "APreWBkW49", 
+  else round(((ppk.bldg_kw49 - mpk.bldg_kw49)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((ppk.bldg_kw49 - mpk.bldg_kw49)/msr.numunits)))))::SMALLINT) end as "APreWBkW", 
 case (pre.thm_tot - msr.thm_tot) when 0 then 0 
   else round(((pre.thm_tot - msr.thm_tot)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((pre.thm_tot - msr.thm_tot)/1e5/msr.numunits)))))::SMALLINT) end as "APreWBtherm", 
 -- DEER whole-building, above code/standard impacts
 case (std.kwh_tot - msr.kwh_tot) when 0 then 0 
   else round(((std.kwh_tot - msr.kwh_tot)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((std.kwh_tot - msr.kwh_tot)/msr.numunits)))))::SMALLINT) end as "AStdWBkWh", 
-case (spk.bldg_kw25 - mpk.bldg_kw25) when 0 then 0 
-  else round(((spk.bldg_kw25 - mpk.bldg_kw25)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((spk.bldg_kw25 - mpk.bldg_kw25)/msr.numunits)))))::SMALLINT) end as "AStdWBkW25", 
+-- case (spk.bldg_kw25 - mpk.bldg_kw25) when 0 then 0 
+  -- else round(((spk.bldg_kw25 - mpk.bldg_kw25)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((spk.bldg_kw25 - mpk.bldg_kw25)/msr.numunits)))))::SMALLINT) end as "AStdWBkW25", 
 case (spk.bldg_kw49 - mpk.bldg_kw49) when 0 then 0 
-  else round(((spk.bldg_kw49 - mpk.bldg_kw49)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((spk.bldg_kw49 - mpk.bldg_kw49)/msr.numunits)))))::SMALLINT) end as "AStdWBkW49", 
+  else round(((spk.bldg_kw49 - mpk.bldg_kw49)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((spk.bldg_kw49 - mpk.bldg_kw49)/msr.numunits)))))::SMALLINT) end as "AStdWBkW", 
 case (std.thm_tot - msr.thm_tot) when 0 then 0 
   else round(((std.thm_tot - msr.thm_tot)/msr.numunits)::Numeric(15,6),(2-floor(log(abs(((std.thm_tot - msr.thm_tot)/1e5/msr.numunits)))))::SMALLINT) end as "AStdWBtherm",
 

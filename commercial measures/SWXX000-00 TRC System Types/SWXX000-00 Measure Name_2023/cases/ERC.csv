@@ -1,7 +1,0 @@
-skip,case_name,sizing_case,:hvac_config,:main_hvac_type,:main_atu_reheat_coil_type,:main_atu_reheat_control,:main_fan_rise,:main_cool_coil_type,:main_heat_coil_type,:main_dx_type,:main_sat_reset_type,:main_sat_temp_max,:main_design_peak_load,:main_oa_econ_type,:main_cool_coil_cop,:main_dx_comp_speed,:main_cool_flow_min_frac,:main_unitary_no_load_flow_method,:main_fan_speed,:main_fan_motor_eff,:main_heat_coil_cop,:main_heat_coil_eff,:main_heat_flow_frac,:chw_chiller_cop,:chw_chiller_model,:chw_pump_type,:hw_boiler_eff
-,default,,,,,,,,,,,,,,,,,,,,,,,,,,
-,cDXGF,,,SZ-CAV,NONE,nil,3.877['in H2O'],DX-AIR,COMBUSTION,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,CONSTANT,,,CONSTANT,0.87,,0.8,1,,,,
-,cDXNH,,,SZ-CAV,NONE,nil,3.877['in H2O'],DX-AIR,NONE,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,CONSTANT,,,CONSTANT,0.87,,,1,,,,
-,cDXHP,,,SZ-CAV,NONE,nil,3.877['in H2O'],DX-AIR,DX-AIR,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,CONSTANT,,,CONSTANT,0.87,3.738,,1,,,,
-,cPVVG,,,SZ-VAV,NONE,nil,3.877['in H2O'],DX-AIR,COMBUSTION,PNNL,FLOATING,95['F'],NONCOINCIDENT,FIXED-DRY-BULB,3.65,CONSTANT,0.67,FractionOfAutosizedCoolingValue,VARIABLE,0.87,,0.8,1,,,,
-,cAVVG,,FLOOR,MZ-VAV,WATER,DUAL-MAX-LIMIT,5.361969['in H2O'],WATER,WATER,PNNL,WARMEST-ZONE,60.0['F'],COINCIDENT,FIXED-DRY-BULB,,,,,VARIABLE,0.9,,,0.5,3.05,Air-Cooled GTE 150tons Default 90.1-2004,VARIABLE,0.805
