@@ -1,2 +1,10 @@
-skip,case_name
-,defaults
+skip,case_name,:vfd_curve_name,:supplyfan_total_eff,:motor_eff,:cooling_coil_cop,:cooling_coil_cop2,:coil_type,:hvac_type
+,LRM AOE R22 R410a rDXGF Measure,,0.12,0.24,3.23,,,unitary_system
+,LRM NR R454b rDXGF Measure,,0.12,0.24,3.58,,,unitary_system
+,LRM AOE LSC R22 R410a rDXGF Base,,0.12,0.24,2.92,,,unitary_system
+,LRM NR LSC R454b rDXGF Base,,0.12,0.24,3.24,,,unitary_system
+,LRM AOE +7.5% RCA LSC R22 R410a rDXGF Base,,0.12,0.24,2.49,,,unitary_system
+,LRM AOE +15% RCA LSC R22 R410a rDXGF Base,,0.12,0.24,2.06,,,unitary_system
+,LRM AOE +22.5% RCA LSC R22 R410a rDXGF Base,,0.12,0.24,1.63,,,unitary_system
+,LRM AOE +30% RCA LSC R22 R410a rDXGF Base,,0.12,0.24,1.20,,,unitary_system
+,LRM AOE +40% RCA LSC R22 R410a rDXGF Base,,0.12,0.24,0.62,,,unitary_system

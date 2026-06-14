@@ -7239,6 +7239,12 @@ Output:VariableDictionary,
         Heating Coil Electricty Energy ,  !- Variable Name
         Hourly;                  !- Reporting Frequency
 
+    Output:Variable,
+        *,                       !- Key Value
+        Fan Electricity Energy ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
+
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:TABLE:SUMMARYREPORTS ===========
 
 Output:Table:SummaryReports,

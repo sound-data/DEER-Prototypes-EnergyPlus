@@ -25442,6 +25442,12 @@ Sizing:Parameters,
     
 
 
+    Output:Variable,
+        *,                       !- Key Value
+        Fan Electricity Energy ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
+
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:TABLE:SUMMARYREPORTS ===========
 
 Output:Table:SummaryReports,
