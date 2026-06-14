@@ -33,9 +33,9 @@ def peak_kw(con, cz):
     tq = ("SELECT t.TimeIndex FROM Time t "
           "JOIN EnvironmentPeriods e ON t.EnvironmentPeriodIndex=e.EnvironmentPeriodIndex "
           "WHERE e.EnvironmentType=3 AND ("
-          "(t.Month=? AND t.Day=? AND t.Hour BETWEEN 15 AND 19) OR "
-          "(t.Month=? AND t.Day=? AND t.Hour BETWEEN 15 AND 19) OR "
-          "(t.Month=? AND t.Day=? AND t.Hour BETWEEN 15 AND 19))")
+          "(t.Month=? AND t.Day=? AND t.Hour BETWEEN 16 AND 20) OR "
+          "(t.Month=? AND t.Day=? AND t.Hour BETWEEN 16 AND 20) OR "
+          "(t.Month=? AND t.Day=? AND t.Hour BETWEEN 16 AND 20))")
     params = []
     for d in days:
         params += [d.month, d.day]
