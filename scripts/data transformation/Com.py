@@ -5,7 +5,6 @@ import numpy as np
 import os
 import sys
 import datetime as dt
-import warnings
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 
 import helper_functions

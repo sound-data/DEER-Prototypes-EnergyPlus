@@ -5,7 +5,6 @@ import numpy as np
 import os
 import sys
 import datetime as dt
-import warnings
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 #%%
 import helper_functions
@@ -900,7 +899,7 @@ def SFm_normunit_lookup(df_in, normunit, normunit_missing):
         print(f'normalizing unit is {normunit}, and it is a constant value, please ensure NormUnit and Numunit is correct')
     
     else:
-        warnings.warn(f"[WARNING] Please double check output, make sure Normunit / numunits is correctly populated, and/or update Normunits.xlsx for corresponding normalizing units.")
+        raise ValueError(f"[ERROR] Please double check output, make sure Normunit / numunits is correctly populated, and/or update Normunits.xlsx for corresponding normalizing units for the measure {measure_name}.")
 
     return df_out
     

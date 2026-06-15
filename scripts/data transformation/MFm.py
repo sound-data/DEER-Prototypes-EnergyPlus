@@ -5,7 +5,6 @@ import numpy as np
 import os
 import sys
 import datetime as dt
-import warnings
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 #%%
 import helper_functions
@@ -678,9 +677,6 @@ unit_lookup = df_normunits[['Normunit','BldgLoc', 'BldgVint', 'Msr', 'Value']]
 
 #check for missing first
 if normunit_missing == True:
-    # warnings.warn('Note: normunit = Each, numunit = 1 as placeholder to continue processing without the appropriate normunit.')
-    # sim_annual_v1['Value'] = 1
-    # sim_annual_v2 = sim_annual_v1
     raise ValueError(
         "Current normalizing unit(s) for this measure not found on Normunit.xlsx table,\n" 
         "please update Normunit.xlsx table appropriately and add corresponding normalizing unit and corresponding unit value(s).\n"
@@ -733,7 +729,7 @@ elif (measure_name == 'SEER Rated AC/HP') & (normunit_missing == False):
     print(f'normalizing unit is {normunit}, added based on the measure {measure_name} and based on climate zone')
 
 else:
-    warnings.warn(f"[WARNING] Please double check output, make sure Normunit / numunits is correctly populated, and/or update Normunits.xlsx for corresponding normalizing units.")
+    raise ValueError(f"[ERROR] Please double check output, make sure Normunit / numunits is correctly populated, and/or update Normunits.xlsx for corresponding normalizing units for the measure {measure_name}.")
 
 
 #outdated code
