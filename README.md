@@ -21,16 +21,18 @@ To install and use the prototype energy models on Windows (instructions for Mac 
 ## How to Use This Modeling Framework
 To run measure cases, open a command line in one of the folders (e.g., '_SWSV001-05 Duct Seal_DMo_') within the '_residential measures/_' directory and execute the command `modelkit rake`. This command runs all predefined simulations in the specified directory. To run all measures in all folders within '_residential measures/_' or '_commercial measures/_', use the provided '_automated_run.py_' Python script located in '_scripts/_'. The predefined measures are grouped by general measure group name, building type, and vintage. Each of these folders contains a set of measure cases (offerings and baselines) defined in the '_cases/_' folder, per building type in '_prototypes/_'. Modelkit runs all measures and stores simulation outputs (IDFs, hourly output variables, etc.) in multiple folders named after the measure case names in '_runs/_' (this folder appears after simulations are complete). To exclude specific simulations based on climate or cohorts, insert the pound sign '#' in the 'skip' column of the respective '_climate.csv_' or '_cohorts.csv_' row for the simulations you wish to skip. A results summary file, mainly containing annual energy consumptions, is stored in '_summary-results.csv_'. More detailed information about how Modelkit works and its features can be found on the [developer's website](https://bigladdersoftware.com/projects/modelkit/).
 
-Post-processing steps for residential measures:
-- Open one of the three Python scripts (building type-specific).
-- Specify the specific subdirectories in the analysis folder (containing simulation results) in the script, and specify the '_measure name_' to be processed (a list of measure names can be found in '_DEER_EnergyPlus_Modelkit_Measure_list.xlsx_' under the '_Measure_list_' sheet, in the '_Measure (general name)_' column.
-- Run the script to generate three CSV files: '_current_msr_mat.csv_', '_sim_annual.csv_', and '_sim_hourly_wb.csv_' (or '_sfm_annual.csv_' and '_sfm_hourly_csv_' for single-family).
-- Load these three CSV files into the PostgreSQL database management software.
-- Run the post-processing SQL queries R1 to R4 (for residential measures only), then P1 to P8 (for all measures), in order.
-- Export '_meas_impacts_2022_res_' as the output.
-
-Post-processing steps for commercial measures:
-- (scripts for commerical measures will be updated by 12/22/2023, high level steps will be very similar to residental ones.)
+Post-processing steps:
+- Locate the python package `deer-ues-tool` located in '_scripts/_'.
+- Install the package into your python environment:
+```
+cd scripts/deer-ues-tool
+python install .
+```
+-  A README file within the package describes more detailed options for using the script.
+- Run the script and specify all options on the command line, replacing the keyword with a value:
+```python -m deer-ues-tool MeasDefFile MeasureName MeasureType Sector NormalizingUnit [--SimdataFile simdata.sqlite]```
+- To enable a graphical alternative to the command line interface, install the additional python package `gooey` (pip install gooey) and then simply run the script:
+```python -m deer-ues-tool```
 
 ## How to Contribute to the Project
 Contributions to the project are welcome. To add new measures or fix bugs, follow these steps:
