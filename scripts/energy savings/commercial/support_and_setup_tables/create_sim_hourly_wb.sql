@@ -1,8 +1,14 @@
 -- Table: MC_results_database.sim_hourly_wb
 
--- DROP TABLE "MC_results_database".sim_hourly_wb;
+-- 2025-09-29 Nicholas Fette (Solaris Technical): Don't hard-code the search_path.
 
-CREATE TABLE IF NOT EXISTS "MC_results_database".sim_hourly_wb
+-- Uncomment this line if you need to run this query manually.
+--SET search_path TO "MC_results_database";
+
+-- Uncomment this line if you need to redefine this table.
+--DROP TABLE IF EXISTS sim_hourly_wb;
+
+CREATE TABLE IF NOT EXISTS sim_hourly_wb
 (
     "TechID" text COLLATE pg_catalog."default",
     "SizingID" text COLLATE pg_catalog."default",
@@ -37,7 +43,10 @@ CREATE TABLE IF NOT EXISTS "MC_results_database".sim_hourly_wb
     hr22 real,
     hr23 real,
     hr24 real,
-    lastmod text COLLATE pg_catalog."default"
+    lastmod text COLLATE pg_catalog."default",
+    -- 2025-09-29 Nicholas Fette (Solaris Technical)
+    -- Cause explicit error if user tries to load duplicate data. This helps avoid accidental mistakes.
+    PRIMARY KEY ("TechID", "SizingID", "BldgType", "BldgVint", "BldgLoc", "BldgHVAC","tstat","enduse","daynum")
 )
 WITH (
     OIDS = FALSE
