@@ -25,8 +25,10 @@ print(measures)
 #Define measure name here (note example commented line for specific measures)
 #measure_name = 'SEER Rated AC/HP'
 #measure_name = 'Efficient Doors'
+#measure_name = 'Wall Insulation'
+#measure_name = 'PTAC / PTHP'
 #Define measure name here
-measure_name = 'SEER Rated AC HP'
+measure_name = 'Duct Seal'
 
 # %%
 #SFm only script
@@ -41,8 +43,14 @@ print(os.path.abspath(os.curdir))
 # path_1985 = 'residential measures/SWHC049-03 SEER Rated AC HP_SFm_1985'
 # path_1975 = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_SFm_1975'
 # path_1985 = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_SFm_1985'
-path_1975 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1975/SWBE011-01 Windows_SFm_1975_Msr1'
-path_1985 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1985/SWBE011-01 Windows_SFm_1985_Msr1'
+# path_1975 = 'residential measures/SWBE007-02 Wall Insulation/SWBE007-02 Wall Insulation_SFm_1975'
+# path_1985 = 'residential measures/SWBE007-02 Wall Insulation/SWBE007-02 Wall Insulation_SFm_1985'
+# path_1975 = 'residential measures/SWHC027-08 PTAC PTHP/SWHC027-08 PTAC PTHP_SFm_1975'
+# path_1985 = 'residential measures/SWHC027-08 PTAC PTHP/SWHC027-08 PTAC PTHP_SFm_1985'
+path_1975 = 'residential measures/SWSV001-05 Duct Seal/SWSV001-05 Duct Seal_SFm_1975'
+path_1985 = 'residential measures/SWSV001-05 Duct Seal/SWSV001-05 Duct Seal_SFm_1985'
+# path_1975 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1975/SWBE011-01 Windows_SFm_1975_Msr1'
+# path_1985 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1985/SWBE011-01 Windows_SFm_1985_Msr1'
 path_new = ''
 
 # Select whether to process New or Existing vintage models.
@@ -617,13 +625,9 @@ df_long_1s2s_with_wts['kWh_numstor_wted'] = (
 df_long = df_long_1s2s_with_wts.sort_values(['BldgLoc','BldgHVAC', 'TechID', 'hr in 8760'])
 
 #%%
-#create groupby ids for each 8760 set
-df_long['set_id'] = (df_long['hr in 8760'].eq(1)
-                .groupby([df_long['BldgLoc'], df_long['BldgHVAC'], df_long['TechID']])
-                .cumsum())
 #calculate annual UEC
 df_long['annual_sum'] = (df_long
-    .groupby(['BldgLoc', 'BldgHVAC', 'TechID', 'set_id'])['kWh_numstor_wted']
+    .groupby(['BldgType', 'BldgVint', 'BldgHVAC', 'BldgLoc', 'TechID'])['kWh_numstor_wted']
     .transform('sum'))
 
 #%%
@@ -646,7 +650,7 @@ df_long['TechGroup'] = df_long['Measure Group Name'].map(TechGroup_lookup_map)
 df_long['TechType'] = df_long['Measure Group Name'].map(TechType_lookup_map)
 
 df_long['Sector'] = 'Res' #this is DMo script, so Sector = Res
-df_long['Type'] = 'Whole Building'
+df_long['Type (Whole Building or End Use)'] = 'Whole Building'
 df_long['Source Year'] = df_long['RunPeriod Start Day'].map(StartDayToSourceYear)
 
 
@@ -655,12 +659,12 @@ df_long.rename(columns={'hr in 8760': 'Hour of Year'}, inplace=True)
 #final table fields round-up
 #note: UEC, Normunits, and numunits omitted in the final table
 df_long_final = df_long[['Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc',
-         'Type', 'Source Year', 'TechGroup', 'TechType','TechID',
+         'Type (Whole Building or End Use)', 'Source Year', 'TechGroup', 'TechType','TechID',
          'Hour of Year','UECproportion']] 
 #%%
 #output annual consumption of each permutation and store for later use if needed
 df_long_annual_loads = df_long[[
-        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Type','Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
+        'Sector', 'BldgType','BldgVint','BldgHVAC','BldgLoc','Type (Whole Building or End Use)','Source Year', 'TechGroup', 'TechType','TechID','annual_sum'
          ]].drop_duplicates().reset_index(drop=True)
 #%%
 #export CEDARS long 8760 csv
@@ -696,11 +700,88 @@ print('CEDARS long 8760 csv exported.')
 bldgtype = 'SFm'
 os.chdir(os.path.dirname(__file__)) #resets to current script directory
 print(os.path.abspath(os.curdir))
-df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
-numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['BldgLoc','Value', 'Msr','BldgVint']]
-normunit = df_measure['Normunit'].unique()[0]
-#measure specific normalizing units table
-df_numunits = df_normunits[df_normunits['Msr']==measure_name]
+
+#%%
+#6/12/2026 Normunit logic updates, fixing unit lookup inconsistencies
+#Normunits.xlsx initial read error handling
+try:
+    df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+#error exception message for file doesn't exist
+except FileNotFoundError:
+    raise FileNotFoundError(
+            "[ERROR] Cannot find workbook 'Normunits.xlsx'.\n"
+            "Please make sure 'Normunits.xlsx' exists in the same directory as this script "
+            "or provide the correct full path."
+        )
+
+#Normunit validation: do they exist in Normunits.xlsx, default state = missing
+normunit_missing = True
+#create set of available unique normunits to test if current measure's normunit is availble in Normunits.xlsx
+available_normunits = set(df_normunits["Normunit"].dropna().astype(str).str.strip())
+
+#locate current measure's normunit from the starting workbook
+#pull raw values before converting to str to check for validity
+raw_normunits = df_measure["Normunit"].dropna().unique()
+
+#If normunit is completely missing, raise a flag / error
+if len(raw_normunits) == 0:
+    raise ValueError(
+            "Normunit is missing: df_measure['Normunit'] contains only NaN/blank values.\n"
+            "Please populate the 'Normunit' column in the starting measure workbook with a valid text value "
+            "(e.g., 'Cap-Tons', 'Each').\n"
+            "And make sure Normunits.xlsx is up-to-date."
+        )
+
+#Current script only designed for Normunit is 1 unique value within a batch workbook
+#If there are multiple Normunits within a batch workbook, there needs to be unique identifiers at the TechID level, perhaps using MeasTechID
+# what about the baseline TechID?  
+# and the unit lookup portion of the script needs to be updated
+
+if len(raw_normunits) != 1:
+    raise ValueError(f"[ERROR] Expected 1 Normunit but found {raw_normunits}. Please make sure only 1 Normunit exists on starting workbook.")
+
+raw_normunit = raw_normunits[0]
+
+#If normunit anything other than a string/text, hard stop, provide appropriate error message 
+if not isinstance(raw_normunit, str):
+    raise TypeError(
+            "Invalid Normunit type in df_measure['Normunit'].\n"
+            f"Expected a string like 'Cap-Tons' or 'Each', but got:\n"
+            f"  type = {type(raw_normunit).__name__}\n"
+            f"  value = {raw_normunit!r}\n\n"
+            "Please correct the starting measure workbook column 'Normunit' to contain text values.\n"
+            "And make sure Normunits.xlsx is up-to-date."
+        )
+
+# Normalize whitespace
+normunit = raw_normunit.strip()
+
+# hard stop if Normunit field is empty
+if normunit == "":
+    raise ValueError(
+        "Invalid Normunit value in df_measure['Normunit'].\n"
+        "Normunit is an empty/blank string after stripping whitespace.\n"
+        "Please correct the source workbook column 'Normunit'.\n"
+        "And make sure Normunits.xlsx is up-to-date."
+    )
+
+if normunit in available_normunits:
+    normunit_missing = False
+    print(f'Current normalzing unit is {normunit}, proceeding')
+else:
+    normunit_missing = True
+    raise ValueError(
+        f"Current normalizing unit(s) for this measure (Normunit = {raw_normunit}) not found on Normunit.xlsx table,\n" 
+        "please update Normunit.xlsx table appropriately and add corresponding normalizing unit and corresponding unit value(s).\n"
+    )
+
+
+#%%
+# df_normunits = pd.read_excel('Normunits.xlsx', sheet_name=bldgtype)
+# numunits_vals = df_normunits[df_normunits['Normunit'] == df_measure['Normunit'].unique()[0]][['BldgLoc','Value', 'Msr','BldgVint']]
+# normunit = df_measure['Normunit'].unique()[0]
+# #measure specific normalizing units table
+# df_numunits = df_normunits[df_normunits['Msr']==measure_name]
 
 
 #%% 
@@ -756,95 +837,104 @@ sim_annual_2s = sim_annual_2s_v1.rename(columns=rename_2s_fields)
 
 
 #%%
-#create numunits object based on what normunit it uses. 
-#numunits can be a single value, or a dictionary
-if len(numunits_vals) == 1:
-    numunits = numunits_vals[0]
-elif measure_name == 'SEER Rated AC/HP':
-    #for SEER rated ACHP, CZ specific Cap-Ton
-    normunit = df_numunits['Normunit'].unique()[0]
-    numunits = df_numunits.set_index('BldgLoc')['Value'].to_dict() #numunit is a dictionary
-    print(f'CZ-dependent numunits for this normalizing unit {normunit}')
-elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
-    cz = list(numunits_vals['BldgLoc'])
-    nvals = list(numunits_vals['Value'])
-    #create dictionary of {cz:values}
-    numunits = {cz[i]:nvals[i] for i in range(len(cz))}
-    print(f'CZ-dependent numunits for this normalizing unit {normunit}')
-elif (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
-    #filter to the corresponding measure
-    numunits_vals = numunits_vals[numunits_vals['Msr'] == measure_name]
-    #create aligned lists for numunit dictionary
-    cz = list(numunits_vals['BldgLoc'])
-    nvals = list(numunits_vals['Value'])
-    #create dictionary of {cz:values}
-    numunits = {cz[i]:nvals[i] for i in range(len(cz))} #numunit is a dictionary
-    print(f'CZ-dependent numunits for this normalizing unit {normunit}')
-elif measure_name == 'PTAC / PTHP':
-    #create aligned lists for numunit dictionary
-    cz = list(numunits_vals['BldgLoc'])
-    vint = list(numunits_vals['BldgVint'])
-    nvals = list(numunits_vals['Value'])
-    #create dictionary of {(cz,vintage):numunits}
-    numunits = {(cz[i],vint[i]):nvals[i] for i in range(len(cz))}
-    print(f'CZ-dependent numunits for this normalizing unit {normunit}')
-elif normunit == 'Each':
-    numunits = 1
-    print('normunit is Each. Setting numunits to 1.')
-else:
-    normunit = 'Each' #If normalizing unit isn't anything else, put default as each
-    numunits = 1
 #%%
 #Annual data adding normalizing unit
-#note HVAC type of this dataset
-print(sim_annual_1s['BldgHVAC'].unique())
 
-#note HVAC type and its corresponding normalizing unit
-#num unit will be per dwelling, so use normunit / num of dwellings (2 for SFM & DMo, 24 for MFm)
+#%%
+#create numunits lookup based on what normunit it uses. 
+unit_lookup = df_normunits[['Normunit','BldgLoc', 'BldgVint', 'Msr', 'Value']]
+
+# constant normunits (single value, no CZ / vintage dependency), add as needed
+constant_normunits = {'kWhreduced', 'Each', 'Household'}
+
+def SFm_normunit_lookup(df_in, normunit, normunit_missing):
+    '''wrapping normunit lookup in a function for ease of use for 1s, 2s for SFm.'''
+    #check for missing first
+    if normunit_missing == True:
+        raise ValueError(
+            "Current normalizing unit(s) for this measure not found on Normunit.xlsx table,\n" 
+            "please update Normunit.xlsx table appropriately and add corresponding normalizing unit and corresponding unit value(s).\n"
+        )
+
+    #if NormUnit is measure dependent + climate zone dependent
+    elif (normunit == 'Area-ft2-BA') & (normunit_missing == False):
+        unit_table = unit_lookup[unit_lookup['Normunit']=='Area-ft2-BA'][['Normunit','BldgLoc','Value']]
+        df_out = pd.merge(df_in, unit_table, on=['Normunit','BldgLoc'], how="left")
+        print(f'normalizing unit is {normunit}, added and based on climate zone') 
+    elif (measure_name == 'Wall Insulation') & (normunit_missing == False):
+        unit_table = unit_lookup[((unit_lookup['Normunit']=='Area-ft2') & 
+                                (unit_lookup['Msr']=='Wall Insulation'))][['Normunit','BldgLoc','Value']]
+        df_out = pd.merge(df_in, unit_table, on=['Normunit', 'BldgLoc'], how="left")
+        print(f'normalizing unit is {normunit}, added based on the measure {measure_name} and based on climate zone')
+    elif (measure_name == 'Ceiling Insulation') & (normunit_missing == False):
+        unit_table = unit_lookup[((unit_lookup['Normunit']=='Area-ft2') & 
+                                (unit_lookup['Msr']=='Ceiling Insulation'))][['Normunit','BldgLoc','Value']]
+        df_out = pd.merge(df_in, unit_table, on=['Normunit', 'BldgLoc'], how="left")
+        print(f'normalizing unit is {normunit}, added based on the measure {measure_name} and based on climate zone')
+    elif (measure_name == 'Windows') & (normunit_missing == False):
+        #6/11/2026: updating logic to include windows, please add Windows normunit in Normunits.xlsx table, currently placeholder
+        unit_table = unit_lookup[((unit_lookup['Normunit']=='Area-ft2') & 
+                                (unit_lookup['Msr']=='Windows'))][['Normunit','BldgLoc','Value']]
+        df_out = pd.merge(df_in, unit_table, on=['Normunit', 'BldgLoc'], how="left")
+        print(f'normalizing unit is {normunit}, added based on the measure {measure_name} and based on climate zone')
+    elif (measure_name == 'SEER Rated AC/HP') & (normunit_missing == False):
+        #only applies if SEER rated AC/HP has Normunit = Cap-Tons at starting workbook
+        unit_table = unit_lookup[((unit_lookup['Normunit']=='Cap-Tons') & 
+                                (unit_lookup['Msr']=='SEER Rated AC/HP'))][['Normunit','BldgLoc','Value']]
+        df_out = pd.merge(df_in, unit_table, on=['Normunit', 'BldgLoc'], how="left")
+        print(f'normalizing unit is {normunit}, added based on the measure {measure_name} and based on climate zone')
+
+    #if NormUnit is measure dependent, Climate Zone dependent, and vintage dependent:
+    elif (measure_name == 'PTAC / PTHP') & (normunit_missing == False):
+        #PTAC/PTHP is dependent on measure, climate zone, and vintage
+        unit_table = unit_lookup[((unit_lookup['Normunit']=='Cap-Tons') & 
+                                (unit_lookup['Msr']=='PTAC / PTHP'))][['Normunit','BldgLoc','BldgVint','Value']]
+        df_out = pd.merge(df_in, unit_table, on=['Normunit', 'BldgLoc','BldgVint'], how="left")
+        print(f'normalizing unit is {normunit}, added based on the measure {measure_name} and based on climate zone and vintage')
+
+    #if Normunit is a single value, generalized
+    elif (normunit in constant_normunits) & (normunit_missing == False):
+        unit_table = unit_lookup[unit_lookup['Normunit']==normunit][['Normunit','Value']]
+        df_out = pd.merge(df_in, unit_table, on=['Normunit'], how="left")
+        print(f'normalizing unit is {normunit}, and it is a constant value, please ensure NormUnit and Numunit is correct')
+    
+    else:
+        raise ValueError(f"[ERROR] Please double check output, make sure Normunit / numunits is correctly populated, and/or update Normunits.xlsx for corresponding normalizing units for the measure {measure_name}.")
+
+    return df_out
+    
+
+#%%
+
 sim_annual_1s.reset_index(inplace=True)
 sim_annual_1s['SizingID'] = 'None'
 sim_annual_1s['tstat'] = 0
-sim_annual_1s['normunit'] = df_measure['Normunit'].unique()[0]
-
+#This is directly assigned after Normunits.xlsx initial validation
+sim_annual_1s['Normunit'] = normunit
 #apply numunits appropriately
-if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
-    sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
-elif measure_name == 'SEER Rated AC/HP':
-    sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
-elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
-    sim_annual_1s['numunits'] = (sim_annual_1s['BldgLoc'].map(numunits))/2
-elif measure_name == 'PTAC / PTHP':
-    sim_annual_1s['numunits'] = (pd.Series(list(zip(sim_annual_1s['BldgLoc'],sim_annual_1s['BldgVint']))).map(numunits))/2
-else:
-    sim_annual_1s['numunits'] = numunits/2
+sim_annual_1s_v2 = SFm_normunit_lookup(sim_annual_1s, normunit, normunit_missing)
 
 #%%
 sim_annual_2s.reset_index(inplace=True)
 sim_annual_2s['SizingID'] = 'None'
 sim_annual_2s['tstat'] = 0
-sim_annual_2s['normunit'] = df_measure['Normunit'].unique()[0]
-
+sim_annual_2s['Normunit'] = df_measure['Normunit'].unique()[0]
 #apply numunits appropriately
-if (measure_name == 'Wall Insulation') or (measure_name == 'Ceiling Insulation') or (measure_name == 'Windows'):
-    sim_annual_2s['numunits'] = (sim_annual_2s['BldgLoc'].map(numunits))/2
-elif measure_name == 'SEER Rated AC/HP':
-    sim_annual_2s['numunits'] = (sim_annual_2s['BldgLoc'].map(numunits))/2
-elif df_measure['Normunit'].unique()[0] == 'Area-ft2-BA':
-    sim_annual_2s['numunits'] = (sim_annual_2s['BldgLoc'].map(numunits))/2
-elif measure_name == 'PTAC / PTHP':
-    sim_annual_2s['numunits'] = (pd.Series(list(zip(sim_annual_2s['BldgLoc'],sim_annual_2s['BldgVint']))).map(numunits))/2
-else:
-    sim_annual_2s['numunits'] = numunits/2
+sim_annual_2s_v2 = SFm_normunit_lookup(sim_annual_2s, normunit, normunit_missing)
 
 #%%
+#add numunits, it is per dwelling, so use normunit / num of dwellings (2 for SFM & DMo, 24 for MFm)
+sim_annual_1s_v2['numunits'] = sim_annual_1s_v2['Value']/2
+sim_annual_2s_v2['numunits'] = sim_annual_2s_v2['Value']/2
 
 #merge 1-s and 2-s results back together side by side
-sim_annual_final = pd.merge(sim_annual_1s, sim_annual_2s, on=['TechID', 'SizingID', 'BldgType', 'BldgLoc','BldgHVAC','BldgVint','tstat','normunit','numunits'])
-sim_annual_final['lastmod']=dt.datetime.now()
+sim_annual_1s2s = pd.merge(sim_annual_1s_v2, sim_annual_2s_v2, on=['TechID', 'SizingID', 'BldgType', 'BldgLoc','BldgHVAC','BldgVint','tstat','Normunit','numunits'])
+sim_annual_1s2s['lastmod']=dt.datetime.now()
+sim_annual_1s2s = sim_annual_1s2s.rename(columns={'Normunit':'normunit'})
 
 #%%
 #rearrange columns
-sim_annual_f = sim_annual_final[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
+sim_annual_f = sim_annual_1s2s[['TechID', 'SizingID', 'BldgType','BldgVint','BldgLoc','BldgHVAC','tstat',
        'normunit', 'numunits', 'kwh_tot1', 'kwh_ltg1', 'kwh_task1',
        'kwh_equip1', 'kwh_htg1', 'kwh_clg1', 'kwh_twr1', 'kwh_aux1',
        'kwh_vent1', 'kwh_venthtg1a', 'kwh_ventclg1a', 'kwh_venthtg1b',
