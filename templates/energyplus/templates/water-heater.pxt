@@ -72,7 +72,7 @@ parameter "climate_zone", :default=>1
 #Solaris Technical - Behzad S. Rizi - 05/09/2025 - Added a parameter for tank_skin_loss to allow for parameterization of tank heat loss. This parameter is assigned to the field "Uniform Skin Loss Coefficient Per Unit Area to Ambient
 #Temperature" in EnergyPlus
 #TRC - 2026-06-04 defined default as nil to correspond with default skin loss calculation
-parameter "tank_skin_loss", :default=> nil
+parameter "tank_skin_loss", :default=> 0
 %>
 
 <%
@@ -457,9 +457,15 @@ WaterHeater:Stratified,
     ,                        !- Ambient Temperature Schedule Name
     <%= water_heater_zone %>,  !- Ambient Temperature Zone Name
     ,                        !- Ambient Temperature Outdoor Air Node Name
-<%# TRC - 2026-06-01 - Remove the conditional logic because it's already defined below the parameters list %>
-
-    <%= tank_skin_loss %>,   !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <% if (water_heater_type =='gas') %>
+    <%= tank_skin_loss %>,               !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <% elsif (water_heater_type =='elec') %>
+    0.28391315,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <% elsif water_heater_type.include?('hpwh') %>
+    0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <% else %>
+    0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <% end %>
     1,                       !- Skin Loss Fraction to Zone
     0,                       !- Off Cycle Flue Loss Coefficient to Ambient Temperature {W/K}
     1,                       !- Off Cycle Flue Loss Fraction to Zone
