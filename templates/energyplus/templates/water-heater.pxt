@@ -60,7 +60,7 @@ parameter "output_recirc_variables", :default=> false, :domain => Boolean
 # TRC - 2026-06-04 - Master on/off switch for the DHW recirculation loop. When true (default) the model is
 # generated exactly as the recirculation PR; when false the model reverts to the original (pre-recirculation)
 # single-use-branch demand-side topology. This lets non-recirculating models be generated without the recirc objects.
-parameter "use_recirc", :default=> true, :domain => Boolean
+parameter "use_recirc", :default=> false, :domain => Boolean
 
 # Solaris - 2026-01-07 - Added parameters for waterheater:sizing object 
 parameter "num_dwelling_unit", :default=> 1.0
