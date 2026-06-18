@@ -99,10 +99,11 @@ daily_volume = case draw_pattern
 
 # Solaris Technical, 2026-01-07. Commented out these lines to force the template
 # to pass through the user specified value for tank_size parameter when gas_tankless.
-# tank_size = case water_heater_type
-#             when 'gas_tankless' then 1 ['gal']
-#             else tank_size['gal']
-#             end
+# TRC - 2026-06-18 reverted so that defaults aren't changed and previously accepted measures still run.
+tank_size = case water_heater_type
+            when 'gas_tankless' then 1 ['gal']
+            else tank_size['gal']
+            end
 
 if tank_height == nil
     tank_height = case tank_size
