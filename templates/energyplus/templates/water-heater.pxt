@@ -71,7 +71,6 @@ parameter "recover_cap_per_dwelling_unit", :default=> 0.378541 #['m3/hr']
 parameter "climate_zone", :default=>1
 #Solaris Technical - Behzad S. Rizi - 05/09/2025 - Added a parameter for tank_skin_loss to allow for parameterization of tank heat loss. This parameter is assigned to the field "Uniform Skin Loss Coefficient Per Unit Area to Ambient
 #Temperature" in EnergyPlus
-#TRC - 2026-06-04 defined default as nil to correspond with default skin loss calculation
 parameter "tank_skin_loss", :default=> 0
 %>
 
