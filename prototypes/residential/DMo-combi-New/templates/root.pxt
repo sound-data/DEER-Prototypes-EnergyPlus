@@ -186,6 +186,7 @@ for zone in all_zones
     :combi => combi,
     :climate_zone_num => climate_zone,
     :dhw_demand_sch => dhw_demand_sch,
+    :climate_zone_num => climate_zone,
     :dhw_stpt_sch => dhw_stpt_sch,
     **water_heating
 
