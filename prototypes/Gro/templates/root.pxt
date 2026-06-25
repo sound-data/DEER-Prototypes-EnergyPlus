@@ -6,6 +6,12 @@ import "general.pxt", :group => "general" do
   parameter "run_name", :default => "Gro"
 end
 
+import "geometry.pxt" do
+  parameter "ufactor", :default=>2.53534
+  parameter "shgc", :default=>0.232625
+  parameter "vt", :default=>0.4415
+end
+
 parameter "latitude", :default => 0
 
 import "ext-light.pxt", :group => "ext_light", :prefix => "ext_light_" do
@@ -62,6 +68,9 @@ group "space_loads" do # hardcode building-level defaults
     parameter "dhw_temp", :default => 135.0['F']
     parameter "dhw_target", :default => 135.0['F']
     parameter "dhw_water_heater_fuel", :default => "Electric"
+
+    parameter "door_zone", :default=>" "
+    parameter "infil_mod", :default=>0
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "grocery", :prefix => "grocery_" do
@@ -767,7 +776,10 @@ insert "constructions.pxt", **constructions,
   :floor_length => 0.0['ft'],  # Second floor and above only; ground floor is handled by Kiva
   :wall_area => 22362.18['ft2']  # External above-grade wall area
 
-insert "geometry.pxt"
+insert "geometry.pxt",
+  :ufactor => ufactor,
+  :shgc => shgc,
+  :vt => vt
 
 if (daylighting_controls)
   insert "daylight.pxt"
