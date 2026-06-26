@@ -1,1 +1,0 @@
-ComponentSizingSummary/Entire Facility/AirLoopHVAC:UnitarySystem/Design Size Nominal Cooling Capacity/*, Unitary Nominal Cooling Capacity [W]
