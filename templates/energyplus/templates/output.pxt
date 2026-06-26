@@ -45,17 +45,17 @@ EnergyManagementSystem:Sensor,
   ,
   Electricity:Facility;
   
-Output:Meter,
-    NaturalGas:Facility,     !- Key Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Meter,
-    Heating:NaturalGas,      !- Key Name
-    Hourly;                  !- Reporting Frequency
-
-Output:Meter,
-    Cooling:Electricity,     !- Key Name
-    Hourly;                  !- Reporting Frequency
+!Output:Meter,
+!   NaturalGas:Facility,     !- Key Name
+!   Hourly;                  !- Reporting Frequency
+!
+!Output:Meter,
+!   Heating:NaturalGas,      !- Key Name
+!   Hourly;                  !- Reporting Frequency
+!
+!Output:Meter,
+!   Cooling:Electricity,     !- Key Name
+!   Hourly;                  !- Reporting Frequency
 
 
 EnergyManagementSystem:Program,
