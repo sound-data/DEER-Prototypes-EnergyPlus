@@ -1,16 +1,35 @@
 """
 Full COP-method UEC: kWh end-use + therms + peak kW, base/measure, with TechIDs.
 NEW base = corrected unit (old measure run, COP 3.23/3.58). NEW measure = COP
-improved -> cooling/(1+coolfrac), HP heating/(1+heatfrac), fan & gas unchanged.
+improved.  Measure COP = Base COP x (col K = 1/(1-F)), so per the COP method the
+measure end use = base end use x (1-F) for cooling and x (1-G) for HP heating,
+where F (col F) / G (col G) are the cooling/heating savings fractions from the
+SWSV014 Cases COP inputs workbook.  Fan & gas unchanged.
 Peak kW: extract the cooling-at-peak component from the existing multi-COP runs
 (facility = cool_const/COP + noncool) and scale -- no re-sim.
+Args: BASE PAIRS OLDKW OUT [COP_INPUTS_XLSX]
 """
 import csv, os, re, sys, openpyxl
 
 BASE=sys.argv[1]; PAIRS=sys.argv[2]; OLDKW=sys.argv[3]; OUT=sys.argv[4]
+COPIN=sys.argv[5] if len(sys.argv)>5 else "SWSV014 Cases COP inputs v3.xlsx"
 KWH_PER_THERM=29.3001
-COOLFRAC={0.0:0.0945,7.5:0.2283,15.0:0.3621,22.5:0.4959,30.0:0.6297,40.0:0.8081}
-HEATFRAC={0.0:0.0394,7.5:0.0951,15.0:0.1508,22.5:0.2066,30.0:0.2623,40.0:0.3366}
+def load_cop_fracs(path):
+    """Cooling (F, col F) & heating (G, col G) savings fractions keyed by UC%,
+    read straight from the COP inputs workbook -- the single source of truth.
+    UC% = (H - 0.053) x 100, where H (col H) is the UC fraction. Falls back to
+    the documented multipliers F=1.7838*H, G=0.743*H if a cached value is blank."""
+    ws=openpyxl.load_workbook(path,data_only=True).active
+    cf={}; hf={}
+    for r in ws.iter_rows(min_row=4,values_only=True):
+        H,F,G=r[7],r[5],r[6]                 # cols H, F, G
+        if H is None: continue
+        uc=round((H-0.053)*100,1)
+        cf[uc]=F if F is not None else 1.7838*H
+        if G is not None: hf[uc]=G
+        elif uc not in hf: hf[uc]=0.743*H
+    return cf,hf
+COOLFRAC,HEATFRAC=load_cop_fracs(COPIN)
 COP_BASE={"AOE":3.23,"NR":3.58,"NC":3.58}; COP_40=0.62   # derated 40% cooling COP (for cool_const extraction)
 NUMSTOR={1:1.48,2:1.48,3:1.48,4:1.48,5:1.48,6:1.55,7:1.55,8:1.55,9:1.33,10:1.42,11:1.23,12:1.23,13:1.23,14:1.12,15:1.12,16:1.31}
 STUDIES={"Dmo":("SWSV014-02 LRM AC HP _Dmo_Ex","results-summary-Dmo.csv"),"Mfm":("SWSV014-02 LRM AC HP_MFm_Ex","results-summary-Mfm.csv"),
@@ -70,7 +89,7 @@ for bld in ["DMo","MFm","SFm"]:
             if e is None: miss+=1; continue
             bh,bc,bf=e["Heating Elec (kWh)"],e["Cooling Elec (kWh)"],e["Fans (kWh)"]
             tbh,tbc=e["Heating NG (kWh)"]/KWH_PER_THERM,e["Cooling NG (kWh)"]/KWH_PER_THERM
-            mh=bh/(1+hf) if h=="rDXHP" else bh; mc=bc/(1+cf)
+            mh=bh*(1-hf) if h=="rDXHP" else bh; mc=bc*(1-cf)   # COP method: measure = base x (1-F)/(1-G)
             czs="CZ%02d"%cz
             kb.append([bt,mt,h,bld,czs,round(bh,2),round(bc,2),round(bf,2)])
             km.append([bt,mt,h,bld,czs,round(mh,2),round(mc,2),round(bf,2)])
@@ -81,7 +100,7 @@ for bld in ["DMo","MFm","SFm"]:
             cc=cool_const.get((bld,cz,h)); mp=meas_peak.get((bld,cz,h))
             if cc is not None:
                 cool_at_pk=cc/3.23
-                base_pk=mp; meas_pk=mp - cool_at_pk*cf/(1+cf)
+                base_pk=mp; meas_pk=mp - cool_at_pk*cf   # COP method: cooling-at-peak reduced by F
                 kw.append([bt,mt,h,bld,czs,round(base_pk,4),round(meas_pk,4)])
                 if meas_pk>base_pk+1e-6: kwbad+=1
             else: kw.append([bt,mt,h,bld,czs,"",""])

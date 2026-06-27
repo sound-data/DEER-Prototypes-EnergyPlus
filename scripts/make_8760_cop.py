@@ -3,16 +3,33 @@ COP-method 8760: base = old measure run hourly; measure = base minus the hourly
 cooling (and HP heating) reduction. The hourly cooling/heating component is
 extracted from the existing multi-COP runs by least squares:
   facility_hr = cool_const_hr/cool_COP (+ heat_const_hr/heat_COP for HP) + rest_hr
-then measure_hr = base_hr - cool@base_hr*cf/(1+cf) - heat@base_hr*hf/(1+hf).
+then measure_hr = base_hr - cool@base_hr*cf - heat@base_hr*hf  (COP method: the
+cooling/heating component is reduced by the savings fraction F/G, i.e. measure
+COP = base COP x col K = base/(1-F)).
 No re-sim. Outputs base/measure 8760 per building + audit.
+Args: BASE PAIRS OUT [COP_INPUTS_XLSX]
 """
 import csv, os, re, glob, sys
 import numpy as np
+import openpyxl
 
 BASE=sys.argv[1]; PAIRS=sys.argv[2]; OUT=sys.argv[3]
-import openpyxl
-COOLFRAC={0.0:0.0945,7.5:0.2283,15.0:0.3621,22.5:0.4959,30.0:0.6297,40.0:0.8081}
-HEATFRAC={0.0:0.0394,7.5:0.0951,15.0:0.1508,22.5:0.2066,30.0:0.2623,40.0:0.3366}
+COPIN=sys.argv[4] if len(sys.argv)>4 else "SWSV014 Cases COP inputs v3.xlsx"
+def load_cop_fracs(path):
+    """Cooling (F, col F) & heating (G, col G) savings fractions keyed by UC%,
+    read from the COP inputs workbook. UC% = (H-0.053)*100. Fallback F=1.7838*H,
+    G=0.743*H if a cached value is blank."""
+    ws=openpyxl.load_workbook(path,data_only=True).active
+    cf={}; hf={}
+    for r in ws.iter_rows(min_row=4,values_only=True):
+        H,F,G=r[7],r[5],r[6]
+        if H is None: continue
+        uc=round((H-0.053)*100,1)
+        cf[uc]=F if F is not None else 1.7838*H
+        if G is not None: hf[uc]=G
+        elif uc not in hf: hf[uc]=0.743*H
+    return cf,hf
+COOLFRAC,HEATFRAC=load_cop_fracs(COPIN)
 # AOE base/measure cooling & heating COPs by UC label
 COOLCOP={"meas":3.23,0.0:2.925,7.5:2.493,15.0:2.060,22.5:1.628,30.0:1.196,40.0:0.620}
 HEATCOP={"meas":2.05,0.0:1.969,7.5:1.855,15.0:1.741,22.5:1.627,30.0:1.512,40.0:1.360}
@@ -78,7 +95,7 @@ for bld in ["DMo","MFm","SFm"]:
             cool_at,heat_at=ck
             # NR/NC base uses NR cooling base scale (COP 3.58); reuse load via 3.23/3.58 ratio
             scale = 1.0 if prog=="AOE" else (3.23/3.58)
-            measure=base - (cool_at*scale)*cf/(1+cf) - (heat_at*scale)*hf/(1+hf)
+            measure=base - (cool_at*scale)*cf - (heat_at*scale)*hf   # COP method: reduce by F / G
             czs="CZ%02d"%cz
             bo.append([bt,mt,h,bld,czs]+["%.4f"%x for x in base])
             mo.append([bt,mt,h,bld,czs]+["%.4f"%x for x in measure])
