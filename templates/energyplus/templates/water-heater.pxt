@@ -57,6 +57,11 @@ parameter "recirc_flow_mode", :default=> false, :domain => Boolean
 
 parameter "output_recirc_variables", :default=> false, :domain => Boolean
 
+# TRC - 2026-06-04 - Master on/off switch for the DHW recirculation loop. When true (default) the model is
+# generated exactly as the recirculation PR; when false the model reverts to the original (pre-recirculation)
+# single-use-branch demand-side topology. This lets non-recirculating models be generated without the recirc objects.
+parameter "use_recirc", :default=> false, :domain => Boolean
+
 # Solaris - 2026-01-07 - Added parameters for waterheater:sizing object 
 parameter "num_dwelling_unit", :default=> 1.0
 parameter "tank_size_per_dwelling_unit", :default=> 50.0 ['gal']
@@ -94,10 +99,11 @@ daily_volume = case draw_pattern
 
 # Solaris Technical, 2026-01-07. Commented out these lines to force the template
 # to pass through the user specified value for tank_size parameter when gas_tankless.
-# tank_size = case water_heater_type
-#             when 'gas_tankless' then 1 ['gal']
-#             else tank_size['gal']
-#             end
+# TRC - 2026-06-18 reverted so that defaults aren't changed and previously accepted measures still run.
+tank_size = case water_heater_type
+            when 'gas_tankless' then 1 ['gal']
+            else tank_size['gal']
+            end
 
 if tank_height == nil
     tank_height = case tank_size
@@ -141,6 +147,17 @@ Schedule:File,
     1,                       !- Minutes per Item
     Yes;                     !- Adjust Schedule for Daylight Savings
 
+! TRC - 2026-06-04 - RESTORED schedule that was dropped during the recirculation PR. This schedule is the
+! Target (mixed) delivery temperature referenced by WaterUse:Equipment below. It is fed by the still-present
+! parameter dhw_use_setpt_t and is required regardless of the recirculation setting.
+! DHW WaterUse:Equipment use temperature
+Schedule:Constant,
+    dhw_use_setpt,    !- Name
+    Temperature,             !- Schedule Type Limits Name
+    <%= dhw_use_setpt_t %>;                   !- Hourly Value (corresponds to schedule and peak flow rate)
+
+<%# TRC - 2026-06-04 added conditional to only gather recirculation flow schedules if recirc is active. %>
+<% if use_recirc %>
 ! Solaris - Behzad S. Rizi & Jenna Moon - Added if statement to assign demand fraction schedule from CSV schedule for the recirculation loop
 ! This schedule is used to scale the "recirculation peak flow" in the "LoadProfile:Plant"
 ! Solaris - Behzad S. Rizi - Defined zone list to call the demand fraction schedule CSV file for each climate zone automatically.
@@ -168,6 +185,7 @@ climate_zone_str = zones[climate_zone - 1] %>
     Until: 24:00,            !- Field 3
     <%= recirc_fraction_constant_mode %>;                   !- Field 4
 
+<% end %>
 <% end %>
 
 ! DHW loop setpoint
@@ -600,6 +618,10 @@ WaterUse:Connections,
 ! DWH loop settings
 ! DHW loop branches
 
+<% if use_recirc %>
+! ============================================================================================================
+! TRC - 2026-06-04 - RECIRCULATION-ON TOPOLOGY (use_recirc = true). Identical to the recirculation PR.
+! ============================================================================================================
 ! Solaris - 2025-12-30 - The "mains Inlet Branch" brings water into the supply side.
 ! Solaris Technical, 2025-12-30. Moved water mains pressure pump to water use branch on demand side.
 Branch,
@@ -820,6 +842,131 @@ Pump:VariableSpeed,
     ,                        !- Design Minimum Flow Rate Fraction
     General;                 !- End-Use Subcategory
 
+<% else %>
+! ============================================================================================================
+! TRC - 2026-06-04 - RECIRCULATION-OFF TOPOLOGY (use_recirc = false). Reproduces the original
+! pre-recirculation demand side: a single Water Use branch, the mains-pressure pump on the SUPPLY-side
+! mains inlet branch, and NO recirculation branch / pump / LoadProfile. Copied verbatim from the proven
+! pre-recirculation template so this path is known-good and independent of the recirc additions.
+! ============================================================================================================
+Branch,
+    <%= water_heater_name %> mains Inlet Branch,!- Name
+    ,                        !- Pressure Drop Curve Name
+    Pump:VariableSpeed,      !- Component 1 Object Type
+    <%= water_heater_name %> mains Pressure,    !- Component 1 Name
+    <%= water_heater_name %> Mains Inlet Node,  !- Component 1 Inlet Node Name
+    <%= water_heater_name %> Mains Pressure Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    <%= water_heater_name %> DHW Supply Outlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    <%= water_heater_name %> DHW Supply Outlet Pipe,  !- Component 1 Name
+    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,  !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Supply Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    <%= water_heater_name %> DHW Demand Inlet Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Component 1 Name
+    <%= water_heater_name %> DHW Demand Inlet Node,  !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Demand Inlet Pipe Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    <%= water_heater_name %> Water Use Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    WaterUse:Connections,    !- Component 1 Object Type
+    <%= water_heater_name %> DHW water use,     !- Component 1 Name
+    <%= water_heater_name %> Water Sink Inlet Node,  !- Component 1 Inlet Node Name
+    <%= water_heater_name %> Water Sink Outlet Node;  !- Component 1 Outlet Node Name
+
+Branch,
+    <%= water_heater_name %> Mains Makeup Branch,  !- Name
+    ,                        !- Pressure Drop Curve Name
+    Pipe:Adiabatic,          !- Component 1 Object Type
+    <%= water_heater_name %> Mains Makeup Pipe, !- Component 1 Name
+    <%= water_heater_name %> Mains Makeup Pipe Inlet Node,  !- Component 1 Inlet Node Name
+    <%= water_heater_name %> Mains Makeup Node; !- Component 1 Outlet Node Name
+
+BranchList,
+    <%= water_heater_name %> DHW Supply Branches,  !- Name
+    <%= water_heater_name %> mains Inlet Branch,!- Branch 1 Name
+    <%= water_heater_name %> Branch,  !- Branch 2 Name
+    <%= water_heater_name %> DHW Supply Outlet Branch;  !- Branch 3 Name
+
+BranchList,
+    <%= water_heater_name %> DHW Demand Branches,  !- Name
+    <%= water_heater_name %> DHW Demand Inlet Branch,  !- Branch 1 Name
+    <%= water_heater_name %> Water Use Branch,  !- Branch 2 Name
+    <%= water_heater_name %> Mains Makeup Branch;  !- Branch 3 Name
+
+Connector:Splitter,
+    <%= water_heater_name %> DHW Demand Splitter,  !- Name
+    <%= water_heater_name %> DHW Demand Inlet Branch,  !- Inlet Branch Name
+    <%= water_heater_name %> Water Use Branch;  !- Outlet Branch 1 Name
+
+Connector:Splitter,
+    <%= water_heater_name %> DHW Supply Splitter,  !- Name
+    <%= water_heater_name %> mains Inlet Branch,!- Inlet Branch Name
+    <%= water_heater_name %> Branch;  !- Outlet Branch 1 Name
+
+Connector:Mixer,
+    <%= water_heater_name %> DHW Demand Mixer,  !- Name
+    <%= water_heater_name %> Mains Makeup Branch,  !- Outlet Branch Name
+    <%= water_heater_name %> Water Use Branch;  !- Inlet Branch 1 Name
+
+Connector:Mixer,
+    <%= water_heater_name %> DHW Supply Mixer,  !- Name
+    <%= water_heater_name %> DHW Supply Outlet Branch,  !- Outlet Branch Name
+    <%= water_heater_name %> Branch;  !- Inlet Branch 1 Name
+
+ConnectorList,
+    <%= water_heater_name %> DHW Demand Connectors,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    <%= water_heater_name %> DHW Demand Splitter,  !- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    <%= water_heater_name %> DHW Demand Mixer;  !- Connector 2 Name
+
+ConnectorList,
+    <%= water_heater_name %> DHW Supply Connectors,  !- Name
+    Connector:Splitter,      !- Connector 1 Object Type
+    <%= water_heater_name %> DHW Supply Splitter,  !- Connector 1 Name
+    Connector:Mixer,         !- Connector 2 Object Type
+    <%= water_heater_name %> DHW Supply Mixer;  !- Connector 2 Name
+
+Pipe:Adiabatic,
+    <%= water_heater_name %> DHW Supply Outlet Pipe,  !- Name
+    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,  !- Inlet Node Name
+    <%= water_heater_name %> DHW Supply Outlet Node;  !- Outlet Node Name
+
+Pipe:Adiabatic,
+    <%= water_heater_name %> Mains Makeup Pipe, !- Name
+    <%= water_heater_name %> Mains Makeup Pipe Inlet Node,  !- Inlet Node Name
+    <%= water_heater_name %> Mains Makeup Node; !- Outlet Node Name
+
+Pipe:Adiabatic,
+    <%= water_heater_name %> DHW Demand Inlet Pipe,  !- Name
+    <%= water_heater_name %> DHW Demand Inlet Node,  !- Inlet Node Name
+    <%= water_heater_name %> DHW Demand Inlet Pipe Outlet Node;  !- Outlet Node Name
+
+Pump:VariableSpeed,
+    <%= water_heater_name %> mains Pressure,    !- Name
+    <%= water_heater_name %> Mains Inlet Node,  !- Inlet Node Name
+    <%= water_heater_name %> Mains Pressure Outlet Node,  !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    1,                       !- Design Pump Head {Pa}
+    0,                       !- Design Power Consumption {W}
+    1,                       !- Motor Efficiency
+    0,                       !- Fraction of Motor Inefficiencies to Fluid Stream
+    0,                       !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    0,                       !- Coefficient 3 of the Part Load Performance Curve
+    0,                       !- Coefficient 4 of the Part Load Performance Curve
+    0,                       !- Design Minimum Flow Rate {m3/s}
+    Intermittent;            !- Pump Control Type
+<% end %>
+
 ! Solaris Technical, 2025-12-29. Added rows to clarify defaults for optional input fields
 ! after Load Distribution Scheme.
 PlantLoop,
@@ -849,7 +996,8 @@ PlantLoop,
 
 
 
-
+<%# TRC - 2026-06-04 - added conditional to only add this object if recirculation is active.%>
+<% if use_recirc %>
 ! Solaris - 2025-12-29 - This object has been added to request the flow rate in the recirculation branch.
 LoadProfile:Plant,
     DHW Recirculation Flow Control,         !- Name
@@ -861,6 +1009,7 @@ LoadProfile:Plant,
     DHW Recirculation Varying Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
 <% else %>
     DHW Recirculation Constant Flow Frac Schedule;  !- Flow Rate Fraction Schedule Name
+<% end %>
 <% end %>
 
 PlantEquipmentOperation:HeatingLoad,
@@ -890,6 +1039,8 @@ Sizing:Plant,
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
 
 <% if (output_recirc_variables) %>
+<%# TRC - 2026-06-04 Added conditional to only activate recirc variables if recirculation is active.%>
+<% if use_recirc %>
 ! Solaris - 2026-01-07 Enable time series outputs for SWWH015 and SWWH016 setup and QC
 
 Output:Variable,
@@ -906,6 +1057,7 @@ Output:Variable,
     DHW Recirculation Pump,    !- Key Value
     Pump Electricity Energy ,!- Variable Name
     Hourly;                  !- Reporting Frequency
+<% end %>
 
 Output:Variable,
     *,                       !- Key Value

@@ -5660,10 +5660,10 @@ Sizing:Zone,
     ,                        !- Design Specification Outdoor Air Object Name
     ,                        !- Zone Heating Sizing Factor
     ,                        !- Zone Cooling Sizing Factor
-    DesignDay,               !- Cooling Design Air Flow Method
+    DesignDayWithLimit,               !- Cooling Design Air Flow Method
     0,                       !- Cooling Design Air Flow Rate {m3/s}
     ,                        !- Cooling Minimum Air Flow per Zone Floor Area {m3/s-m2}
-    ,                        !- Cooling Minimum Air Flow {m3/s}
+    0.001,                        !- Cooling Minimum Air Flow {m3/s}
     0,                       !- Cooling Minimum Air Flow Fraction
     DesignDay,               !- Heating Design Air Flow Method
     0,                       !- Heating Design Air Flow Rate {m3/s}
