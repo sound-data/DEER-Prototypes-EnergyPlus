@@ -43,6 +43,7 @@ parameter "oa_frac", :default => 0.3  # Sets AHU design OA fraction. Value of 1.
 
 parameter "night_cycle_control_type", :default=>"CYCLE-AHU-FOR-ANY-ZONE" # (NONE | FOLLOW-FAN-SCHEDULE | CYCLE-AHU-FOR-ANY-ZONE | CYCLE-AHU-FOR-CONTROL-ZONE-ONLY | CYCLE-ZONE-FANS-ONLY) Control type used in night cycle availability manager. DOAS systems should use "CYCLE-ZONE-FANS-ONLY"
 
+parameter "swsv005_04_BC", :default => nil # TRC created parameter to trigger economizer fault for SWSV005-04
 parameter "oa_econ_type", :default => "NONE"  # (NONE | FIXED-DRY-BULB | DIFFERENTIAL-DRY-BULB | FIXED-ENTHALPY | DIFFERENTIAL-ENTHALPY | ELECTRONIC-ENTHALPY | FIXED-DEW-POINT-AND-DRY-BULB | DIFFERENTIAL-DRY-BULB-AND-ENTHALPY) Economizer control type
 parameter "oa_econ_mode", :default => "MODULATE-FLOW" # ( MODULATE-FLOW | MINIMUM-FLOW-WITH-BYPASS ) ModulateFlow = OA flow increased to meet mixed air setpoint, MinimumFlowWithBypass = forces OA flow to remain at minimum
 parameter "oa_econ_min_temp", :default => 40['F']  # Minimum outdoor air temperature for economizer operation
@@ -1065,11 +1066,28 @@ Controller:OutdoorAir,
   BypassWhenWithinEconomizerLimits;  !- Heat Recovery Bypass Control Type
 <%# only show BypassWhenWithinEconomizerLimits when there is heat recovery %>
 
+<% if swsv005_04_BC %>  !-#TRC - Adding swsv005_04_BC for economizer repair base case										
+Schedule:Compact,
+  <%= ahu_name %> Outdoor Air Schedule,  !- Name
+  Unit Interval,           !- Schedule Type Limits Name
+  Through: 12/31,
+For: SummerDesignDay WinterDesignDay,
+Until: 24:00,1,
+For: Weekdays,
+Until: 05:00,0,
+Until: 24:00,0,
+For: Saturday,
+Until: 05:00,0,
+Until: 19:00,0,
+Until: 24:00,0,
+For: AllOtherDays,
+Until: 24:00,0.0;
+<% else %>
 Schedule:Compact,
   <%= ahu_name %> Outdoor Air Schedule,  !- Name
   Unit Interval,           !- Schedule Type Limits Name
   <%= oa_sch %>
-
+<% end %>	
 
 <% if oa_frac_sch != "NONE" %>
 Schedule:Compact,
