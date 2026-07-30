@@ -1,0 +1,3 @@
+skip,case_name,:vfd_curve_name,:supplyfan_total_eff,:motor_eff,:cooling_coil_cop,:cooling_coil_cop2,:coil_type,:hvac_type,:heating_coil_cop,:burner_eff
+,SFC rNCGF Base,,0.12,0.24,,,,unitary_system,,0.78
+,SFC rNCGF Measure,,0.12,0.24,,,,unitary_system,,1
