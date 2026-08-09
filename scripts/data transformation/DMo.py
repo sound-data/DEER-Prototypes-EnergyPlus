@@ -55,7 +55,7 @@ tech_uniques = list(np.unique((np.array(techgroup_techtypes))))
 expected_att = {
     'BldgType': ['MFm','SFm', 'DMo'],
     'Story': ['0','1','2'], # NA for Not Applicable
-    'BldgHVAC': ['rDXGF','rDXHP','rNCEH','rNCGF'],
+    'BldgHVAC': ['rDXGF','rDXHP','rNCEH','rNCGF','rPTAC','rPTHP'],
     'BldgVint': ['Ex','New'],
     'Measure': tech_uniques
 }
