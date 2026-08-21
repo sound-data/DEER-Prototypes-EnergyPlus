@@ -26,3 +26,5 @@ scripts/data transformation/CEDARS_long_ls_DMo.csv
 scripts/data transformation/CEDARS_long_ls_Com.csv
 scripts/data transformation/CEDARS_long_ls_*.csv
 scripts/data transformation/CEDARS_long_ls_*.zip
+scripts/data transformation/CEDARS_LoadShape_Com_SWHC023.zip
+scripts/data transformation/sim_hourly_wb_SWHC023.csv
