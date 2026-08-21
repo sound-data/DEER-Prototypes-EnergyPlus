@@ -1,0 +1,10 @@
+skip,case_name,:refsys_condenser_type,:refsys_cond_fan_speed_control_type,:refsys_cond_sct_delta,:refsys_cond_floating,:refsys_cond_min_temp,:refsys_cond_hr_mt_air,:refsys_cond_hr_lt_air
+#,defaults,,,,,,,
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-85,AirCooled,TwoSpeed,12['deltaF'],FALSE,85.0['F'],12462,7522
+,NE-Ref_Storage-RefControl-FixCondTemp-AirCool-85-VSDFan,AirCooled,VariableSpeed,12['deltaF'],FALSE,85.0['F'],12462,7522
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-85,EvaporativelyCooled,TwoSpeed,17['deltaF'],FALSE,85.0['F'],3150,2090
+,NE-Ref_Storage-RefControl-FixCondTemp-EvapCool-85-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],FALSE,85.0['F'],3150,2090
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-70,AirCooled,TwoSpeed,12['deltaF'],TRUE,70.0['F'],12462,7522
+,NE-Ref_Storage-RefControl-FltCondTemp-AirCool-70-VSDFan,AirCooled,VariableSpeed,12['deltaF'],TRUE,70.0['F'],12462,7522
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-70,EvaporativelyCooled,TwoSpeed,17['deltaF'],TRUE,70.0['F'],3150,2090
+,NE-Ref_Storage-RefControl-FltCondTemp-EvapCool-70-VSDFan,EvaporativelyCooled,VariableSpeed,17['deltaF'],TRUE,70.0['F'],3150,2090
