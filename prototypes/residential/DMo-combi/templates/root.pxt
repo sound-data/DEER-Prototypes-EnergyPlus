@@ -63,10 +63,13 @@ parameter "sizing_parameter_cooling", :default=>1.8
 parameter "max_designday_schedules", :default=>true #if true, use 100% schedule for CDD for general misc load, occupancy and lighting schedules. Otherwise, use weekday schedule.
 
 #fan power
+parameter "fan_power_per_flow", :default=>773.3
 parameter "supplyfan_total_eff", :default=>0.12
 parameter "motor_eff", :default=>0.24
 parameter "pressure_rise", :default=>125
 parameter "vfd_curve_name", :default=>""
+parameter "fan_type", :default=>"ONOFF" 
+parameter "fan_speed_method", :default=>"CONTINUOUS"
 
 # door construction
 parameter "door_thermal_resistance", :default=>0.32036363636
@@ -111,6 +114,7 @@ parameter "refgfrzr_power_level", :default=>1.37778053333884
 
 
 #Duct Loss
+parameter "ductless", :default=>false
 parameter "total_leakage_ratio", :default=>0.30  #total leakage ratio
 parameter "number_of_stories", :default=>1  #no. of stories, default one story
 parameter "conditioned_floor_area", :default =>1196|'ft2'  # ft2, default conditioned floor area of 1 story SFm
@@ -197,7 +201,8 @@ for zone in all_zones
     :slave_zone => secondary_zone,
     :supply_leakage_frac=>supply_leakage_frac,
     :return_leakage_frac=>return_leakage_frac,
-    :duct_r_value=>duct_r_value
+    :duct_r_value=>duct_r_value,
+	:ductless=>ductless
 
   insert 'zonehvac/res-zone-hvac-combi.pxt',
     :zone_name=>control_zone_name,

@@ -28,7 +28,9 @@ parameter "coil_type", :default =>"" #"", 'multispeed' (multispeed only works wi
 parameter "supplyfan_total_eff", :default=>0.12
 parameter "motor_eff", :default=>0.24
 parameter "pressure_rise", :default=>125
-#parameter "vfd_curve_name", :default=>"" #"" for constant speed, "VFD_Fan_Curve" for variable speed does not work with Fan:OnOff
+parameter "vfd_curve_name", :default=>"" #"" for constant speed, "VFD_Fan_Curve" for variable speed does not work with Fan:OnOff
+parameter "fan_type", :default=>"ONOFF" 
+parameter "fan_speed_method", :default=>"CONTINUOUS"
 
 
 #parameter "heat_coil_object_type",:default => nil
@@ -435,18 +437,46 @@ ZoneHVAC:Baseboard:Convective:Water,
         <%= secondary_zone %> Return Outlet;  !- Zone Return Air Node or NodeList Name
     <% end %>
 
-!Fan:OnOff
-    Fan:OnOff,
-        <%= system_name %> Supply Fan,     !- Name
-        always_avail,            !- Availability Schedule Name
-        <%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
-        <%= pressure_rise %>,                     !- Pressure Rise {Pa}
-        autosize,                !- Maximum Flow Rate {m3/s}
-        <%= motor_eff %>,                     !- Motor Efficiency
-        1,                       !- Motor In Airstream Fraction
-        <%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
-        <%= system_name %> Supply Fan Outlet,  !- Air Outlet Node Name
-        ; !-fan power ratio function of speed ratio curve name
+
+	<% if fan_type == "ONOFF" %>
+		!Fan:OnOff
+		Fan:OnOff,
+			<%= system_name %> Supply Fan,     !- Name
+			always_avail,            !- Availability Schedule Name
+			<%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
+			<%= pressure_rise %>,                     !- Pressure Rise {Pa}
+			autosize,                !- Maximum Flow Rate {m3/s}
+			<%= motor_eff %>,                     !- Motor Efficiency
+			1,                       !- Motor In Airstream Fraction
+			<%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
+			<%= system_name %> Supply Fan Outlet,  !- Air Outlet Node Name
+			<%= vfd_curve_name %>; !-fan power ratio function of speed ratio curve name
+		<% else %>
+		!Fan:SystemModel
+			Fan:SystemModel,
+			<%= system_name %> Supply Fan,     !- Name
+			always_avail,            !- Availability Schedule Name
+			<%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
+			<%= system_name %> Supply Fan Outlet,  !- Air Outlet Node Name
+			autosize,                !- Design Maximum Air Flow Rate {m3/s}
+			<%= fan_speed_method %>,              !- Speed Control Method
+			0.2,                     !- Electric Power Minimum Flow Rate Fraction
+			<%= pressure_rise %>,                     !- Design Pressure Rise {Pa}
+			<%= motor_eff %>,                     !- Motor Efficiency
+			1,                       !- Motor In Air Stream Fraction
+			autosize,                !- Design Electric Power Consumption {W}
+			PowerPerFlowPerPressure, !- Design Power Sizing Method
+			,                        !- Electric Power Per Unit Flow Rate {W/(m3/s)}
+			1.66667,                 !- Electric Power Per Unit Flow Rate Per Unit Pressure {W/((m3/s)-Pa)}
+			<%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
+			<%= vfd_curve_name %>,           !- Electric Power Function of Flow Fraction Curve Name
+			,                        !- Night Ventilation Mode Pressure Rise {Pa}
+			,                        !- Night Ventilation Mode Flow Fraction
+			,                        !- Motor Loss Zone Name
+			,                        !- Motor Loss Radiative Fraction
+			General,                 !- End-Use Subcategory
+			1;                       !- Number of Speeds
+		<% end %>	
 
 !Cooling Coils
     <% if cool_type == "DX" %>
@@ -475,7 +505,7 @@ ZoneHVAC:Baseboard:Convective:Water,
             autosize,                 !- Speed 1 Gross Rated Sensible Heat Ratio
             <%= cooling_coil_cop %>,    !- Speed 1 Gross Rated Cooling COP
             autosize,                 !- Speed 1 Rated Air Flow Rate
-            ,                    !- Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
+            ,                         !- Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
             DEER DX Cool Cap-fT,    !- Speed 1 Total Cooling Capacity Function of Temperature Curve Name
             DEER DX Cool Cap-FF,    !- Speed 1 Total Cooling Capacity Function of Flow Fraction Curve Name
             DEER DX Cool EIR-fT,    !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
@@ -553,7 +583,7 @@ ZoneHVAC:Baseboard:Convective:Water,
             autosize,                !- Gross Rated Sensible Heat Ratio
             <%= cooling_coil_cop %>,               !- Gross Rated Cooling COP {W/W}
             autosize,                !- Rated Air Flow Rate {m3/s}
-            ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
+            <%= fan_power_per_flow %>,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
             <%= system_name %> <%= heat_type == "DX" ? "Supply Fan Outlet" : "Heating Coil Outlet" %>,  !- Air Inlet Node Name
             <%= system_name %> <%= heat_type == "DX" ? "Cooling Coil Outlet" : "Air Loop Outlet" %>,  !- Air Outlet Node Name
         <% if hvac_type=='unitary_system' %>
@@ -768,7 +798,7 @@ ZoneHVAC:Baseboard:Convective:Water,
                 always_avail,             !- Availability Schedule Name
                 <%= system_name %> Mixed Air Outlet,    !- Air Inlet Node Name
                 <%= system_name %> Air Loop Outlet,    !- Air Outlet Node Name
-                Fan:OnOff,                !- Supply Fan Object Type
+                <%= "Fan:#{fan_type}" %>,                !- Supply Fan Object Type
                 <%= system_name %> Supply Fan,    !- Supply Fan Name
                 BlowThrough,              !- Fan Placement
                 ,                         !- Supply Air Fan Operating Mode Schedule Name
@@ -851,7 +881,7 @@ ZoneHVAC:Baseboard:Convective:Water,
                     autosize,                !- Heating Supply Air Flow Rate {m3/s}
                     ,                        !- No Load Supply Air Flow Rate {m3/s}
                     <%= zone_name %>,  !- Controlling Zone or Thermostat Location
-                    Fan:OnOff,               !- Supply Fan Object Type
+                    <%= "Fan:#{fan_type}" %>,               !- Supply Fan Object Type
                     <%= system_name %> Supply Fan,     !- Supply Fan Name
                     BlowThrough,             !- Fan Placement
                     <%= heat_coil_object_type %>,        !- Heating Coil Object Type
@@ -869,7 +899,7 @@ ZoneHVAC:Baseboard:Convective:Water,
                     autosize,                !- Heating Supply Air Flow Rate {m3/s}
                     ,                        !- No Load Supply Air Flow Rate {m3/s}
                     <%= zone_name %>,  !- Controlling Zone or Thermostat Location
-                    Fan:OnOff,               !- Supply Air Fan Object Type
+                    <%= "Fan:#{fan_type}" %>,               !- Supply Air Fan Object Type
                     <%= system_name %> Supply Fan,     !- Supply Air Fan Name
                     <%= heat_coil_object_type %>,  !- Heating Coil Object Type
                     <%= system_name %> Heating Coil,   !- Heating Coil Name
@@ -901,7 +931,7 @@ ZoneHVAC:Baseboard:Convective:Water,
             32.2,                      !- Maximum Supply Air Temperature {C}
             autosize,                !- Heating Supply Air Flow Rate {m3/s}
             <%= zone_name %>,  !- Controlling Zone or Thermostat Location
-            Fan:OnOff,               !- Supply Fan Object Type
+            <%= "Fan:#{fan_type}" %>,               !- Supply Fan Object Type
             <%= system_name %> Supply Fan,     !- Supply Fan Name
             BlowThrough,             !- Fan Placement
             <%= heat_coil_object_type %>,        !- Heating Coil Object Type
