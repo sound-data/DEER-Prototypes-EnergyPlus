@@ -381,8 +381,15 @@ for folder in folder_list:
                 f"{split_meta_cols_eu.iloc[i][1]}/"
                 f"{split_meta_cols_eu.iloc[i][2]}"
                         )
-            csv_path = f"{base_path}/instance-var.csv"
-            idf_path = f"{base_path}/instance.idf"
+            # Kelsey Yen, Solaris Technical LLC, 2026-07-08, new feature: 
+            # Added the following lines of code to deal with hardsizing instance files (instance-hardsize-var.csv and instance-hardsize.idf) 
+            # which are used in place of the default instance files.
+            if os.path.exists(f"{base_path}/instance-var.csv"):
+                csv_path = f"{base_path}/instance-var.csv"
+                idf_path = f"{base_path}/instance.idf"
+            else:
+                csv_path = f"{base_path}/instance-hardsize-var.csv"
+                idf_path = f"{base_path}/instance-hardsize.idf"
 
             #3/3/2026 update, extract RunPeriod Start Day from IDF file for a particular simulation
             runperiod_start_day = helper_functions.get_runperiod_start_day(idf_path)
@@ -417,6 +424,8 @@ for folder in folder_list:
 
 # Create DataFrame once
 hourly_df = pd.DataFrame(hourly_data, index=index)
+
+# %%
 
 # %%
 fyr_hrly = hourly_df
