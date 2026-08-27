@@ -1,0 +1,8 @@
+skip,case_name,:heat_type,:burner_eff,:supplyfan_total_eff,:motor_eff,:combi
+,RG-SpaceHtg_eq-GasFurnace-rNCGF-AFUE67-NoFanPower,GF,0.67,1,1,
+,RG-SpaceHtg_eq-GasFurnace-rNCGF-AFUE65-NoFanPower,GF,0.65,1,1,
+,RG-SpaceHtg_eq-GasFurnace-rNCGF-AFUE66-NoFanPower,GF,0.66,1,1,
+,RG-SpaceHtg_eq-GasFurnace-rNCGF-AFUE70-NoFanPower,GF,0.7,1,1,
+,RG-SpaceHtg_eq-GasFurnace-rNCGF-AFUE75-PoweredFan,GF,0.75,0.12,0.24,
+,RG-SpaceHtg_eq-GasFurnace-rNCGF-AFUE82-PoweredFan,GF,0.82,0.12,0.24,
+,RG-SpaceHtg_eq-GasFurnace-rNCGF-AFUE82-NoFanPower,GF,0.82,1,1,
