@@ -1,0 +1,4 @@
+skip,case_name,:heat_type,:combi,:boiler_eff,:boiler_eff_curve,:curve_evaluation_variable,:design_hw_temp,:min_hw_temp,:sub_heat_type,:cooling_coil_cop,:heating_coil_cop,:supplyfan_total_eff,:motor_eff,:burner_eff,:ductless,:use_dummy_return_plenum,:vfd_curve_name,:coil_type,:hvac_type,:dhw_stpt_sch,:water_heater_type,:tank_size,:uef,:tank_height,:loop_sept,:tank_sept
+,RG-NCOH_equip-Boiler-AFUE84-Radiator,HW,,0.84,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F'],BASEBOARD-WATER,,,,,,,,,,,,,,,,,
+,RG-NCOH_equip-Boiler-AFUE84-FC,HW,,0.84,NonCond_Boiler_Eff,LeavingBoiler,165['F'],140['F'],,,,,,,,,,,,,,,,,,
+,RG-NCGF_eq-GasFurnace-AFUE67-NoFanPower,GF,,,,,,,,,,1,1,0.67,,,,,,,,,,,,

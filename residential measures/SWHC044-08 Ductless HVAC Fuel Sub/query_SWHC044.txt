@@ -1,0 +1,4 @@
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Heating, Heating Electricity
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Cooling, Cooling Electricity
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Fans, Fans
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Heating, Natural Gas
