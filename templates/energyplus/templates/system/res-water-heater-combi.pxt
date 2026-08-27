@@ -219,7 +219,7 @@ end
             <% if defined?($repository_dir) %>
               <%= $repository_dir %>/templates/hot water profile/<%= dhw_stpt_sch %>_CZ<%= climate_zone_str %>.csv,  !- File Name
             <% else %>
-              ../../../../../../../../templates/hot water profile/<%= dhw_stpt_sch %>_CZ<%= climate_zone_str %>.csv,  !- File Name
+              C:/dev/DEER-Prototypes-EnergyPlus/templates/hot water profile/<%= dhw_stpt_sch %>_CZ<%= climate_zone_str %>.csv,  !- File Name
             <% end %>
             1,                       !- Column Number
             1,                       !- Rows to Skip at Top

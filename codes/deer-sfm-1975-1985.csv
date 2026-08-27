@@ -51,6 +51,12 @@ climate_zone,1,,,
 total_leakage_ratio,0.2,,,
 shading_control,AlwaysOn,,,
 floor_abv_crawl_insulation,0.0011,,,SI-R-value
+cool_coil_capacity,9707,,,
+coolCap,14068.0,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,13481.8,,,Watts
+airflow,0.755,,,M3/s
 ,,,,
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 2,,,,
@@ -102,6 +108,12 @@ climate_zone,2,,,
 total_leakage_ratio,0.14,,,
 shading_control,AlwaysOff,,,
 floor_abv_crawl_insulation,0.352,,,SI-R-value-R2
+cool_coil_capacity,9707,,,
+coolCap,14068.0,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,13481.8,,,Watts
+airflow,0.755,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 3,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -152,6 +164,12 @@ climate_zone,3,,,
 total_leakage_ratio,0.2,,,
 shading_control,AlwaysOff,,,
 floor_abv_crawl_insulation,1.056,,,SI-R-value-R6
+cool_coil_capacity,9707,,,
+coolCap,14068.0,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,13481.8,,,Watts
+airflow,0.755,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 4,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -202,6 +220,12 @@ climate_zone,4,,,
 total_leakage_ratio,0.1,,,
 shading_control,AlwaysOn,,,
 floor_abv_crawl_insulation,0.0011,,,SI-R-value
+cool_coil_capacity,9707,,,
+coolCap,14068.0,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,13481.8,,,Watts
+airflow,0.755,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 5,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -252,6 +276,12 @@ climate_zone,5,,,
 total_leakage_ratio,0.2,,,
 shading_control,AlwaysOff,,,
 floor_abv_crawl_insulation,1.056,,,SI-R-value-R6
+cool_coil_capacity,9707,,,
+coolCap,14068.0,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,13481.8,,,Watts
+airflow,0.755,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 6,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -302,6 +332,12 @@ climate_zone,6,,,
 total_leakage_ratio,0.2,,,
 shading_control,AlwaysOn,,,
 floor_abv_crawl_insulation,0.0011,,,SI-R-value
+cool_coil_capacity,9707,,,
+coolCap,14068.0,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,13481.8,,,Watts
+airflow,0.755,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 7,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -352,6 +388,12 @@ climate_zone,7,,,
 total_leakage_ratio,0.2,,,
 shading_control,AlwaysOn,,,
 floor_abv_crawl_insulation,0.0011,,,SI-R-value
+cool_coil_capacity,9707,,,
+coolCap,14068.0,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,13481.8,,,Watts
+airflow,0.755,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 8,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -402,6 +444,12 @@ climate_zone,8,,,
 total_leakage_ratio,0.25,,,
 shading_control,AlwaysOn,,,
 floor_abv_crawl_insulation,0.0011,,,SI-R-value
+cool_coil_capacity,9707,,,
+coolCap,14068.0,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,13481.8,,,Watts
+airflow,0.755,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 9,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -452,6 +500,12 @@ climate_zone,9,,,
 total_leakage_ratio,0.2,,,
 shading_control,AlwaysOn,,,
 floor_abv_crawl_insulation,0.0011,,,SI-R-value
+cool_coil_capacity,9707,,,
+coolCap,14068.0,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,13481.8,,,Watts
+airflow,0.755,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 10,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -501,6 +555,12 @@ cooling_sch_DEER_nit,25.56,,,(Celcius-SI) Added per Modelkit parameters table
 climate_zone,10,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
+cool_coil_capacity,9707,,,
+coolCap,17585.0,,,Watts
+coolShr,0.8,,,
+heatCap,29308.3,,,Watts
+heatPumpHeatCap,16705.7,,,Watts
+airflow,0.944,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 11,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -550,6 +610,12 @@ cooling_sch_DEER_nit,25,,,(Celcius-SI) Added per Modelkit parameters table
 climate_zone,11,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
+cool_coil_capacity,9707,,,
+coolCap,17585.0,,,Watts
+coolShr,0.8,,,
+heatCap,29308.3,,,Watts
+heatPumpHeatCap,16705.7,,,Watts
+airflow,0.944,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 12,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -599,6 +665,12 @@ cooling_sch_DEER_nit,25,,,(Celcius-SI) Added per Modelkit parameters table
 climate_zone,12,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
+cool_coil_capacity,9707,,,
+coolCap,17585.0,,,Watts
+coolShr,0.8,,,
+heatCap,29308.3,,,Watts
+heatPumpHeatCap,16705.7,,,Watts
+airflow,0.944,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 13,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -648,6 +720,12 @@ cooling_sch_DEER_nit,23.89,,,(Celcius-SI) Added per Modelkit parameters table
 climate_zone,13,,,
 total_leakage_ratio,0.3,,,
 shading_control,AlwaysOn,,,
+cool_coil_capacity,9707,,,
+coolCap,17585.0,,,Watts
+coolShr,0.8,,,
+heatCap,29308.3,,,Watts
+heatPumpHeatCap,16705.7,,,Watts
+airflow,0.944,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 14,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -697,6 +775,12 @@ cooling_sch_DEER_nit,26.39,,,(Celcius-SI) Added per Modelkit parameters table
 climate_zone,14,,,
 total_leakage_ratio,0.15,,,
 shading_control,AlwaysOn,,,
+cool_coil_capacity,9707,,,
+coolCap,17585.0,,,Watts
+coolShr,0.8,,,
+heatCap,29308.3,,,Watts
+heatPumpHeatCap,16705.7,,,Watts
+airflow,0.944,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 15,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -746,6 +830,12 @@ cooling_sch_DEER_nit,23.89,,,(Celcius-SI) Added per Modelkit parameters table
 climate_zone,15,,,
 total_leakage_ratio,0.28,,,
 shading_control,AlwaysOn,,,
+cool_coil_capacity,9707,,,
+coolCap,17585.0,,,Watts
+coolShr,0.8,,,
+heatCap,29308.3,,,Watts
+heatPumpHeatCap,16705.7,,,Watts
+airflow,0.944,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 16,,,,
 Key Values,Value, R-Value,Extent,Notes
@@ -795,3 +885,137 @@ cooling_sch_DEER_nit,24.44,,,(Celcius-SI) Added per Modelkit parameters table
 climate_zone,16,,,
 total_leakage_ratio,0.15,,,
 shading_control,OnNightIfHeatingAndOnDayIfCooling,,,
+cool_coil_capacity,9707,,,
+coolCap,17585.0,,,Watts
+coolShr,0.8,,,
+heatCap,29308.3,,,Watts
+heatPumpHeatCap,16705.7,,,Watts
+airflow,0.944,,,M3/s
+table:   Res Key Prototype Values | Climate Zone 1 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,28136.0,,,Watts
+coolShr,0.8,,,
+heatCap,46893.3,,,Watts
+heatPumpHeatCap,26963.7,,,Watts
+airflow,1.51,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 2 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,28136.0,,,Watts
+coolShr,0.8,,,
+heatCap,46893.3,,,Watts
+heatPumpHeatCap,26963.7,,,Watts
+airflow,1.51,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 3 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,28136.0,,,Watts
+coolShr,0.8,,,
+heatCap,46893.3,,,Watts
+heatPumpHeatCap,26963.7,,,Watts
+airflow,1.51,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 4 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,28136.0,,,Watts
+coolShr,0.8,,,
+heatCap,46893.3,,,Watts
+heatPumpHeatCap,26963.7,,,Watts
+airflow,1.51,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 5 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,28136.0,,,Watts
+coolShr,0.8,,,
+heatCap,46893.3,,,Watts
+heatPumpHeatCap,26963.7,,,Watts
+airflow,1.51,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 6 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,28136.0,,,Watts
+coolShr,0.8,,,
+heatCap,46893.3,,,Watts
+heatPumpHeatCap,26963.7,,,Watts
+airflow,1.51,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 7 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,28136.0,,,Watts
+coolShr,0.8,,,
+heatCap,46893.3,,,Watts
+heatPumpHeatCap,26963.7,,,Watts
+airflow,1.51,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 8 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,28136.0,,,Watts
+coolShr,0.8,,,
+heatCap,46893.3,,,Watts
+heatPumpHeatCap,26963.7,,,Watts
+airflow,1.51,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 9 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,28136.0,,,Watts
+coolShr,0.8,,,
+heatCap,46893.3,,,Watts
+heatPumpHeatCap,26963.7,,,Watts
+airflow,1.51,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 10 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,35170.0,,,Watts
+coolShr,0.8,,,
+heatCap,58616.6,,,Watts
+heatPumpHeatCap,33411.5,,,Watts
+airflow,1.89,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 11 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,35170.0,,,Watts
+coolShr,0.8,,,
+heatCap,58616.6,,,Watts
+heatPumpHeatCap,33411.5,,,Watts
+airflow,1.89,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 12 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,35170.0,,,Watts
+coolShr,0.8,,,
+heatCap,58616.6,,,Watts
+heatPumpHeatCap,33411.5,,,Watts
+airflow,1.89,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 13 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,35170.0,,,Watts
+coolShr,0.8,,,
+heatCap,58616.6,,,Watts
+heatPumpHeatCap,33411.5,,,Watts
+airflow,1.89,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 14 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,35170.0,,,Watts
+coolShr,0.8,,,
+heatCap,58616.6,,,Watts
+heatPumpHeatCap,33411.5,,,Watts
+airflow,1.89,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 15 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,35170.0,,,Watts
+coolShr,0.8,,,
+heatCap,58616.6,,,Watts
+heatPumpHeatCap,33411.5,,,Watts
+airflow,1.89,,,M3/s
+
+table:   Res Key Prototype Values | Climate Zone 16 | 2 Story,,,,
+Key Values,Value, R-Value,Extent,Notes
+coolCap,35170.0,,,Watts
+coolShr,0.8,,,
+heatCap,58616.6,,,Watts
+heatPumpHeatCap,33411.5,,,Watts
+airflow,1.89,,,M3/s
+

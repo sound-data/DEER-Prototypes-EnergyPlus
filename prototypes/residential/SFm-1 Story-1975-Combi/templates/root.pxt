@@ -238,10 +238,10 @@ Version,
 SimulationControl,
     Yes,                     !- Do Zone Sizing Calculation
     Yes,                     !- Do System Sizing Calculation
-    Yes,                      !- Do Plant Sizing Calculation
-    Yes,                     !- Run Simulation for Sizing Periods
+    No,                      !- Do Plant Sizing Calculation
+    No,                      !- Run Simulation for Sizing Periods
     Yes,                     !- Run Simulation for Weather File Run Periods
-    Yes,                        !- Do HVAC Sizing Simulation for Sizing Periods
+    ,                        !- Do HVAC Sizing Simulation for Sizing Periods
     ;                        !- Maximum Number of HVAC Sizing Simulation Passes
 
 
@@ -18449,6 +18449,12 @@ Output:Constructions,
     Materials;               !- Details Type 2
 
 
+    Output:Variable,
+        *,                       !- Key Value
+        Fan Electricity Energy ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
+
 !-   ===========  ALL OBJECTS IN CLASS: OUTPUT:TABLE:SUMMARYREPORTS ===========
 
 Output:Table:SummaryReports,
@@ -18575,6 +18581,11 @@ OutputControl:ReportingTolerances,
     Output:Variable,
         *,                       !- Key Value
         Unitary System Compressor Part Load Ratio ,  !- Variable Name
+        Hourly;                  !- Reporting Frequency
+
+    Output:Variable,
+        *,                       !- Key Value
+        Heating Coil Electricty Energy ,  !- Variable Name
         Hourly;                  !- Reporting Frequency
 <% else %>
 
