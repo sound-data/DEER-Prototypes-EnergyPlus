@@ -477,11 +477,11 @@ Sizing:Zone,
   ,                        !- Cooling Design Air Flow Rate {m3/s}
   <%= cooling_min_flow_area %>,                        !- Cooling Minimum Air Flow per Zone Floor Area {m3/s-m2}
   <% else %>
-  DesignDay,               !- Cooling Design Air Flow Method
+  DesignDayWithLimit,               !- Cooling Design Air Flow Method
   ,                        !- Cooling Design Air Flow Rate {m3/s}
   ,                        !- Cooling Minimum Air Flow per Zone Floor Area {m3/s-m2}
   <% end %>
-  ,                        !- Cooling Minimum Air Flow {m3/s}
+  0.001,                        !- Cooling Minimum Air Flow {m3/s}
 
 <%#! - TRC Adding cool_flow_min_frac as the minimum flow ratio in cooling.Cannot be autosized and it doesn't override the ventilation requirement. %>
   <%= cool_flow_min_frac %>,                        !- Cooling Minimum Air Flow Fraction
