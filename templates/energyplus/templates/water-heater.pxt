@@ -17,6 +17,8 @@ parameter "water_heater_type", :name => "Water Heater Type", :description => "cu
 
 parameter "water_heater_location", :default =>"unconditioned" # unconditioned | conditioned
 parameter "tank_size", :default => 50 ['gal']
+# Solaris - 2026-06-26 Janik Somaiya - Added paarameter "allow_tankless_tank_size_override" to assign "tank_size"
+parameter "allow_tankless_tank_size_override", :default=> false, :domain => Boolean
 parameter "water_heater_cap", :name => "water heater capacity", :default=> 41000 ['BTUH']
 parameter "heat_element_cap", :name => "heating element capacity for hpwh each", :default=> 0 ['W']
 parameter "uef", :default => 3.52
@@ -97,11 +99,16 @@ daily_volume = case draw_pattern
                else 69.5
                end
 
-# Solaris Technical, 2026-01-07. Commented out these lines to force the template
-# to pass through the user specified value for tank_size parameter when gas_tankless.
+
 # TRC - 2026-06-18 reverted so that defaults aren't changed and previously accepted measures still run.
+# Solaris - 2026-06-26 Janik Somaiya - Solaris added conditional statement for the parameter "allow_tankless_tank_size_override"
 tank_size = case water_heater_type
-            when 'gas_tankless' then 1 ['gal']
+            when 'gas_tankless'
+                if allow_tankless_tank_size_override
+                    tank_size
+                else
+                    1 ['gal']
+                end
             else tank_size['gal']
             end
 
