@@ -1,0 +1,37 @@
+ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/*, Cooling Capacity
+ComponentSizingSummary/Entire Facility/Coil:Heating:Fuel/Design Size Nominal Capacity/*, Heating Capacity
+InputVerificationandResultsSummary/Entire Facility/General/Value/Program Version and Build
+InputVerificationandResultsSummary/Entire Facility/General/Value/Weather File
+InputVerificationandResultsSummary/Entire Facility/Zone Summary/Area/Conditioned Total
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Utility Use Per Conditioned Floor Area/Electricity Intensity/HVAC
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Utility Use Per Conditioned Floor Area/Natural Gas Intensity/HVAC
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Heating
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Cooling
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Interior Lighting
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Exterior Lighting
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Interior Equipment
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Exterior Equipment
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Fans
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Pumps
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Heat Rejection
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Humidification
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Heat Recovery
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Water Systems
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Refrigeration
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Electricity/Generators
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Heating
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Cooling
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Interior Lighting
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Exterior Lighting
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Interior Equipment
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Exterior Equipment
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Fans
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Pumps
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Heat Rejection
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Humidification
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Heat Recovery
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Water Systems
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Refrigeration
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/End Uses/Natural Gas/Generators
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Heating, Unmet Heating
+AnnualBuildingUtilityPerformanceSummary/Entire Facility/Comfort and Setpoint Not Met Summary/Facility/Time Setpoint Not Met During Occupied Cooling, Unmet Cooling
