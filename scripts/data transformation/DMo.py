@@ -27,7 +27,7 @@ print(measures)
 #measure_name = 'SEER Rated AC/HP'
 #measure_name = 'Efficient Doors'
 #Define measure name here
-measure_name = 'SEER Rated AC HP'
+measure_name = 'Lifecycle Refrigerant Management, Residential'
 
 # %%
 #DMo only script
@@ -43,8 +43,8 @@ print(os.path.abspath(os.curdir))
 #path = 'residential measures/SWBE013-01 Efficient Doors/SWBE013-01 Efficient Doors_DMo'
 #path = 'residential measures/SWBE007-02 Wall Insulation/SWBE007-02 Wall Insulation_DMo'
 #The folder path here is specifc to Windows measure which has three subfolders ending with Msr1,Msr2,Msr3. Modify the path for each submeasure.
-path = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_DMo/SWBE011-01 Windows_DMo_Msr1'
-
+path = 'residential measures/SWSV014-06-1 LRM/SWSV014-06 LRM AC HP _DMo_Ex'
+#"C:\DEER-Prototypes-EnergyPlus\residential measures\SWSV014 Lifecycle Refridgerant Management\SWSV014-06 LRM AC HP _DMo_Ex\results-summary.csv"
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum

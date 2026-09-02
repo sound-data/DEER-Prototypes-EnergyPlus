@@ -28,7 +28,7 @@ print(measures)
 #measure_name = 'Wall Insulation'
 #measure_name = 'PTAC / PTHP'
 #Define measure name here
-measure_name = 'Duct Seal'
+measure_name = 'Lifecycle Refrigerant Management, Residential'
 
 # %%
 #SFm only script
@@ -47,8 +47,9 @@ print(os.path.abspath(os.curdir))
 # path_1985 = 'residential measures/SWBE007-02 Wall Insulation/SWBE007-02 Wall Insulation_SFm_1985'
 # path_1975 = 'residential measures/SWHC027-08 PTAC PTHP/SWHC027-08 PTAC PTHP_SFm_1975'
 # path_1985 = 'residential measures/SWHC027-08 PTAC PTHP/SWHC027-08 PTAC PTHP_SFm_1985'
-path_1975 = 'residential measures/SWSV001-05 Duct Seal/SWSV001-05 Duct Seal_SFm_1975'
-path_1985 = 'residential measures/SWSV001-05 Duct Seal/SWSV001-05 Duct Seal_SFm_1985'
+path_1975 = 'residential measures/SWSV014-06-1 LRM/SWSV014-06 LRM AC HP_SFm_1975'
+#"C:\DEER-Prototypes-EnergyPlus\residential measures\SWSV014 Lifecycle Refridgerant Management\SWSV014-06 LRM AC HP_SFm_1975\results-summary.csv"
+path_1985 = 'residential measures/SWSV014-06-1 LRM/SWSV014-06 LRM AC HP_SFm_1985'
 # path_1975 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1975/SWBE011-01 Windows_SFm_1975_Msr1'
 # path_1985 = 'residential measures/SWBE011-01 Windows/SWBE011-01 Windows_SFm_1985/SWBE011-01 Windows_SFm_1985_Msr1'
 path_new = ''
