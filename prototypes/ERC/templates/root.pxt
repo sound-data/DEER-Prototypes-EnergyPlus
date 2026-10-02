@@ -74,6 +74,8 @@ group "space_loads" do # hardcode building-level defaults
     parameter "dhw_flow_area", :default => 0.00015['GPM/ft2']
     parameter "dhw_water_heater_fuel", :default => "Gas"
     parameter "equip_2_area", :default => 0['W/ft2']
+	#Solaris - Behzad S. Rizi - Added new parameter "setpoint_temp_schedule" for classroom zones
+	parameter "setpoint_temp_schedule", :default => ""
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "plenum", :prefix => "plenum_" do
@@ -119,6 +121,7 @@ group "space_hvac" do
     parameter "oa_area", :default => 0.38['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
+	parameter "setpoint_temp_schedule", :default => "NON-INPUTSCHEDULE"
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "plenum", :prefix => "plenum_" do
