@@ -1,0 +1,73 @@
+Using modelkit-config at C:/Official/DEER-Prototypes-EnergyPlus/commercial measures/SWSV020-01 Life Cycle Refrigerant Management, Commercial/.modelkit-config
+Using global.pxv at C:/Official/DEER-Prototypes-EnergyPlus/commercial measures/SWSV020-01 Life Cycle Refrigerant Management, Commercial/global.pxv
+[1mType Ctrl+C to cancel all tasks.[0m
+Evaluating worksheets...
+Writing: CZ12/weather
+Writing: CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXHP-Refrig-Base/instance.pxv
+Writing: CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXGF-Refrig-Base/instance.pxv
+Opening Energy+.idd...
+Generating: CZ12/site.pxt
+Composing: CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXHP-Refrig-Base/instance.idf
+Composing: CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXGF-Refrig-Base/instance.idf
+Error: unknown key 'building' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'building' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'plenum' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'plenum' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'plenum' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'office_large' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'office_large' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'office_large' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'auditorium' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'auditorium' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'auditorium' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'plenum_schs' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'assembly_schs' for parameter in import for 'zoneloads/zonetemplate.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'building' for parameter in import for 'zonehvac/hvac-zone.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+duplicate key 'disable_ems' in Group 'building'; first occurrence will be used
+Error: unknown key 'plenum' for parameter in import for 'zonehvac/hvac-zone.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'plenum' for parameter in import for 'zonehvac/hvac-zone.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'office_large' for parameter in import for 'zonehvac/hvac-zone.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'office_large' for parameter in import for 'zonehvac/hvac-zone.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'auditorium' for parameter in import for 'zonehvac/hvac-zone.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'auditorium' for parameter in import for 'zonehvac/hvac-zone.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: unknown key 'hw' for parameter in import for 'system/hw.pxt'; it will be ignored in template 'C:/Official/DEER-Prototypes-EnergyPlus/prototypes/Asm/templates/root.pxt'
+Error: Undefined parameter specified (floor_base_cont_insul); parameter ignored.
+Error: Undefined parameter specified (floor_base_cont_insul); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Error: Undefined parameter specified (zone_area); parameter ignored.
+Error: Undefined parameter specified (demand_controlled_vent); parameter ignored.
+Errno::ENOENT: No such file or directory - C:/Official/DEER-Prototypes-EnergyPlus/commercial measures/SWSV020-01 Life Cycle Refrigerant Management, Commercial/SWSV020-01 Life Cycle Refrigerant Management, Commercial_Ex/runs/CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXGF-Refrig-Base/instance-parameters.csv
+C:/Program Files (x86)/Modelkit Caboodle/ruby/ruby-2.0.0/lib/ruby/2.0.0/csv.rb:1254:in `initialize'
+Skipping: CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXGF-Refrig-Base/instance.idf
+Running: CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXGF-Refrig-Base/instance.idf
+Errno::ENOENT: No such file or directory - C:/Official/DEER-Prototypes-EnergyPlus/commercial measures/SWSV020-01 Life Cycle Refrigerant Management, Commercial/SWSV020-01 Life Cycle Refrigerant Management, Commercial_Ex/runs/CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXHP-Refrig-Base/instance-parameters.csv
+C:/Program Files (x86)/Modelkit Caboodle/ruby/ruby-2.0.0/lib/ruby/2.0.0/csv.rb:1254:in `initialize'
+Skipping: CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXGF-Refrig-Base/instance.idf
+Running: CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXHP-Refrig-Base/instance.idf
+Processing: results-profile-gas.csv
+warning: file not found: C:/Official/DEER-Prototypes-EnergyPlus/commercial measures/SWSV020-01 Life Cycle Refrigerant Management, Commercial/SWSV020-01 Life Cycle Refrigerant Management, Commercial_Ex/runs/CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXHP-Refrig-Base/instance-var.csv
+warning: file not found: C:/Official/DEER-Prototypes-EnergyPlus/commercial measures/SWSV020-01 Life Cycle Refrigerant Management, Commercial/SWSV020-01 Life Cycle Refrigerant Management, Commercial_Ex/runs/CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXGF-Refrig-Base/instance-var.csv
+Processing: results-summary.csv
+Processing: results-profile-elec.csv
+warning: file not found: C:/Official/DEER-Prototypes-EnergyPlus/commercial measures/SWSV020-01 Life Cycle Refrigerant Management, Commercial/SWSV020-01 Life Cycle Refrigerant Management, Commercial_Ex/runs/CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXHP-Refrig-Base/instance-var.csv
+warning: file not found: C:/Official/DEER-Prototypes-EnergyPlus/commercial measures/SWSV020-01 Life Cycle Refrigerant Management, Commercial/SWSV020-01 Life Cycle Refrigerant Management, Commercial_Ex/runs/CZ12/Asm&0&&Ex&dxAC_equip&Refrig&Base/NE-cDXGF-Refrig-Base/instance-var.csv
+warning: file not found: C:\Official\DEER-Prototypes-EnergyPlus\commercial measures\SWSV020-01 Life Cycle Refrigerant Management, Commercial\SWSV020-01 Life Cycle Refrigerant Management, Commercial_Ex\runs\CZ12\Asm&0&&Ex&dxAC_equip&Refrig&Base\NE-cDXHP-Refrig-Base\instance-out.sql
+warning: file not found: C:\Official\DEER-Prototypes-EnergyPlus\commercial measures\SWSV020-01 Life Cycle Refrigerant Management, Commercial\SWSV020-01 Life Cycle Refrigerant Management, Commercial_Ex\runs\CZ12\Asm&0&&Ex&dxAC_equip&Refrig&Base\NE-cDXGF-Refrig-Base\instance-out.sql
+Elapsed task duration: 1.352067 sec
