@@ -567,8 +567,21 @@ ZoneHVAC:Baseboard:Convective:Water,
             DOE2 DX Coil EIR-FT, !- Energy Input Ratio Function of Temperature Curve Name
             DOE2 DX Coil EIR-FF, !- Energy Input Ratio Function of Flow Fraction Curve Name
         <%end%>
-            DOE2 DX Coil PLF;    !- Part Load Fraction Correlation Curve Name
-        <% end %>
+            DOE2 DX Coil PLF,    !- Part Load Fraction Correlation Curve Name
+            ,                        !- Maximum Outdoor Dry-Bulb Temperature for Compressor {C}
+            ,                        !- Nominal Time for Condensate Removal to Begin {s}
+            ,                        !- Ratio of Initial Moisture Evaporation Rate and Steady-State Latent Capacity
+            ,                        !- Maximum Cycling Rate {cycles/hr}
+            ,                        !- Latent Capacity Time Constant {s}
+            ,                        !- Condenser Air Inlet Node Name
+            AirCooled,               !- Condenser Type
+            ,                        !- Evaporative Condenser Effectiveness
+            ,                        !- Evaporative Condenser Air Flow Rate {m3/s}
+            ,                        !- Evaporative Condenser Pump Rated Power Consumption {W}
+!Solaris Technical - Behzad S. Rizi - 2026-08-17- Added crankcase heater fields for single-speed DX cooling.
+            <%= dx_crankcase_cap %>,  !- Crankcase Heater Capacity {W}
+            <%= dx_crankcase_max_temp %>;  !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
+         <% end %>
     <% end %>
 
 !Heating Coils
