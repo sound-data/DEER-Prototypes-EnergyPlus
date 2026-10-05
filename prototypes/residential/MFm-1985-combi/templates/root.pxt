@@ -115,6 +115,7 @@ parameter "refgfrzr_power_level", :default=>91.0575745
 
 
 #Duct Loss
+parameter "ductless", :default=>false
 parameter "total_leakage_ratio", :default=>0.15  #total leakage ratio
 parameter "number_of_stories", :default=>1  #no. of stories, default one story
 parameter "conditioned_floor_area", :default =>1017.6|'ft2'  # ft2, default conditioned floor area of 1 story SFm
@@ -125,8 +126,11 @@ parameter "infiltration_reduction", :default=>0.0  # TRC SWBE013-01, SWBE014-01;
 
 
 # fan power
+parameter "fan_power_per_flow", :default=>773.3
 parameter "supplyfan_total_eff", :default=>0.12
 parameter "motor_eff", :default=>0.24
+parameter "fan_type", :default=>"ONOFF" 
+parameter "fan_speed_method", :default=>"CONTINUOUS"
 
 # SEER Rated ACHP
 parameter "cooling_coil_cop", :default=>3.28
@@ -235,7 +239,8 @@ for zone in all_zones
     :slave_zone => secondary_zone,
     :supply_leakage_frac=>supply_leakage_frac,
     :return_leakage_frac=>return_leakage_frac,
-    :duct_r_value=>duct_r_value
+    :duct_r_value=>duct_r_value,
+    :ductless=>ductless
 
   insert 'zonehvac/res-zone-hvac-combi.pxt',
     :zone_name=>control_zone_name,

@@ -65,6 +65,7 @@ parameter "fan_total_eff", :default=>0.8  #get error if this is set to 0.9
 parameter "refgfrzr_power_level", :default=>91.0575745
 
 #Duct Loss
+parameter "ductless", :default=>false
 parameter "total_leakage_ratio", :default=>0.2  #total leakage ratio
 parameter "number_of_stories", :default=>1  #no. of stories, default one story
 parameter "conditioned_floor_area", :default =>1453.92|'ft2'  # ft2, default conditioned floor area of 1 story SFm
@@ -103,10 +104,13 @@ import "system/res-hw-system-combi.pxt", :group => "hw" do
 end
 
 #fan power
+parameter "fan_power_per_flow", :default=>773.3
 parameter "supplyfan_total_eff", :default=>0.12
 parameter "motor_eff", :default=>0.24
 parameter "pressure_rise", :default=>125
 parameter "vfd_curve_name", :default=>""
+parameter "fan_type", :default=>"ONOFF" 
+parameter "fan_speed_method", :default=>"CONTINUOUS"
 
 #DHW demand flow rate
 parameter "peak_flow", :default => 0.00062 ['m3/s']
