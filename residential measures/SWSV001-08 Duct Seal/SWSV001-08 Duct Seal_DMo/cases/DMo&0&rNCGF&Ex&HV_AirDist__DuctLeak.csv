@@ -1,0 +1,4 @@
+skip,case_name,:total_leakage_ratio,:return_leakage_frac
+,RB-HV_AirDist-DuctLeak-rNCGF-Seal-35pct,0.35,
+,RB-HV_AirDist-DuctLeak-rNCGF-Seal-25pct,0.25,
+,RB-HV_AirDist-DuctLeak-rNCGF-Seal-15pct,0.15,

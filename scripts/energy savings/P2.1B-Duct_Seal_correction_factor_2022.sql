@@ -24,6 +24,8 @@ SELECT
 "APreWBkWh",
 "APreWBkW49",
 "APreWBtherm",
+"AMsrUseWBkWh",
+"AMsrUseWBtherm",
 "AStdWBkWh",
 "AStdWBkW49",
 "AStdWBtherm",
@@ -32,5 +34,5 @@ SELECT
 "AStdUseEUkWh",
 "AStdUseEUtherm",
 "AMsrUseEUkWh",
-"AMsrUseEUtherm" */
+"AMsrUseEUtherm"*/
 FROM meas_impacts_2022_ds_mod;

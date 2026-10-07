@@ -1,0 +1,4 @@
+skip,case_name,:total_leakage_ratio
+,RB-HV_AirDist-DuctLeak-rDXHP-Seal-40pct,0.4
+,RB-HV_AirDist-DuctLeak-rDXHP-Seal-24pct,0.24
+,RB-HV_AirDist-DuctLeak-rDXHP-Seal-12pct,0.12
