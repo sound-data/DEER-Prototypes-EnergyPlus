@@ -1,0 +1,244 @@
+name: Run DEER simulations
+
+run-name: >-
+  Run by @${{ github.actor }} from ${{ inputs.model_ref }}
+  using ${{ inputs.run_profile }} profile
+  in ${{ inputs.measure_path }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      model_ref:
+        description: Git branch, tag, or SHA
+        required: true
+        type: string
+      measure_path:
+        description: "Repository-relative path to the measure folder"
+        required: true
+        type: string
+      run_profile:
+        description: "Requested compute profile"
+        required: true
+        type: choice
+        options:
+          - test
+          - standard
+          - large
+      compose_only:
+        description: "Compose models without running EnergyPlus"
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: ec2-simulations2
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repositories for github workflow, models, and build tools
+      - uses: actions/checkout@v7
+        with:
+          ref: simularis-gh-actions
+          path: workflow_repo
+
+      # Checkout the model repository at the specified ref (branch, tag, or SHA)
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.model_ref }}
+          path: model_repo
+      
+      # Checkout simularis/building-energy-utils to get the notebook "QC incomplete simulations.py"
+      - uses: actions/checkout@v7
+        with:
+          repository: simularis/building-energy-utils
+          path: building-energy-utils
+
+      - name: Capture commit SHA
+        id: gitinfo
+        shell: bash
+        run: |
+          cd model_repo
+          echo "start_date=$(date)" >> $GITHUB_OUTPUT
+          echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
+      - name: Validate measure path
+        shell: bash
+        run: |
+          cd model_repo
+          test -d "${{ inputs.measure_path }}"
+          case "${{ inputs.measure_path }}" in
+            "commercial measures/"*|"residential measures/"*) ;;
+            *) echo "Invalid measure path"; exit 1 ;;
+          esac
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_SIMULATION_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Send build scripts to S3
+        id: sendScript
+        shell: bash
+        run: |
+          aws s3 cp \
+            workflow_repo/scripts/RunDeerSimulation.ps1 \
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/RunDeerSimulation.ps1"
+          aws s3 cp \
+            "building-energy-utils/deer-user-scripts/QC incomplete simulations.py" \
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/QC incomplete simulations.py"
+
+      - name: Start simulation instance
+        run: |
+          aws ec2 start-instances \
+            --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}"
+
+          aws ec2 wait instance-running \
+            --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}"
+
+      - name: Wait for SSM
+        run: |
+          while true; do
+            STATUS=$(aws ssm describe-instance-information \
+              --filters "Key=InstanceIds,Values=${{ vars.SIMULATION_INSTANCE_ID }}" \
+              --query "InstanceInformationList[0].PingStatus" \
+              --output text)
+
+            echo "SSM status: $STATUS"
+
+            if [[ "$STATUS" == "Online" ]]; then
+              break
+            fi
+
+            sleep 15
+          done
+
+      - name: Launch simulation
+        id: launchSimulation
+        shell: bash
+        run: |
+          # The bootstrap script downloads the simulation script and then launches it.
+          COMMAND_ID=$(aws ssm send-command \
+            --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}" \
+            --document-name "AWS-RunPowerShellScript" \
+            --parameters "commands=\"pwsh C:/Scripts/BootstrapSimulation.ps1 -RunId ${{ github.run_id }} -Repository ${{ github.repository }} -CommitSha ${{ steps.gitinfo.outputs.sha }} -MeasurePath \\\"${{ inputs.measure_path }}\\\" -S3Bucket ${{ vars.SIMULATION_BUCKET }} -RunAttempt ${{ github.run_attempt }}\"" \
+            --cloud-watch-output-config CloudWatchOutputEnabled=true,CloudWatchLogGroupName="/aws/ssm/githubactions" \
+            --query 'Command.CommandId' \
+            --output text \
+            )
+          echo "command_id=$COMMAND_ID" >> $GITHUB_OUTPUT
+          echo "## DEER Simulation Submitted" >> $GITHUB_STEP_SUMMARY
+          echo "- Run ID: ${{ github.run_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit SHA: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Measure path: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
+          echo "- SSM Command ID: $COMMAND_ID" >> $GITHUB_STEP_SUMMARY
+          echo "- Log file: s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/attempt-${{ github.run_attempt }}/RunDeerSimulation.log" >> $GITHUB_STEP_SUMMARY
+          
+      - name: Wait for simulation to complete
+        shell: bash
+        run: |
+          while true; do
+            STATUS=$(aws ssm get-command-invocation \
+              --instance-id "${{ vars.SIMULATION_INSTANCE_ID }}" \
+              --command-id "${{ steps.launchSimulation.outputs.command_id }}" \
+              --query "Status" \
+              --output text)
+            echo "Current status: $STATUS"
+            if [[ "$STATUS" == "Failed" ]]; then
+                echo "SSM command failed"
+                exit 1
+            fi
+            if [[ "$STATUS" == "Cancelled" ]]; then
+                echo "SSM command cancelled"
+                exit 1
+            fi
+            if [[ "$STATUS" == "Success" ]]; then
+                break
+            fi
+            sleep 30
+          done
+
+      - name: Stop simulation instance
+        if: always()
+        run: |
+          aws ec2 stop-instances \
+            --instance-ids "${{ vars.SIMULATION_INSTANCE_ID }}"
+
+      - name: Download status file
+        shell: bash
+        run: |
+          for i in {1..10}; do
+            if aws s3 cp \
+              "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/status.json" \
+              status.json
+            then
+              break
+            fi
+
+            echo "Waiting for status.json..."
+            sleep 10
+          done
+
+          cat status.json
+
+      - name: Validate status
+        shell: bash
+        run: |
+          STATUS=$(jq -r .Status status.json)
+
+          if [[ "$STATUS" != "Success" ]]; then
+            echo "Simulation failed"
+            cat status.json
+            exit 1
+          fi
+
+      - name: Download QC artifacts from S3
+        id: download-qc
+        shell: bash
+        run: |
+          mkdir -p qc-artifacts
+
+          aws s3 cp \
+            "s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/simulation_stats.csv" \
+            "qc-artifacts/simulation_stats.csv"
+
+          test -s "qc-artifacts/simulation_stats.csv"
+
+      - name: Upload QC results
+        id: upload-qc
+        uses: actions/upload-artifact@v4
+        with:
+          name: deer-qc-results-${{ github.run_id }}
+          path: |
+            qc-artifacts/simulation_stats.csv
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Add summary
+        shell: bash
+        run: |
+          STATUS=$(jq -r .Status status.json)
+          echo "## DEER Simulation Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Repository: $(jq -r .Repository status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: ${{ steps.gitinfo.outputs.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Measure: ${{ inputs.measure_path }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Runtime (seconds): $(jq -r .RunTimeSeconds status.json)" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: $(jq -r .Status status.json)" >> $GITHUB_STEP_SUMMARY
+          if [[ "$STATUS" != "Success" ]]; then
+            echo "- Failure message: $(jq -r .FailureMessage status.json)" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### QC results" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- ${{ steps.upload-qc.outputs.artifact-url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Included file: \`simulation_stats.csv\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- S3 archive: \`s3://${{ vars.SIMULATION_BUCKET }}/githubactions/${{ github.run_id }}/qc/\`" >> "$GITHUB_STEP_SUMMARY"
