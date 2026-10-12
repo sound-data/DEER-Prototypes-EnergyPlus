@@ -30,6 +30,13 @@ parameter "motor_eff", :default=>0.24
 parameter "pressure_rise", :default=>125
 #parameter "vfd_curve_name", :default=>"" #"" for constant speed, "VFD_Fan_Curve" for variable speed does not work with Fan:OnOff
 
+# Hardsize (ported from DEER-Prototypes-EnergyPlus-Hard-coded-res); "autosize" default preserves behavior for measures that do not pass these.
+parameter "coolCap", :default=>"autosize"
+parameter "coolShr", :default=>"autosize"
+parameter "heatCap", :default=>"autosize"
+parameter "heatPumpHeatCap", :default=>"autosize"
+parameter "airflow", :default=>"autosize"
+
 
 #parameter "heat_coil_object_type",:default => nil
 #parameter "cool_coil_object_type",:default => nil
@@ -441,7 +448,7 @@ ZoneHVAC:Baseboard:Convective:Water,
         always_avail,            !- Availability Schedule Name
         <%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
         <%= pressure_rise %>,                     !- Pressure Rise {Pa}
-        autosize,                !- Maximum Flow Rate {m3/s}
+        <%= airflow %>,                !- Maximum Flow Rate {m3/s}
         <%= motor_eff %>,                     !- Motor Efficiency
         1,                       !- Motor In Airstream Fraction
         <%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
@@ -549,10 +556,10 @@ ZoneHVAC:Baseboard:Convective:Water,
         Coil:Cooling:DX:SingleSpeed,
             <%= system_name %> Cooling Coil,   !- Name
             always_avail,            !- Availability Schedule Name
-            autosize,                !- Gross Rated Total Cooling Capacity {W}
-            autosize,                !- Gross Rated Sensible Heat Ratio
+            <%= coolCap %>,                !- Gross Rated Total Cooling Capacity {W}
+            <%= coolShr %>,                !- Gross Rated Sensible Heat Ratio
             <%= cooling_coil_cop %>,               !- Gross Rated Cooling COP {W/W}
-            autosize,                !- Rated Air Flow Rate {m3/s}
+            <%= airflow %>,                !- Rated Air Flow Rate {m3/s}
             ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
             <%= system_name %> <%= heat_type == "DX" ? "Supply Fan Outlet" : "Heating Coil Outlet" %>,  !- Air Inlet Node Name
             <%= system_name %> <%= heat_type == "DX" ? "Cooling Coil Outlet" : "Air Loop Outlet" %>,  !- Air Outlet Node Name
@@ -590,7 +597,7 @@ ZoneHVAC:Baseboard:Convective:Water,
             always_avail,            !- Availability Schedule Name
             NaturalGas,              !- Fuel Type
             <%= burner_eff %>,                     !- Burner Efficiency
-            autosize,                !- Nominal Capacity {W}
+            <%= heatCap %>,                !- Nominal Capacity {W}
             <%= system_name %> Supply Fan Outlet,  !- Air Inlet Node Name
             <% if cool_type == "NC" %>
                 <%= system_name %> Air Loop Outlet;  !- Air Outlet Node Name
@@ -686,9 +693,9 @@ ZoneHVAC:Baseboard:Convective:Water,
             Coil:Heating:DX:SingleSpeed,
                 <%= system_name %> Heating Coil,   !- Name
                 always_avail,            !- Availability Schedule Name
-                autosize,                !- Gross Rated Heating Capacity {W}
+                <%= heatPumpHeatCap %>,                !- Gross Rated Heating Capacity {W}
                 <%= heating_coil_cop %>,                     !- Gross Rated Heating COP {W/W}
-                autosize,                !- Rated Air Flow Rate {m3/s}
+                <%= airflow %>,                !- Rated Air Flow Rate {m3/s}
                 ,                        !- Rated Supply Fan Power Per Volume Flow Rate {W/(m3/s)}
                 <%= system_name %> Cooling Coil Outlet,  !- Air Inlet Node Name
                 <%= system_name %> Heating Coil Outlet,  !- Air Outlet Node Name

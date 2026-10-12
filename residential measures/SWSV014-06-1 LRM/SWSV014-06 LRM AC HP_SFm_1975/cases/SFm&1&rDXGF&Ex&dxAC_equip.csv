@@ -1,0 +1,10 @@
+skip,case_name,:vfd_curve_name,:supplyfan_total_eff,:motor_eff,:cooling_coil_cop,:cooling_coil_cop2,:coil_type,:hvac_type
+,RB-dxAC_equip-spltAC-SEER-BA-rDXGF-NoLRM-15%UC-AOE,,0.12,0.24,2.371318528,,,unitary_system
+,RB-dxAC_equip-spltAC-SEER-BA-rDXGF-NoLRM-22.5%UC-AOE,,0.12,0.24,2.159240439,,,unitary_system
+,RB-dxAC_equip-spltAC-SEER-BA-rDXGF-NoLRM-30%UC-AOE,,0.12,0.24,1.981982491,,,unitary_system
+,RB-dxAC_equip-spltAC-SEER-BA-rDXGF-NoLRM-40%UC-AOE,,0.12,0.24,1.786443757,,,unitary_system
+,RB-dxAC_equip-spltAC-SEER-BA-rDXGF-NoLRM-7.5%UC-AOE,,0.12,0.24,2.629594219,,,unitary_system
+,RB-dxAC_equip-spltAC-SEER-BA-rDXGF-NoLRM-0%UC-AOE,,0.12,0.24,2.951007609,,,unitary_system
+,RB-dxAC_equip-spltAC-SEER-BA-rDXGF-LRM-LSC-AOE,,0.12,0.24,3.23,,,unitary_system
+,RB-dxAC_equip-spltAC-SEER-BA-rDXGF-NoLRM-0%UC-NR,,0.12,0.24,3.270776236,,,unitary_system
+,RB-dxAC_equip-spltAC-SEER-BA-rDXGF-LRM-LSC-NR,,0.12,0.24,3.58,,,unitary_system
