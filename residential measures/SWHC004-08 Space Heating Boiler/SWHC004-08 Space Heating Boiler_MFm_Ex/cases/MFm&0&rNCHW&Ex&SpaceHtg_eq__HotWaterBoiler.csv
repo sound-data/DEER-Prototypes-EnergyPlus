@@ -1,0 +1,7 @@
+skip,case_name,:heat_type,:combi,:boiler_eff,:boiler_eff_curve,:curve_evaluation_variable,:design_hw_temp,:min_hw_temp
+,RG-SpaceHtg_eq-Boiler-Non-Cond-83-TE,HW,,0.83,NonCond_Boiler_Eff,LeavingBoiler,130['F'],105['F']
+,RG-SpaceHtg_eq-Boiler-Non-Cond-84-TE,HW,,0.84,NonCond_Boiler_Eff,LeavingBoiler,130['F'],105['F']
+,RG-SpaceHtg_eq-Boiler-Cond-94-TE,HW,,0.94,Cond_Boiler_Eff,EnteringBoiler,130['F'],105['F']
+,RG-SpaceHtg_eq-Boiler-Cond-93-TE,HW,,0.93,Cond_Boiler_Eff,EnteringBoiler,130['F'],105['F']
+,RG-SpaceHtg_eq-Boiler-Non-Cond-85-TE,HW,,0.85,NonCond_Boiler_Eff,LeavingBoiler,130['F'],105['F']
+,RG-SpaceHtg_eq-Boiler-Non-Cond-85.3-TE,HW,,0.853,NonCond_Boiler_Eff,LeavingBoiler,130['F'],105['F']
