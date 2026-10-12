@@ -12,7 +12,7 @@ from importlib import reload
 reload(helper_functions)
 # %%
 #Read master workbook for measure / tech list (note example commented line for specific measures)
-df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working.xlsx', sheet_name='Measure_list', skiprows=4)
+df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working SWWH015.xlsx', sheet_name='Measure_list', skiprows=4)
 #df_master = pd.read_excel('DEER_EnergyPlus_Modelkit_Measure_list_working_eff_doors.xlsx', sheet_name='Measure_list', skiprows=4)
 measure_group_names = list(df_master['Measure Group Name'].unique())
 
@@ -27,7 +27,7 @@ print(measures)
 #measure_name = 'SEER Rated AC/HP'
 #measure_name = 'Efficient Doors'
 #measure_name = 'Wall Insulation'
-measure_name = 'PTAC / PTHP'
+measure_name = 'Recirc Pump Control'
 #Define measure name here
 #measure_name = 'Duct Seal'
 
@@ -43,7 +43,7 @@ print(os.path.abspath(os.curdir))
 #path = 'residential measures/SWBE011-01 Windows\SWBE011-01 Windows_MFm\SWBE011-01 Windows_MFm_Msr1'
 #path = 'residential measures/SWSV001-05 Duct Seal/SWSV001-05 Duct Seal_MFm_Ex'
 #path = 'residential measures/SWBE007-02 Wall Insulation/SWBE007-02 Wall Insulation_MFm'
-path = 'residential measures/SWHC027-08 PTAC PTHP/SWHC027-08 PTAC PTHP_MFm_Ex'
+path = 'residential measures/SWWH015-05 Recirc Pump Control/SWWH015-05 Recirc_MFm_Ex'
 # %%
 #extract only the 5th portion of the measure group name for expected_att
 #split argument 4 means only split 4 times maximum
