@@ -1,3 +1,11 @@
+<%#INITIALIZE
+require "modelkit/energyplus"
+
+parameter "ufactor", :default=>2.53534
+parameter "shgc", :default=>0.232625
+parameter "vt", :default=>0.4415
+%>
+
 
 GlobalGeometryRules,
   UpperLeftCorner,         !- Starting Vertex Position
@@ -1296,6 +1304,16 @@ BuildingSurface:Detailed,
   0,                       !- Vertex 4 Y-coordinate
   7.62;                    !- Vertex 4 Z-coordinate
 
+<% #TRC add door material %>
+
+!-   ===========  ALL OBJECTS IN CLASS: WINDOWMATERIAL:SIMPLEGLAZINGSYSTEM ===========
+
+WindowMaterial:SimpleGlazingSystem,
+  Glassdoor mat, !- Name
+  <%= ufactor %>,                 !- U-Factor {W/m2-K}
+  <%= shgc %>,                !- Solar Heat Gain Coefficient
+  <%= vt %>;                  !- Visible Transmittance
+
 FenestrationSurface:Detailed,
   EL1 East Win (G.SSE1.E1.W1),  !- Name
   Window,                  !- Surface Type
@@ -1503,6 +1521,31 @@ FenestrationSurface:Detailed,
   4.148328,                !- Vertex 4 Y-coordinate
   3.9624;                  !- Vertex 4 Z-coordinate
 
+<% #TRC add glass door %>
+
+FenestrationSurface:Detailed,
+  Exterior Door,           !- Name
+  GlassDoor,               !- Surface Type
+  GlassDoor Construction,    !- Construction Name
+  EL1 South Wall (G.SSE1.E3),  !- Building Surface Name
+  ,                        !- Outside Boundary Condition Object
+  ,                        !- View Factor to Ground
+  ,                        !- Frame and Divider Name
+  ,                        !- Multiplier
+  ,                        !- Number of Vertices
+  57.9120000000001,        !- Vertex 1 X-coordinate {m}
+  0,                       !- Vertex 1 Y-coordinate {m}
+  1.8982944,               !- Vertex 1 Z-coordinate {m}
+  57.9120000000001,        !- Vertex 2 X-coordinate {m}
+  0,                       !- Vertex 2 Y-coordinate {m}
+  0,                       !- Vertex 2 Z-coordinate {m}
+  59.9120976000001,        !- Vertex 3 X-coordinate {m}
+  0,                       !- Vertex 3 Y-coordinate {m}
+  0,                       !- Vertex 3 Z-coordinate {m}
+  59.9120976000001,        !- Vertex 4 X-coordinate {m}
+  0,                       !- Vertex 4 Y-coordinate {m}
+  1.8982944;               !- Vertex 4 Z-coordinate {m}
+
 Shading:Zone:Detailed,
   Shading Surface 1,       !- Name
   EL1 Roof (G.SSE1.E4),    !- Base Surface Name
@@ -1610,6 +1653,32 @@ Shading:Zone:Detailed,
   -2.43839997828415,       !- Vertex 4 X-coordinate
   66.695953948102,         !- Vertex 4 Y-coordinate
   3.9624;                  !- Vertex 4 Z-coordinate
+
+<% #TRC add door overhang %>
+
+Shading:Zone:Detailed,
+  Shading Surface Door,    !- Name
+  EL1 East Wall (G.SSE1.E1),  !- Base Surface Name
+  ,                        !- Transmittance Schedule Name
+  ,                        !- Number of Vertices
+  59.9121,                 !- Vertex 1 X-coordinate {m}
+  -2.4384,                 !- Vertex 1 Y-coordinate {m}
+  1.8982944,               !- Vertex 1 Z-coordinate {m}
+  59.9121,                 !- Vertex 2 X-coordinate {m}
+  0,                       !- Vertex 2 Y-coordinate {m}
+  1.8982944,               !- Vertex 2 Z-coordinate {m}
+  57.912,                  !- Vertex 3 X-coordinate {m}
+  0,                       !- Vertex 3 Y-coordinate {m}
+  1.8982944,               !- Vertex 3 Z-coordinate {m}
+  57.912,                  !- Vertex 4 X-coordinate {m}
+  -2.4384,                 !- Vertex 4 Y-coordinate {m}
+  1.8982944;               !- Vertex 4 Z-coordinate {m}
+
+<% #TRC add door construction %>
+
+Construction,
+  GlassDoor Construction,    !- Name
+  Glassdoor mat; !- Outside Layer
 
 Construction:FfactorGroundFloor,
   EL1 Flr (G.C4.U4) SlabOnOrBelowGradeF073,  !- Name
