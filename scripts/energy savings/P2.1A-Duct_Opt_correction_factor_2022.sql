@@ -1,5 +1,7 @@
 --modification 7/27/2022 (due to EMS over calculating heat losses. Temporary fix for Duct Sealing Measure
 --multiply retrofit savings record by a factor of 1/2
+--TRC modification 6/1/2026, added AMsrUseWBkWh and AMsrUseWBtherm, applied 1/2 factor to AMsrUseWBkWh,AMsrUseWBther,APreUseWBkWh,APreUseWBtherm
+--TRC modification 6/1/2026 Updated Energy Impact ID
 SET search_path TO "MC_results_database";
 DROP TABLE IF EXISTS meas_impacts_2022_do_mod;
 CREATE TABLE meas_impacts_2022_do_mod AS 
@@ -26,21 +28,22 @@ meas_impacts_2022."BldgHVAC",
 ("AStdWBkW25" * (0.5)) as "AStdWBkW25",
 ("AStdWBkW49" * (0.5)) as "AStdWBkW49",
 ("AStdWBtherm" * (0.5)) as "AStdWBtherm",
-"APreUseWBkWh",
-"APreUseWBtherm",
+("APreUseWBkWh" * (0.5)) as "APreUseWBkWh",
+("APreUseWBtherm"* (0.5)) as "APreUseWBtherm",
 "AStdUseWBkWh",
 "AStdUseWBtherm",
-"AMsrUseWBkWh",
-"AMsrUseWBtherm",
+("AMsrUseWBkWh" * (0.5)) as "AMsrUseWBkWh",
+("AMsrUseWBtherm" * (0.5)) as "AMsrUseWBTherm",
 "APreUseEUkWh",
 "APreUseEUtherm",
 "AStdUseEUkWh",
 "AStdUseEUtherm",
 "AMsrUseEUkWh",
 "AMsrUseEUtherm"
+
 FROM 
 meas_impacts_2022
-WHERE (meas_impacts_2022."EnergyImpactID" = 'Res-DuctSeal-HighToLow-wtd_retrofit')
+WHERE (meas_impacts_2022."EnergyImpactID" = 'Res-DuctOpt-HighToLow-Retrofit')
 
 ORDER BY 
 "EnergyImpactID",

@@ -1,0 +1,5 @@
+skip,case_name,:total_leakage_ratio,:return_leakage_frac
+,RB-HV_AirDist-DuctLeak-rNCGF-OptRpl-Tot35pct,0.35,
+,RB-HV_AirDist-DuctLeak-rNCGF-OptRpl-Tot15pct,0.15,
+,RB-HV_AirDist-DuctLeak-rNCGF-OptRtf-Ret50pct,0.3,0.5
+,RB-HV_AirDist-DuctLeak-rNCGF-OptRtf-Ret15pct,0.3,0.15
