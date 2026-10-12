@@ -57,6 +57,13 @@ CeilIns_Existing_AddR19_thichness,0.274513,,,
 CeilIns_Existing_AddR30_thichness,0.394073,,,
 CeilIns_Existing_AddR38_thichness,0.481026,,,
 cool_coil_capacity,7280,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
+,,,,
+,,,,
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 2,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -113,6 +120,11 @@ CeilIns_Existing_AddR19_thichness,0.274513,,,
 CeilIns_Existing_AddR30_thichness,0.394073,,,
 CeilIns_Existing_AddR38_thichness,0.481026,,,
 cool_coil_capacity,9707,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 3,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -169,6 +181,12 @@ CeilIns_Existing_AddR19_thichness,0.274513,,,
 CeilIns_Existing_AddR30_thichness,0.394073,,,
 CeilIns_Existing_AddR38_thichness,0.481026,,,
 cool_coil_capacity,9707,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
+,,,,
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 4,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -225,6 +243,11 @@ CeilIns_Existing_AddR19_thichness,0.274513,,,
 CeilIns_Existing_AddR30_thichness,0.394073,,,
 CeilIns_Existing_AddR38_thichness,0.481026,,,
 cool_coil_capacity,9707,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 5,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -281,6 +304,11 @@ CeilIns_Existing_AddR19_thichness,0.274513,,,
 CeilIns_Existing_AddR30_thichness,0.394073,,,
 CeilIns_Existing_AddR38_thichness,0.481026,,,
 cool_coil_capacity,9707,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 6,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -337,6 +365,11 @@ CeilIns_Existing_AddR19_thichness,0.282513,,,
 CeilIns_Existing_AddR30_thichness,0.402073,,,
 CeilIns_Existing_AddR38_thichness,0.489026,,,
 cool_coil_capacity,9707,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 7,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -393,6 +426,11 @@ CeilIns_Existing_AddR19_thichness,0.282513,,,
 CeilIns_Existing_AddR30_thichness,0.402073,,,
 CeilIns_Existing_AddR38_thichness,0.489026,,,
 cool_coil_capacity,9707,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 8,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -449,6 +487,11 @@ CeilIns_Existing_AddR19_thichness,0.282513,,,
 CeilIns_Existing_AddR30_thichness,0.402073,,,
 CeilIns_Existing_AddR38_thichness,0.489026,,,
 cool_coil_capacity,10920,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 9,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -505,6 +548,11 @@ CeilIns_Existing_AddR19_thichness,0.282513,,,
 CeilIns_Existing_AddR30_thichness,0.402073,,,
 CeilIns_Existing_AddR38_thichness,0.489026,,,
 cool_coil_capacity,10920,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 10,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -561,6 +609,11 @@ CeilIns_Existing_AddR19_thichness,0.401513,,,
 CeilIns_Existing_AddR30_thichness,0.521073,,,
 CeilIns_Existing_AddR38_thichness,0.608026,,,
 cool_coil_capacity,10920,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 11,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -617,6 +670,11 @@ CeilIns_Existing_AddR19_thichness,0.416513,,,
 CeilIns_Existing_AddR30_thichness,0.536073,,,
 CeilIns_Existing_AddR38_thichness,0.623026,,,
 cool_coil_capacity,10920,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 12,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -673,6 +731,11 @@ CeilIns_Existing_AddR19_thichness,0.416513,,,
 CeilIns_Existing_AddR30_thichness,0.536073,,,
 CeilIns_Existing_AddR38_thichness,0.623026,,,
 cool_coil_capacity,10920,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 13,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -729,6 +792,11 @@ CeilIns_Existing_AddR19_thichness,0.416513,,,
 CeilIns_Existing_AddR30_thichness,0.536073,,,
 CeilIns_Existing_AddR38_thichness,0.623026,,,
 cool_coil_capacity,10920,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 14,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -785,6 +853,11 @@ CeilIns_Existing_AddR19_thichness,0.406513,,,
 CeilIns_Existing_AddR30_thichness,0.526073,,,
 CeilIns_Existing_AddR38_thichness,0.613026,,,
 cool_coil_capacity,12304,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 15,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -841,6 +914,11 @@ CeilIns_Existing_AddR19_thichness,0.406513,,,
 CeilIns_Existing_AddR30_thichness,0.526073,,,
 CeilIns_Existing_AddR38_thichness,0.613026,,,
 cool_coil_capacity,12304,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s
 ,,,,
 table:   Res Key Prototype Values | Climate Zone 16,,,,
 Key Values,Value,R-Value,Extent,Notes
@@ -897,3 +975,8 @@ CeilIns_Existing_AddR19_thichness,0.466513,,,
 CeilIns_Existing_AddR30_thichness,0.586073,,,
 CeilIns_Existing_AddR38_thichness,0.673026,,,
 cool_coil_capacity,9707,,,
+coolCap,12309.5,,,Watts
+coolShr,0.8,,,
+heatCap,23446.7,,,Watts
+heatPumpHeatCap,11723.3,,,Watts
+airflow,0.661,,,M3/s

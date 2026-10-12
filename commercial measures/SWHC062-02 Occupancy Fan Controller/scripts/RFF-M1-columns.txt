@@ -1,0 +1,1617 @@
+RFF
+	CZ01
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ02
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ03
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ04
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ05
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ06
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ07
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ08
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ09
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ10
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ11
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ12
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ13
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ14
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ15
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+	CZ16
+		cDXGF
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cDXHP
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPTAC
+			Heating Natural Gas
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+		cPVVG
+			Heating Natural Gas
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: Ignore
+			Heating Electricity
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+			Cooling
+				Coil: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: DINING EL1 ESE PERIM SPC (G.ESE1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: LOBBYWAITING EL1 SSW PERIM SPC (G.SSW2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RESTROOM EL1 NORTH PERIM SPC (G.N4) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: KITCHEN EL1 NW PERIM SPC (G.NW3) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore

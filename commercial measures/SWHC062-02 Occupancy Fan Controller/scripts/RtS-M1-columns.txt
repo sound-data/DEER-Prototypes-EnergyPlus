@@ -1,0 +1,913 @@
+RtS
+	CZ01
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ02
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ03
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ04
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ05
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ06
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ07
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ08
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ09
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ10
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ11
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ12
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ13
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ14
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ15
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ16
+		cDXGF
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-CAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: RETAILSALES EL1 SOUTH PERIM (G.S1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+				Coil: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: STOCKROOM EL1 NORTH PERIM (G.N2) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
