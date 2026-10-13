@@ -65,7 +65,6 @@ parameter "fan_total_eff", :default=>0.8  #get error if this is set to 0.9
 parameter "refgfrzr_power_level", :default=>91.0575745
 
 #Duct Loss
-parameter "ductless", :default=>false
 parameter "total_leakage_ratio", :default=>0.2  #total leakage ratio
 parameter "number_of_stories", :default=>1  #no. of stories, default one story
 parameter "conditioned_floor_area", :default =>1453.92|'ft2'  # ft2, default conditioned floor area of 1 story SFm

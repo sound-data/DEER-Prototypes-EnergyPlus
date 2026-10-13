@@ -427,7 +427,7 @@ ZoneHVAC:Baseboard:Convective:Water,
     <% end %>
 
 
-	<% if fan_type == "ONOFF" %>
+
 		!Fan:OnOff
 		Fan:OnOff,
 			<%= system_name %> Supply Fan,     !- Name
@@ -440,32 +440,6 @@ ZoneHVAC:Baseboard:Convective:Water,
 			<%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
 			<%= system_name %> Supply Fan Outlet,  !- Air Outlet Node Name
 			<%= vfd_curve_name %>; !-fan power ratio function of speed ratio curve name
-		<% else %>
-		!Fan:SystemModel
-			Fan:SystemModel,
-			<%= system_name %> Supply Fan,     !- Name
-			always_avail,            !- Availability Schedule Name
-			<%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
-			<%= system_name %> Supply Fan Outlet,  !- Air Outlet Node Name
-			autosize,                !- Design Maximum Air Flow Rate {m3/s}
-			<%= fan_speed_method %>,              !- Speed Control Method
-			0.2,                     !- Electric Power Minimum Flow Rate Fraction
-			<%= pressure_rise %>,                     !- Design Pressure Rise {Pa}
-			<%= motor_eff %>,                     !- Motor Efficiency
-			1,                       !- Motor In Air Stream Fraction
-			autosize,                !- Design Electric Power Consumption {W}
-			PowerPerFlowPerPressure, !- Design Power Sizing Method
-			,                        !- Electric Power Per Unit Flow Rate {W/(m3/s)}
-			1.66667,                 !- Electric Power Per Unit Flow Rate Per Unit Pressure {W/((m3/s)-Pa)}
-			<%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
-			<%= vfd_curve_name %>,           !- Electric Power Function of Flow Fraction Curve Name
-			,                        !- Night Ventilation Mode Pressure Rise {Pa}
-			,                        !- Night Ventilation Mode Flow Fraction
-			,                        !- Motor Loss Zone Name
-			,                        !- Motor Loss Radiative Fraction
-			General,                 !- End-Use Subcategory
-			1;                       !- Number of Speeds
-		<% end %>	
 
 !Cooling Coils
     <% if cool_type == "DX" %>
