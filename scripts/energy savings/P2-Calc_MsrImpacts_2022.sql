@@ -44,13 +44,13 @@ case (std.thm_tot - msr.thm_tot) when 0 then 0
 
 --New Field Names for pre/std/msr case consumptions: Added for 2022/2023 modeling from EnergyPlus
 --note WB and EU difference
---sig fig change. 4 = 5 digits - 1 in formula
-((pre.kwh_tot)/msr.numunits)::numeric(15,5) as "APreUseWBkWh",
-((pre.thm_tot)/msr.numunits)::numeric(15,5) as "APreUseWBtherm",
-((std.kwh_tot)/msr.numunits)::numeric(15,5) as "AStdUseWBkWh",
-((std.thm_tot)/msr.numunits)::numeric(15,5) as "AStdUseWBtherm",
-((msr.kwh_tot)/msr.numunits)::numeric(15,5) as "AMsrUseWBkWh",
-((msr.thm_tot)/msr.numunits)::numeric(15,5) as "AMsrUseWBtherm",
+-- Preserve full precision for whole-building use fields used in CEDARS load-shape impact profile generation.
+((pre.kwh_tot)/msr.numunits)::double precision as "APreUseWBkWh",
+((pre.thm_tot)/msr.numunits)::double precision as "APreUseWBtherm",
+((std.kwh_tot)/msr.numunits)::double precision as "AStdUseWBkWh",
+((std.thm_tot)/msr.numunits)::double precision as "AStdUseWBtherm",
+((msr.kwh_tot)/msr.numunits)::double precision as "AMsrUseWBkWh",
+((msr.thm_tot)/msr.numunits)::double precision as "AMsrUseWBtherm",
 
 NULL::numeric(15,5) as "APreUseEUkWh",
 NULL::numeric(15,5) as "APreUseEUtherm",
