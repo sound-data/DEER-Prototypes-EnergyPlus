@@ -64,4 +64,3 @@ ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size G
 ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM E4 WEST PERIM (G.W4) SZ-CAV COOLING COIL	
 ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:SingleSpeed/Design Size Gross Rated Total Cooling Capacity/CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL
 ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:MultiSpeed/Design Size Speed 1 Gross Rated Total Cooling Capacity/CLASSROOM E1 WEST PERIM (G.W1) SZ-VAV COOLING COIL
-ComponentSizingSummary/Entire Facility/Coil:Cooling:DX:MultiSpeed/Design Size Speed 1 Gross Rated Total Cooling Capacity/COMPUTER CLASSROOM E4 CORE SPC (G.C5) SZ-CRAC COOLING COIL
