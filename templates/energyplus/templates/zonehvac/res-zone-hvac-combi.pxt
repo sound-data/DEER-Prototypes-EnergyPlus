@@ -437,20 +437,18 @@ ZoneHVAC:Baseboard:Convective:Water,
         <%= secondary_zone %> Return Outlet;  !- Zone Return Air Node or NodeList Name
     <% end %>
 
-
-
-		!Fan:OnOff
-		Fan:OnOff,
-			<%= system_name %> Supply Fan,     !- Name
-			always_avail,            !- Availability Schedule Name
-			<%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
-			<%= pressure_rise %>,                     !- Pressure Rise {Pa}
-			autosize,                !- Maximum Flow Rate {m3/s}
-			<%= motor_eff %>,                     !- Motor Efficiency
-			1,                       !- Motor In Airstream Fraction
-			<%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
-			<%= system_name %> Supply Fan Outlet,  !- Air Outlet Node Name
-			<%= vfd_curve_name %>; !-fan power ratio function of speed ratio curve name
+!Fan:OnOff
+    Fan:OnOff,
+        <%= system_name %> Supply Fan,     !- Name
+        always_avail,            !- Availability Schedule Name
+        <%= supplyfan_total_eff %>,                     !- Fan Total Efficiency
+        <%= pressure_rise %>,                     !- Pressure Rise {Pa}
+        autosize,                !- Maximum Flow Rate {m3/s}
+        <%= motor_eff %>,                     !- Motor Efficiency
+        1,                       !- Motor In Airstream Fraction
+        <%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
+        <%= system_name %> Supply Fan Outlet,  !- Air Outlet Node Name
+		<%= vfd_curve_name %>; !-fan power ratio function of speed ratio curve name
 
 !Cooling Coils
     <% if cool_type == "DX" %>
@@ -479,7 +477,7 @@ ZoneHVAC:Baseboard:Convective:Water,
             autosize,                 !- Speed 1 Gross Rated Sensible Heat Ratio
             <%= cooling_coil_cop %>,    !- Speed 1 Gross Rated Cooling COP
             autosize,                 !- Speed 1 Rated Air Flow Rate
-            ,                         !- Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
+            ,                    !- Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
             DEER DX Cool Cap-fT,    !- Speed 1 Total Cooling Capacity Function of Temperature Curve Name
             DEER DX Cool Cap-FF,    !- Speed 1 Total Cooling Capacity Function of Flow Fraction Curve Name
             DEER DX Cool EIR-fT,    !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
