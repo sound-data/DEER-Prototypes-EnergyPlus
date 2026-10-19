@@ -1,0 +1,8 @@
+skip,case_name,:dhw_water_heater_volume,:dhw_water_heater_capacity,:dhw_water_heater_fuel,:dhw_gas_water_heater_eff,:dhw_gas_wh_config
+,NG-WtrHt-SmlInst-Gas-lt200kBtuh-HI-0p81UEF,Autosize,Autosize,NaturalGas,0.84,CENTRAL
+,NG-WtrHt-SmlInst-Gas-lt200kBtuh-HI-0p87UEF,Autosize,Autosize,NaturalGas,0.92,CENTRAL
+,NG-WtrHt-SmlInst-Gas-lt200kBtuh-HI-0p92UEF,Autosize,Autosize,NaturalGas,0.96,CENTRAL
+,NG-WtrHt-SmlInst-Gas-lt200kBtuh-HI-0p96UEF,Autosize,Autosize,NaturalGas,0.99,CENTRAL
+,NG-WtrHt-LrgBoiler-Gas-gte300kBtuh-0p78TE,Autosize,Autosize,NaturalGas,0.78,CENTRAL
+,NG-WtrHt-LrgBoiler-Gas-gte300kBtuh-0p96TE,Autosize,Autosize,NaturalGas,0.96,CENTRAL
+,NG-WtrHt-LrgBoiler-Gas-gte300kBtuh-0p98TE,Autosize,Autosize,NaturalGas,0.98,CENTRAL
