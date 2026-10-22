@@ -1,0 +1,9 @@
+skip,case_name,:mt_meatdc1_fan_power,:mt_fishdc_fan_power,:mt_melon_fan_power,:mt_deli_fan_power,:mt_deliserv_fan_power,:mt_meat2_fan_power,:mt_meat3_fan_power,:mt_dairy1_fan_power,:mt_dairy2_fan_power,:mt_produce_fan_power,:lt_reachins_fan_power,:lt_icreachin_fan_power,:lt_dualtemp1_fan_power,:lt_dualtemp2_fan_power
+,NE-Ref_Storage-VertDisplay-MT-PSC-Std,41.368,41.368,41.368,41.368,41.368,41.368,41.368,41.368,41.368,41.368,,,,
+,NE-Ref_Storage-VertDisplay-MT-SHP-Std,55.992,55.992,55.992,55.992,55.299,55.992,55.992,55.992,55.992,55.992,,,,
+,NE-Ref_Storage-VertDisplay-LT-PSC-Std,,,,,,,,,,,44.008,44.008,44.008,44.008
+,NE-Ref_Storage-VertDisplay-LT-SHP-Std,,,,,,,,,,,59.565,59.565,59.565,59.565
+,NE-Ref_Storage-VertDisplay-MT-ECM-Msr,24.898,24.898,24.898,24.898,24.898,24.898,24.898,24.898,24.898,24.898,,,,
+,NE-Ref_Storage-VertDisplay-MT-PMS-Msr,17.12,17.12,17.12,17.12,17.12,17.12,17.12,17.12,17.12,17.12,,,,
+,NE-Ref_Storage-VertDisplay-LT-ECM-Msr,,,,,,,,,,,26.487,26.487,26.487,26.487
+,NE-Ref_Storage-VertDisplay-LT-PMS-Msr,,,,,,,,,,,18.213,18.213,18.213,18.213
