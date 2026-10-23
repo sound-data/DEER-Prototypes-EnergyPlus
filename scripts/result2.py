@@ -24,6 +24,7 @@ Changelog
     * 2026-04-19 Set DEER Peak default to CZ2025
     * 2026-07-21 Fixed peak demand extraction issue which returned None whenever
                  extra rows present in hourly data (design days and warmup).
+    * 2026-10-22 Corrected peak day calculation to include 3 days instead of 3+1.
 
 @Author: Nicholas Fette <nfette@solaris-technical.com>
 @Author: Safia Sheerin
@@ -287,7 +288,9 @@ def get_deer_peak_multipliers(BldgLoc: str,
     hour_of_day_1 = hour_of_day_0 + 1
     day_of_year_1 = day_of_year_0 + 1
     # Is the hour in the DEER Peak period?
-    is_deer_peak_day = (day_of_year_1 >= peak_day) * (day_of_year_1 <= peak_day + days)
+    # 2026-10-22 NF: Corrected to use < instead of <= for end day
+    is_deer_peak_day = (day_of_year_1 >= peak_day) * (day_of_year_1 < peak_day + days)
+    # 2024-05-03 NF: Corrected to use < instead of <= for end hour
     is_deer_peak_hour = (hour_of_day_0 >= start_hr) * (hour_of_day_0 < end_hr)
     is_deer_peak = is_deer_peak_day * is_deer_peak_hour
     # Normalize
