@@ -53,7 +53,7 @@ Output:Variable,
 		
 
 Output:Meter,Electricity:Facility,hourly; !- [J]
-Output:Meter,Gas:Facility,hourly; !- [J]
+Output:Meter,NaturalGas:Facility,hourly; !- [J]
 
 ! Zone
 !Output:Variable,Perimeter_ZN_1,Zone Mean Air Temperature,hourly; !- Zone Average [C]
