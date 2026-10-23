@@ -63,6 +63,7 @@ parameter "sizing_parameter_cooling", :default=>1.8
 parameter "max_designday_schedules", :default=>true #if true, use 100% schedule for CDD for general misc load, occupancy and lighting schedules. Otherwise, use weekday schedule.
 
 #fan power
+parameter "fan_power_per_flow", :default=>773.3
 parameter "supplyfan_total_eff", :default=>0.25
 parameter "motor_eff", :default=>0.5
 parameter "vfd_curve_name", :default=>""

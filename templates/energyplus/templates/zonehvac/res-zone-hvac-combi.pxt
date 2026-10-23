@@ -28,7 +28,7 @@ parameter "coil_type", :default =>"" #"", 'multispeed' (multispeed only works wi
 parameter "supplyfan_total_eff", :default=>0.12
 parameter "motor_eff", :default=>0.24
 parameter "pressure_rise", :default=>125
-#parameter "vfd_curve_name", :default=>"" #"" for constant speed, "VFD_Fan_Curve" for variable speed does not work with Fan:OnOff
+parameter "vfd_curve_name", :default=>"" #"" for constant speed, "VFD_Fan_Curve" for variable speed does not work with Fan:OnOff
 
 
 #parameter "heat_coil_object_type",:default => nil
@@ -446,7 +446,7 @@ ZoneHVAC:Baseboard:Convective:Water,
         1,                       !- Motor In Airstream Fraction
         <%= system_name %> Mixed Air Outlet,  !- Air Inlet Node Name
         <%= system_name %> Supply Fan Outlet,  !- Air Outlet Node Name
-        ; !-fan power ratio function of speed ratio curve name
+		<%= vfd_curve_name %>; !-fan power ratio function of speed ratio curve name
 
 !Cooling Coils
     <% if cool_type == "DX" %>
@@ -553,7 +553,7 @@ ZoneHVAC:Baseboard:Convective:Water,
             autosize,                !- Gross Rated Sensible Heat Ratio
             <%= cooling_coil_cop %>,               !- Gross Rated Cooling COP {W/W}
             autosize,                !- Rated Air Flow Rate {m3/s}
-            ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
+            <%= fan_power_per_flow %>,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
             <%= system_name %> <%= heat_type == "DX" ? "Supply Fan Outlet" : "Heating Coil Outlet" %>,  !- Air Inlet Node Name
             <%= system_name %> <%= heat_type == "DX" ? "Cooling Coil Outlet" : "Air Loop Outlet" %>,  !- Air Outlet Node Name
         <% if hvac_type=='unitary_system' %>

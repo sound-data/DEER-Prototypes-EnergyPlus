@@ -122,6 +122,7 @@ parameter "infiltration_reduction", :default=>0.0  # TRC SWBE013-01, SWBE014-01;
 
 
 # fan power
+parameter "fan_power_per_flow", :default=>773.3
 parameter "supplyfan_total_eff", :default=>0.25
 parameter "motor_eff", :default=>0.5
 
