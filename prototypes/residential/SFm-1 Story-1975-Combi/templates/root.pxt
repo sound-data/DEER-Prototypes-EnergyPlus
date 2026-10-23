@@ -108,8 +108,6 @@ parameter "supplyfan_total_eff", :default=>0.12
 parameter "motor_eff", :default=>0.24
 parameter "pressure_rise", :default=>125
 parameter "vfd_curve_name", :default=>""
-parameter "fan_type", :default=>"ONOFF" 
-parameter "fan_speed_method", :default=>"CONTINUOUS"
 
 #DHW demand flow rate
 parameter "peak_flow", :default => 0.00062 ['m3/s']

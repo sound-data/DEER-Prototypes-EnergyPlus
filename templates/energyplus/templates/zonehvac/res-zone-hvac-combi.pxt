@@ -29,8 +29,6 @@ parameter "supplyfan_total_eff", :default=>0.12
 parameter "motor_eff", :default=>0.24
 parameter "pressure_rise", :default=>125
 parameter "vfd_curve_name", :default=>"" #"" for constant speed, "VFD_Fan_Curve" for variable speed does not work with Fan:OnOff
-parameter "fan_type", :default=>"ONOFF" 
-parameter "fan_speed_method", :default=>"CONTINUOUS"
 
 
 #parameter "heat_coil_object_type",:default => nil
@@ -770,7 +768,7 @@ ZoneHVAC:Baseboard:Convective:Water,
                 always_avail,             !- Availability Schedule Name
                 <%= system_name %> Mixed Air Outlet,    !- Air Inlet Node Name
                 <%= system_name %> Air Loop Outlet,    !- Air Outlet Node Name
-                <%= "Fan:#{fan_type}" %>,                !- Supply Fan Object Type
+                Fan:OnOff,                !- Supply Fan Object Type
                 <%= system_name %> Supply Fan,    !- Supply Fan Name
                 BlowThrough,              !- Fan Placement
                 ,                         !- Supply Air Fan Operating Mode Schedule Name
@@ -853,7 +851,7 @@ ZoneHVAC:Baseboard:Convective:Water,
                     autosize,                !- Heating Supply Air Flow Rate {m3/s}
                     ,                        !- No Load Supply Air Flow Rate {m3/s}
                     <%= zone_name %>,  !- Controlling Zone or Thermostat Location
-                    <%= "Fan:#{fan_type}" %>,               !- Supply Fan Object Type
+                    Fan:OnOff,               !- Supply Fan Object Type
                     <%= system_name %> Supply Fan,     !- Supply Fan Name
                     BlowThrough,             !- Fan Placement
                     <%= heat_coil_object_type %>,        !- Heating Coil Object Type
@@ -871,7 +869,7 @@ ZoneHVAC:Baseboard:Convective:Water,
                     autosize,                !- Heating Supply Air Flow Rate {m3/s}
                     ,                        !- No Load Supply Air Flow Rate {m3/s}
                     <%= zone_name %>,  !- Controlling Zone or Thermostat Location
-                    <%= "Fan:#{fan_type}" %>,               !- Supply Air Fan Object Type
+                    Fan:OnOff,               !- Supply Air Fan Object Type
                     <%= system_name %> Supply Fan,     !- Supply Air Fan Name
                     <%= heat_coil_object_type %>,  !- Heating Coil Object Type
                     <%= system_name %> Heating Coil,   !- Heating Coil Name
@@ -903,7 +901,7 @@ ZoneHVAC:Baseboard:Convective:Water,
             32.2,                      !- Maximum Supply Air Temperature {C}
             autosize,                !- Heating Supply Air Flow Rate {m3/s}
             <%= zone_name %>,  !- Controlling Zone or Thermostat Location
-            <%= "Fan:#{fan_type}" %>,               !- Supply Fan Object Type
+            Fan:OnOff,               !- Supply Fan Object Type
             <%= system_name %> Supply Fan,     !- Supply Fan Name
             BlowThrough,             !- Fan Placement
             <%= heat_coil_object_type %>,        !- Heating Coil Object Type
