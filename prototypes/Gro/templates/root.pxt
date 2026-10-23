@@ -393,6 +393,7 @@ end
 # Behzad Rizi - Parametrized "credit_type" and new added parameters ("credit_sch_1", "credit_sch_2" and "availability_schedule")
 import "ref-case.pxt", :group => "refcases", :prefix => "refcases_" do
   parameter "zone_name", :default => "Grocery Sales EL1 SSE Perim Spc (G.SSE1)"
+  parameter "humidity_at_zero_ash", :default=>35.0
 end
 
 import "ref-case.pxt", :group => "mt_meatdc1", :prefix => "mt_meatdc1_" do
