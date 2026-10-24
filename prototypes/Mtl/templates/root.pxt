@@ -26,7 +26,8 @@ import "foundation.pxt", :group => "foundation" do
 end
 
 import "constructions.pxt", :group => "constructions" do
-
+# TRC - 2026-09-24 Updated to import parameters from constructions.pxt including windows_u and windows_shgc.
+  include "*"
   exclude "window_shade*|radiant*"
   exclude "foundation_type|parapet_length|floor_length|wall_area"
   parameter "roof_base_type", :default => "Insulation Entirely Above Deck"
