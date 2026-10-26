@@ -72,6 +72,8 @@ parameter "climate_zone", :default=>1
 #Solaris Technical - Behzad S. Rizi - 05/09/2025 - Added a parameter for tank_skin_loss to allow for parameterization of tank heat loss. This parameter is assigned to the field "Uniform Skin Loss Coefficient Per Unit Area to Ambient
 #Temperature" in EnergyPlus
 parameter "tank_skin_loss", :default=> 0
+#TRC - 08-21-2026 - Added a parameter to allow the user to override the default tank skin loss value for the water heater. If true, the user-specified value is used; if false, the default value is used.
+parameter "override_skin_loss", :default=> false, :domain => Boolean
 %>
 
 <%
@@ -138,7 +140,11 @@ end
 Schedule:File,
     <%= water_heater_name %>_demand_frac_sch,  !- Name
     fraction,                !- Schedule Type Limits Name
-    ../../../../../hot water profile/<%= sch %>,  !- File Name
+    <% if defined?($repository_dir) %>
+    <%= $repository_dir %>/templates/hot water profile/<%= sch %>,  !- File Name
+    <% else %>
+    ../../../../../../../../templates/hot water profile/<%= sch %>,  !- File Name
+    <% end %>
     1,                       !- Column Number
     1,                       !- Rows to Skip at Top
     8760,                    !- Number of Hours of Data
@@ -457,14 +463,15 @@ WaterHeater:Stratified,
     ,                        !- Ambient Temperature Schedule Name
     <%= water_heater_zone %>,  !- Ambient Temperature Zone Name
     ,                        !- Ambient Temperature Outdoor Air Node Name
+    <%# TRC - 08-21-2026 Added a parameter to allow the user to override the default tank skin loss value for the water heater. %>
     <% if (water_heater_type =='gas') %>
-    <%= tank_skin_loss %>,               !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <%= override_skin_loss ? tank_skin_loss : 1.7034789 %>,               !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
     <% elsif (water_heater_type =='elec') %>
-    0.28391315,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <%= override_skin_loss ? tank_skin_loss :0.28391315 %>,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
     <% elsif water_heater_type.include?('hpwh') %>
-    0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <%= override_skin_loss ? tank_skin_loss :0.806313346 %>,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
     <% else %>
-    0.806313346,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+    <%= override_skin_loss ? tank_skin_loss :0.806313346 %>,              !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
     <% end %>
     1,                       !- Skin Loss Fraction to Zone
     0,                       !- Off Cycle Flue Loss Coefficient to Ambient Temperature {W/K}
