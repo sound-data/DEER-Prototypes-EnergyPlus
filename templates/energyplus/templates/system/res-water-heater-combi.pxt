@@ -35,6 +35,40 @@ parameter "parasitic_power", :default=> 0 ['BTUH'] #gas water heater 350btuh, ga
 parameter "parasitic_fuel", :default=> "NaturalGas" #Electricity
 
 parameter "combi", :default => false #combined space heating and DHW
+
+# Solaris Technical - Behzad S. Rizi - 2026-09-03 - Develope Central multifamily DHW system.
+parameter "central_dhw", :default => false, :domain => Boolean
+parameter "water_uses", :default => []
+# Master switch for the centralized distribution recirculation branch/pump topology.
+parameter "use_recirc", :default => false, :domain => Boolean
+# Central DHW recirculation inputs aligned with water-heater.pxt.
+parameter "recirc_schedule", :default => "DHW Recirculation Constant Flow Frac Schedule"
+parameter "recirc_pipe_id", :default => 0.0254 ['m']
+parameter "recirc_outlet_pipe_length", :default => 30.48
+parameter "recirc_peak_flow", :default => 0.000005060 ['m3/s']
+# Solaris-Technical - Behzad S. Rizi - Parametarized recirc pump design head for dedicated DHW recirculation pump
+parameter "recirc_pump_design_head", :default => 21521.4467194739 #Default is aligned with water-heater.pxt
+parameter "recirc_fraction_constant_mode", :default => 1.0
+# Pipe construction inputs for Pipe:Indoor. These are explicit so they can be revised later
+# if the measure methodology specifies a different insulation level or pipe material.
+parameter "recirc_pipe_insulation_thickness", :default => 0.0254 ['m']
+parameter "recirc_pipe_insulation_conductivity", :default => 0.04
+parameter "recirc_pipe_wall_thickness", :default => 0.00127 ['m']
+parameter "recirc_pipe_wall_conductivity", :default => 385.0
+# WaterHeater:Sizing inputs aligned with water-heater.pxt. In central mode, the number of units
+# defaults to the number of dwelling-unit WaterUse loads collected by root.pxt.
+parameter "num_dwelling_unit", :default => nil
+parameter "tank_size_per_dwelling_unit", :default => 20.0 ['gal']
+parameter "recover_cap_per_dwelling_unit", :default => 0.378541
+# Heating source for central_dhw: "water_heater" or "boiler".
+parameter "dhw_heating_source", :default => "water_heater", :domain => String
+# Central boiler inputs
+parameter "dhw_boiler_eff", :default => 0.8
+parameter "dhw_boiler_capacity", :default => "autosize"
+parameter "dhw_boiler_design_flow", :default => "autosize"
+# Storage-tank loss coefficient. <= 0 keeps the legacy type-specific defaults.
+parameter "skin_loss_coefficient", :default => 0
+
 parameter "dhw_stpt_sch", :default => ""
 parameter "climate_zone_num", :default => false
 parameter "climate_zone_str", :default => ""
@@ -120,8 +154,706 @@ rule "sanco2_hpwh_rule", :parameters => {:water_heater_type => "sanco2_hpwh"} do
   default :parasitic_fuel => "Electricity"
   default :tank_height => 63['in']
 end
-
 %>
+
+
+! Solaris Technical - Behzad S. Rizi - 2026-09-03 - Develope Central multifamily DHW system.
+! Central DHW is intentionally independent of the legacy dwelling-unit combi space-heating configuration.
+<% if central_dhw %>
+
+! =================================================================================================
+! CENTRAL MFm DHW MODE (central_dhw = true)
+! - One plant serves all dwelling-unit WaterUse branches.
+! - use_recirc toggles the return branch, including a dedicated recirculation pump and its electricity.
+! - dhw_heating_source = water_heater: central stratified fired/storage water heater.
+! - dhw_heating_source = boiler: boiler followed by passive stratified storage, with or without recirculation.
+! Space-heating coils are intentionally excluded from this central DHW mode.
+! =================================================================================================
+
+
+<%
+if climate_zone_num
+  zones = ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16"]
+  climate_zone_str = zones[climate_zone_num - 1]
+end
+raise "water_heater_zone must be provided for central_dhw" if water_heater_zone.nil?
+raise "water_uses must contain at least one dwelling unit for central_dhw" if water_uses.empty?
+raise "central_dhw and combi cannot both be true" if combi
+unless ["water_heater", "boiler"].include?(dhw_heating_source)
+  raise "dhw_heating_source must be 'water_heater' or 'boiler'"
+end
+# Central storage sizing follows the PerUnit method used in water-heater.pxt.
+# EnergyPlus 9.5 showed unstable zone-sizing behavior when WaterHeater:Stratified Tank Volume
+# itself was set to Autosize. Therefore calculate the central tank volume explicitly from the
+# per-dwelling-unit storage basis, while retaining WaterHeater:Sizing to autosize heater capacity.
+# If num_dwelling_unit is not explicitly provided, use the number of dwelling-unit WaterUse loads
+# collected by root.pxt.
+central_unit_count = num_dwelling_unit.nil? ? water_uses.length : num_dwelling_unit
+central_tank_volume = tank_size_per_dwelling_unit * central_unit_count
+
+# Keep tank geometry consistent with the explicit central volume. The original tank_height and
+# 1.916 m perimeter correspond to the rule-based dwelling-unit tank_size; scale all linear
+# dimensions by the cube root of (central volume / rule-based unit tank volume).
+central_geometry_scale = (central_unit_count * (tank_size_per_dwelling_unit / tank_size)) ** (1.0 / 3.0)
+central_tank_height = tank_height * central_geometry_scale
+central_tank_perimeter = 1.916 * central_geometry_scale
+heater1_height = 0.4 * central_tank_height
+heater2_height = 0.3 * central_tank_height
+
+# Central DHW boiler storage is included with and without recirculation; use the same per-unit sizing basis as the water-heater configuration.
+central_boiler_storage_volume = tank_size_per_dwelling_unit * central_unit_count
+central_storage_required = true # both boiler configurations and water-heater configurations include storage
+%>
+
+Schedule:File,
+    <%= water_heater_name %>_demand_frac_sch,
+    fraction,
+    <% if defined?($repository_dir) %>
+      <%= $repository_dir %>/templates/hot water profile/<%= dhw_demand_sch %>,
+    <% else %>
+      ../../../../../../../../templates/hot water profile/<%= dhw_demand_sch %>,
+    <% end %>
+    1,
+    1,
+    8760,
+    Comma,
+    No,
+    1;
+
+Schedule:Compact,
+    <%= water_heater_name %>_Tank_setpt,
+    Temperature,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00,
+    <%= tank_sept %>;
+
+Schedule:Constant,
+    <%= water_heater_name %> DHW Use Setpoint,
+    Temperature,
+    <%= dhw_use_setpt_t %>;
+
+<% if use_recirc %>
+! Zero thermal load schedule for LoadProfile:Plant. The recirculation object is used to impose
+! loop flow; distribution heat transfer is represented by the recirculation pipe object.
+Schedule:Constant,
+    DHW Recirculation Load Schedule,
+    Any Number,
+    0;
+
+<% if recirc_schedule.include?("csv") %>
+Schedule:File,
+    <%= water_heater_name %> Recirculation Varying Flow Frac Schedule,
+    fraction,
+    <% if defined?($repository_dir) %>
+      <%= $repository_dir %>/templates/hot water profile/DHW Recirculation Varying Flow Frac Schedule_CZ<%= climate_zone_str %>.csv,
+    <% else %>
+      ../../../../../../../../templates/hot water profile/DHW Recirculation Varying Flow Frac Schedule_CZ<%= climate_zone_str %>.csv,
+    <% end %>
+    2,
+    1,
+    8760,
+    Comma,
+    No,
+    60;
+<% else %>
+Schedule:Compact,
+    <%= water_heater_name %> Recirculation Constant Flow Frac Schedule,
+    Any Number,
+    Through: 12/31,
+    For: AllDays,
+    Until: 24:00,
+    <%= recirc_fraction_constant_mode %>;
+<% end %>
+<% end %>
+
+<% if !dhw_stpt_sch.empty? %>
+Schedule:File,
+    <%= water_heater_name %>_Loop_setpt,
+    Temperature,
+    <% if defined?($repository_dir) %>
+      <%= $repository_dir %>/templates/hot water profile/<%= dhw_stpt_sch %>_CZ<%= climate_zone_str %>.csv,
+    <% else %>
+      ../../../../../../../../templates/hot water profile/<%= dhw_stpt_sch %>_CZ<%= climate_zone_str %>.csv,
+    <% end %>
+    1,
+    1,
+    8760,
+    Comma,
+    No,
+    60;
+<% else %>
+Schedule:Constant,
+    <%= water_heater_name %>_Loop_setpt,
+    Temperature,
+    <%= loop_sept %>;
+<% end %>
+
+<% if dhw_heating_source == "water_heater" %>
+! Central storage-water-heater sizing follows the proven PerUnit method in water-heater.pxt.
+WaterHeater:Sizing,
+    <%= water_heater_name %>,              !- WaterHeater Name
+    PerUnit,                               !- Design Mode
+    0,                                     !- Time Storage Can Meet Peak Draw {hr}
+    0,                                     !- Time for Tank Recovery {hr}
+    ,                                      !- Nominal Tank Volume for Autosizing Plant Connections {m3}
+    1,                                     !- Number of Bedrooms
+    1,                                     !- Number of Bathrooms
+    ,                                      !- Storage Capacity per Person {m3/person}
+    ,                                      !- Recovery Capacity per Person {m3/hr-person}
+    ,                                      !- Storage Capacity per Floor Area {m3/m2}
+    ,                                      !- Recovery Capacity per Floor Area {m3/hr-m2}
+    <%= central_unit_count %>,             !- Number of Units
+    <%= tank_size_per_dwelling_unit %>,    !- Storage Capacity per Unit {m3}
+    <%= recover_cap_per_dwelling_unit %>;  !- Recovery Capacity Per Unit {m3/hr}
+<% end %>
+
+<% if central_storage_required %>
+  WaterHeater:Stratified,
+        <%= water_heater_name %>,      !- Name
+        Domestic Hot Water,      !- End-Use Subcategory
+        <%= dhw_heating_source == "water_heater" ? central_tank_volume : central_boiler_storage_volume %>, !- Tank Volume {m3}
+        <%= central_tank_height %>,      !- Tank Height {m}
+        VerticalCylinder,        !- Tank Shape
+        <%= central_tank_perimeter %>,  !- Tank Perimeter {m}
+        82.2222,                 !- Maximum Temperature Limit {C}
+        MasterSlave,             !- Heater Priority Control
+        <% if dhw_heating_source == "boiler" %>
+        <%= water_heater_name %>_Loop_setpt,  !- Heater 1 Setpoint Temperature Schedule Name
+        2,                                    !- Heater 1 Deadband Temperature Difference {deltaC}
+        0,                                    !- Heater 1 Capacity {W}; passive storage for boiler source
+        <% elsif water_heater_type.include?('hpwh') %>
+        <%= water_heater_name %>_Tank_sept,
+        11.11,
+        <%= heat_element_cap %>,
+        <% else %>
+        <%= water_heater_name %>_Loop_setpt,
+        2,
+        Autosize,                              !- Heater 1 Capacity {W}; sized by WaterHeater:Sizing
+        <% end %>
+        <%=heater1_height %>,                   !- Heater 1 Height {m}
+        <% if dhw_heating_source == "boiler" %>
+        <%= water_heater_name %>_Loop_setpt,
+        2,
+        0,                                    !- Heater 2 Capacity {W}; passive storage for boiler source
+        <% elsif water_heater_type.include?('hpwh') %>
+        <%= water_heater_name %>_Tank_sept,
+        16.67,
+        0,
+        <% else %>
+        <%= water_heater_name %>_Loop_setpt,
+        2,
+        <%= heat_element_cap %>,
+        <% end %>
+        <%=heater2_height %>,                !- Heater 2 Height {m}
+        <%= dhw_heating_source == "boiler" ? "Electricity" : ((water_heater_type == 'gas') ? "NaturalGas" : "Electricity") %>,  !- Heater Fuel Type
+        <%= dhw_heating_source == "boiler" ? 1.0 : thermal_eff %>,  !- Heater Thermal Efficiency
+        <%= dhw_heating_source == "boiler" ? 0 : parasitic_power %>,  !- Off Cycle Parasitic Fuel Consumption Rate {W}
+        <%= dhw_heating_source == "boiler" ? "Electricity" : parasitic_fuel %>,  !- Off Cycle Parasitic Fuel Type
+        0.67,
+        ,
+        <%= dhw_heating_source == "boiler" ? 0 : parasitic_power %>,  !- On Cycle Parasitic Fuel Consumption Rate {W}
+        <%= dhw_heating_source == "boiler" ? "Electricity" : parasitic_fuel %>,  !- On Cycle Parasitic Fuel Type
+        0.67,                    !- On Cycle Parasitic Heat Fraction to Tank
+        ,                        !- On Cycle Parasitic Height {m}
+        Zone,                    !- Ambient Temperature Indicator
+        ,                        !- Ambient Temperature Schedule Name
+        <%= water_heater_zone %>,  !- Ambient Temperature Zone Name
+        ,                        !- Ambient Temperature Outdoor Air Node Name
+        <% if skin_loss_coefficient > 0 %>
+        <%= skin_loss_coefficient %>,         !- Uniform Skin Loss Coefficient per Unit Area to Ambient Temperature {W/m2-K}
+        <% elsif (water_heater_type =='gas') %>
+        1.7034789,
+        <% elsif (water_heater_type =='elec') %>
+        0.28391315,
+        <% else %>
+        0.806313346,
+        <% end %>
+        1,                       !- Skin Loss Fraction to Zone
+        0,                       !- Off Cycle Flue Loss Coefficient to Ambient Temperature {W/K}
+        1,                       !- Off Cycle Flue Loss Fraction to Zone
+        ,                        !- Peak Use Flow Rate {m3/s}
+        ,                        !- Use Flow Rate Fraction Schedule Name
+        ,                        !- Cold Water Supply Temperature Schedule Name
+        <%= dhw_heating_source == "boiler" ? water_heater_name + " Boiler Outlet Node" : water_heater_name + " Central Heating Inlet Node" %>,  !- Use Side Inlet Node Name
+        <%= water_heater_name %> Central Heating Outlet Node,  !- Use Side Outlet Node Name
+        1,                       !- Use Side Effectiveness
+        0,                       !- Use Side Inlet Height {m}
+        autocalculate,           !- Use Side Outlet Height {m}
+        <%= condenser_type == "pumped" ? water_heater_name + " water heater outlet" : "" %>,                        !- Source Side Inlet Node Name
+        <%= condenser_type == "pumped" ? water_heater_name + " water heater inlet" : "" %>,                        !- Source Side Outlet Node Name
+        1,                       !- Source Side Effectiveness
+        autocalculate,           !- Source Side Inlet Height {m}
+        ,                        !- Source Side Outlet Height {m}
+        Fixed,                   !- Inlet Mode
+        autosize,                !- Use Side Design Flow Rate {m3/s}
+        autosize,                !- Source Side Design Flow Rate {m3/s}
+        1.5,                     !- Indirect Water Heating Recovery Time {hr}
+        10,                      !- Number of Nodes
+        ,                        !- Additional Destratification Conductivity {W/m-K}
+        ,                        !- Node 1 Additional Loss Coefficient {W/K}
+        ,                        !- Node 2 Additional Loss Coefficient {W/K}
+        ,                        !- Node 3 Additional Loss Coefficient {W/K}
+        ,                        !- Node 4 Additional Loss Coefficient {W/K}
+        ,                        !- Node 5 Additional Loss Coefficient {W/K}
+        ,                        !- Node 6 Additional Loss Coefficient {W/K}
+        ,                        !- Node 7 Additional Loss Coefficient {W/K}
+        ,                        !- Node 8 Additional Loss Coefficient {W/K}
+        ,                        !- Node 9 Additional Loss Coefficient {W/K}
+        ,                        !- Node 10 Additional Loss Coefficient {W/K}
+        ,                        !- Node 11 Additional Loss Coefficient {W/K}
+        ,                        !- Node 12 Additional Loss Coefficient {W/K}
+        IndirectHeatPrimarySetpoint;  !- Source Side Flow Control Mode
+
+<% end %>
+
+<% water_uses.each do |water_use| %>
+WaterUse:Equipment,
+    <%= water_use[:name] %> Equipment,          !- Name
+    Domestic Hot Water,                         !- End-Use Subcategory
+    <%= water_use[:peak_flow] %>,               !- Peak Flow Rate {m3/s}
+    <%= water_heater_name %>_demand_frac_sch,   !- Flow Rate Fraction Schedule Name
+    <%= water_heater_name %> DHW Use Setpoint,  !- Target Temperature Schedule Name
+    ,                                           !- Hot Water Supply Temperature Schedule Name
+    ,                                           !- Cold Water Supply Temperature Schedule Name
+    <%= water_use[:zone_name] %>;               !- Zone Name
+
+WaterUse:Connections,
+    <%= water_use[:name] %> Connection,         !- Name
+    <%= water_use[:name] %> <%= use_recirc ? "Pump Outlet Node" : "Inlet Node" %>, !- Inlet Node Name
+    <%= water_use[:name] %> Outlet Node,        !- Outlet Node Name
+    ,                                           !- Hot Water Storage Tank Name
+    ,                                           !- Cold Water Storage Tank Name
+    <%= water_heater_name %>_Loop_setpt,        !- Hot Water Supply Temperature Schedule Name
+    ,                                           !- Drain Water Heat Exchanger Type
+    None,                                       !- Drain Water Heat Exchanger Destination
+    ,                                           !- Drain Water Heat Exchanger U-Factor Times Area {W/K}
+    ,                                           !- Drain Water Heat Exchanger Maximum Flow Rate {m3/s}
+    <%= water_use[:name] %> Equipment;          !- Water Use Equipment 1 Name
+
+Branch,
+    <%= water_use[:name] %> Water Use Branch,   !- Name
+    ,                                           !- Pressure Drop Curve Name
+! Solaris Technical - Behzad Rizi - 2026-10-13 - Added variable speed pump object
+<% if use_recirc %>
+    ! Each water-use branch has a near-ideal pump, matching the reference water-heater.pxt
+    ! demand-side layout. Unique pump names allow multiple dwelling-unit water-use branches.
+    Pump:VariableSpeed,                         !- Component 1 Object Type
+    <%= water_use[:name] %> Mains Pressure Pump, !- Component 1 Name
+    <%= water_use[:name] %> Inlet Node,         !- Component 1 Inlet Node Name
+    <%= water_use[:name] %> Pump Outlet Node,   !- Component 1 Outlet Node Name
+    WaterUse:Connections,                       !- Component 2 Object Type
+    <%= water_use[:name] %> Connection,         !- Component 2 Name
+    <%= water_use[:name] %> Pump Outlet Node,   !- Component 2 Inlet Node Name
+    <%= water_use[:name] %> Outlet Node;        !- Component 2 Outlet Node Name
+<% else %>
+    WaterUse:Connections,                       !- Component 1 Object Type
+    <%= water_use[:name] %> Connection,         !- Component 1 Name
+    <%= water_use[:name] %> Inlet Node,         !- Component 1 Inlet Node Name
+    <%= water_use[:name] %> Outlet Node;        !- Component 1 Outlet Node Name
+<% end %>
+! Solaris Technical - Behzad Rizi - 2026-10-13 - Added variable speed pump object
+<% if use_recirc %>
+! Near-ideal demand-side flow pump (not intended to represent real pumping energy).
+Pump:VariableSpeed,
+    <%= water_use[:name] %> Mains Pressure Pump, !- Name
+    <%= water_use[:name] %> Inlet Node,          !- Inlet Node Name
+    <%= water_use[:name] %> Pump Outlet Node,    !- Outlet Node Name
+    autosize,                                    !- Design Maximum Flow Rate {m3/s}
+    1,                                           !- Design Pump Head {Pa}
+    0,                                           !- Design Power Consumption {W}
+    1,                                           !- Motor Efficiency
+    0,                                           !- Fraction of Motor Inefficiencies to Fluid Stream
+    0,                                           !- Coefficient 1 of Part Load Performance Curve
+    1,                                           !- Coefficient 2 of Part Load Performance Curve
+    0,                                           !- Coefficient 3 of Part Load Performance Curve
+    0,                                           !- Coefficient 4 of Part Load Performance Curve
+    0,                                           !- Design Minimum Flow Rate {m3/s}
+    Intermittent;                                !- Pump Control Type
+<% end %>
+<% end %>
+
+<% if dhw_heating_source == "boiler" %>
+Boiler:HotWater,
+    <%= water_heater_name %> DHW Boiler,               !- Name
+    NaturalGas,                                        !- Fuel Type
+    <%= dhw_boiler_capacity %>,                        !- Nominal Capacity {W}
+    <%= dhw_boiler_eff %>,                             !- Nominal Thermal Efficiency
+    LeavingBoiler,                                     !- Efficiency Curve Temperature Evaluation Variable
+    ,                                                  !- Normalized Boiler Efficiency Curve Name
+    <%= dhw_boiler_design_flow %>,                     !- Design Water Flow Rate {m3/s}
+    0.0,                                               !- Minimum Part Load Ratio
+    1.0,                                               !- Maximum Part Load Ratio
+    1.0,                                               !- Optimum Part Load Ratio
+    <%= water_heater_name %> Central Heating Inlet Node, !- Boiler Water Inlet Node Name
+    <%= water_heater_name %> Boiler Outlet Node, !- Boiler Water Outlet Node Name
+    99.9,                                              !- Water Outlet Upper Temperature Limit {C}
+    NotModulated,                                      !- Boiler Flow Mode
+    0,                                                 !- Parasitic Electric Load {W}
+    1,                                                 !- Sizing Factor
+    Domestic Hot Water;                                !- End-Use Subcategory
+<% end %>
+
+Branch,
+    <%= water_heater_name %> Central Heating Branch,              !- Name
+    ,                                                             !- Pressure Drop Curve Name
+<% if dhw_heating_source == "water_heater" %>
+    WaterHeater:Stratified,                                       !- Component 1 Object Type
+    <%= water_heater_name %>,                                     !- Component 1 Name
+    <%= water_heater_name %> Central Heating Inlet Node,           !- Component 1 Inlet Node Name
+    <%= water_heater_name %> Central Heating Outlet Node;          !- Component 1 Outlet Node Name
+<% else %>
+    Boiler:HotWater,                                              !- Component 1 Object Type
+    <%= water_heater_name %> DHW Boiler,                          !- Component 1 Name
+    <%= water_heater_name %> Central Heating Inlet Node,           !- Component 1 Inlet Node Name
+    <%= water_heater_name %> Boiler Outlet Node,                  !- Component 1 Outlet Node Name
+    WaterHeater:Stratified,                                       !- Component 2 Object Type; passive storage tank
+    <%= water_heater_name %>,                                     !- Component 2 Name
+    <%= water_heater_name %> Boiler Outlet Node,                  !- Component 2 Inlet Node Name
+    <%= water_heater_name %> Central Heating Outlet Node;          !- Component 2 Outlet Node Name
+<% end %>
+
+Branch,
+    <%= water_heater_name %> DHW Supply Inlet Branch,            !- Name
+    , 
+                                                            !- Pressure Drop Curve Name
+! Solaris Technical - Behzad Rizi - 2026-10-13 - Added pipe adiabatic object
+<% if use_recirc %>
+    ! With recirculation enabled, the near-ideal pumps are on the demand-side water-use branches.
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> DHW Supply Inlet Pipe,               !- Component 1 Name
+    <%= water_heater_name %> DHW Supply Inlet Node,               !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Pump Outlet Node;                !- Component 1 Outlet Node Name
+<% else %>
+    ! Preserve the original supply-side pump for no-recirculation cases.
+    Pump:VariableSpeed,                                           !- Component 1 Object Type
+    <%= water_heater_name %> DHW Circulation Pump,                !- Component 1 Name
+    <%= water_heater_name %> DHW Supply Inlet Node,               !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Pump Outlet Node;                !- Component 1 Outlet Node Name
+<% end %>
+
+Branch,
+    <%= water_heater_name %> DHW Supply Outlet Branch,            !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> DHW Supply Outlet Pipe,              !- Component 1 Name
+    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,   !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Supply Outlet Node;              !- Component 1 Outlet Node Name
+
+Branch,
+    <%= water_heater_name %> DHW Supply Bypass Branch,            !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> DHW Supply Bypass Pipe,              !- Component 1 Name
+    <%= water_heater_name %> DHW Supply Bypass Inlet Node,        !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Supply Bypass Outlet Node;       !- Component 1 Outlet Node Name
+
+Branch,
+    <%= water_heater_name %> DHW Demand Inlet Branch,             !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> DHW Demand Inlet Pipe,               !- Component 1 Name
+    <%= water_heater_name %> DHW Demand Inlet Node,               !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Inlet Node;      !- Component 1 Outlet Node Name
+
+<% if use_recirc %>
+Branch,
+    <%= water_heater_name %> Recirculation Return Branch,         !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    ! Same demand-side parallel recirculation branch sequence as the working water-heater.pxt.
+    LoadProfile:Plant,                                            !- Component 1 Object Type
+    <%= water_heater_name %> Recirculation Flow Control,          !- Component 1 Name
+    <%= water_heater_name %> Recirculation Return Inlet Node,     !- Component 1 Inlet Node Name
+    <%= water_heater_name %> Recirculation Load Outlet Node,      !- Component 1 Outlet Node Name
+    Pump:VariableSpeed,                                           !- Component 2 Object Type
+    <%= water_heater_name %> DHW Recirculation Pump,              !- Component 2 Name
+    <%= water_heater_name %> Recirculation Load Outlet Node,      !- Component 2 Inlet Node Name
+    <%= water_heater_name %> Recirculation Pump Outlet Node,      !- Component 2 Outlet Node Name
+    Pipe:Indoor,                                                  !- Component 3 Object Type
+    <%= water_heater_name %> Recirculation Return Pipe,           !- Component 3 Name
+    <%= water_heater_name %> Recirculation Pump Outlet Node,      !- Component 3 Inlet Node Name
+    <%= water_heater_name %> Recirculation Return Outlet Node;    !- Component 3 Outlet Node Name
+<% end %>
+
+Branch,
+    <%= water_heater_name %> DHW Demand Outlet Branch,            !- Name
+    ,                                                             !- Pressure Drop Curve Name
+    Pipe:Adiabatic,                                               !- Component 1 Object Type
+    <%= water_heater_name %> DHW Demand Outlet Pipe,              !- Component 1 Name
+    <%= water_heater_name %> DHW Demand Mixer Outlet Node,        !- Component 1 Inlet Node Name
+    <%= water_heater_name %> DHW Demand Outlet Node;              !- Component 1 Outlet Node Name
+
+BranchList,
+    <%= water_heater_name %> DHW Supply Side Branches,            !- Name
+    <%= water_heater_name %> DHW Supply Inlet Branch,             !- Branch 1 Name
+    <%= water_heater_name %> Central Heating Branch,                 !- Branch 2 Name
+    <%= water_heater_name %> DHW Supply Bypass Branch,            !- Branch 3 Name
+    <%= water_heater_name %> DHW Supply Outlet Branch;            !- Branch 4 Name
+
+BranchList,
+    <%= water_heater_name %> DHW Demand Side Branches,            !- Name
+    <%= water_heater_name %> DHW Demand Inlet Branch,             !- Branch 1 Name
+<% water_uses.each do |water_use| %>
+    <%= water_use[:name] %> Water Use Branch,                     !- Water Use Branch Name
+<% end %>
+<% if use_recirc %>
+    <%= water_heater_name %> Recirculation Return Branch,         !- Recirculation Return Branch Name
+<% end %>
+    <%= water_heater_name %> DHW Demand Outlet Branch;            !- Demand Outlet Branch Name
+
+Connector:Splitter,
+    <%= water_heater_name %> DHW Supply Splitter,                 !- Name
+    <%= water_heater_name %> DHW Supply Inlet Branch,             !- Inlet Branch Name
+    <%= water_heater_name %> Central Heating Branch,                 !- Outlet Branch 1 Name
+    <%= water_heater_name %> DHW Supply Bypass Branch;            !- Outlet Branch 2 Name
+
+Connector:Mixer,
+    <%= water_heater_name %> DHW Supply Mixer,                    !- Name
+    <%= water_heater_name %> DHW Supply Outlet Branch,            !- Outlet Branch Name
+    <%= water_heater_name %> Central Heating Branch,                 !- Inlet Branch 1 Name
+    <%= water_heater_name %> DHW Supply Bypass Branch;            !- Inlet Branch 2 Name
+
+Connector:Splitter,
+    <%= water_heater_name %> DHW Demand Splitter,                 !- Name
+    <%= water_heater_name %> DHW Demand Inlet Branch,             !- Inlet Branch Name
+<% demand_parallel_branches = water_uses.map { |wu| "#{wu[:name]} Water Use Branch" } %>
+<% demand_parallel_branches << "#{water_heater_name} Recirculation Return Branch" if use_recirc %>
+<% demand_parallel_branches.each_with_index do |branch_name, idx| %>
+    <%= branch_name %><%= idx == demand_parallel_branches.length - 1 ? ";" : "," %>
+<% end %>
+
+Connector:Mixer,
+    <%= water_heater_name %> DHW Demand Mixer,                    !- Name
+    <%= water_heater_name %> DHW Demand Outlet Branch,            !- Outlet Branch Name
+<% demand_parallel_branches.each_with_index do |branch_name, idx| %>
+    <%= branch_name %><%= idx == demand_parallel_branches.length - 1 ? ";" : "," %>
+<% end %>
+
+ConnectorList,
+    <%= water_heater_name %> DHW Supply Side Connectors,          !- Name
+    Connector:Splitter,                                          !- Connector 1 Object Type
+    <%= water_heater_name %> DHW Supply Splitter,                 !- Connector 1 Name
+    Connector:Mixer,                                             !- Connector 2 Object Type
+    <%= water_heater_name %> DHW Supply Mixer;                    !- Connector 2 Name
+
+ConnectorList,
+    <%= water_heater_name %> DHW Demand Side Connectors,          !- Name
+    Connector:Splitter,                                          !- Connector 1 Object Type
+    <%= water_heater_name %> DHW Demand Splitter,                 !- Connector 1 Name
+    Connector:Mixer,                                             !- Connector 2 Object Type
+    <%= water_heater_name %> DHW Demand Mixer;                    !- Connector 2 Name
+
+Pipe:Adiabatic,
+    <%= water_heater_name %> DHW Supply Outlet Pipe,              !- Name
+    <%= water_heater_name %> DHW Supply Outlet Pipe Inlet Node,   !- Inlet Node Name
+    <%= water_heater_name %> DHW Supply Outlet Node;              !- Outlet Node Name
+
+Pipe:Adiabatic,
+    <%= water_heater_name %> DHW Supply Bypass Pipe,              !- Name
+    <%= water_heater_name %> DHW Supply Bypass Inlet Node,        !- Inlet Node Name
+    <%= water_heater_name %> DHW Supply Bypass Outlet Node;       !- Outlet Node Name
+! Solaris Technical - Behzad Rizi - 2026-10-13 - Defined connections for pipe adiabatic object
+<% if use_recirc %>
+Pipe:Adiabatic,
+    <%= water_heater_name %> DHW Supply Inlet Pipe,               !- Name
+    <%= water_heater_name %> DHW Supply Inlet Node,               !- Inlet Node Name
+    <%= water_heater_name %> DHW Pump Outlet Node;                !- Outlet Node Name
+<% end %>
+
+Pipe:Adiabatic,
+    <%= water_heater_name %> DHW Demand Inlet Pipe,               !- Name
+    <%= water_heater_name %> DHW Demand Inlet Node,               !- Inlet Node Name
+    <%= water_heater_name %> DHW Demand Splitter Inlet Node;      !- Outlet Node Name
+
+<% if use_recirc %>
+! Recirculation pipe construction is defined locally so this central-DHW template does not
+! depend on construction/schedule objects from another prototype. Per the EnergyPlus
+! Pipe:Indoor convention, construction layers are listed from outer insulation to pipe wall.
+Material,
+    <%= water_heater_name %> Recirculation Pipe Insulation,       !- Name
+    MediumRough,                                                  !- Roughness
+    <%= recirc_pipe_insulation_thickness %>,                      !- Thickness {m}
+    <%= recirc_pipe_insulation_conductivity %>,                   !- Conductivity {W/m-K}
+    32,                                                           !- Density {kg/m3}
+    1400,                                                         !- Specific Heat {J/kg-K}
+    0.9,                                                          !- Thermal Absorptance
+    0.7,                                                          !- Solar Absorptance
+    0.7;                                                          !- Visible Absorptance
+
+Material,
+    <%= water_heater_name %> Recirculation Pipe Wall,             !- Name
+    Smooth,                                                       !- Roughness
+    <%= recirc_pipe_wall_thickness %>,                            !- Thickness {m}
+    <%= recirc_pipe_wall_conductivity %>,                         !- Conductivity {W/m-K}
+    8900,                                                         !- Density {kg/m3}
+    385,                                                          !- Specific Heat {J/kg-K}
+    0.9,                                                          !- Thermal Absorptance
+    0.6,                                                          !- Solar Absorptance
+    0.6;                                                          !- Visible Absorptance
+
+Construction,
+    <%= water_heater_name %> Insulated Recirculation Pipe,        !- Name
+    <%= water_heater_name %> Recirculation Pipe Insulation,       !- Outside Layer
+    <%= water_heater_name %> Recirculation Pipe Wall;             !- Layer 2
+
+Pipe:Indoor,
+    <%= water_heater_name %> Recirculation Return Pipe,           !- Name
+    <%= water_heater_name %> Insulated Recirculation Pipe,        !- Construction Name
+    <%= water_heater_name %> Recirculation Pump Outlet Node,      !- Fluid Inlet Node Name
+    <%= water_heater_name %> Recirculation Return Outlet Node,    !- Fluid Outlet Node Name
+    Zone,                                                         !- Environment Type
+    <%= water_heater_zone %>,                                    !- Ambient Temperature Zone Name
+    ,                                                             !- Ambient Temperature Schedule Name
+    ,                                                             !- Ambient Air Velocity Schedule Name
+    <%= recirc_pipe_id %>,                                        !- Pipe Inside Diameter {m}
+    <%= recirc_outlet_pipe_length %>;                             !- Pipe Length {m}
+
+LoadProfile:Plant,
+    <%= water_heater_name %> Recirculation Flow Control,          !- Name
+    <%= water_heater_name %> Recirculation Return Inlet Node,     !- Inlet Node Name
+    <%= water_heater_name %> Recirculation Load Outlet Node,      !- Outlet Node Name
+    DHW Recirculation Load Schedule,                              !- Load Schedule Name
+    <%= recirc_peak_flow %>,                                      !- Peak Flow Rate {m3/s}
+<% if recirc_schedule.include?("csv") %>
+    <%= water_heater_name %> Recirculation Varying Flow Frac Schedule; !- Flow Rate Fraction Schedule Name
+<% else %>
+    <%= water_heater_name %> Recirculation Constant Flow Frac Schedule; !- Flow Rate Fraction Schedule Name
+<% end %>
+
+! Solaris Technical - Behzad Rizi - 2026-10-13 - Added variable speed pump objectDedicated recirculation pump after LoadProfile:Plant on the parallel demand return branch.
+Pump:VariableSpeed,
+    <%= water_heater_name %> DHW Recirculation Pump,              !- Name
+    <%= water_heater_name %> Recirculation Load Outlet Node,      !- Inlet Node Name
+    <%= water_heater_name %> Recirculation Pump Outlet Node,      !- Outlet Node Name
+    autosize,                                                     !- Design Maximum Flow Rate {m3/s}
+    <%= recirc_pump_design_head %>,                               !- Design Pump Head {Pa}
+    autosize,                                                     !- Design Power Consumption {W}
+    0.9,                                                          !- Motor Efficiency
+    ,                                                             !- Fraction of Motor Inefficiencies to Fluid Stream
+    ,                                                             !- Coefficient 1 of the Part Load Performance Curve
+    1,                                                            !- Coefficient 2 of the Part Load Performance Curve
+    ,                                                             !- Coefficient 3 of the Part Load Performance Curve
+    ,                                                             !- Coefficient 4 of the Part Load Performance Curve
+    0,                                                            !- Design Minimum Flow Rate {m3/s}
+    Intermittent,                                                 !- Pump Control Type
+    ,                                                             !- Pump Flow Rate Schedule Name
+    ,                                                             !- Pump Curve Name
+    ,                                                             !- Impeller Diameter {m}
+    ,                                                             !- VFD Control Type
+    ,                                                             !- Pump RPM Schedule Name
+    ,                                                             !- Minimum Pressure Schedule {Pa}
+    ,                                                             !- Maximum Pressure Schedule {Pa}
+    ,                                                             !- Minimum RPM Schedule {rev/min}
+    ,                                                             !- Maximum RPM Schedule {rev/min}
+    ,                                                             !- Zone Name
+    ,                                                             !- Skin Loss Radiative Fraction
+    PowerPerFlowPerPressure,                                      !- Design Power Sizing Method
+    348701.1,                                                     !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+    1.282051282,                                                  !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+    ,                                                             !- Design Minimum Flow Rate Fraction
+    General;                                                      !- End-Use Subcategory
+<% end %>
+
+Pipe:Adiabatic,
+    <%= water_heater_name %> DHW Demand Outlet Pipe,              !- Name
+    <%= water_heater_name %> DHW Demand Mixer Outlet Node,        !- Inlet Node Name
+    <%= water_heater_name %> DHW Demand Outlet Node;              !- Outlet Node Name
+
+<% if !use_recirc %>
+Pump:VariableSpeed,
+    <%= water_heater_name %> DHW Circulation Pump,                !- Name
+    <%= water_heater_name %> DHW Supply Inlet Node,               !- Inlet Node Name
+    <%= water_heater_name %> DHW Pump Outlet Node,                !- Outlet Node Name
+    autosize,                !- Design Maximum Flow Rate {m3/s}
+    1,                       !- Design Pump Head {Pa}; near-ideal plant circulation pump
+    autosize,                !- Design Power Consumption {W}
+    1.0,                     !- Motor Efficiency
+    ,                        !- Fraction of Motor Inefficiencies to Fluid Stream
+    ,                        !- Coefficient 1 of the Part Load Performance Curve
+    1,                       !- Coefficient 2 of the Part Load Performance Curve
+    ,                        !- Coefficient 3 of the Part Load Performance Curve
+    ,                        !- Coefficient 4 of the Part Load Performance Curve
+    0,                       !- Design Minimum Flow Rate {m3/s}
+    Intermittent,            !- Pump Control Type
+    ,                        !- Pump Flow Rate Schedule Name
+    ,                        !- Pump Curve Name
+    ,                        !- Impeller Diameter {m}
+    ,                        !- VFD Control Type
+    ,                        !- Pump RPM Schedule Name
+    ,                        !- Minimum Pressure Schedule {Pa}
+    ,                        !- Maximum Pressure Schedule {Pa}
+    ,                        !- Minimum RPM Schedule {rev/min}
+    ,                        !- Maximum RPM Schedule {rev/min}
+    ,                        !- Zone Name
+    ,                        !- Skin Loss Radiative Fraction
+    PowerPerFlowPerPressure, !- Design Power Sizing Method
+    1.0,                     !- Design Electric Power per Unit Flow Rate {W/(m3/s)}
+    1.0,                     !- Design Shaft Power per Unit Flow Rate per Unit Head {W/((m3/s)-Pa)}
+    ,                        !- Design Minimum Flow Rate Fraction
+    General;                 !- End-Use Subcategory
+<% end %>
+
+PlantLoop,
+    <%= water_heater_name %> Central DHW Loop,                   !- Name
+    Water,                                                       !- Fluid Type
+    ,                                                            !- User Defined Fluid Type
+    <%= water_heater_name %> DHW Loop Operation,                 !- Plant Equipment Operation Scheme Name
+    <%= water_heater_name %> DHW Supply Outlet Node,             !- Loop Temperature Setpoint Node Name
+    100,                                                         !- Maximum Loop Temperature {C}
+    0,                                                           !- Minimum Loop Temperature {C}
+    autosize,                                                    !- Maximum Loop Flow Rate {m3/s}
+    0,                                     !- Minimum Loop Flow Rate {m3/s}
+    autocalculate,                                               !- Plant Loop Volume {m3}
+    <%= water_heater_name %> DHW Supply Inlet Node,              !- Plant Side Inlet Node Name
+    <%= water_heater_name %> DHW Supply Outlet Node,             !- Plant Side Outlet Node Name
+    <%= water_heater_name %> DHW Supply Side Branches,           !- Plant Side Branch List Name
+    <%= water_heater_name %> DHW Supply Side Connectors,         !- Plant Side Connector List Name
+    <%= water_heater_name %> DHW Demand Inlet Node,              !- Demand Side Inlet Node Name
+    <%= water_heater_name %> DHW Demand Outlet Node,             !- Demand Side Outlet Node Name
+    <%= water_heater_name %> DHW Demand Side Branches,           !- Demand Side Branch List Name
+    <%= water_heater_name %> DHW Demand Side Connectors,         !- Demand Side Connector List Name
+    Optimal,                                             !- Load Distribution Scheme
+    ,                                                            !- Availability Manager List Name
+    SingleSetpoint,                                             !- Plant Loop Demand Calculation Scheme
+    None,                                                        !- Common Pipe Simulation: all pumps demand-side when recirc enabled
+    None;                                                        !- Pressure Simulation Type
+
+PlantEquipmentList,
+    <%= water_heater_name %> DHW Heating Plant,                  !- Name
+<% if dhw_heating_source == "boiler" %>
+    Boiler:HotWater,                                             !- Equipment 1 Object Type
+    <%= water_heater_name %> DHW Boiler;                         !- Equipment 1 Name
+<% else %>
+    WaterHeater:Stratified,                                      !- Equipment 1 Object Type
+    <%= water_heater_name %>;                                    !- Equipment 1 Name
+<% end %>
+
+PlantEquipmentOperation:HeatingLoad,
+    <%= water_heater_name %> Central Heating Only,                  !- Name
+    0,                                                           !- Load Range 1 Lower Limit {W}
+    1000000000000000,                                            !- Load Range 1 Upper Limit {W}
+    <%= water_heater_name %> DHW Heating Plant;                  !- Range 1 Equipment List Name
+
+PlantEquipmentOperationSchemes,
+    <%= water_heater_name %> DHW Loop Operation,                 !- Name
+    PlantEquipmentOperation:HeatingLoad,                          !- Control Scheme 1 Object Type
+    <%= water_heater_name %> Central Heating Only,                  !- Control Scheme 1 Name
+    always_avail;                                                !- Control Scheme 1 Schedule Name
+
+SetpointManager:Scheduled,
+    <%= water_heater_name %> DHW Loop Setpoint Manager,          !- Name
+    Temperature,                                                 !- Control Variable
+    <%= water_heater_name %>_Loop_setpt,                         !- Schedule Name
+    <%= water_heater_name %> DHW Supply Outlet Node;             !- Setpoint Node or NodeList Name
+
+Sizing:Plant,
+    <%= water_heater_name %> Central DHW Loop,                   !- Plant or Condenser Loop Name
+    Heating,                                                     !- Loop Type
+    <%= loop_sept %>,                                            !- Design Loop Exit Temperature {C}
+    5.55555555555556;                                            !- Loop Design Temperature Difference {deltaC}
+
+<% else %>
+
 
 <%
 if climate_zone_num
@@ -1015,3 +1747,4 @@ Sizing:Plant,
     Heating,                 !- Loop Type
     <%= loop_sept %>,        !- Design Loop Exit Temperature {C}
     5.55555555555556;        !- Loop Design Temperature Difference {deltaC}
+<% end %>

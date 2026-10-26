@@ -1,0 +1,6 @@
+skip,case_name,:combi,:central_dhw,:use_recirc,:water_heater_type,:thermal_eff,:sch
+,RG-WtrHt-Central-LrgStrg-Gas-0p80Et-Recirc,FALSE,TRUE,TRUE,gas,0.8,MFm_minute_dhw_demand_fraction.csv
+,RG-WtrHt-Central-LrgStrg-Gas-0p84Et-Recirc,FALSE,TRUE,TRUE,gas,0.84,MFm_minute_dhw_demand_fraction.csv
+,RG-WtrHt-Central-LrgStrg-Gas-0p90Et-Recirc,FALSE,TRUE,TRUE,gas,0.9,MFm_minute_dhw_demand_fraction.csv
+,RG-WtrHt-Central-LrgStrg-Gas-0p95Et-Recirc,FALSE,TRUE,TRUE,gas,0.95,MFm_minute_dhw_demand_fraction.csv
+,RG-WtrHt-Central-LrgStrg-Gas-0p96Et-Recirc,FALSE,TRUE,TRUE,gas,0.96,MFm_minute_dhw_demand_fraction.csv
