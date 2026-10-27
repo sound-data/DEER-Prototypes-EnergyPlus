@@ -1,0 +1,3 @@
+skip,case_name,:heat_type,:combi,:boiler_eff,:boiler_eff_curve,:curve_evaluation_variable,:design_hw_temp,:min_hw_temp,:sub_heat_type,:cooling_coil_cop,:heating_coil_cop,:supplyfan_total_eff,:motor_eff,:burner_eff,:ductless,:use_dummy_return_plenum,:vfd_curve_name,:coil_type,:hvac_type,:dhw_stpt_sch,:water_heater_type,:tank_size,:uef,:tank_height,:loop_sept,:tank_sept
+,RG-NCGF_equip-GasFurnace-AFUE78,GF,,,,,,,,,,0.12,0.24,0.8,,,,,,,,,,,,
+,RG-NCGF_equip-GasFurnace-AFUE80,GF,,,,,,,,,,0.12,0.24,0.82,,,,,,,,,,,,
