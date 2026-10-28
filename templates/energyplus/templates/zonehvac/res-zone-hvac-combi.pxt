@@ -15,7 +15,7 @@ parameter "hvac_sch", :name => "HVAC Schedule", :description => "Operation sched
 parameter "cool_type", :default => "DX" #DX, NC
 parameter "cooling_coil_cop", :default=>3.28
 parameter "cooling_coil_cop2", :default=>3.28
-parameter "fan_power_per_flow", :default=>773.3 #rated fan power for cooling coil calculations
+parameter "fan_power_per_flow", :default=> nil #rated fan power for cooling coil calculations. Updated by TRC 10-26-2026. Set to EneryPlus default.
 # Heating Eff
 parameter "heat_type", :default => "GF" #DX, GF, EH, HW, ST
 parameter "burner_eff", :default=>0.78
