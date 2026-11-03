@@ -2,6 +2,4 @@ skip,case_name,:hvac_type,:cool_type,:heat_type,:cooling_coil_cop2,:cooling_coil
 ,RE-dxAC_equip-RoomAC-Std,unitary_system,DX,EH,4.44,4.51,6153,,,3480.062874,,0,multispeed,TRUE
 ,RE-dxAC_equip-RoomAC-Pre,unitary_system,DX,EH,,3.46,6153,,,3480.062874,,0,singlespeed,TRUE
 ,RE-dxAC_equip-RoomAC-ES,unitary_system,DX,EH,4.6,4.67,6153,,,3480.062874,,0,multispeed,TRUE
-,RE-dxHP_equip-RoomHP-Std,unitary_system,DX,DX,4.44,4.51,6153,3.38,3.33,5648.454,0,0,multispeed,TRUE
-,RE-dxHP_equip-RoomHP-Pre,unitary_system,DX,DX,,3.46,6153,3.33,,5648.454,0,0,singlespeed,TRUE
 ,RE-dxHP_equip-RoomHP-ES,unitary_system,DX,DX,4.6,4.67,6153,3.38,3.33,5648.454,0,0,multispeed,TRUE
