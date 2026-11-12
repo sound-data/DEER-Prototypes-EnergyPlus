@@ -62,6 +62,9 @@ group "space_loads" do # hardcode building-level defaults
     parameter "dhw_temp", :default => 135.0['F']
     parameter "dhw_target", :default => 135.0['F']
     parameter "dhw_water_heater_fuel", :default => "Electric"
+	#TRC - added door infiltration parameters		
+    parameter "door_zone", :default=>" "
+    parameter "infil_mod", :default=>0
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "corridor", :prefix => "corridor_" do
