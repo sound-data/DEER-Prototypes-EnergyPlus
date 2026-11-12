@@ -30,6 +30,10 @@ parameter "oa_frac_sch", :name => "Outdoor Air Schedule", :description => "Outdo
   :default => "NONE"
 parameter "oa_frac_max_sch", :name => "Outdoor Air Schedule", :description => "Outdoor air schedule controls when ventilation air is supplied",
   :default => "NONE"
+parameter "tstat_cool_temp1", :name => "Thermostat Cooling Setpoint Temperature 1", :description => "Thermostat cooling temperature setpoint 1",
+  :default => 75['F'], :domain => Quantity
+parameter "tstat_cool_temp2", :name => "Thermostat Cooling Setpoint Temperature 2", :description => "Thermostat cooling temperature setpoint 2",
+  :default => 85['F'], :domain => Quantity  
 
 parameter "zone_max_oa_frac", :default => 1
 parameter "oa_min_flow", :default => Autosize  # Minimum design outdoor air flow rate {m3/s}
@@ -73,6 +77,7 @@ parameter "rac_oa_max", :default => 95['F']
 parameter "rac_deadband", :default => 5['F']
 parameter "rac_pump_eff", :default => 0.9
 parameter "rac_pump_head", :default => 15['ft H2O']
+parameter "min_limit_type", :default => "FixedMinimum"
 
 parameter "chiller_cond_hr", :default => false # Creates HR coil to provide heat to AHU system from chiller heat recovery loop
 parameter "chiller_hr_flow", :default => Autosize # Max water flow rate in chiller heat recovery HX
@@ -1044,7 +1049,7 @@ Controller:OutdoorAir,
   <%= oa_econ_min_temp %>,  !- Economizer Minimum Limit Dry-Bulb Temperature {C}
   <%= oa_econ_lockout %>,  !- Lockout Type
 <% end %>
-  FixedMinimum,            !- Minimum Limit Type
+  <%= min_limit_type %>,            !- Minimum Limit Type
   <%= ahu_name %> Outdoor Air Schedule,  !- Minimum Outdoor Air Schedule Name
 <% if oa_frac_sch != "NONE" %>
   <%= ahu_name %> Outdoor Air Fraction Schedule,                        !- Minimum Fraction of Outdoor Air Schedule Name
