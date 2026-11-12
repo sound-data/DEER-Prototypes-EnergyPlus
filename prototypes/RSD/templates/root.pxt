@@ -161,6 +161,7 @@ group "space_hvac" do
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0.7['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
+    parameter "cool_coil_type", :default => "DX-AIR"
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "lobby", :prefix => "lobby_" do
@@ -244,6 +245,11 @@ group "hvac_zone", :prefix => "main_" do
   parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "NONE"
   parameter "atu_reheat_control", :default => nil
+  parameter "fan_speed_3_power_frac", :default => 1
+  parameter "atu_leak_supply_frac", :default => 0
+  parameter "min_limit_type", :default => "FixedMinimum"
+  parameter "tstat_cool_temp1", :default => 75['F']
+  parameter "tstat_cool_temp2", :default => 85['F']
 end
 
 group "hvac_system", :prefix => "main_" do
@@ -291,6 +297,10 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_speed_2_power_frac", :default => 0.418596373
   parameter "fan_speed_3_flow_frac", :default => 1
   parameter "fan_speed_3_power_frac", :default => 1
+  parameter "atu_leak_supply_frac", :default => 0
+  parameter "min_limit_type", :default => "FixedMinimum"
+  parameter "tstat_cool_temp1", :default => 75['F']
+  parameter "tstat_cool_temp2", :default => 85['F']												 
 end
 
 group "alt_hvac_zone", :prefix => "alt_" do
@@ -300,6 +310,10 @@ group "alt_hvac_zone", :prefix => "alt_" do
   parameter "atu_flow_min_frac", :default => Autosize
   parameter "atu_reheat_coil_type", :default => "WATER"
   parameter "atu_reheat_control", :default => "DUAL-MAX-LIMIT"
+  parameter "atu_leak_supply_frac", :default => 0
+  parameter "min_limit_type", :default => "FixedMinimum"
+  parameter "tstat_cool_temp1", :default => 75['F']
+  parameter "tstat_cool_temp2", :default => 85['F']
 end
 
 group "alt_hvac_system", :prefix => "alt_" do
@@ -333,6 +347,14 @@ group "alt_hvac_system", :prefix => "alt_" do
   parameter "hum_type", :default => "NONE"
   parameter "hum_cap", :default => nil
   parameter "return_plenum", :default => false
+  parameter "atu_leak_supply_frac", :default => 0
+  parameter "min_limit_type", :default => "FixedMinimum"
+  parameter "tstat_cool_temp1", :default => 75['F']
+  parameter "tstat_cool_temp2", :default => 85['F']
+  parameter "cool_flow_min_frac", :default => nil
+  parameter "unitary_no_load_flow_method", :default => "SupplyAirFlowRate"
+  parameter "heat_coil_eff", :default => 0.80
+  parameter "heat_flow_frac", :default => 0.5
 end
 
 import "system/ahu.pxt", :group => "doas", :prefix => "doas_" do

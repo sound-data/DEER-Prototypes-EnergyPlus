@@ -53,6 +53,8 @@ parameter "oa_area", :name => "Outside Air Flow per Area", :description => "Outs
   :default => 0['CFM/ft2'], :domain => Quantity
 parameter "oa_zone", :name => "Outside Air Flow per Zone", :description => "Outside air flow ventilation rate per zone",
   :default => 0['CFM'], :domain => Quantity
+parameter "oa_frac_sch", :name => "Outdoor Air Schedule", :description => "Outdoor air schedule controls when ventilation air is supplied",
+  :default => "NONE"
 
 # need to set reheat SAT separately; or just always set as zone heating sp + 15  (see ASHRAE)
 
@@ -97,6 +99,7 @@ parameter "exh_fan_frac_sch",  # NOTE: This is not required - set to exh_fan_sch
 parameter "cooling_min_flow_area", :default=>nil
 
 parameter "vent_eff", :default => 0.0
+parameter "min_limit_type", :default => "FixedMinimum"
 
 rule "oa_type_none", :parameters => {:oa_type => "NONE"} do
   force :oa_type => "NONE" # to prevent subsequent rules from overridding oa_type
@@ -976,7 +979,10 @@ elsif (hvac_mode == "SZ")
       :oa_energy_recovery_power,
 
       :return_plenum,
-      :return_plenum_zone_name)
+      :return_plenum_zone_name,
+	  :min_limit_type,
+	  :tstat_cool_temp1,
+	  :tstat_cool_temp2)
 end
 %>
 <% if (hvac_mode == "ID") %>

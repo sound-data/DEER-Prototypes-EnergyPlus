@@ -107,6 +107,8 @@ group "space_loads" do # hardcode building-level defaults
     parameter "occ_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1.0,\nFor: WinterDesignDay,\nUntil: 24:00,0.0,\nFor: Weekdays,\nUntil: 06:00,0.0,\nUntil: 07:00,0.10,\nUntil: 08:00,0.20,\nUntil: 12:00,0.95,\nUntil: 13:00,0.50,\nUntil: 17:00,0.95,\nUntil: 18:00,0.30,\nUntil: 22:00,0.10,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 06:00,0.0,\nUntil: 08:00,0.10,\nUntil: 12:00,0.30,\nUntil: 17:00,0.10,\nUntil: 19:00,0.05,\nUntil: 24:00,0.0,\nFor: AllOtherDays,\nUntil: 06:00,0.0,\nUntil: 18:00,0.05,\nUntil: 24:00,0.0;"
     parameter "gas_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1.0,\nFor: WinterDesignDay,\nUntil: 24:00,0.0,\nFor: Weekdays,\nUntil: 07:00,0.0,\nUntil: 10:00,0.5,\nUntil: 14:00,0.9,\nUntil: 18:00,0.75,\nUntil: 24:00,0,\nFor: Saturday,\nUntil: 08:00,0.0,\nUntil: 10:00,0.5,\nUntil: 14:00,0.9,\nUntil: 17:00,0.75,\nUntil: 24:00,0,\nFor: AllOtherDays,\nUntil: 24:00,0;"
     parameter "dhw_sch", :default => "Through: 12/31,\nFor: SummerDesignDay,\nUntil: 24:00,1.0,\nFor: WinterDesignDay,\nUntil: 24:00,0.0,\nFor: Weekdays,\nUntil: 05:00,0.05,\nUntil: 06:00,0.08,\nUntil: 07:00,0.07,\nUntil: 08:00,0.19,\nUntil: 09:00,0.35,\nUntil: 10:00,0.38,\nUntil: 11:00,0.39,\nUntil: 12:00,0.47,\nUntil: 13:00,0.57,\nUntil: 14:00,0.54,\nUntil: 15:00,0.34,\nUntil: 16:00,0.33,\nUntil: 17:00,0.44,\nUntil: 18:00,0.26,\nUntil: 19:00,0.21,\nUntil: 20:00,0.15,\nUntil: 21:00,0.17,\nUntil: 22:00,0.08,\nUntil: 24:00,0.05,\nFor: Saturday,\nUntil: 05:00,0.05,\nUntil: 06:00,0.08,\nUntil: 07:00,0.07,\nUntil: 08:00,0.11,\nUntil: 09:00,0.15,\nUntil: 10:00,0.21,\nUntil: 11:00,0.19,\nUntil: 12:00,0.23,\nUntil: 13:00,0.20,\nUntil: 14:00,0.19,\nUntil: 15:00,0.15,\nUntil: 16:00,0.12,\nUntil: 17:00,0.14,\nUntil: 21:00,0.07,\nUntil: 22:00,0.09,\nUntil: 24:00,0.05,\nFor: AllOtherDays,\nUntil: 05:00,0.04,\nUntil: 06:00,0.07,\nUntil: 11:00,0.04,\nUntil: 13:00,0.06,\nUntil: 14:00,0.09,\nUntil: 15:00,0.06,\nUntil: 21:00,0.04,\nUntil: 22:00,0.07,\nUntil: 24:00,0.04;"
+	parameter "atu_leak_supply_frac", :default => 0
+	parameter "min_limit_type", :default => "FixedMinimum"
   end
 
   import "zoneloads/zonetemplate.pxt", :group => "plenum_schs", :prefix => "plenum_" do
@@ -137,6 +139,11 @@ group "space_hvac" do
     parameter "oa_area", :default => 0.15['CFM/ft2']
     parameter "exh_fan_flow_area", :default => 0['CFM/ft2']
     parameter "exh_fan_coupling", :default => FALSE
+	parameter "atu_leak_supply_frac", :default => 0
+	parameter "min_limit_type", :default => "FixedMinimum"
+	parameter "oa_frac_sch", :default => "NONE"
+	parameter "tstat_cool_temp1", :default => 75['F']
+	parameter "tstat_cool_temp2", :default => 85['F']
   end
 
   import "zonehvac/hvac-zone.pxt", :group => "plenum", :prefix => "plenum_" do
@@ -207,6 +214,11 @@ group "hvac_zone", :prefix => "main_" do
   parameter "cool_flow_min_frac", :default => nil
   parameter "atu_reheat_coil_type", :default => "NONE"
   parameter "atu_reheat_control", :default => nil
+  parameter "oa_frac_sch", :default => "NONE"
+  parameter "atu_leak_supply_frac", :default => 0
+  parameter "min_limit_type", :default => "FixedMinimum"
+  parameter "tstat_cool_temp1", :default => 75['F']
+  parameter "tstat_cool_temp2", :default => 85['F']	
 end
 
 group "hvac_system", :prefix => "main_" do
@@ -254,6 +266,10 @@ group "hvac_system", :prefix => "main_" do
   parameter "fan_speed_2_power_frac", :default => 0.418596373
   parameter "fan_speed_3_flow_frac", :default => 1
   parameter "fan_speed_3_power_frac", :default => 1
+  parameter "atu_leak_supply_frac", :default => 0
+  parameter "min_limit_type", :default => "FixedMinimum"
+  parameter "tstat_cool_temp1", :default => 75['F']
+  parameter "tstat_cool_temp2", :default => 85['F']
 end
 
 group "alt_hvac_zone", :prefix => "alt_" do
