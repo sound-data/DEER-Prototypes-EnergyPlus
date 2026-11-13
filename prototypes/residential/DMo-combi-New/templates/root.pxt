@@ -7587,58 +7587,6 @@ Curve:Biquadratic,
 
 <% if coil_type == "singlespeed" %>
 
-!
-!  ResidentialACsAndHPsPerfCurves.idf
-!  This dataset includes performance curves for single speed and two speed/stage air conditioners
-!  or furnaces for residential applications. The single speed performance curve are used in EnergyPlus
-!  single speed coils of air conditioners or furnace objects "Coil:Cooling:DX:singlespeed". And the
-!  two speed performance curves can be used in EnergyPlus multi-speed heat pump objects
-!  "Coil:Cooling:DX:MultiSpeed".
-!  This dataset also includes performance curves for single speed and two speed/stage heat pumps for
-!  residential applications. The single speed performance curve are used in EnergyPlus single
-!  speed coils of air-to-air heat pumps objects "Coil:Heating:DX:SingleSpeed" and
-!  "Coil:Cooling:DX:SingleSpeed".  The two speed performance curves can be used in EnergyPlus
-!  multi-speed DX coils of air-to-air heat pump objects: "Coil:Heating:DX:MultiSpeed" and
-!  "Coil:Cooling:DX:MultiSpeed".
-!
-!  These coefficients were taken directly from the report below. For further details users may need
-!  to refer this report.
-!  D. Cutler, J. Winkler, N. Kruis, and C. Christensen
-!  National Renewable Energy Laboratory
-!  M. Brandemuehl
-!  University of Colorado
-!
-!  Improved Modeling of Residential Air Conditioners and Heat Pumps for Energy Calculations
-!
-!  Technical Report
-!  NREL/TP-5500-56354
-!  January 2013
-!
-!
-!  Air Conditioner Performance Curves were taken from: Tables 9, 10, 16 and 17:
-!
-! *******************************************************************************************
-! *******************************************************************************************
-!               Beginning of Single Speed Air Conditioners Performance Curves
-! *******************************************************************************************
-! The objects and syntax in this dataset comply with EnergyPlus, Version 8.4.0 and above, unless otherwise noted.
-! The coil objects in this idf are entered generically with many required fields purposely removed.  These objects are left in the file as comments to show how to use the curves defined in this file, which remain uncommented to allow including the curves in a particular idf, by macro, for example.
-!  Coil:Cooling:DX:SingleSpeed,
-!   ACDXCoil Name,           !- Name
-!   ,                        !- Availability Schedule Name
-!   ,                        !- Rated Total Cooling Capacity {W}
-!   ,                        !- Rated Sensible Heat Ratio
-!   ,                        !- Rated COP {W/W}
-!   ,                        !- Rated Air Flow Rate {m3/s}
-!   ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
-!   ,                        !- Air Inlet Node Name
-!   ,                        !- Air Outlet Node Name
-!   ACCoolingCAPFTemp,       !- Total Cooling Capacity Function of Temperature Curve Name
-!   ACCoolingCAPFFF,         !- Total Cooling Capacity Function of Flow Fraction Curve Name
-!   ACCoolingEIRFTemp,       !- Energy Input Ratio Function of Temperature Curve Name
-!   ACCoolingEIRFFF,         !- Energy Input Ratio Function of Flow Fraction Curve Name
-!   ACCoolingPLFFPLR;        !- Part Load Fraction Correlation Curve Name
-
   Curve:Biquadratic,
     ACCoolingCAPFTemp,       !- Name
     1.5509,                  !- Coefficient1 Constant
@@ -7709,27 +7657,7 @@ Curve:Biquadratic,
     0.0,                     !- Coefficient3 x**2
     0.0,                     !- Minimum Value of x
     1.0;                     !- Maximum Value of x
-	
-! *******************************************************************************************
-! *******************************************************************************************
-!               Beginning of Single Speed Heat Pump
-! *******************************************************************************************
-! Coil:Cooling:DX:SingleSpeed,
-!   HeatPump DX Cooling Coil,!- Name
-!   ,                        !- Availability Schedule Name
-!   ,                        !- Rated Total Cooling Capacity {W}
-!   ,                        !- Rated Sensible Heat Ratio
-!   ,                        !- Rated COP {W/W}
-!   ,                        !- Rated Air Flow Rate {m3/s}
-!   ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
-!   ,                        !- Air Inlet Node Name
-!   ,                        !- Air Outlet Node Name
-!   HPCoolingCAPFTemp,       !- Total Cooling Capacity Function of Temperature Curve Name
-!   HPCoolingCAPFFF,         !- Total Cooling Capacity Function of Flow Fraction Curve Name
-!   HPCoolingEIRFTemp,       !- Energy Input Ratio Function of Temperature Curve Name
-!   HPCoolingEIRFFF,         !- Energy Input Ratio Function of Flow Fraction Curve Name
-!   HPCOOLPLFFPLR;           !- Part Load Fraction Correlation Curve Name
-! ************ Single Speed Cooling **********
+
 
   Curve:Biquadratic,
     HPCoolingCAPFTemp,       !- Name
@@ -7802,31 +7730,6 @@ Curve:Biquadratic,
     0.0,                     !- Minimum Value of x
     1.0;                     !- Maximum Value of x
 
-! ************ Single Speed Heating **********
-!  Coil:Heating:DX:SingleSpeed,
-!   HeatPump DX Heating Coil,!- Name
-!   ,                        !- Availability Schedule Name
-!   ,                        !- Rated Total Heating Capacity {W}
-!   2.75,                    !- Rated COP {W/W}
-!   ,                        !- Rated Air Flow Rate {m3/s}
-!   ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
-!   ,                        !- Air Inlet Node Name
-!   ,                        !- Air Outlet Node Name
-!   HPHeatingCAPFTemp,       !- Total Heating Capacity Function of Temperature Curve Name
-!   HPHeatingCAPFFF,         !- Total Heating Capacity Function of Flow Fraction Curve Name
-!   HPHeatingEIRFTemp,       !- Energy Input Ratio Function of Temperature Curve Name
-!   HPHeatingCAPFFF,         !- Energy Input Ratio Function of Flow Fraction Curve Name
-!   HPHeatPLFFPLR,           !- Part Load Fraction Correlation Curve Name
-!   ,                        !- Defrost Energy Input Ratio Function of Temperature Curve Name
-!   ,                        !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
-!   ,                        !- Outdoor Dry-Bulb Temperature to Turn On Compressor {C}
-!   ,                        !- Maximum Outdoor Dry-Bulb Temperature for Defrost Operation {C}
-!   ,                        !- Crankcase Heater Capacity {W}
-!   ,                        !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
-!   ,                        !- Defrost Strategy
-!   ,                        !- Defrost Control
-!   ,                        !- Defrost Time Period Fraction
-!   ;                        !- Resistive Defrost Heater Capacity {W}
 
   Curve:Biquadratic,
     HPHeatingCAPFTemp,       !- Name
@@ -7903,77 +7806,10 @@ Curve:Biquadratic,
 !               End of Single Speed Heat Pump
 ! *******************************************************************************************
 ! *******************************************************************************************	
-	
-	
+		
 	
 <% elsif coil_type == "multispeed"%>	
 	
-	
-
-! *******************************************************************************************
-! *******************************************************************************************
-!               Beginning of Two Speed/Stage Air Conditioners Performance Curves
-! *******************************************************************************************
-!  The multi-speed heat pump has the option to use gas or electric heating coil. This means
-!  the multi-speed heat pump model can be used as multi-speed AC using gas or electric coil
-!  as the main heating coil.
-!  Coil:Cooling:DX:MultiSpeed,
-!    2Stage AC DXCoil Cooling,!- Name
-!    ,                        !- Availability Schedule Name
-!    ,                        !- Air Inlet Node Name
-!    ,                        !- Air Outlet Node Name
-!    ,                        !- Condenser Air Inlet Node Name
-!    AirCooled,               !- Condenser Type
-!    ,                        !- Supply Water Storage Tank Name
-!    ,                        !- Condensate Collection Water Storage Tank Name
-!    ,                        !- Apply Part Load Fraction to Speeds Greater than 1
-!    ,                        !- Apply Latent Degradation to Speeds Greater than 1
-!    ,                        !- Crankcase Heater Capacity {W}
-!    ,                        !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
-!    ,                        !- Basin Heater Capacity {W/K}
-!    ,                        !- Basin Heater Setpoint Temperature {C}
-!    ,                        !- Basin Heater Operating Schedule Name
-!    Electricity,             !- Fuel Type
-!    ,                        !- Number of Speeds
-!    ,                        !- Speed 1 Rated Total Cooling Capacity {W}
-!    ,                        !- Speed 1 Rated Sensible Heat Ratio
-!    ,                        !- Speed 1 Rated COP {W/W}
-!    ,                        !- Speed 1 Rated Air Flow Rate {m3/s}
-!    ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
-!    ACLowStageCoolingCAPFTemp, !- Speed 1 Total Cooling Capacity Function of Temperature Curve Name
-!    ACLowStageCoolingCAPFFF,   !- Speed 1 Total Cooling Capacity Function of Flow Fraction Curve Name
-!    ACLowStageCoolingEIRFTemp, !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
-!    ACLowStageCoolingEIRFFF,   !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
-!    AC2StageCoolingPLFFPLR,     !- Speed 1 Part Load Fraction Correlation Curve Name
-!    ,                        !- Speed 1 Nominal Time for Condensate Removal to Begin {s}
-!    ,                        !- Speed 1 Ratio of Initial Moisture Evaporation Rate and Steady State Latent Capacity {dimensionless}
-!    ,                        !- Speed 1 Maximum Cycling Rate {cycles/hr}
-!    ,                        !- Speed 1 Latent Capacity Time Constant {s}
-!    ,                        !- Speed 1 Rated Waste Heat Fraction of Power Input {dimensionless}
-!    ,                        !- Speed 1 Waste Heat Function of Temperature Curve Name
-!    ,                        !- Speed 1 Evaporative Condenser Effectiveness {dimensionless}
-!    ,                        !- Speed 1 Evaporative Condenser Air Flow Rate {m3/s}
-!    ,                        !- Speed 1 Rated Evaporative Condenser Pump Power Consumption {W}
-!    ,                        !- Speed 2 Rated Total Cooling Capacity {W}
-!    ,                        !- Speed 2 Rated Sensible Heat Ratio
-!    ,                        !- Speed 2 Rated COP {W/W}
-!    ,                        !- Speed 2 Rated Air Flow Rate {m3/s}
-!    ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
-!    ACHighStageCoolingCAPFTemp, !- Speed 2 Total Cooling Capacity Function of Temperature Curve Name
-!    ACHighStageCoolingCAPFFF,   !- Speed 2 Total Cooling Capacity Function of Flow Fraction Curve Name
-!    ACHighStageCoolingEIRFTemp, !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
-!    ACHighStageCoolingEIRFFF,   !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
-!    AC2StageCoolingPLFFPLR,    !- Speed 2 Part Load Fraction Correlation Curve Name
-!    ,                        !- Speed 2 Nominal Time for Condensate Removal to Begin {s}
-!    ,                        !- Speed 2 Ratio of Initial Moisture Evaporation Rate and steady state Latent Capacity {dimensionless}
-!    ,                        !- Speed 2 Maximum Cycling Rate {cycles/hr}
-!    ,                        !- Speed 2 Latent Capacity Time Constant {s}
-!    ,                        !- Speed 2 Rated Waste Heat Fraction of Power Input {dimensionless}
-!    ,                        !- Speed 2 Waste Heat Function of Temperature Curve Name
-!    ,                        !- Speed 2 Evaporative Condenser Effectiveness {dimensionless}
-!    ,                        !- Speed 2 Evaporative Condenser Air Flow Rate {m3/s}
-!    ;                        !- Speed 2 Rated Evaporative Condenser Pump Power Consumption {W}
-! ************ Low Speed Cooling **********
 
   Curve:Biquadratic,
     ACLowStageCoolingCAPFTemp,  !- Name
@@ -8112,92 +7948,12 @@ Curve:Biquadratic,
 !               End of Two Speed/Stage Air Conditioners Performance Curves
 ! *******************************************************************************************
 ! *******************************************************************************************
-!
-!
-!  This dataset includes performance curves for single speed and two speed/stage heat pumps for
-!  residential applications. The single speed performance curve are used in EnergyPlus single
-!  speed coils of air-to-air heat pumps objects "Coil:Heating:DX:singlespeed" and
-!  "Coil:Cooling:DX:singlespeed".  The two speed performance curves can be used in EnergyPlus
-!  multi-speed DX coils of air-to-air heat pump objects: "Coil:Heating:DX:MultiSpeed" and
-!  "Coil:Cooling:DX:MultiSpeed".  These coefficients were taken directly from the report below.
-!  For further details users may need to refer this report.
-!
-!  D. Cutler, J. Winkler, N. Kruis, and C. Christensen
-!  National Renewable Energy Laboratory
-!  M. Brandemuehl
-!  University of Colorado
-!
-!  Improved Modeling of Residential Air Conditioners and Heat Pumps for Energy Calculations
-!
-!  Technical Report
-!  NREL/TP-5500-56354
-!  January 2013
-!
-!  Heat Pump Performance Curves were taken from: Tables 14, 15, 18 and 19:
-!
+
 
 ! *******************************************************************************************
 ! *******************************************************************************************
 !               Beginning of Two Stage/Speed Heat Pump
 ! *******************************************************************************************
-  ! Two Stage Heat Pump Cooling Coil Object
-!  Coil:Cooling:DX:MultiSpeed,
-!    2Stage HP DXCoil Cooling,!- Name
-!    ,                        !- Availability Schedule Name
-!    ,                        !- Air Inlet Node Name
-!    ,                        !- Air Outlet Node Name
-!    ,                        !- Condenser Air Inlet Node Name
-!    AirCooled,               !- Condenser Type
-!    ,                        !- Supply Water Storage Tank Name
-!    ,                        !- Condensate Collection Water Storage Tank Name
-!    ,                        !- Apply Part Load Fraction to Speeds Greater than 1
-!    ,                        !- Apply Latent Degradation to Speeds Greater than 1
-!    ,                        !- Crankcase Heater Capacity {W}
-!    ,                        !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
-!    ,                        !- Basin Heater Capacity {W/K}
-!    ,                        !- Basin Heater Setpoint Temperature {C}
-!    ,                        !- Basin Heater Operating Schedule Name
-!    Electricity,             !- Fuel Type
-!    ,                        !- Number of Speeds
-!    ,                        !- Speed 1 Rated Total Cooling Capacity {W}
-!    ,                        !- Speed 1 Rated Sensible Heat Ratio
-!    ,                        !- Speed 1 Rated COP {W/W}
-!    ,                        !- Speed 1 Rated Air Flow Rate {m3/s}
-!    ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
-!    HPLowStageCoolingCAPFTemp, !- Speed 1 Total Cooling Capacity Function of Temperature Curve Name
-!    HPLowStageCoolingCAPFFF,   !- Speed 1 Total Cooling Capacity Function of Flow Fraction Curve Name
-!    HPLowStageCoolingEIRFTemp, !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
-!    HPLowStageCoolingEIRFFF,   !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
-!    HP2StageCoolingPLFFPLR,     !- Speed 1 Part Load Fraction Correlation Curve Name
-!    ,                        !- Speed 1 Nominal Time for Condensate Removal to Begin {s}
-!    ,                        !- Speed 1 Ratio of Initial Moisture Evaporation Rate and Steady State Latent Capacity {dimensionless}
-!    ,                        !- Speed 1 Maximum Cycling Rate {cycles/hr}
-!    ,                        !- Speed 1 Latent Capacity Time Constant {s}
-!    ,                        !- Speed 1 Rated Waste Heat Fraction of Power Input {dimensionless}
-!    ,                        !- Speed 1 Waste Heat Function of Temperature Curve Name
-!    ,                        !- Speed 1 Evaporative Condenser Effectiveness {dimensionless}
-!    ,                        !- Speed 1 Evaporative Condenser Air Flow Rate {m3/s}
-!    ,                        !- Speed 1 Rated Evaporative Condenser Pump Power Consumption {W}
-!    ,                        !- Speed 2 Rated Total Cooling Capacity {W}
-!    ,                        !- Speed 2 Rated Sensible Heat Ratio
-!    ,                        !- Speed 2 Rated COP {W/W}
-!    ,                        !- Speed 2 Rated Air Flow Rate {m3/s}
-!    ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
-!    HPHighStageCoolingCAPFTemp, !- Speed 2 Total Cooling Capacity Function of Temperature Curve Name
-!    HPHighStageCoolingCAPFFF,   !- Speed 2 Total Cooling Capacity Function of Flow Fraction Curve Name
-!    HPHighStageCoolingEIRFTemp, !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
-!    HPHighStageCoolingEIRFFF,   !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
-!    HP2StageCoolingPLFFPLR,    !- Speed 2 Part Load Fraction Correlation Curve Name
-!    ,                        !- Speed 2 Nominal Time for Condensate Removal to Begin {s}
-!    ,                        !- Speed 2 Ratio of Initial Moisture Evaporation Rate and steady state Latent Capacity {dimensionless}
-!    ,                        !- Speed 2 Maximum Cycling Rate {cycles/hr}
-!    ,                        !- Speed 2 Latent Capacity Time Constant {s}
-!    ,                        !- Speed 2 Rated Waste Heat Fraction of Power Input {dimensionless}
-!    ,                        !- Speed 2 Waste Heat Function of Temperature Curve Name
-!    ,                        !- Speed 2 Evaporative Condenser Effectiveness {dimensionless}
-!    ,                        !- Speed 2 Evaporative Condenser Air Flow Rate {m3/s}
-!    ;                        !- Speed 2 Rated Evaporative Condenser Pump Power Consumption {W}
-! **************** Low Speed Cooling *********
 
   Curve:Biquadratic,
     HPLowStageCoolingCAPFTemp,  !- Name
@@ -8332,49 +8088,6 @@ Curve:Biquadratic,
     0.0,                     !- Minimum Value of x
     1.0;                     !- Maximum Value of x
 
-! Two Stage Heat Pump Heating Coil Object
-!  Coil:Heating:DX:MultiSpeed,
-!    2Stage HP DXCoil Heating,!- Name
-!    ,                        !- Availability Schedule Name
-!    ,                        !- Air Inlet Node Name
-!    ,                        !- Air Outlet Node Name
-!    ,                        !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
-!    ,                        !- Outdoor Dry-Bulb Temperature to Turn On Compressor {C}
-!    ,                        !- Crankcase Heater Capacity {W}
-!    ,                        !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
-!    ,                        !- Defrost Energy Input Ratio Function of Temperature Curve Name
-!    ,                        !- Maximum Outdoor Dry-Bulb Temperature for Defrost Operation {C}
-!    ,                        !- Defrost Strategy
-!    ,                        !- Defrost Control
-!    ,                        !- Defrost Time Period Fraction
-!    ,                        !- Resistive Defrost Heater Capacity {W}
-!    ,                        !- Apply Part Load Fraction to Speeds Greater than 1
-!    Electricity,             !- Fuel Type
-!    ,                        !- Region number for Calculating HSPF
-!    ,                        !- Number of Speeds
-!    ,                        !- Speed 1 Rated Total Heating Capacity {W}
-!    ,                        !- Speed 1 Rated COP {W/W}
-!    ,                        !- Speed 1 Rated Air Flow Rate {m3/s}
-!    ,                        !- Speed 1 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
-!    HPLowStageHeatingCAPFTemp, !- Speed 1 Total Heating Capacity Function of Temperature Curve Name
-!    HPLowStageHeatingCAPFFF,   !- Speed 1 Total Heating Capacity Function of Flow Fraction Curve Name
-!    HPLowStageHeatingEIRFTemp, !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
-!    HPLowStageHeatingEIRFFF,   !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
-!    HP2StageHeatingPLFFPLR,     !- Speed 1 Part Load Fraction Correlation Curve Name
-!    ,                        !- Speed 1 Rated Waste Heat Fraction of Power Input {dimensionless}
-!    ,                        !- Speed 1 Waste Heat Function of Temperature Curve Name
-!    ,                        !- Speed 2 Rated Total Heating Capacity {W}
-!    ,                        !- Speed 2 Rated COP {W/W}
-!    ,                        !- Speed 2 Rated Air Flow Rate {m3/s}
-!    ,                        !- Speed 2 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
-!    HPHighStageHeatingCAPFTemp, !- Speed 2 Total Heating Capacity Function of Temperature Curve Name
-!    HPHighStageHeatingCAPFFF,   !- Speed 2 Total Heating Capacity Function of Flow Fraction Curve Name
-!    HPHighStageHeatingEIRFTemp, !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
-!    HPHighStageHeatingEIRFFF,   !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
-!    HP2StageHeatingPLFFPLR,    !- Speed 2 Part Load Fraction Correlation Curve Name
-!    ,                        !- Speed 2 Rated Waste Heat Fraction of Power Input {dimensionless}
-!    ;                        !- Speed 2 Waste Heat Function of Temperature Curve Name
-! *************** Low Speed Heating ************
 
   Curve:Biquadratic,
     HPLowStageHeatingCAPFTemp,  !- Name
