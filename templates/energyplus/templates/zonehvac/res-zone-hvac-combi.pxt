@@ -20,7 +20,14 @@ parameter "fan_power_per_flow", :default=>773.3 #rated fan power for cooling coi
 parameter "heat_type", :default => "GF" #DX, GF, EH, HW, ST
 parameter "burner_eff", :default=>0.78
 parameter "heating_coil_cop", :default => 2.26
+parameter "heating_coil_cop2", :default=> nil
 parameter "design_hw_temp", :default => 73.88 ['C']
+# Heating and Cooling capacity
+#TRC - SWAP007-06 Room AC/HP : Adding heating and cooling coil related parameters 
+parameter "heating_coil_cap", :default=> "autosize"
+parameter "cooling_coil_cap", :default=> "autosize"
+parameter "supplmental_heat_cap", :default=> "autosize"
+parameter "nrel_hpac_curves", :default => FALSE
 #hvac type
 parameter "hvac_type", :default=>"" #"", "unitary_system"
 parameter "coil_type", :default =>"" #"", 'multispeed' (multispeed only works with hvac_type=='unitary_system')
@@ -291,11 +298,11 @@ ZoneHVAC:Baseboard:Convective:Water,
         ZoneSum,                 !- System Outdoor Air Method
         1.0,                     !- Zone Maximum Outdoor Air Fraction {dimensionless}
         CoolingDesignCapacity,   !- Cooling Design Capacity Method
-        autosize,                !- Cooling Design Capacity {W}
+        <%= cooling_coil_cap %>,                !- Cooling Design Capacity {W}
         ,                        !- Cooling Design Capacity Per Floor Area {W/m2}
         ,                        !- Fraction of Autosized Cooling Design Capacity
         HeatingDesignCapacity,   !- Heating Design Capacity Method
-        autosize,                !- Heating Design Capacity {W}
+		<%= heating_coil_cap %>,                !- Heating Design Capacity {W}
         ,                        !- Heating Design Capacity Per Floor Area {W/m2}
         ,                        !- Fraction of Autosized Heating Design Capacity
         OnOff;                   !- Central Cooling Capacity Control Method
@@ -476,11 +483,26 @@ ZoneHVAC:Baseboard:Convective:Water,
             <%= cooling_coil_cop %>,    !- Speed 1 Gross Rated Cooling COP
             autosize,                 !- Speed 1 Rated Air Flow Rate
             ,                    !- Speed 1 Rated Evaporator Fan Power Per Volume Flow Rate
-            DEER DX Cool Cap-fT,    !- Speed 1 Total Cooling Capacity Function of Temperature Curve Name
-            DEER DX Cool Cap-FF,    !- Speed 1 Total Cooling Capacity Function of Flow Fraction Curve Name
-            DEER DX Cool EIR-fT,    !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
-            DEER DX Cool EIR-FF,    !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
-            DOE2 DX Coil PLF,    !- Speed 1 Part Load Fraction Correlation Curve Name
+            ! TRC -(SWAP007-06)– Added Performance Curves for Multi-Speed Coils
+			<% if nrel_hpac_curves && heat_type == "DX" %>
+				HPLowStageCoolingCAPFTemp,    !- Speed 1 Total Cooling Capacity Function of Temperature Curve Name
+				HPLowStageCoolingCAPFFF,      !- Speed 1 Total Cooling Capacity Function of Flow Fraction Curve Name
+				HPLowStageCoolingEIRFTemp,    !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
+				HPLowStageCoolingEIRFFF,      !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
+				HP2StageCoolingPLFFPLR,       !- Speed 1 Part Load Fraction Correlation Curve Name
+			<% elsif nrel_hpac_curves && heat_type != "DX" %>
+				ACLowStageCoolingCAPFTemp,    !- Speed 1 Total Cooling Capacity Function of Temperature Curve Name
+			    ACLowStageCoolingCAPFFF,      !- Speed 1 Total Cooling Capacity Function of Flow Fraction Curve Name
+			    ACLowStageCoolingEIRFTemp,    !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
+			    ACLowStageCoolingEIRFFF,      !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
+			    AC2StageCoolingPLFFPLR,       !- Speed 1 Part Load Fraction Correlation Curve Name
+			<% else %>
+				DEER DX Cool Cap-fT,          !- Speed 1 Total Cooling Capacity Function of Temperature Curve Name
+				DEER DX Cool Cap-FF,    	  !- Speed 1 Total Cooling Capacity Function of Flow Fraction Curve Name
+				DEER DX Cool EIR-fT,    	  !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
+				DEER DX Cool EIR-FF,    	  !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
+				DOE2 DX Coil PLF,      		  !- Speed 1 Part Load Fraction Correlation Curve Name
+			<% end %>				
             0,                        !- Speed 1 Nominal Time for Condensate Removal to Begin
             0,                        !- Speed 1 Ratio of Initial Moisture Evaporation Rate and Steady State Latent Capacity
             0,                        !- Speed 1 Maximum Cycling Rate
@@ -494,12 +516,27 @@ ZoneHVAC:Baseboard:Convective:Water,
             autosize,                 !- Speed 2 Gross Rated Sensible Heat Ratio
             <%= cooling_coil_cop2 %>,    !- Speed 2 Gross Rated Cooling COP
             autosize,                 !- Speed 2 Rated Air Flow Rate
-            ,                    !- Speed 2 Rated Evaporator Fan Power Per Volume Flow Rate
-            DEER DX Cool Cap-fT,    !- Speed 2 Total Cooling Capacity Function of Temperature Curve Name
-            DEER DX Cool Cap-FF,    !- Speed 2 Total Cooling Capacity Function of Flow Fraction Curve Name
-            DEER DX Cool EIR-fT,    !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
-            DEER DX Cool EIR-FF,    !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
-            DOE2 DX Coil PLF,    !- Speed 2 Part Load Fraction Correlation Curve Name
+            ,                    !- Speed 2 Rated Evaporator Fan Power Per Volume Flow Rate			
+			! TRC -(SWAP007-06)– Added Performance Curves for Multi-Speed Coils
+			<% if nrel_hpac_curves && heat_type == "DX" %>
+				HPHighStageCoolingCAPFTemp,    !- Speed 2 Total Cooling Capacity Function of Temperature Curve Name
+				HPHighStageCoolingCAPFFF,      !- Speed 2 Total Cooling Capacity Function of Flow Fraction Curve Name
+				HPHighStageCoolingEIRFTemp,    !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
+				HPHighStageCoolingEIRFFF,      !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
+				HP2StageCoolingPLFFPLR,        !- Speed 2 Part Load Fraction Correlation Curve Name
+			<% elsif nrel_hpac_curves && heat_type != "DX" %>
+				ACHighStageCoolingCAPFTemp,    !- Speed 2 Total Cooling Capacity Function of Temperature Curve Name
+			    ACHighStageCoolingCAPFFF,      !- Speed 2 Total Cooling Capacity Function of Flow Fraction Curve Name
+			    ACHighStageCoolingEIRFTemp,    !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
+			    ACHighStageCoolingEIRFFF,      !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
+			    AC2StageCoolingPLFFPLR,        !- Speed 2 Part Load Fraction Correlation Curve Name
+			<% else %>
+				DEER DX Cool Cap-fT,          !- Speed 2 Total Cooling Capacity Function of Temperature Curve Name
+				DEER DX Cool Cap-FF,    	  !- Speed 2 Total Cooling Capacity Function of Flow Fraction Curve Name
+				DEER DX Cool EIR-fT,    	  !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
+				DEER DX Cool EIR-FF,    	  !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
+				DOE2 DX Coil PLF,      		  !- Speed 2 Part Load Fraction Correlation Curve Name
+			<% end %>				
             0,                        !- Speed 2 Nominal Time for Condensate Removal to Begin
             0,                        !- Speed 2 Ratio of Initial Moisture Evaporation Rate and steady state Latent Capacity
             0,                        !- Speed 2 Maximum Cycling Rate
@@ -556,19 +593,46 @@ ZoneHVAC:Baseboard:Convective:Water,
             ,                        !- Rated Evaporator Fan Power Per Volume Flow Rate {W/(m3/s)}
             <%= system_name %> <%= heat_type == "DX" ? "Supply Fan Outlet" : "Heating Coil Outlet" %>,  !- Air Inlet Node Name
             <%= system_name %> <%= heat_type == "DX" ? "Cooling Coil Outlet" : "Air Loop Outlet" %>,  !- Air Outlet Node Name
-        <% if hvac_type=='unitary_system' %>
-            DEER DX Cool Cap-fT,
-            DEER DX Cool Cap-FF,
-            DEER DX Cool EIR-fT,
-            DEER DX Cool EIR-FF,
+        ! TRC -(SWAP007-06)– Added Performance Curves for Multi-Speed Coils
+		<% if nrel_hpac_curves && hvac_type=='unitary_system' && heat_type == "DX" %>
+			HPCoolingCAPFTemp,       !- Total Cooling Capacity Function of Temperature Curve Name
+    		HPCoolingCAPFFF,         !- Total Cooling Capacity Function of Flow Fraction Curve Name
+    		HPCoolingEIRFTemp,       !- Energy Input Ratio Function of Temperature Curve Name
+    		HPCoolingEIRFFF,         !- Energy Input Ratio Function of Flow Fraction Curve Name
+    		HPCOOLPLFFPLR,           !- Part Load Fraction Correlation Curve Name
+		<% elsif nrel_hpac_curves && hvac_type=='unitary_system' && heat_type != "DX" %>
+			ACCoolingCAPFTemp,       !- Total Cooling Capacity Function of Temperature Curve Name
+		    ACCoolingCAPFFF,         !- Total Cooling Capacity Function of Flow Fraction Curve Name
+		    ACCoolingEIRFTemp,       !- Energy Input Ratio Function of Temperature Curve Name
+		    ACCoolingEIRFFF,         !- Energy Input Ratio Function of Flow Fraction Curve Name
+		    ACCoolingPLFFPLR,        !- Part Load Fraction Correlation Curve Name			
+		<% elsif !nrel_hpac_curves && hvac_type=='unitary_system' %>		
+			DEER DX Cool Cap-fT,	 !- Total Cooling Capacity Function of Temperature Curve Name
+		    DEER DX Cool Cap-FF,     !- Total Cooling Capacity Function of Flow Fraction Curve Name
+		    DEER DX Cool EIR-fT,     !- Energy Input Ratio Function of Temperature Curve Name
+		    DEER DX Cool EIR-FF,     !- Energy Input Ratio Function of Flow Fraction Curve Name	
+			DOE2 DX Coil PLF,        !- Part Load Fraction Correlation Curve Name
         <%else %>
             DOE2 DX Coil Cap-FT, !- Total Cooling Capacity Function of Temperature Curve Name
             DOE2 DX Coil Cap-FF, !- Total Cooling Capacity Function of Flow Fraction Curve Name
             DOE2 DX Coil EIR-FT, !- Energy Input Ratio Function of Temperature Curve Name
             DOE2 DX Coil EIR-FF, !- Energy Input Ratio Function of Flow Fraction Curve Name
+			DOE2 DX Coil PLF,	 !- Part Load Fraction Correlation Curve Name
         <%end%>
-            DOE2 DX Coil PLF;    !- Part Load Fraction Correlation Curve Name
-        <% end %>
+            ,                        !- Maximum Outdoor Dry-Bulb Temperature for Compressor {C}
+            ,                        !- Nominal Time for Condensate Removal to Begin {s}
+            ,                        !- Ratio of Initial Moisture Evaporation Rate and Steady-State Latent Capacity
+            ,                        !- Maximum Cycling Rate {cycles/hr}
+            ,                        !- Latent Capacity Time Constant {s}
+            ,                        !- Condenser Air Inlet Node Name
+            AirCooled,               !- Condenser Type
+            ,                        !- Evaporative Condenser Effectiveness
+            ,                        !- Evaporative Condenser Air Flow Rate {m3/s}
+            ,                        !- Evaporative Condenser Pump Rated Power Consumption {W}
+	!Solaris Technical - Behzad S. Rizi - 2026-08-17- Added crankcase heater fields for single-speed DX cooling.
+            <%= dx_crankcase_cap %>,  !- Crankcase Heater Capacity {W}
+            <%= dx_crankcase_max_temp %>;  !- Maximum Outdoor Dry-Bulb Temperature for Crankcase Heater Operation {C}
+         <% end %>
     <% end %>
 
 !Heating Coils
@@ -623,23 +687,44 @@ ZoneHVAC:Baseboard:Convective:Water,
                 autosize,                !- Speed 1 Gross Rated Heating Capacity {W}
                 <%= heating_coil_cop %>, !- Speed 1 Gross Rated Heating COP {W/W}
                 autosize,                !- Speed 1 Rated Air Flow Rate {m3/s}
-                ,        !- Speed 1 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
-                DEER DX Heat Cap-fT,     !- Speed 1 Heating Capacity Function of Temperature Curve Name
-                DEER DX Heat Cap-FF,     !- Speed 1 Heating Capacity Function of Flow Fraction Curve Name
-                DEER DX Heat EIR-fT,     !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
-                DEER DX HeatEIR-FF,      !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
-                HPACCOOLPLFFPLR,         !- Speed 1 Part Load Fraction Correlation Curve Name
+                ,        				 !- Speed 1 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
+				! TRC -(SWAP007-06)– Added Performance Curves for Multi-Speed Coils
+				<% if nrel_hpac_curves && cool_type == "DX" %>
+					HPLowStageHeatingCAPFTemp,    !- Speed 1 Heating Capacity Function of Temperature Curve Name
+					HPLowStageHeatingCAPFFF,      !- Speed 1 Heating Capacity Function of Flow Fraction Curve Name
+					HPLowStageHeatingEIRFTemp,    !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
+					HPLowStageHeatingEIRFFF,      !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
+					HP2StageHeatingPLFFPLR,           !- Speed 1 Part Load Fraction Correlation Curve Name
+				<% elsif !nrel_hpac_curves && cool_type == "DX" %>							
+					DEER DX Heat Cap-fT,			!- Speed 1 Heating Capacity Function of Temperature Curve Name
+					DEER DX Heat Cap-FF,            !- Speed 1 Heating Capacity Function of Flow Fraction Curve Name
+					DEER DX Heat EIR-fT,            !- Speed 1 Energy Input Ratio Function of Temperature Curve Name
+					DEER DX HeatEIR-FF,             !- Speed 1 Energy Input Ratio Function of Flow Fraction Curve Name
+					HPACCOOLPLFFPLR,	                !- Speed 1 Part Load Fraction Correlation Curve Name
+				<% end %>	
                 0.2,                     !- Speed 1 Rated Waste Heat Fraction of Power Input {dimensionless}
                 ,                        !- Speed 1 Waste Heat Function of Temperature Curve Name
                 autosize,                !- Speed 2 Gross Rated Heating Capacity {W}
-                <%= heating_coil_cop %>,  !- Speed 2 Gross Rated Heating COP {W/W}
+                <% if heating_coil_cop2 != nil %>
+                <%= heating_coil_cop2 %>,  !- Speed 2 Gross Rated Heating COP {W/W}
+                <% else %>
+                <%= heating_coil_cop %>,
+                <% end %>
                 autosize,                !- Speed 2 Rated Air Flow Rate {m3/s}
-                ,        !- Speed 2 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
-                DEER DX Heat Cap-fT,     !- Speed 2 Heating Capacity Function of Temperature Curve Name
-                DEER DX Heat Cap-FF,     !- Speed 2 Heating Capacity Function of Flow Fraction Curve Name
-                DEER DX Heat EIR-fT,     !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
-                DEER DX HeatEIR-FF,      !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
-                HPACCOOLPLFFPLR,         !- Speed 2 Part Load Fraction Correlation Curve Name
+                ,                          !- Speed 2 Rated Supply Air Fan Power Per Volume Flow Rate {W/(m3/s)}
+				<% if nrel_hpac_curves && cool_type == "DX" %>
+					HPHighStageHeatingCAPFTemp, !- Speed 2 Total Heating Capacity Function of Temperature Curve Name
+				    HPHighStageHeatingCAPFFF,   !- Speed 2 Total Heating Capacity Function of Flow Fraction Curve Name
+				    HPHighStageHeatingEIRFTemp, !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
+				    HPHighStageHeatingEIRFFF,   !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
+				    HP2StageHeatingPLFFPLR,     !- Speed 2 Part Load Fraction Correlation Curve Name
+				<% elsif !nrel_hpac_curves && cool_type == "DX" %>			
+					DEER DX Heat Cap-fT,     !- Speed 2 Heating Capacity Function of Temperature Curve Name
+					DEER DX Heat Cap-FF,     !- Speed 2 Heating Capacity Function of Flow Fraction Curve Name
+					DEER DX Heat EIR-fT,     !- Speed 2 Energy Input Ratio Function of Temperature Curve Name
+					DEER DX HeatEIR-FF,      !- Speed 2 Energy Input Ratio Function of Flow Fraction Curve Name
+					HPACCOOLPLFFPLR,	     !- Speed 2 Part Load Fraction Correlation Curve Name
+				<% end %>
                 0.2,                     !- Speed 2 Rated Waste Heat Fraction of Power Input {dimensionless}
                 ,                        !- Speed 2 Waste Heat Function of Temperature Curve Name
                 ,                        !- Speed 3 Gross Rated Heating Capacity {W}
@@ -692,18 +777,26 @@ ZoneHVAC:Baseboard:Convective:Water,
                 ,                        !- Rated Supply Fan Power Per Volume Flow Rate {W/(m3/s)}
                 <%= system_name %> Cooling Coil Outlet,  !- Air Inlet Node Name
                 <%= system_name %> Heating Coil Outlet,  !- Air Outlet Node Name
-                <% if hvac_type=='unitary_system' %>
-                DEER DX Heat Cap-fT,
-                DEER DX Heat Cap-FF,
-                DEER DX Heat EIR-fT,
-                DEER DX HeatEIR-FF,
+				! TRC -(SWAP007-06)– Added Performance Curves for Multi-Speed Coils
+				<% if nrel_hpac_curves && hvac_type=='unitary_system' && cool_type == "DX" %>
+					HPHeatingCAPFTemp,       !- Total Heating Capacity Function of Temperature Curve Name
+				    HPHeatingCAPFFF,         !- Total Heating Capacity Function of Flow Fraction Curve Name
+				    HPHeatingEIRFTemp,       !- Energy Input Ratio Function of Temperature Curve Name
+				    HPHeatingCAPFFF,         !- Energy Input Ratio Function of Flow Fraction Curve Name
+				    HPHeatPLFFPLR,           !- Part Load Fraction Correlation Curve Name
+				<% elsif !nrel_hpac_curves && hvac_type=='unitary_system' %>
+					DEER DX Heat Cap-fT,	    !- Heating Capacity Function of Temperature Curve Name
+					DEER DX Heat Cap-FF,	    !- Heating Capacity Function of Flow Fraction Curve Name
+					DEER DX Heat EIR-fT,	    !- Energy Input Ratio Function of Temperature Curve Name
+					DEER DX HeatEIR-FF,		    !- Energy Input Ratio Function of Flow Fraction Curve Name
+				    HPACCOOLPLFFPLR,		    !- Part Load Fraction Correlation Curve Name			
                 <% else %>
-                HPACHeatCapFT,           !- Heating Capacity Function of Temperature Curve Name
-                HPACHeatCapFFF,          !- Heating Capacity Function of Flow Fraction Curve Name
-                HPACHeatEIRFT,           !- Energy Input Ratio Function of Temperature Curve Name
-                HPACHeatEIRFFF,          !- Energy Input Ratio Function of Flow Fraction Curve Name
+					HPACHeatCapFT,           !- Heating Capacity Function of Temperature Curve Name
+					HPACHeatCapFFF,          !- Heating Capacity Function of Flow Fraction Curve Name
+					HPACHeatEIRFT,           !- Energy Input Ratio Function of Temperature Curve Name
+					HPACHeatEIRFFF,          !- Energy Input Ratio Function of Flow Fraction Curve Name
+					HPACCOOLPLFFPLR,     	 !- Part Load Fraction Correlation Curve Name	
                 <% end %>
-                HPACCOOLPLFFPLR,         !- Part Load Fraction Correlation Curve Name
                 Defrost_EIR_FT,                        !- Defrost Energy Input Ratio Function of Temperature Curve Name
                 -5.0,                    !- Minimum Outdoor Dry-Bulb Temperature for Compressor Operation {C}
                 ,                        !- Outdoor Dry-Bulb Temperature to Turn On Compressor {C}
@@ -834,7 +927,7 @@ ZoneHVAC:Baseboard:Convective:Water,
                     <%= system_name %> Supplemental Heating Coil,   !- Name
                     always_avail,            !- Availability Schedule Name
                     1,                       !- Efficiency
-                    autosize,                !- Nominal Capacity {W}
+                    <%= supplmental_heat_cap %>,                !- Nominal Capacity {W}
                     <%= system_name %> Heating Coil Outlet,  !- Air Inlet Node Name
                     <%= system_name %> Air Loop Outlet;!- Air Outlet Node Name
             <% end %>
