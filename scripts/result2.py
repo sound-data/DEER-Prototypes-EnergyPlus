@@ -29,6 +29,9 @@ Changelog
 
 # Select columns from hourly files to apply DEER peak calculation
 DEERPEAK_COLUMNS = ["Electricity:Facility [J](Hourly)"]
+# Which definition of peak period dates to use? SWHC059 runs CZ2025 weather,
+# so the peak days must come from the CZ2025 assessment, not the CZ2022-derived tables.
+PEAK_VERSION = 'CZ2025' # 'E5152', 'E5350', 'CZ2025'
 # Do you want to append "(units)"" in the column name, if available?
 APPEND_UNITS = False
 # Which definition of peak period dates to use?
@@ -381,11 +384,19 @@ def get_sim_hourly(conn: Connection, column_filter=None):
     #   If 'EL7 NORTH PERIM ZN (G.N2):Zone Total Internal Total Heating Energy [J](Hourly)'
     # LookupKey looks like 'EL7 NORTH PERIM ZN (G.N2):Zone Total Internal Total Heating Energy [J](Hourly)'
     ReportDataDictionary['LookupKey']=ReportDataDictionary.apply(
-        lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if bool(x.KeyValue)
+        lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if isinstance(x.KeyValue, str) and x.KeyValue
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
 
-    query_report_data = 'select * from ReportData'
+    # Restrict to the weather-file RunPeriod (EnvironmentPeriods.EnvironmentType = 3).
+    # Models that simulate sizing periods also write design-day hours here, which would
+    # make the series longer than 8760 and silently disable the DEER peak downstream
+    # (get_sim_deer_peak returns None on any length but 8760). Filtering by environment
+    # keeps the peak correct whether or not sizing periods were run.
+    query_report_data = '''select rd.* from ReportData rd
+        join Time t on rd.TimeIndex = t.TimeIndex
+        join EnvironmentPeriods ep on t.EnvironmentPeriodIndex = ep.EnvironmentPeriodIndex
+        where ep.EnvironmentType = 3'''
 
     rd_indices = []
     if column_filter:
@@ -393,7 +404,7 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         # Note that ReportDataDictionaryIndex values are file-specific.
         rd_indices = ReportDataDictionary[ReportDataDictionary['LookupKey'].isin(column_filter)].index
         placeholders = ', '.join(['?'] * len(rd_indices))
-        query_report_data += f''' where "ReportDataDictionaryIndex" in ({placeholders})'''
+        query_report_data += f''' and rd."ReportDataDictionaryIndex" in ({placeholders})'''
 
     #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
     chunks = []
