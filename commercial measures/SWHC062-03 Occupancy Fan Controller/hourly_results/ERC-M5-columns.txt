@@ -1,0 +1,593 @@
+ERC
+	CZ01
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ02
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ03
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ04
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ05
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ06
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ07
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ08
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ09
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ10
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ11
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ12
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ13
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ14
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ15
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+	CZ16
+		cDXGF
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cDXHP
+			Heating Natural Gas
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPTAC
+			Heating Natural Gas
+			Heating Electricity
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-CAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-CAV UNITARY:Unitary System Fan Part Load Ratio [](Hourly)
+		cPVVG
+			Heating Natural Gas
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil NaturalGas Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Heating Electricity
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV ATU HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: Ignore
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV HEATING COIL:Heating Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)
+			Cooling
+				Coil: CLASSROOM EL1 SPC (G.1) SZ-VAV COOLING COIL:Cooling Coil Electricity Energy [J](Hourly)
+				Schedule Value: CLASSROOM EL1 SPC (G.1) SZ-VAV OPERATION SCHEDULE:Schedule Value [](Hourly)

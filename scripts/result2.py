@@ -380,8 +380,11 @@ def get_sim_hourly(conn: Connection, column_filter=None):
     # LookupKey looks like:
     #   If 'EL7 NORTH PERIM ZN (G.N2):Zone Total Internal Total Heating Energy [J](Hourly)'
     # LookupKey looks like 'EL7 NORTH PERIM ZN (G.N2):Zone Total Internal Total Heating Energy [J](Hourly)'
+    # Note: for facility-level meters (e.g. Electricity:Facility), KeyValue is SQL NULL,
+    # which pandas reads as float NaN. bool(NaN) is True, so guard on string type to avoid
+    # building a bogus "nan:..." prefix that would break column_filter matching.
     ReportDataDictionary['LookupKey']=ReportDataDictionary.apply(
-        lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if bool(x.KeyValue)
+        lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if (isinstance(x.KeyValue, str) and x.KeyValue.strip())
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
 
