@@ -1,0 +1,7 @@
+skip,case_name,:vfd_curve_name,:supplyfan_total_eff,:motor_eff,:cooling_coil_cop,:cooling_coil_cop2,:coil_type,:hvac_type,:heating_coil_cop,:burner_eff
+,RB-dxHP_equip-spltHP-SEER-BA-rDXHP-NoSFC,,0.12,0.24,2.56462,,,unitary_system,1.71175,
+,RB-dxHP_equip-spltHP-SEER-BA-rDXHP-SFC,,0.12,0.24,3.23,,,unitary_system,2.05,
+,RB-dxHP_equip-spltHP-SEER-BA-rDXWP-NoSFC,,0.12,0.24,2.867711455,,,unitary_system,3.202898701,
+,RB-dxHP_equip-spltHP-SEER-BA-rDXWP-SFC,,0.12,0.24,3.611727273,,,unitary_system,3.887012987,
+,RB-dxAC_equip-spltAC-SEER-BA-rDXEF-NoSFC,,0.12,0.24,2.56462,,,unitary_system,0.824,
+,RB-dxAC_equip-spltAC-SEER-BA-rDXEF-SFC,,0.12,0.24,3.23,,,unitary_system,1,

@@ -27,6 +27,9 @@ Changelog
 
 # Select columns from hourly files to apply DEER peak calculation
 DEERPEAK_COLUMNS = ["Electricity:Facility [J](Hourly)"]
+# Which definition of peak period dates to use? SWHC059 runs CZ2025 weather,
+# so the peak days must come from the CZ2025 assessment, not the CZ2022-derived tables.
+PEAK_VERSION = 'CZ2025' # 'E5152', 'E5350', 'CZ2025'
 # Do you want to append "(units)"" in the column name, if available?
 APPEND_UNITS = False
 
@@ -56,8 +59,10 @@ import numpy as np
 import pandas as pd
 import tqdm
 
-def get_deer_peak_day(bldgloc: str):
+def get_deer_peak_day_E5152(bldgloc: str):
     """Return a for DEER peak period start day lookups.
+    Dates are from Resolution E-5152 (DEER2023) Attachment A, Table A-3-2.
+    The dates were derived using CZ2022 weather data.
 
     Input:
         BldgLoc: str
@@ -87,9 +92,76 @@ def get_deer_peak_day(bldgloc: str):
     ])
     return peakperspec[bldgloc]
 
+def get_deer_peak_day_E5350(bldgloc: str):
+    """Return a for DEER peak period start day lookups.
+    Dates are from Resolution E-5350 (DEER2026) Attachment A, Table A-1-5.
+    The dates were derived using CZ2022 weather data.
+
+    Input:
+        BldgLoc: str
+            CEC climate zone, e.g. CZ01 through CZ16.
+
+    Returns:
+        PkDay: int
+            1-based day number index for first day of the 3-day DEER peak period.
+    """
+    peakperspec = dict([
+        ("CZ01",238),
+        ("CZ02",238),
+        ("CZ03",238),
+        ("CZ04",238),
+        ("CZ05",259),
+        ("CZ06",180),
+        ("CZ07",245),
+        ("CZ08",245),
+        ("CZ09",245),
+        ("CZ10",180),
+        ("CZ11",224),
+        ("CZ12",180),
+        ("CZ13",180),
+        ("CZ14",180),
+        ("CZ15",180),
+        ("CZ16",224),
+    ])
+    return peakperspec[bldgloc]
+
+def get_deer_peak_day_CZ2025(bldgloc: str):
+    """Return a for DEER peak period start day lookups.
+    Dates are from CPUC assessment posted to CEDARS on 2026-03-10.
+    See https://cedars.cpuc.ca.gov/deer-resources/tools/energy-plus/resource/29/history/
+    The dates were derived using CZ2025 weather data.
+
+    Input:
+        BldgLoc: str
+            CEC climate zone, e.g. CZ01 through CZ16.
+
+    Returns:
+        PkDay: int
+            1-based day number index for first day of the 3-day DEER peak period.
+    """
+    peakperspec = dict([
+        ("CZ01",266),
+        ("CZ02",203),
+        ("CZ03",266),
+        ("CZ04",217),
+        ("CZ05",266),
+        ("CZ06",266),
+        ("CZ07",271),
+        ("CZ08",168),
+        ("CZ09",168),
+        ("CZ10",168),
+        ("CZ11",187),
+        ("CZ12",217),
+        ("CZ13",187),
+        ("CZ14",187),
+        ("CZ15",238),
+        ("CZ16",187),
+    ])
+    return peakperspec[bldgloc]
+
 @cache
 def get_deer_peak_multipliers(BldgLoc: str,
-                          days=3, start_hr=16, end_hr=21, dst=True):
+                          days=3, start_hr=16, end_hr=21, dst=True, version=PEAK_VERSION):
     """Return a masking array useful to calculate an average over DEER Peak Period.
 
     Note that for compatibility, simulation data must be an 8760-length array
@@ -117,7 +189,14 @@ def get_deer_peak_multipliers(BldgLoc: str,
         dpm = deer_peak_multipliers('CZ11')
         dpload = sum(load_data * dpm)
     """
-    peak_day = get_deer_peak_day(BldgLoc)
+    if version == 'E5152':
+        peak_day = get_deer_peak_day_E5152(BldgLoc)
+    elif version == 'E5350':
+        peak_day = get_deer_peak_day_E5350(BldgLoc)
+    elif version == 'CZ2025':
+        peak_day = get_deer_peak_day_CZ2025(BldgLoc)
+    else:
+        raise ValueError(f'Unrecognized peak date version: {version}')
     # In case start_hr and end_hr are given in daylight saving time (DST), shift back to standard time.
     # time_dst = time_standard + 1
     start_hr -= 1 * dst
@@ -300,11 +379,19 @@ def get_sim_hourly(conn: Connection, column_filter=None):
     #   If 'EL7 NORTH PERIM ZN (G.N2):Zone Total Internal Total Heating Energy [J](Hourly)'
     # LookupKey looks like 'EL7 NORTH PERIM ZN (G.N2):Zone Total Internal Total Heating Energy [J](Hourly)'
     ReportDataDictionary['LookupKey']=ReportDataDictionary.apply(
-        lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if bool(x.KeyValue)
+        lambda x: f'{x.KeyValue}:{x.Name} [{x.Units}]({x.ReportingFrequency})' if isinstance(x.KeyValue, str) and x.KeyValue
         else f'{x.Name} [{x.Units}]({x.ReportingFrequency})'
         , axis=1)
 
-    query_report_data = 'select * from ReportData'
+    # Restrict to the weather-file RunPeriod (EnvironmentPeriods.EnvironmentType = 3).
+    # Models that simulate sizing periods also write design-day hours here, which would
+    # make the series longer than 8760 and silently disable the DEER peak downstream
+    # (get_sim_deer_peak returns None on any length but 8760). Filtering by environment
+    # keeps the peak correct whether or not sizing periods were run.
+    query_report_data = '''select rd.* from ReportData rd
+        join Time t on rd.TimeIndex = t.TimeIndex
+        join EnvironmentPeriods ep on t.EnvironmentPeriodIndex = ep.EnvironmentPeriodIndex
+        where ep.EnvironmentType = 3'''
 
     rd_indices = []
     if column_filter:
@@ -312,7 +399,7 @@ def get_sim_hourly(conn: Connection, column_filter=None):
         # Note that ReportDataDictionaryIndex values are file-specific.
         rd_indices = ReportDataDictionary[ReportDataDictionary['LookupKey'].isin(column_filter)].index
         placeholders = ', '.join(['?'] * len(rd_indices))
-        query_report_data += f''' where "ReportDataDictionaryIndex" in ({placeholders})'''
+        query_report_data += f''' and rd."ReportDataDictionaryIndex" in ({placeholders})'''
 
     #n_rows, = conn.execute('select count(*) from ReportData').fetchone()
     chunks = []
